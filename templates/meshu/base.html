@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
+    <title>{% block title %}Meshu{% endblock %}</title>
+</head>
+
+<body>
+	<div id="navigation">
+		{% block navigation %}
+		<ul>
+		    <li><a href="/">Home</a></li>
+			<li><a href="/blog/">Blog</a></li>
+		</ul>
+		{% endblock %}
+	</div>
+
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>
