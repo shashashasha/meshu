@@ -1,19 +1,51 @@
 {% extends "meshu/base.html" %}
 
-{% block title %}Gallery{% endblock %}
+{% block title %}Meshu{% endblock %}
 
 {% block content %}
-    <ul class="gallery">
-        {% for item in gallery_list %}
-            <li class="object">
-                <div class="image" style="backgound-image: url({{ object.image_url }});">
-                <div class="description">{{ object.description }}</div>
-                <div class="detail">click for more information</div>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="frame"></div>
+    <div id="edit">
+        <div id="search">
+            <h2>Search</h2>
+            <input type="text" id="coords" value="add a city, place, or address" onfocus="value=''"/>
+            <div id="submit" class="button">search</div>
+        </div>
+        <div id="cases"></div>
+        <div id="places"></div>
+
+        <div id="next">when finished, pick your material</div>
+    </div>
+    <div id="materials">
+        <div id="back">go back</div>
+        <div id="options">
+            <h2>Object</h2>
+            <ul class="option-list objects">
+                <li class="selected">Pair of Earrings (maximum sidelength 3")</li>
+                <li>Pendant Necklace (maximum sidelength 3")</li>
+                <li>Long Necklace (maximum sidelength 5")</li>
+            </ul>
+            <h2>Material</h2>
+            <ul class="option-list material-list">
+                <li class="selected">Acrylic<span class="price">$30.00</span></li>
+                <li>Wood<span class="price">$40.00</span><li>
+                <li>Flexible Nylon<span class="price">$50.00</span></li>
+                <li>Silver<span class="price">$90.00</span></li>
+            </ul>
+        </div>
+        <div id="total">
+            <span class="total-cost">$30.00</span>
+            <h2>Total</h2>
+            <div id="checkout-button">Checkout</div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
 {% endblock %}
