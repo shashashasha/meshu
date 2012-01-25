@@ -15,7 +15,14 @@ urlpatterns = patterns('',
 
   # Uncomment the next line to enable the admin:
   url(r'^admin/', include(admin.site.urls)),
+)
+
+urlpatterns += patterns('meshu.views',
 
 	# meshu begin
-	url(r'^meshu/', include('meshu.urls')),
+	url(r'^$', 'index'),
+	
+	url(r'^make/', 'make'),
+
+	url(r'^shop/', 'shop'),
 )
