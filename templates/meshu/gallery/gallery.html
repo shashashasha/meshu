@@ -6,7 +6,7 @@
     <ul class="gallery">
         {% for item in gallery_list %}
             <li class="object">
-                <div class="image" style="backgound-image: url({{ object.image_url }});">
+                <a class="image" style="backgound-image: url({{ object.image_url }});" href="{{ STATIC_URL }}item/#edit">
                 <div class="description">{{ object.description }}</div>
                 <div class="detail">click for more information</div>
             </li>
