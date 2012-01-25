@@ -1,0 +1,324 @@
+/*
+    Mixins
+*/
+.fade (@time: 1s) {
+    transition: opacity @time;
+    -moz-transition: opacity @time;
+    -webkit-transition: opacity @time;
+    -o-transition: opacity @time;
+}
+@grey: #808080;
+@pink: #FF3FB4;
+@blue: #1fcaff;
+
+
+/* main page styles */
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+h2 {
+    font-weight: normal;
+}
+
+
+
+#top {
+    width: 1000px;
+    margin: 30px auto 0;
+    position: relative;
+}
+h1#meshu {
+    margin: 0;
+}
+#nav {
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    font-size: 18px;
+}
+#nav li {
+    display: inline-block;
+    margin-left: 25px;
+}
+
+#content {
+    width: 1000px;
+    margin: 0 auto;
+    border: 1px solid @grey;
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+#content h2 {
+    font-size: 28px;
+    margin: 0 0 10px;
+}
+
+#edit {
+    padding: 20px;
+    width: 360px;
+    min-height: 560px;
+    position: absolute;
+    top: 0;
+}
+.edit #edit {
+    left: 0;
+    transition: left 1s;
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+}
+.materials #edit {
+    left: -400px;
+    transition: left 1s;
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+}
+
+input {
+    width: 200px;
+    color: @grey;
+    border: 1px solid @blue;
+    padding: 5px;
+}
+.button {
+    cursor: pointer;
+    background-color: @blue;
+    color: white;
+    padding: 3px 5px;
+    margin: 4px 0;
+    text-align: center;
+    display: inline;
+}
+
+#cases {
+    margin: 5px 0;
+}
+#cases li.title {
+    margin-bottom: 5px;
+}
+.maybe-place {
+    color: @grey;
+    cursor: pointer;
+}
+.maybe-place:hover {
+    color: black;
+}
+
+#places {
+    margin-top: 40px;
+}
+.place {
+    color: @grey;
+}
+.place.highlight {
+    color: @pink;
+}
+.place .delete {
+    display: none;
+    margin-left: 15px;
+    padding: 0 3px;
+    background-color: @pink;
+    cursor: pointer;
+    color: white;
+}
+.place:hover .delete {
+    display: inline;
+}
+
+.frame {
+	width: 600px;
+	height: 600px;
+    position: absolute;
+    z-index: 1;
+}
+.edit .frame {
+    right: 0;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+.materials .frame {
+    right: 400px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+
+.edit .map .layer {
+    opacity: 1;
+    .fade;
+}
+.materials .map .layer {
+    opacity: .3;
+    .fade;
+}
+
+#materials {
+    padding: 20px;
+    position: relative;
+    width: 360px;
+    min-height: 560px;
+    position: absolute;
+    top: 0;
+}
+.edit #materials {
+    right: -400px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+.materials #materials{
+    right: 0px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+
+#options {
+    margin-top: 50px;
+}
+#options h2 {
+    margin: 20px 0 10px;
+}
+#options li {
+    color: @grey;
+}
+#options li:hover {
+    color: black;
+}
+#options li.selected {
+    color: @pink;
+}
+.option-list li {
+    cursor: pointer;
+}
+.material-list {
+    width: 200px;
+}
+.material-list li .price {
+    float: right;
+    color: black;
+    display: none;
+}
+.material-list li:hover .price {
+    display: inline;
+}
+.material-list li.selected .price {
+    display: inline;
+    color: @grey;
+}
+
+#total {
+    display: block;
+    width: 100%;
+    border-top: 1px solid black;
+    margin-top: 40px;
+    padding-top: 10px;
+}
+.total-cost {
+    float: right;
+    font-size: 28px;
+    color: @grey;
+}
+
+#next, #back, #checkout-button {
+    background-color: @pink;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#next {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0;
+    .fade;
+    cursor: default;
+}
+#back {
+    background-color: @grey;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+#checkout-button {
+    position: relative;
+    float: right;
+    font-size: 20px;
+}
+#next.active {
+    opacity: 1;
+    .fade;
+    cursor: pointer;
+}
+
+/* 
+	SVG Styling
+*/
+path {
+    fill: none;
+    stroke: black;
+    pointer-events: none;
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+circle {
+    fill: @pink;
+    fill-opacity: 0;
+}
+
+circle:hover, circle.highlight {
+    fill-opacity: 1;
+    cursor: pointer;
+}
+
+
+li.object {
+    display: inline-block;
+    border: 1px solid @grey;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: -3px;
+}
+li.object .image {
+    width: 238px;
+    height: 290px;
+    border: 5px solid white;
+}
+li.object:hover .image {
+    border: 5px solid @blue;
+}
+li.object .description {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    color: @grey;
+}
+li.object:hover .description {
+    color: black;
+}
+li.object .detail {
+    background-color: @pink;
+    color: white;
+    position: absolute;
+    padding: 3px 6px;
+    right: 10px;
+    bottom: 35px;
+    display: none;
+}
+li.object:hover .detail {
+    display: block;
+}
