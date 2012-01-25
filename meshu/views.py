@@ -7,8 +7,8 @@ def index(request):
 
 # meshu.views.shop
 def shop(request):
-	return render_to_response('meshu/shop.html', {}, context_instance=RequestContext(request))
+	return render_to_response('meshu/gallery/gallery.html', {}, context_instance=RequestContext(request))
 
 # meshu.views.make
 def make(request):
-	return render_to_response('meshu/make.html', {}, context_instance=RequestContext(request))
+	return render_to_response('meshu/item/item.html', {}, context_instance=RequestContext(request))
