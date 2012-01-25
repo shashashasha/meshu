@@ -7,13 +7,15 @@
 </head>
 
 <body>
-	<div id="navigation">
+	<div id="top">
 		{% block navigation %}
-		<ul>
-		    <li><a href="/">Home</a></li>
-			<li><a href="/blog/">Blog</a></li>
+		<ul id="nav">
+		    <li class="nav-list"><a href="/make/">Make</a></li>
+			<li class="nav-list"><a href="/shop/">Shop</a></li>
+			<li class="nav-list"><a href="/about/">About</a></li>
 		</ul>
 		{% endblock %}
+		<h1 id="meshu">meshu</h1>
 	</div>
 
 	<div id="content">
@@ -21,4 +23,6 @@
 		{% endblock %}
 	</div>
 </body>
+{% block script %}
+{% endblock %}
 </html>
