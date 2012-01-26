@@ -3,9 +3,14 @@ from django.contrib import admin
 
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('Date information', {'fields': ['date_created'], 'classes': ['collapse']}),
+		(None, {
+            'fields': ('user', 'title', 'description', 'points_blob')
+        }),
+		('Date information', {
+			'classes': ['collapse'],
+			'fields': ['date_created']
+		}),
 	]
-	list_display = ('user', 'date_created')
 	list_filter = ['date_created']
 
 admin.site.register(Meshu, MeshuAdmin)

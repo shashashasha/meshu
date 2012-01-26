@@ -139,7 +139,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'meshu',
-    'polls',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -164,5 +163,8 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'meshu.UserProfile'
+LOGIN_REDIRECT_URL = '/user/profile/'
 
 from settings_local import *

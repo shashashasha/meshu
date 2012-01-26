@@ -5,5 +5,9 @@ urlpatterns = patterns('meshu.views',
 
 	url(r'^make/', 'make'),
 
+	url(r'^edit/(?P<item_id>\d+)', 'edit'),
+
+	url(r'^create/user/(?P<user_id>\d+)', 'create_user'),
+
 	url(r'^$', 'index'),
 )
