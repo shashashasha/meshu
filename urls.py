@@ -8,7 +8,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	# polls urls
 	# "url/polls/34/vote/" will be passed to polls/urls.py as "34/vote/"
-	url(r'^polls/', include('polls.urls')),
 
   # Uncomment the admin/doc line below to enable admin documentation:
   url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -22,7 +21,7 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
-	url(r'^make/', 'make'),
+	url(r'^make/$', 'make'),
 
 	url(r'^shop/', 'shop'),
 )
