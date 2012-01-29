@@ -26,11 +26,6 @@ urlpatterns = patterns('',
 	url(r'^logout/', 'django.contrib.auth.views.logout', {
 		'template_name': 'meshu/user/logout.html'
 	}),
-
-	# after successful signup/login we go here
-	url(r'^user/profile/', direct_to_template, {
-		'template': 'meshu/gallery/gallery.html'
-	}),
 )
 
 urlpatterns += patterns('meshu.views',
@@ -38,21 +33,27 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
-	url(r'^make/', 'item_make'),
-
+	# shopping for readymades
 	url(r'^shop/', 'shop'),
-	
+
 	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
 
+	url(r'^make/', 'item_make'),
+	
 	url(r'^edit/(?P<item_id>\d+)', 'item_edit'),
 
 	url(r'^view/(?P<item_id>\d+)', 'item_display'),
 
-	# after successful signup we run the create user view
-	url(r'^user/create/', 'create_user'),
-
 	# after successful meshu we create an item
-	url(r'^item/create/', 'create_item'),
+	url(r'^item/create/', 'item_create'),
+
+	url(r'^make_random/', 'item_make_random'),
+	
+	# after successful signup we run the create user view
+	url(r'^user/create/', 'user_create'),
+
+	# after successful signup/login we go here
+	url(r'^user/profile/', 'user_profile'),
 
 	# about page
 	url(r'^about/', direct_to_template, {

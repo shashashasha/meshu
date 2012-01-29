@@ -64,6 +64,17 @@ def item_create(request):
 		'view' : 'edit'
 	}, context_instance=RequestContext(request))
 
+def item_make_random(request):
+	# create a meshu
+	meshu = Meshu("title", "description", "data")
+	meshu.save()
+
+	return render_to_response('meshu/item/item.html', {
+		'meshu' : meshu,
+		'view' : 'edit'
+	}, context_instance=RequestContext(request))
+
+
 
 def user_create(request):
 	username = request.POST['username']
@@ -81,8 +92,10 @@ def user_create(request):
 	}, context_instance=RequestContext(request))
 
 def user_profile(request):
+	# show all meshus belonging to the current user
+	meshus = Meshu.objects.filter(user=request.user)
 
-		
 	return render_to_response('meshu/gallery/gallery.html', {
-			'view' : 'user_profile'
+			'view' : 'user_profile',
+			'meshus': meshus
 	}, context_instance=RequestContext(request))
