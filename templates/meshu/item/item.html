@@ -5,7 +5,7 @@
     <div id="edit">
         <div id="search">
             <h2>Search</h2>
-            <input type="text" id="coords" value="add a city, place, or address" onfocus="value=''"/>
+            <input type="text" id="coords" size="35" value="add a city, place, or address" onfocus="value=''"/>
             <div id="submit" class="button">search</div>
         </div>
         <div id="cases"></div>
@@ -18,7 +18,7 @@
 {% block make %}
     <div id="materials">
         <div class="nav back">go back</div>
-        <div id="options">
+        <div class="make-wrapper">
             <h2>Object</h2>
             <ul class="option-list objects">
                 <li class="selected">Pair of Earrings (maximum sidelength 3")</li>
@@ -32,15 +32,59 @@
                 <li>Flexible Nylon<span class="price">$50.00</span></li>
                 <li>Silver<span class="price">$90.00</span></li>
             </ul>
-        </div>
-        <div id="total">
-            <span class="total-cost">$30.00</span>
-            <h2>Total</h2>
-            <div class="nav next checkout-button">Checkout</div>
+            <div id="total">
+                <span class="total-cost">$30.00</span>
+                <h2>Total</h2>
+                <div class="nav next checkout-button">Checkout</div>
+            </div>
         </div>
     </div>
     <div id="checkout">
         <div class="nav back">back to materials</div>
-        <p>buy buy buy</p>
+        <div class="make-wrapper">
+            <h2>Shipping</h2>
+            <form action="" method="POST" id="shipping">
+                <div class="form-row">
+                    <label>Name</label>
+                    <input type="text" size="40" class="ship-name"/>
+                </div>
+                <div class="form-row">
+                    <label>Address Row 1</label>
+                    <input type="text" size="40" class="ship-address-1"/>
+                </div>
+                <div class="form-row">
+                    <label>Address Row 2</label>
+                    <input type="text" size="40" class="ship-address-2"/>
+                </div>
+                <div class="form-row">
+                    <label>City</label>
+                    <input type="text" size="30" class="ship-city"/>
+                    <label>State</label>
+                    <input type="text" size="2" class="ship-state"/>
+                </div>
+                <div class="form-row">
+                    <label>Zip Code</label>
+                    <input type="text" size="5" class="ship-zip"/>
+                </div>
+            </form>
+            <h2>Payment</h2>
+            <form action="" method="POST" id="payment-form">
+                <div class="form-row">
+                    <label>Card Number</label>
+                    <input type="text" size="20" autocomplete="off" class="card-number"/>
+                </div>
+                <div class="form-row">
+                    <label>CVC</label>
+                    <input type="text" size="4" autocomplete="off" class="card-cvc"/>
+                </div>
+                <div class="form-row">
+                    <label>Expiration (MM/YYYY)</label>
+                    <input type="text" size="2" class="card-expiry-month"/>
+                    <span> / </span>
+                    <input type="text" size="4" class="card-expiry-year"/>
+                </div>
+                <button type="submit" class="submit-button">Submit Payment</button>
+            </form>
+        </div>
     </div>
 {% endblock %}
