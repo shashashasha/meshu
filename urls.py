@@ -38,11 +38,15 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
-	url(r'^make/', 'make'),
+	url(r'^make/', 'item_make'),
 
 	url(r'^shop/', 'shop'),
+	
+	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
 
-	url(r'^edit/(?P<item_id>\d+)', 'edit'),
+	url(r'^edit/(?P<item_id>\d+)', 'item_edit'),
+
+	url(r'^view/(?P<item_id>\d+)', 'item_display'),
 
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'create_user'),

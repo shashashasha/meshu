@@ -20,6 +20,10 @@ def index(request):
 def shop(request):
 	return render_to_response('meshu/gallery/gallery.html', {}, context_instance=RequestContext(request))
 
+#
+# Views for Items
+#
+
 # meshu.views.make
 def item_make(request):
 	return render_to_response('meshu/item/item.html', {
@@ -45,7 +49,7 @@ def item_readymade(request, item_id):
 			'meshu': item,
 		}, context_instance = RequestContext(request))
 
-def create_item(request):
+def item_create(request):
 	username = request.POST['username']
 	title = request.POST['title']
 	description = request.POST['description']
@@ -61,7 +65,7 @@ def create_item(request):
 	}, context_instance=RequestContext(request))
 
 
-def create_user(request):
+def user_create(request):
 	username = request.POST['username']
 	email = request.POST['email']
 	password = request.POST['password']
@@ -72,6 +76,13 @@ def create_user(request):
 	user.is_staff = False
 	user.save()
 
+	return render_to_response('meshu/gallery/gallery.html', {
+			'view' : 'user_profile'
+	}, context_instance=RequestContext(request))
+
+def user_profile(request):
+
+		
 	return render_to_response('meshu/gallery/gallery.html', {
 			'view' : 'user_profile'
 	}, context_instance=RequestContext(request))
