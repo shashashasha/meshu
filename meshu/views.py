@@ -35,11 +35,17 @@ def edit(request, item_id):
 			'view' : 'edit'
 		}, context_instance = RequestContext(request))
 
-def view_readymade(request, item_id):
+def view_item(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 	return render_to_response('meshu/item/item.html', {
 			'meshu': item,
-			'view' : 'edit'
+			'view' : 'view'
+		}, context_instance = RequestContext(request))
+
+def view_readymade(request, item_id):
+	item = get_object_or_404(Meshu, pk=item_id)
+	return render_to_response('meshu/item/readymade.html', {
+			'meshu': item,
 		}, context_instance = RequestContext(request))
 
 def create_item(request):
@@ -54,7 +60,7 @@ def create_item(request):
 
 	return render_to_response('meshu/item/item.html', {
 		'meshu' : meshu,
-		'view' : 'made'
+		'view' : 'edit'
 	}, context_instance=RequestContext(request))
 
 
