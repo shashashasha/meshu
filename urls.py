@@ -18,13 +18,13 @@ urlpatterns = patterns('',
 
 	# account stuff
 	url(r'^signup/', direct_to_template, {
-		'template': 'meshu/users/signup.html'
+		'template': 'meshu/user/signup.html'
 	}),
 	url(r'^login/', 'django.contrib.auth.views.login', {
-		'template_name': 'meshu/users/login.html'
+		'template_name': 'meshu/user/login.html'
 	}),
 	url(r'^logout/', 'django.contrib.auth.views.logout', {
-		'template_name': 'meshu/users/logout.html'
+		'template_name': 'meshu/user/logout.html'
 	}),
 
 	# after successful signup/login we go here
@@ -38,7 +38,7 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
-	url(r'^make/$', 'make'),
+	url(r'^make/', 'make'),
 
 	url(r'^shop/', 'shop'),
 
@@ -49,4 +49,9 @@ urlpatterns += patterns('meshu.views',
 
 	# after successful meshu we create an item
 	url(r'^item/create/', 'create_item'),
+
+	# about page
+	url(r'^about/', direct_to_template, {
+		'template': 'meshu/base_about.html'
+	}),
 )

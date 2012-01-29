@@ -64,5 +64,5 @@ def create_user(request):
 	user.save()
 
 	return render_to_response('meshu/gallery/gallery.html', {
-		
+			'view' : 'user_profile'
 	}, context_instance=RequestContext(request))
