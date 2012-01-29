@@ -21,28 +21,25 @@ def shop(request):
 	return render_to_response('meshu/gallery/gallery.html', {}, context_instance=RequestContext(request))
 
 # meshu.views.make
-def make(request):
-	meshu = Meshu()
-
+def item_make(request):
 	return render_to_response('meshu/item/item.html', {
 			'view' : 'edit'
 		}, context_instance=RequestContext(request))
 
-def edit(request, item_id):
+def item_edit(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 	return render_to_response('meshu/item/item.html', {
 			'meshu': item,
 			'view' : 'edit'
 		}, context_instance = RequestContext(request))
 
-def view_item(request, item_id):
+def item_display(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
-	return render_to_response('meshu/item/item.html', {
+	return render_to_response('meshu/item/display.html', {
 			'meshu': item,
-			'view' : 'view'
 		}, context_instance = RequestContext(request))
 
-def view_readymade(request, item_id):
+def item_readymade(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 	return render_to_response('meshu/item/readymade.html', {
 			'meshu': item,
