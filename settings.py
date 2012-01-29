@@ -164,4 +164,7 @@ LOGGING = {
     }
 }
 
+AUTH_PROFILE_MODULE = 'meshu.UserProfile'
+LOGIN_REDIRECT_URL = '/user/profile/'
+
 from settings_local import *

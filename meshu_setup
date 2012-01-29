@@ -1,0 +1,61 @@
+# pull down the meshu git project into /whateverfolder
+# install virtualenv
+
+sudo pip install -U virtualenv
+sudo pip install virtualenvwrapper
+
+# add this to .bash_profile or .bashrc
+export WORKON_HOME=$HOME/Environments
+source /usr/local/bin/virtualenvwrapper.sh
+
+# then run this to reload the profile
+source ~/.bash_profile
+
+# make the virtual env
+mkvirtualenv meshu
+
+# if you need to, clear the python path
+# export PYTHONPATH=
+
+# install yolk in to meshu
+pip install yolk
+pip install Django
+
+# install mysql
+# add this to .bash_profile
+alias mysql=/usr/local/mysql/bin/mysql
+alias mysqladmin=/usr/local/mysql/bin/mysqladmin
+export PATH=$PATH:/usr/local/bin/mysql
+
+# install mysql python bindings
+pip install MySQL-python
+
+# install mysql
+# http://dev.mysql.com/downloads/mysql/5.1.html
+# start mysql server
+# create user meshu
+# http://dev.mysql.com/doc/refman/4.1/en/adding-users.html
+mysql --user=root mysql
+
+GRANT ALL PRIVILEGES ON *.* TO 'meshu'@'localhost'
+    ->     IDENTIFIED BY 'm3shm3b4by' WITH GRANT OPTION;
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'meshu'@'%'
+    ->     IDENTIFIED BY 'm3shm3b4by' WITH GRANT OPTION;
+mysql> GRANT RELOAD,PROCESS ON *.* TO 'admin'@'localhost';
+mysql> GRANT USAGE ON *.* TO 'dummy'@'localhost';
+
+# create meshu database
+# http://stackoverflow.com/questions/4851138/connecting-to-mysql-from-django
+mysql --user=root mysql
+SHOW DATABASES;
+CREATE DATABASE meshu;
+	
+# add this to settings.py
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
