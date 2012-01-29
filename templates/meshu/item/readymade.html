@@ -1,1 +1,26 @@
-{% extends "meshu/item/item.html" %}
+{% extends "meshu/item/base_item.html" %}
+
+{% block make %}
+    <div id="materials">
+        <div id="options">
+            <h2>Object</h2>
+            <ul class="option-list objects">
+                <li class="selected">Pair of Earrings (maximum sidelength 3")</li>
+                <li>Pendant Necklace (maximum sidelength 3")</li>
+                <li>Long Necklace (maximum sidelength 5")</li>
+            </ul>
+            <h2>Material</h2>
+            <ul class="option-list material-list">
+                <li class="selected">Acrylic<span class="price">$30.00</span></li>
+                <li>Wood<span class="price">$40.00</span><li>
+                <li>Flexible Nylon<span class="price">$50.00</span></li>
+                <li>Silver<span class="price">$90.00</span></li>
+            </ul>
+        </div>
+        <div id="total">
+            <span class="total-cost">$30.00</span>
+            <h2>Total</h2>
+            <div id="checkout-button">Checkout</div>
+        </div>
+    </div>
+{% endblock %}
