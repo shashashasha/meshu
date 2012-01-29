@@ -25,6 +25,16 @@ ul {
 }
 h2 {
     font-weight: normal;
+    font-size: 28px;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+input {
+    color: @grey;
+    padding: 5px;
+    border: 1px solid @grey;
 }
 
 
@@ -56,10 +66,6 @@ h1#meshu {
     position: relative;
     overflow: hidden;
 }
-#content h2 {
-    font-size: 28px;
-    margin: 0 0 10px;
-}
 
 #edit {
     padding: 20px;
@@ -80,12 +86,13 @@ h1#meshu {
     left: -400px;
 }
 
-input {
-    width: 200px;
-    color: @grey;
-    border: 1px solid @blue;
-    padding: 5px;
+#search h2 {
+    margin: 0 0 10px;
 }
+#search input {
+    border: 1px solid @blue;
+}
+
 .button {
     cursor: pointer;
     background-color: @blue;
@@ -185,19 +192,19 @@ input {
     .transition(right, 1s);
 }
 
-#options {
-    margin-top: 50px;
+.make-wrapper {
+    margin-top: 40px;
 }
-#options h2 {
-    margin: 20px 0 10px;
+.make-wrapper h2 {
+    margin: 20px 0 10px 0;
 }
-#options li {
+.make-wrapper li {
     color: @grey;
 }
-#options li:hover {
+.make-wrapper li:hover {
     color: black;
 }
-#options li.selected {
+.make-wrapper li.selected {
     color: @pink;
 }
 .option-list li {
@@ -231,6 +238,9 @@ input {
     float: right;
     font-size: 28px;
     color: @grey;
+}
+#total h2{
+    margin-top: 0;
 }
 
 .nav {
