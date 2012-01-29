@@ -1,20 +1,13 @@
 $(function() {
-
-	var place = window.location.hash;
-	if(place.charAt(0) == '#')
-    	place = place.substr(1);
-	$("#content").addClass(place);
-	console.log(place);
-
 	// create a meshu object for every frame class div
 	$(".frame").each(function(i, e) {
 		var meshu = sb.meshu(e);
 	});
 	$("#next").click(function(){
-	    $("#content").addClass("materials")
+	    $("#content").attr("class","materials")
 	});
 	$("#back").click(function(){
-	    $("#content").removeClass("materials")
+	    $("#content").attr("class","edit")
 	});
 	$(".option-list li").click(function(){
 		$(this).parent().find("li").removeClass("selected");
