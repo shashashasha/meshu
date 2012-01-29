@@ -43,6 +43,7 @@ sb.mesh = function(frame, map, width, height) {
         .on("mouseup", mouseup);
 
     function mousemove() {
+        if (!$("#content").hasClass("edit")) return;
         if (!dragging) {
             return;
         }
@@ -61,6 +62,7 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function mouseup() {
+        if (!$("#content").hasClass("edit")) return;
         if (!dragging) {
             var m = d3.svg.mouse(main.node());
             var loc = map.p2l({
@@ -238,8 +240,8 @@ sb.mesh = function(frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
-        if (points.length > 3) $("#next").addClass("active");
-        else $("#next").removeClass("active");
+        if (points.length > 3) $(".finish").addClass("active");
+        else $(".finish").removeClass("active");
 
         return self;
     };
@@ -249,7 +251,7 @@ sb.mesh = function(frame, map, width, height) {
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
-        if (points.length < 4) $("#next").removeClass("active");
+        if (points.length < 4) $(".finish").removeClass("active");
     };
 
     self.lats = function() {
