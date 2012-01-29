@@ -25,7 +25,7 @@ def make(request):
 	meshu = Meshu()
 
 	return render_to_response('meshu/item/item.html', {
-			'view' : 'make'
+			'view' : 'edit'
 		}, context_instance=RequestContext(request))
 
 def edit(request, item_id):
@@ -35,6 +35,12 @@ def edit(request, item_id):
 			'view' : 'edit'
 		}, context_instance = RequestContext(request))
 
+def view_readymade(request, item_id):
+	item = get_object_or_404(Meshu, pk=item_id)
+	return render_to_response('meshu/item/item.html', {
+			'meshu': item,
+			'view' : 'edit'
+		}, context_instance = RequestContext(request))
 
 def create_item(request):
 	username = request.POST['username']
