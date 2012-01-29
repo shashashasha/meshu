@@ -14,7 +14,8 @@ $(function() {
 						"wood":{"price":"55","colors":["Amber","Blonde"]},
 						"nylon":{"price":"70","colors":["Black","Grey","White"]},
 						"silver":{"price":"140","colors":["Silver"]}}};
-	var views = ["edit","make","checkout"];
+	
+	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
 
 	// create a meshu object for every frame class div

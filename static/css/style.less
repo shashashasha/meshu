@@ -151,7 +151,7 @@ h1#meshu {
     right: 0;
     .transition(right, 1s);
 }
-.make .frame, .checkout .frame {
+.make .frame, .checkout .frame, .review .frame {
     right: 400px;
     .transition(right, 1s);
 }
@@ -166,7 +166,7 @@ h1#meshu {
     .transition(opacity, 1s);
 }
 
-#materials, #checkout {
+#materials, #checkout, #review {
     padding: 20px;
     width: 360px;
     min-height: 560px;
@@ -181,7 +181,7 @@ h1#meshu {
     right: 0px;
     .transition(right, 1s);
 }
-.checkout #materials {
+.checkout #materials, .review #materials {
     right: 400px;
     .transition(right, 1s);
 }
@@ -191,6 +191,18 @@ h1#meshu {
     .transition(right, 1s);
 }
 .checkout #checkout {
+    right: 0;
+    .transition(right, 1s);
+}
+.review #checkout {
+    right: 400px;
+    .transition(right,1s);
+}
+.edit #review, .make #review, .checkout #review {
+    right: -400px;
+    .transition(right, 1s);
+}
+.review #review {
     right: 0;
     .transition(right, 1s);
 }
