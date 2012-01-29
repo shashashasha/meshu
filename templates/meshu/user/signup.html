@@ -1,0 +1,15 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Meshu - Sign Up / Login{% endblock %}
+
+{% block content %}
+<form action="/user/create/" method="post">
+	{# put a csrf token in every form in django, for security #}
+	{% csrf_token %}
+	<input type="textarea" name="username"/>
+	<input type="textarea" name="password"/>
+	<input type="textarea" name="email"/>
+	<input type="submit" value="Sign Up" />
+</form>
+
+{% endblock %}
