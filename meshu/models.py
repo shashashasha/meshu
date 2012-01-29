@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 import datetime
 
 class Meshu(models.Model):
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(User, related_name="meshus")
 	date_created = models.DateTimeField('date created')	
 	title = models.CharField(max_length=140)
 	description = models.CharField(max_length=400)
@@ -14,9 +14,13 @@ class Meshu(models.Model):
 	def __unicode__(self):
 		return self.title
 
+class MeshuImage(models.Model):
+	meshu = models.ForeignKey(Meshu, related_name="images")
+	image = models.ImageField(upload_to="images")
+
 class Order(models.Model):
-	user = models.ForeignKey(User)
-	meshu = models.ForeignKey(Meshu)
+	user = models.ForeignKey(User, related_name="orders")
+	meshu = models.ForeignKey(Meshu, related_name="orders")
 
 	# order details
 	ORDER_STATUSES = (
@@ -54,6 +58,10 @@ class Order(models.Model):
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
+
+	def num_orders(self):
+		# return Order.objects.filter(user=self.user).count()
+		return self.meshus.all().count()
 	# other fields here
 
 # function to create a UserProfile whenever a new User is .save()'d

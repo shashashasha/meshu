@@ -1,5 +1,9 @@
-from meshu.models import Meshu, Order
+from meshu.models import Meshu, MeshuImage, Order
 from django.contrib import admin
+
+class MeshuImageInline(admin.TabularInline):
+	model = MeshuImage
+	extra = 2
 
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
@@ -12,6 +16,7 @@ class MeshuAdmin(admin.ModelAdmin):
 		}),
 	]
 	list_filter = ['date_created']
+	inlines = [ MeshuImageInline, ]
 
 admin.site.register(Meshu, MeshuAdmin)
 

@@ -18,7 +18,12 @@ def index(request):
 
 # meshu.views.shop
 def shop(request):
-	return render_to_response('meshu/gallery/gallery.html', {}, context_instance=RequestContext(request))
+	# assume user__id = 1 is all our admin created readymades
+	meshus = Meshu.objects.filter(user__id=1)
+	return render_to_response('meshu/gallery/gallery.html', {
+		"meshus": meshus,
+		"view": 'shop',
+	}, context_instance=RequestContext(request))
 
 #
 # Views for Items
@@ -31,22 +36,23 @@ def item_make(request):
 		}, context_instance=RequestContext(request))
 
 def item_edit(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-	return render_to_response('meshu/item/item.html', {
-			'meshu': item,
-			'view' : 'edit'
-		}, context_instance = RequestContext(request))
+	return item_handler(request, item_id, 'item.html', 'edit')
+
+def item_view(request, item_id):
+	return item_handler(request, item_id, 'item.html', 'view')
 
 def item_display(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-	return render_to_response('meshu/item/display.html', {
-			'meshu': item,
-		}, context_instance = RequestContext(request))
+	return item_handler(request, item_id, 'display.html', 'display')
 
 def item_readymade(request, item_id):
+	return item_handler(request, item_id, 'readymade.html', 'readymade')
+
+# generalized handler for all our item pages
+def item_handler(request, item_id, template, view):
 	item = get_object_or_404(Meshu, pk=item_id)
-	return render_to_response('meshu/item/readymade.html', {
+	return render_to_response('meshu/item/' + template, {
 			'meshu': item,
+			'view': view
 		}, context_instance = RequestContext(request))
 
 def item_create(request):
@@ -64,17 +70,10 @@ def item_create(request):
 		'view' : 'edit'
 	}, context_instance=RequestContext(request))
 
-def item_make_random(request):
-	# create a meshu
-	meshu = Meshu("title", "description", "data")
-	meshu.save()
 
-	return render_to_response('meshu/item/item.html', {
-		'meshu' : meshu,
-		'view' : 'edit'
-	}, context_instance=RequestContext(request))
-
-
+#
+# Views for Users
+#
 
 def user_create(request):
 	username = request.POST['username']
@@ -88,7 +87,7 @@ def user_create(request):
 	user.save()
 
 	return render_to_response('meshu/gallery/gallery.html', {
-			'view' : 'user_profile'
+			'view' : 'user'
 	}, context_instance=RequestContext(request))
 
 def user_profile(request):
@@ -96,6 +95,6 @@ def user_profile(request):
 	meshus = Meshu.objects.filter(user=request.user)
 
 	return render_to_response('meshu/gallery/gallery.html', {
-			'view' : 'user_profile',
+			'view' : 'user',
 			'meshus': meshus
 	}, context_instance=RequestContext(request))

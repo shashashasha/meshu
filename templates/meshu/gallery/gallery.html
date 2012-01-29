@@ -6,7 +6,7 @@
     <ul class="gallery">
         {% for object in meshus %}
             <li class="object">
-                <a class="image" style="backgound-image: url({{ object.image_url }});" href="/view/{{ object.id }}">
+                <a class="image" style="backgound-image: url({{ object.image_url }});" href="/{{ view }}/{{ object.id }}">
                 <div class="description">{{ object.title }}</div>
                 <div class="detail">click for more information</div>
             </li>

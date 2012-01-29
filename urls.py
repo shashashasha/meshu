@@ -34,9 +34,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^$', 'index'),
 	
 	# shopping for readymades
-	url(r'^shop/', 'shop'),
-
 	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
+	url(r'^shop/', 'shop'),
 
 	url(r'^make/', 'item_make'),
 	
@@ -47,13 +46,14 @@ urlpatterns += patterns('meshu.views',
 	# after successful meshu we create an item
 	url(r'^item/create/', 'item_create'),
 
-	url(r'^make_random/', 'item_make_random'),
-	
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'user_create'),
 
+	# users own meshus
+	url(r'^user/(?P<item_id>\d+)', 'item_view'),
+	
 	# after successful signup/login we go here
-	url(r'^user/profile/', 'user_profile'),
+	url(r'^user/', 'user_profile'),
 
 	# about page
 	url(r'^about/', direct_to_template, {
