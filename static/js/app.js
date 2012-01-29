@@ -1,13 +1,17 @@
 $(function() {
+	var views = ["edit","make","checkout"];
+	var content = $("#content");
 	// create a meshu object for every frame class div
 	$(".frame").each(function(i, e) {
 		var meshu = sb.meshu(e);
 	});
-	$("#next").click(function(){
-	    $("#content").attr("class","materials")
+	$(".next").click(function(){
+		var index = views.indexOf(content.attr("class"));
+		content.attr("class",views[index+1]);
 	});
-	$("#back").click(function(){
-	    $("#content").attr("class","edit")
+	$(".back").click(function(){
+	    var index = views.indexOf(content.attr("class"));
+		content.attr("class",views[index-1]);
 	});
 	$(".option-list li").click(function(){
 		$(this).parent().find("li").removeClass("selected");

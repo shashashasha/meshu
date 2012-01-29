@@ -11,18 +11,18 @@
         <div id="cases"></div>
         <div id="places"></div>
 
-        <div id="next">when finished, pick your material</div>
+        <div class="nav next finish">when finished, pick your material</div>
     </div>
 {% endblock %}
 
 {% block make %}
     <div id="materials">
-        <div id="back">go back</div>
+        <div class="nav back">go back</div>
         <div id="options">
             <h2>Object</h2>
             <ul class="option-list objects">
                 <li class="selected">Pair of Earrings (maximum sidelength 3")</li>
-                <li>Pendant Necklace (maximum sidelength 3")</li>
+                <li>Pendant Necklace (maximum sidelength 1.5")</li>
                 <li>Long Necklace (maximum sidelength 5")</li>
             </ul>
             <h2>Material</h2>
@@ -36,7 +36,11 @@
         <div id="total">
             <span class="total-cost">$30.00</span>
             <h2>Total</h2>
-            <div id="checkout-button">Checkout</div>
+            <div class="nav next checkout-button">Checkout</div>
         </div>
+    </div>
+    <div id="checkout">
+        <div class="nav back">back to materials</div>
+        <p>buy buy buy</p>
     </div>
 {% endblock %}

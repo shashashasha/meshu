@@ -1,12 +1,13 @@
 /*
     Mixins
 */
-.fade (@time: 1s) {
-    transition: opacity @time;
-    -moz-transition: opacity @time;
-    -webkit-transition: opacity @time;
-    -o-transition: opacity @time;
+.transition (@property: opacity, @time: 1s) {
+    transition: @property @time;
+    -moz-transition: @property @time;
+    -webkit-transition: @property @time;
+    -o-transition: @property @time;
 }
+
 @grey: #808080;
 @pink: #FF3FB4;
 @blue: #1fcaff;
@@ -69,17 +70,14 @@ h1#meshu {
 }
 .edit #edit {
     left: 0;
-    transition: left 1s;
-    -moz-transition: left 1s;
-    -webkit-transition: left 1s;
-    -o-transition: left 1s;
+    .transition(left, 1s);
 }
-.materials #edit {
+.make #edit {
     left: -400px;
-    transition: left 1s;
-    -moz-transition: left 1s;
-    -webkit-transition: left 1s;
-    -o-transition: left 1s;
+    .transition(left, 1s);
+}
+.checkout #edit {
+    left: -400px;
 }
 
 input {
@@ -141,31 +139,25 @@ input {
 }
 .edit .frame {
     right: 0;
-    transition: right 1s;
-    -moz-transition: right 1s;
-    -webkit-transition: right 1s;
-    -o-transition: right 1s;
+    .transition(right, 1s);
 }
-.materials .frame {
+.make .frame, .checkout .frame {
     right: 400px;
-    transition: right 1s;
-    -moz-transition: right 1s;
-    -webkit-transition: right 1s;
-    -o-transition: right 1s;
+    .transition(right, 1s);
+}
+
+.map .layer {
+    opacity: .25;
+    .transition(opacity, 1s);
 }
 
 .edit .map .layer {
     opacity: 1;
-    .fade;
-}
-.materials .map .layer {
-    opacity: .3;
-    .fade;
+    .transition(opacity, 1s);
 }
 
-#materials {
+#materials, #checkout {
     padding: 20px;
-    position: relative;
     width: 360px;
     min-height: 560px;
     position: absolute;
@@ -173,17 +165,24 @@ input {
 }
 .edit #materials {
     right: -400px;
-    transition: right 1s;
-    -moz-transition: right 1s;
-    -webkit-transition: right 1s;
-    -o-transition: right 1s;
+    .transition(right, 1s);
 }
-.materials #materials{
+.make #materials{
     right: 0px;
-    transition: right 1s;
-    -moz-transition: right 1s;
-    -webkit-transition: right 1s;
-    -o-transition: right 1s;
+    .transition(right, 1s);
+}
+.checkout #materials {
+    right: 400px;
+    .transition(right, 1s);
+}
+
+#checkout {
+    right: -400px;
+    .transition(right, 1s);
+}
+.checkout #checkout {
+    right: 0;
+    .transition(right, 1s);
 }
 
 #options {
@@ -220,6 +219,7 @@ input {
     color: @grey;
 }
 
+
 #total {
     display: block;
     width: 100%;
@@ -233,35 +233,35 @@ input {
     color: @grey;
 }
 
-#next, #back, #checkout-button {
+.nav {
     background-color: @pink;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
 }
-#next {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    opacity: 0;
-    .fade;
-    cursor: default;
-}
-#back {
+.back {
     background-color: @grey;
     position: absolute;
     left: 20px;
     top: 20px;
 }
-#checkout-button {
+.finish {
+    background-color: @grey;
+    .transition(background-color, 1s);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: default;
+}
+.finish.active {
+    cursor: pointer;
+    background-color: @pink;
+    .transition(background-color, 1s);
+}
+.checkout-button {
     position: relative;
     float: right;
     font-size: 20px;
-}
-#next.active {
-    opacity: 1;
-    .fade;
-    cursor: pointer;
 }
 
 /* 

@@ -40,20 +40,12 @@ sb.meshu = function(frame, width, height) {
                 }
             }
         });
-
-        // random coordinate
-        //var coords = [(Math.random() * 140) - 70, -180 + (Math.random() * 360)];
     });
 
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
         map.updateBounds(mesh.lats(), mesh.lons());
     }
-
-	// this is tied to a global output button for now
-    $("#output").click(function(){
-        $("body").append($("<div>").text(self.output()));
-    });
 
     self.locations = function(locations) {
 
