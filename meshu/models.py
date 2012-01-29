@@ -10,13 +10,15 @@ class Meshu(models.Model):
 	description = models.CharField(max_length=400)
 	points_blob = models.CharField(max_length=4000)
 	
+	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/meshu_01.png")
+
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
 		return self.title
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, related_name="images")
-	image = models.ImageField(upload_to="images")
+	image = models.ImageField(upload_to="images/meshus/")
 
 class Order(models.Model):
 	user = models.ForeignKey(User, related_name="orders")
