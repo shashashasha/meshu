@@ -41,7 +41,7 @@
             <div id="total">
                 <span id="total-cost">$50.00</span>
                 <h2>Total</h2>
-                <div class="nav next checkout-button">Checkout</div>
+                <div class="nav next checkout-button active">Checkout</div>
             </div>
         </div>
     </div>
@@ -52,46 +52,52 @@
             <form action="/item/order/" method="POST" id="payment-form">
                 {# put a csrf token in every form in django, for security #}
                 {% csrf_token %}
-                <div class="form-row">
+                <div style="display:none;">
+                    <input type="hidden" id="object-material" name="material"/>
+                    <input type="hidden" id="object-type" name="product"/>
+                    <input type="hidden" id="object-color" name="color"/>
+                    <input type="hidden" id="object-amount" name="amount"/>
+                </div>
+                <div class="form-row ship-row">
                     <label>Name</label>
-                    <input type="text" size="40" class="ship-name"/>
+                    <input type="text" size="40" id="ship-name" name="shipping_name"/>
                 </div>
-                <div class="form-row">
+                <div class="form-row ship-row">
                     <label>Address Row 1</label>
-                    <input type="text" size="40" class="ship-address-1"/>
+                    <input type="text" size="40" id="ship-add1" name="shipping_address"/>
                 </div>
-                <div class="form-row">
+                <div class="form-row ship-row">
                     <label>Address Row 2</label>
-                    <input type="text" size="40" class="ship-address-2"/>
+                    <input type="text" size="40" id="ship-add2" name="shipping_address_2"/>
                 </div>
-                <div class="form-row">
+                <div class="form-row ship-row">
                     <label>City</label>
-                    <input type="text" size="30" class="ship-city"/>
+                    <input type="text" size="30" id="ship-city" name="shipping_city"/>
                     <label>State</label>
-                    <input type="text" size="2" class="ship-state"/>
+                    <input type="text" size="2" maxlength="2" id="ship-state" name="shipping_state"/>
                 </div>
-                <div class="form-row">
+                <div class="form-row ship-row">
                     <label>Zip Code</label>
-                    <input type="text" size="5" class="ship-zip"/>
+                    <input type="text" size="5" maxlength="5" id="ship-zip" name="shipping_zip"/>
                 </div>
             <h2>Payment</h2>
                 <div class="form-row">
                     <label>Card Number</label>
-                    <input type="text" size="20" autocomplete="off" class="card-number"/>
+                    <input type="text" size="20" maxlength="16" autocomplete="off" class="card-number"/>
                 </div>
                 <div class="form-row">
                     <label>CVC</label>
-                    <input type="text" size="4" autocomplete="off" class="card-cvc"/>
+                    <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc"/>
                 </div>
                 <div class="form-row">
                     <label>Expiration (MM/YYYY)</label>
-                    <input type="text" size="2" class="card-expiry-month"/>
+                    <input type="text" size="2" maxlength="2" class="card-expiry-month"/>
                     <span> / </span>
-                    <input type="text" size="4" class="card-expiry-year"/>
+                    <input type="text" size="4" maxlength="4" class="card-expiry-year"/>
                 </div>
             </form>
         </div>
-        <div class="nav next" id="populateReview">Review Your Order</div>
+        <div class="nav next active" id="populateReview">Review Your Order</div>
     </div>
     <div id="review">
         <div class="nav back">edit information</div>
@@ -99,8 +105,9 @@
             <h2>Your Order</h2>
             <h3>Object:</h3>
             <p id="review-description"></p>
+            <p id="review-price"></p>
             <h3>Ship To:</h3>
-            <p id="review-shipping"></p>
+            <div id="review-shipping"></div>
             <h3>Payment:</h3>
             <p id="review-payment"></p>
             <button type="submit" class="submit-button">Submit Payment</button>
