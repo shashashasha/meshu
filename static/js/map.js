@@ -16,17 +16,17 @@ sb.map = function(frame, width, height) {
 	var image = po.image()
 		.url(po.url(baseURL)
 	    .hosts(["a.", "b.", "c.", ""]));
-	    
+	
+	self.dispatch = d3.dispatch("show");
+
 	self.map = po.map()
 		.container(container.appendChild(po.svg("svg")))
 		.zoom(12)
 		.center({ lat: 37.755, lon: -122.445 });
-	
+
 	self.map.add(image);
 
 	$(".map").find("rect").attr("visibility","visible").attr("fill","white");
-
-	// self.map.add(po.interact());
 
 	self.frame = function() {
 		return container;

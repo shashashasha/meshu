@@ -6,6 +6,17 @@ sb.meshu = function(frame, width, height) {
 		map = sb.map(frame, width, height),
 		mesh = sb.mesh(frame, map, width, height);
 
+    $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
+
+    $("#zoomin").mousedown(function(e) {
+        map.map.zoom(map.map.zoom() + 1);
+        mesh.refresh();
+    });
+    $("#zoomout").mousedown(function(e) {
+        map.map.zoom(map.map.zoom() - 1);
+        mesh.refresh();
+    });
+
 	// this is tied to a global submit button for now
     $("#submit").click(function(){
         var input = $("#coords").val();

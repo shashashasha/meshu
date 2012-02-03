@@ -15,12 +15,13 @@ sb.mesh = function(frame, map, width, height) {
             .attr("id","delaunay");
     
     var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;")
-        .append("svg:svg")
+        .attr("style", "position:absolute;z-index:1337;");
+
+    var svg = uiFrame.append("svg:svg")
         .attr("width", width || "600px")
         .attr("height", height || "600px");
 
-    var ui = uiFrame.append("svg:g")
+    var ui = svg.append("svg:g")
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
@@ -38,7 +39,7 @@ sb.mesh = function(frame, map, width, height) {
         moved = false,
         dragging = null;
 
-    d3.select(frame)
+    d3.select(uiFrame.node())
         .on("mousemove", mousemove)
         .on("mouseup", mouseup);
 
@@ -63,6 +64,7 @@ sb.mesh = function(frame, map, width, height) {
 
     function mouseup() {
         if (!$("#content").hasClass("edit")) return;
+
         if (!dragging) {
             var m = d3.svg.mouse(main.node());
             var loc = map.p2l({

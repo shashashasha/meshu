@@ -45,15 +45,18 @@ input {
     margin: 30px auto 0;
     position: relative;
 }
+
 h1#meshu {
     margin: 0;
 }
+
 #nav {
     position: absolute;
     bottom: 3px;
     right: 0;
     font-size: 18px;
 }
+
 #nav li {
     display: inline-block;
     margin-left: 25px;
@@ -291,7 +294,7 @@ h1#meshu {
 }
 
 /* 
-	SVG Styling
+	Map Object Styling
 */
 path {
     fill: none;
@@ -311,7 +314,29 @@ circle:hover, circle.highlight {
     cursor: pointer;
 }
 
+/* Map UI */
 
+.mapui {
+    position: absolute;
+    z-index: 1338;
+
+    div {
+        position: relative;
+        background: black;
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 5px;
+    }
+
+    div:hover {
+        pointer: cursor;
+    }
+}
+
+/*
+
+*/
 li.object {
     display: inline-block;
     border: 1px solid @grey;
