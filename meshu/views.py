@@ -8,6 +8,10 @@ from django.contrib.auth import authenticate, login
 # our models
 from meshu.models import Meshu, UserProfile
 
+# this is how i get dates. 
+import datetime
+
+# got to get paid.
 import stripe
 
 #
@@ -65,6 +69,7 @@ def item_create(request):
 
 	# create a meshu
 	meshu = Meshu(title=title, description=description, points_blob=points_blob)
+	meshu.date_created = datetime.now()
 	meshu.save()
 
 	return render_to_response('meshu/item/item.html', {
@@ -120,6 +125,20 @@ def order(request):
 	    card=token,
 	    description="hi@meshu.io"
 	)
+
+	order = Order()
+	order.shipping_name = request.POST['shipping_name']
+	order.shipping_address = request.POST['shipping_address']
+	order.shipping_address_2 = request.POST['shipping_address_2']
+	order.shipping_city = request.POST['shipping_city']
+	order.shipping_zip = request.POST['shipping_zip']
+	order.shipping_state = request.POST['shipping_state']
+
+	# mark this order as being created now
+	order.date_created = datetime.now()
+
+	# save this order to the database
+	order.save()
 
 	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'paid'

@@ -1,13 +1,14 @@
 /*
     Mixins
 */
-.transition (@property: opacity, @time: 1s) {
+.transition (@property: opacity, @time: .6s) {
     transition: @property @time;
     -moz-transition: @property @time;
     -webkit-transition: @property @time;
     -o-transition: @property @time;
 }
 
+@borderGrey: #e6e6e6;
 @grey: #808080;
 @pink: #FF3FB4;
 @blue: #1fcaff;
@@ -61,7 +62,7 @@ h1#meshu {
 #content {
     width: 1000px;
     margin: 0 auto;
-    border: 1px solid @grey;
+    border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
     overflow: hidden;
@@ -76,11 +77,11 @@ h1#meshu {
 }
 .edit #edit {
     left: 0;
-    .transition(left, 1s);
+    .transition(left);
 }
 .make #edit {
     left: -400px;
-    .transition(left, 1s);
+    .transition(left);
 }
 .checkout #edit {
     left: -400px;
@@ -149,21 +150,21 @@ h1#meshu {
 }
 .edit .frame {
     right: 0;
-    .transition(right, 1s);
+    .transition(right);
 }
 .make .frame, .checkout .frame, .review .frame {
     right: 400px;
-    .transition(right, 1s);
+    .transition(right);
 }
 
 .map .layer {
     opacity: .25;
-    .transition(opacity, 1s);
+    .transition(opacity);
 }
 
 .edit .map .layer {
     opacity: 1;
-    .transition(opacity, 1s);
+    .transition(opacity);
 }
 
 #materials, #checkout, #review {
@@ -175,24 +176,24 @@ h1#meshu {
 }
 .edit #materials {
     right: -400px;
-    .transition(right, 1s);
+    .transition(right);
 }
 .make #materials{
     right: 0px;
-    .transition(right, 1s);
+    .transition(right);
 }
 .checkout #materials, .review #materials {
     right: 400px;
-    .transition(right, 1s);
+    .transition(right);
 }
 
 #checkout {
     right: -400px;
-    .transition(right, 1s);
+    .transition(right);
 }
 .checkout #checkout {
     right: 0;
-    .transition(right, 1s);
+    .transition(right);
 }
 .review #checkout {
     right: 400px;
@@ -200,11 +201,11 @@ h1#meshu {
 }
 .edit #review, .make #review, .checkout #review {
     right: -400px;
-    .transition(right, 1s);
+    .transition(right);
 }
 .review #review {
     right: 0;
-    .transition(right, 1s);
+    .transition(right);
 }
 
 .make-wrapper {
@@ -272,7 +273,7 @@ h1#meshu {
 }
 .finish {
     background-color: @grey;
-    .transition(background-color, 1s);
+    .transition(background-color);
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -281,7 +282,7 @@ h1#meshu {
 .finish.active {
     cursor: pointer;
     background-color: @pink;
-    .transition(background-color, 1s);
+    .transition(background-color);
 }
 .checkout-button {
     position: relative;

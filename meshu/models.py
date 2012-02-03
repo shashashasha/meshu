@@ -43,7 +43,8 @@ class Order(models.Model):
 	amount = models.DecimalField(max_digits=6, decimal_places=2)
 
 	# shipping information
-	shipping_address = models.CharField(max_length=140)
+	shipping_name = models.CharField(max_length=200)
+	shipping_address = models.CharField(max_length=200)
 	shipping_address_2 = models.CharField(max_length=140)
 	shipping_city = models.CharField(max_length=100)
 	shipping_zip = models.CharField(max_length=5)
