@@ -22,6 +22,8 @@ $(function() {
 	$(".frame").each(function(i, e) {
 		var meshu = sb.meshu(e);
 	});
+
+	//navigation
 	$(".next").click(function(){
 		var index = views.indexOf(content.attr("class"));
 		content.attr("class",views[index+1]);
@@ -31,7 +33,8 @@ $(function() {
 		content.attr("class",views[index-1]);
 	});
 
-	var currentObject;
+	//materials selection
+	var currentObject, objectMaterial, objectColor;
 	$("#object-list li").click(function(){
 		currentObject = $(this).attr("id");
 		$("#material-list li").each(function(){
@@ -42,15 +45,19 @@ $(function() {
 		});
 	});
 	$("#material-list li").click(function(){
-		var material = $(this).attr("id");
+		var material = objectMaterial = $(this).attr("id");
 		$("#total-cost").text("$"+options[currentObject][material].price+".00");
 		if (options[currentObject][material].colors) {
-			var list = $("#color-list").empty().show();
+			var list = $("#color-list li").empty().show();
 			$.each(options[currentObject][material].colors, function(i, value){
-				$("<li>").text(value).addClass((i == 0) ? "selected" : "").appendTo(list);
+				$("#color-list li").eq(i).text(value).addClass((i == 0) ? "selected" : "");
 			});
 		} else $(".color-list").hide();
 	});
+	$("#color-list li").click(function(){ 
+		objectColor = $(this).text();
+	});
+
 	$(".option-list li").live("click",function(){
 		var li = $(this);
 		li.parent().find("li").removeClass("selected");
@@ -59,5 +66,10 @@ $(function() {
 	$("#object-list li:first").click();
 	$("#material-list li:first").click();
 
+	//creating the review form
+	$("#populateReview").click(function(){
+		$("#review-description").text("You want a " + objectColor + " " + currentObject + " made out of " + objectMaterial);
+		$("#review-shipping").text("Ship to: " + $(".ship-name").val());
+	})
 	
 });
