@@ -1,0 +1,31 @@
+{% extends "meshu/item/base_item.html" %}
+
+{% block title %}Meshu - Order Confirmed{% endblock %}
+
+{% block page_type %}{{ view }}{% endblock page_type %}
+
+
+{% block content %}
+	<h1 id="notification">
+		
+	</h1>
+    <script type="text/javascript">
+    	var page_name = '{{ view }}';
+    	var notification;
+
+    	switch (page_name) {
+    		case 'paid':
+    			notification = 'Awesome! Thanks for ordering!';
+    			break;
+    		case '404':
+    			notification = 'Oh, our bad.'
+    			break;
+    		default:
+    			notification = 'Default notification';
+    			break;
+    	}
+
+    	var text = document.getElementById('notification');
+    	text.innerHTML = notification;
+    </script>
+{% endblock %}

@@ -120,7 +120,7 @@ def order(request):
 	    card=token,
 	    description="hi@meshu.io"
 	)
-	
-	return render_to_response('meshu/notification/paid.html', {
+
+	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'paid'
 	}, context_instance=RequestContext(request))
