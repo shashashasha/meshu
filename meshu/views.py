@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login
 # our models
 from meshu.models import Meshu, UserProfile
 
+import stripe
+
 #
 # The views for our Meshu app
 #
@@ -97,4 +99,28 @@ def user_profile(request):
 	return render_to_response('meshu/gallery/gallery.html', {
 			'view' : 'user',
 			'meshus': meshus
+	}, context_instance=RequestContext(request))
+
+#
+# Ordering!
+#
+
+def order(request):
+	# set your secret key: remember to change this to your live secret key in production
+	# see your keys here https://manage.stripe.com/account
+	stripe.api_key = "4HpS6PRbhNrY0YBLrsGZNietuNJYjNcb" # key the binx gave
+
+	# get the credit card details submitted by the form
+	token = request.POST['stripeToken']
+
+	# create the charge on Stripe's servers - this will charge the user's card
+	charge = stripe.Charge.create(
+	    amount=1000, # amount in cents, again
+	    currency="usd",
+	    card=token,
+	    description="hi@meshu.io"
+	)
+	
+	return render_to_response('meshu/notification/paid.html', {
+			'view' : 'paid'
 	}, context_instance=RequestContext(request))

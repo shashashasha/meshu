@@ -46,6 +46,8 @@ urlpatterns += patterns('meshu.views',
 	# after successful meshu we create an item
 	url(r'^item/create/', 'item_create'),
 
+	url(r'^item/order/', 'order'),
+
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'user_create'),
 

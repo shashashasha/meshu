@@ -71,7 +71,9 @@
                 </div>
             </form>
             <h2>Payment</h2>
-            <form action="" method="POST" id="payment-form">
+            <form action="/item/order/" method="POST" id="payment-form">
+                {# put a csrf token in every form in django, for security #}
+                {% csrf_token %}
                 <div class="form-row">
                     <label>Card Number</label>
                     <input type="text" size="20" autocomplete="off" class="card-number"/>

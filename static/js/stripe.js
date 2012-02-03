@@ -1,6 +1,7 @@
 Stripe.setPublishableKey('pk_9Lu9WnR6pvkYDKKXFFH5UFF31vQzH');
 
 function stripeResponseHandler(status, response) {
+    console.log(status, response);
     if (response.error) {
         // re-enable the submit button
         $('.submit-button').removeAttr("disabled");
@@ -17,6 +18,7 @@ function stripeResponseHandler(status, response) {
     }
 }
 
+// test card 4242424242424242
 $(document).ready(function() {
     $("#payment-form").submit(function(event) {
         // disable the submit button to prevent repeated clicks
