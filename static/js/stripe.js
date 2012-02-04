@@ -20,6 +20,7 @@ function stripeResponseHandler(status, response) {
 
 // test card 4242424242424242
 $(document).ready(function() {
+    $(".submit-button").click(function(){ $("#payment-form").submit(); })
     $("#payment-form").submit(function(event) {
         // disable the submit button to prevent repeated clicks
         $('.submit-button').attr("disabled", "disabled");

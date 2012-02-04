@@ -245,6 +245,14 @@ h1#meshu {
     color: @grey;
 }
 
+#review h3 {
+    margin: 1.5em 0 .5em 0;
+}
+
+#review p{
+    margin: .25em 0;
+}
+
 
 #total {
     display: block;
@@ -263,20 +271,22 @@ h1#meshu {
 }
 
 .nav {
-    background-color: @pink;
+    background-color: @grey;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
+    .transition(background-color, 1s);
+}
+.nav.active {
+    background-color: @pink;
+    .transition(background-color, 1s);
 }
 .back {
-    background-color: @grey;
     position: absolute;
     left: 20px;
     top: 20px;
 }
 .finish {
-    background-color: @grey;
-    .transition(background-color);
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -284,8 +294,6 @@ h1#meshu {
 }
 .finish.active {
     cursor: pointer;
-    background-color: @pink;
-    .transition(background-color);
 }
 .checkout-button {
     position: relative;
