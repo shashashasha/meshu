@@ -143,7 +143,7 @@ $(function() {
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
-		$("#svg-file").val(delaunay.parent());
+		$("#svg-file").val(delaunay.parent().html());
 		$("#svg-theta").val(rotation);
 		$("#meshu-data").val(dataString);
 
