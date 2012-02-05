@@ -17,7 +17,7 @@ $(function() {
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
-	var delaunay = $("#delaunay");
+	var delaunay;
 	var rotation = 0;
 
 	// create a meshu object for every frame class div
@@ -31,6 +31,7 @@ $(function() {
 		main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 		var div = main.append("svg:g").attr("id","transform")
 					.attr("transform","scale(.2) translate(200,200)");
+		delaunay = $("#delaunay");
 		var miniDelaunay = delaunay.clone().attr("id","mini-delaunay");
 		var bounding = $("#hidden").clone().attr("id","rotate-ui");
 		$("#transform").append(miniDelaunay).append(bounding);
