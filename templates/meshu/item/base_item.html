@@ -31,14 +31,17 @@
 {% endblock %}
 
 {% block resources %}
-    {% if meshu %}
     <script type="text/javascript">
+    {% if meshu %}
         var loadedMeshu = {
             user: '{{ meshu.user_profile.user.username }}',
             title: '{{ meshu.title }}',
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
         };
-    </script>
+    {% else %} 
+        var loadedMeshu = null;
     {% endif %}
+    </script>
+    
 {% endblock %}
