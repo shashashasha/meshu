@@ -53,6 +53,7 @@ $(function() {
 			var end = Math.sqrt(Math.pow(endX,2)+Math.pow(endY,2));
 			theta =  Math.acos((startX*endX + startY*endY)/(start*end)) * 180/Math.PI;
 			rotation = ccw ? (rotation - theta) % 360 : (rotation + theta) % 360;
+			if (isNaN(rotation)) rotation = 0;
 			startX = endX, startY = endY;
 			div.attr("transform","scale(.2) translate(200,200) rotate("+(rotation)+",300,300)");
 		}
