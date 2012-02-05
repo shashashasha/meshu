@@ -4,7 +4,8 @@
     <div id="edit">
         <div id="search">
             <h2>Search</h2>
-            <input type="text" id="coords" size="35" value="add a city, place, or address" onfocus="value=''"/>
+            <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
+                onfocus="value=''"/>
             <div id="submit" class="button">search</div>
         </div>
         <div id="cases"></div>
@@ -49,7 +50,7 @@
             <div id="total">
                 <span id="total-cost">$50.00</span>
                 <h2>Total</h2>
-                <div class="nav next checkout-button active">Checkout</div>
+                <div id="checkout-button" class="nav next active">Checkout</div>
             </div>
         </div>
     </div>
@@ -108,7 +109,7 @@
                 </div>
             </form>
         </div>
-        <div class="nav next active" id="populateReview">Review Your Order</div>
+        <div class="nav next active" id="review-button">Review Your Order</div>
     </div>
     <div id="review">
         <div class="nav back">edit information</div>

@@ -114,7 +114,7 @@ $(function() {
 		if (options[objectType][material].colors) {
 			var list = $("#color-list li").empty().show();
 			$.each(options[objectType][material].colors, function(i, value){
-				$("#color-list li").eq(i).text(value).addClass((i == 0) ? "selected" : "");
+				$("#color-list li").eq(i).text(value);
 			});
 		} else {
 			objectColor = "";
@@ -135,8 +135,8 @@ $(function() {
 	$("#color-list li:first").click();
 
 	//creating the review form
-	$("#populateReview").click(function(){
-
+	$("#review-button").click(function(){
+		
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
@@ -151,7 +151,7 @@ $(function() {
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
-		$("#shipping-review").empty();
+		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){
 			$("<p>").text($(this).val()).appendTo("#review-shipping");
 		});
