@@ -6,7 +6,7 @@
 
 {% block content %}
     {% block display %}
-        <div class="frame"></div>
+        <div id="meshu-container" class="frame"></div>
     {% endblock %}
 
     {% block edit %}
@@ -18,13 +18,27 @@
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+{% endblock %}
+
+{% block resources %}
+    {% if meshu %}
+    <script type="text/javascript">
+        var loadedMeshu = {
+            user: '{{ meshu.user_profile.user.username }}',
+            title: '{{ meshu.title }}',
+            location_data: '{{ meshu.location_data }}',
+            svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
+        };
+    </script>
+    {% endif %}
 {% endblock %}

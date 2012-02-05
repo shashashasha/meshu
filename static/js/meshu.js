@@ -77,9 +77,43 @@ sb.meshu = function(frame, width, height) {
         // mesh.refresh();
     };
 
-    // output the contents of our mesh
-    self.output = function() {
+    self.locationData = function(data) {
+        var locations = data.split('|');
+        var newLocs = [];
+
+        for (var i = 0; i < locations.length; i++) {
+            var values = locations[i].split('\t');
+
+            newLocs.push({
+                lat: parseFloat(values[0]),
+                lon: parseFloat(values[1]),
+                name: values[2]
+            });
+        }
+
+        mesh.locations(newLocs);
+        map.updateBounds(mesh.lats(), mesh.lons());
+        mesh.refresh();
+        return self;
+    };
+
+    // output the contents of our mesh as svg
+    self.outputSVG = function() {
     	return mesh.output();
+    };
+
+    self.outputLocationData = function() {
+        var dataString = "";
+        var cp = mesh.places(),
+            clats = mesh.lats(),
+            clons = mesh.lons();
+
+        $.each(places, function(i){
+            var dataPoint = clats[i] + "\t" + clons[i] + "\t" + cp[i] + "|";
+            dataString += dataPoint;
+        });
+
+        return dataString;
     };
 
 	return self;

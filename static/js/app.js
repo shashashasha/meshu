@@ -17,23 +17,25 @@ $(function() {
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
-	var delaunay;
 	var rotation = 0;
 
-	// create a meshu object for every frame class div
-	$(".frame").each(function(i, e) {
-		var meshu = sb.meshu(e);
-	});
+	// create a meshu object for a single meshu container
+	var meshu = sb.meshu($("#meshu-container")[0]);
+	if (loadedMeshu) {
+		meshu.locationData(loadedMeshu.location_data);
+	}
 
 	$("#finish").live("click",function(){
 		$("#rotate").empty();
 		var main = d3.select("#rotate");
 		main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
-		var div = main.append("svg:g").attr("id","transform")
+		var div = main.append("svg:g")
+					.attr("id","transform")
 					.attr("transform","scale(.2) translate(200,200)");
-		delaunay = $("#delaunay");
-		var miniDelaunay = delaunay.clone().attr("id","mini-delaunay");
+
+		var miniDelaunay = $("#delaunay").clone().attr("id","mini-delaunay");
 		var bounding = $("#hidden").clone().attr("id","rotate-ui");
+
 		$("#transform").append(miniDelaunay).append(bounding);
 		d3.selectAll("circle.hidden").on("mousedown",mousemove);
 		main.on("mouseup",mouseup).on("mousemove",mainmove);
@@ -65,25 +67,25 @@ $(function() {
 	          d3.event.stopPropagation();
 	        }
 		}
-	});
-
-	function clockize(x1, y1, x2, y2) {
-		if (x2 > x1) {
-			if (y1 > 0 && y2 > 0) return true;
-			else return false;
-		} else if (x2 < x1) {
-			if (y1 < 0 && y2 < 0) return true;
-			else return false;
-		} else {
-			if (y2 < y1){
-				if (x1 > 0) return true;
-				else return false
-			} else {
-				if (x1 < 0) return true;
+			
+		function clockize(x1, y1, x2, y2) {
+			if (x2 > x1) {
+				if (y1 > 0 && y2 > 0) return true;
 				else return false;
+			} else if (x2 < x1) {
+				if (y1 < 0 && y2 < 0) return true;
+				else return false;
+			} else {
+				if (y2 < y1){
+					if (x1 > 0) return true;
+					else return false
+				} else {
+					if (x1 < 0) return true;
+					else return false;
+				}
 			}
 		}
-	}
+	});
 
 	//navigation
 	$(".next").click(function(){
@@ -134,23 +136,17 @@ $(function() {
 
 	//creating the review form
 	$("#populateReview").click(function(){
-		var dataString = "";
-		$.each(places, function(i){
-			var dataPoint = lats[i] + "\t" + lons[i] + "\t" + places[i] + "\n";
-			dataString += dataPoint;
-		});
 
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
 		
-		// serializing svg
-		var serializedSVG = $("#delaunay").parent().parent().html();
-		$("#svg-file").val(serializedSVG);
-
 		$("#svg-theta").val(rotation);
-		$("#meshu-data").val(dataString);
+
+		// outputting meshu data
+		$("#svg-file").val(meshu.outputSVG());
+		$("#meshu-data").val(meshu.outputLocationData());
 
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");

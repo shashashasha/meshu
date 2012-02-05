@@ -276,6 +276,7 @@ sb.mesh = function(frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
+
         if (points.length > 3) $("#finish").addClass("active");
         else $("#finish").removeClass("active");
 
@@ -335,6 +336,7 @@ sb.mesh = function(frame, map, width, height) {
         update();
     };
 
+    // outputs svg data
     self.output = function() {
     	return $('#' + selfId).html();
     };
