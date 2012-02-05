@@ -151,7 +151,7 @@ def order(request):
 	order.product = request.POST['product']
 
 	# stripe uses cents, which makes none
-	order.amount = float(request.POST['amount']) / 100.0
+	order.amount = str(float(request.POST['amount']) / 100.0)
 
 	# set the status to ORDERED
 	order.status = 'OR'
