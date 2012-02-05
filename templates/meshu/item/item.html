@@ -10,7 +10,7 @@
         <div id="cases"></div>
         <div id="places"></div>
 
-        <div class="nav next finish">when finished, pick your material</div>
+        <div id="finish" class="nav next">when finished, pick your material</div>
     </div>
 {% endblock %}
 
@@ -24,20 +24,25 @@
                 <li id="smallNecklace">Pendant Necklace (maximum sidelength 2")</li>
                 <li id="largeNecklace">Long Necklace (maximum sidelength 4")</li>
             </ul>
-            <h2>Material</h2>
-            <ul id="material-list" class="option-list">
-                <li id="nylon">Nylon<span class="price"></span></li>
-                <li id="silver">Silver<span class="price"></span></li>
-                <li id="wood">Wood<span class="price"></span></li>
-                <li id="acrylic">Acrylic<span class="price"></span></li>
-            </ul>
-            <h2>Color</h2>
-            <ul id="color-list" class="option-list">
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-
+            <svg id="rotate">
+            </svg>
+            <div class="left-div">
+                <h2>Material</h2>
+                <ul id="material-list" class="option-list">
+                    <li id="nylon">Nylon</li>
+                    <li id="silver">Silver</li>
+                    <li id="wood">Wood</li>
+                    <li id="acrylic">Acrylic</li>
+                </ul>
+            </div>
+            <div class="right-div">
+                <h2>Color</h2>
+                <ul id="color-list" class="option-list">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
             <div id="total">
                 <span id="total-cost">$50.00</span>
                 <h2>Total</h2>

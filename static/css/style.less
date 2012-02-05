@@ -170,6 +170,21 @@ h1#meshu {
     .transition(opacity);
 }
 
+.right-div, .left-div{
+    position: absolute;
+}
+.left-div{
+    top: 290px;
+}
+.right-div {
+    left: 200px;
+    top: 292px;
+}
+#rotate {
+    width: 200px;
+    height: 200px;
+}
+
 #materials, #checkout, #review {
     padding: 20px;
     width: 360px;
@@ -213,6 +228,7 @@ h1#meshu {
 
 .make-wrapper {
     margin-top: 40px;
+    position: relative;
 }
 .make-wrapper h2 {
     margin: 20px 0 10px 0;
@@ -260,6 +276,8 @@ h1#meshu {
     border-top: 1px solid black;
     margin-top: 40px;
     padding-top: 10px;
+    position: absolute;
+    top: 400px;
 }
 #total-cost {
     float: right;
@@ -274,26 +292,23 @@ h1#meshu {
     background-color: @grey;
     color: white;
     padding: 5px 10px;
-    cursor: pointer;
     .transition(background-color, 1s);
 }
 .nav.active {
     background-color: @pink;
     .transition(background-color, 1s);
+    cursor: pointer;
 }
 .back {
     position: absolute;
     left: 20px;
     top: 20px;
 }
-.finish {
+#finish {
     position: absolute;
     bottom: 20px;
     right: 20px;
     cursor: default;
-}
-.finish.active {
-    cursor: pointer;
 }
 .checkout-button {
     position: relative;
@@ -320,6 +335,18 @@ circle {
 circle:hover, circle.highlight {
     fill-opacity: 1;
     cursor: pointer;
+}
+#hidden, #rotate-ui {
+    display: none;
+}
+#rotate:hover #rotate-ui {
+    display: block;
+}
+#rotate-ui circle {
+    fill-opacity: 1;
+}
+#rotate-ui path {
+    stroke: #999;
 }
 
 /* Map UI */

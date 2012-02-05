@@ -13,6 +13,10 @@ sb.mesh = function(frame, map, width, height) {
 
     var g = main.append("svg:g")
             .attr("id","delaunay");
+
+    var hidden = main.append("svg:g")
+                 .attr("id","hidden");
+        hidden.append("svg:path");
     
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:1337;");
@@ -29,11 +33,12 @@ sb.mesh = function(frame, map, width, height) {
     var list = placeList.append("ul");
                 
 
-    var points = [], 
-    	lats = [], 
+    var points = [],
+        lats = [], 
     	lons = [],
         places = [],
     	new_pt = [],
+        pixel_bounds = {},
     	updateInterval = 0,
         selected = null,
         moved = false,
@@ -129,6 +134,7 @@ sb.mesh = function(frame, map, width, height) {
                 } 
                 return "M" + draw.join("L") + "Z"; 
             });
+
         // we move the newest point closer and closer to its destination
         if (new_pt) {
             var last = points[points.length-1];
@@ -214,6 +220,24 @@ sb.mesh = function(frame, map, width, height) {
                 return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
             }
         });
+
+        var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
+        rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
+        rotate_pts.attr("cx",function(d,i){
+                return d.x;
+            }).attr("cy",function(d,i){
+                return d.y;
+            });
+        var bounding_box = hidden.select("path");
+        bounding_box.attr("d",function(){
+            if (!pixel_bounds.length) return;
+            var draw = [];
+            $.each(pixel_bounds, function(i,p){
+                draw.push([p.x,p.y]);
+            })
+            return "M" + draw.join("L") + "Z"; 
+        })
+
         updateMesh();
     };
 
@@ -239,6 +263,10 @@ sb.mesh = function(frame, map, width, height) {
         	// make the new point start from the last location
             var last = points[points.length-1];
             points.push([last[0], last[1]]);
+            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
             update();
 
             // animate the new point in place
@@ -247,8 +275,8 @@ sb.mesh = function(frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
-        if (points.length > 3) $(".finish").addClass("active");
-        else $(".finish").removeClass("active");
+        if (points.length > 3) $("#finish").addClass("active");
+        else $("#finish").removeClass("active");
 
         return self;
     };
