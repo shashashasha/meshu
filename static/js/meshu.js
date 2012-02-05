@@ -6,6 +6,7 @@ sb.meshu = function(frame, width, height) {
 		map = sb.map(frame, width, height),
 		mesh = sb.mesh(frame, map, width, height);
 
+    // need to make these controls optional....
     $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
 
     $("#zoomin").mousedown(function(e) {

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 # our models
-from meshu.models import Meshu, UserProfile
+from meshu.models import Meshu, Order, UserProfile
 
 # this is how i get dates. 
 import datetime
@@ -93,8 +93,8 @@ def user_create(request):
 	user.is_staff = False
 	user.save()
 
-	return render_to_response('meshu/gallery/gallery.html', {
-			'view' : 'user'
+	return render_to_response('meshu/notification/base_notification.html', {
+			'view' : 'signedup'
 	}, context_instance=RequestContext(request))
 
 def user_profile(request):
@@ -134,8 +134,20 @@ def order(request):
 	order.shipping_zip = request.POST['shipping_zip']
 	order.shipping_state = request.POST['shipping_state']
 
-	# mark this order as being created now
-	order.date_created = datetime.now()
+	# assign it to the logged in user if there is one
+	if request.user.is_authenticated():
+		order.user = request.user.get_profile()
+	else:
+		order.user = UserProfile.objects.get(id=1)
+
+	# set the meshu materials
+	order.material = request.POST['material']
+	order.color = request.POST['color']
+	order.product = request.POST['product']
+	order.amount = float(request.POST['amount']) / 100.0
+
+	# set the status to ORDERED
+	order.status = 'OR'
 
 	# save this order to the database
 	order.save()

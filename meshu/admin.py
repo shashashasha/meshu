@@ -1,24 +1,28 @@
-from meshu.models import Meshu, MeshuImage, Order
+from meshu.models import Meshu, MeshuImage, UserProfile, Order
 from django.contrib import admin
 
 class MeshuImageInline(admin.TabularInline):
 	model = MeshuImage
 	extra = 2
 
+class MeshuInline(admin.TabularInline):
+	model = Meshu
+	extra = 1
+
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {
             'fields': ('user', 'title', 'description', 'points_blob')
         }),
-		('Date information', {
-			'classes': ['collapse'],
-			'fields': ['date_created']
-		}),
 	]
-	list_filter = ['date_created']
 	inlines = [ MeshuImageInline, ]
 
 admin.site.register(Meshu, MeshuAdmin)
+
+class OrderInline(admin.StackedInline):
+	model = Order
+	raw_id_fields = ("user",)
+	extra = 0
 
 class OrderAdmin(admin.ModelAdmin):
 	fieldsets = [
@@ -26,7 +30,7 @@ class OrderAdmin(admin.ModelAdmin):
 			'fields': ('user', 'meshu', 'product', 'material', 'color')
 		}),
 		('Order Details', {
-			'fields': ('status', 'amount', 'date_created')
+			'fields': ('status', 'amount')
 		}),
 		('Shipping Information', {
 			'classes': ['collapse'],
@@ -35,3 +39,8 @@ class OrderAdmin(admin.ModelAdmin):
 	]
 
 admin.site.register(Order, OrderAdmin)
+
+class UserProfileAdmin(admin.ModelAdmin):
+	inlines = [OrderInline]
+
+admin.site.register(UserProfile, UserProfileAdmin)

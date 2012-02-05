@@ -3,11 +3,36 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 import datetime
 
+# Create your models here.
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, default=1)
+
+	def num_orders(self):
+		# return Order.objects.filter(user=self.user).count()
+		return self.meshu_set.all().count()
+
+	# other fields here
+	def __unicode__(self):
+		details = ''
+		details += self.user.username
+		details += ', ' + str(self.meshu_set.all().count()) + ' meshus'
+		details += ', ' + str(self.order_set.all().count()) + ' orders'
+		return details
+
+# function to create a UserProfile whenever a new User is .save()'d
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        profile = UserProfile.objects.create(user=instance)
+        profile.save()
+
+post_save.connect(create_user_profile, sender=User)
+
+
 class Meshu(models.Model):
-	user = models.ForeignKey(User, related_name="meshus")
-	date_created = models.DateTimeField('date created')	
-	title = models.CharField(max_length=140)
-	description = models.CharField(max_length=400)
+	user = models.ForeignKey(UserProfile, null=True)
+	date_created = models.DateTimeField('date created', auto_now_add=True)	
+	title = models.CharField(max_length=140, blank=True)
+	description = models.CharField(max_length=400, blank=True)
 	points_blob = models.CharField(max_length=4000)
 	
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/meshu_01.png")
@@ -17,12 +42,22 @@ class Meshu(models.Model):
 		return self.title
 
 class MeshuImage(models.Model):
-	meshu = models.ForeignKey(Meshu, related_name="images")
+	meshu = models.ForeignKey(Meshu, default=1)
 	image = models.ImageField(upload_to="images/meshus/")
 
+# class ShippingInfo(models.Model):
+# 	name = models.CharField(max_length=200, default='')
+# 	email = models.CharField(max_length=100, default='')
+
+# 	address = models.CharField(max_length=200, default='')
+# 	address_2 = models.CharField(max_length=140, default='')
+# 	city = models.CharField(max_length=100, default='')
+# 	zip = models.CharField(max_length=5, default='')
+# 	state = models.CharField(max_length=2, default='')
+
 class Order(models.Model):
-	user = models.ForeignKey(User, related_name="orders")
-	meshu = models.ForeignKey(Meshu, related_name="orders")
+	user = models.ForeignKey(UserProfile, default=1)
+	meshu = models.ForeignKey(Meshu, default=1)
 
 	# order details
 	ORDER_STATUSES = (
@@ -33,43 +68,27 @@ class Order(models.Model):
 		(u'PA', u'Packaged'), # 
 		(u'SH', u'Shipped'),
 	)
-	date_created = models.DateTimeField('date created')	
-	status = models.CharField(max_length=2, choices=ORDER_STATUSES)
+	date_created = models.DateTimeField('date created', auto_now_add=True)	
+	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='OR')
 
 	# order information
 	material = models.CharField(max_length=140) # acrylic, silver, wood
-	color = models.CharField(max_length=140) # black, white, grey
+	color = models.CharField(max_length=140, blank=True) # black, white, grey
 	product = models.CharField(max_length=140) # necklace, pendant, etc
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
+	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
 	# shipping information
-	shipping_name = models.CharField(max_length=200)
-	shipping_address = models.CharField(max_length=200)
-	shipping_address_2 = models.CharField(max_length=140)
-	shipping_city = models.CharField(max_length=100)
-	shipping_zip = models.CharField(max_length=5)
-	shipping_state = models.CharField(max_length=2)
+	shipping_name = models.CharField(max_length=200, default='')
+	shipping_address = models.CharField(max_length=200, default='')
+	shipping_address_2 = models.CharField(max_length=140, default='')
+	shipping_city = models.CharField(max_length=100, default='')
+	shipping_zip = models.CharField(max_length=5, default='')
+	shipping_state = models.CharField(max_length=2, default='')
 
-	# "Black Acrylic Necklace ordered by Sha, "
+	# "Black Acrylic Necklace ordered by Sha, $60.00"
 	def __unicode__(self):
 		strings = [self.color, self.material, self.product]
 		details = ' '.join(strings)
-		details += ' ordered by ' + self.user.username
+		details += ' ordered by ' + self.user.user.username
 		details += ', $' + str(self.amount)
 		return details
-
-# Create your models here.
-class UserProfile(models.Model):
-	user = models.OneToOneField(User)
-
-	def num_orders(self):
-		# return Order.objects.filter(user=self.user).count()
-		return self.meshus.all().count()
-	# other fields here
-
-# function to create a UserProfile whenever a new User is .save()'d
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-
-post_save.connect(create_user_profile, sender=User)
