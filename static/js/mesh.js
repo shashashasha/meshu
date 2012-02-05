@@ -206,6 +206,7 @@ sb.mesh = function(frame, map, width, height) {
 
         names.select(".delete").on("click",function(d,i){
             self.remove(i);
+            updatePixelBounds();
             map.updateBounds(lats, lons);
             update();
         });
