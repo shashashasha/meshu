@@ -99,7 +99,7 @@ def user_create(request):
 
 def user_profile(request):
 	# show all meshus belonging to the current user
-	meshus = Meshu.objects.filter(user=request.user)
+	meshus = Meshu.objects.filter(user_profile=request.user.get_profile())
 
 	return render_to_response('meshu/gallery/gallery.html', {
 			'view' : 'user',
@@ -126,7 +126,18 @@ def order(request):
 	    description="hi@meshu.io"
 	)
 
+	# create a new meshu
+	# add logic later if it's not new, ie readymade
+	meshu = Meshu()
+	meshu.location_data = request.POST['location_data']	
+	meshu.svg = request.POST['svg']
+	meshu.theta = int(float(request.POST['theta']))
+
+	# create a new order
+	# every order is new
 	order = Order()
+
+	# store the shipping address information
 	order.shipping_name = request.POST['shipping_name']
 	order.shipping_address = request.POST['shipping_address']
 	order.shipping_address_2 = request.POST['shipping_address_2']
@@ -134,23 +145,34 @@ def order(request):
 	order.shipping_zip = request.POST['shipping_zip']
 	order.shipping_state = request.POST['shipping_state']
 
-	# assign it to the logged in user if there is one
-	if request.user.is_authenticated():
-		order.user = request.user.get_profile()
-	else:
-		order.user = UserProfile.objects.get(id=1)
-
 	# set the meshu materials
 	order.material = request.POST['material']
 	order.color = request.POST['color']
 	order.product = request.POST['product']
+
+	# stripe uses cents, which makes none
 	order.amount = float(request.POST['amount']) / 100.0
 
 	# set the status to ORDERED
 	order.status = 'OR'
 
-	# save this order to the database
+
+	# assign it to the logged in user if there is one
+	if request.user.is_authenticated():
+		profile = request.user.get_profile()
+		meshu.user_profile = profile
+		order.user_profile = profile
+		order.contact = request.user.email
+	else:
+		profile = UserProfile.objects.get(id=1)
+		meshu.user_profile = profile
+		order.user_profile = profile
+		order.contact = request.POST['shipping_contact']
+
+
+	# save these to the database
 	order.save()
+	meshu.save()
 
 	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'paid'

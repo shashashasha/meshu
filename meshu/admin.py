@@ -1,6 +1,7 @@
 from meshu.models import Meshu, MeshuImage, UserProfile, Order
 from django.contrib import admin
 
+# How Meshus are displayed
 class MeshuImageInline(admin.TabularInline):
 	model = MeshuImage
 	extra = 2
@@ -12,25 +13,26 @@ class MeshuInline(admin.TabularInline):
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {
-            'fields': ('user', 'title', 'description', 'points_blob')
+            'fields': ('user_profile', 'title', 'description', 'location_data', 'svg')
         }),
 	]
 	inlines = [ MeshuImageInline, ]
 
 admin.site.register(Meshu, MeshuAdmin)
 
+# How Orders are displayed
 class OrderInline(admin.StackedInline):
 	model = Order
-	raw_id_fields = ("user",)
+	raw_id_fields = ("user_profile",)
 	extra = 0
 
 class OrderAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Order', {
-			'fields': ('user', 'meshu', 'product', 'material', 'color')
+			'fields': ('user_profile', 'meshu', 'product', 'material', 'color')
 		}),
 		('Order Details', {
-			'fields': ('status', 'amount')
+			'fields': ('status', 'amount', 'contact')
 		}),
 		('Shipping Information', {
 			'classes': ['collapse'],

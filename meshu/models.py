@@ -29,34 +29,33 @@ post_save.connect(create_user_profile, sender=User)
 
 
 class Meshu(models.Model):
-	user = models.ForeignKey(UserProfile, null=True)
+	user_profile = models.ForeignKey(UserProfile, default=1, null=True)
 	date_created = models.DateTimeField('date created', auto_now_add=True)	
-	title = models.CharField(max_length=140, blank=True)
+	title = models.CharField(max_length=140, default='My Meshu', blank=True)
 	description = models.CharField(max_length=400, blank=True)
-	points_blob = models.CharField(max_length=4000)
+
+	# tab separated list of locations
+	location_data = models.TextField(blank=True)
+
+	# svg of the meshu
+	svg = models.TextField(blank=True)
+
+	# rotation angle, around the center
+	theta = models.IntegerField(default=0, blank=True)
 	
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/meshu_01.png")
 
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
-		return self.title
+		return self.title + ' by ' + self.user_profile.user.username
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
 	image = models.ImageField(upload_to="images/meshus/")
 
-# class ShippingInfo(models.Model):
-# 	name = models.CharField(max_length=200, default='')
-# 	email = models.CharField(max_length=100, default='')
-
-# 	address = models.CharField(max_length=200, default='')
-# 	address_2 = models.CharField(max_length=140, default='')
-# 	city = models.CharField(max_length=100, default='')
-# 	zip = models.CharField(max_length=5, default='')
-# 	state = models.CharField(max_length=2, default='')
 
 class Order(models.Model):
-	user = models.ForeignKey(UserProfile, default=1)
+	user_profile = models.ForeignKey(UserProfile, default=1)
 	meshu = models.ForeignKey(Meshu, default=1)
 
 	# order details
@@ -71,11 +70,14 @@ class Order(models.Model):
 	date_created = models.DateTimeField('date created', auto_now_add=True)	
 	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='OR')
 
+	# order status email address
+	contact = models.CharField(max_length=200, default='')
+
 	# order information
 	material = models.CharField(max_length=140) # acrylic, silver, wood
 	color = models.CharField(max_length=140, blank=True) # black, white, grey
 	product = models.CharField(max_length=140) # necklace, pendant, etc
-	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
 
 	# shipping information
 	shipping_name = models.CharField(max_length=200, default='')
@@ -89,6 +91,6 @@ class Order(models.Model):
 	def __unicode__(self):
 		strings = [self.color, self.material, self.product]
 		details = ' '.join(strings)
-		details += ' ordered by ' + self.user.user.username
+		details += ' ordered by ' + self.user_profile.user.username
 		details += ', $' + str(self.amount)
 		return details
