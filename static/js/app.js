@@ -17,7 +17,7 @@ $(function() {
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
-	var delaunay;
+	var delaunay = $("#delaunay");
 	var rotation = 0;
 
 	// create a meshu object for every frame class div
@@ -31,9 +31,9 @@ $(function() {
 		main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 		var div = main.append("svg:g").attr("id","transform")
 					.attr("transform","scale(.2) translate(200,200)");
-		delaunay = $("#delaunay").clone().attr("id","mini-delaunay");
+		var miniDelaunay = delaunay.clone().attr("id","mini-delaunay");
 		var bounding = $("#hidden").clone().attr("id","rotate-ui");
-		$("#transform").append(delaunay).append(bounding);
+		$("#transform").append(miniDelaunay).append(bounding);
 		d3.selectAll("circle.hidden").on("mousedown",mousemove);
 		main.on("mouseup",mouseup).on("mousemove",mainmove);
 		var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
@@ -143,9 +143,12 @@ $(function() {
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
+		
+		// serializing svg
 		console.log(delaunay.parent().parent()[0].innerHTML);
 		console.log($("#delaunay").parent().parent().html());
 		$("#svg-file").val(delaunay.parent().parent()[0].innerHTML);
+
 		$("#svg-theta").val(rotation);
 		$("#meshu-data").val(dataString);
 

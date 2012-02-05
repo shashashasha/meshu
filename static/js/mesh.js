@@ -11,6 +11,7 @@ sb.mesh = function(frame, map, width, height) {
         .attr("id", selfId)
         .attr("style", "position:absolute;z-index:100;")
         .append("svg:svg")
+        .attr("id","master-svg")
         .attr("width", $(frame).width())
         .attr("height", $(frame).height());
 
