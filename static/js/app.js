@@ -15,7 +15,8 @@ $(function() {
 						"nylon":{"price":"70","colors":["Black","Grey","White"]},
 						"silver":{"price":"140"}}};
 	
-	var views = ["edit","make","checkout","review"];
+	var views = ["edit","make","checkout","review"],
+		patternNames = ["amber,blonde,silver"];
 	var content = $("#content");
 	var delaunay;
 	var rotation = 0;
@@ -35,6 +36,16 @@ $(function() {
 		var miniDelaunay = delaunay.clone().attr("id","mini-delaunay");
 		var bounding = $("#hidden").clone().attr("id","rotate-ui");
 		$("#transform").append(miniDelaunay).append(bounding);
+
+// this is where pattern support would be put in, it's spec'd out now but needs images and logic
+		var patternGroup = main.append("svg:g").attr("id","patterns");
+		var patterns = patternGroup.selectAll("pattern").data(patternNames);
+			patterns.enter()
+				.append("svg:pattern")
+				.append("svg:image")
+					.attr("id",function(d){ return "pattern-"+d; })
+					.attr("xlink:href",function(d){ return "url(../../static/images/patterns/"+d+".png)"; });
+
 		d3.selectAll("circle.hidden").on("mousedown",mousemove);
 		main.on("mouseup",mouseup).on("mousemove",mainmove);
 		var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
@@ -110,13 +121,14 @@ $(function() {
 		var material = objectMaterial = $(this).attr("id");
 		$("#total-cost").text("$"+options[objectType][material].price+".00");
 		if (options[objectType][material].colors) {
-			var list = $("#color-list li").empty().show();
+			$(".right-div").slideDown();
+			var list = $("#color-list li").empty();
 			$.each(options[objectType][material].colors, function(i, value){
 				$("#color-list li").eq(i).text(value);
 			});
 		} else {
 			objectColor = "";
-			$(".color-list").hide()
+			$(".right-div").slideUp()
 		}
 	});
 	$("#color-list li").click(function(){ 
