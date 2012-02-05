@@ -145,9 +145,8 @@ $(function() {
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
 		
 		// serializing svg
-		console.log(delaunay.parent().parent()[0].innerHTML);
-		console.log($("#delaunay").parent().parent().html());
-		$("#svg-file").val(delaunay.parent().parent()[0].innerHTML);
+		var serializedSVG = $("#delaunay").parent().parent().html();
+		$("#svg-file").val(serializedSVG);
 
 		$("#svg-theta").val(rotation);
 		$("#meshu-data").val(dataString);

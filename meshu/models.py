@@ -47,7 +47,7 @@ class Meshu(models.Model):
 
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
-		return self.title + ' by ' + self.user_profile.user.username
+		return self.title + ', ' + str(self.date_created)
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
@@ -82,7 +82,7 @@ class Order(models.Model):
 	# shipping information
 	shipping_name = models.CharField(max_length=200, default='')
 	shipping_address = models.CharField(max_length=200, default='')
-	shipping_address_2 = models.CharField(max_length=140, default='')
+	shipping_address_2 = models.CharField(max_length=140, default='', blank=True)
 	shipping_city = models.CharField(max_length=100, default='')
 	shipping_zip = models.CharField(max_length=5, default='')
 	shipping_state = models.CharField(max_length=2, default='')
