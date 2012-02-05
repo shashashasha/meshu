@@ -17,6 +17,8 @@ $(function() {
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
+	var delaunay;
+	var rotation = 0;
 
 	// create a meshu object for every frame class div
 	$(".frame").each(function(i, e) {
@@ -29,13 +31,13 @@ $(function() {
 		main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 		var div = main.append("svg:g").attr("id","transform")
 					.attr("transform","scale(.2) translate(200,200)");
-		var delaunay = $("#delaunay").clone().attr("id","mini-delaunay");
+		delaunay = $("#delaunay").clone().attr("id","mini-delaunay");
 		var bounding = $("#hidden").clone().attr("id","rotate-ui");
 		$("#transform").append(delaunay).append(bounding);
 		d3.selectAll("circle.hidden").on("mousedown",mousemove);
 		main.on("mouseup",mouseup).on("mousemove",mainmove);
 		var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
-		var rotation = 0, oldtheta = 0;
+		var oldtheta = 0;
 
 		function mousemove(){
 			var m = d3.svg.mouse(main.node());
@@ -61,26 +63,25 @@ $(function() {
 	          d3.event.stopPropagation();
 	        }
 		}
-		function clockize(x1, y1, x2, y2) {
-			console.log(x2-x1, x1, x2, y1, y2, ccw);
-			if (x2 > x1) {
-				if (y1 > 0 && y2 > 0) return true;
-				else return false;
-			} else if (x2 < x1) {
-				if (y1 < 0 && y2 < 0) return true;
-				else return false;
+	});
+
+	function clockize(x1, y1, x2, y2) {
+		if (x2 > x1) {
+			if (y1 > 0 && y2 > 0) return true;
+			else return false;
+		} else if (x2 < x1) {
+			if (y1 < 0 && y2 < 0) return true;
+			else return false;
+		} else {
+			if (y2 < y1){
+				if (x1 > 0) return true;
+				else return false
 			} else {
-				if (y2 < y1){
-					if (x1 > 0) return true;
-					else return false
-				} else {
-					if (x1 < 0) return true;
-					else return false;
-				}
+				if (x1 < 0) return true;
+				else return false;
 			}
 		}
-
-	});
+	}
 
 	//navigation
 	$(".next").click(function(){
@@ -131,11 +132,19 @@ $(function() {
 
 	//creating the review form
 	$("#populateReview").click(function(){
+		var dataString = "";
+		$.each(places, function(i){
+			var dataPoint = lats[i] + "\t" + lons[i] + "\t" + places[i] + "\n";
+			dataString += dataPoint;
+		});
 
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
+		$("#svg-file").val(delaunay.parent());
+		$("#svg-theta").val(rotation);
+		$("#meshu-data").val(dataString);
 
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");

@@ -1,4 +1,7 @@
 var sb = sb || {};
+var lats = [], 
+    lons = [],
+    places = [];
 
 sb.mesh = function(frame, map, width, height) {
 	var self = {},
@@ -34,9 +37,6 @@ sb.mesh = function(frame, map, width, height) {
                 
 
     var points = [],
-        lats = [], 
-    	lons = [],
-        places = [],
     	new_pt = [],
         pixel_bounds = {},
     	updateInterval = 0,
