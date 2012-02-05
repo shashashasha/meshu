@@ -25,7 +25,7 @@ def index(request):
 # meshu.views.shop
 def shop(request):
 	# assume user__id = 1 is all our admin created readymades
-	meshus = Meshu.objects.filter(user__id=1)
+	meshus = Meshu.objects.filter(user_profile__id=1)
 	return render_to_response('meshu/gallery/gallery.html', {
 		"meshus": meshus,
 		"view": 'shop',
