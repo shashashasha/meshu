@@ -88,6 +88,7 @@ sb.mesh = function(frame, map, width, height) {
             self.remove(index);
 
             map.updateBounds(lats, lons);
+            updatePixelBounds();
             update();
         } else {
             mousemove();
@@ -100,6 +101,13 @@ sb.mesh = function(frame, map, width, height) {
 
         moved = false;
         dragging = null;
+    }
+
+    function updatePixelBounds(){
+        pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
     }
 
     function updateMesh() {
@@ -264,10 +272,7 @@ sb.mesh = function(frame, map, width, height) {
         	// make the new point start from the last location
             var last = points[points.length-1];
             points.push([last[0], last[1]]);
-            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
-                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+            updatePixelBounds();
             update();
 
             // animate the new point in place

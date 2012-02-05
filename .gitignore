@@ -65,3 +65,11 @@ __init__.pyc
 __init__.pyc
 
 __init__.pyc
+
+meshu/migrations/0001_initial.py
+
+meshu/migrations/__init__.py
+
+.gitignore
+
+.gitignore

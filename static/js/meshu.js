@@ -18,9 +18,21 @@ sb.meshu = function(frame, width, height) {
         mesh.refresh();
     });
 
+    var searchbox = $("#searchbox");
+
+    searchbox.keypress(function(event) {
+      if ( event.which == 13 ) {
+         searchPlaces();
+         searchbox.val("");
+       }
+    });
 	// this is tied to a global submit button for now
     $("#submit").click(function(){
-        var input = $("#coords").val();
+        searchPlaces();
+    });
+
+    function searchPlaces() {
+        var input = searchbox.val();
         var query = input.replace(" ","+");
 
         $.ajax({
@@ -52,7 +64,7 @@ sb.meshu = function(frame, width, height) {
                 }
             }
         });
-    });
+    }
 
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
