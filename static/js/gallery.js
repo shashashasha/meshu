@@ -6,8 +6,8 @@ $(function() {
 		$("<li>")
 			.attr("class","object")
 			.append($("<div>").addClass("image").css("background-image","url(../../static/images/meshu_0"+i+".png)"))
-			.append($("<div>").addClass("description").text(desc[Math.floor(Math.random()*6)]))
-			.append($("<div>").addClass("detail").text("Click for more information"))
+			.append($("<p>").addClass("description").text(desc[Math.floor(Math.random()*6)]))
+			.append($("<a>").addClass("clickthrough").text("Click for more information"))
 			.appendTo("ul.gallery")
 			.click(function() {
 				var j = i;
@@ -16,5 +16,7 @@ $(function() {
 				};
 			}());
 	}
+	d3.selectAll("#master-svg").attr("class","meshu-svg");
+	d3.selectAll("#delaunay").attr("transform","scale(.33)");
 	
 });

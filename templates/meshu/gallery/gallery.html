@@ -6,14 +6,19 @@
     <ul class="gallery">
         {% for object in meshus %}
             <li class="object">
-                <a class="image" style="backgound-image: url({{ object.image_url }});" href="/{{ view }}/{{ object.id }}">
-                <div class="description">{{ object.title }}</div>
-                <div class="detail">click for more information</div>
+                <div class="image" style="backgound-image: url({{ object.image_url }});">
+                    {% autoescape off %}
+                        {{ object.svg }}
+                    {% endautoescape %}
+                </div>
+                <p class="description">{{ object.title }}</p>
+                <a class="clickthrough" href="/{{ view }}/{{ object.id }}">click for more information</a>
             </li>
         {% endfor %}
     </ul>
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
 {% endblock %}

@@ -32,6 +32,9 @@ a {
     color: black;
     text-decoration: none;
 }
+p {
+    margin: 0;
+}
 input {
     color: @grey;
     padding: 5px;
@@ -387,7 +390,6 @@ li.object {
     display: inline-block;
     border: 1px solid @grey;
     position: relative;
-    cursor: pointer;
     margin-bottom: -3px;
 }
 li.object .image {
@@ -407,7 +409,7 @@ li.object .description {
 li.object:hover .description {
     color: black;
 }
-li.object .detail {
+li.object .clickthrough {
     background-color: @pink;
     color: white;
     position: absolute;
@@ -416,6 +418,16 @@ li.object .detail {
     bottom: 35px;
     display: none;
 }
-li.object:hover .detail {
+li.object:hover .clickthrough {
     display: block;
+    cursor: pointer;
+}
+
+.gallery .meshu-svg {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+}
+.meshu-svg path {
+    stroke-width: 15;
 }
