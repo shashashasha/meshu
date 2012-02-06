@@ -17,6 +17,6 @@ $(function() {
 			}());
 	}
 	d3.selectAll("#master-svg").attr("class","meshu-svg");
-	d3.selectAll("#delaunay").attr("transform","scale(.33)");
+	d3.selectAll("#delaunay").attr("transform","scale(.36)");
 	
 });

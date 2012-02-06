@@ -1,22 +1,10 @@
 {% extends "meshu/item/base_item.html" %}
 
-{% block edit %}
-    <div id="edit">
-        <div id="search">
-            <h2>Search</h2>
-            <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
-                onfocus="value=''"/>
-            <div id="submit" class="button">search</div>
-        </div>
-        <div id="cases"></div>
-        <div id="places"></div>
-
-        <div id="finish" class="nav next">when finished, pick your material</div>
-    </div>
-{% endblock %}
-
 {% block goback %}
     <div class="nav back">edit meshu</div>
+{% endblock %}
+{% block finish %}
+    <div id="finish-button" class="nav next start-order">when finished, pick your material</div>
 {% endblock %}
 
 {% block options %}

@@ -15,8 +15,8 @@ $(function() {
 						"nylon":{"price":"70","colors":["Black","Grey","White"]},
 						"silver":{"price":"140"}}};
 	
-	var views = ["edit","make","checkout","review"],
-		patternNames = ["amber,blonde,silver"];
+	
+	var patternNames = ["amber,blonde,silver"];
 	var content = $("#content");
 	var rotation = 0;
 
@@ -24,9 +24,22 @@ $(function() {
 	var meshu = sb.meshu($("#meshu-container")[0]);
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
+		var views = ["edit","view","make","checkout","review"];
+		console.log(loadedMeshu.location_data);
+		var rows = loadedMeshu.location_data.split("|");
+		$.each(rows,function(i,row){
+			var cols = row.split("\t");
+			$("<li>").text(cols[2]).appendTo($(".display-places"));
+		})
+	} else {
+		var views = ["edit","make","checkout","review"];
 	}
 
-	$("#finish").live("click",function(){
+	$(".start-order").live("click",function(){
+		setUpRotation();
+	});
+
+	function setUpRotation() {
 		$("#rotate").empty();
 		var main = d3.select("#rotate");
 		main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
@@ -39,7 +52,7 @@ $(function() {
 
 		$("#transform").append(miniDelaunay).append(bounding);
 
-// this is where pattern support would be put in, it's spec'd out now but needs images and logic
+		// this is where pattern support would be put in, it's spec'd out now but needs images and logic
 		var patternGroup = main.append("svg:g").attr("id","patterns");
 		var patterns = patternGroup.selectAll("pattern").data(patternNames);
 			patterns.enter()
@@ -78,25 +91,25 @@ $(function() {
 	          d3.event.stopPropagation();
 	        }
 		}
+	}
 			
-		function clockize(x1, y1, x2, y2) {
-			if (x2 > x1) {
-				if (y1 > 0 && y2 > 0) return true;
-				else return false;
-			} else if (x2 < x1) {
-				if (y1 < 0 && y2 < 0) return true;
-				else return false;
+	function clockize(x1, y1, x2, y2) {
+		if (x2 > x1) {
+			if (y1 > 0 && y2 > 0) return true;
+			else return false;
+		} else if (x2 < x1) {
+			if (y1 < 0 && y2 < 0) return true;
+			else return false;
+		} else {
+			if (y2 < y1){
+				if (x1 > 0) return true;
+				else return false
 			} else {
-				if (y2 < y1){
-					if (x1 > 0) return true;
-					else return false
-				} else {
-					if (x1 < 0) return true;
-					else return false;
-				}
+				if (x1 < 0) return true;
+				else return false;
 			}
 		}
-	});
+	}
 
 	//navigation
 	$(".next").click(function(){

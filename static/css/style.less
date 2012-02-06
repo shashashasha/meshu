@@ -85,12 +85,9 @@ h1#meshu {
     left: 0;
     .transition(left);
 }
-.make #edit {
+.make #edit, .checkout #edit, .view #edit {
     left: -400px;
     .transition(left);
-}
-.checkout #edit {
-    left: -400px;
 }
 
 #search h2 {
@@ -136,15 +133,16 @@ h1#meshu {
 .place.highlight {
     color: @pink;
 }
-.place .delete {
+.place .delete-place, .place .edit-place {
     display: none;
-    margin-left: 15px;
+    margin-right: 15px;
     padding: 0 3px;
     background-color: @pink;
     cursor: pointer;
     color: white;
+    float: right;
 }
-.place:hover .delete {
+.place:hover .delete-place, .place:hover .edit-place {
     display: inline;
 }
 
@@ -197,14 +195,14 @@ h1#meshu {
     font-size: 12px;
 }
 
-#materials, #checkout, #review {
+#materials, #checkout, #review, #view {
     padding: 20px;
     width: 360px;
     min-height: 560px;
     position: absolute;
     top: 0;
 }
-.edit #materials {
+.edit #materials, .view #materials {
     right: -400px;
     .transition(right);
 }
@@ -229,7 +227,7 @@ h1#meshu {
     right: 400px;
     .transition(right);
 }
-.edit #review, .make #review, .checkout #review {
+.edit #review, .make #review, .checkout #review, .view #review {
     right: -400px;
     .transition(right);
 }
@@ -238,7 +236,20 @@ h1#meshu {
     .transition(right);
 }
 
-.make-wrapper {
+.edit #view {
+    right: -400px;
+    .transition(right);
+}
+.view #view {
+    right: 0;
+    .transition(right);
+}
+.make #view, .checkout #view, .review #view {
+    right: 400px;
+    .transition(right);
+}
+
+.make-wrapper, .view-wrapper {
     margin-top: 40px;
     position: relative;
 }
@@ -313,12 +324,12 @@ h1#meshu {
     left: 20px;
     top: 20px;
 }
-#finish {
+#finish-button {
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
-#checkout-button, #review-button {
+#checkout-button, #review-button, #order-button {
     position: relative;
     float: right;
     font-size: 20px;
@@ -330,7 +341,7 @@ h1#meshu {
 /* 
 	Map Object Styling
 */
-path {
+#meshu-container path, #mini-delaunay path, #rotate-ui path {
     fill: none;
     stroke: black;
     pointer-events: none;
@@ -424,10 +435,11 @@ li.object:hover .clickthrough {
 }
 
 .gallery .meshu-svg {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
+    padding: 5px;
     position: absolute;
 }
 .meshu-svg path {
-    stroke-width: 15;
+    stroke-width: 12;
 }

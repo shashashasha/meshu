@@ -45,7 +45,7 @@ def item_edit(request, item_id):
 	return item_handler(request, item_id, 'item.html', 'edit')
 
 def item_view(request, item_id):
-	return item_handler(request, item_id, 'item.html', 'view')
+	return item_handler(request, item_id, 'usermade.html', 'view')
 
 def item_display(request, item_id):
 	return item_handler(request, item_id, 'display.html', 'display')

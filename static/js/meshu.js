@@ -105,6 +105,7 @@ sb.meshu = function(frame, width, height) {
 
         mesh.locations(newLocs);
         map.updateBounds(mesh.lats(), mesh.lons());
+        mesh.updatePixelBounds();
         mesh.refresh();
         return self;
     };
