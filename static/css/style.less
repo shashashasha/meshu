@@ -19,6 +19,8 @@
 @pink: #FF3FB4;
 @blue: #1fcaff;
 
+@pageWidth: 1000px;
+
 
 /* main page styles */
 body {
@@ -50,7 +52,7 @@ input {
 
 
 #top {
-    width: 1000px;
+    width: @pageWidth;
     margin: 30px auto 0;
     position: relative;
 }
@@ -74,7 +76,7 @@ h1#meshu {
 #login-form {
     display: none; 
     position: absolute; 
-    z-index:9000; 
+    z-index: 9000; 
     top: 24px;
     right: -1px; 
     width: auto; 
@@ -86,7 +88,7 @@ h1#meshu {
 }
 
 #content {
-    width: 1000px;
+    width: @pageWidth;
     margin: 0 auto;
     border: 1px solid @borderGrey;
     min-height: 600px;
@@ -337,6 +339,10 @@ h1#meshu {
     background-color: @grey;
     color: white;
     padding: 5px 10px;
+    
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
     .transition(background-color, 1s);
 }
 .nav.active {
@@ -424,12 +430,15 @@ circle:hover, circle.highlight {
 */
 li.object {
     display: inline-block;
-    border: 1px solid @grey;
+    border: 1px solid @borderGrey;
     position: relative;
-    margin-bottom: -3px;
+    margin-bottom: -4px;
+    margin-top: -1px;
+    margin-left: -1px;
+    margin-right: -4px;
 }
 li.object .image {
-    width: 238px;
+    width: 240px;
     height: 290px;
     border: 5px solid white;
 }
