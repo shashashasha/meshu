@@ -87,7 +87,7 @@ $(function() {
 		$("#object-color").val(objectColor);
 		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
 		
-		$("#svg-theta").val(rotation);
+		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
 		// outputting meshu data
 		$("#svg-file").val(meshu.outputSVG());
