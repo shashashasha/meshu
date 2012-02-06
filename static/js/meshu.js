@@ -95,6 +95,9 @@ sb.meshu = function(frame, width, height) {
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
+            if (values.length != 3) {
+                continue;
+            }
 
             newLocs.push({
                 lat: parseFloat(values[0]),
@@ -116,17 +119,17 @@ sb.meshu = function(frame, width, height) {
     };
 
     self.outputLocationData = function() {
-        var dataString = "";
+        var dataString = [];
         var cp = mesh.places(),
             clats = mesh.lats(),
             clons = mesh.lons();
 
         $.each(places, function(i){
-            var dataPoint = clats[i] + "\t" + clons[i] + "\t" + cp[i] + "|";
-            dataString += dataPoint;
+            var dataPoint = clats[i] + "\t" + clons[i] + "\t" + cp[i];
+            dataString.push(dataPoint);
         });
 
-        return dataString;
+        return dataString.join("|");
     };
 
 	return self;

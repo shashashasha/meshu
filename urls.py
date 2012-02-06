@@ -42,6 +42,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/', 'item_make'),
 	
 	url(r'^edit/(?P<item_id>\d+)', 'item_edit'),
+	url(r'^edit/(?P<item_id>\d+)/save', 'item_save'),
 
 	url(r'^view/(?P<item_id>\d+)', 'item_display'),
 

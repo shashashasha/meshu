@@ -25,7 +25,9 @@ $(function() {
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
-			$("<li>").text(cols[2]).appendTo($(".display-places"));
+			if (cols.length == 3) {
+				$("<li>").text(cols[2]).appendTo($(".display-places"));	
+			}
 		})
 	} else {
 		var views = ["edit","make","checkout","review"];

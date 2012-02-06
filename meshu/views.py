@@ -80,6 +80,26 @@ def item_create(request):
 		'view' : 'edit'
 	}, context_instance=RequestContext(request))
 
+def item_save(request, item_id):
+	xhr = request.GET.has_key('xhr')
+
+	meshu = Meshu.objects.get(id=item_id)
+	meshu.title = request.GET.get('title', meshu.title)
+	meshu.description = request.GET.get('description', meshu.description)
+
+	meshu.location_data = request.GET.get('location_data', meshu.location_data)
+	meshu.svg = request.GET.get('svg', meshu.svg)
+	meshu.theta = request.GET.get('theta', meshu.theta)
+
+	meshu.save()
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : True })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
+	return item_handler(request, item_id, 'item.html', 'view')
+	
 
 #
 # Views for Users
