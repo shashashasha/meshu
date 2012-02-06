@@ -16,7 +16,6 @@ $(function() {
 						"silver":{"price":"140"}}};
 	
 	var content = $("#content");
-	var rotation = 0;
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
