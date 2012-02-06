@@ -47,19 +47,29 @@ $(function() {
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class",views[index-1]);
 	});
+	// this only applies to usermade meshus
 	$("#save-button").click(function() {
+		$("#save-button").html('saving');
+
 		$.get(window.location.href + '/save', { 
             'xhr': 'true', 
 
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()
         }, function(data) {
+        	setTimeout(function() {
+        		$("#save-button").html('saved!');
+        	}, 200);
 
-        	console.log('saved meshu', data);
+        	setTimeout(function() {
+	        	// advance to the next 'page'
+				var index = views.indexOf(content.attr("class"));
+				content.attr("class",views[index+1]);
+        	}, 500);
 
-        	// advance to the next 'page'
-			var index = views.indexOf(content.attr("class"));
-			content.attr("class",views[index+1]);
+        	setTimeout(function() {
+        		$("#save-button").html('save');
+        	}, 1000);
         }, 'json');
 	});
 
