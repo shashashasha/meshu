@@ -109,32 +109,25 @@ def user_profile(request):
 #
 # Ordering!
 #
+def get_current_profile(request):
+	if request.user.is_authenticated():
+		return request.user.get_profile()
+	else 
+		return UserProfile.objects.get(id=1)
 
-def order(request):
-	# set your secret key: remember to change this to your live secret key in production
-	# see your keys here https://manage.stripe.com/account
-	stripe.api_key = "4HpS6PRbhNrY0YBLrsGZNietuNJYjNcb" # key the binx gave
-
-	# get the credit card details submitted by the form
-	token = request.POST['stripeToken']
-
-	# create the charge on Stripe's servers - this will charge the user's card
-	charge = stripe.Charge.create(
-	    amount=1000, # amount in cents, again
-	    currency="usd",
-	    card=token,
-	    description="hi@meshu.io"
-	)
-
-	# create a new meshu
-	# add logic later if it's not new, ie readymade
+def meshu_create_or_update(request, profile):
 	meshu = Meshu()
+	meshu.title = request.POST.get('title', 'My Meshu')
+	meshu.description = request.POST.get('description', '')
 	meshu.location_data = request.POST['location_data']	
 	meshu.svg = request.POST['svg']
 	meshu.theta = int(float(request.POST['theta']))
 
-	# create a new order
-	# every order is new
+	meshu.user_profile = profile
+	meshu.save()
+	return meshu
+
+def order_create(request, profile):
 	order = Order()
 
 	# store the shipping address information
@@ -155,24 +148,42 @@ def order(request):
 
 	# set the status to ORDERED
 	order.status = 'OR'
+	order.user_profile = profile
 
-
-	# assign it to the logged in user if there is one
-	if request.user.is_authenticated():
-		profile = request.user.get_profile()
-		meshu.user_profile = profile
-		order.user_profile = profile
-		order.contact = request.user.email
-	else:
-		profile = UserProfile.objects.get(id=1)
-		meshu.user_profile = profile
-		order.user_profile = profile
+	if profile.user.id == 1:
 		order.contact = request.POST['shipping_contact']
+	else:
+		order.contact = profile.user.email
 
-
-	# save these to the database
 	order.save()
-	meshu.save()
+	return order
+
+def order(request):
+	# set your secret key: remember to change this to your live secret key in production
+	# see your keys here https://manage.stripe.com/account
+	stripe.api_key = "4HpS6PRbhNrY0YBLrsGZNietuNJYjNcb" # key the binx gave
+
+	# get the credit card details submitted by the form
+	token = request.POST['stripeToken']
+
+	# create the charge on Stripe's servers - this will charge the user's card
+	charge = stripe.Charge.create(
+	    amount=1000, # amount in cents, again
+	    currency="usd",
+	    card=token,
+	    description="hi@meshu.io"
+	)
+
+	# gets logged in user profile, or anonymouse profile
+	profile = get_current_profile(request)
+
+	# create a new meshu
+	# add logic later if it's not new, ie readymade
+	meshu = meshu_create_or_update(request)
+
+	# create a new order
+	# every order is new
+	order = order_create(request)
 
 	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'paid'
