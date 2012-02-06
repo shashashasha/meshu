@@ -132,7 +132,7 @@ def user_create(request):
 def user_profile(request):
 	# show all meshus belonging to the current user
 	profile = current_profile(request)
-	
+
 	meshus = Meshu.objects.filter(user_profile=profile)
 
 	return render_to_response('meshu/gallery/gallery.html', {
@@ -207,7 +207,7 @@ def meshu_create_or_update(request, profile):
 	meshu.svg = request.POST['svg']
 
 	# wtf dawg
-	meshu.theta = int(float(request.POST['theta']))
+	meshu.theta = int(float(request.POST.get('theta', '0')))
 
 	meshu.user_profile = profile
 	meshu.save()
