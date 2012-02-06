@@ -112,7 +112,7 @@ h1#meshu {
     left: 0;
     .transition(left);
 }
-.make #edit, .checkout #edit, .view #edit {
+.make #edit, .checkout #edit, .view #edit, .readymade #edit {
     left: -400px;
     .transition(left);
 }
@@ -194,7 +194,7 @@ h1#meshu {
     right: 0;
     .transition(right);
 }
-.make .frame, .checkout .frame, .review .frame, .display .frame, .view .frame {
+.make .frame, .checkout .frame, .review .frame, .display .frame, .view .frame, .readymade .frame {
     right: 400px;
     .transition(right);
 }
@@ -220,6 +220,9 @@ h1#meshu {
     left: 200px;
     top: 292px;
 }
+.readymade .left-div, .readymade .right-div {
+    top: 200px;
+}
 #rotate {
     width: 200px;
     height: 200px;
@@ -244,7 +247,7 @@ h1#meshu {
     right: -400px;
     .transition(right);
 }
-.make #materials{
+.make #materials, .readymade #materials{
     right: 0px;
     .transition(right);
 }
@@ -265,7 +268,7 @@ h1#meshu {
     right: 400px;
     .transition(right);
 }
-.edit #review, .make #review, .checkout #review, .view #review {
+.edit #review, .make #review, .checkout #review, .view #review, .readymade #review {
     right: -400px;
     .transition(right);
 }
@@ -291,14 +294,23 @@ h1#meshu {
     margin-top: 40px;
     position: relative;
 }
+.ready .make-wrapper {
+    margin-top: 0;
+}
 .make-wrapper h2 {
     margin: 20px 0 10px 0;
+}
+.ready .make-wrapper h2 {
+    margin-top: 0;
 }
 .make-wrapper li {
     color: @grey;
 }
 .make-wrapper li:hover {
     color: black;
+}
+.readymade li:hover {
+    color: @grey;
 }
 .make-wrapper li.selected {
     color: @pink;
@@ -336,6 +348,9 @@ h1#meshu {
     padding-top: 10px;
     position: absolute;
     top: 400px;
+}
+.readymade #total {
+    top: 310px;
 }
 #total-cost {
     float: right;

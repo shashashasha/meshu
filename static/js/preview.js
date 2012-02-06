@@ -54,7 +54,6 @@ $(function() {
 				if (isNaN(rotation)) rotation = 0;
 				startX = endX, startY = endY;
 				div.attr("transform","scale(.2) translate(200,200) rotate("+(rotation)+",300,300)");
-				console.log(rotation);
 			}
 
 			function mouseup(){

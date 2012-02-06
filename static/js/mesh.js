@@ -175,7 +175,7 @@ sb.mesh = function(frame, map, width, height) {
         circles.enter()
                 .append("svg:circle")
                 .attr("id",function(d,i){ return "c-"+i; })
-                .attr("r", 6)
+                .attr("r", 7)
                 .on("mousedown", function(d) {
                     selected = dragging = d;
                 });

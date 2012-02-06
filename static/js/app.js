@@ -22,7 +22,12 @@ $(function() {
 	var meshu = sb.meshu($("#meshu-container")[0]);
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
-		views = ["edit","view","make","checkout","review"];
+		if (pageType == "view")
+			views = ["edit","view","make","checkout","review"];
+		else {
+			views = ["readymade","checkout","review"];
+			$("#materials").addClass("ready");
+		}
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");

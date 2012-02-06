@@ -161,6 +161,7 @@
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
         };
+        var pageType = "{{ view }}";
     {% else %} 
         var loadedMeshu = null;
     {% endif %}
