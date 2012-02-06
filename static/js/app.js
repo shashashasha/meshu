@@ -31,7 +31,7 @@ $(function() {
 			}
 		})
 	} 
-	
+
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
@@ -41,6 +41,21 @@ $(function() {
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class",views[index-1]);
+	});
+	$("#save-button").click(function() {
+		$.get(window.location.href + '/save', { 
+            'xhr': 'true', 
+
+			'svg': meshu.outputSVG(),
+			'location_data': meshu.outputLocationData()
+        }, function(data) {
+
+        	console.log('saved meshu', data);
+
+        	// advance to the next 'page'
+			var index = views.indexOf(content.attr("class"));
+			content.attr("class",views[index+1]);
+        }, 'json');
 	});
 
 	//materials selection
@@ -103,6 +118,6 @@ $(function() {
 		});
 		var digits = $(".card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
-	})
+	});
 	
 });
