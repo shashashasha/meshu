@@ -32,7 +32,7 @@ $(function() {
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
 			if (cols.length == 3) {
-				$("<li>").text(cols[2]).appendTo($(".display-places"));	
+				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
 		})
 	} 
@@ -61,6 +61,12 @@ $(function() {
 			var index = views.indexOf(content.attr("class"));
 			content.attr("class",views[index+1]);
         }, 'json');
+
+        var list = $("#display-places");
+        list.empty();
+        $(".place .name").each(function(){
+        	$("<li>").text($(this).text()).appendTo(list);	
+        })
 	});
 
 	//materials selection

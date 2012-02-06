@@ -117,7 +117,7 @@ h1#meshu {
     .transition(left);
 }
 
-#search h2 {
+#search h2, #places h2 {
     margin: 0 0 10px;
 }
 #search input {
@@ -226,6 +226,7 @@ h1#meshu {
 #rotate {
     width: 200px;
     height: 200px;
+    margin-top: 10px;
 }
 #rotate-help {
     position: absolute;
@@ -381,7 +382,7 @@ h1#meshu {
     left: 20px;
     top: 20px;
 }
-#finish-button {
+#finish-button, #save-button {
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -434,8 +435,15 @@ circle {
 /* Map UI */
 
 .mapui {
+    opacity: 0;
+    .transition(opacity);
+}
+
+.edit .mapui {
     position: absolute;
     z-index: 1338;
+    opacity: 1;
+    .transition(opacity);
 
     div {
         position: relative;
