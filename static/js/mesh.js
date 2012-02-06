@@ -248,6 +248,7 @@ sb.mesh = function(frame, map, width, height) {
             var field = button.parent().find(".name");
             if (d.edit) {
                 field.html('<input value="'+places[i]+'">');
+                field.find("input").focus();
                 field.keypress(function(event) {
                     if ( event.which == 13 ) {
                         d.edit = !d.edit;
