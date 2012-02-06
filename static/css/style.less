@@ -8,6 +8,12 @@
     -o-transition: @property @time;
 }
 
+.shadow (@distance: 300px, @color: rgba(0,0,0, 0.1)) {
+  -webkit-box-shadow: 0px 0px @distance @color;
+     -moz-box-shadow: 0px 0px @distance @color; 
+          box-shadow: 0px 0px @distance @color; 
+}
+
 @borderGrey: #e6e6e6;
 @grey: #808080;
 @pink: #FF3FB4;
@@ -86,6 +92,7 @@ h1#meshu {
     min-height: 600px;
     position: relative;
     overflow: hidden;
+    .shadow();
 }
 
 #edit {

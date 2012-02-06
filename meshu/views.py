@@ -131,7 +131,9 @@ def user_create(request):
 
 def user_profile(request):
 	# show all meshus belonging to the current user
-	meshus = Meshu.objects.filter(user_profile=request.user.get_profile())
+	profile = current_profile(request)
+	
+	meshus = Meshu.objects.filter(user_profile=profile)
 
 	return render_to_response('meshu/gallery/gallery.html', {
 			'view' : 'user',

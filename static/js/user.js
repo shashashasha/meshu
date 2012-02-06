@@ -22,7 +22,7 @@ $(function() {
     $("#login-cancel").click(function(e) {
         $("#login-form").slideUp();
     }); 
-    
+
     $("#logout").click(function(e) {
         $.get('/logout/', { 'xhr': 'true' }, function(data) {
             $("#login").show();
