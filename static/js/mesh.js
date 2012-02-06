@@ -206,56 +206,6 @@ sb.mesh = function(frame, map, width, height) {
                 return places[i];   
             });
 
-        names.select(".edit-place").on("click",function(d,i){
-            var button = $(this).text(d.edit ? "edit" : "save");
-            d.edit = !d.edit;
-            var field = button.parent().find(".name");
-            if (d.edit) {
-                field.html('<input value="'+places[i]+'">');
-                field.keypress(function(event) {
-                    if ( event.which == 13 ) {
-                        d.edit = !d.edit;
-                        saveText();
-                        button.text("edit");
-                    }
-                });
-            } else {
-                saveText();
-            }
-            function saveText() {
-                var text = field.find("input").val();
-                field.text(text);
-                places[i] = text;
-            }
-        });
-
-        names.select(".delete-place").on("click",function(d,i){
-            self.remove(i);
-            self.updatePixelBounds();
-            map.updateBounds(lats, lons);
-            update();
-        });
-
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-
-        var nameList = $("#places ul")
-        if (nameList.height() > 345){
-            nameList.css("overflow-y","scroll");
-        } else nameList.css("overflow-y","auto");
-
-        placeTitle.text(function(){
-            if (places.length == 0) return "";
-            else {
-                var multiple = places.length > 1;
-                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
-            }
-        });
-
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
         rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
         rotate_pts.attr("cx",function(d,i){
@@ -273,8 +223,60 @@ sb.mesh = function(frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         })
 
+        updateListBehavior();
         updateMesh();
     };
+
+    function updateListBehavior() {
+        var names = list.selectAll("li.place");
+        names.select(".delete-place").on("click",function(d,i){
+            self.remove(i);
+            self.updatePixelBounds();
+            map.updateBounds(lats, lons);
+            update();
+        });
+
+        names.on("mouseover",function(d,i){
+            ui.select("#c-"+i).attr("class","highlight");
+        });
+        names.on("mouseout",function(d,i){
+            ui.select("#c-"+i).attr("class","");
+        });
+        names.select(".edit-place").on("click",function(d,i){
+            var button = $(this).text(d.edit ? "edit" : "save");
+            d.edit = !d.edit;
+            var field = button.parent().find(".name");
+            if (d.edit) {
+                field.html('<input value="'+places[i]+'">');
+                field.keypress(function(event) {
+                    if ( event.which == 13 ) {
+                        d.edit = !d.edit;
+                        saveText();
+                        button.text("edit");
+                    }
+                });
+            } else saveText();
+
+            function saveText() {
+                var text = field.find("input").val();
+                field.text(text);
+                places[i] = text;
+            }
+        });
+
+        var nameList = $("#places ul")
+        if (nameList.height() > 345){
+            nameList.css("overflow-y","scroll");
+        } else nameList.css("overflow-y","auto");
+
+        placeTitle.text(function(){
+            if (places.length == 0) return "";
+            else {
+                var multiple = places.length > 1;
+                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
+            }
+        });
+    }
 
     self.add = function(latitude, longitude, placename) {
     	// clear previous update

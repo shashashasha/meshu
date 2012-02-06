@@ -1,0 +1,33 @@
+{% extends "meshu/item/base_item.html" %}
+
+{% block view %}
+    <div id="view">
+        <div class="nav back">edit meshu</div>
+        <div class="view-wrapper">
+            <h1>{{ meshu.title }}</h1>
+            <ul class="display-places"></ul>
+        </div>
+        <div id="order-button" class="nav next active start-order">order meshu</div>
+    </div>
+{% endblock %}
+
+{% block goback %}
+    <div class="nav back">go back</div>
+{% endblock %}
+{% block finish %}
+    <div id="finish-button" class="nav next active">save</div>
+{% endblock %}
+
+{% block options %}
+    <h2>Object</h2>
+    <ul id="object-list" class="option-list">
+        <li id="earrings">Pair of Earrings (maximum sidelength 3")</li>
+        <li id="smallNecklace">Pendant Necklace (maximum sidelength 2")</li>
+        <li id="largeNecklace">Long Necklace (maximum sidelength 4")</li>
+    </ul>
+    <svg id="rotate">
+    </svg>
+    <div id="rotate-help">
+        <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box</p>
+    </div>
+{% endblock %}
