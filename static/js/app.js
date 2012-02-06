@@ -15,8 +15,6 @@ $(function() {
 						"nylon":{"price":"70","colors":["Black","Grey","White"]},
 						"silver":{"price":"140"}}};
 	
-	
-	var patternNames = ["amber,blonde,silver"];
 	var content = $("#content");
 	var rotation = 0;
 
