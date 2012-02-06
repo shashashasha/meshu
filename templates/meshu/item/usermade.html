@@ -1,10 +1,21 @@
 {% extends "meshu/item/base_item.html" %}
 
+{% block view %}
+    <div id="view">
+        <div class="nav back">edit meshu</div>
+        <div class="view-wrapper">
+            <h1>{{ meshu.title }}</h1>
+            <ul class="display-places"></ul>
+        </div>
+        <div id="order-button" class="nav next active start-order">order meshu</div>
+    </div>
+{% endblock %}
+
 {% block goback %}
-    <div class="nav back">edit meshu</div>
+    <div class="nav back">go back</div>
 {% endblock %}
 {% block finish %}
-    <div id="finish-button" class="nav next start-order">when finished, pick your material</div>
+    <div id="finish-button" class="nav next active">save</div>
 {% endblock %}
 
 {% block options %}

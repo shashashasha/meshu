@@ -88,7 +88,7 @@ sb.mesh = function(frame, map, width, height) {
             self.remove(index);
 
             map.updateBounds(lats, lons);
-            updatePixelBounds();
+            self.updatePixelBounds();
             update();
         } else {
             mousemove();
@@ -103,7 +103,7 @@ sb.mesh = function(frame, map, width, height) {
         dragging = null;
     }
 
-    function updatePixelBounds(){
+    self.updatePixelBounds = function(){
         pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
@@ -195,41 +195,16 @@ sb.mesh = function(frame, map, width, height) {
         
         var place = names.enter().append("li").attr("class","place");
             place.append("span").attr("class","name");
-            place.append("span").attr("class","delete").html("x");
+            place.append("span").attr("class","delete-place").html("x");
+            place.append("span").attr("class","edit-place").html("edit");
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
             .select(".name")
             .text(function(d,i){
+                d.edit = false;
                 return places[i];   
             });
-
-        names.select(".delete").on("click",function(d,i){
-            self.remove(i);
-            updatePixelBounds();
-            map.updateBounds(lats, lons);
-            update();
-        });
-
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-
-        var nameList = $("#places ul")
-        if (nameList.height() > 345){
-            nameList.css("overflow-y","scroll");
-        } else nameList.css("overflow-y","auto");
-
-        placeTitle.text(function(){
-            if (places.length == 0) return "";
-            else {
-                var multiple = places.length > 1;
-                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
-            }
-        });
 
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
         rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
@@ -248,8 +223,60 @@ sb.mesh = function(frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         })
 
+        updateListBehavior();
         updateMesh();
     };
+
+    function updateListBehavior() {
+        var names = list.selectAll("li.place");
+        names.select(".delete-place").on("click",function(d,i){
+            self.remove(i);
+            self.updatePixelBounds();
+            map.updateBounds(lats, lons);
+            update();
+        });
+
+        names.on("mouseover",function(d,i){
+            ui.select("#c-"+i).attr("class","highlight");
+        });
+        names.on("mouseout",function(d,i){
+            ui.select("#c-"+i).attr("class","");
+        });
+        names.select(".edit-place").on("click",function(d,i){
+            var button = $(this).text(d.edit ? "edit" : "save");
+            d.edit = !d.edit;
+            var field = button.parent().find(".name");
+            if (d.edit) {
+                field.html('<input value="'+places[i]+'">');
+                field.keypress(function(event) {
+                    if ( event.which == 13 ) {
+                        d.edit = !d.edit;
+                        saveText();
+                        button.text("edit");
+                    }
+                });
+            } else saveText();
+
+            function saveText() {
+                var text = field.find("input").val();
+                field.text(text);
+                places[i] = text;
+            }
+        });
+
+        var nameList = $("#places ul")
+        if (nameList.height() > 345){
+            nameList.css("overflow-y","scroll");
+        } else nameList.css("overflow-y","auto");
+
+        placeTitle.text(function(){
+            if (places.length == 0) return "";
+            else {
+                var multiple = places.length > 1;
+                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
+            }
+        });
+    }
 
     self.add = function(latitude, longitude, placename) {
     	// clear previous update
@@ -273,7 +300,7 @@ sb.mesh = function(frame, map, width, height) {
         	// make the new point start from the last location
             var last = points[points.length-1];
             points.push([last[0], last[1]]);
-            updatePixelBounds();
+            self.updatePixelBounds();
             update();
 
             // animate the new point in place
@@ -283,8 +310,8 @@ sb.mesh = function(frame, map, width, height) {
             update();
         }
 
-        if (points.length > 3) $("#finish").addClass("active");
-        else $("#finish").removeClass("active");
+        if (points.length > 3) $("#finish-button").addClass("active");
+        else $("#finish-button").removeClass("active");
 
         return self;
     };

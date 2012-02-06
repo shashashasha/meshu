@@ -8,6 +8,22 @@
     <div id="meshu-container" class="frame"></div>
 
     {% block edit %}
+        <div id="edit">
+            <div id="search">
+                <h2>Search</h2>
+                <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
+                    onfocus="value=''"/>
+                <div id="submit" class="button">search</div>
+            </div>
+            <div id="cases"></div>
+            <div id="places"></div>
+
+            {% block finish %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block view %}
     {% endblock %}
 
     {% block make %}
@@ -132,6 +148,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
 {% endblock %}
 
