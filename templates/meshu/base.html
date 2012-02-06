@@ -14,6 +14,24 @@
 		    <li class="nav-list"><a href="/make/">make</a></li>
 			<li class="nav-list"><a href="/shop/">shop</a></li>
 			<li class="nav-list"><a href="/about/">about</a></li>
+
+	        <li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list">login</li>
+	        <li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">{{ user.username }}: logout</li>
+
+	        <div id="login-form" style="">
+	        	<table><tbody><tr>
+				    <td><label for="id_username">Username</label></td>
+				    <td><input id="id_username" type="text" name="username" maxlength="30"></td>
+				</tr>
+				<tr>
+				    <td><label for="id_password">Password</label></td>
+				    <td><input type="password" name="password" id="id_password"></td>
+				</tr>
+				</tbody></table>
+				<div id="login-cancel" class="button">Cancel</div>
+				<div id="login-submit" class="button">Log In</div>
+	        </div>
+
 		</ul>
 		{% endblock %}
 		<h1 id="meshu"><a href="/">meshu</a></h1>
@@ -24,6 +42,7 @@
 		{% endblock %}
 	</div>
 </body>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/user.js"></script>
 {% block script %}
 {% endblock %}
 {% block resources %}
