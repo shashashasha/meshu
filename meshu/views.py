@@ -3,7 +3,10 @@ from django.shortcuts import render_to_response, get_object_or_404
 
 # user stuff
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+
+from django.http import HttpResponse
+from django.utils import simplejson
 
 # our models
 from meshu.models import Meshu, Order, UserProfile
@@ -81,6 +84,35 @@ def item_create(request):
 #
 # Views for Users
 #
+def user_login(request, *args, **kwargs):
+	xhr = request.GET.has_key('xhr')
+
+	user = authenticate(username=request.GET['username'], password=request.GET['password'])
+	response = login(request, user)
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : True })
+		response_dict.update({ 'username' : user.username })
+		response_dict.update({ 'meshus' : Meshu.objects.filter(user_profile=request.user.get_profile()).count() })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
+	return render_to_response('meshu/notification/base_notification.html', {
+			'view' : request.GET['xhr']
+	}, context_instance=RequestContext(request))
+
+def user_logout(request, *args, **kwargs):
+	xhr = request.GET.has_key('xhr')
+	response = logout(request)
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : True })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
+	return render_to_response('meshu/notification/base_notification.html', {
+			'view' : request.GET['xhr']
+	}, context_instance=RequestContext(request))
 
 def user_create(request):
 	username = request.POST['username']
