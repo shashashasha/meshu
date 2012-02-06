@@ -1,5 +1,6 @@
 $(function() {
 	var patternNames = ["amber,blonde,silver"];
+	var rotation = 0;
 	$(".start-order").live("click",function(){
 		setUpRotation();
 	});
