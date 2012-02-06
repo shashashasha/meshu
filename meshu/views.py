@@ -99,7 +99,7 @@ def item_save(request, item_id):
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return item_handler(request, item_id, 'item.html', 'view')
-	
+
 
 #
 # Views for Users

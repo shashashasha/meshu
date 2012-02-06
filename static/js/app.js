@@ -15,13 +15,14 @@ $(function() {
 						"nylon":{"price":"70","colors":["Black","Grey","White"]},
 						"silver":{"price":"140"}}};
 	
+	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
-		var views = ["edit","view","make","checkout","review"];
+		views = ["edit","view","make","checkout","review"];
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
@@ -29,10 +30,8 @@ $(function() {
 				$("<li>").text(cols[2]).appendTo($(".display-places"));	
 			}
 		})
-	} else {
-		var views = ["edit","make","checkout","review"];
-	}
-
+	} 
+	
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
