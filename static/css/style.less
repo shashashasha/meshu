@@ -148,6 +148,20 @@ h1#meshu {
     color: black;
 }
 
+#place-hover {
+    position: absolute;
+    z-index: 1339;
+    display: block;
+    background: white;
+    border: 1px solid @grey;
+    padding: 2px 4px;
+    display: none;
+    white-space: nowrap;
+}
+#place-hover.active {
+    display: block;
+}
+
 #places {
     margin-top: 40px;
 }
@@ -220,7 +234,7 @@ h1#meshu {
     left: 200px;
     top: 292px;
 }
-.readymade .left-div, .readymade .right-div {
+.ready .left-div, .ready .right-div {
     top: 200px;
 }
 #rotate {
@@ -291,6 +305,10 @@ h1#meshu {
     .transition(right);
 }
 
+#display-places {
+    height: 410px;
+}
+
 .make-wrapper, .view-wrapper {
     margin-top: 40px;
     position: relative;
@@ -350,7 +368,7 @@ h1#meshu {
     position: absolute;
     top: 400px;
 }
-.readymade #total {
+.ready #total {
     top: 310px;
 }
 #total-cost {
@@ -392,7 +410,7 @@ h1#meshu {
     float: right;
     font-size: 20px;
 }
-#review-button {
+#review-button, #order-button {
     margin-top: 30px;
 }
 

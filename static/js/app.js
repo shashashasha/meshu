@@ -20,6 +20,7 @@ $(function() {
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
+
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
 		if (pageType == "view")
@@ -34,14 +35,17 @@ $(function() {
 			if (cols.length == 3) {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
+			checkListHeight();
 		})
 	} 
 
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
-		var index = views.indexOf(content.attr("class"));
+		var view = content.attr("class");
+		var index = views.indexOf(view);
 		content.attr("class",views[index+1]);
+		if (view == "edit") meshu.mesh().updateCircleBehavior();
 	});
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
@@ -76,8 +80,16 @@ $(function() {
         list.empty();
         $(".place .name").each(function(){
         	$("<li>").text($(this).text()).appendTo(list);	
-        })
+        });
+        checkListHeight();
 	});
+
+	function checkListHeight() {
+		var list = $("#display-places");
+		if (list.height() > 410){
+            list.css("overflow-y","scroll");
+        } else list.css("overflow-y","auto");
+	}
 
 	//materials selection
 	var objectType, objectMaterial, objectColor;

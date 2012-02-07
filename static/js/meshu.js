@@ -113,6 +113,10 @@ sb.meshu = function(frame, width, height) {
         return self;
     };
 
+    self.mesh = function() {
+        return mesh;
+    };
+
     // output the contents of our mesh as svg
     self.outputSVG = function() {
     	return mesh.output();
