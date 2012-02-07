@@ -37,7 +37,7 @@ $(function() {
 			}
 			checkListHeight();
 		})
-	} 
+	}
 
 	//navigation
 	$(".next").click(function(){
@@ -45,11 +45,21 @@ $(function() {
 		var view = content.attr("class");
 		var index = views.indexOf(view);
 		content.attr("class",views[index+1]);
-		if (view == "edit") meshu.mesh().updateCircleBehavior();
+		if (view == "edit") 
+			meshu.mesh().updateCircleBehavior();
+		else if (view == "make") {
+			d3.select("#delaunay")
+				.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+		}
 	});
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class",views[index-1]);
+		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
+		if (views[index-1] == "make") 
+			d3.select("#delaunay")
+				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
+
 	});
 	// this only applies to usermade meshus
 	$("#save-button").click(function() {
@@ -132,6 +142,7 @@ $(function() {
 	$("#object-list li:first").click();
 	$("#material-list li:first").click();
 	$("#color-list li:first").click();
+
 
 	//creating the review form
 	$("#review-button").click(function(){
