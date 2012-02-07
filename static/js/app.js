@@ -52,31 +52,34 @@ $(function() {
 		$("#save-button").html('saving');
 
 		$.get(window.location.href + '/save', { 
-            'xhr': 'true', 
-
+      'xhr': 'true', 
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()
-        }, function(data) {
-        	setTimeout(function() {
-        		$("#save-button").html('saved!');
-        	}, 200);
+    }, function(data) {
+    	var id = data.meshu_id;
+    	console.log('setting new meshu id as', id);
+    	$("#meshu-id").val(id);
 
-        	setTimeout(function() {
-	        	// advance to the next 'page'
-				var index = views.indexOf(content.attr("class"));
-				content.attr("class",views[index+1]);
-        	}, 500);
+    	setTimeout(function() {
+    		$("#save-button").html('saved!');
+    	}, 200);
 
-        	setTimeout(function() {
-        		$("#save-button").html('save');
-        	}, 1000);
-        }, 'json');
+    	setTimeout(function() {
+      	// advance to the next 'page'
+			var index = views.indexOf(content.attr("class"));
+			content.attr("class",views[index+1]);
+      	}, 500);
 
-        var list = $("#display-places");
-        list.empty();
-        $(".place .name").each(function(){
-        	$("<li>").text($(this).text()).appendTo(list);	
-        })
+      	setTimeout(function() {
+      		$("#save-button").html('save');
+      	}, 1000);
+      }, 'json');
+
+      var list = $("#display-places");
+      list.empty();
+      $(".place .name").each(function(){
+      	$("<li>").text($(this).text()).appendTo(list);	
+      })
 	});
 
 	//materials selection

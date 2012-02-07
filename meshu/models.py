@@ -47,7 +47,7 @@ class Meshu(models.Model):
 
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
-		return self.title + ', ' + str(self.date_created)
+		return str(self.id) + ' - ' + self.title + ', ' + str(self.date_created)
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
