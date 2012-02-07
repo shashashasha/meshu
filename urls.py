@@ -5,6 +5,8 @@ from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 admin.autodiscover()
 
+from django import shortcuts
+
 # separate these patterns because they don't use the polls.views prefix
 urlpatterns = patterns('',
 	# polls urls
@@ -25,6 +27,7 @@ urlpatterns = patterns('',
 		'template_name': 'meshu/user/login.html'
 	}),
 
+  url(r'^m/', include('shorturls.urls'))
 	# url(r'^logout/', 'django.contrib.auth.views.logout', {
 	# 	'template_name': 'meshu/user/logout.html'
 	# }),
@@ -36,7 +39,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^$', 'index'),
 	
 	# order an existing meshu
-	url(r'^order/edited/(?P<item_id>\d+)', 'item_order'),
+	url(r'^order/(?P<item_id>\d+)', 'item_order'),
 	url(r'^order/(?P<item_id>\d+)', 'item_order'),
 	# order a new meshu, not saved yet
 	url(r'^order/', 'order'),
