@@ -74,7 +74,7 @@
                 <form action="/order/{{ meshu.id }}" method="POST" id="payment-form">
                     {# put a csrf token in every form in django, for security #}
                     {% csrf_token %}
-                    <div style="display:none;">
+                    <div id="hidden-form-values" style="display:none;">
                         <input type="hidden" id="object-material" name="material"/>
                         <input type="hidden" id="object-type" name="product"/>
                         <input type="hidden" id="object-color" name="color"/>
@@ -82,7 +82,6 @@
                         <input type="hidden" id="svg-file" name="svg"/>
                         <input type="hidden" id="svg-theta" name="theta"/>
                         <input type="hidden" id="meshu-data" name="location_data"/>
-                        <input type="hidden" id="meshu-id" name="meshu_id" value={{ meshu.id }}/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Name</label>

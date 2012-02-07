@@ -198,9 +198,10 @@ def make_order(request, profile, meshu):
 	order = order_create(request, profile, meshu)
 
 
-	return render_to_response('meshu/notification/base_notification.html', {
+	return render_to_response('meshu/notification/ordered.html', {
 			'view' : 'paid',
-			'order': order
+			'order': order,
+			'meshu': meshu
 	}, context_instance=RequestContext(request))
 
 #

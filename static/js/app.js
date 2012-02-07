@@ -70,8 +70,10 @@ $(function() {
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()
     }, function(data) {
+
+    	// create new meshu_id element in the form
     	var id = data.meshu_id;
-    	console.log('setting new meshu id as', id);
+	    $("#hidden-form-values").append('<input type="hidden" id="meshu-id" name="meshu_id" />');
     	$("#meshu-id").val(id);
 
     	setTimeout(function() {
