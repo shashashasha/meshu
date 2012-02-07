@@ -65,6 +65,7 @@ sb.map = function(frame, width, height) {
 		}];
 
 		self.map.extent(extent);
+		self.map.zoom(self.map.zoom() - 1);
 	};
 
 	// this was old, from when we were updating the proportions of the map. 
@@ -91,7 +92,7 @@ sb.map = function(frame, width, height) {
 		
 		var width = Math.abs(ne_pt.x - sw_pt.x);
 		var height = Math.abs(ne_pt.y - sw_pt.y);
-		var max = 900;
+		var max = 430; // so it can rotate in a 600x600 square
 		var ratio = width > height ? max / width : max / height;
 
 		width *= ratio;

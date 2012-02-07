@@ -49,6 +49,10 @@ class Meshu(models.Model):
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title + ', ' + str(self.date_created)
 
+	# for short urling
+	def get_absolute_url(self):
+		return "/view/%i/" % self.id
+
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
 	image = models.ImageField(upload_to="images/meshus/")
