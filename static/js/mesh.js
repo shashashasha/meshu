@@ -186,13 +186,6 @@ sb.mesh = function(frame, map, width, height) {
         
         circles.exit().remove();
 
-        circles.on("mouseover",function(d,i){
-            list.select("#p-"+i).attr("class","place highlight");
-        });
-        circles.on("mouseout",function(d,i){
-            list.select("#p-"+i).attr("class","place");
-        });
-
         // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
@@ -227,9 +220,33 @@ sb.mesh = function(frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         })
 
+        self.updateCircleBehavior();
         updateListBehavior();
         updateMesh();
     };
+
+    self.updateCircleBehavior = function() {
+        var editMode = $("#content").hasClass("edit");
+        var placeHover = $("#place-hover");
+        var circles = ui.selectAll("circle");
+        circles.on("mouseover",function(d,i){
+            console.log("outside");
+            if (editMode)
+                list.select("#p-"+i).attr("class","place highlight");
+            else {
+                console.log("here");
+                var p = map.l2p({ lat: d[1], lon: d[0] });
+                placeHover.text(places[i]).addClass("active")
+                    .css({"top":(p.y-25)+"px", "left":(p.x+5)+"px"});
+            }
+        });
+        circles.on("mouseout",function(d,i){
+            if (editMode)
+                list.select("#p-"+i).attr("class","place");
+            else
+                placeHover.removeClass("active");
+        });
+    }
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
