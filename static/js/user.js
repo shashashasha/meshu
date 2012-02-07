@@ -13,6 +13,7 @@ $(function() {
         }, function(data) {
             // format this better
             $("#logout").show().html(data.username + ': logout');
+            $("#profile").show();
 
             $("#login").hide();
             $("#login-form").slideUp();
@@ -26,6 +27,8 @@ $(function() {
     $("#logout").click(function(e) {
         $.get('/logout/', { 'xhr': 'true' }, function(data) {
             $("#login").show();
+            
+            $("#profile").hide();
             $("#logout").hide().html('');
         }, 'json');
     }); 

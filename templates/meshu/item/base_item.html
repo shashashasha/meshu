@@ -69,7 +69,7 @@
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
                 <h2>Shipping</h2>
-                <form action="/item/order/" method="POST" id="payment-form">
+                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form">
                     {# put a csrf token in every form in django, for security #}
                     {% csrf_token %}
                     <div style="display:none;">
@@ -80,6 +80,7 @@
                         <input type="hidden" id="svg-file" name="svg"/>
                         <input type="hidden" id="svg-theta" name="theta"/>
                         <input type="hidden" id="meshu-data" name="location_data"/>
+                        <input type="hidden" id="meshu-id" name="meshu_id" value={{ meshu.id }}/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Name</label>
@@ -106,17 +107,17 @@
                 <h2>Payment</h2>
                     <div class="form-row">
                         <label>Card Number</label>
-                        <input type="text" size="20" maxlength="16" autocomplete="off" class="card-number"/>
+                        <input type="text" size="20" maxlength="16" autocomplete="off" class="card-number" value="4242424242424242"/>
                     </div>
                     <div class="form-row">
                         <label>CVC</label>
-                        <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc"/>
+                        <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc" value="424"/>
                     </div>
                     <div class="form-row">
                         <label>Expiration (MM/YYYY)</label>
-                        <input type="text" size="2" maxlength="2" class="card-expiry-month"/>
+                        <input type="text" size="2" maxlength="2" class="card-expiry-month" value="12"/>
                         <span> / </span>
-                        <input type="text" size="4" maxlength="4" class="card-expiry-year"/>
+                        <input type="text" size="4" maxlength="4" class="card-expiry-year"  value="2014"/>
                     </div>
                 </form>
             </div>

@@ -6,7 +6,7 @@
     <ul class="gallery">
         {% for object in meshus %}
             <li class="object">
-                <div class="image" style="backgound-image: url({{ object.image_url }});">
+                <div class="image">
                     {% autoescape off %}
                         {{ object.svg }}
                     {% endautoescape %}
