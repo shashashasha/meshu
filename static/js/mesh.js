@@ -34,9 +34,13 @@ sb.mesh = function(frame, map, width, height) {
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.select(".place-number");
+    var placeTitle = placeList.select("#place-number").attr("class","inactive");
+        placeTitle.append("span").attr("class","title-text");
+        placeTitle.append("span").attr("class","title-edit").html("edit");
+
     var list = placeList.append("ul");
-                
+
+    $(".place-text input").live("blur",removeInput);
 
     var points = [],
     	new_pt = [],
@@ -44,7 +48,8 @@ sb.mesh = function(frame, map, width, height) {
     	updateInterval = 0,
         selected = null,
         moved = false,
-        dragging = null;
+        dragging = null,
+        meshuTitle = null;
 
     d3.select(uiFrame.node())
         .on("mousemove", mousemove)
@@ -193,18 +198,21 @@ sb.mesh = function(frame, map, width, height) {
         
         var place = names.enter().append("li").attr("class","place");
         var title = place.append("span").attr("class","title");
-            title.append("span").attr("class","name");
-            title.append("span").attr("class","edit-place").html("edit");
-            place.append("span").attr("class","delete-place").html("x");
+            title.append("span").attr("class","place-text");
+            title.append("span").attr("class","place-edit").html("edit");
+            place.append("span").attr("class","place-delete").html("x");
 
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
             .select(".title").each(function(d){ d.edit = false; })
-            .select(".name")
+            .select(".place-text")
             .text(function(d,i){
                 return places[i];   
             });
+
+        placeTitle.data(points)
+            .each(function(d){ d.edit = false; });
 
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
         rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
@@ -221,7 +229,7 @@ sb.mesh = function(frame, map, width, height) {
                 draw.push([p.x,p.y]);
             })
             return "M" + draw.join("L") + "Z"; 
-        })
+        });
 
         self.updateCircleBehavior();
         updateListBehavior();
@@ -251,7 +259,7 @@ sb.mesh = function(frame, map, width, height) {
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
-        names.select(".delete-place").on("click",function(d,i){
+        names.select(".place-delete").on("click",function(d,i){
             self.remove(i);
             self.updatePixelBounds();
             map.updateBounds(lats, lons);
@@ -264,51 +272,66 @@ sb.mesh = function(frame, map, width, height) {
         names.on("mouseout",function(d,i){
             ui.select("#c-"+i).attr("class","");
         });
-        names.select(".edit-place").on("click",function(d,i){
+        names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
-            if (!d.edit) editText(node,i);
-            else saveText(node,i);
+            if (!d.edit) editText(node,i,"place");
+            else saveText(node,i,"title");
             d.edit = !d.edit;
         });
-        names.select(".name").on("click",function(d,i){
-            editText($(this).parent(),i);
+        names.select(".place-text").on("click",function(d,i){
+            if (d.edit) return;
+            editText($(this).parent(),i,"place");
             d.edit = !d.edit;
         });
-        function editText(node,i) {
-            removeInput();
-            var button = node.find(".edit-place").text("save");
-            var field = node.find(".name");
-            field.html('<input value="'+places[i]+'">').find("input").focus();
-            // field.keypress(function(event) {
-            //     if (event.which != 13) return;
-            //     saveText(node, i);
-            //     button.text("edit");
-            //     field.unbind(event);
-            // });
-        }
-        function saveText(node, i) {
-            var button = node.find(".edit-place").text("edit");
-            var text = node.find("input").val();
-            node.find(".name").text(text);
-            places[i] = text;
-        }
-        function removeInput(){
-            names.select(".title")
-                .each(function(d,i){
-                    if (!d.edit) return;
-                    d.edit = false;
-                    saveText($(this),i);
-                });
-        }
-        $("#places").focusout(function(){ removeInput(); });
 
-        placeTitle.text(function(){
-            if (places.length == 0) return "";
-            else {
-                var multiple = places.length > 1;
-                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
-            }
+        placeTitle.attr("class","").select(".title-text")
+            .text(function(d){
+                if (d.title) return d.title;
+                else {
+                    var multiple = places.length > 1;
+                    return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
+                }
+            });
+
+        placeTitle.select(".title-text").on("click",function(d){
+            if (d.edit) return;
+            editText($(this).parent(),0,"title");
+            d.edit = !d.edit;
         });
+
+        placeTitle.select(".title-edit").on("click",function(d){
+            var node = $(this).parent();
+            if (!d.edit) editText(node,0,"title");
+            else d.title = meshuTitle = saveText(node,0,"title");
+            d.edit = !d.edit;
+        });
+    }
+
+    function editText(node,i,type) {
+        var button = node.find("."+type+"-edit").text("save");
+        var field = node.find("."+type+"-text");
+        field.html('<input value="'+((type == "title") ? field.text() : places[i])+'">').find("input").focus();
+        // field.keypress(function(event) {
+        //     if (event.which != 13) return;
+        //     saveText(node, i);
+        //     button.text("edit");
+        //     field.unbind(event);
+        // });
+    }
+    function saveText(node, i, type) {
+        var button = node.find("."+type+"-edit").text("edit");
+        var text = node.find("input").val();
+        node.find("."+type+"-text").text(text);
+        if (type == "place") places[i] = text;
+        else return text;
+    }
+    function removeInput(){
+        var titles = list.selectAll("li.place .title");
+        titles.each(function(d,i){
+                if (!d.edit) return;
+                d.edit = false;
+                saveText($(this),i,"place");
+            });
     }
 
     self.add = function(latitude, longitude, placename) {
@@ -401,6 +424,10 @@ sb.mesh = function(frame, map, width, height) {
     self.refresh = function() {
         update();
     };
+
+    self.outputTitle = function() {
+        return meshuTitle || "My Meshu";
+    }
 
     // outputs svg data
     self.output = function() {

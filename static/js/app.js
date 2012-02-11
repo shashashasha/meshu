@@ -99,8 +99,11 @@ $(function() {
 
 	$("#img-thumbs img").click(function(){
 		var id = $(this).attr("id");
-		if (!id) $(".other-view").removeClass("active");	
-		$("#l-"+id).addClass("active");
+		if (!id) {
+			$(".other-view").removeClass("active");
+			setTimeout(function(){ $(".other-view").removeClass("z-1"); },1000);
+		}
+		$("#l-"+id).addClass("active z-1");
 	});
 
 	//materials selection
@@ -155,6 +158,7 @@ $(function() {
 		// outputting meshu data
 		$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
+		$("#meshu-title").val(meshu.outputTitle());
 
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");

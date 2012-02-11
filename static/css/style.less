@@ -168,6 +168,42 @@ h1#meshu {
 #places {
     margin-top: 40px;
 }
+#place-number .title-text {
+    display: inline-block;
+    width: 290px;
+    position: relative;
+    height: 32px;
+    cursor: text;
+}
+#place-number .title-text input {
+    width: 275px;
+    position: absolute;
+    top: 0;
+    font-size: 20px;
+}
+#place-number:hover .title-text{
+    background-color: #eee;
+    cursor: auto;
+}
+#place-number.inactive:hover .title-text{
+    background-color: #fff;
+}
+#place-number .title-edit{
+    display: none;
+    background-color: @pink;
+    float: right;
+    padding: 0 5px;
+    color: white;
+    cursor: pointer;
+}
+#place-number:hover .title-edit{
+    display: inline-block;
+}
+#place-number.inactive:hover .title-edit{
+    display: none;
+    cursor: auto;
+}
+
 #places ul {
     height: 345px;
     overflow-y: auto;
@@ -190,18 +226,18 @@ h1#meshu {
     cursor: text;
     padding: 1px 0;
 }
-.place .name {
+.place .place-text {
     width: 210px;
     display: inline-block;
 }
-.place:hover .name {
+.place:hover .place-text {
     color: black;
     background-color: #eee;
 }
 .place.highlight {
     color: @pink;
 }
-.place .delete-place, .place .edit-place {
+.place .place-delete, .place .place-edit {
     display: none;
     padding: 0 3px;
     background-color: @pink;
@@ -209,7 +245,7 @@ h1#meshu {
     color: white;
     float: right;
 }
-.place:hover .delete-place, .place:hover .edit-place {
+.place:hover .place-delete, .place:hover .place-edit {
     display: inline;
 }
 
@@ -562,11 +598,14 @@ li.object:hover .clickthrough {
     position: absolute;
     top: -20px;
     left: -620px;
-    z-index: 1;
     opacity: 0;
     .transition(opacity);
 }
 .other-view.active {
     opacity: 1;
+    z-index: 1;
     .transition(opacity);
+}
+.other-view.z-1{
+    z-index: 1;
 }

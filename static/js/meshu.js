@@ -117,6 +117,10 @@ sb.meshu = function(frame, width, height) {
         return mesh;
     };
 
+    self.outputTitle = function() {
+        return mesh.outputTitle();
+    }
+
     // output the contents of our mesh as svg
     self.outputSVG = function() {
     	return mesh.output();
