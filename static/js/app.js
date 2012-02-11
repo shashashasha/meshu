@@ -35,7 +35,6 @@ $(function() {
 			if (cols.length == 3) {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
-			checkListHeight();
 		})
 	}
 
@@ -96,15 +95,7 @@ $(function() {
       $(".place .name").each(function(){
       	$("<li>").text($(this).text()).appendTo(list);	
       });
-      checkListHeight();
 	});
-
-	function checkListHeight() {
-		var list = $("#display-places");
-		if (list.height() > 410){
-            list.css("overflow-y","scroll");
-        } else list.css("overflow-y","auto");
-	}
 
 	$("#img-thumbs img").click(function(){
 		var id = $(this).attr("id");

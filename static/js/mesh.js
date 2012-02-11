@@ -302,11 +302,6 @@ sb.mesh = function(frame, map, width, height) {
         }
         $("#places").focusout(function(){ removeInput(); });
 
-        var nameList = $("#places ul")
-        if (nameList.height() > 345){
-            nameList.css("overflow-y","scroll");
-        } else nameList.css("overflow-y","auto");
-
         placeTitle.text(function(){
             if (places.length == 0) return "";
             else {

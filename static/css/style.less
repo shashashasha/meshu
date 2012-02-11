@@ -170,11 +170,12 @@ h1#meshu {
 }
 #places ul {
     height: 345px;
-    width: 275px;
+    overflow-y: auto;
 }
 .place {
     color: @grey;
     margin: 2px 0;
+    width: 278px;
 }
 .place input {
     color: gray;
@@ -326,6 +327,7 @@ h1#meshu {
 
 #display-places {
     height: 410px;
+    overflow-y: auto;
 }
 
 .make-wrapper, .view-wrapper {
@@ -555,7 +557,6 @@ li.object:hover .clickthrough {
 
 #img-thumbs li {
     display: inline-block;
-    cursor: pointer;
 }
 .other-view {
     position: absolute;
