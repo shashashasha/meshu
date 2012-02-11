@@ -106,7 +106,7 @@ h1#meshu {
 
 #content {
     width: @pageWidth;
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
     border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
@@ -581,6 +581,11 @@ li.object {
         height: 290px;
         border: 5px solid white;
     }
+
+    .blank {
+        background-color: @borderGrey;
+        border: 5px solid @borderGrey;
+    }
     
     .description {
         position: absolute;
@@ -602,7 +607,11 @@ li.object {
     /* hover for gallery item */
     &:hover {
         .image {
-            border: 5px solid @blue;   
+            border: 5px solid @blue; 
+        }
+
+        .blank {
+            cursor: pointer;
         }
 
         .description {

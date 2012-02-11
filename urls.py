@@ -40,7 +40,6 @@ urlpatterns += patterns('meshu.views',
 	
 	# order an existing meshu
 	url(r'^order/(?P<item_id>\d+)', 'item_order'),
-	url(r'^order/(?P<item_id>\d+)', 'item_order'),
 	# order a new meshu, not saved yet
 	url(r'^order/', 'order'),
 

@@ -8,6 +8,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.utils import simplejson
 
+# for emailing html
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 # our models
 from meshu.models import Meshu, Order, UserProfile
 
@@ -148,8 +153,23 @@ def user_profile(request):
 
 	return render_to_response('meshu/gallery/gallery.html', {
 			'view' : 'user',
+			'profile' : profile,
 			'meshus': meshus
 	}, context_instance=RequestContext(request))
+
+def mail_order_confirmation(email, meshu, order):
+	subject, from_email, to = 'Order Confirmation', 'meshbot@meshu.io', email
+	html_content = render_to_string('meshu/email/base_email.html', { 
+		'view':'paid',
+		'meshu': meshu,
+		'order': order
+	})
+	text_content = strip_tags(html_content)
+	# create the email, and attach the HTML version as well.
+	msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+	msg.attach_alternative(html_content, "text/html")
+	msg.send()
+	return
 
 #
 # Ordering!
@@ -197,8 +217,11 @@ def make_order(request, profile, meshu):
 	# every order is new
 	order = order_create(request, profile, meshu)
 
+	# mail the current user if they're logged in
+	if request.user.is_authenticated():
+		mail_order_confirmation(profile.user.email, meshu, order)
 
-	return render_to_response('meshu/notification/ordered.html', {
+	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'paid',
 			'order': order,
 			'meshu': meshu

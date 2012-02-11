@@ -22,6 +22,12 @@ DATABASES = {
     }
 }
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'shattachments@gmail.com'
+EMAIL_HOST_PASSWORD = 'm3shm3b4by'
+EMAIL_PORT = 587
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

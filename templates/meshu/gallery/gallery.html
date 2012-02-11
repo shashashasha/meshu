@@ -4,7 +4,16 @@
 
 {% block content %}
     {% if view == 'user' %}
-    <h2 class="page-header">Meshus meshu meshu</h2>
+    <h2 class="page-header">
+        Welcome back{% if profile.user.first_name %}, {{ profile.user.first_name }}{% endif %}. 
+
+        {% if meshus|length == 0 %}
+            You haven't made any meshus yet.
+        {% endif %}
+        {% if meshus|length > 0 %}
+            You've made {{ meshus|length }} meshus.
+        {% endif %}
+    </h2>
     {% endif %}
     <ul class="gallery">
         {% for object in meshus %}
@@ -18,6 +27,10 @@
                 <a class="clickthrough" href="/{{ view }}/{{ object.id }}">click for more information</a>
             </li>
         {% endfor %}
+            <li class="object">
+                <div class="image blank">
+                </div>
+            </li>
     </ul>
 {% endblock %}
 
@@ -37,6 +50,10 @@
             if (Math.floor(i / 4) >= (max-1) / 4) {
                 $(e).addClass("last-object");
             }
+        });
+
+        $(".object .blank").click(function() {
+            window.location.href = "/make/";
         });
     </script>
 {% endblock %}

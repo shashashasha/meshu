@@ -9,12 +9,12 @@
 	<h2 id="notification" class="page-header">
         {% if view == 'signedup' %}
             Awesome! Thanks for signing up!
-        {% elif view == 'paid' %}
+        {% endif %}
+        {% if view == 'paid' %}
             Awesome! Thanks for ordering!
-        {% elif view == '404' %}
+        {% endif %}
+        {% if view == '404' %}
             Oh, our bad.
-        {% else %}
-            Default Notification.
         {% endif %}
     </h2>
     {% block message %}
