@@ -72,7 +72,8 @@ def item_view(request, item_id):
 
 	return item_handler(request, item_id, 'usermade.html', 'view')
 
-def item_display(request, item_id):
+def item_display(request, item_encoded):
+	item_id = int(str(item_encoded).decode("hex"))
 	return item_handler(request, item_id, 'display.html', 'display')
 
 def item_readymade(request, item_id):

@@ -51,7 +51,7 @@ class Meshu(models.Model):
 
 	# for short urling
 	def get_absolute_url(self):
-		return "/view/%i/" % self.id
+		return "/view/%s/" % str(self.id).encode("hex")
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
