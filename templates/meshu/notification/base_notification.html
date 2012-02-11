@@ -13,6 +13,9 @@
         {% if view == 'paid' %}
             Awesome! Thanks for ordering!
         {% endif %}
+        {% if view == 'authorization_required' %}
+            Sorry, you need to log in to see that page.
+        {% endif %}
         {% if view == '404' %}
             Oh, our bad.
         {% endif %}
