@@ -108,12 +108,13 @@ $(function() {
 
 	$("#img-thumbs img").click(function(){
 		var id = $(this).attr("id");
-		if (!id) $(".other-view").removeClass("active");
+		if (!id) $(".other-view").removeClass("active");	
 		$("#l-"+id).addClass("active");
 	});
 
 	//materials selection
-	var objectType, objectMaterial, objectColor;
+	var objectType = "earrings";
+	var objectMaterial, objectColor;
 	$("#object-list li").click(function(){
 		objectType = $(this).attr("id");
 		$("#material-list li").each(function(){
