@@ -62,6 +62,10 @@ sb.mesh = function(frame, map, width, height) {
         });
         dragging[0] = l.lon;
         dragging[1] = l.lat;
+
+        var index = points.indexOf(dragging);
+        lats[index] = l.lat;
+        lons[index] = l.lon;
         
         update();
 
