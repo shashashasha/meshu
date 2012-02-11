@@ -24,25 +24,35 @@
 
 /* main page styles */
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    /*font-family: Helvetica, Arial, sans-serif;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
+
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
+
 h2 {
     font-weight: normal;
     font-size: 28px;
 }
+
+h2.page-header {
+    padding-left: 20px;
+}
+
 a {
     color: black;
     text-decoration: none;
 }
+
 p {
     margin: 0;
 }
+
 input {
     color: @grey;
     padding: 5px;
@@ -211,6 +221,7 @@ h1#meshu {
 .place {
     color: @grey;
     margin: 2px 0;
+    padding: 1px 0;
     width: 278px;
 }
 .place input {
@@ -218,16 +229,17 @@ h1#meshu {
     padding: 1px;
     border: 1px solid gray;
     margin: -1px 0;
-    width: 210px;
+    width: 216px;
 }
 .place .title {
     width: 252px;
     display: inline-block;
     cursor: text;
-    padding: 1px 0;
 }
+
 .place .place-text {
-    width: 210px;
+    width: 216px;
+    padding: 2px;
     display: inline-block;
 }
 .place:hover .place-text {
@@ -239,7 +251,7 @@ h1#meshu {
 }
 .place .place-delete, .place .place-edit {
     display: none;
-    padding: 0 3px;
+    padding: 1px 5px 3px 5px;
     background-color: @pink;
     cursor: pointer;
     color: white;
@@ -247,6 +259,10 @@ h1#meshu {
 }
 .place:hover .place-delete, .place:hover .place-edit {
     display: inline;
+}
+
+.place .delete-place:hover, .place .edit-place:hover {
+    background-color: @blue;
 }
 
 .frame {
@@ -394,18 +410,23 @@ h1#meshu {
 .option-list li {
     cursor: pointer;
 }
-#material-list li .price {
-    float: right;
-    color: black;
-    display: none;
-}
-#material-list li:hover .price {
-    display: inline;
-}
-#material-list li.selected .price {
-    display: inline;
-    color: @grey;
-}
+
+#material-list {
+    li .price {
+        float: right;
+        color: black;
+        display: none;
+    }
+
+    li:hover .price {
+        display: inline;
+    }
+
+    li.selected .price {
+        display: inline;
+        color: @grey;
+    }
+} 
 
 #review h3 {
     margin: 1.5em 0 .5em 0;
@@ -445,18 +466,26 @@ h1#meshu {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    .transition(background-color, 1s);
-}
-.nav.active {
-    background-color: @pink;
-    .transition(background-color, 1s);
+    .transition(background-color, .5s);
     cursor: pointer;
 }
+
+.nav:hover {
+    background-color: @blue;
+}
+
+.nav.active {
+    background-color: @pink;
+    .transition(background-color, .5s);
+    cursor: pointer;
+}
+
 .back {
     position: absolute;
     left: 20px;
     top: 20px;
 }
+
 #finish-button, #save-button {
     position: absolute;
     bottom: 20px;
@@ -497,6 +526,7 @@ circle {
 #mini-delaunay path {
     stroke-width: 10;
 }
+
 #rotate:hover #rotate-ui {
     display: block;
 }
@@ -535,46 +565,68 @@ circle {
 }
 
 /*
-
+    gallery display
 */
 li.object {
     display: inline-block;
     border: 1px solid @borderGrey;
     position: relative;
-    margin-bottom: -4px;
+    margin-bottom: -3px;
     margin-top: -1px;
     margin-left: -1px;
     margin-right: -4px;
+
+    .image {
+        width: 239px;
+        height: 290px;
+        border: 5px solid white;
+    }
+    
+    .description {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        color: @grey;
+    }
+
+    .clickthrough {
+        background-color: @pink;
+        color: white;
+        position: absolute;
+        padding: 3px 6px;
+        right: 10px;
+        bottom: 35px;
+        display: none;
+    }
+
+    /* hover for gallery item */
+    &:hover {
+        .image {
+            border: 5px solid @blue;   
+        }
+
+        .description {
+            color: black;
+        }
+
+        .clickthrough {
+            display: block;
+            cursor: pointer;
+        }
+    }
 }
-li.object .image {
-    width: 240px;
-    height: 290px;
-    border: 5px solid white;
+
+/* fix the last item in every row in the store / gallery views */
+li.object:nth-child(4n) {
+    border-right: 0px;
+
+    .image {
+        width: 240px;
+    }
 }
-li.object:hover .image {
-    border: 5px solid @blue;
-}
-li.object .description {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    color: @grey;
-}
-li.object:hover .description {
-    color: black;
-}
-li.object .clickthrough {
-    background-color: @pink;
-    color: white;
-    position: absolute;
-    padding: 3px 6px;
-    right: 10px;
-    bottom: 35px;
-    display: none;
-}
-li.object:hover .clickthrough {
-    display: block;
-    cursor: pointer;
+
+li.last-object {
+    border-bottom: 0px;
 }
 
 .gallery .meshu-svg {

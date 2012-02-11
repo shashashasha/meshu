@@ -3,6 +3,9 @@
 {% block title %}Gallery{% endblock %}
 
 {% block content %}
+    {% if view == 'user' %}
+    <h2 class="page-header">Meshus meshu meshu</h2>
+    {% endif %}
     <ul class="gallery">
         {% for object in meshus %}
             <li class="object">
@@ -21,4 +24,19 @@
 {% block script %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
+    <script type="text/javascript">
+        /*
+            Fixing last row of objects bottom border.
+
+            maybe this can actually be done in CSS, 
+            but I'm not quite sure how....
+        */
+        var galleryObjects = $(".object");
+        galleryObjects.each(function(i, e) {
+            var max = galleryObjects.length;
+            if (Math.floor(i / 4) >= (max-1) / 4) {
+                $(e).addClass("last-object");
+            }
+        });
+    </script>
 {% endblock %}
