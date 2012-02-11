@@ -35,7 +35,6 @@ $(function() {
 			if (cols.length == 3) {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
-			checkListHeight();
 		})
 	}
 
@@ -96,18 +95,17 @@ $(function() {
       $(".place .name").each(function(){
       	$("<li>").text($(this).text()).appendTo(list);	
       });
-      checkListHeight();
 	});
 
-	function checkListHeight() {
-		var list = $("#display-places");
-		if (list.height() > 410){
-            list.css("overflow-y","scroll");
-        } else list.css("overflow-y","auto");
-	}
+	$("#img-thumbs img").click(function(){
+		var id = $(this).attr("id");
+		if (!id) $(".other-view").removeClass("active");	
+		$("#l-"+id).addClass("active");
+	});
 
 	//materials selection
-	var objectType, objectMaterial, objectColor;
+	var objectType = "earrings";
+	var objectMaterial, objectColor;
 	$("#object-list li").click(function(){
 		objectType = $(this).attr("id");
 		$("#material-list li").each(function(){

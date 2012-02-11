@@ -5,7 +5,10 @@
 
 {% block options %}
     <h2>{{ meshu.title }}</h2>
-    <ul id="object-list">
-        <li>Description</li>
+    <p>Description</p>
+    <img src="{{ STATIC_URL }}images/r_1.jpg" class="other-view" id="l-r-1">
+    <ul id="img-thumbs">
+    	<li><img src="{{ STATIC_URL }}images/r_0_thumb.jpg"></li>
+    	<li><img id="r-1" src="{{ STATIC_URL }}images/r_1_thumb.jpg"></li>
     </ul>
 {% endblock %}

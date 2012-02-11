@@ -171,12 +171,13 @@ h1#meshu {
 }
 #places ul {
     height: 345px;
-    width: 275px;
+    overflow-y: auto;
 }
 .place {
     color: @grey;
     margin: 2px 0;
     padding: 1px 0;
+    width: 278px;
 }
 .place input {
     color: gray;
@@ -332,6 +333,7 @@ h1#meshu {
 
 #display-places {
     height: 410px;
+    overflow-y: auto;
 }
 
 .make-wrapper, .view-wrapper {
@@ -585,4 +587,24 @@ li.object:nth-child(4n) {
 }
 .gallery .meshu-svg path {
     stroke-width: 12;
+}
+
+#img-thumbs {
+    padding-top: 10px;
+}
+
+#img-thumbs li {
+    display: inline-block;
+}
+.other-view {
+    position: absolute;
+    top: -20px;
+    left: -620px;
+    z-index: 1;
+    opacity: 0;
+    .transition(opacity);
+}
+.other-view.active {
+    opacity: 1;
+    .transition(opacity);
 }
