@@ -28,22 +28,31 @@ body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
+
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
+
 h2 {
     font-weight: normal;
     font-size: 28px;
 }
+
+h2.page-header {
+    padding-left: 20px;
+}
+
 a {
     color: black;
     text-decoration: none;
 }
+
 p {
     margin: 0;
 }
+
 input {
     color: @grey;
     padding: 5px;
@@ -577,6 +586,10 @@ li.object:nth-child(4n) {
     .image {
         width: 240px;
     }
+}
+
+li.last-object {
+    border-bottom: 0px;
 }
 
 .gallery .meshu-svg {
