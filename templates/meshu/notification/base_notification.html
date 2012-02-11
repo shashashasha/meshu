@@ -6,29 +6,17 @@
 
 
 {% block content %}
-	<h2 id="notification" class="page-header"></h2>
+	<h2 id="notification" class="page-header">
+        {% if view == 'signedup' %}
+            Awesome! Thanks for signing up!
+        {% elif view == 'paid' %}
+            Awesome! Thanks for ordering!
+        {% elif view == '404' %}
+            Oh, our bad.
+        {% else %}
+            Default Notification.
+        {% endif %}
+    </h2>
     {% block message %}
     {% endblock %}
-    <script type="text/javascript">
-    	var page_name = '{{ view }}';
-    	var notification;
-
-    	switch (page_name) {
-            case 'signedup':
-                notification = 'Awesome! Thanks for signing up!';
-                break;
-    		case 'paid':
-    			notification = 'Awesome! Thanks for ordering!';
-    			break;
-    		case '404':
-    			notification = 'Oh, our bad.'
-    			break;
-    		default:
-    			notification = 'Default notification';
-    			break;
-    	}
-
-    	var text = document.getElementById('notification');
-    	text.innerHTML = notification;
-    </script>
 {% endblock %}

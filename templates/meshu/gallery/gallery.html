@@ -3,7 +3,9 @@
 {% block title %}Gallery{% endblock %}
 
 {% block content %}
+    {% if view == 'user' %}
     <h2 class="page-header">Meshus meshu meshu</h2>
+    {% endif %}
     <ul class="gallery">
         {% for object in meshus %}
             <li class="object">
