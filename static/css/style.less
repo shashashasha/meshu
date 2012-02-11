@@ -24,7 +24,8 @@
 
 /* main page styles */
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    /*font-family: Helvetica, Arial, sans-serif;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
 ul {
@@ -175,22 +176,23 @@ h1#meshu {
 .place {
     color: @grey;
     margin: 2px 0;
+    padding: 1px 0;
 }
 .place input {
     color: gray;
     padding: 1px;
     border: 1px solid gray;
     margin: -1px 0;
-    width: 210px;
+    width: 216px;
 }
 .place .title {
     width: 252px;
     display: inline-block;
     cursor: text;
-    padding: 1px 0;
 }
 .place .name {
-    width: 210px;
+    width: 216px;
+    padding: 2px;
     display: inline-block;
 }
 .place:hover .name {
@@ -202,7 +204,7 @@ h1#meshu {
 }
 .place .delete-place, .place .edit-place {
     display: none;
-    padding: 0 3px;
+    padding: 1px 5px 3px 5px;
     background-color: @pink;
     cursor: pointer;
     color: white;
@@ -210,6 +212,10 @@ h1#meshu {
 }
 .place:hover .delete-place, .place:hover .edit-place {
     display: inline;
+}
+
+.place .delete-place:hover, .place .edit-place:hover {
+    background-color: @blue;
 }
 
 .frame {
@@ -407,13 +413,20 @@ h1#meshu {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    .transition(background-color, 1s);
-}
-.nav.active {
-    background-color: @pink;
-    .transition(background-color, 1s);
+    .transition(background-color, .5s);
     cursor: pointer;
 }
+
+.nav:hover {
+    background-color: @blue;
+}
+
+.nav.active {
+    background-color: @pink;
+    .transition(background-color, .5s);
+    cursor: pointer;
+}
+
 .back {
     position: absolute;
     left: 20px;
