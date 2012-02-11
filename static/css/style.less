@@ -548,3 +548,24 @@ li.object:hover .clickthrough {
 .gallery .meshu-svg path {
     stroke-width: 12;
 }
+
+#img-thumbs {
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+#img-thumbs li {
+    display: inline-block;
+}
+.other-view {
+    position: absolute;
+    top: -20px;
+    left: -620px;
+    z-index: 1;
+    opacity: 0;
+    .transition(opacity);
+}
+.other-view.active {
+    opacity: 1;
+    .transition(opacity);
+}

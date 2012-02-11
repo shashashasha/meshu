@@ -106,6 +106,12 @@ $(function() {
         } else list.css("overflow-y","auto");
 	}
 
+	$("#img-thumbs img").click(function(){
+		var id = $(this).attr("id");
+		if (!id) $(".other-view").removeClass("active");
+		$("#l-"+id).addClass("active");
+	});
+
 	//materials selection
 	var objectType, objectMaterial, objectColor;
 	$("#object-list li").click(function(){
