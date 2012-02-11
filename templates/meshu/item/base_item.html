@@ -5,7 +5,9 @@
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
-    <div id="meshu-container" class="frame"></div>
+    <div id="meshu-container" class="frame">
+        <div id="place-hover"></div>
+    </div>
 
     {% block edit %}
         <div id="edit">
@@ -16,7 +18,9 @@
                 <div id="submit" class="button">search</div>
             </div>
             <div id="cases"></div>
-            <div id="places"></div>
+            <div id="places">
+            <h2 class="place-number">Or, just click on the map...</h2>
+            </div>
 
             {% block finish %}
             {% endblock %}
@@ -67,10 +71,10 @@
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
                 <h2>Shipping</h2>
-                <form action="/item/order/" method="POST" id="payment-form">
+                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form">
                     {# put a csrf token in every form in django, for security #}
                     {% csrf_token %}
-                    <div style="display:none;">
+                    <div id="hidden-form-values" style="display:none;">
                         <input type="hidden" id="object-material" name="material"/>
                         <input type="hidden" id="object-type" name="product"/>
                         <input type="hidden" id="object-color" name="color"/>
@@ -104,17 +108,17 @@
                 <h2>Payment</h2>
                     <div class="form-row">
                         <label>Card Number</label>
-                        <input type="text" size="20" maxlength="16" autocomplete="off" class="card-number"/>
+                        <input type="text" size="20" maxlength="16" autocomplete="off" class="card-number" value="4242424242424242"/>
                     </div>
                     <div class="form-row">
                         <label>CVC</label>
-                        <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc"/>
+                        <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc" value="424"/>
                     </div>
                     <div class="form-row">
                         <label>Expiration (MM/YYYY)</label>
-                        <input type="text" size="2" maxlength="2" class="card-expiry-month"/>
+                        <input type="text" size="2" maxlength="2" class="card-expiry-month" value="12"/>
                         <span> / </span>
-                        <input type="text" size="4" maxlength="4" class="card-expiry-year"/>
+                        <input type="text" size="4" maxlength="4" class="card-expiry-year"  value="2014"/>
                     </div>
                 </form>
             </div>

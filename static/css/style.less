@@ -76,6 +76,9 @@ h1#meshu {
     display: inline-block;
     margin-left: 25px;
 }
+#nav li.inactive {
+    display: none;
+}
 
 #login-form {
     display: none; 
@@ -148,12 +151,26 @@ h1#meshu {
     color: black;
 }
 
+#place-hover {
+    position: absolute;
+    z-index: 1339;
+    display: block;
+    background: white;
+    border: 1px solid @grey;
+    padding: 2px 4px;
+    display: none;
+    white-space: nowrap;
+}
+#place-hover.active {
+    display: block;
+}
+
 #places {
     margin-top: 40px;
 }
 #places ul {
     height: 345px;
-    width: 300px;
+    width: 275px;
 }
 .place {
     color: @grey;
@@ -164,16 +181,27 @@ h1#meshu {
     padding: 1px;
     border: 1px solid gray;
     margin: -1px 0;
+    width: 210px;
+}
+.place .title {
+    width: 252px;
+    display: inline-block;
+    cursor: text;
+    padding: 1px 0;
+}
+.place .name {
+    width: 210px;
+    display: inline-block;
 }
 .place:hover .name {
     color: black;
+    background-color: #eee;
 }
 .place.highlight {
     color: @pink;
 }
 .place .delete-place, .place .edit-place {
     display: none;
-    margin-right: 15px;
     padding: 0 3px;
     background-color: @pink;
     cursor: pointer;
@@ -200,12 +228,17 @@ h1#meshu {
 }
 
 .map .layer {
-    opacity: .25;
+    opacity: .3;
     .transition(opacity);
 }
 
 .edit .map .layer {
     opacity: 1;
+    .transition(opacity);
+}
+
+.checkout .map .layer, .review .map .layer {
+    opacity: 0;
     .transition(opacity);
 }
 
@@ -220,7 +253,7 @@ h1#meshu {
     left: 200px;
     top: 292px;
 }
-.readymade .left-div, .readymade .right-div {
+.ready .left-div, .ready .right-div {
     top: 200px;
 }
 #rotate {
@@ -291,6 +324,10 @@ h1#meshu {
     .transition(right);
 }
 
+#display-places {
+    height: 410px;
+}
+
 .make-wrapper, .view-wrapper {
     margin-top: 40px;
     position: relative;
@@ -350,7 +387,7 @@ h1#meshu {
     position: absolute;
     top: 400px;
 }
-.readymade #total {
+.ready #total {
     top: 310px;
 }
 #total-cost {
@@ -392,7 +429,7 @@ h1#meshu {
     float: right;
     font-size: 20px;
 }
-#review-button {
+#review-button, #order-button {
     margin-top: 30px;
 }
 

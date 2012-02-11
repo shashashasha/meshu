@@ -56,6 +56,13 @@ def item_display(request, item_id):
 def item_readymade(request, item_id):
 	return item_handler(request, item_id, 'readymade.html', 'readymade')
 
+def item_delete(request, item_id):
+	meshu = meshu_delete(request, item_id)
+	return render_to_response('meshu/notification/base_notification.html', {
+			'view' : 'meshu_deleted',
+			'meshu': meshu
+	}, context_instance=RequestContext(request))
+
 # generalized handler for all our item pages
 def item_handler(request, item_id, template, view):
 	item = get_object_or_404(Meshu, pk=item_id)
@@ -64,38 +71,20 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
-def item_create(request):
-	username = request.POST['username']
-	title = request.POST['title']
-	description = request.POST['description']
-	points_blob = request.POST['points_blob']
-
-	# create a meshu
-	meshu = Meshu(title=title, description=description, points_blob=points_blob)
-	meshu.date_created = datetime.now()
-	meshu.save()
-
-	return render_to_response('meshu/item/item.html', {
-		'meshu' : meshu,
-		'view' : 'edit'
-	}, context_instance=RequestContext(request))
-
 def item_save(request, item_id):
 	xhr = request.GET.has_key('xhr')
 
-	meshu = Meshu.objects.get(id=item_id)
-	meshu.title = request.GET.get('title', meshu.title)
-	meshu.description = request.GET.get('description', meshu.description)
+	old = Meshu.objects.get(id=item_id)
 
-	meshu.location_data = request.GET.get('location_data', meshu.location_data)
-	meshu.svg = request.GET.get('svg', meshu.svg)
-	meshu.theta = request.GET.get('theta', meshu.theta)
-
+	meshu = Meshu()
+	meshu.user_profile = old.user_profile
+	meshu = meshu_update(request, meshu)
 	meshu.save()
 
 	if xhr:
 		response_dict = {}
 		response_dict.update({ 'success' : True })
+		response_dict.update({ 'meshu_id' : meshu.id })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return item_handler(request, item_id, 'item.html', 'view')
@@ -111,10 +100,12 @@ def user_login(request, *args, **kwargs):
 	response = login(request, user)
 
 	if xhr:
+		meshus = Meshu.objects.filter(user_profile=request.user.get_profile())
+
 		response_dict = {}
 		response_dict.update({ 'success' : True })
 		response_dict.update({ 'username' : user.username })
-		response_dict.update({ 'meshus' : Meshu.objects.filter(user_profile=request.user.get_profile()).count() })
+		response_dict.update({ 'meshus' : meshus.count() })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return render_to_response('meshu/notification/base_notification.html', {
@@ -163,8 +154,30 @@ def user_profile(request):
 #
 # Ordering!
 #
+def item_order(request, item_id):
+	# gets logged in user profile, or anonymous profile
+	profile = current_profile(request)
 
+	item_id = request.POST.get('meshu_id', item_id)
+	
+	# get existing meshu
+	meshu = Meshu.objects.get(id=item_id)
+
+	return make_order(request, profile, meshu)
+
+# ordering a new meshu
 def order(request):
+	# gets logged in user profile, or anonymous profile
+	profile = current_profile(request)
+
+	# create a new meshu
+	# add logic later if it's not new, ie readymade
+	meshu = meshu_get_or_create(request, profile)
+
+	return make_order(request, profile, meshu)
+
+
+def make_order(request, profile, meshu):
 	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = "4HpS6PRbhNrY0YBLrsGZNietuNJYjNcb" # key the binx gave
@@ -180,21 +193,16 @@ def order(request):
 	    description="hi@meshu.io"
 	)
 
-	# gets logged in user profile, or anonymous profile
-	profile = current_profile(request)
-
-	# create a new meshu
-	# add logic later if it's not new, ie readymade
-	meshu = meshu_create_or_update(request, profile)
-
 	# create a new order
 	# every order is new
 	order = order_create(request, profile, meshu)
 
-	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : 'paid'
-	}, context_instance=RequestContext(request))
 
+	return render_to_response('meshu/notification/ordered.html', {
+			'view' : 'paid',
+			'order': order,
+			'meshu': meshu
+	}, context_instance=RequestContext(request))
 
 #
 # helper functions, ie functions that don't render views
@@ -212,12 +220,16 @@ def current_profile(request):
 #
 # creating or updating model functions, saves them to databases
 #
-def meshu_create_or_update(request, profile):
-	meshu_exists = request.POST.has_key('meshu_id')
-	if meshu_exists:
-		meshu_id = request.POST.get('meshu_id')
-		return Meshu.objects.get(id=meshu_id)
+def meshu_update(request, meshu):
+	meshu.title = request.GET.get('title', meshu.title)
+	meshu.description = request.GET.get('description', meshu.description)
 
+	meshu.location_data = request.GET.get('location_data', meshu.location_data)
+	meshu.svg = request.GET.get('svg', meshu.svg)
+	meshu.theta = request.GET.get('theta', meshu.theta)
+	return meshu
+
+def meshu_get_or_create(request, profile):
 	meshu = Meshu()
 	meshu.title = request.POST.get('title', 'My Meshu')
 	meshu.description = request.POST.get('description', '')
@@ -227,10 +239,15 @@ def meshu_create_or_update(request, profile):
 	meshu.svg = request.POST['svg']
 
 	# wtf dawg
-	meshu.theta = int(float(request.POST.get('theta', '0')))
+	meshu.theta = int(float(request.POST.get('theta', '0.0')))
 
 	meshu.user_profile = profile
 	meshu.save()
+	return meshu
+
+def meshu_delete(request, item_id):
+	meshu = Meshu.objects.get(id=item_id)
+	meshu.delete()
 	return meshu
 
 def order_create(request, profile, meshu):
@@ -250,7 +267,8 @@ def order_create(request, profile, meshu):
 	order.product = request.POST['product']
 
 	# stripe uses cents, which makes none
-	order.amount = str(float(request.POST['amount']) / 100.0)
+	amount = float(request.POST.get('amount', '0.0')) / 100.0
+	order.amount = str(amount)
 
 	# set the status to ORDERED
 	order.status = 'OR'

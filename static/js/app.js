@@ -20,6 +20,7 @@ $(function() {
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
+
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
 		if (pageType == "view")
@@ -34,50 +35,76 @@ $(function() {
 			if (cols.length == 3) {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
+			checkListHeight();
 		})
-	} 
+	}
 
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
-		var index = views.indexOf(content.attr("class"));
+		var view = content.attr("class");
+		var index = views.indexOf(view);
 		content.attr("class",views[index+1]);
+		if (view == "edit") 
+			meshu.mesh().updateCircleBehavior();
+		else if (view == "make") {
+			d3.select("#delaunay")
+				.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+		}
 	});
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class",views[index-1]);
+		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
+		if (views[index-1] == "make") 
+			d3.select("#delaunay")
+				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
+
 	});
 	// this only applies to usermade meshus
 	$("#save-button").click(function() {
 		$("#save-button").html('saving');
 
 		$.get(window.location.href + '/save', { 
-            'xhr': 'true', 
-
+      'xhr': 'true', 
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()
-        }, function(data) {
-        	setTimeout(function() {
-        		$("#save-button").html('saved!');
-        	}, 200);
+    }, function(data) {
 
-        	setTimeout(function() {
-	        	// advance to the next 'page'
-				var index = views.indexOf(content.attr("class"));
-				content.attr("class",views[index+1]);
-        	}, 500);
+    	// create new meshu_id element in the form
+    	var id = data.meshu_id;
+	    $("#hidden-form-values").append('<input type="hidden" id="meshu-id" name="meshu_id" />');
+    	$("#meshu-id").val(id);
 
-        	setTimeout(function() {
-        		$("#save-button").html('save');
-        	}, 1000);
-        }, 'json');
+    	setTimeout(function() {
+    		$("#save-button").html('saved!');
+    	}, 200);
 
-        var list = $("#display-places");
-        list.empty();
-        $(".place .name").each(function(){
-        	$("<li>").text($(this).text()).appendTo(list);	
-        })
+    	setTimeout(function() {
+      	// advance to the next 'page'
+			var index = views.indexOf(content.attr("class"));
+			content.attr("class",views[index+1]);
+      	}, 500);
+
+      	setTimeout(function() {
+      		$("#save-button").html('save');
+      	}, 1000);
+      }, 'json');
+
+      var list = $("#display-places");
+      list.empty();
+      $(".place .name").each(function(){
+      	$("<li>").text($(this).text()).appendTo(list);	
+      });
+      checkListHeight();
 	});
+
+	function checkListHeight() {
+		var list = $("#display-places");
+		if (list.height() > 410){
+            list.css("overflow-y","scroll");
+        } else list.css("overflow-y","auto");
+	}
 
 	//materials selection
 	var objectType, objectMaterial, objectColor;
@@ -115,6 +142,7 @@ $(function() {
 	$("#object-list li:first").click();
 	$("#material-list li:first").click();
 	$("#color-list li:first").click();
+
 
 	//creating the review form
 	$("#review-button").click(function(){

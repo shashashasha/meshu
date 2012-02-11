@@ -16,7 +16,8 @@ sb.mesh = function(frame, map, width, height) {
         .attr("height", $(frame).height());
 
     var g = main.append("svg:g")
-            .attr("id","delaunay");
+            .attr("id","delaunay")
+            .attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
 
     var hidden = main.append("svg:g")
                  .attr("id","hidden");
@@ -33,7 +34,7 @@ sb.mesh = function(frame, map, width, height) {
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.append("h2").attr("class","place-number");
+    var placeTitle = placeList.select(".place-number");
     var list = placeList.append("ul");
                 
 
@@ -63,6 +64,10 @@ sb.mesh = function(frame, map, width, height) {
         dragging[0] = l.lon;
         dragging[1] = l.lat;
 
+        var index = points.indexOf(dragging);
+        lats[index] = l.lat;
+        lons[index] = l.lon;
+        
         var index = points.indexOf(dragging);
         lats[index] = l.lat;
         lons[index] = l.lon;
@@ -186,27 +191,22 @@ sb.mesh = function(frame, map, width, height) {
         
         circles.exit().remove();
 
-        circles.on("mouseover",function(d,i){
-            list.select("#p-"+i).attr("class","place highlight");
-        });
-        circles.on("mouseout",function(d,i){
-            list.select("#p-"+i).attr("class","place");
-        });
-
         // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
         
         var place = names.enter().append("li").attr("class","place");
-            place.append("span").attr("class","name");
+        var title = place.append("span").attr("class","title");
+            title.append("span").attr("class","name");
+            title.append("span").attr("class","edit-place").html("edit");
             place.append("span").attr("class","delete-place").html("x");
-            place.append("span").attr("class","edit-place").html("edit");
+
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
+            .select(".title").each(function(d){ d.edit = false; })
             .select(".name")
             .text(function(d,i){
-                d.edit = false;
                 return places[i];   
             });
 
@@ -227,9 +227,31 @@ sb.mesh = function(frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         })
 
+        self.updateCircleBehavior();
         updateListBehavior();
         updateMesh();
     };
+
+    self.updateCircleBehavior = function() {
+        var editMode = $("#content").hasClass("edit");
+        var placeHover = $("#place-hover");
+        var circles = ui.selectAll("circle");
+        circles.on("mouseover",function(d,i){
+            if (editMode)
+                list.select("#p-"+i).attr("class","place highlight");
+            else {
+                var p = map.l2p({ lat: d[1], lon: d[0] });
+                placeHover.text(places[i]).addClass("active")
+                    .css({"top":(p.y-25)+"px", "left":(p.x+5)+"px"});
+            }
+        });
+        circles.on("mouseout",function(d,i){
+            if (editMode)
+                list.select("#p-"+i).attr("class","place");
+            else
+                placeHover.removeClass("active");
+        });
+    }
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
@@ -247,27 +269,42 @@ sb.mesh = function(frame, map, width, height) {
             ui.select("#c-"+i).attr("class","");
         });
         names.select(".edit-place").on("click",function(d,i){
-            var button = $(this).text(d.edit ? "edit" : "save");
+            var node = $(this).parent();
+            if (!d.edit) editText(node,i);
+            else saveText(node,i);
             d.edit = !d.edit;
-            var field = button.parent().find(".name");
-            if (d.edit) {
-                field.html('<input value="'+places[i]+'">');
-                field.find("input").focus();
-                field.keypress(function(event) {
-                    if ( event.which == 13 ) {
-                        d.edit = !d.edit;
-                        saveText();
-                        button.text("edit");
-                    }
-                });
-            } else saveText();
-
-            function saveText() {
-                var text = field.find("input").val();
-                field.text(text);
-                places[i] = text;
-            }
         });
+        names.select(".name").on("click",function(d,i){
+            editText($(this).parent(),i);
+            d.edit = !d.edit;
+        });
+        function editText(node,i) {
+            removeInput();
+            var button = node.find(".edit-place").text("save");
+            var field = node.find(".name");
+            field.html('<input value="'+places[i]+'">').find("input").focus();
+            // field.keypress(function(event) {
+            //     if (event.which != 13) return;
+            //     saveText(node, i);
+            //     button.text("edit");
+            //     field.unbind(event);
+            // });
+        }
+        function saveText(node, i) {
+            var button = node.find(".edit-place").text("edit");
+            var text = node.find("input").val();
+            node.find(".name").text(text);
+            places[i] = text;
+        }
+        function removeInput(){
+            names.select(".title")
+                .each(function(d,i){
+                    if (!d.edit) return;
+                    d.edit = false;
+                    saveText($(this),i);
+                });
+        }
+        $("#places").focusout(function(){ removeInput(); });
 
         var nameList = $("#places ul")
         if (nameList.height() > 345){
