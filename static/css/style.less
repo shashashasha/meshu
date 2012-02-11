@@ -362,18 +362,23 @@ h1#meshu {
 .option-list li {
     cursor: pointer;
 }
-#material-list li .price {
-    float: right;
-    color: black;
-    display: none;
-}
-#material-list li:hover .price {
-    display: inline;
-}
-#material-list li.selected .price {
-    display: inline;
-    color: @grey;
-}
+
+#material-list {
+    li .price {
+        float: right;
+        color: black;
+        display: none;
+    }
+
+    li:hover .price {
+        display: inline;
+    }
+
+    li.selected .price {
+        display: inline;
+        color: @grey;
+    }
+} 
 
 #review h3 {
     margin: 1.5em 0 .5em 0;
@@ -432,6 +437,7 @@ h1#meshu {
     left: 20px;
     top: 20px;
 }
+
 #finish-button, #save-button {
     position: absolute;
     bottom: 20px;
@@ -472,6 +478,7 @@ circle {
 #mini-delaunay path {
     stroke-width: 10;
 }
+
 #rotate:hover #rotate-ui {
     display: block;
 }
@@ -510,7 +517,7 @@ circle {
 }
 
 /*
-
+    gallery display
 */
 li.object {
     display: inline-block;
@@ -543,22 +550,23 @@ li.object {
         bottom: 35px;
         display: none;
     }
+
+    /* hover for gallery item */
+    &:hover {
+        .image {
+            border: 5px solid @blue;   
+        }
+
+        .description {
+            color: black;
+        }
+
+        .clickthrough {
+            display: block;
+            cursor: pointer;
+        }
+    }
 }
-
-li.object:hover {
-    .image {
-        border: 5px solid @blue;   
-    }
-
-    .description {
-        color: black;
-    }
-
-    .clickthrough {
-        display: block;
-        cursor: pointer;
-    }
-} 
 
 /* fix the last item in every row in the store / gallery views */
 li.object:nth-child(4n) {
