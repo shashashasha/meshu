@@ -220,8 +220,10 @@
                                     <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                     	<tr>
                                         	<td valign="top">
-                                            	<div mc:edit="std_preheader_content">
-                                                	 Thanks for ordering!
+                                            	<div>
+                                                	{% block plaintext_header %}
+                                                	Thanks for ordering!
+                                                	{% endblock %}
                                                 </div>
                                             </td>
                                         </tr>
@@ -237,7 +239,9 @@
                                 	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
                                         <tr>
                                             <td class="headerContent">
+                                            	{% block header_image %}
                                             	<!-- if we want a header image -->
+                                            	{% endblock %}
                                             </td>
                                         </tr>
                                     </table>
@@ -245,18 +249,19 @@
                             </tr>
                         	<tr>
                             	<td align="center" valign="top">
-                                    <!-- // Begin Template Body \\ -->
                                 	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
                                     	<tr>
                                             <td valign="top" class="bodyContent">
-                                
-                                                <!-- // Begin Module: Standard Postcard Content \\ -->
                                                 <table border="0" cellpadding="20" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td valign="top">
                                                         	<div>
-                                                                <h1 class="h1">Thanks for ordering!</h1>
+                                                                <h1 class="h1">
+                                                                {% block email_title %}
+                                                                Thanks for ordering!
+                                                                {% endblock %}</h1>
                                                             </div>
+                                                            {% block content %}
                                                             <img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
                                                             <br /><br />
                                                             <div>
@@ -264,30 +269,27 @@
                                                                 <h4 class="h4">Amount: ${{ order.amount }}</h4>
                                                                 <strong>Thanks {{ meshu.user.username }}!</strong> We've received your order and will let you know when we've processed it. Beep a boop.
                                                             </div>
+                                                            {% endblock %}
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <!-- // End Module: Standard Postcard Content \\ -->
-                                                
                                             </td>
                                         </tr>
                                     </table>
-                                    <!-- // End Template Body \\ -->
                                 </td>
                             </tr>
                         	<tr>
                             	<td align="center" valign="top">
-                                    <!-- // Begin Template Footer \\ -->
                                 	<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter">
                                     	<tr>
                                         	<td valign="top" class="footerContent">
-                                            
-                                                <!-- // Begin Module: Standard Footer \\ -->
                                                 <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td colspan="2" valign="middle" id="social">
-                                                            <div mc:edit="std_social">
-                                                                &nbsp;<a href="http://twitter.com/hi_meshu">follow on Twitter</a> | <a href="http://facebook.com/hi.meshu">friend on Facebook</a>
+                                                            <div>
+                                                            	{% block social_links %}
+                                                                <a href="http://twitter.com/hi_meshu">follow on Twitter</a> | <a href="http://facebook.com/hi.meshu">friend on Facebook</a>
+                                                                {% endblock %}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -312,12 +314,9 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <!-- // End Module: Standard Footer \\ -->
-                                            
                                             </td>
                                         </tr>
                                     </table>
-                                    <!-- // End Template Footer \\ -->
                                 </td>
                             </tr>
                         </table>

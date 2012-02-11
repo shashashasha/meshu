@@ -178,7 +178,7 @@ def user_profile(request):
 
 def mail_order_confirmation(email, meshu, order):
 	subject, from_email, to = 'Order Confirmation', 'meshbot@meshu.io', email
-	html_content = render_to_string('meshu/email/base_email.html', { 
+	html_content = render_to_string('meshu/email/order_confirmation.html', { 
 		'view':'paid',
 		'meshu': meshu,
 		'order': order

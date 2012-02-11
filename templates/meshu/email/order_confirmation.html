@@ -1,0 +1,22 @@
+{% extends "meshu/email/base_email.html" %}
+
+{% block plaintext_header %}
+Thanks for ordering!
+{% endblock %}
+
+{% block header_image %}
+{% endblock %}
+
+{% block email_title %}
+Thanks for ordering!
+{% endblock %}
+
+{% block content %}
+<img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
+<br /><br />
+<div>
+    <h3 class="h4">{{ meshu.title }}, by {{ meshu.profile.user.username }}</h3>
+    <h4 class="h4">Amount: ${{ order.amount }}</h4>
+    Thanks! We've received your order for <strong>{{ order.color }} {{ order.material }} {{ order.product }}</strong> and will let you know when we've processed it. 
+</div>
+{% endblock %}
