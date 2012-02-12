@@ -16,7 +16,11 @@
     </h2>
     {% endif %}
     <ul class="gallery">
-        {% for object in meshus %}
+            <li class="object">
+                <div class="image blank">
+                </div>
+            </li>
+        {% for object in meshus reversed %}
             <li class="object">
                 <div class="image">
                     {% autoescape off %}
@@ -27,10 +31,6 @@
                 <a class="clickthrough" href="/{{ view }}/{{ object.id }}">click for more information</a>
             </li>
         {% endfor %}
-            <li class="object">
-                <div class="image blank">
-                </div>
-            </li>
     </ul>
 {% endblock %}
 
