@@ -1,4 +1,5 @@
 {% extends "meshu/item/base_item.html" %}
+{% load shorturl %}
 
 {% block view %}
     <div id="view">
@@ -7,6 +8,7 @@
             <h1>{{ meshu.title }}</h1>
             <ul id="display-places"></ul>
         </div>
+        <a href="{% shorturl meshu %}">View public link</a>
         <div id="order-button" class="nav next active start-order">order meshu</div>
     </div>
 {% endblock %}
