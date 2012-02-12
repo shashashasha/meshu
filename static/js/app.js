@@ -35,7 +35,12 @@ $(function() {
 			if (cols.length == 3) {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
-		})
+		});
+		d3.select("#place-number").attr("class","").select(".title-text")
+            .text(function(d){
+                d.title = loadedMeshu.title;
+                return d.title;
+            });
 	}
 
 	//navigation
