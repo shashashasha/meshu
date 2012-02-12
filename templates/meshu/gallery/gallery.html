@@ -21,19 +21,19 @@
     <ul class="gallery">
         {% if view == 'user' %}
             <li class="object">
-                <div class="image blank">
-                </div>
+                <a class="image blank" href="/make/"></a>
+                <a class="clicknew" href="/make/">click to make a new meshu!</a>
             </li>
         {% endif %}
         {% for object in meshus reversed %}
             <li class="object">
-                <div class="image">
+                <a class="image" href="/{{ view }}/{{ object.id }}/">
                     {% autoescape off %}
                         {{ object.svg }}
                     {% endautoescape %}
-                </div>
+                </a>
                 <p class="description">{{ object.title }}</p>
-                <a class="clickthrough" href="/{{ view }}/{{ object.id }}">click for more information</a>
+                <a class="clickthrough" href="/{{ view }}/{{ object.id }}/">click to view</a>
             </li>
         {% endfor %}
     </ul>
@@ -57,8 +57,5 @@
             }
         });
 
-        $(".object .blank").click(function() {
-            window.location.href = "/make/";
-        });
     </script>
 {% endblock %}
