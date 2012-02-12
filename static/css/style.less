@@ -131,7 +131,7 @@ h1#meshu {
 }
 
 #search h2, #places h2 {
-    margin: 0 0 10px;
+    margin: 0 0 5px;
 }
 #search input {
     border: 1px solid @blue;
@@ -176,7 +176,7 @@ h1#meshu {
 }
 
 #places {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 #place-number .title-text {
     display: inline-block;
@@ -184,12 +184,16 @@ h1#meshu {
     position: relative;
     height: 32px;
     cursor: text;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 #place-number .title-text input {
-    width: 275px;
+    width: 280px;
     position: absolute;
     top: 0;
     font-size: 20px;
+    padding: 3px;
 }
 #place-number:hover .title-text{
     background-color: #eee;
@@ -228,8 +232,9 @@ h1#meshu {
     color: gray;
     padding: 1px;
     border: 1px solid gray;
-    margin: -1px 0;
-    width: 216px;
+    margin: -2px 0;
+    width: 207px;
+    font-size: 13px;
 }
 .place .title {
     width: 252px;
@@ -238,7 +243,7 @@ h1#meshu {
 }
 
 .place .place-text {
-    width: 216px;
+    width: 211px;
     padding: 2px;
     display: inline-block;
 }

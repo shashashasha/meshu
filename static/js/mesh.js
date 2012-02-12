@@ -279,7 +279,7 @@ sb.mesh = function(frame, map, width, height) {
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
             if (!d.edit) editText(node,i,"place");
-            else saveText(node,i,"title");
+            else saveText(node,i,"place");
             d.edit = !d.edit;
         });
         names.select(".place-text").on("click",function(d,i){
@@ -291,10 +291,7 @@ sb.mesh = function(frame, map, width, height) {
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
                 if (d.title) return d.title;
-                else {
-                    var multiple = places.length > 1;
-                    return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
-                }
+                else return "My Meshu";
             });
 
         placeTitle.select(".title-text").on("click",function(d){
