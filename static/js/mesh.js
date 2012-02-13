@@ -310,6 +310,7 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function editText(node,i,type) {
+        node.addClass("active");
         var button = node.find("."+type+"-edit").text("save");
         var field = node.find("."+type+"-text");
         field.html('<input value="'+((type == "title") ? field.text() : places[i])+'">').find("input").focus();
@@ -321,6 +322,7 @@ sb.mesh = function(frame, map, width, height) {
         // });
     }
     function saveText(node, i, type) {
+        node.removeClass("active");
         var button = node.find("."+type+"-edit").text("edit");
         var text = node.find("input").val();
         node.find("."+type+"-text").text(text);

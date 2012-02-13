@@ -52,7 +52,6 @@ $(function() {
 			meshu.mesh().updateCircleBehavior();
 		}
 		else if (view == "make") {
-
 			// break the flow if they're not logged in
 			if (!user.loggedIn)	{
 				user.showModal();
@@ -65,9 +64,16 @@ $(function() {
 				return;
 			}
 
-			d3.select("#delaunay")
-				.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
-
+			var counter = 0;
+			var rotateInterval = setInterval(function(){
+				if (counter < 20){
+					d3.select("#delaunay")
+						.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+					counter++;
+				}
+				else
+				clearInterval(rotateInterval);
+			},40);
 		}
 
 		var index = views.indexOf(view);
@@ -182,6 +188,7 @@ $(function() {
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(meshu.outputTitle());
 
+		$("#review-title").text('"'+meshu.outputTitle()+'"');
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
