@@ -38,6 +38,7 @@ ul {
 h2 {
     font-weight: normal;
     font-size: 28px;
+    margin: 0;
 }
 
 h2.page-header {
@@ -94,14 +95,55 @@ h1#meshu {
     display: none; 
     position: absolute; 
     z-index: 9000; 
-    top: 24px;
-    right: -1px; 
-    width: auto; 
-    height: auto;
-    padding: 20px; 
+    top: 150px;
+    right: 295px; 
+    width: 410px; 
+    height: 250px;
+    padding: 15px 0;
     background: white;
     border: 1px solid @borderGrey;
-
+}
+#login-form h2 {
+    padding: 0 13px 10px;
+}
+#login-form ul {
+    border-bottom: 1px solid @borderGrey;
+    height: 33px;
+    padding-left: 20px;
+}
+#login-form li {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid @borderGrey;
+    margin: 0 -3px 0;
+    color: @grey;
+    background-color: white;
+    cursor: pointer;
+}
+#login-form.signin .account, #login-form.account .signin {
+    display: none;
+}
+#login-form li:hover {
+    color: @pink;
+}
+#login-form li.active, #login-form li.active:hover {
+    border-bottom: 1px solid white;
+    color: black;
+}
+#login-form table {
+    padding: 20px;
+}
+#login-form.signin table {
+    padding-top: 40px;
+}
+#login-form input {
+    width: 255px;
+    margin-left: 20px;
+}
+#login-form #login-buttons {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
 }
 
 #content {
@@ -112,6 +154,9 @@ h1#meshu {
     position: relative;
     overflow: hidden;
     .shadow();
+}
+#content.modal {
+    opacity: .3;
 }
 
 #edit {
@@ -630,7 +675,7 @@ li.object {
         }
 
         .blank {
-            cursor: pointer;
+            border: 5px solid @pink; 
         }
 
         .description {
