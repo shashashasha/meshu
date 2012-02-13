@@ -43,6 +43,7 @@ h2 {
 
 h2.page-header {
     padding-left: 20px;
+    margin: .83em 0;
 }
 
 a {
@@ -261,7 +262,7 @@ h1#meshu {
     color: white;
     cursor: pointer;
 }
-#place-number:hover .title-edit{
+#place-number:hover .title-edit, #place-number.active .title-edit{
     display: inline-block;
 }
 #place-number.inactive:hover .title-edit{
@@ -313,12 +314,9 @@ h1#meshu {
     color: white;
     float: right;
 }
-.place:hover .place-delete, .place:hover .place-edit {
+.place:hover .place-delete, .place:hover .place-edit,
+.title.active .place-delete, .title.active .place-edit {
     display: inline;
-}
-
-.place .delete-place:hover, .place .edit-place:hover {
-    background-color: @blue;
 }
 
 .frame {
