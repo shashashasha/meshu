@@ -63,6 +63,11 @@
 	</div>
 </body>
     <script type="text/javascript" src="{{ STATIC_URL }}js/user.js"></script>
+    <script type="text/javascript">
+    	{% if user.is_authenticated %}
+    		user.loggedIn = true;
+    	{% endif %}
+    </script>
 {% block script %}
 {% endblock %}
 {% block resources %}

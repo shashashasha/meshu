@@ -1,69 +1,81 @@
-$(function() {
-    $("#login").click(function(e) {
+var user = function() {
+    var self = {};
+
+    self.loggedIn = false;
+
+    self.showModal = function() {
         $("#content").addClass("modal");
         $("#login-form").fadeIn();
 
         $("#id_username").val('');
         $("#id_password").val('');
         $("#repeat_password").val('');
-    });
+    };
 
-    $("#login-cancel").click(function(e) {
+    self.hideModal = function() {
         $("#content").removeClass("modal");
         $("#login-form").fadeOut();
 
         $("#id_username").val('');
         $("#id_password").val('');
         $("#repeat_password").val('');
-    }); 
+    };
 
-    // switching mode
-    $("#login-form li").click(function(){
-       var mode = $(this).attr("id").split("-")[1];
-       var form = $("#login-form");
-       form.attr("class",mode); 
-       form.find("li").removeClass("active");
-       $(this).addClass("active");
-    });
+    self.initialize = function() {
+        $("#login").click(self.showModal);
 
-    /* 
-        when logging in 
-    */
-    $("#login-submit").click(function(e) {
-        $.post('/user/login/', { 
-            'xhr': 'true', 
+        $("#login-cancel").click(self.hideModal); 
 
-            'csrfmiddlewaretoken': $("#csrf input").val(),
-            'email': $("#id_username").val(), 
-            'password': $("#id_password").val() 
-        }, loggedIn, 'json');
-    });
+        // switching mode
+        $("#login-form li").click(function(){
+           var mode = $(this).attr("id").split("-")[1];
+           var form = $("#login-form");
+           form.attr("class",mode); 
+           form.find("li").removeClass("active");
+           $(this).addClass("active");
+        });
 
-    /* 
-        when creating an account
-    */
-    $("#login-create").click(function(e) {
-        $.post('/user/create/', {
-            'xhr': 'true',
+        /* 
+            when logging in 
+        */
+        $("#login-submit").click(function(e) {
+            $.post('/user/login/', { 
+                'xhr': 'true', 
 
-            'csrfmiddlewaretoken': $("#csrf input").val(),
-            'email': $("#id_username").val(), 
-            'password': $("#id_password").val() 
-        }, loggedIn, 'json');
-    })
+                'csrfmiddlewaretoken': $("#csrf input").val(),
+                'email': $("#id_username").val(), 
+                'password': $("#id_password").val() 
+            }, onLogIn, 'json');
+        });
 
-    $("#logout").click(function(e) {
-        $.get('/user/logout/', { 'xhr': 'true' }, loggedOut, 'json');
-    }); 
+        /* 
+            when creating an account
+        */
+        $("#login-create").click(function(e) {
+            $.post('/user/create/', {
+                'xhr': 'true',
 
-    function loggedOut(data) {
+                'csrfmiddlewaretoken': $("#csrf input").val(),
+                'email': $("#id_username").val(), 
+                'password': $("#id_password").val() 
+            }, onLogIn, 'json');
+        })
+
+        $("#logout").click(function(e) {
+            $.get('/user/logout/', { 'xhr': 'true' }, onLogOut, 'json');
+        }); 
+    };
+
+    function onLogOut(data) {
         $("#login").show();
         
         $("#profile").hide();
         $("#logout").hide().html('');
+
+        self.loggedIn = false;
     }
 
-    function loggedIn(data) {
+    function onLogIn(data) {
         // format this better
         $("#logout").show().html('logout');
         $("#profile").show();
@@ -71,5 +83,18 @@ $(function() {
         $("#login").hide();
         $("#content").removeClass("modal");
         $("#login-form").hide();
+
+        self.loggedIn = true;
+
+        if (self.afterLogIn) {
+            self.afterLogIn();
+            self.afterLogIn = null;
+        }
     }
+
+    return self;
+}();
+
+$(function() {
+    user.initialize();
 });

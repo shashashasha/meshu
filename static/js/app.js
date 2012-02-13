@@ -47,18 +47,35 @@ $(function() {
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
 		var view = content.attr("class");
-		var index = views.indexOf(view);
-		content.attr("class",views[index+1]);
-		if (view == "edit") 
+		
+		if (view == "edit") {
 			meshu.mesh().updateCircleBehavior();
+		}
 		else if (view == "make") {
+
+			// break the flow if they're not logged in
+			if (!user.loggedIn)	{
+				user.showModal();
+				var button = $(this);
+
+				// after a user logs in, click the "checkout button"
+				user.afterLogIn = function() {
+					button.click();
+				};
+				return;
+			}
+
 			d3.select("#delaunay")
 				.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+
 		}
+
+		var index = views.indexOf(view);
+		content.attr("class", views[index+1]);
 	});
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
-		content.attr("class",views[index-1]);
+		content.attr("class", views[index-1]);
 		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
 		if (views[index-1] == "make") 
 			d3.select("#delaunay")
