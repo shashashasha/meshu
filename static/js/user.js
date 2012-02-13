@@ -25,7 +25,8 @@ $(function() {
             $("#profile").show();
 
             $("#login").hide();
-            $("#login-form").slideUp();
+            $("#content").removeClass("modal");
+            $("#login-form").hide();
         }, 'json');
     });
 
