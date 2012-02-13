@@ -141,8 +141,12 @@ LOGGING = {
     }
 }
 
+# authentication
 AUTH_PROFILE_MODULE = 'meshu.UserProfile'
+# make django able to accept email/pass as login, vs username/pass
+AUTHENTICATION_BACKENDS = ( 'meshu.backend.EmailBackend', )
 
+# for view short urls
 SHORTEN_MODELS = {
     'M': 'meshu.meshu'
 }

@@ -1,9 +1,23 @@
 $(function() {
     $("#login").click(function(e) {
         $("#content").addClass("modal");
-        $("#login-form").show();
+        $("#login-form").fadeIn();
+
+        $("#id_username").val('');
+        $("#id_password").val('');
+        $("#repeat_password").val('');
     });
 
+    $("#login-cancel").click(function(e) {
+        $("#content").removeClass("modal");
+        $("#login-form").fadeOut();
+
+        $("#id_username").val('');
+        $("#id_password").val('');
+        $("#repeat_password").val('');
+    }); 
+
+    // switching mode
     $("#login-form li").click(function(){
        var mode = $(this).attr("id").split("-")[1];
        var form = $("#login-form");
@@ -12,35 +26,50 @@ $(function() {
        $(this).addClass("active");
     });
 
+    /* 
+        when logging in 
+    */
     $("#login-submit").click(function(e) {
-        $.get('/login/', { 
+        $.post('/user/login/', { 
             'xhr': 'true', 
 
-            // need to pass these securely
-            'username': $("#id_username").val(), 
+            'csrfmiddlewaretoken': $("#csrf input").val(),
+            'email': $("#id_username").val(), 
             'password': $("#id_password").val() 
-        }, function(data) {
-            // format this better
-            $("#logout").show().html(data.username + ': logout');
-            $("#profile").show();
-
-            $("#login").hide();
-            $("#content").removeClass("modal");
-            $("#login-form").hide();
-        }, 'json');
+        }, loggedIn, 'json');
     });
 
-    $("#login-cancel").click(function(e) {
-        $("#content").removeClass("modal");
-        $("#login-form").hide();
-    }); 
+    /* 
+        when creating an account
+    */
+    $("#login-create").click(function(e) {
+        $.post('/user/create/', {
+            'xhr': 'true',
+
+            'csrfmiddlewaretoken': $("#csrf input").val(),
+            'email': $("#id_username").val(), 
+            'password': $("#id_password").val() 
+        }, loggedIn, 'json');
+    })
 
     $("#logout").click(function(e) {
-        $.get('/logout/', { 'xhr': 'true' }, function(data) {
-            $("#login").show();
-            
-            $("#profile").hide();
-            $("#logout").hide().html('');
-        }, 'json');
+        $.get('/user/logout/', { 'xhr': 'true' }, loggedOut, 'json');
     }); 
+
+    function loggedOut(data) {
+        $("#login").show();
+        
+        $("#profile").hide();
+        $("#logout").hide().html('');
+    }
+
+    function loggedIn(data) {
+        // format this better
+        $("#logout").show().html('logout');
+        $("#profile").show();
+
+        $("#login").hide();
+        $("#content").removeClass("modal");
+        $("#login-form").hide();
+    }
 });

@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import uuid
 
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -119,9 +120,9 @@ def item_save(request, item_id):
 # Views for Users
 #
 def user_login(request, *args, **kwargs):
-	xhr = request.GET.has_key('xhr')
+	xhr = request.POST.has_key('xhr')
 
-	user = authenticate(username=request.GET['username'], password=request.GET['password'])
+	user = authenticate(username=request.POST['email'], password=request.POST['password'])
 	response = login(request, user)
 
 	if xhr:
@@ -134,7 +135,7 @@ def user_login(request, *args, **kwargs):
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : request.GET['xhr']
+			'view' : request.POST['xhr']
 	}, context_instance=RequestContext(request))
 
 def user_logout(request, *args, **kwargs):
@@ -151,7 +152,16 @@ def user_logout(request, *args, **kwargs):
 	}, context_instance=RequestContext(request))
 
 def user_create(request):
-	username = request.POST['username']
+	username = uuid.uuid4().hex[:30]
+	
+	try:
+		while True:
+			User.objects.get(username=username)
+			username = uuid.uuid4().hex[:30]
+	except User.DoesNotExist:
+		pass
+
+	# username = request.POST['username']
 	email = request.POST['email']
 	password = request.POST['password']
 
@@ -160,6 +170,11 @@ def user_create(request):
 
 	user.is_staff = False
 	user.save()
+
+	# if it's an ajax request, assume you want to log in immediately
+	xhr = request.POST.has_key('xhr')
+	if xhr:
+		return user_login(request)
 
 	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'signedup'
