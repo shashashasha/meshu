@@ -56,6 +56,7 @@ sb.mesh = function(frame, map, width, height) {
         .on("mouseup", mouseup);
 
     function mousemove() {
+        // disable mousemove detection when we're not editing
         if (!$("#content").hasClass("edit")) return;
         if (!dragging) {
             return;

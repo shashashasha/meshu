@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import uuid
 
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -151,7 +152,16 @@ def user_logout(request, *args, **kwargs):
 	}, context_instance=RequestContext(request))
 
 def user_create(request):
-	username = request.POST['username']
+	username = uuid.uuid4().hex[:30]
+	
+	try:
+		while True:
+			User.objects.get(username=username)
+			username = uuid.uuid4().hex[:30]
+	except User.DoesNotExist:
+		pass
+
+	# username = request.POST['username']
 	email = request.POST['email']
 	password = request.POST['password']
 
