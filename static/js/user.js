@@ -1,6 +1,15 @@
 $(function() {
     $("#login").click(function(e) {
-        $("#login-form").slideDown();
+        $("#content").addClass("modal");
+        $("#login-form").show();
+    });
+
+    $("#login-form li").click(function(){
+       var mode = $(this).attr("id").split("-")[1];
+       var form = $("#login-form");
+       form.attr("class",mode); 
+       form.find("li").removeClass("active");
+       $(this).addClass("active");
     });
 
     $("#login-submit").click(function(e) {
@@ -16,12 +25,14 @@ $(function() {
             $("#profile").show();
 
             $("#login").hide();
-            $("#login-form").slideUp();
+            $("#content").removeClass("modal");
+            $("#login-form").hide();
         }, 'json');
     });
 
     $("#login-cancel").click(function(e) {
-        $("#login-form").slideUp();
+        $("#content").removeClass("modal");
+        $("#login-form").hide();
     }); 
 
     $("#logout").click(function(e) {
