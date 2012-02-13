@@ -120,9 +120,9 @@ def item_save(request, item_id):
 # Views for Users
 #
 def user_login(request, *args, **kwargs):
-	xhr = request.GET.has_key('xhr')
+	xhr = request.POST.has_key('xhr')
 
-	user = authenticate(username=request.GET['username'], password=request.GET['password'])
+	user = authenticate(username=request.POST['email'], password=request.POST['password'])
 	response = login(request, user)
 
 	if xhr:
@@ -135,7 +135,7 @@ def user_login(request, *args, **kwargs):
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : request.GET['xhr']
+			'view' : request.POST['xhr']
 	}, context_instance=RequestContext(request))
 
 def user_logout(request, *args, **kwargs):
@@ -170,6 +170,11 @@ def user_create(request):
 
 	user.is_staff = False
 	user.save()
+
+	# if it's an ajax request, assume you want to log in immediately
+	xhr = request.POST.has_key('xhr')
+	if xhr:
+		return user_login(request)
 
 	return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'signedup'

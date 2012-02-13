@@ -17,7 +17,7 @@
 
 	<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list">login</li>
 	<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
-	<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">{{ user.username }}: logout</li>
+	<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
 
 	<div id="login-form" class="signin">
 		<h2>Please sign in to place an order</h2>
@@ -26,6 +26,11 @@
 			<li id="tab-account">Create an Account</li>
 		</ul>
 		<table><tbody>
+			<form action="" method="POST" id="user-form">
+            {# put a csrf token in every form in django, for security #}
+            <div id="csrf">
+            	{% csrf_token %}
+            </div>
 			<tr>
 				<td><label for="id_username">Email</label></td>
 				<td><input id="id_username" type="text" name="username" maxlength="30"></td>
@@ -38,6 +43,7 @@
 				<td><label for="repeat_password">Re-enter Password</label></td>
 				<td><input type="password" name="repeat_password" id="repeat_password"></td>
 			</tr>
+			</form>
 		</tbody></table>
 		<div id="login-buttons">
 			<div id="login-cancel" class="button">Cancel</div>
@@ -45,7 +51,7 @@
 			<div id="login-create" class="button account">Create Account</div>
 		</div>
 	</div>
-	
+
 		</ul>
 		{% endblock %}
 		<h1 id="meshu"><a href="/">meshu</a></h1>

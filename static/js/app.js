@@ -70,7 +70,7 @@ $(function() {
 		$("#save-button").html('saving');
 
 		$.get(window.location.href + '/save', { 
-      'xhr': 'true', 
+      		'xhr': 'true', 
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()
     }, function(data) {

@@ -57,8 +57,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
 	# url(r'^view/(?P<item_id>\d+)', 'item_display'),
 
-	url(r'^login/', 'user_login'),
-	url(r'^logout/', 'user_logout'),
+	url(r'^user/login/', 'user_login'),
+	url(r'^user/logout/', 'user_logout'),
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'user_create'),
 
