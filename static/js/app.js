@@ -52,8 +52,16 @@ $(function() {
 		if (view == "edit") 
 			meshu.mesh().updateCircleBehavior();
 		else if (view == "make") {
-			d3.select("#delaunay")
-				.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+			var counter = 0;
+			var rotateInterval = setInterval(function(){
+				if (counter < 20){
+					d3.select("#delaunay")
+						.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
+					counter++;
+				}
+				else
+				clearInterval(rotateInterval);
+			},40);
 		}
 	});
 	$(".back").click(function(){
@@ -165,6 +173,7 @@ $(function() {
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(meshu.outputTitle());
 
+		$("#review-title").text('"'+meshu.outputTitle()+'"');
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
