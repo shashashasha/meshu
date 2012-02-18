@@ -1,8 +1,10 @@
 var sb = sb || {};
 var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
 
-sb.meshu = function(frame, width, height) {
+sb.meshu = function(frame) {
 	var self = {},
+        width = $(frame).width() + 'px',
+        height = $(frame).height() + 'px',
 		map = sb.map(frame, width, height),
 		mesh = sb.mesh(frame, map, width, height);
 
