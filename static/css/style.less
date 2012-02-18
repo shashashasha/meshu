@@ -217,14 +217,27 @@ h1#meshu {
     position: absolute;
     z-index: 1339;
     display: block;
-    background: white;
-    border: 1px solid @grey;
-    padding: 2px 4px;
+    background: @pink;
+    color: white;
+    padding: 2px 5px;
     display: none;
     white-space: nowrap;
 }
 #place-hover.active {
     display: block;
+}
+.notch {
+    position: absolute;
+    top: 21px;
+    left: 20px;
+    margin: 0;
+    border-top: 6px solid @pink;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
 }
 
 #places {
@@ -451,10 +464,11 @@ h1#meshu {
     .transition(right);
 }
 #view p, #view span, #view ul{
-    background-color: rgba(255,255,255,.85);
+    background-color: rgba(255,255,255,.9);
     padding: 3px 10px;  
 }
 #view ul{
+    padding-top: 10px;
     display: none;
 }
 #view li {

@@ -255,8 +255,10 @@ sb.mesh = function(frame, map, width, height) {
                 list.select("#p-"+i).attr("class","place highlight");
             else {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
-                placeHover.text(places[i]).addClass("active")
-                    .css({"top":(p.y-25)+"px", "left":(p.x+5)+"px"});
+                placeHover.addClass("active").find("span").text(places[i]);
+                var w = placeHover.width();
+                placeHover.css({"top":(p.y-32)+"px", "left":(p.x-(w/2))+"px"})
+                    .find("b").css("left",w/2-3+"px");
             }
         });
         circles.on("mouseout",function(d,i){
