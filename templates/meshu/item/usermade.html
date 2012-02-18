@@ -3,14 +3,13 @@
 
 {% block view %}
     <div id="view">
-        <div class="nav back">edit meshu</div>
-        <div class="view-wrapper">
-            <h2>{{ meshu.title }}</h2>
-            <ul id="display-places"></ul>
-        </div>
-        <a href="{% shorturl meshu %}">View public link</a>
-        <div id="order-button" class="nav next active start-order">order meshu</div>
+        <h2><span>{{ meshu.title }}</span></h2>
+        <p class="show-places">show places list</p>
+        <p class="show-places" style="display: none;">hide places list</p>
+        <ul id="display-places"></ul>
     </div>
+    <div id="reedit" class="nav back">edit meshu</div>
+    <div id="order-button" class="nav next active start-order">order meshu</div>
 {% endblock %}
 
 {% block goback %}

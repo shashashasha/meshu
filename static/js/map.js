@@ -9,8 +9,8 @@ sb.map = function(frame, width, height) {
 	var container = d3.select(frame || "body").append("div")[0][0];
       
     container.style.position = "absolute";
-    container.style.width = width || '600px';
-    container.style.height = height || '600px';
+    container.style.width = width;
+    container.style.height = height;
 
 	// var container = document.getElementById(selector || "body");
 	var image = po.image()
@@ -65,7 +65,7 @@ sb.map = function(frame, width, height) {
 		}];
 
 		self.map.extent(extent);
-		self.map.zoom(self.map.zoom() - 1);
+		self.map.zoom(self.map.zoom() - .5);
 	};
 
 	// this was old, from when we were updating the proportions of the map. 

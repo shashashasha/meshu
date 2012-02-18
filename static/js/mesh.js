@@ -9,11 +9,14 @@ sb.mesh = function(frame, map, width, height) {
 
     var main = d3.select(frame || "body").append("div")
         .attr("id", selfId)
-        .attr("style", "position:absolute;z-index:100;")
+        .style("width", width)
+        .style("height", height)
+        .style("position","absolute")
+        .style("z-index","100")
         .append("svg:svg")
         .attr("class","meshu-svg")
-        .attr("width", $(frame).width())
-        .attr("height", $(frame).height());
+        .attr("width", "100%")
+        .attr("height", "100%");
 
     var g = main.append("svg:g")
             .attr("id","delaunay")
@@ -24,11 +27,13 @@ sb.mesh = function(frame, map, width, height) {
         hidden.append("svg:path");
     
     var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;");
+        .attr("style", "position:absolute;z-index:1337;")
+        .style("width", width)
+        .style("height", height);
 
     var svg = uiFrame.append("svg:svg")
-        .attr("width", width || "600px")
-        .attr("height", height || "600px");
+        .attr("width", "100%")
+        .attr("height", "100%");
 
     var ui = svg.append("svg:g")
         .attr("id", "delaunay-ui");
@@ -250,8 +255,10 @@ sb.mesh = function(frame, map, width, height) {
                 list.select("#p-"+i).attr("class","place highlight");
             else {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
-                placeHover.text(places[i]).addClass("active")
-                    .css({"top":(p.y-25)+"px", "left":(p.x+5)+"px"});
+                placeHover.addClass("active").find("span").text(places[i]);
+                var w = placeHover.width();
+                placeHover.css({"top":(p.y-32)+"px", "left":(p.x-(w/2))+"px"})
+                    .find("b").css("left",w/2-3+"px");
             }
         });
         circles.on("mouseout",function(d,i){

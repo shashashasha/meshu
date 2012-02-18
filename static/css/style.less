@@ -221,14 +221,27 @@ h1#meshu {
     position: absolute;
     z-index: 1339;
     display: block;
-    background: white;
-    border: 1px solid @grey;
-    padding: 2px 4px;
+    background: @pink;
+    color: white;
+    padding: 2px 5px;
     display: none;
     white-space: nowrap;
 }
 #place-hover.active {
     display: block;
+}
+.notch {
+    position: absolute;
+    top: 21px;
+    left: 20px;
+    margin: 0;
+    border-top: 6px solid @pink;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
 }
 
 #places {
@@ -328,18 +341,29 @@ h1#meshu {
 	height: 600px;
     position: absolute;
     z-index: 1;
+    .transition(width);
+}
+.view .frame {
+    width: 1000px;
+    .transition(width);
+    right: 0;
 }
 .edit .frame {
     right: 0;
     .transition(right);
 }
-.make .frame, .checkout .frame, .review .frame, .display .frame, .view .frame, .readymade .frame {
+.make .frame, .checkout .frame, .review .frame, .display .frame, .readymade .frame {
     right: 400px;
     .transition(right);
 }
 
 .map .layer {
     opacity: .3;
+    .transition(opacity);
+}
+
+.view .map .layer {
+    opacity: .6;
     .transition(opacity);
 }
 
@@ -433,12 +457,37 @@ h1#meshu {
     .transition(right);
 }
 .view #view {
-    right: 0;
-    .transition(right);
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    padding: 0;
+    width: 250px;
 }
 .make #view, .checkout #view, .review #view {
     right: 400px;
     .transition(right);
+}
+#view p, #view span, #view ul{
+    background-color: rgba(255,255,255,.9);
+    padding: 3px 10px;  
+}
+#view ul{
+    padding-top: 10px;
+    display: none;
+}
+#view li {
+    padding-left: 20px;
+    text-indent: -20px;
+}
+#view h2 {
+    margin-bottom: 15px;
+    width: 550px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#view .show-places {
+    cursor: pointer;
 }
 
 .display #display {
@@ -446,11 +495,11 @@ h1#meshu {
 }
 
 #display-places {
-    height: 410px;
+    max-height: 410px;
     overflow-y: auto;
 }
 
-.make-wrapper, .view-wrapper {
+.make-wrapper {
     margin-top: 40px;
     position: relative;
 }
@@ -535,6 +584,7 @@ h1#meshu {
     background-color: @grey;
     color: white;
     padding: 5px 10px;
+    z-index: 1;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -558,19 +608,28 @@ h1#meshu {
     left: 20px;
     top: 20px;
 }
+.view .back {
+    left: auto;
+    right: 130px;
+}
 
 #finish-button, #save-button {
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
-#checkout-button, #review-button, #order-button {
+#checkout-button, #review-button {
     position: relative;
     float: right;
     font-size: 20px;
 }
-#review-button, #order-button {
+#review-button {
     margin-top: 30px;
+}
+#order-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 /* 

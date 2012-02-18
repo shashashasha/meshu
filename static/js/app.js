@@ -141,6 +141,11 @@ $(function() {
 		}
 	});
 
+	$(".show-places").click(function(){
+		$("#display-places").slideToggle();
+		$(".show-places").toggle();
+	})
+
 	//materials selection
 	var objectType = "earrings";
 	var objectMaterial, objectColor;
