@@ -1,0 +1,14 @@
+{% extends "meshu/notification/base_notification.html" %}
+{% load shorturl %}
+
+{% block title %}Meshu - Order Confirmed{% endblock %}
+
+{% block message %}
+<div>
+    We've just sent you an email confirmation.<br/>
+    You can show other people your new meshu (if you want!) by sending them this link: <strong><a href="http://meshu.io{% shorturl meshu %}">http://meshu.io{% shorturl meshu %}</a></strong>.
+</div>
+<h2 class="content-header">Share the Love</h2>
+<a href="https://twitter.com/hi_meshu" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @hi_meshu</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}
