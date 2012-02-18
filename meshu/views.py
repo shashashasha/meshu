@@ -62,20 +62,9 @@ def item_edit(request, item_id):
 
 	return item_handler(request, item_id, 'item.html', 'edit')
 
-def item_view(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# check user id
-	if request.user.id != item.user_profile.user.id:
-		return render_to_response('meshu/notification/base_notification.html', {
-				'view' : 'authorization_required'
-		}, context_instance=RequestContext(request))
-
-	return item_handler(request, item_id, 'usermade.html', 'view')
-
 def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
-	return item_handler(request, item_id, 'display.html', 'display')
+	return item_handler(request, item_id, 'usermade.html', 'view')
 
 def item_readymade(request, item_id):
 	return item_handler(request, item_id, 'readymade.html', 'readymade')

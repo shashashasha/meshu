@@ -64,8 +64,6 @@ urlpatterns += patterns('meshu.views',
 	# users own meshus
 	url(r'^user/(?P<item_id>\d+)/save', 'item_save'),
 	# url(r'^user/(?P<item_id>\d+)/delete', 'item_delete'),
-	url(r'^user/(?P<item_id>\d+)', 'item_view'),
-	url(r'^user/(?P<item_encoded>\w+)', 'item_display'),
 
 	# user profile
 	url(r'^user/', 'user_profile'),
