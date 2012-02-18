@@ -166,6 +166,10 @@ h1#meshu {
     opacity: .3;
 }
 
+.inner-content {
+    padding: 20px;
+}
+
 #edit {
     padding: 20px;
     width: 360px;
@@ -461,16 +465,20 @@ h1#meshu {
 }
 .make-wrapper li {
     color: @grey;
+
+    &:hover {
+        color: black;
+    }
+
+    &.selected {
+        color: @pink;
+    }
 }
-.make-wrapper li:hover {
-    color: black;
-}
+
 .readymade li:hover {
     color: @grey;
 }
-.make-wrapper li.selected {
-    color: @pink;
-}
+
 .option-list li {
     cursor: pointer;
 }
@@ -492,14 +500,14 @@ h1#meshu {
     }
 } 
 
-#review h3 {
-    margin: 1.5em 0 .5em 0;
+#review {
+    h3 {
+        margin: 1.5em 0 .5em 0;
+    }
+    p {
+        margin: .25em 0;
+    }
 }
-
-#review p{
-    margin: .25em 0;
-}
-
 
 #total {
     display: block;
@@ -509,6 +517,10 @@ h1#meshu {
     padding-top: 10px;
     position: absolute;
     top: 400px;
+
+    h2 {
+        margin-top: 0;
+    }
 }
 .ready #total {
     top: 310px;
@@ -517,9 +529,6 @@ h1#meshu {
     float: right;
     font-size: 28px;
     color: @grey;
-}
-#total h2{
-    margin-top: 0;
 }
 
 .nav {

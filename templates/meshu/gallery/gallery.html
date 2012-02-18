@@ -27,13 +27,17 @@
         {% endif %}
         {% for object in meshus reversed %}
             <li class="object">
-                <a class="image" href="/{{ view }}/{{ object.id }}/">
+                <a class="image" href="
+                    {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
+                    {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
                     {% autoescape off %}
                         {{ object.svg }}
                     {% endautoescape %}
                 </a>
                 <p class="description">{{ object.title }}</p>
-                <a class="clickthrough" href="/{{ view }}/{{ object.id }}/">click to view</a>
+                <a class="clickthrough" href="
+                    {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
+                    {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">click to view</a>
             </li>
         {% endfor %}
     </ul>

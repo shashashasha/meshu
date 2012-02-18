@@ -55,7 +55,6 @@ urlpatterns += patterns('meshu.views',
 
 	# display
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
-	# url(r'^view/(?P<item_id>\d+)', 'item_display'),
 
 	url(r'^user/login/', 'user_login'),
 	url(r'^user/logout/', 'user_logout'),
@@ -66,6 +65,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^user/(?P<item_id>\d+)/save', 'item_save'),
 	# url(r'^user/(?P<item_id>\d+)/delete', 'item_delete'),
 	url(r'^user/(?P<item_id>\d+)', 'item_view'),
+	url(r'^user/(?P<item_encoded>\w+)', 'item_display'),
 
 	# user profile
 	url(r'^user/', 'user_profile'),

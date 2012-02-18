@@ -26,7 +26,6 @@
 			<li id="tab-account">Create an Account</li>
 		</ul>
 		<table><tbody>
-			<form action="" method="POST" id="user-form">
             {# put a csrf token in every form in django, for security #}
             <div id="csrf">
             	{% csrf_token %}
@@ -43,7 +42,6 @@
 				<td><label for="repeat_password">Re-enter Password</label></td>
 				<td><input type="password" name="repeat_password" id="repeat_password"></td>
 			</tr>
-			</form>
 		</tbody></table>
 		<div id="login-buttons">
 			<div id="login-cancel" class="button">Cancel</div>

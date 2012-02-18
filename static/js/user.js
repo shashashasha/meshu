@@ -3,6 +3,8 @@ var user = function() {
 
     self.loggedIn = false;
 
+    self.mode = 'signin';
+
     self.showModal = function() {
         $("#content").addClass("modal");
         $("#login-form").fadeIn();
@@ -33,6 +35,18 @@ var user = function() {
            form.attr("class",mode); 
            form.find("li").removeClass("active");
            $(this).addClass("active");
+
+           self.mode = mode;
+        });
+
+        $("#login-form input").keypress(function(event) {
+            if ( event.which == 13 ) {
+                 if (self.mode == 'signin') {
+                     $("#login-submit").click();
+                 } else if (self.mode == 'account') {
+                     $("#login-create").click();
+                 }
+            }
         });
 
         /* 

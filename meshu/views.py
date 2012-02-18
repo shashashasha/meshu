@@ -256,7 +256,7 @@ def make_order(request, profile, meshu):
 	if request.user.is_authenticated():
 		mail_order_confirmation(profile.user.email, meshu, order)
 
-	return render_to_response('meshu/notification/base_notification.html', {
+	return render_to_response('meshu/notification/ordered.html', {
 			'view' : 'paid',
 			'order': order,
 			'meshu': meshu

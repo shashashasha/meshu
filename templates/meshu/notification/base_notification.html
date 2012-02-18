@@ -5,7 +5,7 @@
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
-	<h2 id="notification" class="page-header">
+	<h2 id="notification">
         {% if view == 'signedup' %}
             Awesome! Thanks for signing up!
         {% endif %}
@@ -19,6 +19,8 @@
             Oh, our bad.
         {% endif %}
     </h2>
+    <div class="inner-content">
     {% block message %}
     {% endblock %}
+    </div>
 {% endblock %}

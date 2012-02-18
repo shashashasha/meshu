@@ -79,6 +79,7 @@ $(function() {
 		var index = views.indexOf(view);
 		content.attr("class", views[index+1]);
 	});
+	
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class", views[index-1]);
@@ -86,8 +87,8 @@ $(function() {
 		if (views[index-1] == "make") 
 			d3.select("#delaunay")
 				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
-
 	});
+
 	// this only applies to usermade meshus
 	$("#save-button").click(function() {
 		$("#save-button").html('saving');
@@ -125,13 +126,19 @@ $(function() {
       });
 	});
 
+	var timer;
 	$("#img-thumbs img").click(function(){
+		clearTimeout(timer);
+
+		// <3
 		var id = $(this).attr("id");
 		if (!id) {
 			$(".other-view").removeClass("active");
-			setTimeout(function(){ $(".other-view").removeClass("z-1"); },1000);
+			timer = setTimeout(function(){ $(".other-view").removeClass("z-1"); },1000);
 		}
-		$("#l-"+id).addClass("active z-1");
+		else {
+			$("#l-"+id).addClass("active z-1");
+		}
 	});
 
 	//materials selection
