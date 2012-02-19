@@ -99,7 +99,7 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
-def meshu_update(request, item_encoded):
+def item_update(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
 
 	item_id = int(str(item_encoded).decode("hex"))
@@ -112,11 +112,12 @@ def meshu_update(request, item_encoded):
 		response_dict = {}
 		response_dict.update({ 'success' : True })
 		response_dict.update({ 'meshu_id' : old.id })
+		response_dict.update({ 'meshu_url' : old.get_absolute_url() })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return item_handler(request, item_id, 'item.html', 'view')
 
-def meshu_save(request, item_encoded):
+def item_save(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
 
 	item_id = int(str(item_encoded).decode("hex"))
@@ -131,6 +132,7 @@ def meshu_save(request, item_encoded):
 		response_dict = {}
 		response_dict.update({ 'success' : True })
 		response_dict.update({ 'meshu_id' : meshu.id })
+		response_dict.update({ 'meshu_url' : meshu.get_absolute_url() })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return item_handler(request, item_id, 'item.html', 'view')

@@ -39,8 +39,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/', 'item_make'),
 	
 	# save/new always creates a new meshu
-	url(r'^edit/(?P<item_encoded>\d+)/save', 'meshu_save'),
-	url(r'^edit/(?P<item_encoded>\d+)/update', 'meshu_update'),
+	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
+	url(r'^edit/(?P<item_encoded>\d+)/update', 'item_update'),
 
 	# edit an existing user meshu
 	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),

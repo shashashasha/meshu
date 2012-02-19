@@ -119,9 +119,13 @@ sb.meshu = function(frame) {
         return mesh;
     };
 
+    self.updateTitle = function(t) {
+        mesh.updateTitle(t);
+    };
+
     self.outputTitle = function() {
         return mesh.outputTitle();
-    }
+    };
 
     // output the contents of our mesh as svg
     self.outputSVG = function() {

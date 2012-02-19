@@ -9,7 +9,7 @@ var saver = function() {
   function getMeshuXHR(meshu) {
     return {
       'xhr': 'true',
-      'title': meshu.outputTitle(),
+      'title' : meshu.outputTitle(),
       'svg': meshu.outputSVG(),
       'location_data' : meshu.outputLocationData()
     }
@@ -45,7 +45,8 @@ var saver = function() {
             setTimeout(postSave, 500);
 
           setTimeout(function() {
-            $("#save-button").html('save as new');
+            // $("#save-button").html('save as new');
+            window.location.href = window.location.href.split('/').shift() + data.meshu_url;
           }, 1000);
         }, 'json');
     });
@@ -70,7 +71,8 @@ var saver = function() {
             setTimeout(postSave, 500);
 
           setTimeout(function() {
-            $("#update-button").html('save current');
+            // $("#update-button").html('save current');
+            window.location.href = window.location.href.split('/').shift() + data.meshu_url;
           }, 1000);
         }, 'json');
 
