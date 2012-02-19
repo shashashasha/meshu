@@ -54,6 +54,21 @@ $(function() {
             });
 	}
 
+	if (!user.loggedIn) {
+		if (loadedMeshu && pageType != "edit") return;
+		var helpdiv = $("<div>").attr("id","edit-help")
+						.append($("<h2>").text("It's easy to get started!"),
+							$("<p>").text("Search for a place"),
+							$("<p>").text("Or just click on the map"),
+							$("<p>").text("Ok, I'm ready!").attr("id","close-help"));
+		content.append(helpdiv);
+		$("#modal-bg").fadeIn();
+		$("#close-help").click(function(){
+			$("#edit-help").slideUp('fast');
+			$("#modal-bg").fadeOut();
+		});
+	}
+
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
@@ -172,9 +187,9 @@ $(function() {
 		// outputting meshu data
 		$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
-		$("#meshu-title").val(meshu.outputTitle());
+		$("#meshu-title").val(loadedMeshu.title || meshu.outputTitle());
 
-		$("#review-title").text('"'+meshu.outputTitle()+'"');
+		$("#review-title").text('"'+(loadedMeshu.title || meshu.outputTitle())+'"');
 		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
