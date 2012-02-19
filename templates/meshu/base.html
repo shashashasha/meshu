@@ -20,7 +20,7 @@
 	<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
 
 	<div id="login-form" class="signin">
-		<h2>Please sign in to place an order</h2>
+		<h2>{%block login_form %}Please sign in to place an order{% endblock %}</h2>
 		<ul>
 			<li id="tab-signin" class="active">Sign In</li>
 			<li id="tab-account">Create an Account</li>
