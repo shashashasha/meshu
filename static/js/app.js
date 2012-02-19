@@ -23,16 +23,19 @@ $(function() {
 
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
-		if (pageType == "view")
-			views = ["edit","view","make","checkout","review"];
-		else if (pageType == "edit")
+		if (pageType == "edit")
 			views = ["edit","make","checkout","review"];
-		else if (pageType == "make")
-			views = ["make","checkout","review"];
+		else if (pageType == "make") {
+			views = ["edit","make","checkout","review"];
+			sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
+		}
+		else if (pageType == "view")
+			views = ["edit","view","make","checkout","review"];
 		else {
 			views = ["readymade","checkout","review"];
 			$("#materials").addClass("ready");
 		}
+		$("#finish-button").addClass("active");
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
@@ -45,7 +48,6 @@ $(function() {
                 d.title = loadedMeshu.title;
                 return d.title;
             });
-        $("#finish-button").addClass("active");
 	}
 
 	//navigation
