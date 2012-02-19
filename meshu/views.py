@@ -51,7 +51,8 @@ def item_make(request):
 			'view' : 'edit'
 		}, context_instance=RequestContext(request))
 
-def item_edit(request, item_id):
+def item_edit(request, item_encoded):
+	item_id = int(str(item_encoded).decode("hex"))
 	item = get_object_or_404(Meshu, pk=item_id)
 
 	# check user id

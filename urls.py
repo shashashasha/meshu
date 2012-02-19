@@ -50,8 +50,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/', 'item_make'),
 	
 	# save always creates a new meshu
-	url(r'^edit/(?P<item_id>\d+)/save', 'item_save'),
-	url(r'^edit/(?P<item_id>\d+)', 'item_edit'),
+	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
+	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
 
 	# display
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
@@ -62,8 +62,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^user/create/', 'user_create'),
 
 	# users own meshus
-	url(r'^user/(?P<item_id>\d+)/save', 'item_save'),
-	# url(r'^user/(?P<item_id>\d+)/delete', 'item_delete'),
+	url(r'^user/(?P<item_encoded>\d+)/save', 'item_save'),
+	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
 
 	# user profile
 	url(r'^user/', 'user_profile'),

@@ -48,10 +48,19 @@ class Meshu(models.Model):
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title + ', ' + str(self.date_created)
+	
+	def get_encoded_id(self):
+		return str(self.id).encode("hex")
+
+	def get_order_url(self):
+		return "/order/%s/" % self.get_encoded_id()
+		
+	def get_edit_url(self):
+		return "/edit/%s/" % self.get_encoded_id()
 
 	# for short urling
 	def get_absolute_url(self):
-		return "/view/%s/" % str(self.id).encode("hex")
+		return "/view/%s/" % self.get_encoded_id()
 
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
