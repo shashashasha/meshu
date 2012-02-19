@@ -292,7 +292,7 @@ h1#meshu {
 }
 
 #places ul {
-    height: 345px;
+    height: 352px;
     overflow-y: auto;
 }
 .place {
@@ -345,15 +345,12 @@ h1#meshu {
 	height: 600px;
     position: absolute;
     z-index: 1;
-    .transition(width);
+    right: 0;
 }
 .view .frame {
     width: 1000px;
-    .transition(width);
-    right: 0;
 }
 .edit .frame {
-    right: 0;
     .transition(right);
 }
 .make .frame, .checkout .frame, .review .frame, .display .frame, .readymade .frame {
@@ -588,12 +585,12 @@ h1#meshu {
     background-color: @grey;
     color: white;
     padding: 5px 10px;
+    cursor: pointer;
 
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     .transition(background-color, .5s);
-    cursor: pointer;
 }
 .nav a {
     color: white;
@@ -608,8 +605,6 @@ h1#meshu {
 
 .nav.active {
     background-color: @pink;
-    .transition(background-color, .5s);
-    cursor: pointer;
 }
 
 .back {

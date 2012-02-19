@@ -30,7 +30,7 @@ $(function() {
 			sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
 		}
 		else if (pageType == "view")
-			views = ["edit","view","make","checkout","review"];
+			views = ["view","make","checkout","review"];
 		else {
 			views = ["readymade","checkout","review"];
 			$("#materials").addClass("ready");
