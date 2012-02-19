@@ -83,7 +83,7 @@ def item_readymade(request, item_id):
 	return item_handler(request, item_id, 'readymade.html', 'readymade')
 
 def item_delete(request, item_id):
-	item_permissions(request, item_id)
+	# item_permissions(request, item_id)
 
 	meshu = meshu_delete(request, item_id)
 	return render_to_response('meshu/notification/base_notification.html', {
