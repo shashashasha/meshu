@@ -27,6 +27,8 @@ $(function() {
 			views = ["edit","view","make","checkout","review"];
 		else if (pageType == "edit")
 			views = ["edit","make","checkout","review"];
+		else if (pageType == "make")
+			views = ["make","checkout","review"];
 		else {
 			views = ["readymade","checkout","review"];
 			$("#materials").addClass("ready");
