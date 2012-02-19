@@ -166,6 +166,7 @@
     {% if meshu %}
         var loadedMeshu = {
             user: '{{ meshu.user_profile.user.username }}',
+            edit_url: '{{ meshu.get_edit_url }}',
             title: '{{ meshu.title }}',
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
