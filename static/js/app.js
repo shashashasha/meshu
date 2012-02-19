@@ -115,7 +115,8 @@ $(function() {
 	$("#save-button").click(function() {
 		$("#save-button").html('saving');
 
-		$.get(window.location.href + '/save', { 
+		console.log(loadedMeshu.edit_url + 'save');
+		$.get(loadedMeshu.edit_url + 'save', { 
       		'xhr': 'true', 
 			'svg': meshu.outputSVG(),
 			'location_data': meshu.outputLocationData()

@@ -61,7 +61,7 @@ def item_begin_order(request, item_encoded):
 				'view' : 'authorization_required'
 		}, context_instance=RequestContext(request))
 
-	return item_handler(request, item_id, 'item.html', 'make')
+	return item_handler(request, item_id, 'usermade.html', 'make')
 
 def item_edit(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
@@ -73,11 +73,11 @@ def item_edit(request, item_encoded):
 				'view' : 'authorization_required'
 		}, context_instance=RequestContext(request))
 
-	return item_handler(request, item_id, 'item.html', 'edit')
+	return item_handler(request, item_id, 'usermade.html', 'edit')
 
 def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
-	return item_handler(request, item_id, 'usermade.html', 'view')
+	return item_handler(request, item_id, 'display.html', 'view')
 
 def item_readymade(request, item_id):
 	return item_handler(request, item_id, 'readymade.html', 'readymade')
@@ -99,9 +99,10 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
-def item_save(request, item_id):
+def item_save(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
 
+	item_id = int(str(item_encoded).decode("hex"))
 	old = Meshu.objects.get(id=item_id)
 
 	meshu = Meshu()

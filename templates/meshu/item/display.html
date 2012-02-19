@@ -1,0 +1,27 @@
+{% extends "meshu/item/base_item.html" %}
+{% load shorturl %}
+
+{% block login_form %}Please sign in{% endblock %}
+
+{% block view %}
+    <div id="view">
+        <h2><span>{{ meshu.title }}</span></h2>
+        <p class="show-places">show places list</p>
+        <p class="show-places" style="display: none;">hide places list</p>
+        <ul id="display-places"></ul>
+    </div>
+    {% if user.is_authenticated %}
+    {% if user.id == meshu.user_profile.user.id %}
+    <div id="reedit" class="nav back"><a href="{{ meshu.get_edit_url }}">edit meshu</a></div>
+    <div id="order-button" class="nav active"><a href="{{ meshu.get_order_url }}">order meshu</a></div>
+    {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block goback %}
+{% endblock %}
+{% block finish %}
+{% endblock %}
+
+{% block options %}
+{% endblock %}
