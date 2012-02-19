@@ -9,8 +9,6 @@ from django import shortcuts
 
 # separate these patterns because they don't use the polls.views prefix
 urlpatterns = patterns('',
-	# polls urls
-	# "url/polls/34/vote/" will be passed to polls/urls.py as "34/vote/"
 
 	# Uncomment the admin/doc line below to enable admin documentation:
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -27,10 +25,7 @@ urlpatterns = patterns('',
 		'template_name': 'meshu/user/login.html'
 	}),
 
-  url(r'^m/', include('shorturls.urls'))
-	# url(r'^logout/', 'django.contrib.auth.views.logout', {
-	# 	'template_name': 'meshu/user/logout.html'
-	# }),
+	url(r'^m/', include('shorturls.urls'))
 )
 
 urlpatterns += patterns('meshu.views',
@@ -47,10 +42,13 @@ urlpatterns += patterns('meshu.views',
 	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
 	url(r'^shop/', 'shop'),
 
-	url(r'^make/', 'item_make'),
+	# begin ordering an existing user meshu
+	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
 	
 	# save always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
+
+	# edit an existing user meshu
 	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
 
 	# display
@@ -67,6 +65,9 @@ urlpatterns += patterns('meshu.views',
 
 	# user profile
 	url(r'^user/', 'user_profile'),
+
+	# root way to begin making a meshu
+	url(r'^make/', 'item_make'),
 
 	# about page
 	url(r'^about/', direct_to_template, {

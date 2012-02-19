@@ -53,8 +53,8 @@ class Meshu(models.Model):
 		return str(self.id).encode("hex")
 
 	def get_order_url(self):
-		return "/order/%s/" % self.get_encoded_id()
-		
+		return "/make/%s/" % self.get_encoded_id()
+
 	def get_edit_url(self):
 		return "/edit/%s/" % self.get_encoded_id()
 

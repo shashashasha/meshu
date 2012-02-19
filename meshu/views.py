@@ -51,6 +51,18 @@ def item_make(request):
 			'view' : 'edit'
 		}, context_instance=RequestContext(request))
 
+def item_begin_order(request, item_encoded):
+	item_id = int(str(item_encoded).decode("hex"))
+	item = get_object_or_404(Meshu, pk=item_id)
+
+	# check user id
+	if request.user.id != item.user_profile.user.id:
+		return render_to_response('meshu/notification/base_notification.html', {
+				'view' : 'authorization_required'
+		}, context_instance=RequestContext(request))
+
+	return item_handler(request, item_id, 'item.html', 'make')
+
 def item_edit(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
 	item = get_object_or_404(Meshu, pk=item_id)
