@@ -99,6 +99,24 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
+def item_update(request, item_encoded):
+	xhr = request.GET.has_key('xhr')
+
+	item_id = int(str(item_encoded).decode("hex"))
+	old = Meshu.objects.get(id=item_id)
+
+	old = meshu_update(request, old)
+	old.save()
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : True })
+		response_dict.update({ 'meshu_id' : old.id })
+		response_dict.update({ 'meshu_url' : old.get_absolute_url() })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
+	return item_handler(request, item_id, 'item.html', 'view')
+
 def item_save(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
 
@@ -114,6 +132,7 @@ def item_save(request, item_encoded):
 		response_dict = {}
 		response_dict.update({ 'success' : True })
 		response_dict.update({ 'meshu_id' : meshu.id })
+		response_dict.update({ 'meshu_url' : meshu.get_absolute_url() })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	return item_handler(request, item_id, 'item.html', 'view')
@@ -212,7 +231,7 @@ def mail_order_confirmation(email, meshu, order):
 #
 # Ordering!
 #
-def item_order(request, item_id):
+def order_meshu(request, item_id):
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 
@@ -224,7 +243,7 @@ def item_order(request, item_id):
 	return make_order(request, profile, meshu)
 
 # ordering a new meshu
-def order(request):
+def order_new(request):
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 

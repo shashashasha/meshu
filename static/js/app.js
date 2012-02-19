@@ -21,6 +21,9 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
+	// create a saver object, in saver.js
+	saver.initialize(meshu, loadedMeshu.view_url);
+
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
 		if (pageType == "edit")
@@ -46,6 +49,7 @@ $(function() {
 		d3.select("#place-number").attr("class","").select(".title-text")
             .text(function(d){
                 d.title = loadedMeshu.title;
+                meshu.updateTitle(d.title);
                 return d.title;
             });
 	}
@@ -111,44 +115,6 @@ $(function() {
 				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
 	});
 
-	// this only applies to usermade meshus
-	$("#save-button").click(function() {
-		$("#save-button").html('saving');
-
-		console.log(loadedMeshu.edit_url + 'save');
-		$.get(loadedMeshu.edit_url + 'save', { 
-      		'xhr': 'true', 
-			'svg': meshu.outputSVG(),
-			'location_data': meshu.outputLocationData()
-    }, function(data) {
-
-    	// create new meshu_id element in the form
-    	var id = data.meshu_id;
-	    $("#hidden-form-values").append('<input type="hidden" id="meshu-id" name="meshu_id" />');
-    	$("#meshu-id").val(id);
-
-    	setTimeout(function() {
-    		$("#save-button").html('saved!');
-    	}, 200);
-
-    	setTimeout(function() {
-      	// advance to the next 'page'
-			var index = views.indexOf(content.attr("class"));
-			content.attr("class",views[index+1]);
-      	}, 500);
-
-      	setTimeout(function() {
-      		$("#save-button").html('save');
-      	}, 1000);
-      }, 'json');
-
-      var list = $("#display-places");
-      list.empty();
-      $(".place .name").each(function(){
-      	$("<li>").text($(this).text()).appendTo(list);	
-      });
-	});
-
 	var timer;
 	$("#img-thumbs img").click(function(){
 		clearTimeout(timer);
@@ -184,14 +150,14 @@ $(function() {
 		var material = objectMaterial = $(this).attr("id");
 		$("#total-cost").text("$"+options[objectType][material].price+".00");
 		if (options[objectType][material].colors) {
-			$(".right-div").slideDown();
+			$(".right-div").fadeIn();
 			var list = $("#color-list li").empty();
 			$.each(options[objectType][material].colors, function(i, value){
 				$("#color-list li").eq(i).text(value);
 			});
 		} else {
 			objectColor = "";
-			$(".right-div").slideUp()
+			$(".right-div").fadeOut()
 		}
 	});
 	$("#color-list li").click(function(){ 

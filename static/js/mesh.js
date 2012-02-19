@@ -438,9 +438,13 @@ sb.mesh = function(frame, map, width, height) {
         update();
     };
 
+    self.updateTitle = function(t) {
+        meshuTitle = t;
+    };
+
     self.outputTitle = function() {
         return meshuTitle || "My Meshu";
-    }
+    };
 
     // outputs svg data
     self.output = function() {

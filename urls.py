@@ -33,20 +33,14 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
-	# order an existing meshu
-	url(r'^order/(?P<item_id>\d+)', 'item_order'),
-	# order a new meshu, not saved yet
-	url(r'^order/', 'order'),
-
-	# shopping for readymades
-	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
-	url(r'^shop/', 'shop'),
-
 	# begin ordering an existing user meshu
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
+	# root way to begin making a meshu
+	url(r'^make/', 'item_make'),
 	
-	# save always creates a new meshu
+	# save/new always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
+	url(r'^edit/(?P<item_encoded>\d+)/update', 'item_update'),
 
 	# edit an existing user meshu
 	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
@@ -66,8 +60,15 @@ urlpatterns += patterns('meshu.views',
 	# user profile
 	url(r'^user/', 'user_profile'),
 
-	# root way to begin making a meshu
-	url(r'^make/', 'item_make'),
+
+	# order an existing meshu
+	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
+	# order a new meshu, not saved yet
+	url(r'^order/', 'order_new'),
+
+	# shopping for readymades
+	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
+	url(r'^shop/', 'shop'),
 
 	# about page
 	url(r'^about/', direct_to_template, {

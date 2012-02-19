@@ -158,6 +158,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
 {% endblock %}
 
@@ -167,6 +168,7 @@
         var loadedMeshu = {
             user: '{{ meshu.user_profile.user.username }}',
             edit_url: '{{ meshu.get_edit_url }}',
+            view_url: '{{ meshu.get_absolute_url }}',
             title: '{{ meshu.title }}',
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
