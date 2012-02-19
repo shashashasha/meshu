@@ -2,8 +2,7 @@
   saver.js connects to #save-button and #update-button to save as new and update the current meshu, respectively
 */
 var saver = function() {
-  var self = {},
-      postSave = null;
+  var self = {};
 
   // the object we send to the server to be saved/updated
   function getMeshuXHR(meshu) {
@@ -24,7 +23,11 @@ var saver = function() {
     $("#meshu-id").val(id);
   }
 
-  self.initialize = function(meshu) {
+  self.initialize = function(meshu, view_url) {
+    $("#cancel-button").click(function() {
+      window.location.href = view_url;
+    });
+
     // this only applies to usermade meshus
     $("#save-button").click(function() {
       if (!loadedMeshu) return;
@@ -41,12 +44,8 @@ var saver = function() {
             $("#save-button").html('saved!');
           }, 200);
 
-          if (postSave)
-            setTimeout(postSave, 500);
-
           setTimeout(function() {
-            // $("#save-button").html('save as new');
-            window.location.href = window.location.href.split('/').shift() + data.meshu_url;
+            window.location.href = data.meshu_url;
           }, 1000);
         }, 'json');
     });
@@ -67,24 +66,13 @@ var saver = function() {
             $("#update-button").html('saved!');
           }, 200);
 
-          if (postSave) 
-            setTimeout(postSave, 500);
-
           setTimeout(function() {
-            // $("#update-button").html('save current');
-            window.location.href = window.location.href.split('/').shift() + data.meshu_url;
+            window.location.href = data.meshu_url;
           }, 1000);
         }, 'json');
 
     });
 
-    return self;
-  };
-
-  self.saved = function(s) {
-    if (!arguments.length) return postSave;
-
-    postSave = s;
     return self;
   };
 

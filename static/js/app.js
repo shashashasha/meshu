@@ -22,17 +22,7 @@ $(function() {
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
 	// create a saver object, in saver.js
-	saver.initialize(meshu);
-		// .saved(function() {
-		// 	var index = views.indexOf(content.attr("class"));
-		// 	content.attr("class", views[index+1]);
-
-		//     var list = $("#display-places");
-		//     list.empty();
-		//     $(".place .name").each(function(){
-		//       $("<li>").text($(this).text()).appendTo(list);  
-		//     });
-		// });
+	saver.initialize(meshu, loadedMeshu.view_url);
 
 	if (loadedMeshu) {
 		meshu.locationData(loadedMeshu.location_data);
