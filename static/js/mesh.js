@@ -56,13 +56,15 @@ sb.mesh = function(frame, map, width, height) {
         dragging = null,
         meshuTitle = null;
 
+    var content = $("#content");
+
     d3.select(uiFrame.node())
         .on("mousemove", mousemove)
         .on("mouseup", mouseup);
 
     function mousemove() {
         // disable mousemove detection when we're not editing
-        if (!$("#content").hasClass("edit")) return;
+        if (!content.hasClass("edit")) return;
         if (!dragging) {
             return;
         }
@@ -89,7 +91,7 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function mouseup() {
-        if (!$("#content").hasClass("edit")) return;
+        if (!content.hasClass("edit")) return;
 
         if (!dragging) {
             var m = d3.svg.mouse(main.node());

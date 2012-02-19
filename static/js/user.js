@@ -6,7 +6,7 @@ var user = function() {
     self.mode = 'signin';
 
     self.showModal = function() {
-        $("#content").addClass("modal");
+        $("#modal-bg").fadeIn();
         $("#login-form").fadeIn();
 
         $("#id_username").val('');
@@ -15,7 +15,7 @@ var user = function() {
     };
 
     self.hideModal = function() {
-        $("#content").removeClass("modal");
+        $("#modal-bg").fadeOut();
         $("#login-form").fadeOut();
 
         $("#id_username").val('');
@@ -95,7 +95,7 @@ var user = function() {
         $("#profile").show();
 
         $("#login").hide();
-        $("#content").removeClass("modal");
+        $("#modal-bg").fadeOut();
         $("#login-form").hide();
 
         self.loggedIn = true;
