@@ -25,6 +25,8 @@ $(function() {
 		meshu.locationData(loadedMeshu.location_data);
 		if (pageType == "view")
 			views = ["edit","view","make","checkout","review"];
+		else if (pageType == "edit")
+			views = ["edit","make","checkout","review"];
 		else {
 			views = ["readymade","checkout","review"];
 			$("#materials").addClass("ready");
@@ -41,6 +43,7 @@ $(function() {
                 d.title = loadedMeshu.title;
                 return d.title;
             });
+        $("#finish-button").addClass("active");
 	}
 
 	//navigation
