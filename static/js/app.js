@@ -173,9 +173,15 @@ $(function() {
 	$("#color-list li:first").click();
 
 
-	//creating the review form
-	$("#review-button").click(function(){
-		
+	//validating!
+	$("#payment-form").validate({
+			submitHandler: function(){
+				content.attr("class","review");
+				populateReview();
+			}
+	});
+
+	function populateReview() {
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
@@ -198,6 +204,6 @@ $(function() {
 		});
 		var digits = $(".card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
-	});
+	}
 	
 });

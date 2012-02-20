@@ -101,9 +101,9 @@
                     </div>
                     <div class="form-row ship-row">
                         <label>City</label>
-                        <input type="text" style="width:170px;" id="ship-city" class="required" name="shipping_city"/>
+                        <input type="text" style="width:175px; margin-right: 30px;" id="ship-city" class="required" name="shipping_city"/>
                         <label>State</label>
-                        <input type="text" size="2" style="margin-right:30px;" maxlength="2" id="ship-state" class="required" name="shipping_state"/>
+                        <input type="text" size="2" maxlength="2" id="ship-state" class="required" name="shipping_state"/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Zip Code</label>
@@ -127,9 +127,9 @@
                             <input type="text" size="3" maxlength="4" class="card-expiry-year required"  value="2014"/>
                         </div>
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
+                    <input class="nav active" type="submit" id="review-button" value="Review Your Order">
                 </form>
             </div>
-            <div class="nav next active" id="review-button">Review Your Order</div>
         </div>
         <div id="review">
             <div class="nav back">edit information</div>
@@ -152,6 +152,7 @@
 
 {% block script %}
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+    <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
