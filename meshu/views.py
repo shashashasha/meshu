@@ -30,6 +30,9 @@ import stripe
 
 # meshu.views.index
 def index(request):
+	if request.user.is_authenticated():
+		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
+		
 	return render_to_response('meshu/index.html', {}, context_instance=RequestContext(request))
 
 # meshu.views.shop
