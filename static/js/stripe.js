@@ -19,13 +19,14 @@ function stripeResponseHandler(status, response) {
 }
 function submit() {
         $('#submit-button').attr("disabled", "disabled").addClass("inactive");
+        $(".card-info").removeAttr("name");
         var chargeAmount = 1000; //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         // createToken returns immediately - the supplied callback submits the form if there are no errors
         Stripe.createToken({
-            number: $('.card-number').val(),
-            cvc: $('.card-cvc').val(),
-            exp_month: $('.card-expiry-month').val(),
-            exp_year: $('.card-expiry-year').val()
+            number: $('#card-number').val(),
+            cvc: $('#card-cvc').val(),
+            exp_month: $('#card-expiry-month').val(),
+            exp_year: $('#card-expiry-year').val()
         }, chargeAmount, stripeResponseHandler);
         return false; // submit from callback
 }

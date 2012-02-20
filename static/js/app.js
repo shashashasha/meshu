@@ -175,6 +175,39 @@ $(function() {
 
 	//validating!
 	$("#payment-form").validate({
+			rules: {
+				shipping_zip: {
+					digits: true,
+			      	minlength: 5
+			    },
+			    shipping_state: {
+			    	minlength: 2
+			    },
+			    card_number: {
+			    	creditcard: true
+			    },
+			    card_cvc: {
+			    	digits: true,
+			    	minlength: 3
+			    },
+			    card_month: {
+			    	digits: true,
+			    	minlength: 2
+			    },
+			    card_year: {
+			    	digits: true,
+			    	minlength: 4,
+			    }
+			},
+			messages: {
+				shipping_state: "Please enter the two-letter state abbreviation.",
+				card_cvc: "Sorry, that is not a valid CVC code",
+				card_month: {
+					minlength: "Please enter the month as a two-digit number."
+				}, card_year: {
+					minlength: "Please enter the year as a four-digit number.",
+				},
+			},
 			submitHandler: function(){
 				content.attr("class","review");
 				populateReview();
@@ -202,7 +235,7 @@ $(function() {
 		$(".ship-row input").each(function(){
 			$("<p>").text($(this).val()).appendTo("#review-shipping");
 		});
-		var digits = $(".card-number").val();
+		var digits = $("#card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
 	}
 	
