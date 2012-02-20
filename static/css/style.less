@@ -99,7 +99,7 @@ h1#meshu {
 #login-form {
     display: none; 
     position: absolute; 
-    z-index: 9000; 
+    z-index: 3; 
     top: 150px;
     right: 295px; 
     width: 410px; 
@@ -107,6 +107,7 @@ h1#meshu {
     padding: 15px 0;
     background: white;
     border: 1px solid @borderGrey;
+    .shadow(200px);
 }
 #login-form h2 {
     padding: 0 13px 10px;
@@ -175,15 +176,16 @@ h1#meshu {
 
 #edit-help {
     position: absolute;
-    top: 0;
+    top: 170px;
     left: 280px;
     width: 400px;
     height: 200px;
-    z-index: 2;
+    z-index: 4;
     background: white;
     border: 1px solid @borderGrey;
     padding: 20px;
     text-align: center;
+    .shadow(100px);
 }
 #edit-help #close-help {
     cursor: pointer;
