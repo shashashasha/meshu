@@ -2,9 +2,23 @@
 
 {% block title %}Welcome to Meshu{% endblock %}
 
+{% if view != 'invited' %}
+	{% block navigation %}
+	{% endblock %}
+{% endif %}
+
 {% block content %}
 <div id="main">
-	<h2>Say hi to meshu.</h2>
+	{% if view == 'invited' %}
+		<h2 class="big">Hi, friend!</h2>
+		<div id="get-started">
+			<a class="option" href="/shop/">Shop Our Gallery</a>
+			<a class="option pink" href="/make/">Make Your Own!</a>
+		</div>
+	{% else %}
+		<h2 class="big">Say hi to meshu.</h2>
+	{% endif %}
+
 	<ul id="diagram">
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams_01.png">
@@ -23,20 +37,21 @@
 		</li>
 	</ul>
 
-	<div id="mc_embed_signup">
-		<form action="http://meshu.us4.list-manage.com/subscribe/post?u=ff0ddd123572fdc8891df623e&amp;id=43c8c55de8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-		    <label for="mce-EMAIL">Sign up to be notified when we launch.</label>
-		    <input type="email" value="email address" name="EMAIL" class="email" id="mce-EMAIL" onfocus="value=''" required>
-		    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-		</form>
-	</div>
+	{% if view != 'invited' %}
+		<div id="mc_embed_signup">
+			<form action="http://meshu.us4.list-manage.com/subscribe/post?u=ff0ddd123572fdc8891df623e&amp;id=43c8c55de8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+			    <label for="mce-EMAIL">Sign up to be notified when we launch.</label>
+			    <input type="email" value="email address" name="EMAIL" class="email" id="mce-EMAIL" onfocus="value=''" required>
+			    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+			</form>
+		</div>
 
-	<form action="/invite/" method="post" name="invite-form">
-		{% csrf_token %}
-		<label>If you have an invite code, enter it here.</label>
-		<input value="seekrit code" onfocus="value=''" name="code">
-		<div class="button" type="submit">Let's go!</div>
-		<input type="submit" value="Let's go!" class="button">
-	</form>
+		<form action="/invite/" method="post" name="invite-form">
+			{% csrf_token %}
+			<label>Or if you have an invite code, enter it here.</label>
+			<input value="seekrit code" onfocus="value=''" name="code">
+			<input type="submit" value="Let's go!" class="button">
+		</form>
+	{% endif %}
 </div>
 {% endblock %}
