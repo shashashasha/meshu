@@ -42,14 +42,14 @@ def shop(request):
 	}, context_instance=RequestContext(request))
 
 def invite(request):
-	code = request.GET.get('code', '')
+	code = request.POST.get('code', '')
 
 	# if you found this, you're trying too hard
-	if code == 'IMESHU'
+	if code == 'IMESHU':
 		return render_to_response('meshu/index.html', {
 			'view': 'invited',
 		}, context_instance=RequestContext(request))
-	else 
+	else:
 		return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'invite_failed'
 		}, context_instance=RequestContext(request))
