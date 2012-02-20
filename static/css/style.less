@@ -61,8 +61,10 @@ p {
 
 input {
     color: @grey;
-    padding: 5px;
+    padding: 4px;
     border: 1px solid @grey;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 13px;
 }
 
 /* for map tiles initially, but let's see how annoying it is for all the images */
@@ -513,6 +515,13 @@ h1#meshu {
     right: 0;
     .transition(right);
 }
+#checkout .note {
+    color: @grey;
+    margin: 10px 0;
+}
+#checkout input {
+    margin-left: 10px;
+}
 .review #checkout {
     right: 400px;
     .transition(right);
@@ -604,10 +613,6 @@ h1#meshu {
     }
 }
 
-.readymade li:hover {
-    color: @grey;
-}
-
 .option-list li {
     cursor: pointer;
 }
@@ -696,15 +701,17 @@ h1#meshu {
     right: 130px;
 }
 
-#finish-button, #save-button {
+#finish-button, #save-button, #update-button, #cancel-button {
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
 
-#update-button {
-    position: absolute;
-    bottom: 20px;
+#save-button {
+    right: 125px;
+}
+#cancel-button {
+    right: auto;
     left: 20px;
 }
 
@@ -720,6 +727,17 @@ h1#meshu {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+#submit-button {
+    border: none;
+    font-size: 20px;
+    float: right;
+    margin-top: 30px;
+    padding: 5px 10px;
+}
+#submit-button.inactive {
+    background-color: @grey;
+    cursor: auto;
 }
 
 /* 
@@ -754,6 +772,7 @@ circle {
 }
 #rotate-ui circle {
     fill-opacity: 1;
+    cursor: pointer;
 }
 #rotate-ui path {
     stroke: #999;
@@ -886,6 +905,9 @@ li.last-object {
 
 #img-thumbs li {
     display: inline-block;
+}
+#img-thumbs img {
+    cursor: pointer;
 }
 .other-view {
     position: absolute;

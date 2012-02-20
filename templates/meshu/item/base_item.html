@@ -89,26 +89,27 @@
                     </div>
                     <div class="form-row ship-row">
                         <label>Name</label>
-                        <input type="text" size="40" id="ship-name" name="shipping_name" value="{{ user.username }}" />
+                        <input type="text" style="width:288px;" id="ship-name" name="shipping_name" value="{{ user.username }}" />
                     </div>
                     <div class="form-row ship-row">
                         <label>Address Row 1</label>
-                        <input type="text" size="40" id="ship-add1" name="shipping_address"/>
+                        <input type="text" style="width:230px;" id="ship-add1" name="shipping_address"/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Address Row 2</label>
-                        <input type="text" size="40" id="ship-add2" name="shipping_address_2"/>
+                        <input type="text" style="width:230px;" id="ship-add2" name="shipping_address_2"/>
                     </div>
                     <div class="form-row ship-row">
                         <label>City</label>
-                        <input type="text" size="30" id="ship-city" name="shipping_city"/>
+                        <input type="text" style="width:180px;" id="ship-city" name="shipping_city"/>
                         <label>State</label>
-                        <input type="text" size="2" maxlength="2" id="ship-state" name="shipping_state"/>
+                        <input type="text" size="2" style="margin-right:30px;" maxlength="2" id="ship-state" name="shipping_state"/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Zip Code</label>
-                        <input type="text" size="5" maxlength="5" id="ship-zip" name="shipping_zip"/>
+                        <input type="text" size="4" maxlength="5" id="ship-zip" name="shipping_zip"/>
                     </div>
+                <p class="note">Please allow 3-4 weeks for the shipping acrylic and wood orders, and 5-6 weeks for nylon or silver.</p>
                 <h2>Payment</h2>
                     <div class="form-row">
                         <label>Card Number</label>
@@ -116,13 +117,13 @@
                     </div>
                     <div class="form-row">
                         <label>CVC</label>
-                        <input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc" value="424"/>
+                        <input type="text" size="3" maxlength="4" autocomplete="off" class="card-cvc" value="424"/>
                     </div>
                     <div class="form-row">
                         <label>Expiration (MM/YYYY)</label>
-                        <input type="text" size="2" maxlength="2" class="card-expiry-month" value="12"/>
+                        <input type="text" size="1" maxlength="2" class="card-expiry-month" value="12"/>
                         <span> / </span>
-                        <input type="text" size="4" maxlength="4" class="card-expiry-year"  value="2014"/>
+                        <input type="text" size="3" maxlength="4" class="card-expiry-year"  value="2014"/>
                     </div>
                 </form>
             </div>
@@ -140,7 +141,7 @@
                 <div id="review-shipping"></div>
                 <h2 class="review-header">Payment:</h2>
                 <p id="review-payment"></p>
-                <button type="submit" class="submit-button">Submit Payment</button>
+                <input type="submit" id="submit-button" class="button" value="Submit Payment">
             </div>
         </div>
     {% endblock %}
