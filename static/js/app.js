@@ -21,10 +21,10 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
-	// create a saver object, in saver.js
-	saver.initialize(meshu, loadedMeshu.view_url);
-
 	if (loadedMeshu) {
+		// create a saver object, in saver.js
+		saver.initialize(meshu, loadedMeshu.view_url);
+
 		meshu.locationData(loadedMeshu.location_data);
 		if (pageType == "edit")
 			views = ["edit","make","checkout","review"];
@@ -64,7 +64,7 @@ $(function() {
 		content.append(helpdiv);
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
-			$("#edit-help").slideUp('fast');
+			$("#edit-help").fadeOut();
 			$("#modal-bg").fadeOut();
 		});
 	}

@@ -31,11 +31,12 @@
 		</form>
 	</div>
 
-	<form action="" method="post">
+	<form action="/invite/" method="post" name="invite-form">
 		{% csrf_token %}
 		<label>If you have an invite code, enter it here.</label>
-		<input value="seekrit code" onfocus="value=''">
-		<div class="button">Let's go!</div>
+		<input value="seekrit code" onfocus="value=''" name="code">
+		<div class="button" type="submit">Let's go!</div>
+		<input type="submit" value="Let's go!" class="button">
 	</form>
 </div>
 {% endblock %}

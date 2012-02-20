@@ -70,6 +70,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
 	url(r'^shop/', 'shop'),
 
+	url(r'^invite/', 'invite'),
+
 	# about page
 	url(r'^about/', direct_to_template, {
 		'template': 'meshu/base_about.html'
