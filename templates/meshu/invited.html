@@ -1,0 +1,31 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Welcome to Meshu{% endblock %}
+
+{% block content %}
+<div id="main">
+	<h2 class="big">Hi, friend!</h2>
+	<div id="get-started">
+		<a class="option" href="/shop/">Shop Our Gallery</a>
+		<a class="option pink" href="/make/">Make Your Own!</a>
+	</div>
+
+	<ul id="diagram">
+		<li>
+			<img src="{{ STATIC_URL }}images/diagrams_01.png">
+			<p>Enter in cities you've been to,</p>
+			<p>or any places you like.</p>
+		</li>
+		<li>
+			<img src="{{ STATIC_URL }}images/diagrams_02.png">
+			<p>We generate a meshu to order</p>
+			<p>as a necklace or earrings.</p>
+		</li>
+		<li>
+			<img src="{{ STATIC_URL }}images/diagrams_03.png">
+			<p>We fabricate and ship you</p>
+			<p>your finished piece!</p>
+		</li>
+	</ul>
+</div>
+{% endblock %}

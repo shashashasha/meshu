@@ -46,9 +46,7 @@ def invite(request):
 
 	# if you found this, you're trying too hard
 	if code == 'IMESHU':
-		return render_to_response('meshu/index.html', {
-			'view': 'invited',
-		}, context_instance=RequestContext(request))
+		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('meshu/notification/base_notification.html', {
 			'view' : 'invite_failed'
