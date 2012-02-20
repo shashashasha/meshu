@@ -4,7 +4,7 @@ function stripeResponseHandler(status, response) {
     console.log(status, response);
     if (response.error) {
         // re-enable the submit button
-        $('.submit-button').removeAttr("disabled");
+        $('#submit-button').removeAttr("disabled");
         // show the errors on the form
         $(".payment-errors").html(response.error.message);
     } else {
@@ -20,10 +20,10 @@ function stripeResponseHandler(status, response) {
 
 // test card 4242424242424242
 $(document).ready(function() {
-    $(".submit-button").click(function(){ $("#payment-form").submit(); })
+    $("#submit-button").click(function(){ $("#payment-form").submit(); })
     $("#payment-form").submit(function(event) {
         // disable the submit button to prevent repeated clicks
-        $('.submit-button').attr("disabled", "disabled");
+        $('#submit-button').attr("disabled", "disabled").addClass("inactive");
         var chargeAmount = 1000; //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         // createToken returns immediately - the supplied callback submits the form if there are no errors
         Stripe.createToken({
