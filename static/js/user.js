@@ -52,6 +52,12 @@ var user = function() {
         /* 
             when logging in 
         */
+        // $("#login-form").validate({
+        //   rules: {
+        //     password: "required",
+        //     password_again: {
+        //       equalTo: "#password"
+        //     }
         $("#login-submit").click(function(e) {
             $.post('/user/login/', { 
                 'xhr': 'true', 
