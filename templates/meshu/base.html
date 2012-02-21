@@ -34,16 +34,46 @@
 		</ul>
 
 		<div id="login-form" class="signin">
-			<h2>{%block login_form %}Please sign in to place an order{% endblock %}</h2>
+			<h2>{%block login_form %}Please sign in to continue{% endblock %}</h2>
 			<ul>
 				<li id="tab-signin" class="active">Sign In</li>
 				<li id="tab-account">Create an Account</li>
 			</ul>
-			<table><tbody>
-	            {# put a csrf token in every form in django, for security #}
-	            <div id="csrf">
-	            	{% csrf_token %}
-	            </div>
+			<form class="signin">
+				{% csrf_token %}
+				<div class="login-row">
+					<label for="id_username">Email</label>
+					<input id="id_username" class="required email" type="text" name="username" maxlength="30">
+				</div>
+				<div class="login-row">
+					<label for="id_password">Password</label>
+					<input type="password" class="required" name="password" id="id_password">
+				</div>
+				<div class="login-buttons">
+					<div class="login-cancel button">Cancel</div>
+					<input id="login-submit" class="button" value="Login">
+				</div>
+			</form>
+			<form class="account">
+				{% csrf_token %}
+				<div class="login-row">
+					<label for="id_username">Email</label>
+					<input id="id_username" class="required email" type="text" name="username" maxlength="30">
+				</div>
+				<div class="login-row">
+					<label for="id_password">Password</label>
+					<input type="password" class="required" name="password" id="id_password">
+				</div>
+				<div class="login-row">
+					<label for="repeat_password" style="bottom: -10px;">Re-enter Password</label>
+					<input type="password" class="required" name="repeat_password" id="repeat_password">
+				</div>
+				<div class="login-buttons">
+					<div class="login-cancel button">Cancel</div>
+					<input id="login-create" class="button" value="Create Account">
+				</div>
+			</form>
+			<!-- <table><tbody>
 				<tr>
 					<td><label for="id_username">Email</label></td>
 					<td><input id="id_username" class="required email" type="text" name="username" maxlength="30"></td>
@@ -56,12 +86,12 @@
 					<td><label for="repeat_password">Re-enter Password</label></td>
 					<td><input type="password" class="required" name="repeat_password" id="repeat_password"></td>
 				</tr>
-			</tbody></table>
-			<div id="login-buttons">
+			</tbody></table> -->
+			<!-- <div id="login-buttons">
 				<div id="login-cancel" class="button">Cancel</div>
 				<div id="login-submit" class="button signin">Login</div>
 				<div id="login-create" class="button account">Create Account</div>
-			</div>
+			</div> -->
 		</div>
 		{% endblock %}
 		<h1 id="meshu"><a href="/">meshu</a></h1>
