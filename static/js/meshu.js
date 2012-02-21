@@ -127,8 +127,6 @@ sb.meshu = function(frame) {
         if (rotateInterval) {
             clearInterval(rotateInterval);
         }
-        
-        r = (r + 360) % 360;
 
         var easeTo = function(current, dest) {
             return (dest - current) * .33;
