@@ -122,7 +122,13 @@ sb.meshu = function(frame) {
 
     // save the transform for now
     var cx = 0, cy = 0, cs = 1, cr = 0;
+    var rotateInterval;
     self.animateTransform = function(tx, ty, s, r) {
+        if (rotateInterval) {
+            clearInterval(rotateInterval);
+        }
+        
+        r = (r + 360) % 360;
 
         var easeTo = function(current, dest) {
             return (dest - current) * .33;
@@ -130,8 +136,8 @@ sb.meshu = function(frame) {
 
         var counter = 0;
         var delaunay = d3.select("#delaunay");
-        var rotateInterval = setInterval(function(){
-            if (counter < 50){
+        rotateInterval = setInterval(function(){
+            if (counter < 30) {
                 cx += easeTo(cx, tx);
                 cy += easeTo(cy, ty);
                 cs += easeTo(cs, s);
