@@ -365,8 +365,21 @@ h1#meshu {
     height: 0;
 }
 
+.cases #places {
+    opacity: 0;
+    .transition(opacity);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    z-index:-1;
+}
+
 #places {
-    margin-top: 30px;
+    position: absolute;
+    top: 120px;
+    width: 360px;
+    opacity: 1;
+    .transition(opacity);
 }
 #place-number .title-text {
     display: inline-block;
@@ -497,7 +510,7 @@ h1#meshu {
 
 .right-div, .left-div{
     position: absolute;
-    width: 100px;
+    width: 120px;
 }
 .left-div{
     top: 295px;
@@ -505,6 +518,17 @@ h1#meshu {
 .right-div {
     left: 200px;
     top: 297px;
+}
+.color-img {
+    position: absolute;
+    right: 0;
+    display: none;
+}
+#color-list li:hover .color-img {
+    display: inline;
+}
+.color-img img {
+    border: 1px solid @borderGrey;
 }
 .ready .left-div, .ready .right-div {
     top: 260px;
@@ -813,7 +837,7 @@ circle {
     fill-opacity: 0;
 }
 
-.edit circle:hover, circle.highlight, .inactive circle:first-child {
+.edit circle:hover, circle.highlight, .edit .inactive circle:first-child {
     fill-opacity: 1;
     cursor: pointer;
 }
