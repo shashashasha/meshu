@@ -182,11 +182,12 @@ $(function() {
 			colorList.find(".color-title").empty();
 			colorList.find("img").attr("scr","");
 			$.each(options[objectType][material].colors, function(i, value){
+				console.log("each");
 				var li = colorList.eq(i);
 				li.find(".color-title").text(value);
 				li.find(".color-img img").attr("src","../static/images/materials/"+material+"_"+value.toLowerCase()+".png");
 			});
-			colorList.find("li:first").click();
+			colorList.eq(0).click();
 		} else {
 			objectColor = "";
 			$(".right-div").fadeOut();
@@ -201,9 +202,8 @@ $(function() {
 		li.parent().find("li").removeClass("selected");
 		li.addClass("selected");
 	});
-	objectList.find("li:first").click();
-	materialList.find("li:first").click();
-	colorList.find("li:first").click();
+	objectList.eq(0).click();
+	materialList.eq(0).click();
 
 
 	//validating!
