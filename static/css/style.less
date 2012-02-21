@@ -104,20 +104,20 @@ h1#meshu {
     position: absolute; 
     z-index: 3; 
     top: 150px;
-    right: 295px; 
-    width: 410px; 
-    height: 250px;
-    padding: 15px 0;
+    right: 310px; 
+    width: 380px; 
+    min-height: 205px;
+    padding-top: 15px;
     background: white;
     border: 1px solid @borderGrey;
     .shadow(200px);
 }
 #login-form h2 {
-    padding: 0 13px 10px;
+    padding: 0 0 10px 17px;
 }
 #login-form ul {
     border-bottom: 1px solid @borderGrey;
-    height: 33px;
+    height: 28px;
     padding-left: 20px;
 }
 #login-form li {
@@ -139,26 +139,62 @@ h1#meshu {
     border-bottom: 1px solid white;
     color: black;
 }
-#login-form table {
-    padding: 20px;
+#login-form.signin form {
+    margin-top: 30px;
 }
-#login-form.signin table {
-    padding-top: 40px;
+#login-form.account form {
+    margin-top: 15px;
+}
+#login-form .login-row {
+    display: block;
+    width: 350px;
+    margin-left: 30px;
+}
+#login-form label {
+    width: 70px;
+}
+#login-form label.error {
+    color: @pink;
+    margin: 4px 0;
+    width: auto;
+    display: block;
 }
 #login-form input {
-    width: 255px;
+    width: 225px;
     margin-left: 20px;
 }
-#login-form #login-buttons {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+#login-form input.error {
+    border-color: @pink;
 }
-#login-form #login-cancel {
+#login-form input.button {
+    border: none;
+}
+#login-form .login-buttons {
+    margin-top: 40px;
+    position: relative;
+    height: 20px;
+}
+#login-form .login-cancel {
     background-color: @grey;
+    position: absolute;
+    bottom: 15px;
+    right: 90px;
 }
-#login-form #login-submit, #login-form #login-create {
+#login-form.account .login-cancel {
+    right: 150px;
+}
+#login-form #login-signin, #login-form #login-account {
     background-color: @pink;
+    font-size: 14px;
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+}
+#login-form #login-account {
+    width: 110px;
+}
+#login-form #login-signin{
+    width: 50px;
 }
 
 #main h2.big {
@@ -481,10 +517,9 @@ h1#meshu {
 #rotate-help {
     position: absolute;
     left: 220px;
-    top: 130px;
+    top: 145px;
     width: 140px;
     color: #aaa;
-    font-size: 12px;
 }
 
 #materials, #checkout, #review, #view, #display {
@@ -508,6 +543,8 @@ h1#meshu {
 }
 
 #checkout {
+    height: 560px;
+    overflow-y: auto;
     right: -400px;
     .transition(right);
 }
@@ -521,6 +558,13 @@ h1#meshu {
 }
 #checkout input {
     margin-left: 10px;
+}
+#checkout label.error {
+    color: @pink;
+    display: block;
+}
+#checkout input.error {
+    border-color: @pink;
 }
 .review #checkout {
     right: 400px;
@@ -722,6 +766,7 @@ h1#meshu {
 }
 #review-button {
     margin-top: 30px;
+    border: none;
 }
 #order-button {
     position: absolute;

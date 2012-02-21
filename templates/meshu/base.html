@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
     <link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/style.less"/>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/less-1.2.2.min.js"></script>
     <title>{% block title %}Meshu{% endblock %}</title>
@@ -34,34 +35,65 @@
 		</ul>
 
 		<div id="login-form" class="signin">
-			<h2>{%block login_form %}Please sign in to place an order{% endblock %}</h2>
+			<h2>{%block login_form %}Please sign in to continue{% endblock %}</h2>
 			<ul>
 				<li id="tab-signin" class="active">Sign In</li>
 				<li id="tab-account">Create an Account</li>
 			</ul>
-			<table><tbody>
-	            {# put a csrf token in every form in django, for security #}
-	            <div id="csrf">
-	            	{% csrf_token %}
-	            </div>
+			<div id="csrf">
+				{% csrf_token %}
+			</div>
+			<form id="form-signin" class="signin">
+				<div class="login-row">
+					<label for="signin_name">Email</label>
+					<input id="signin_name" class="required email" type="text" name="signin_name" maxlength="30" style="margin-left: 47px;">
+				</div>
+				<div class="login-row">
+					<label for="signin_password">Password</label>
+					<input type="password" class="required" name="signin_password" id="signin_password">
+				</div>
+				<div class="login-buttons">
+					<div class="login-cancel button">Cancel</div>
+					<input id="login-signin" class="button" type="submit" value="Login">
+				</div>
+			</form>
+			<form id="form-account" class="account">
+				<div class="login-row">
+					<label for="account_name">Email</label>
+					<input id="account_name" class="required email" type="text" name="account_name" maxlength="30" style="margin-left: 47px;">
+				</div>
+				<div class="login-row">
+					<label for="account_password">Password</label>
+					<input type="password" class="required" name="account_password" id="account_password">
+				</div>
+				<div class="login-row">
+					<label for="repeat_password" style="bottom: -10px; float: left;">Re-enter Password</label>
+					<input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
+				</div>
+				<div class="login-buttons">
+					<div class="login-cancel button">Cancel</div>
+					<input id="login-account" class="button" type="submit" value="Create Account">
+				</div>
+			</form>
+			<!-- <table><tbody>
 				<tr>
 					<td><label for="id_username">Email</label></td>
-					<td><input id="id_username" type="text" name="username" maxlength="30"></td>
+					<td><input id="id_username" class="required email" type="text" name="username" maxlength="30"></td>
 				</tr>
 				<tr>
 					<td><label for="id_password">Password</label></td>
-					<td><input type="password" name="password" id="id_password"></td>
+					<td><input type="password" class="required" name="password" id="id_password"></td>
 				</tr>
 				<tr class="account">
 					<td><label for="repeat_password">Re-enter Password</label></td>
-					<td><input type="password" name="repeat_password" id="repeat_password"></td>
+					<td><input type="password" class="required" name="repeat_password" id="repeat_password"></td>
 				</tr>
-			</tbody></table>
-			<div id="login-buttons">
+			</tbody></table> -->
+			<!-- <div id="login-buttons">
 				<div id="login-cancel" class="button">Cancel</div>
 				<div id="login-submit" class="button signin">Login</div>
 				<div id="login-create" class="button account">Create Account</div>
-			</div>
+			</div> -->
 		</div>
 		{% endblock %}
 		<h1 id="meshu"><a href="/">meshu</a></h1>
