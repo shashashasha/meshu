@@ -8,25 +8,19 @@ var user = function() {
     self.showModal = function() {
         $("#modal-bg").fadeIn();
         $("#login-form").fadeIn();
-
-        $("#id_username").val('');
-        $("#id_password").val('');
-        $("#repeat_password").val('');
+        $(".login-row").find("input").val('');
     };
 
     self.hideModal = function() {
         $("#modal-bg").fadeOut();
         $("#login-form").fadeOut();
-
-        $("#id_username").val('');
-        $("#id_password").val('');
-        $("#repeat_password").val('');
+        $(".login-row").find("input").val('');
     };
 
     self.initialize = function() {
         $("#login").click(self.showModal);
 
-        $("#login-cancel").click(self.hideModal); 
+        $(".login-cancel").click(self.hideModal); 
 
         // switching mode
         $("#login-form li").click(function(){
@@ -39,12 +33,12 @@ var user = function() {
            self.mode = mode;
         });
 
-        $("#login-form input").keypress(function(event) {
+        $(".login-row input").keypress(function(event) {
             if ( event.which == 13 ) {
                  if (self.mode == 'signin') {
-                     $("#login-submit").click();
+                     $("#login-signin").click();
                  } else if (self.mode == 'account') {
-                     $("#login-create").click();
+                     $("#login-account").click();
                  }
             }
         });
@@ -52,34 +46,47 @@ var user = function() {
         /* 
             when logging in 
         */
-        // $("#login-form").validate({
-        //   rules: {
-        //     password: "required",
-        //     password_again: {
-        //       equalTo: "#password"
-        //     }
-        $("#login-submit").click(function(e) {
-            $.post('/user/login/', { 
-                'xhr': 'true', 
-
-                'csrfmiddlewaretoken': $("#csrf input").val(),
-                'email': $("#id_username").val(), 
-                'password': $("#id_password").val() 
-            }, onLogIn, 'json');
+        $("#form-signin").validate({
+            rules: {
+                signin_name: {
+                    email: true
+                }
+            },
+            messages: {
+                signin_name: "Sorry, that's not a valid email format."
+            },
+            submitHandler: function(){
+                $.post('/user/login/', { 
+                    'xhr': 'true', 
+                    'csrfmiddlewaretoken': $("#csrf input").val(),
+                    'email': $("#signin_name").val(), 
+                    'password': $("#signin_password").val() 
+                }, onLogIn, 'json');
+            }
         });
+        $("#form-account").validate({
+            rules: {
+                account_name: {
+                    email: true
+                },
+                repeat_password: {
+                    equalTo: "#account_password"
+                }
+            },
+            messages: {
+                account_name: "Sorry, that's not a valid email format.",
+                repeat_password: "Oops, those passwords didn't match. Try again?"
+            },
+            submitHandler: function(){
+                $.post('/user/create/', {
+                    'xhr': 'true',
 
-        /* 
-            when creating an account
-        */
-        $("#login-create").click(function(e) {
-            $.post('/user/create/', {
-                'xhr': 'true',
-
-                'csrfmiddlewaretoken': $("#csrf input").val(),
-                'email': $("#id_username").val(), 
-                'password': $("#id_password").val() 
-            }, onLogIn, 'json');
-        })
+                    'csrfmiddlewaretoken': $("#csrf input").val(),
+                    'email': $("#account_name").val(), 
+                    'password': $("#account_password").val() 
+                }, onLogIn, 'json');
+            }
+        });
 
         $("#logout").click(function(e) {
             $.get('/user/logout/', { 'xhr': 'true' }, onLogOut, 'json');

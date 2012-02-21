@@ -106,8 +106,8 @@ h1#meshu {
     top: 150px;
     right: 310px; 
     width: 380px; 
-    height: 235px;
-    padding: 15px 0;
+    min-height: 205px;
+    padding-top: 15px;
     background: white;
     border: 1px solid @borderGrey;
     .shadow(200px);
@@ -147,24 +147,32 @@ h1#meshu {
 }
 #login-form .login-row {
     display: block;
-    width: 290px;
-    height: 23px;
-    position: relative;
-    padding: 5px 30px;
+    width: 350px;
+    margin-left: 30px;
 }
 #login-form label {
-    position: absolute;
-    bottom: 5px;
     width: 70px;
 }
+#login-form label.error {
+    color: @pink;
+    margin: 4px 0;
+    width: auto;
+    display: block;
+}
 #login-form input {
-    width: 240px;
+    width: 225px;
     margin-left: 20px;
-    position: absolute;
-    right: 0;
+}
+#login-form input.error {
+    border-color: @pink;
 }
 #login-form input.button {
     border: none;
+}
+#login-form .login-buttons {
+    margin-top: 40px;
+    position: relative;
+    height: 20px;
 }
 #login-form .login-cancel {
     background-color: @grey;
@@ -175,18 +183,18 @@ h1#meshu {
 #login-form.account .login-cancel {
     right: 150px;
 }
-#login-form #login-submit, #login-form #login-create {
+#login-form #login-signin, #login-form #login-account {
     background-color: @pink;
     font-size: 14px;
     position: absolute;
     bottom: 15px;
     right: 30px;
 }
-#login-form #login-create {
-    width: 100px;
+#login-form #login-account {
+    width: 110px;
 }
-#login-form #login-submit{
-    width: 40px;
+#login-form #login-signin{
+    width: 50px;
 }
 
 #main h2.big {
