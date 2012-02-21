@@ -114,7 +114,7 @@ $(function() {
 			}
 
 			// animate meshu
-			meshu.animateTransform(50, 50, .83, sb.rotator ? sb.rotator.rotation() : 0);
+			meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0);
 		} else if (view == "readymade") {
 			meshu.mesh().updateCircleBehavior(true);
 		}
@@ -129,7 +129,7 @@ $(function() {
 		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
 		if (views[index-1] == "make" || views[index-1] == "readymade") {
 			meshu.mesh().updateCircleBehavior();
-			meshu.animateTransform(0, 0, 1, 0);
+			meshu.animateTransform(0);
 		}
 	});
 

@@ -120,34 +120,22 @@ sb.meshu = function(frame) {
         return mesh;
     };
 
-    // save the transform for now
-    var cx = 0, cy = 0, cs = 1, cr = 0;
+    // save the rotation for now
+    var cr = 0;
     var rotateInterval;
-    self.animateTransform = function(tx, ty, s, r) {
+    self.animateTransform = function(r) {
         if (rotateInterval) {
             clearInterval(rotateInterval);
         }
-        
-        r = (r + 360) % 360;
-
-        var easeTo = function(current, dest) {
-            return (dest - current) * .33;
-        };
 
         var counter = 0;
         var delaunay = d3.select("#delaunay");
         rotateInterval = setInterval(function(){
-            if (counter < 30) {
-                cx += easeTo(cx, tx);
-                cy += easeTo(cy, ty);
-                cs += easeTo(cs, s);
-                cr += easeTo(cr, r);
+            if (++counter < 30) {
+                cr += (r - cr) * .33;
 
-                var translate = "translate(" + cx + "," + cy + ")";
-                var scale = " scale(" + cs + ")";
-                var rotate = " rotate(" + cr + ",300,300)";
-                delaunay.attr("transform", translate + scale + rotate);
-                counter++;
+                var rotate = "rotate(" + cr + ",300,300)";
+                delaunay.attr("transform", rotate);
             }
             else
                 clearInterval(rotateInterval);

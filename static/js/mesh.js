@@ -120,7 +120,7 @@ sb.mesh = function(frame, map, width, height) {
         last_mouse = null;
 
         // ignore zoom buttons, other ui
-        if (d3.event.target != svg.node())  return;
+        if (d3.event.target != svg.node() && !dragging)  return;
 
         if (!content.hasClass("edit")) return;
 
