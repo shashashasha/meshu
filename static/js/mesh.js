@@ -248,12 +248,13 @@ sb.mesh = function(frame, map, width, height) {
         updateMesh();
     };
 
-    self.updateCircleBehavior = function() {
-        var editMode = $("#content").hasClass("edit");
+    self.updateCircleBehavior = function(off) {
+        var editMode = content.hasClass("edit");
         var placeHover = $("#place-hover");
         var circles = ui.selectAll("circle");
         circles.on("mouseover",function(d,i){
-            if (editMode)
+            if (off) return;
+            else if (editMode)
                 list.select("#p-"+i).attr("class","place highlight");
             else {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
@@ -264,7 +265,8 @@ sb.mesh = function(frame, map, width, height) {
             }
         });
         circles.on("mouseout",function(d,i){
-            if (editMode)
+            if (off) return;
+            else if (editMode)
                 list.select("#p-"+i).attr("class","place");
             else
                 placeHover.removeClass("active");

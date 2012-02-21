@@ -1,19 +1,37 @@
 $(function() {
+	// var options = {"earrings":
+	// 					{"acrylic":{"price":"45","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"50","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"65","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"140"}},
+	// 			   "smallNecklace":
+	// 			   		{"acrylic":{"price":"40","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"45","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"55","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"130"}},
+	// 			   "largeNecklace":
+	// 			   		{"acrylic":{"price":"55","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"60","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"75","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"150"}}};
 	var options = {"earrings":
 						{"acrylic":{"price":"40","colors":["Black","Grey","White"]},
 						"wood":{"price":"45","colors":["Amber","Blonde"]},
-						"nylon":{"price":"60","colors":["Black","Grey","White"]},
-						"silver":{"price":"120"}},
-				   "smallNecklace":
-				   		{"acrylic":{"price":"30","colors":["Black","Grey","White"]},
-						"wood":{"price":"35","colors":["Amber","Blonde"]},
 						"nylon":{"price":"50","colors":["Black","Grey","White"]},
-						"silver":{"price":"110"}},
+						"silver":{"price":"90"}},
+				   "smallNecklace":
+				   		{"acrylic":{"price":"40","colors":["Black","Grey","White"]},
+						"wood":{"price":"45","colors":["Amber","Blonde"]},
+						"nylon":{"price":"50","colors":["Black","Grey","White"]},
+						"silver":{"price":"90"}},
 				   "largeNecklace":
-				   		{"acrylic":{"price":"50","colors":["Black","Grey","White"]},
-						"wood":{"price":"55","colors":["Amber","Blonde"]},
-						"nylon":{"price":"70","colors":["Black","Grey","White"]},
-						"silver":{"price":"140"}}};
+				   		{"acrylic":{"price":"40","colors":["Black","Grey","White"]},
+						"wood":{"price":"45","colors":["Amber","Blonde"]},
+						"nylon":{"price":"50","colors":["Black","Grey","White"]},
+						"silver":{"price":"100"}}};
+	var displayNames = {"earrings":"One pair of earrings",
+						"smallNecklace":"One small necklace pendant",
+						"largeNecklace":"One large necklace pendant"};
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
@@ -77,6 +95,7 @@ $(function() {
 			meshu.mesh().updateCircleBehavior();
 		}
 		else if (view == "make") {
+			meshu.mesh().updateCircleBehavior(true);
 			// break the flow if they're not logged in
 			if (!user.loggedIn)	{
 				user.showModal();
@@ -99,6 +118,8 @@ $(function() {
 				else
 				clearInterval(rotateInterval);
 			},40);
+		} else if (view == "readymade") {
+			meshu.mesh().updateCircleBehavior(true);
 		}
 
 		var index = views.indexOf(view);
@@ -109,9 +130,11 @@ $(function() {
 	    var index = views.indexOf(content.attr("class"));
 		content.attr("class", views[index-1]);
 		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
-		if (views[index-1] == "make") 
+		if (views[index-1] == "make" || views[index-1] == "readymade") {
+			meshu.mesh().updateCircleBehavior();
 			d3.select("#delaunay")
 				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
+		}
 	});
 
 	var timer;
@@ -154,6 +177,7 @@ $(function() {
 			$.each(options[objectType][material].colors, function(i, value){
 				$("#color-list li").eq(i).text(value);
 			});
+			$("#color-list li:first").click();
 		} else {
 			objectColor = "";
 			$(".right-div").fadeOut()
@@ -228,7 +252,7 @@ $(function() {
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
 
 		$("#review-title").text('"'+(loadedMeshu ? loadedMeshu.title : meshu.outputTitle())+'"');
-		$("#review-description").text(objectType + ", made out of " + objectColor + " " + objectMaterial);
+		$("#review-description").text(displayNames[objectType] + ", made out of " + objectColor.toLowerCase() + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
 		$("#review-shipping").empty();
