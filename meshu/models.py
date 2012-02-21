@@ -42,8 +42,12 @@ class Meshu(models.Model):
 
 	# rotation angle, around the center
 	theta = models.IntegerField(default=0, blank=True)
+
+	# if it's a readymade, we need to define what product it is
+	product = models.CharField(max_length=140, default='', blank=True)
 	
-	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/meshu_01.png")
+	# thumbnail in case we need gallery views	
+	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/default_thumbnail.png")
 
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
@@ -65,7 +69,6 @@ class Meshu(models.Model):
 class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
 	image = models.ImageField(upload_to="images/meshus/")
-
 
 class Order(models.Model):
 	user_profile = models.ForeignKey(UserProfile, default=1)
