@@ -76,4 +76,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^about/', direct_to_template, {
 		'template': 'meshu/base_about.html'
 	}),
+
+	# backend for our orders
+	url(r'^orders/', 'processing_orders'),
 )

@@ -1,0 +1,15 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Current Orders{% endblock %}
+
+{% block content %}
+    <h2 class="page-header">{{ orders|length }} orders in processing.</h2>
+    <ul class="gallery">
+        {% for order in orders reversed %}
+            <li>
+                <span class="description"><a href="{{ order.meshu.get_absolute_url }}">{{ order.meshu.title }}</a></span>
+                <span class="status">{{ order.status }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

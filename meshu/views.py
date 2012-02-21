@@ -38,7 +38,7 @@ def index(request):
 # meshu.views.shop
 def shop(request):
 	# assume user__id = 1 is all our admin created readymades
-	meshus = Meshu.objects.filter(user_profile__id=1)
+	meshus = Meshu.objects.filter(user_profile__user__username='shop')
 	return render_to_response('meshu/gallery/gallery.html', {
 		"meshus": meshus,
 		"view": 'shop',
@@ -308,7 +308,7 @@ def current_profile(request):
 	if request.user.is_authenticated():
 		return request.user.get_profile()
 	else:
-		return UserProfile.objects.get(id=1)
+		return UserProfile.objects.get(user__username='shop')
 
 
 #
@@ -367,7 +367,7 @@ def order_create(request, profile, meshu):
 	# set the status to ORDERED
 	order.status = 'OR'
 
-	if profile.id == 1:
+	if profile.user.username == 'shop':
 		order.contact = request.POST.get('shipping_contact', '')
 	else:
 		order.contact = profile.user.email
@@ -378,3 +378,17 @@ def order_create(request, profile, meshu):
 
 	order.save()
 	return order
+
+# Processing Orders!
+def processing_orders(request):
+	profile = current_profile(request)
+
+	# if profile.user.username != 'shop':
+	# 	return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	# get all orders that haven't been shipped
+	orders = Order.objects.exclude(status='SH')
+
+	return render_to_response('meshu/processing/orders.html', {
+			'orders': orders
+	}, context_instance=RequestContext(request))
