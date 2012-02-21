@@ -155,31 +155,38 @@ $(function() {
 
 	//materials selection
 	var objectMaterial, objectColor;
-	$("#object-list li").click(function(){
+	var objectList = $("#object-list li");
+	var materialList = $("#material-list li");
+	var colorList = $("#color-list li");
+	objectList.click(function(){
 		objectType = $(this).attr("id");
-		$("#material-list li").each(function(){
+		materialList.each(function(){
 			var material = $(this).attr("id");
 			if ($(this).hasClass("selected"))
 				$("#total-cost").text("$"+options[objectType][material].price+".00");
 		});
 	});
-	$("#material-list li").click(function(){
+	materialList.click(function(){
 		var material = objectMaterial = $(this).attr("id");
 		$("#total-cost").text("$"+options[objectType][material].price+".00");
 		if (options[objectType][material].colors) {
 			$(".right-div").fadeIn();
-			var list = $("#color-list li").empty();
+			colorList.find(".color-title").empty();
+			colorList.find("img").attr("scr","");
 			$.each(options[objectType][material].colors, function(i, value){
-				$("#color-list li").eq(i).text(value);
+				console.log("each");
+				var li = colorList.eq(i);
+				li.find(".color-title").text(value);
+				li.find(".color-img img").attr("src","../static/images/materials/"+material+"_"+value.toLowerCase()+".png");
 			});
-			$("#color-list li:first").click();
+			colorList.eq(0).click();
 		} else {
 			objectColor = "";
-			$(".right-div").fadeOut()
+			$(".right-div").fadeOut();
 		}
 	});
-	$("#color-list li").click(function(){ 
-		objectColor = $(this).text();
+	colorList.click(function(){ 
+		objectColor = $(this).find(".color-title").text();
 	});
 
 	$(".option-list li").live("click",function(){
@@ -187,9 +194,8 @@ $(function() {
 		li.parent().find("li").removeClass("selected");
 		li.addClass("selected");
 	});
-	$("#object-list li:first").click();
-	$("#material-list li:first").click();
-	$("#color-list li:first").click();
+	objectList.eq(0).click();
+	materialList.eq(0).click();
 
 
 	//validating!

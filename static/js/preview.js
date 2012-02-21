@@ -4,7 +4,6 @@ $(function() {
 	sb.rotator = function(rotateFrame, delaunayFrame, hiddenFrame) {
 		var self = {};
 
-		var patternNames = ["amber,blonde,silver"];
 		var rotation = 0;
 
 		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame) {
@@ -19,15 +18,6 @@ $(function() {
 			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
 
 			$("#transform").append(miniDelaunay).append(bounding);
-
-			// this is where pattern support would be put in, it's spec'd out now but needs images and logic
-			var patternGroup = main.append("svg:g").attr("id","patterns");
-			var patterns = patternGroup.selectAll("pattern").data(patternNames);
-				patterns.enter()
-					.append("svg:pattern")
-					.append("svg:image")
-						.attr("id",function(d){ return "pattern-"+d; })
-						.attr("xlink:href",function(d){ return "url(../../static/images/patterns/"+d+".png)"; });
 
 			d3.selectAll("circle.hidden").on("mousedown",mousemove);
 			main.on("mouseup",mouseup).on("mousemove",mainmove);
