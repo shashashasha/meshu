@@ -12,6 +12,9 @@
         {% if view == 'paid' %}
             Awesome! Thanks for ordering!
         {% endif %}
+        {% if view == 'login_error' %}
+            Oops, we don't have a user matching that email and password.
+        {% endif %}
         {% if view == 'authorization_required' %}
             Sorry, you need to log in to see that page.
         {% endif %}

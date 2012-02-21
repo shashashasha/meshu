@@ -1,0 +1,21 @@
+{% extends "meshu/email/base_email.html" %}
+
+{% block plaintext_header %}
+How exciting! Your order is off to the fabricator!
+{% endblock %}
+
+{% block header_image %}
+{% endblock %}
+
+{% block email_title %}
+How exciting! Your order is off to the fabricator!
+{% endblock %}
+
+{% block content %}
+<img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
+<br /><br />
+<div>
+    <h3 class="h4">{{ meshu.title }} is off to the fabricator!</h3>
+    We've processed your <strong>{{ order.color }} {{ order.material }} {{ order.product }}</strong> order and have sent it off to the fabricator! We'll let you know when it's en route to you.
+</div>
+{% endblock %}

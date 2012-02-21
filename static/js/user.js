@@ -103,6 +103,11 @@ var user = function() {
     }
 
     function onLogIn(data) {
+        // if the login information was incorrect
+        if (!data.success) {
+            return;
+        }
+
         // format this better
         $("#logout").show().html('logout');
         $("#profile").show();

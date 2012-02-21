@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import uuid
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 
 # for emailing html
@@ -156,23 +156,46 @@ def item_save(request, item_encoded):
 # Views for Users
 #
 def user_login(request, *args, **kwargs):
+	user = authenticate(username=request.POST['email'], password=request.POST['password'])
+	if user is not None:
+		if user.is_active:
+			response = login(request, user)
+			return user_login_success(request, user)
+		else:
+			return user_login_error(request, user)
+	else:
+	    return user_login_error(request, user)
+
+def user_login_success(request, user):
 	xhr = request.POST.has_key('xhr')
 
-	user = authenticate(username=request.POST['email'], password=request.POST['password'])
-	response = login(request, user)
+	profile = user.get_profile()
+	meshus = Meshu.objects.filter(user_profile=profile)
 
 	if xhr:
-		meshus = Meshu.objects.filter(user_profile=request.user.get_profile())
-
 		response_dict = {}
 		response_dict.update({ 'success' : True })
 		response_dict.update({ 'username' : user.username })
 		response_dict.update({ 'meshus' : meshus.count() })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+	else:
+		return render_to_response('meshu/gallery/gallery.html', {
+				'view' : 'user',
+				'profile' : profile,
+				'meshus': meshus
+		}, context_instance=RequestContext(request))
 
-	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : request.POST['xhr']
-	}, context_instance=RequestContext(request))
+def user_login_error(request, user):
+	xhr = request.POST.has_key('xhr')
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : False })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+	else:
+		return render_to_response('meshu/notification/base_notification.html', {
+				'view' : 'login_error'
+		}, context_instance=RequestContext(request))
 
 def user_logout(request, *args, **kwargs):
 	xhr = request.GET.has_key('xhr')
@@ -211,10 +234,10 @@ def user_create(request):
 	xhr = request.POST.has_key('xhr')
 	if xhr:
 		return user_login(request)
-
-	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : 'signedup'
-	}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('meshu/notification/base_notification.html', {
+				'view' : 'signedup'
+		}, context_instance=RequestContext(request))
 
 def user_profile(request):
 	# show all meshus belonging to the current user
@@ -229,9 +252,8 @@ def user_profile(request):
 	}, context_instance=RequestContext(request))
 
 def mail_order_confirmation(email, meshu, order):
-	subject, from_email, to = 'Order Confirmation', 'meshbot@meshu.io', email
+	subject, from_email, to = 'Order Confirmation', 'orders@meshu.io', email
 	html_content = render_to_string('meshu/email/order_confirmation.html', { 
-		'view':'paid',
 		'meshu': meshu,
 		'order': order
 	})
@@ -241,6 +263,21 @@ def mail_order_confirmation(email, meshu, order):
 	msg.attach_alternative(html_content, "text/html")
 	msg.send()
 	return
+
+def mail_order_status_change(email, meshu, order):
+	subject, from_email, to = 'Your Order Status Update', 'orders@meshu.io', email
+
+	html_content = render_to_string('meshu/email/order_sent_to_fabricator.html', { 
+		'meshu': meshu,
+		'order': order
+	})
+	text_content = strip_tags(html_content)
+	# create the email, and attach the HTML version as well.
+	msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+	msg.attach_alternative(html_content, "text/html")
+	msg.send()
+	return
+
 
 #
 # Ordering!
@@ -383,8 +420,8 @@ def order_create(request, profile, meshu):
 def processing_orders(request):
 	profile = current_profile(request)
 
-	# if profile.user.username != 'shop':
-	# 	return render_to_response('404.html', {}, context_instance=RequestContext(request))
+	if profile.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
 	# get all orders that haven't been shipped
 	orders = Order.objects.exclude(status='SH')
@@ -392,3 +429,15 @@ def processing_orders(request):
 	return render_to_response('meshu/processing/orders.html', {
 			'orders': orders
 	}, context_instance=RequestContext(request))
+
+def processing_order_update_status(request, order_id):
+	order = Order.objects.get(id=order_id)
+
+	# don't send duplicate emails
+	if order.status != request.GET.get('status'):
+		order.status = request.GET.get('status')
+		order.save()
+		mail_order_status_change(order.contact, order.meshu, order)
+	
+	# go back to gallery view
+	return HttpResponseRedirect('/orders/')

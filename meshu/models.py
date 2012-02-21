@@ -103,6 +103,22 @@ class Order(models.Model):
 	shipping_zip = models.CharField(max_length=5, default='')
 	shipping_state = models.CharField(max_length=2, default='')
 
+	def get_status_message(self):
+		if self.status == 'OR':
+			return 'Ordered'
+		elif self.status == 'PR':
+			return 'Processed'
+		elif self.status == 'SE':
+			return 'Sent to Fabricator'
+		elif self.status == 'RE':
+			return 'Received from Fabricator'
+		elif self.status == 'PA':
+			return 'Packaged'
+		elif self.status == 'SH':
+			return 'Shipped'
+		else:
+			return 'Unknown Status'
+
 	# "Black Acrylic Necklace ordered by Sha, $60.00"
 	def __unicode__(self):
 		strings = [self.color, self.material, self.product]
