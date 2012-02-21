@@ -96,6 +96,7 @@ $(function() {
 		var view = content.attr("class");
 		
 		if (view == "edit") {
+			meshu.updateBounds();
 			meshu.mesh().updateCircleBehavior();
 		}
 		else if (view == "make") {
@@ -112,16 +113,8 @@ $(function() {
 				return;
 			}
 
-			var counter = 0;
-			var rotateInterval = setInterval(function(){
-				if (counter < 20){
-					d3.select("#delaunay")
-						.attr("transform","translate(50,50) scale(.83) rotate("+(sb.rotator ? sb.rotator.rotation() : 0)+",300,300)");
-					counter++;
-				}
-				else
-				clearInterval(rotateInterval);
-			},40);
+			// animate meshu
+			meshu.animateTransform(50, 50, .83, sb.rotator ? sb.rotator.rotation() : 0);
 		} else if (view == "readymade") {
 			meshu.mesh().updateCircleBehavior(true);
 		}
@@ -136,8 +129,7 @@ $(function() {
 		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
 		if (views[index-1] == "make" || views[index-1] == "readymade") {
 			meshu.mesh().updateCircleBehavior();
-			d3.select("#delaunay")
-				.attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
+			meshu.animateTransform(0, 0, 1, 0);
 		}
 	});
 

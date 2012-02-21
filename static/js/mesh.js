@@ -116,9 +116,11 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function mouseup() {
-        // ignore zoom buttons
-        if (d3.event.target.id == 'zoomout' || d3.event.target.id == 'zoomin')  return;
+        mouse_down = null;
+        last_mouse = null;
 
+        // ignore zoom buttons, other ui
+        if (d3.event.target != svg.node())  return;
 
         if (!content.hasClass("edit")) return;
 
@@ -131,7 +133,6 @@ sb.mesh = function(frame, map, width, height) {
 
             self.add(loc.lat, loc.lon);
             map_dragging = null;
-            mouse_down = null;
             return;
         }
 
@@ -156,7 +157,6 @@ sb.mesh = function(frame, map, width, height) {
         moved = false;
         dragging = null;
         map_dragging = null;
-        mouse_down = null;
     }
 
     self.updatePixelBounds = function(){

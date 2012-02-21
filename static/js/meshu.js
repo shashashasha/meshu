@@ -109,14 +109,46 @@ sb.meshu = function(frame) {
         }
 
         mesh.locations(newLocs);
-        map.updateBounds(mesh.lats(), mesh.lons());
-        mesh.updatePixelBounds();
-        mesh.refresh();
+        self.updateBounds();
         return self;
     };
 
     self.mesh = function() {
         return mesh;
+    };
+
+    // save the transform for now
+    var cx = 0, cy = 0, cs = 1, cr = 0;
+    self.animateTransform = function(tx, ty, s, r) {
+
+        var easeTo = function(current, dest) {
+            return (dest - current) * .33;
+        };
+
+        var counter = 0;
+        var delaunay = d3.select("#delaunay");
+        var rotateInterval = setInterval(function(){
+            if (counter < 50){
+                cx += easeTo(cx, tx);
+                cy += easeTo(cy, ty);
+                cs += easeTo(cs, s);
+                cr += easeTo(cr, r);
+
+                var translate = "translate(" + cx + "," + cy + ")";
+                var scale = " scale(" + cs + ")";
+                var rotate = " rotate(" + cr + ",300,300)";
+                delaunay.attr("transform", translate + scale + rotate);
+                counter++;
+            }
+            else
+                clearInterval(rotateInterval);
+        }, 40);
+    };
+
+    self.updateBounds = function() {
+        map.updateBounds(mesh.lats(), mesh.lons());
+        mesh.updatePixelBounds();
+        mesh.refresh();
     };
 
     self.updateTitle = function(t) {
