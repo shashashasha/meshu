@@ -29,9 +29,10 @@ $(function() {
 						"wood":{"price":"45","colors":["Amber","Blonde"]},
 						"nylon":{"price":"50","colors":["Black","Grey","White"]},
 						"silver":{"price":"100"}}};
-	var displayNames = {"earrings":"One pair of earrings",
-						"smallNecklace":"One small necklace pendant",
-						"largeNecklace":"One large necklace pendant"};
+	var displayNames = {"earrings":"pair of earrings",
+						"smallNecklace":"small necklace pendant",
+						"largeNecklace":"large necklace pendant"};
+	var objectType;
 	
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
@@ -55,6 +56,9 @@ $(function() {
 		else {
 			views = ["readymade","checkout","review"];
 			$("#materials").addClass("ready");
+			objectType = loadedMeshu.product;
+			var type = displayNames[loadedMeshu.product];
+			$("#readymade-type").text(type.charAt(0).toUpperCase() + type.slice(1));
 		}
 		$("#finish-button").addClass("active");
 		var rows = loadedMeshu.location_data.split("|");
@@ -158,7 +162,6 @@ $(function() {
 	})
 
 	//materials selection
-	var objectType = "earrings";
 	var objectMaterial, objectColor;
 	$("#object-list li").click(function(){
 		objectType = $(this).attr("id");
@@ -252,7 +255,7 @@ $(function() {
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
 
 		$("#review-title").text('"'+(loadedMeshu ? loadedMeshu.title : meshu.outputTitle())+'"');
-		$("#review-description").text(displayNames[objectType] + ", made out of " + objectColor.toLowerCase() + " " + objectMaterial);
+		$("#review-description").text("One " + displayNames[objectType] + ", made out of " + objectColor.toLowerCase() + " " + objectMaterial);
 		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
 
 		$("#review-shipping").empty();

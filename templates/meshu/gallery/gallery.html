@@ -35,7 +35,7 @@
                         {{ object.svg }}
                     {% endautoescape %}
                 </a>
-                <p class="description">{{ object.title }}</p>
+                <p class="description">{{ object.title }}<span class="price-range">{{ object.product }}</span></p>
                 <a class="clickthrough" href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">click to view</a>
