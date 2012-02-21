@@ -54,46 +54,75 @@ sb.mesh = function(frame, map, width, height) {
         selected = null,
         moved = false,
         dragging = null,
+        mouse_down = null,
+        map_dragging = null,
+        last_mouse = null,
         meshuTitle = null;
 
     var content = $("#content");
 
     d3.select(uiFrame.node())
         .on("mousemove", mousemove)
-        .on("mouseup", mouseup);
+        .on("mousedown", mousedown);
+
+    d3.select('body').on("mouseup", mouseup);
+
+    function mousedown() {
+        if (!content.hasClass("edit")) return;
+
+        // mouse is down, get ready to track map dragging
+        mouse_down = true;
+    }
 
     function mousemove() {
         // disable mousemove detection when we're not editing
         if (!content.hasClass("edit")) return;
-        if (!dragging) {
+        if (!dragging && !mouse_down) {
             return;
         }
 
         var m = d3.svg.mouse(main.node());
-        var l = map.p2l({
-            x: m[0],
-            y: m[1]
-        });
-        dragging[0] = l.lon;
-        dragging[1] = l.lat;
+        if (dragging) {
+            var l = map.p2l({
+                x: m[0],
+                y: m[1]
+            });
+            dragging[0] = l.lon;
+            dragging[1] = l.lat;
 
-        var index = points.indexOf(dragging);
-        lats[index] = l.lat;
-        lons[index] = l.lon;
+            var index = points.indexOf(dragging);
+            lats[index] = l.lat;
+            lons[index] = l.lon;
+            
+            var index = points.indexOf(dragging);
+            lats[index] = l.lat;
+            lons[index] = l.lon;   
         
-        var index = points.indexOf(dragging);
-        lats[index] = l.lat;
-        lons[index] = l.lon;
-        
-        update();
+            update();
+        }
+
+        if (moved && mouse_down) {
+            // if we've moved and the mouse is down, we're dragging the map
+            map_dragging = true;
+
+            // move the map by the delta
+            map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
+
+            update();
+        }
 
         moved = true;
+        last_mouse = m;
     }
 
     function mouseup() {
+        // ignore zoom buttons
+        if (d3.event.target.id == 'zoomout' || d3.event.target.id == 'zoomin')  return;
+
+
         if (!content.hasClass("edit")) return;
 
-        if (!dragging) {
+        if (!dragging && !map_dragging) {
             var m = d3.svg.mouse(main.node());
             var loc = map.p2l({
                 x: m[0],
@@ -101,6 +130,8 @@ sb.mesh = function(frame, map, width, height) {
             });
 
             self.add(loc.lat, loc.lon);
+            map_dragging = null;
+            mouse_down = null;
             return;
         }
 
@@ -116,6 +147,7 @@ sb.mesh = function(frame, map, width, height) {
             mousemove();
         }
 
+        // ignore other events
         if (d3.event) {
           d3.event.preventDefault();
           d3.event.stopPropagation();
@@ -123,6 +155,8 @@ sb.mesh = function(frame, map, width, height) {
 
         moved = false;
         dragging = null;
+        map_dragging = null;
+        mouse_down = null;
     }
 
     self.updatePixelBounds = function(){
@@ -200,6 +234,9 @@ sb.mesh = function(frame, map, width, height) {
                 .attr("r", 7)
                 .on("mousedown", function(d) {
                     selected = dragging = d;
+
+                    // stop prop to prevent map dragging
+                    d3.event.stopPropagation();
                 });
         
         circles.exit().remove();
@@ -302,7 +339,7 @@ sb.mesh = function(frame, map, width, height) {
 
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
-                if (d.title) return d.title;
+                if (d && d.title) return d.title;
                 else return "My Meshu";
             });
 
