@@ -726,6 +726,9 @@ h1#meshu {
     user-select: none;
     .transition(background-color, .5s);
 }
+.nav.next {
+    cursor: default;
+}
 .nav a {
     color: white;
 }
@@ -736,9 +739,12 @@ h1#meshu {
 .nav:hover {
     background-color: @blue;
 }
-
-.nav.active {
+.nav.next:hover {
+    background-color: @grey;
+}
+.nav.active, .nav.next.active:hover {
     background-color: @pink;
+    cursor: pointer;
 }
 
 .back {
@@ -807,7 +813,7 @@ circle {
     fill-opacity: 0;
 }
 
-.edit circle:hover, circle.highlight {
+.edit circle:hover, circle.highlight, .inactive circle:first-child {
     fill-opacity: 1;
     cursor: pointer;
 }

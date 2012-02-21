@@ -49,7 +49,7 @@ sb.mesh = function(frame, map, width, height) {
 
     var points = [],
     	new_pt = [],
-        pixel_bounds = {},
+        pixel_bounds = [],
     	updateInterval = 0,
         selected = null,
         moved = false,
@@ -126,10 +126,12 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     self.updatePixelBounds = function(){
-        pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+        if (lats.length && lons.length)
+            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
                             map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+        else pixel_bounds = [];
     }
 
     function updateMesh() {
@@ -168,7 +170,7 @@ sb.mesh = function(frame, map, width, height) {
 
         // we move the newest point closer and closer to its destination
         if (new_pt) {
-            var last = points[points.length-1];
+            var last = points[points.length-1] || [];
             if (Math.abs(last[0] - new_pt[0]) > .0003) {
                 last[0] += (new_pt[0] - last[0]) / 3;
             }    
@@ -228,6 +230,7 @@ sb.mesh = function(frame, map, width, height) {
 
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
         rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
+        rotate_pts.exit().remove();
         rotate_pts.attr("cx",function(d,i){
                 return d.x;
             }).attr("cy",function(d,i){
@@ -235,7 +238,7 @@ sb.mesh = function(frame, map, width, height) {
             });
         var bounding_box = hidden.select("path");
         bounding_box.attr("d",function(){
-            if (!pixel_bounds.length) return;
+            if (pixel_bounds.length == 0) return;
             var draw = [];
             $.each(pixel_bounds, function(i,p){
                 draw.push([p.x,p.y]);
@@ -366,6 +369,7 @@ sb.mesh = function(frame, map, width, height) {
             places.push(placename);
 
         if (points.length) {
+            $("#meshu-container").removeClass("inactive");
         	new_pt = [lon, lat];
 
         	// make the new point start from the last location
@@ -387,12 +391,12 @@ sb.mesh = function(frame, map, width, height) {
         return self;
     };
 
-    self.remove = function(index) {     
+    self.remove = function(index) {   
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
-        if (points.length < 4) $(".finish").removeClass("active");
+        if (points.length < 4) $("#finish-button").removeClass("active");
     };
 
     self.lats = function() {
