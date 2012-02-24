@@ -34,14 +34,14 @@ $(function() {
 						"largeNecklace":"large necklace pendant"};
 
 	// the type of object we're ordering
-	var objectType;
+	var objectType, objectMaterial, objectColor;
 	
 	// here's the list of views we have in this flow
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
 
 	// create a stripe payment object
-	stripe.options(options);
+	orderer.options(options);
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
@@ -177,7 +177,6 @@ $(function() {
 	})
 
 	//materials selection
-	var objectMaterial, objectColor;
 	var objectList = $("#object-list li");
 	var materialList = $("#material-list li");
 	var colorList = $("#color-list li");
@@ -185,33 +184,42 @@ $(function() {
 	objectList.click(function(){
 		objectType = $(this).attr("id");
 		materialList.each(function(){
-			var material = $(this).attr("id");
-			if ($(this).hasClass("selected"))
-				$("#total-cost").text("$"+options[objectType][material].price+".00");
+			if ($(this).hasClass("selected")) {
+				objectMaterial = $(this).attr("id");
+				var price = orderer.getPriceString(objectType, objectMaterial);
+				$("#total-cost").text(price);	
+			}
 		});
 	});
 
 	materialList.click(function(){
-		var material = objectMaterial = $(this).attr("id");
-		$("#total-cost").text("$"+options[objectType][material].price+".00");
-		if (options[objectType][material].colors) {
+		objectMaterial = $(this).attr("id");
+
+		var price = orderer.getPriceString(objectType, objectMaterial);
+		$("#total-cost").text(price);
+
+		var colors = orderer.getColors(objectType, objectMaterial);
+		if (colors) {
 			$(".right-div").fadeIn();
 			colorList.find(".color-title").empty();
 			colorList.find("img").attr("scr","");
 
-			$.each(options[objectType][material].colors, function(i, value) {
+			$.each(colors, function(i, value) {
 				var li = colorList.eq(i);
-				var imgURL = static_url + "images/materials/" + material + "_" + value.toLowerCase() + ".png";
+				var imgURL = static_url + "images/materials/" + objectMaterial + "_" + value.toLowerCase() + ".png";
 
 				li.find(".color-title").text(value);
 				li.find(".color-img img").attr("src", imgURL);
 			});
+
+			// select the first color
 			colorList.eq(0).click();
 		} else {
 			objectColor = "";
 			$(".right-div").fadeOut();
 		}
 	});
+
 	colorList.click(function(){ 
 		objectColor = $(this).find(".color-title").text();
 	});
@@ -222,7 +230,7 @@ $(function() {
 		li.addClass("selected");
 	});
 
-	if (pageType != 'view') {
+	if (pageType && pageType != 'view') {
 		objectList.eq(0).click();
 		materialList.eq(0).click();
 	}
@@ -282,7 +290,7 @@ $(function() {
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
-		$("#object-amount").val(options[objectType][objectMaterial].price + "00");
+		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial) + "00");
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
@@ -294,8 +302,9 @@ $(function() {
 		// let our stripe object know what object we're purchasing
 		// it'll know the price, given the options beforehand
 		// we also can't change options once it's set, so no one can mess with it
-		stripe.updateProduct(objectType, objectMaterial);
+		orderer.updateProduct(objectType, objectMaterial);
 
+		// update the review
 		updateReviewText();
 
 		$("#review-shipping").empty();
@@ -317,7 +326,6 @@ $(function() {
 		var productType = objectColor.toLowerCase() + " " + objectMaterial;
 		$("#review-description").text(product + ", made out of " + productType);
 
-		var price = options[objectType][objectMaterial].price;
-		$("#review-price").text("Total Cost: $" + price + ".00");
+		$("#review-price").text("Total Cost: " + orderer.getPriceString(objectType, objectMaterial));
 	}
 });

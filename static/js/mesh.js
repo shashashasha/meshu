@@ -1,31 +1,33 @@
 var sb = sb || {};
-var lats = [], 
+var lats = [],
     lons = [],
     places = [];
 
-sb.mesh = function(frame, map, width, height) {
+sb.mesh = function (frame, map, width, height) {
 	var self = {},
-		selfId = parseInt(Math.random() * 10000000000);
+		selfId = parseInt(Math.random() * 10000000000, 10);
 
+    // main svg
     var main = d3.select(frame || "body").append("div")
         .attr("id", selfId)
         .style("width", width)
         .style("height", height)
-        .style("position","absolute")
-        .style("z-index","100")
+        .style("position", "absolute")
+        .style("z-index", "100")
         .append("svg:svg")
-        .attr("class","meshu-svg")
+        .attr("class", "meshu-svg")
         .attr("width", "100%")
         .attr("height", "100%");
 
     var g = main.append("svg:g")
-            .attr("id","delaunay")
-            .attr("transform","translate(0,0) scale(1) rotate(0,300,300)");
+            .attr("id", "delaunay")
+            .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
 
     var hidden = main.append("svg:g")
-                 .attr("id","hidden");
-        hidden.append("svg:path");
-    
+                 .attr("id", "hidden");
+
+    hidden.append("svg:path");
+
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:1337;")
         .style("width", width)
@@ -39,13 +41,13 @@ sb.mesh = function(frame, map, width, height) {
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-number").attr("class","inactive");
-        placeTitle.append("span").attr("class","title-text");
-        placeTitle.append("span").attr("class","title-edit").html("edit");
+    var placeTitle = placeList.select("#place-number").attr("class", "inactive");
+        placeTitle.append("span").attr("class", "title-text");
+        placeTitle.append("span").attr("class", "title-edit").html("edit");
 
     var list = placeList.append("ul");
 
-    $(".place-text input").live("blur",removeInput);
+    $(".place-text input").live("blur", removeInput);
 
     var points = [],
     	new_pt = [],
@@ -98,10 +100,6 @@ sb.mesh = function(frame, map, width, height) {
             var index = points.indexOf(dragging);
             lats[index] = l.lat;
             lons[index] = l.lon;
-            
-            var index = points.indexOf(dragging);
-            lats[index] = l.lat;
-            lons[index] = l.lon;   
         
             update();
         }
@@ -239,16 +237,17 @@ sb.mesh = function(frame, map, width, height) {
         var circles = ui.selectAll("circle")
             .data(points);
 
+        // new circles
         circles.enter()
-                .append("svg:circle")
-                .attr("id",function(d,i){ return "c-"+i; })
-                .attr("r", 7)
-                .on("mousedown", function(d) {
-                    selected = dragging = d;
+            .append("svg:circle")
+            .attr("id",function(d, i){ return "c-" + i; })
+            .attr("r", 7)
+            .on("mousedown", function(d) {
+                selected = dragging = d;
 
-                    // stop prop to prevent map dragging
-                    d3.event.stopPropagation();
-                });
+                // stop prop to prevent map dragging
+                d3.event.stopPropagation();
+            });
         
         circles.exit().remove();
 
@@ -256,18 +255,18 @@ sb.mesh = function(frame, map, width, height) {
         var names = list.selectAll("li.place")
             .data(points);
         
-        var place = names.enter().append("li").attr("class","place");
-        var title = place.append("span").attr("class","title");
-            title.append("span").attr("class","place-text");
-            title.append("span").attr("class","place-edit").html("edit");
-            place.append("span").attr("class","place-delete").html("x");
+        var place = names.enter().append("li").attr("class", "place");
+        var title = place.append("span").attr("class", "title");
+            title.append("span").attr("class", "place-text");
+            title.append("span").attr("class", "place-edit").html("edit");
+            place.append("span").attr("class", "place-delete").html("x");
 
         names.exit().remove();
 
-        names.attr("id",function(d,i){ return "p-"+i; })
-            .select(".title").each(function(d){ d.edit = false; })
+        names.attr("id", function(d, i) { return "p-" + i; })
+            .select(".title").each(function(d) { d.edit = false; })
             .select(".place-text")
-            .text(function(d,i){
+            .text(function(d, i) {
                 return places[i];   
             });
 
@@ -277,18 +276,18 @@ sb.mesh = function(frame, map, width, height) {
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
         rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
         rotate_pts.exit().remove();
-        rotate_pts.attr("cx",function(d,i){
+        rotate_pts.attr("cx", function(d, i) {
                 return d.x;
-            }).attr("cy",function(d,i){
+            }).attr("cy", function(d, i) {
                 return d.y;
             });
         var bounding_box = hidden.select("path");
-        bounding_box.attr("d",function(){
+        bounding_box.attr("d", function() {
             if (pixel_bounds.length == 0) return;
             var draw = [];
-            $.each(pixel_bounds, function(i,p){
+            $.each(pixel_bounds, function(i, p) {
                 draw.push([p.x,p.y]);
-            })
+            });
             return "M" + draw.join("L") + "Z"; 
         });
 
@@ -301,19 +300,24 @@ sb.mesh = function(frame, map, width, height) {
         var editMode = content.hasClass("edit");
         var placeHover = $("#place-hover");
         var circles = ui.selectAll("circle");
-        circles.on("mouseover",function(d,i){
+
+        circles.on("mouseover", function(d, i) {
             if (off) return;
             else if (editMode)
-                list.select("#p-"+i).attr("class","place highlight");
+                list.select("#p-" + i).attr("class", "place highlight");
             else {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
-                placeHover.addClass("active").find("span").text(places[i]);
                 var w = placeHover.width();
-                placeHover.css({"top":(p.y-32)+"px", "left":(p.x-(w/2))+"px"})
-                    .find("b").css("left",w/2-3+"px");
+                var top = (p.y - 32) + "px";
+                var left = (p.x - (w/2)) + "px";
+                var bleft = w/2 - 3 + "px";
+
+                placeHover.addClass("active").find("span").text(places[i]);
+                placeHover.css({"top": top, "left": left})
+                    .find("b").css("left", bleft);
             }
         });
-        circles.on("mouseout",function(d,i){
+        circles.on("mouseout", function(d, i) {
             if (off) return;
             else if (editMode)
                 list.select("#p-"+i).attr("class","place");
@@ -370,32 +374,41 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function editText(node,i,type) {
+        var button = node.find("." + type + "-edit").text("save");
+        var field = node.find("." + type + "-text");
+        var value = ((type == "title") ? field.text() : places[i]);
+
         node.addClass("active");
-        var button = node.find("."+type+"-edit").text("save");
-        var field = node.find("."+type+"-text");
-        field.html('<input value="'+((type == "title") ? field.text() : places[i])+'">').find("input").focus();
-        // field.keypress(function(event) {
+        field.html('<input value="' + value + '">').find("input").focus();
+
+        // TODO: pressing enter saves the value
+        // right now has issues with event propogation 
+        // also going from one edit field to another
+
+        // field.keyup(function(event) {
         //     if (event.which != 13) return;
-        //     saveText(node, i);
+        //     saveText(node, i, type);
         //     button.text("edit");
-        //     field.unbind(event);
+        //     field.unbind('keyup'); 
         // });
     }
     function saveText(node, i, type) {
-        node.removeClass("active");
-        var button = node.find("."+type+"-edit").text("edit");
+        var button = node.find("." + type + "-edit").text("edit");
         var text = node.find("input").val();
-        node.find("."+type+"-text").text(text);
+
+        node.removeClass("active");
+        node.find("." + type + "-text").text(text);
+
         if (type == "place") places[i] = text;
         else return text;
     }
     function removeInput(){
         var titles = list.selectAll("li.place .title");
-        titles.each(function(d,i){
-                if (!d.edit) return;
-                d.edit = false;
-                saveText($(this),i,"place");
-            });
+        titles.each(function(d, i) {
+            if (!d.edit) return;
+            d.edit = false;
+            saveText($(this), i, "place");
+        });
     }
 
     self.add = function(latitude, longitude, placename) {

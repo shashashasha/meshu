@@ -1,6 +1,6 @@
 Stripe.setPublishableKey('pk_9Lu9WnR6pvkYDKKXFFH5UFF31vQzH');
 
-var stripe = function() {
+var orderer = function() {
     var self = {},
         //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
@@ -59,6 +59,21 @@ var stripe = function() {
 
         currentAmount = parseInt(options[type][material].price) * 100;
         return self;
+    };
+
+    self.getPrice = function(type, material) {
+        if (!options) return null;
+        return options[type][material].price;
+    };
+
+    self.getPriceString = function(type, material) {
+        if (!options) return null;
+        return '$' + options[type][material].price + '.00';
+    };
+
+    self.getColors = function(type, material) {
+        if (!options) return null;
+        return options[type][material].colors;
     };
 
     // 
