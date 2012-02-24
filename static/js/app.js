@@ -61,6 +61,7 @@ $(function() {
 			$("#readymade-type").text(type.charAt(0).toUpperCase() + type.slice(1));
 		}
 		$("#finish-button").addClass("active");
+		$("#meshu-container").removeClass("inactive");
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
