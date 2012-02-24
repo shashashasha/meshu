@@ -3,9 +3,18 @@
 {% block title %}About Meshu{% endblock %}
 
 {% block content %}
-<h2 class="page-header">We are sha and binx and we like you</h2>
+<h2 class="page-header">We are Sha and Rachel and we like you.</h2>
 <div class="inner-content">
 <p>If you have questions, comments, ideas or suggestions, get in touch at hi@meshu.io</p>
-<p>Get ready for some bitchin' photos and bios of us!</p>
+<div class="about">
+	<img src="{{ STATIC_URL }}images/sha.png" style="float:left;">
+	<h2>Sha Hwang</h2>
+	<p>Sha is a super-cute dude who excels at life. He works as a design technologist at Trulia, where he is a key member of the visualization and mapping team. When not rocking out with code, he can be found enjoying Mission restuarants and listening to hipster music.</p>
+</div>
+<div class="about right">
+	<img src="{{ STATIC_URL }}images/rachel.png">
+	<h2>Rachel Binx</h2>
+	<p>Rachel sports a remarkably similar skillset to Sha, which is why this site 92% written in Javascript! She also goes by the title of design technologist, working at the ever-lovely design firm Stamen. She jokingly refers to Meshu as her startup, which makes Sha laugh.</p>
+</div>
 </div>
 {% endblock %}
