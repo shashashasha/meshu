@@ -32,10 +32,16 @@ $(function() {
 	var displayNames = {"earrings":"pair of earrings",
 						"smallNecklace":"small necklace pendant",
 						"largeNecklace":"large necklace pendant"};
+
+	// the type of object we're ordering
 	var objectType;
 	
+	// here's the list of views we have in this flow
 	var views = ["edit","make","checkout","review"];
 	var content = $("#content");
+
+	// create a stripe payment object
+	stripe.options(options);
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
@@ -45,21 +51,34 @@ $(function() {
 		saver.initialize(meshu, loadedMeshu.view_url);
 
 		meshu.locationData(loadedMeshu.location_data);
-		if (pageType == "edit")
-			views = ["edit","make","checkout","review"];
-		else if (pageType == "make") {
-			views = ["edit","make","checkout","review"];
-			sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
+
+		// checking the page view type, setting our flows accordingly
+		switch (pageType) {
+			case 'edit':
+				views = ["edit","make","checkout","review"];
+				break;
+
+			case 'make':
+				views = ["edit","make","checkout","review"];
+				sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
+				break;
+
+			case 'view':
+				views = ["view","make","checkout","review"];
+				break;
+
+			default:
+				views = ["readymade","checkout","review"];
+
+				$("#materials").addClass("ready");
+				objectType = loadedMeshu.product;
+
+				var type = displayNames[loadedMeshu.product];
+				var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+				$("#readymade-type").text(capitalized);
+				break;
 		}
-		else if (pageType == "view")
-			views = ["view","make","checkout","review"];
-		else {
-			views = ["readymade","checkout","review"];
-			$("#materials").addClass("ready");
-			objectType = loadedMeshu.product;
-			var type = displayNames[loadedMeshu.product];
-			$("#readymade-type").text(type.charAt(0).toUpperCase() + type.slice(1));
-		}
+
 		$("#finish-button").addClass("active");
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
@@ -68,6 +87,8 @@ $(function() {
 				$("<li>").text(cols[2]).appendTo($("#display-places"));	
 			}
 		});
+
+
 		d3.select("#place-number").attr("class","").select(".title-text")
             .text(function(d){
                 d.title = loadedMeshu.title;
@@ -158,6 +179,7 @@ $(function() {
 	var objectList = $("#object-list li");
 	var materialList = $("#material-list li");
 	var colorList = $("#color-list li");
+	
 	objectList.click(function(){
 		objectType = $(this).attr("id");
 		materialList.each(function(){
@@ -166,6 +188,7 @@ $(function() {
 				$("#total-cost").text("$"+options[objectType][material].price+".00");
 		});
 	});
+
 	materialList.click(function(){
 		var material = objectMaterial = $(this).attr("id");
 		$("#total-cost").text("$"+options[objectType][material].price+".00");
@@ -173,11 +196,13 @@ $(function() {
 			$(".right-div").fadeIn();
 			colorList.find(".color-title").empty();
 			colorList.find("img").attr("scr","");
-			$.each(options[objectType][material].colors, function(i, value){
-				console.log("each");
+
+			$.each(options[objectType][material].colors, function(i, value) {
 				var li = colorList.eq(i);
+				var imgURL = "../static/images/materials/" + material + "_" + value.toLowerCase() + ".png";
+
 				li.find(".color-title").text(value);
-				li.find(".color-img img").attr("src","../static/images/materials/"+material+"_"+value.toLowerCase()+".png");
+				li.find(".color-img img").attr("src", imgURL);
 			});
 			colorList.eq(0).click();
 		} else {
@@ -198,52 +223,62 @@ $(function() {
 	materialList.eq(0).click();
 
 
-	//validating!
-	$("#payment-form").validate({
-			rules: {
-				shipping_zip: {
-					digits: true,
-			      	minlength: 5
-			    },
-			    shipping_state: {
-			    	minlength: 2
-			    },
-			    card_number: {
-			    	creditcard: true
-			    },
-			    card_cvc: {
-			    	digits: true,
-			    	minlength: 3
-			    },
-			    card_month: {
-			    	digits: true,
-			    	minlength: 2
-			    },
-			    card_year: {
-			    	digits: true,
-			    	minlength: 4,
-			    }
-			},
-			messages: {
-				shipping_state: "Please enter the two-letter state abbreviation.",
-				card_cvc: "Sorry, that is not a valid CVC code",
-				card_month: {
-					minlength: "Please enter the month as a two-digit number."
-				}, card_year: {
-					minlength: "Please enter the year as a four-digit number.",
-				},
-			},
-			submitHandler: function(){
-				content.attr("class","review");
-				populateReview();
-			}
-	});
+	/*
+		We're using JQuery validate to check all the forms 
+		of our shipping and credit card input
 
+		If it's valid, we populate the review
+	*/
+	$("#payment-form").validate({
+		rules: {
+			shipping_zip: {
+				digits: true,
+		      	minlength: 5
+		    },
+		    shipping_state: {
+		    	minlength: 2
+		    },
+		    card_number: {
+		    	creditcard: true
+		    },
+		    card_cvc: {
+		    	digits: true,
+		    	minlength: 3
+		    },
+		    card_month: {
+		    	digits: true,
+		    	minlength: 2
+		    },
+		    card_year: {
+		    	digits: true,
+		    	minlength: 4,
+		    }
+		},
+		messages: {
+			shipping_state: "Please enter the two-letter state abbreviation.",
+			card_cvc: "Sorry, that is not a valid CVC code",
+			card_month: {
+				minlength: "Please enter the month as a two-digit number."
+			}, card_year: {
+				minlength: "Please enter the year as a four-digit number.",
+			},
+		},
+		submitHandler: function(){
+			content.attr("class","review");
+			populateReview();
+		}
+	});
+	
+	/*
+		populateReview runs when we click 'review your order'
+		here's where we populate our hidden form with all of the data we'll be sending
+		also telling stripe how much to charge once the "submit" button is pressed
+	*/
 	function populateReview() {
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
-		$("#object-amount").val(options[objectType][objectMaterial].price+"00");
+		$("#object-amount").val(options[objectType][objectMaterial].price + "00");
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
@@ -252,9 +287,12 @@ $(function() {
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
 
-		$("#review-title").text('"'+(loadedMeshu ? loadedMeshu.title : meshu.outputTitle())+'"');
-		$("#review-description").text("One " + displayNames[objectType] + ", made out of " + objectColor.toLowerCase() + " " + objectMaterial);
-		$("#review-price").text("Total Cost: $"+options[objectType][objectMaterial].price+".00");
+		// let our stripe object know what object we're purchasing
+		// it'll know the price, given the options beforehand
+		// we also can't change options once it's set, so no one can mess with it
+		stripe.updateProduct(objectType, objectMaterial);
+
+		updateReviewText();
 
 		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){
@@ -264,4 +302,19 @@ $(function() {
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
 	}
 	
+	/*
+		Updating the review order divs
+	*/
+	function updateReviewText() {
+		var title = loadedMeshu ? loadedMeshu.title : meshu.outputTitle();
+		$("#review-title").text('"' + title + '"');
+
+		var product = "One " + displayNames[objectType];
+		var productType = objectColor.toLowerCase() + " " + objectMaterial;
+		$("#review-description").text(product + ", made out of " + productType);
+
+		var price = options[objectType][objectMaterial].price;
+		$("#review-price").text("Total Cost: $" + price + ".00");
+	}
+
 });

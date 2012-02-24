@@ -77,11 +77,15 @@ sb.mesh = function(frame, map, width, height) {
     function mousemove() {
         // disable mousemove detection when we're not editing
         if (!content.hasClass("edit")) return;
+
+        // if we're not dragging anything and the mouse isn't down, ignore
         if (!dragging && !mouse_down) {
             return;
         }
 
         var m = d3.svg.mouse(main.node());
+
+        // if we're dragging a point, we need to update its data
         if (dragging) {
             var l = map.p2l({
                 x: m[0],
@@ -119,11 +123,14 @@ sb.mesh = function(frame, map, width, height) {
         mouse_down = null;
         last_mouse = null;
 
-        // ignore zoom buttons, other ui
-        if (d3.event.target != svg.node())  return;
-
+        // if we're not on the right page, ignore
         if (!content.hasClass("edit")) return;
 
+        // ignore zoom buttons, other ui
+        // if it's a circle we need to continue because that means it's a point that's being dragged
+        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node())  return;
+
+        // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {
             var m = d3.svg.mouse(main.node());
             var loc = map.p2l({
@@ -154,6 +161,7 @@ sb.mesh = function(frame, map, width, height) {
           d3.event.stopPropagation();
         }
 
+        // reset the dragging flags
         moved = false;
         dragging = null;
         map_dragging = null;
