@@ -174,7 +174,6 @@ $(function() {
 			colorList.find(".color-title").empty();
 			colorList.find("img").attr("scr","");
 			$.each(options[objectType][material].colors, function(i, value){
-				console.log("each");
 				var li = colorList.eq(i);
 				li.find(".color-title").text(value);
 				li.find(".color-img img").attr("src","../static/images/materials/"+material+"_"+value.toLowerCase()+".png");

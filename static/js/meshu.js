@@ -6,7 +6,8 @@ sb.meshu = function(frame) {
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
 		map = sb.map(frame, width, height),
-		mesh = sb.mesh(frame, map, width, height);
+		mesh = sb.mesh(frame, map, width, height),
+        cases = $("#cases");
 
     // need to make these controls optional....
     $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
@@ -22,10 +23,13 @@ sb.meshu = function(frame) {
 
     var searchbox = $("#searchbox");
 
+    searchbox.focus(function(){
+        cases.fadeOut();
+    })
+
     searchbox.keypress(function(event) {
       if ( event.which == 13 ) {
          searchPlaces();
-         searchbox.val("");
        }
     });
 	// this is tied to a global submit button for now
@@ -35,6 +39,8 @@ sb.meshu = function(frame) {
 
     function searchPlaces() {
         var input = searchbox.val();
+        searchbox.val("");
+        if (input == "add a city, place, or address") return;
         var query = input.replace(" ","+");
 
         $.ajax({
@@ -42,30 +48,38 @@ sb.meshu = function(frame) {
             cache: false,
             success: function(data){
                 var results = data.ResultSet.Results;
-                var cases = $("#cases");
                 cases.empty().hide();
                 var content = $("#content");
 
-                //if (results == undefined) XXX: make a 404 "results got bonked" case
-                if (results.length == 1)
+                if (typeof results == "undefined") {
+                    searchbox.blur();
+                    cases.append(
+                        $("<p>").text("Hrm, we weren't able to find your search. Try again?"))
+                        .fadeIn();
+                }
+                else if (results.length == 1)
                     addPoint(results[0],input);
                 else {
-                    var list = $("<ul>").append($("<li>").attr("class","title").text("Hrm, did you mean:")).appendTo(cases);
-                    for (var i = 0; i < results.length; i++) {
-                        var r = results[i];
-                        $("<li>").text(r.city+", "+r.state+", "+r.country)
-                            .addClass("maybe-place")
-                            .data("place",r)
-                            .appendTo(list);
-                    }
-                    content.addClass("cases");
-                    cases.slideDown('fast');
-                    $("#cases li").click(function(){
-                        var r = $(this);
-                        addPoint(r.data("place"),input);
-                        content.removeClass("cases");
-                        cases.slideUp('fast');
-                    });
+                    cases.append(
+                        $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
+                            .fadeIn();
+                        searchbox.blur();
+                    // var list = $("<ul>").append($("<li>").attr("class","title").text("Hrm, did you mean:")).appendTo(cases);
+                    // for (var i = 0; i < results.length; i++) {
+                    //     var r = results[i];
+                    //     $("<li>").text(r.city+", "+r.state+", "+r.country)
+                    //         .addClass("maybe-place")
+                    //         .data("place",r)
+                    //         .appendTo(list);
+                    // }
+                    // content.addClass("cases");
+                    // cases.slideDown('fast');
+                    // $("#cases li").click(function(){
+                    //     var r = $(this);
+                    //     addPoint(r.data("place"),input);
+                    //     content.removeClass("cases");
+                    //     cases.slideUp('fast');
+                    // });
                 }
             }
         });
@@ -77,7 +91,6 @@ sb.meshu = function(frame) {
     }
 
     self.locations = function(locations) {
-
         for (var i = 0; i < locations.length; i++) {
             setTimeout(function(loc) {
                 return function() {
