@@ -59,7 +59,8 @@ sb.mesh = function(frame, map, width, height) {
         last_mouse = null,
         meshuTitle = null;
 
-    var content = $("#content");
+    var content = $("#content"),
+        cases = $("#cases");
 
     d3.select(uiFrame.node())
         .on("mousemove", mousemove)
@@ -430,6 +431,7 @@ sb.mesh = function(frame, map, width, height) {
             update();
         }
 
+        cases.fadeOut();
         if (points.length > 3) $("#finish-button").addClass("active");
         else $("#finish-button").removeClass("active");
 
