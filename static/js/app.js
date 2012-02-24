@@ -90,7 +90,9 @@ $(function() {
 		});
 
 
-		d3.select("#place-number").attr("class","").select(".title-text")
+		d3.select("#place-number")
+			.attr("class","")
+			.select(".title-text")
             .text(function(d){
                 d.title = loadedMeshu.title;
                 meshu.updateTitle(d.title);
@@ -200,7 +202,7 @@ $(function() {
 
 			$.each(options[objectType][material].colors, function(i, value) {
 				var li = colorList.eq(i);
-				var imgURL = "../static/images/materials/" + material + "_" + value.toLowerCase() + ".png";
+				var imgURL = static_url + "images/materials/" + material + "_" + value.toLowerCase() + ".png";
 
 				li.find(".color-title").text(value);
 				li.find(".color-img img").attr("src", imgURL);
@@ -220,9 +222,11 @@ $(function() {
 		li.parent().find("li").removeClass("selected");
 		li.addClass("selected");
 	});
-	objectList.eq(0).click();
-	materialList.eq(0).click();
 
+	if (pageType != 'view') {
+		objectList.eq(0).click();
+		materialList.eq(0).click();
+	}
 
 	/*
 		We're using JQuery validate to check all the forms 
@@ -317,5 +321,4 @@ $(function() {
 		var price = options[objectType][objectMaterial].price;
 		$("#review-price").text("Total Cost: $" + price + ".00");
 	}
-
 });

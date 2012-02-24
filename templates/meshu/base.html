@@ -89,6 +89,9 @@
 </body>
     <script type="text/javascript" src="{{ STATIC_URL }}js/user.js"></script>
     <script type="text/javascript">
+    	// django static url
+    	var static_url = "{{ STATIC_URL }}";
+
     	{% if user.is_authenticated %}
     		user.loggedIn = true;
     	{% endif %}
