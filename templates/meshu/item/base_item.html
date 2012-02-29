@@ -167,6 +167,9 @@
 
 {% block resources %}
     <script type="text/javascript">
+
+    var pageType = "{{ view }}";
+    
     {% if meshu %}
         var loadedMeshu = {
             user: '{{ meshu.user_profile.user.username }}',
@@ -177,7 +180,6 @@
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
         };
-        var pageType = "{{ view }}";
     {% else %} 
         var loadedMeshu = null;
     {% endif %}

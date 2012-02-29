@@ -70,30 +70,12 @@
 					<label for="repeat_password" style="bottom: -10px; float: left;">Re-enter Password</label>
 					<input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
 				</div>
+				<p>Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!</p>
 				<div class="login-buttons">
 					<div class="login-cancel button">Cancel</div>
 					<input id="login-account" class="button" type="submit" value="Create Account">
 				</div>
 			</form>
-			<!-- <table><tbody>
-				<tr>
-					<td><label for="id_username">Email</label></td>
-					<td><input id="id_username" class="required email" type="text" name="username" maxlength="30"></td>
-				</tr>
-				<tr>
-					<td><label for="id_password">Password</label></td>
-					<td><input type="password" class="required" name="password" id="id_password"></td>
-				</tr>
-				<tr class="account">
-					<td><label for="repeat_password">Re-enter Password</label></td>
-					<td><input type="password" class="required" name="repeat_password" id="repeat_password"></td>
-				</tr>
-			</tbody></table> -->
-			<!-- <div id="login-buttons">
-				<div id="login-cancel" class="button">Cancel</div>
-				<div id="login-submit" class="button signin">Login</div>
-				<div id="login-create" class="button account">Create Account</div>
-			</div> -->
 		</div>
 		{% endblock %}
 		<h1 id="meshu"><a href="/">meshu</a></h1>
@@ -107,6 +89,9 @@
 </body>
     <script type="text/javascript" src="{{ STATIC_URL }}js/user.js"></script>
     <script type="text/javascript">
+    	// django static url
+    	var static_url = "{{ STATIC_URL }}";
+
     	{% if user.is_authenticated %}
     		user.loggedIn = true;
     	{% endif %}

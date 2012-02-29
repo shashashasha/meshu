@@ -12,7 +12,7 @@ $(function() {
 			main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 			var div = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform","scale(.2) translate(200,200)");
+						.attr("transform","scale(.25) translate(50,50)");
 
 			var miniDelaunay = $(delaunayFrame).clone().attr("id","mini-delaunay");
 			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
@@ -43,7 +43,7 @@ $(function() {
 				rotation = ccw ? (rotation - theta) % 360 : (rotation + theta) % 360;
 				if (isNaN(rotation)) rotation = 0;
 				startX = endX, startY = endY;
-				div.attr("transform","scale(.2) translate(200,200) rotate("+(rotation)+",300,300)");
+				div.attr("transform","scale(.25) translate(50,50) rotate("+(rotation)+",300,300)");
 			}
 
 			function mouseup(){

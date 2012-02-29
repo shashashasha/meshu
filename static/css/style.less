@@ -139,10 +139,7 @@ h1#meshu {
     border-bottom: 1px solid white;
     color: black;
 }
-#login-form.signin form {
-    margin-top: 30px;
-}
-#login-form.account form {
+#login-form form {
     margin-top: 15px;
 }
 #login-form .login-row {
@@ -179,6 +176,11 @@ h1#meshu {
     position: absolute;
     bottom: 15px;
     right: 90px;
+}
+#form-account p {
+    margin: 15px 20px 0 29px;
+    color: @grey;
+    font-size: 12px;
 }
 #login-form.account .login-cancel {
     right: 150px;
@@ -325,7 +327,10 @@ h1#meshu {
 }
 
 #cases {
-    margin: 5px 0;
+    margin: 3px 0;
+}
+#cases p {
+    color: @pink;
 }
 #cases li.title {
     margin-bottom: 5px;
@@ -376,7 +381,7 @@ h1#meshu {
 
 #places {
     position: absolute;
-    top: 120px;
+    top: 130px;
     width: 360px;
     opacity: 1;
     .transition(opacity);
@@ -534,8 +539,8 @@ h1#meshu {
     top: 260px;
 }
 #rotate {
-    width: 200px;
-    height: 200px;
+    width: 175px;
+    height: 175px;
     margin-top: 15px;
 }
 #rotate-help {
@@ -837,6 +842,9 @@ h1#meshu {
     stroke-width: 5;
     stroke-linejoin: round;
 }
+#rotate-ui path {
+    stroke-dasharray: 9, 5;
+}
 
 circle {
     fill: @pink;
@@ -1010,4 +1018,24 @@ li.last-object {
 }
 .other-view.z-1{
     z-index: 1;
+}
+
+.about {
+    width: 460px;
+    float: left;
+    margin-top: 50px;
+}
+.about img {
+    width: 240px;
+    float: left;
+    padding: 0 10px 0 0;
+}
+.about.right {
+    float: right;
+    text-align: right;
+}
+
+.about.right img {
+    float: right;
+    padding: 0 0 0 10px;
 }
