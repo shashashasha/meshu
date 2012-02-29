@@ -73,7 +73,7 @@ sb.meshu = function(frame) {
 
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
-        map.updateBounds(mesh.lats(), mesh.lons());
+        self.updateBounds();
     }
 
     self.locations = function(locations) {

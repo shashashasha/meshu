@@ -292,19 +292,22 @@ sb.mesh = function(frame, map, width, height) {
         var editMode = content.hasClass("edit");
         var placeHover = $("#place-hover");
         var circles = ui.selectAll("circle");
-        circles.on("mouseover",function(d,i){
+        circles.on("mouseover", function(d, i) {
             if (off) return;
             else if (editMode)
                 list.select("#p-"+i).attr("class","place highlight");
             else {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
-                placeHover.addClass("active").find("span").text(places[i]);
                 var w = placeHover.width();
-                placeHover.css({"top":(p.y-32)+"px", "left":(p.x-(w/2))+"px"})
+                var t = (p.y - 32) + "px";
+                var l = (p.x - (w/2)) + "px";
+
+                placeHover.addClass("active").find("span").text(places[i]);
+                placeHover.css({"top": t, "left": l})
                     .find("b").css("left",w/2-3+"px");
             }
         });
-        circles.on("mouseout",function(d,i){
+        circles.on("mouseout", function(d, i) {
             if (off) return;
             else if (editMode)
                 list.select("#p-"+i).attr("class","place");
