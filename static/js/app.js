@@ -98,6 +98,8 @@ $(function() {
                 meshu.updateTitle(d.title);
                 return d.title;
             });
+	} else {
+		saver.initializeNewMeshu(meshu);
 	}
 
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {

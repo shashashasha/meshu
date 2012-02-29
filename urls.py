@@ -35,6 +35,7 @@ urlpatterns += patterns('meshu.views',
 	
 	# begin ordering an existing user meshu
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
+	url(r'^make/create/', 'item_create'),
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),
 	

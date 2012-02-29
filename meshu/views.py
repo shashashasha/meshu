@@ -113,6 +113,18 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
+def item_create(request):
+	xhr = request.POST.has_key('xhr')
+
+	profile = current_profile(request)
+
+	meshu = meshu_get_or_create(request, profile)
+
+	if xhr:
+		return meshu_xhr_response(meshu)
+
+	return item_handler(request, meshu.id, 'display.html', 'view')
+
 def item_update(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
 
@@ -123,13 +135,9 @@ def item_update(request, item_encoded):
 	old.save()
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : True })
-		response_dict.update({ 'meshu_id' : old.id })
-		response_dict.update({ 'meshu_url' : old.get_absolute_url() })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return meshu_xhr_response(old)
 
-	return item_handler(request, item_id, 'item.html', 'view')
+	return item_handler(request, item_id, 'display.html', 'view')
 
 def item_save(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
@@ -143,13 +151,9 @@ def item_save(request, item_encoded):
 	meshu.save()
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : True })
-		response_dict.update({ 'meshu_id' : meshu.id })
-		response_dict.update({ 'meshu_url' : meshu.get_absolute_url() })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return meshu_xhr_response(meshu)
 
-	return item_handler(request, item_id, 'item.html', 'view')
+	return item_handler(request, item_id, 'display.html', 'view')
 
 
 #
@@ -361,7 +365,15 @@ def meshu_update(request, meshu):
 	return meshu
 
 def meshu_get_or_create(request, profile):
-	meshu = Meshu()
+	has_id = request.POST.has_key('id')
+
+	if has_id:
+		meshu_id = int(request.POST['id'])
+		meshu = Meshu.objects.get(id=meshu_id)
+	else:
+		meshu = Meshu()
+		meshu.user_profile = profile
+
 	meshu.title = request.POST.get('title', 'My Meshu')
 	meshu.description = request.POST.get('description', '')
 
@@ -372,9 +384,17 @@ def meshu_get_or_create(request, profile):
 	# wtf dawg
 	meshu.theta = int(float(request.POST.get('theta', '0.0')))
 
-	meshu.user_profile = profile
 	meshu.save()
 	return meshu
+
+
+def meshu_xhr_response(meshu):
+	response_dict = {}
+	response_dict.update({ 'success' : True })
+	response_dict.update({ 'meshu_id' : meshu.id })
+	response_dict.update({ 'meshu_url' : meshu.get_absolute_url() })
+	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
 
 def meshu_delete(request, item_id):
 	meshu = Meshu.objects.get(id=item_id)
