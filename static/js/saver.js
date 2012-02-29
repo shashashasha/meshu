@@ -24,8 +24,6 @@ var saver = function() {
     };
 
     function createNewMeshu() {
-        console.log('creating new meshu');
-
         var xhr = getMeshuXHR();
         xhr.csrfmiddlewaretoken = $("#csrf input").val();
 
