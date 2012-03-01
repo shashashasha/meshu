@@ -5,8 +5,11 @@ var user = function() {
 
     self.mode = 'account';
 
+
     self.showModal = function(mode) {
         mode = mode || 'account';
+
+        $("#login-error").hide();
 
         $("#modal-bg").fadeIn();
         $("#login-form").fadeIn();
@@ -121,6 +124,10 @@ var user = function() {
     function onLogIn(data) {
         // if the login information was incorrect
         if (!data.success) {
+            $("#login-error").fadeIn();
+            $("#login-form").click(function() {
+                $("#login-error").hide();
+            });
             return;
         }
 

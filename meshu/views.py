@@ -18,6 +18,9 @@ from django.utils.html import strip_tags
 # our models
 from meshu.models import Meshu, Order, UserProfile
 
+import string
+import random
+
 # this is how i get dates. 
 import datetime
 
@@ -243,30 +246,77 @@ def user_profile(request):
 			'meshus': meshus
 	}, context_instance=RequestContext(request))
 
+def user_forgot_password(request):
+	# show all meshus belonging to the current user
+	profile = current_profile(request)
+
+	if profile.user.username == 'shop':
+		return notify(request, 'authorization_required')
+
+	password = random_password(4)
+
+	user = profile.user
+	user.set_password(password)
+
+	user.save()
+
+	# mail the user the reset password
+	mail_forgotten_password(user.email, password)
+
+	return notify(request, 'password_reset')
+
+def user_change_password(request):
+	# show all meshus belonging to the current user
+	profile = current_profile(request)
+
+	if profile.user.username == 'shop':
+		return notify(request, 'authorization_required')
+
+	# not done yet
+
 def mail_order_confirmation(email, meshu, order):
-	subject, from_email, to = 'Order Confirmation', 'orders@meshu.io', email
-	html_content = render_to_string('meshu/email/order_confirmation.html', { 
+	mail_template('meshu/email/order_confirmation.html', {
+		'subject' : 'Order Confirmation',
+		'from' : 'orders@meshu.io',
+		'to': email,
 		'meshu': meshu,
 		'order': order
 	})
-	text_content = strip_tags(html_content)
-	# create the email, and attach the HTML version as well.
-	msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-	msg.attach_alternative(html_content, "text/html")
-	msg.send()
 	return
 
 def mail_order_status_change(email, meshu, order):
-	subject, from_email, to = 'Your Order Status Update', 'orders@meshu.io', email
 
-	html_content = render_to_string('meshu/email/order_sent_to_fabricator.html', { 
+	mail_template('meshu/email/order_sent_to_fabricator.html', {
+		'subject' : 'Your Order Status Update',
+		'from' : 'orders@meshu.io',
+		'to': email,
 		'meshu': meshu,
 		'order': order
 	})
+	return
+
+def mail_forgotten_password(email, password):
+	# subject, from_email, to = 'Your password has been reset', 'accounts@meshu.io', email
+
+	mail_template('meshu/email/reset_password.html', {
+		'subject' : 'Your password has been reset',
+		'from' : 'accounts@meshu.io',
+		'to': email,
+		'password': password
+	})
+	return
+
+def mail_template(template, arguments):
+
+	html_content = render_to_string(template, arguments)
 	text_content = strip_tags(html_content)
 	
 	# create the email, and attach the HTML version as well.
-	msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+	subject = arguments['subject']
+	from_email = arguments['from']
+	to_email = arguments['to']
+
+	msg = EmailMultiAlternatives(arguments['subject'], text_content, from_email, [to_email])
 	msg.attach_alternative(html_content, "text/html")
 	msg.send()
 	return
@@ -454,3 +504,20 @@ def processing_order_update_status(request, order_id):
 	
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
+
+
+def random_password(length):
+	phrases = ['me', 'mi', 'ma', 'mu', 'shu', 'ki', 'ku', 'shi', 'wa', 'do', 'ka', 'de', 'sa', 'su', 'ji']
+	numbers = string.digits
+
+	password = ''
+
+	for i in range(length):
+		randid = random.randint(0, 14)
+		password += phrases[randid]
+
+	for j in range(3):
+		randid = random.randint(0, 9)
+		password += numbers[randid]
+
+	return password

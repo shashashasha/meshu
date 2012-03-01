@@ -34,11 +34,6 @@
 			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
 		</ul>
 
-		<div id="logout-confirmation" class="">
-			<h2>Sureskis?</h2>
-			<div class="login-cancel button">Cancel</div>
-			<div id="logout-confirm" class="button">Totes</div>
-		</div>
 		<div id="login-form" class="signin">
 			<h2 class="account">Please sign up to continue</h2>
 			<h2 class="signin">Please log in to continue</h2>
@@ -57,6 +52,7 @@
 				<div class="login-row">
 					<label for="signin_password">Password</label>
 					<input type="password" class="required" name="signin_password" id="signin_password">
+					<label id="login-error" for="signin_password" class="error">Oops, wrong email or password.</label>
 				</div>
 				<div class="login-buttons">
 					<div class="login-cancel button">Cancel</div>

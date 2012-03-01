@@ -2,6 +2,8 @@
 
 {% block title %}Gallery{% endblock %}
 
+{% block page_type %}{{ view }}{% endblock page_type %}
+
 {% block content %}
     <h2 class="page-header">
     {% if view == 'user' %}
