@@ -101,7 +101,7 @@ $(function() {
 	} else {
 		saver.initializeNewMeshu(meshu);
 	}
-
+	
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {
 		var helpdiv = $("<div>").attr("id","edit-help")
 						.append($("<h2>").text("It's easy to get started!"),
