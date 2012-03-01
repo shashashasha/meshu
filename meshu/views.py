@@ -233,7 +233,7 @@ def user_profile(request):
 	profile = current_profile(request)
 
 	if profile.user.username == 'shop':
-		return notify('authorization_required')
+		return notify(request, 'authorization_required')
 
 	meshus = Meshu.objects.filter(user_profile=profile)
 
