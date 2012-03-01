@@ -279,12 +279,13 @@ h1#meshu {
     background: white;
     border: 1px solid @borderGrey;
     padding: 20px;
-    text-align: center;
     .shadow(100px);
+    display: none;
 }
 #edit-help #close-help {
-    cursor: pointer;
-    color: @pink;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
 #modal-bg {
     width: 100%;
@@ -329,6 +330,10 @@ h1#meshu {
     margin: 4px 0;
     text-align: center;
     display: inline;
+}
+
+.button.pink {
+    background-color: @pink;
 }
 
 #cases {
@@ -523,11 +528,11 @@ h1#meshu {
     width: 120px;
 }
 .left-div{
-    top: 295px;
+    top: 285px;
 }
 .right-div {
     left: 200px;
-    top: 297px;
+    top: 287px;
 }
 .color-img {
     position: absolute;
@@ -592,9 +597,10 @@ h1#meshu {
     right: 0;
     .transition(right);
 }
-#checkout .note {
+p.note {
     color: @grey;
     margin: 10px 0;
+    clear: both;
 }
 #checkout input {
     margin-left: 10px;
@@ -622,6 +628,10 @@ h1#meshu {
     font-size: 18px;
 }
 #review p {
+    color: @grey;
+}
+#review-shipping span {
+    margin-right: 10px;
     color: @grey;
 }
 
@@ -719,12 +729,30 @@ h1#meshu {
 } 
 
 #review {
-    h3 {
-        margin: 1.5em 0 .5em 0;
+    h2 {
+        margin: 15px 0 5px;
     }
     p {
         margin: .25em 0;
     }
+}
+
+#review-total {
+    margin-top: 30px;
+    padding-top: 5px;
+    border-top: 1px solid black;
+    width: 100%;
+}
+#review-total h2 {
+    margin: 7px 0;
+    width: 100%;
+    color: @grey;
+}
+#review-total #total-price {
+    color: black;
+}
+#review-total span {
+    float: right;
 }
 
 #total {
@@ -796,6 +824,15 @@ h1#meshu {
     bottom: 20px;
     right: 20px;
 }
+#finish-button {
+    font-size: 20px;
+    opacity: 0;
+    .transition(opacity);
+}
+#finish-button.active {
+    opacity: 1;
+    .transition(opacity);
+}
 
 #save-button {
     right: 125px;
@@ -829,7 +866,7 @@ h1#meshu {
     border: none;
     font-size: 20px;
     float: right;
-    margin-top: 30px;
+    margin: 15px 0;
     padding: 5px 10px;
 }
 #submit-button.inactive {

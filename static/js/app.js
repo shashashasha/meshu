@@ -103,12 +103,7 @@ $(function() {
 	}
 
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {
-		var helpdiv = $("<div>").attr("id","edit-help")
-						.append($("<h2>").text("It's easy to get started!"),
-							$("<p>").text("Search for a place"),
-							$("<p>").text("Or just click on the map"),
-							$("<p>").text("Ok, I'm ready!").attr("id","close-help"));
-		content.append(helpdiv);
+		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
 			$("#edit-help").fadeOut();
@@ -396,7 +391,17 @@ $(function() {
 
 		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){
-			$("<p>").text($(this).val()).appendTo("#review-shipping");
+			var div;
+			switch (this.id) {
+				case 'ship-city':
+				case 'ship-state':
+					div = $("<span>");
+					break;
+				default:
+					div = $("<p>");
+					break;
+			}
+			div.text($(this).val()).appendTo("#review-shipping");
 		});
 		var digits = $("#card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
@@ -406,13 +411,13 @@ $(function() {
 		Updating the review order divs
 	*/
 	function updateReviewText() {
-		var title = loadedMeshu ? loadedMeshu.title : meshu.outputTitle();
-		$("#review-title").text('"' + title + '"');
 
 		var product = "One " + displayNames[objectType];
 		var productType = objectColor.toLowerCase() + " " + objectMaterial;
 		$("#review-description").text(product + ", made out of " + productType);
 
-		$("#review-price").text("Total Cost: " + orderer.getPriceString(objectType, objectMaterial));
+		$("#subtotal-price span").text(orderer.getPriceString(objectType, objectMaterial));
+		$("#shipping-price span").text("$0");
+		$("#total-price span").text(orderer.getPriceString(objectType, objectMaterial));
 	}
 });

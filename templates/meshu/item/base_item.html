@@ -12,6 +12,9 @@
         </div>
     </div>
 
+    {% block helpedit %}
+    {% endblock %}
+
     {% block edit %}
         <div id="edit">
             <div id="search">
@@ -62,7 +65,7 @@
             </div>
             <div id="total">
                 <span id="total-cost">$50.00</span>
-                <h2>Total</h2>
+                <h2>Subtotal</h2>
                 <div id="checkout-button" class="nav next active">Checkout</div>
             </div>
         </div>
@@ -109,8 +112,8 @@
                         <label>Zip Code</label>
                         <input type="text" size="4" maxlength="5" id="ship-zip" class="required" name="shipping_zip"/>
                     </div>
-                    <p class="note">Please allow 3-4 weeks for the shipping of acrylic and wood orders, and 5-6 weeks for nylon or silver</p>
                     <p class="note">At this time, we only ship to the US</p>
+                    <p class="note">Please allow 3-4 weeks for acrylic and wood orders, and 5-6 weeks for nylon or silver.</p>
                     <h2>Payment</h2>
                         <div class="form-row">
                             <label>Card Number</label>
@@ -135,14 +138,17 @@
             <div class="nav back">edit information</div>
             <div class="make-wrapper">
                 <h2>Your Order</h2>
-                <h2 class="review-header" id="review-title"></h2>
                 <h2 class="review-header">Object:</h2>
                 <p id="review-description"></p>
-                <p id="review-price"></p>
                 <h2 class="review-header">Shipping:</h2>
                 <div id="review-shipping"></div>
                 <h2 class="review-header">Payment:</h2>
                 <p id="review-payment"></p>
+                <div id="review-total">
+                    <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
+                    <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
+                    <h2 id="total-price">Total: <span></span></h2>
+                </div>
                 <input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1">
             </div>
         </div>

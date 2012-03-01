@@ -1,11 +1,18 @@
 {% extends "meshu/item/base_item.html" %}
 
+{% block helpedit %}
+<div id="edit-help">
+    <h2>It's easy to get started!</h2>
+    <div class="button pink" id="close-help">OK, I'm ready!</div>
+</div>
+{% endblock %}
+
 {% block goback %}
     <div class="nav back">edit meshu</div>
 {% endblock %}
 {% block finish %}
     <!-- <div id="save-progress-button" class="nav">save current</div> -->
-    <div id="finish-button" class="nav next start-order">save and continue</div>
+    <div id="finish-button" class="nav next start-order">Save and Continue</div>
 {% endblock %}
 
 {% block options %}
