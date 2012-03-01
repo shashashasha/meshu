@@ -71,9 +71,9 @@ $(function() {
 				views = ["readymade","checkout","review"];
 
 				$("#materials").addClass("ready");
-				objectType = loadedMeshu.product;
+				objectType = loadedMeshu.product.length ? loadedMeshu.product : 'smallNecklace';
 
-				var type = displayNames[loadedMeshu.product];
+				var type = displayNames[objectType];
 				var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
 				$("#readymade-type").text(capitalized);
 				break;
@@ -101,7 +101,7 @@ $(function() {
 	} else {
 		saver.initializeNewMeshu(meshu);
 	}
-	
+
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {
 		var helpdiv = $("<div>").attr("id","edit-help")
 						.append($("<h2>").text("It's easy to get started!"),
@@ -128,8 +128,6 @@ $(function() {
 			});
 			return;
 		}
-
-		console.log('user status:', user.loggedIn);
 
 		var view = content.attr("class");
 		makeNextView(view);
@@ -351,7 +349,6 @@ $(function() {
 	}
 
 	function updateLogoutActions(view) { 
-		console.log(view);
 		switch (view) {
 			case 'user':
 				user.logoutRedirect = '/shop/';
