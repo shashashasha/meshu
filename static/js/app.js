@@ -318,7 +318,7 @@ $(function() {
     $("#submit-button").click(function(){ 
         if (!user.loggedIn) {
         	forceUserLogin();
-        	return;
+        	return false;
         }
 
         orderer.submit(); 
@@ -351,6 +351,7 @@ $(function() {
 	}
 
 	function updateLogoutActions(view) { 
+		console.log(view);
 		switch (view) {
 			case 'user':
 				user.logoutRedirect = '/shop/';
