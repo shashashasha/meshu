@@ -109,7 +109,8 @@ sb.mesh = function (frame, map, width, height) {
             map_dragging = true;
 
             // move the map by the delta
-            map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
+            if (last_mouse)
+                map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
 
             update();
         }
