@@ -119,31 +119,21 @@ $(function() {
 	//navigation
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
+
+		if (!user.loggedIn) {
+			// pass the button, so that on login we can click it
+			var button = $(this);
+			forceUserLogin(function() {
+				button.click();
+			});
+			return;
+		}
+
+		console.log('user status:', user.loggedIn);
+
 		var view = content.attr("class");
-		
-		if (view == "edit") {
-			meshu.updateBounds();
-			meshu.mesh().updateCircleBehavior();
-		}
-		else if (view == "make") {
-			meshu.mesh().updateCircleBehavior(true);
-			// break the flow if they're not logged in
-			if (!user.loggedIn)	{
-				user.showModal();
-				var button = $(this);
-
-				// after a user logs in, click the "checkout button"
-				user.afterLogIn = function() {
-					button.click();
-				};
-				return;
-			}
-
-			// animate meshu
-			meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0);
-		} else if (view == "readymade") {
-			meshu.mesh().updateCircleBehavior(true);
-		}
+		makeNextView(view);
+		updateLogoutActions(view);
 
 		var index = views.indexOf(view);
 		content.attr("class", views[index+1]);
@@ -151,13 +141,55 @@ $(function() {
 	
 	$(".back").click(function(){
 	    var index = views.indexOf(content.attr("class"));
-		content.attr("class", views[index-1]);
-		if (views[index-1] == "edit") meshu.mesh().updateCircleBehavior();
-		if (views[index-1] == "make" || views[index-1] == "readymade") {
-			meshu.mesh().updateCircleBehavior();
-			meshu.animateTransform(0);
-		}
+	    var view = views[index-1];
+		content.attr("class", view);
+
+		makePrevView(view);
 	});
+
+	// called when a next button is clicked
+	function makeNextView(view) {
+
+		switch (view) {
+			case 'edit':
+				// if we were editing and not logged in, show the modal, and save the meshu
+				meshu.updateBounds();
+				meshu.mesh().updateCircleBehavior();
+				break;
+
+			case 'make':
+				meshu.mesh().updateCircleBehavior(true);
+				// animate meshu
+				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0);
+				break;
+
+			case 'readymade':
+				meshu.mesh().updateCircleBehavior(true);
+				break;
+
+			// this doesn't happen because of a 'next' class button
+			// it's a little weird but it's because of jquery validate
+			case 'review':
+				populateReview();
+				break;
+		}
+	}
+
+	// called when a back button is clicked
+	function makePrevView(view) {
+		switch (view) {
+			case 'edit':
+				meshu.mesh().updateCircleBehavior();
+				break;
+
+			case 'make':
+			case 'readymade':
+				meshu.mesh().updateCircleBehavior();
+				meshu.animateTransform(0);
+				break;
+		}
+	}
+
 
 	var timer;
 	$("#img-thumbs img").click(function(){
@@ -278,12 +310,63 @@ $(function() {
 				minlength: "Please enter the year as a four-digit number.",
 			},
 		},
-		submitHandler: function(){
-			content.attr("class","review");
-			populateReview();
-		}
+		submitHandler: onFormValidated
 	});
 	
+
+    // 
+    $("#submit-button").click(function(){ 
+        if (!user.loggedIn) {
+        	forceUserLogin();
+        	return;
+        }
+
+        orderer.submit(); 
+    });
+
+	function onFormValidated() {
+		if (!user.loggedIn) {
+			forceUserLogin(onFormValidated);
+			return;
+		}
+
+		content.attr("class","review");
+		makeNextView('review');
+	}
+
+	function forceUserLogin(callback) {
+		user.showModal();
+
+		// after a user logs in, click the "save and continue" button
+		user.afterLogIn = function() {
+			if (callback) {
+				saver.postCreateCallback = function() {
+					// wait a bit... 
+					setTimeout(callback, 200);
+				};	
+			}
+
+			saver.createOrUpdateMeshu();
+		};
+	}
+
+	function updateLogoutActions(view) { 
+		switch (view) {
+			case 'user':
+				user.logoutRedirect = '/shop/';
+				break;
+
+			case 'view':
+				// refresh to remove the user buttons
+				user.logoutRedirect = window.location.href;
+				break;
+
+			default:
+				user.logoutRedirect = null;
+				break;
+		}
+	}
+
 	/*
 		populateReview runs when we click 'review your order'
 		here's where we populate our hidden form with all of the data we'll be sending

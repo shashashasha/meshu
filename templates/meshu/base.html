@@ -34,11 +34,17 @@
 			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
 		</ul>
 
+		<div id="logout-confirmation" class="">
+			<h2>Sureskis?</h2>
+			<div class="login-cancel button">Cancel</div>
+			<div id="logout-confirm" class="button">Totes</div>
+		</div>
 		<div id="login-form" class="signin">
-			<h2>{%block login_form %}Please sign in to continue{% endblock %}</h2>
+			<h2 class="account">Please sign up to continue</h2>
+			<h2 class="signin">Please log in to continue</h2>
 			<ul>
-				<li id="tab-signin" class="active">Sign In</li>
-				<li id="tab-account">Create an Account</li>
+				<li id="tab-account" class="active">Create an Account</li>
+				<li id="tab-signin">Sign In</li>
 			</ul>
 			<div id="csrf">
 				{% csrf_token %}

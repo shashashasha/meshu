@@ -3,11 +3,16 @@ var user = function() {
 
     self.loggedIn = false;
 
-    self.mode = 'signin';
+    self.mode = 'account';
 
-    self.showModal = function() {
+    self.showModal = function(mode) {
+        mode = mode || 'account';
+
         $("#modal-bg").fadeIn();
         $("#login-form").fadeIn();
+
+        $("#tab-" + mode).click();
+
         $(".login-row").find("input").val('');
     };
 
@@ -18,19 +23,24 @@ var user = function() {
     };
 
     self.initialize = function() {
-        $("#login").click(self.showModal);
+        $("#login").click(function() {
+            self.showModal('signin');
+        });
 
         $(".login-cancel").click(self.hideModal); 
 
         // switching mode
         $("#login-form li").click(function(){
-           var mode = $(this).attr("id").split("-")[1];
-           var form = $("#login-form");
-           form.attr("class",mode); 
-           form.find("li").removeClass("active");
-           $(this).addClass("active");
+            var mode = $(this).attr("id").split("-")[1];
 
-           self.mode = mode;
+            var form = $("#login-form");
+
+            form.attr("class",mode); 
+            form.find("li").removeClass("active");
+
+            $(this).addClass("active");
+
+            self.mode = mode;
         });
 
         $(".login-row input").keypress(function(event) {
@@ -64,6 +74,7 @@ var user = function() {
                 }, onLogIn, 'json');
             }
         });
+
         $("#form-account").validate({
             rules: {
                 account_name: {
@@ -100,6 +111,11 @@ var user = function() {
         $("#logout").hide().html('');
 
         self.loggedIn = false;
+
+        // if we want to redirect on logout, set this property
+        if (self.logoutRedirect) {
+            window.location.href = self.logoutRedirect;
+        }
     }
 
     function onLogIn(data) {

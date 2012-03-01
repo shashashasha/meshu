@@ -51,9 +51,7 @@ def invite(request):
 	if code == 'IMESHU':
 		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
 	else:
-		return render_to_response('meshu/notification/base_notification.html', {
-			'view' : 'invite_failed'
-		}, context_instance=RequestContext(request))
+		return notify(request, 'invite_failed')
 
 #
 # Views for Items
@@ -71,9 +69,7 @@ def item_begin_order(request, item_encoded):
 
 	# check user id
 	if request.user.id != item.user_profile.user.id:
-		return render_to_response('meshu/notification/base_notification.html', {
-				'view' : 'authorization_required'
-		}, context_instance=RequestContext(request))
+		return notify(request, 'authorization_required')
 
 	return item_handler(request, item_id, 'usermade.html', 'make')
 
@@ -83,9 +79,7 @@ def item_edit(request, item_encoded):
 
 	# check user id
 	if request.user.id != item.user_profile.user.id:
-		return render_to_response('meshu/notification/base_notification.html', {
-				'view' : 'authorization_required'
-		}, context_instance=RequestContext(request))
+		return notify(request, 'authorization_required')
 
 	return item_handler(request, item_id, 'usermade.html', 'edit')
 
@@ -100,10 +94,7 @@ def item_delete(request, item_id):
 	# item_permissions(request, item_id)
 
 	meshu = meshu_delete(request, item_id)
-	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : 'meshu_deleted',
-			'meshu': meshu
-	}, context_instance=RequestContext(request))
+	return notify(request, 'meshu_deleted')
 
 # generalized handler for all our item pages
 def item_handler(request, item_id, template, view):
@@ -197,9 +188,7 @@ def user_login_error(request, user):
 		response_dict.update({ 'success' : False })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 	else:
-		return render_to_response('meshu/notification/base_notification.html', {
-				'view' : 'login_error'
-		}, context_instance=RequestContext(request))
+		return notify(request, 'login_error')
 
 def user_logout(request, *args, **kwargs):
 	xhr = request.GET.has_key('xhr')
@@ -210,9 +199,7 @@ def user_logout(request, *args, **kwargs):
 		response_dict.update({ 'success' : True })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
-	return render_to_response('meshu/notification/base_notification.html', {
-			'view' : request.GET['xhr']
-	}, context_instance=RequestContext(request))
+	return notify(request, request.GET['xhr'])
 
 def user_create(request):
 	username = uuid.uuid4().hex[:30]
@@ -239,13 +226,14 @@ def user_create(request):
 	if xhr:
 		return user_login(request)
 	else:
-		return render_to_response('meshu/notification/base_notification.html', {
-				'view' : 'signedup'
-		}, context_instance=RequestContext(request))
+		return notify('signedup')
 
 def user_profile(request):
 	# show all meshus belonging to the current user
 	profile = current_profile(request)
+
+	if profile.user.username == 'shop':
+		return notify('authorization_required')
 
 	meshus = Meshu.objects.filter(user_profile=profile)
 
@@ -276,12 +264,17 @@ def mail_order_status_change(email, meshu, order):
 		'order': order
 	})
 	text_content = strip_tags(html_content)
+	
 	# create the email, and attach the HTML version as well.
 	msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
 	msg.attach_alternative(html_content, "text/html")
 	msg.send()
 	return
 
+def notify(request, view):
+	return render_to_response('meshu/notification/base_notification.html', {
+		'view' : view
+	}, context_instance=RequestContext(request))
 
 #
 # Ordering!

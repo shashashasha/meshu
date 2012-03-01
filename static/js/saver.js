@@ -36,13 +36,9 @@ var saver = function() {
             // create new meshu_id element in the form
             updateMeshuID(data.meshu_id);
 
-            setTimeout(function() {
-                $("#save-progress-button").html('saved!');
-            }, 200);
-
-            setTimeout(function() {
-                $("#save-progress-button").html('save current');
-            }, 1000);
+            if (self.postCreateCallback) {
+              self.postCreateCallback();
+            }
 
         }, 'json');
     }
@@ -104,17 +100,12 @@ var saver = function() {
 
     self.initializeNewMeshu = function(meshu) {
         self.meshu = meshu;
+        return self;
+    };
 
-        $("#save-progress-button").click(function() {
+    self.createOrUpdateMeshu = function() {
 
-            if (!user.loggedIn) {
-                user.showModal();
-                user.afterLogIn = createNewMeshu;
-                return;
-            }
-
-            createNewMeshu();
-        });
+        createNewMeshu();
 
         return self;
     };

@@ -23,7 +23,7 @@ var orderer = function() {
         }
     }
 
-    function submit() {
+    self.submit = function() {
         // if we're charging under $20, something's wrong
         if (currentAmount < 2000)   return;
 
@@ -75,9 +75,6 @@ var orderer = function() {
         if (!options) return null;
         return options[type][material].colors;
     };
-
-    // 
-    $("#submit-button").click(function(){ submit(); });
 
     return self;
 }();
