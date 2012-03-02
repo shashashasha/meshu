@@ -2,7 +2,14 @@
 
 {% block helpedit %}
 <div id="edit-help">
-    <h2>It's easy to get started!</h2>
+    <h2>Let's get started!</h2>
+    <img src="{{ STATIC_URL }}images/make_helper_search.gif">
+    <img src="{{ STATIC_URL }}images/make_helper_map.gif" class="right">
+    <p class="caption">Search for cities, addresses, or neighborhoods.</p>
+    <p class="caption right">Or just click on the map to add points!</p>
+    <p class="title">Some ideas to get you started:</p> 
+    <p class="ideas">Cities I’ve Been To, Places I’ve Lived,</p>
+    <p class="ideas">Countries I want to Visit, Restaurants I Love, etc...</p>
     <div class="button pink" id="close-help">OK, I'm ready!</div>
 </div>
 {% endblock %}
@@ -25,6 +32,8 @@
     <svg id="rotate">
     </svg>
     <div id="rotate-help">
-        <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box</p>
+        <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+        <b class="border-notch notch"></b>
+        <b class="notch"></b>
     </div>
 {% endblock %}
