@@ -4,15 +4,27 @@ $(function() {
 	sb.rotator = function(rotateFrame, delaunayFrame, hiddenFrame) {
 		var self = {};
 
-		var rotation = 0;
+		var rotation = 0,
+			defaultTransform = "scale(.125) translate(380, 670) ";
 
 		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame) {
 			$(rotateFrame).empty();
 			var main = d3.select(rotateFrame);
-			main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
+			
+			// main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
+
+			// image bg instead of rect
+			var image = main.append('svg:image')
+				.attr('id', 'previewImage')
+				.attr('x', 0)
+				.attr('y', 0)
+				.attr('width', 200)
+				.attr('height', 200)
+				.attr('xlink:href', static_url + 'images/preview/preview_earrings.png');
+
 			var div = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform","scale(.25) translate(50,50)");
+						.attr("transform", defaultTransform);
 
 			var miniDelaunay = $(delaunayFrame).clone().attr("id","mini-delaunay");
 			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
@@ -43,7 +55,8 @@ $(function() {
 				rotation = ccw ? (rotation - theta) % 360 : (rotation + theta) % 360;
 				if (isNaN(rotation)) rotation = 0;
 				startX = endX, startY = endY;
-				div.attr("transform","scale(.25) translate(50,50) rotate("+(rotation)+",300,300)");
+
+				div.attr("transform", defaultTransform + " rotate("+(rotation)+",300,300)");
 			}
 
 			function mouseup(){
@@ -53,6 +66,28 @@ $(function() {
 		          d3.event.stopPropagation();
 		        }
 			}
+		};
+
+		self.switchProduct = function(product) {
+			var imageURL;
+
+			switch(product) {
+				case 'earrings':
+					imageURL = static_url + 'images/preview/preview_earrings.png';
+					defaultTransform = "scale(.125) translate(500, 450) ";
+					break;
+				case 'smallNecklace':
+					imageURL = static_url + 'images/preview/preview_pendant.png';
+					defaultTransform = "scale(.08) translate(940, 1400) ";
+					break;
+				case 'largeNecklace':
+					imageURL = static_url + 'images/preview/preview_necklace.png';
+					defaultTransform = "scale(.125) translate(500, 760) ";
+					break;
+			}
+
+			d3.select("#previewImage").attr("xlink:href", imageURL);
+			d3.select("#transform").attr("transform", defaultTransform + " rotate(" + rotation + ",300, 300)");
 		};
 
 		self.rotation = function() {

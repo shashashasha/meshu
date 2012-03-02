@@ -218,6 +218,8 @@ $(function() {
 				$("#total-cost").text(price);	
 			}
 		});
+
+		sb.rotator.switchProduct(objectType);
 	});
 
 	materialList.click(function(){

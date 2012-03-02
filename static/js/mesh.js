@@ -275,7 +275,10 @@ sb.mesh = function (frame, map, width, height) {
             .each(function(d){ d.edit = false; });
 
         var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
-        rotate_pts.enter().append("svg:circle").attr("class","hidden").attr("r","20");
+        rotate_pts.enter()
+            .append("svg:circle")
+            .attr("class","hidden")
+            .attr("r","40");
         rotate_pts.exit().remove();
         rotate_pts.attr("cx", function(d, i) {
                 return d.x;
@@ -290,7 +293,7 @@ sb.mesh = function (frame, map, width, height) {
                 draw.push([p.x,p.y]);
             });
             return "M" + draw.join("L") + "Z"; 
-        });
+        }).attr("class","hiddenFrame")
 
         self.updateCircleBehavior();
         updateListBehavior();
