@@ -228,7 +228,7 @@ $(function() {
 
 		var colors = orderer.getColors(objectType, objectMaterial);
 		if (colors) {
-			$(".right-div").fadeIn();
+			$(".options.right").fadeIn();
 			colorList.find(".color-title").empty();
 			colorList.find("img").attr("scr","");
 
@@ -244,7 +244,7 @@ $(function() {
 			colorList.eq(0).click();
 		} else {
 			objectColor = "";
-			$(".right-div").fadeOut();
+			$(".options.right").fadeOut();
 		}
 	});
 
