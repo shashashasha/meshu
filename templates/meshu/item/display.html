@@ -15,8 +15,8 @@
     </div>
     {% if user.is_authenticated %}
     {% if user.id == meshu.user_profile.user.id %}
-    <div id="reedit" class="nav back"><a href="{{ meshu.get_edit_url }}">edit meshu</a></div>
-    <div id="order-button" class="nav active"><a href="{{ meshu.get_order_url }}">order meshu</a></div>
+    <a id="reedit" class="nav back"  href="{{ meshu.get_edit_url }}">edit meshu</a>
+    <a id="order-button" class="nav active" href="{{ meshu.get_order_url }}">order meshu</a>
     {% endif %}
     {% endif %}
 {% endblock %}

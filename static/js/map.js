@@ -26,7 +26,7 @@ sb.map = function(frame, width, height) {
 
 	self.map.add(image);
 
-	$(".map").find("rect").attr("visibility","visible").attr("fill","white");
+	$(".map").find("rect").attr("visibility","visible").attr("fill","#c5c5c5");
 
 	self.frame = function() {
 		return container;
