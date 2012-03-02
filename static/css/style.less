@@ -271,10 +271,10 @@ h1#meshu {
 
 #edit-help {
     position: absolute;
-    top: 170px;
+    top: 100px;
     left: 280px;
-    width: 400px;
-    height: 200px;
+    width: 380px;
+    height: 300px;
     z-index: 4;
     background: white;
     border: 1px solid @borderGrey;
@@ -282,10 +282,31 @@ h1#meshu {
     .shadow(100px);
     display: none;
 }
+#edit-help h2 {
+    margin-bottom: 10px;
+}
+#edit-help img {
+    border: 1px solid @borderGrey;
+}
+#edit-help .caption {
+    width: 175px;
+    display: inline-block;
+    padding-left: 2px;
+}
+#edit-help .right {
+    margin-left: 20px;
+}
+#edit-help .title {
+    margin-top: 25px;
+}
+#edit-help .ideas {
+    color: @grey;
+}
 #edit-help #close-help {
     position: absolute;
     bottom: 20px;
     right: 20px;
+    font-size: 20px;
 }
 #modal-bg {
     width: 100%;
