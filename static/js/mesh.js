@@ -307,13 +307,15 @@ sb.mesh = function (frame, map, width, height) {
             else if (editMode)
                 list.select("#p-" + i).attr("class", "place highlight");
             else {
+                placeHover.addClass("active").find("span").text(places[i]);
+                
                 var p = map.l2p({ lat: d[1], lon: d[0] });
                 var w = placeHover.width();
                 var top = (p.y - 32) + "px";
                 var left = (p.x - (w/2)) + "px";
                 var bleft = w/2 - 3 + "px";
 
-                placeHover.addClass("active").find("span").text(places[i]);
+                
                 placeHover.css({"top": top, "left": left})
                     .find("b").css("left", bleft);
             }
