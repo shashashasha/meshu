@@ -4,11 +4,14 @@
 
 {% block content %}
 <div id="main">
-	<h2 class="big">Hi, friend!</h2>
-	<div id="get-started">
-		<a class="option" href="/shop/">Shop Our Gallery</a>
-		<a class="option pink" href="/make/">Make Your Own!</a>
+	<h2 class="big">meshu turns your places into beautiful objects.</h2>
+	<div id="banners">
+		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" />
+		<img class="bleed" id="banner-1" src="{{ STATIC_URL }}images/samples/banner3.jpg" />
+		<img class="bleed" id="banner-0" src="{{ STATIC_URL }}images/samples/banner1.jpg" />
 	</div>
+
+	<h2 class="big">here's how it works:</h2>
 
 	<ul id="diagram">
 		<li>
@@ -27,5 +30,17 @@
 			<p>your finished piece!</p>
 		</li>
 	</ul>
+
+	<h2 class="big">ready to get started?</h2>
+	<div id="get-started">
+		<a class="option" href="/shop/">Shop Our Gallery</a>
+		<a class="option pink" href="/make/">Make Your Own!</a>
+	</div>
+
 </div>
+{% endblock %}
+
+{% block script %}
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
 {% endblock %}
