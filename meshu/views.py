@@ -22,7 +22,7 @@ import string
 import random
 
 # this is how i get dates. 
-import datetime
+from datetime import datetime
 
 # got to get paid.
 import stripe
@@ -498,9 +498,11 @@ def processing_orders(request):
 
 	# get all orders that haven't been shipped
 	orders = Order.objects.exclude(status='SH')
+	orders_shipped = Order.objects.filter(status='SH')
 
 	return render_to_response('meshu/processing/orders.html', {
-			'orders': orders
+			'orders': orders,
+			'orders_shipped' : orders_shipped
 	}, context_instance=RequestContext(request))
 
 def processing_order_update_status(request, order_id):
@@ -510,7 +512,11 @@ def processing_order_update_status(request, order_id):
 	if order.status != request.GET.get('status'):
 		order.status = request.GET.get('status')
 		order.tracking = request.GET.get('tracking', '')
-		
+
+		# update the ship date
+		if order.status == 'SH':
+			order.ship_date = datetime.now()
+
 		order.save()
 
 		if order.status == 'SE' or order.status == 'SH':
