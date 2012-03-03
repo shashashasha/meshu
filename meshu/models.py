@@ -11,6 +11,12 @@ class UserProfile(models.Model):
 		# return Order.objects.filter(user=self.user).count()
 		return self.meshu_set.all().count()
 
+	def amount_orders(self):
+		return str(self.num_orders()) + ' orders'
+
+	def amount_meshus(self):
+		return str(self.meshu_set.all().count()) + ' meshus'
+
 	# other fields here
 	def __unicode__(self):
 		details = ''
@@ -51,7 +57,7 @@ class Meshu(models.Model):
 
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
-		return str(self.id) + ' - ' + self.title + ', ' + str(self.date_created)
+		return str(self.id) + ' - ' + self.title
 	
 	def get_encoded_id(self):
 		return str(self.id).encode("hex")
@@ -126,7 +132,4 @@ class Order(models.Model):
 	# "Black Acrylic Necklace ordered by Sha, $60.00"
 	def __unicode__(self):
 		strings = [self.color, self.material, self.product]
-		details = ' '.join(strings)
-		details += ' ordered by ' + self.user_profile.user.username
-		details += ', $' + str(self.amount)
-		return details
+		return ' '.join(strings)
