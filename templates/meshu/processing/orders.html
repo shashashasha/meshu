@@ -7,24 +7,31 @@
     <div class="inner-content">
     <ul class="gallery">
         {% for order in orders reversed %}
-            <li>
-                <h3><a href="{{ order.meshu.get_absolute_url }}">{{ order.meshu.title }} by {{ order.contact }}</a></h3>
-                <span class="date">Ordered on {{ order.date_created }}</span>
-                <span class="status">Current Status: {{ order.get_status_message }}</span>
+            <li class="status-list">
+                <div class="{{ order.status }} status-block">
+                    {{ order.status }}
+                </div>
+                <div class="status-information">
+                    <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.meshu.title }} by {{ order.contact }}</a></b>
+                    <br /><br />
+                    <span class="date">Ordered on {{ order.date_created }}</span>
+                    <span class="status">Current Status: {{ order.get_status_message }}</span>
 
-                <form action="/orders/{{ order.id }}/update/">
-                    <select name="status">
-                        <option value="OR">Ordered</option>
-                        <option value="PR">Processed</option>
-                        <option value="SE">Sent to Fabricator</option>
-                        <option value="RE">Received from Fabricator</option>
-                        <option value="PA">Packaged</option>
-                        <option value="SH">Shipped</option>
-                    </select>
-                    <input type="submit" value="Notify!">
-                </form>
+                    <form action="/orders/{{ order.id }}/update/">
+                        <select name="status">
+                            <option value="OR">Ordered</option>
+                            <option value="PR">Processed</option>
+                            <option value="SE">Sent to Fabricator</option>
+                            <option value="RE">Received from Fabricator</option>
+                            <option value="PA">Packaged</option>
+                            <option value="SH">Shipped</option>
+                        </select>
+                        <label for="tracking">tracking number</label>
+                        <input type="text" value="" name="tracking">
+                        <input type="submit" value="Notify!">
+                    </form>
+                </div>
             </li>
-            <br />
         {% endfor %}
     </ul>
     </div>

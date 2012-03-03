@@ -509,6 +509,8 @@ def processing_order_update_status(request, order_id):
 	# don't send duplicate emails
 	if order.status != request.GET.get('status'):
 		order.status = request.GET.get('status')
+		order.tracking = request.GET.get('tracking', '')
+		
 		order.save()
 
 		if order.status == 'SE' or order.status == 'SH':
