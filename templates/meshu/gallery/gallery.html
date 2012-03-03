@@ -1,6 +1,9 @@
 {% extends "meshu/base.html" %}
 
-{% block title %}Gallery{% endblock %}
+{% block title %}
+    {% if view == 'user' %}My Meshus{% endif %}
+    {% if view == 'shop' %}Shop{% endif %}
+{% endblock %}
 
 {% block page_type %}{{ view }}{% endblock page_type %}
 
