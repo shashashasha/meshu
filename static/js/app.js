@@ -31,7 +31,8 @@ $(function() {
 						"silver":{"price":"120"}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"smallNecklace":"small necklace pendant",
-						"largeNecklace":"large necklace pendant"};
+						"largeNecklace":"large necklace"};
+	var shipPrice = 4;
 
 	// the type of object we're ordering
 	var objectType, objectMaterial, objectColor;
@@ -371,7 +372,6 @@ $(function() {
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
-		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial) + "00");
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
@@ -383,7 +383,7 @@ $(function() {
 		// let our stripe object know what object we're purchasing
 		// it'll know the price, given the options beforehand
 		// we also can't change options once it's set, so no one can mess with it
-		orderer.updateProduct(objectType, objectMaterial);
+		orderer.updateProduct(objectType, objectMaterial, shipPrice);
 
 		// update the review
 		updateReviewText();
@@ -416,7 +416,7 @@ $(function() {
 		$("#review-description").text(product + ", made out of " + productType);
 
 		$("#subtotal-price span").text(orderer.getPriceString(objectType, objectMaterial));
-		$("#shipping-price span").text("$0");
-		$("#total-price span").text(orderer.getPriceString(objectType, objectMaterial));
+		$("#shipping-price span").text("$"+shipPrice+".00");
+		$("#total-price span").text(orderer.getPriceString(objectType, objectMaterial, shipPrice));
 	}
 });
