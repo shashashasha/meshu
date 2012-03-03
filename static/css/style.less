@@ -565,7 +565,7 @@ h1#meshu {
 .color-img img {
     border: 1px solid @borderGrey;
 }
-.ready .left-div, .ready .right-div {
+.ready .options.left, .ready .options.right {
     top: 260px;
 }
 #rotate {
@@ -750,6 +750,14 @@ p.note {
 
 .option-list li {
     cursor: pointer;
+}
+
+#object-list span {
+    float: right;
+    display: none;
+}
+#object-list li:hover span, #object-list li.selected span {
+    display: inline;
 }
 
 #material-list {
@@ -951,6 +959,8 @@ circle {
 #rotate-ui circle {
     fill-opacity: 1;
     cursor: pointer;
+    stroke: transparent;
+    stroke-width: 50;
 }
 #rotate-ui path {
     stroke: #999;
