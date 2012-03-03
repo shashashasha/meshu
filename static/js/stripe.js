@@ -53,11 +53,12 @@ var orderer = function() {
         return self;
     };
 
-    self.updateProduct = function(type, material) {
+    self.updateProduct = function(type, material, shipping) {
         // ignore if we haven't heard about this product before
         if (!options[type] || !options[type][material]) return;
 
-        currentAmount = parseInt(options[type][material].price) * 100;
+        shipping = shipping || 0;
+        currentAmount = parseInt(options[type][material].price + shipping) * 100;
         return self;
     };
 
@@ -66,9 +67,11 @@ var orderer = function() {
         return options[type][material].price;
     };
 
-    self.getPriceString = function(type, material) {
+    self.getPriceString = function(type, material, shipping) {
         if (!options) return null;
-        return '$' + options[type][material].price + '.00';
+        
+        shipping = shipping || 0;
+        return '$' + (parseInt(options[type][material].price) + shipping) + '.00';
     };
 
     self.getColors = function(type, material) {
