@@ -286,13 +286,23 @@ def mail_order_confirmation(email, meshu, order):
 
 def mail_order_status_change(email, meshu, order):
 
-	mail_template('meshu/email/order_sent_to_fabricator.html', {
-		'subject' : 'Your Order Status Update',
-		'from' : 'orders@meshu.io',
-		'to': email,
-		'meshu': meshu,
-		'order': order
-	})
+	if order.status == 'SH':
+		subject = 'Your order has been shipped!'
+		template = 'order_shipped'
+	elif order.status == 'SE':
+		subject = 'Your order has been sent to the fabricator!'
+		template = 'order_sent_to_fabricator'
+
+	# only send an email if it's been Shipped or Sent to the fabricator
+	if order.status == 'SH' or order.status == 'SE':
+		mail_template('meshu/email/' + template + '.html', {
+			'subject' : subject,
+			'from' : 'orders@meshu.io',
+			'to': email,
+			'meshu': meshu,
+			'order': order
+		})
+
 	return
 
 def mail_forgotten_password(email, password):
@@ -500,7 +510,9 @@ def processing_order_update_status(request, order_id):
 	if order.status != request.GET.get('status'):
 		order.status = request.GET.get('status')
 		order.save()
-		mail_order_status_change(order.contact, order.meshu, order)
+
+		if order.status == 'SE' or order.status == 'SH':
+			mail_order_status_change(order.contact, order.meshu, order)
 	
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
