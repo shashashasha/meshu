@@ -15,8 +15,10 @@ Thanks for ordering!
 <img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
 <br /><br />
 <div>
-    <h3 class="h4">{{ meshu.title }}, by {{ meshu.profile.user.username }}</h3>
-    <h4 class="h4">Amount: ${{ order.amount }}</h4>
-    Thanks! We've received your order for <strong>{{ order.color }} {{ order.material }} {{ order.product }}</strong> and will let you know when we've processed it. 
+    <h3 class="h4">{{ meshu.title }}</h3>
+    <h3 class="h4">Amount: ${{ order.amount }}</h3>
+    Thanks! We've received your order for <b>{{ order.color|lower }} {{ order.material }} {{ order.product }}</b> and will let you know when we've processed it. 
+    <br />
+    And if you're as excited as we are about this, you can view or share your meshu with this link: <b><a href="http://meshu.io{% shorturl meshu %}">http://meshu.io{% shorturl meshu %}</a></b>.
 </div>
 {% endblock %}

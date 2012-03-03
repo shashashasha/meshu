@@ -103,6 +103,10 @@ class Order(models.Model):
 	shipping_zip = models.CharField(max_length=5, default='')
 	shipping_state = models.CharField(max_length=2, default='')
 
+	# tracking number and shipping date
+	ship_date = models.DateTimeField('date shipped')
+	tracking = models.CharField(max_length=140)
+
 	def get_status_message(self):
 		if self.status == 'OR':
 			return 'Ordered'
