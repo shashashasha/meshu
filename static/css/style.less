@@ -16,6 +16,7 @@
 
 @borderGrey: #e6e6e6;
 @grey: #808080;
+@lightGrey: #8F8F8F;
 @pink: #FF3FB4;
 @blue: #1fcaff;
 
@@ -159,6 +160,8 @@ h1#meshu {
     margin: 4px 0;
     width: auto;
     display: block;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
 }
 #login-form input {
     width: 225px;
@@ -652,21 +655,30 @@ h1#meshu {
     right: 0;
     .transition(right);
 }
+
 p.note {
-    color: @grey;
-    margin: 10px 0;
+    color: @lightGrey;
+    margin: 10px 0 0 0;
     clear: both;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
 }
+
 #checkout input {
     margin-left: 10px;
 }
+
 #checkout label.error {
     color: @pink;
     display: block;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
 }
+
 #checkout input.error {
     border-color: @pink;
 }
+
 .review #checkout {
     right: 400px;
     .transition(right);
