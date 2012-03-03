@@ -372,6 +372,7 @@ $(function() {
 		$("#object-type").val(objectType);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor);
+		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial, shipPrice) + "00");
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 

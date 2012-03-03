@@ -62,9 +62,10 @@ var orderer = function() {
         return self;
     };
 
-    self.getPrice = function(type, material) {
+    self.getPrice = function(type, material, shipping) {
         if (!options) return null;
-        return options[type][material].price;
+        shipping = shipping || 0;
+        return parseInt(options[type][material].price + shipping);
     };
 
     self.getPriceString = function(type, material, shipping) {

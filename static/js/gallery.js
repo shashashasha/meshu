@@ -3,9 +3,9 @@ $(function() {
 	d3.selectAll("#master-svg").attr("class","meshu-svg");
 	d3.selectAll("#delaunay").attr("transform","scale(.39)");
 
-	var prices = {"earrings":"$40-$90",
-						"smallNecklace":"$40-$90",
-						"largeNecklace":"$40-$90"};
+	var prices = {"earrings":"$50-$120",
+						"smallNecklace":"$45-$100",
+						"largeNecklace":"$50-$120"};
 
 	$(".price-range").each(function(){
 		var type = $(this).text();

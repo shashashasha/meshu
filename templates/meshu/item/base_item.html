@@ -131,16 +131,14 @@
                         <div class="form-row">
                             <label>Card Number</label>
                             <input type="text" size="20" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="4242424242424242" name="card_number"/>
-                        </div>
-                        <div class="form-row">
-                            <label>CVC</label>
+                            <label style="margin-left: 15px;">CVC</label>
                             <input type="text" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="424" name="card_cvc"/>
                         </div>
                         <div class="form-row">
                             <label>Expiration (MM/YYYY)</label>
                             <input type="text" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="12" name="card_month"/>
                             <span> / </span>
-                            <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="2014" name="card_year"/>
+                            <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="2014" name="card_year" style="margin-left: 3px;"/>
                         </div>
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
                     <input class="nav active" type="submit" id="review-button" value="Review Your Order">
