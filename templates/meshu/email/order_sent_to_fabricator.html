@@ -1,24 +1,17 @@
 {% extends "meshu/email/base_email.html" %}
 {% load shorturl %}
 
-{% block plaintext_header %}
-How exciting! Your order is off to the fabricator!
-{% endblock %}
-
-{% block header_image %}
-{% endblock %}
-
 {% block email_title %}
-How exciting! Your order is off to the fabricator!
+Your order is off to the fabricator!
 {% endblock %}
 
 {% block content %}
-<img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
-<br /><br />
+<!-- <img src="http://o7.no/wA9xVQ" style="max-width:560px;" /> -->
+<br />
 <div>
-    <h3 class="h4">{{ meshu.title }} is off to the fabricator!</h3>
+    <h3 class="h4"><b>{{ meshu.title }}</b> is off to the fabricator!</h3>
     We've processed your <b>{{ order.get_display_name }}</b> order and have sent it off to the fabricator! We'll let you know when it's en route to you.
-    <br />
-    Also, in case you forgot, you can check out what your meshu looks like here: <b><a href="http://meshu.io{% shorturl meshu %}">http://meshu.io{% shorturl meshu %}</a></b>.
+    <br /><br />
+    Here's a link to view your meshu: <a href="http://meshu.io{% shorturl meshu %}"><b>http://meshu.io{% shorturl meshu %}</b></a>.
 </div>
 {% endblock %}

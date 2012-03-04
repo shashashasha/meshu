@@ -83,4 +83,7 @@ urlpatterns += patterns('meshu.views',
 	# backend for our orders
 	url(r'^orders/(?P<order_id>\d+)/update/', 'processing_order_update_status'),
 	url(r'^orders/', 'processing_orders'),
+
+	# internal to see email templates
+	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
 )

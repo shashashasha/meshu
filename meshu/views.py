@@ -266,7 +266,6 @@ def user_forgot_password(request):
 	return notify(request, 'password_reset')
 
 def user_change_password(request):
-	# show all meshus belonging to the current user
 	profile = current_profile(request)
 
 	if profile.user.username == 'shop':
@@ -274,9 +273,24 @@ def user_change_password(request):
 
 	# not done yet
 
+def mail_viewer(request, template):
+	profile = current_profile(request)
+
+	orders = Order.objects.filter(user_profile=profile)
+
+	order = orders[0]
+	meshu = order.meshu
+
+	return render_to_response('meshu/email/' + template + '.html', {
+			'profile' : profile,
+			'meshu' : meshu,
+			'order' : order
+ 	}, context_instance=RequestContext(request))
+
+
 def mail_order_confirmation(email, meshu, order):
 	mail_template('meshu/email/order_confirmation.html', {
-		'subject' : 'Order Confirmation',
+		'subject' : 'Order Confirmation: ' + meshu.title,
 		'from' : 'orders@meshu.io',
 		'to': email,
 		'meshu': meshu,
@@ -287,10 +301,10 @@ def mail_order_confirmation(email, meshu, order):
 def mail_order_status_change(email, meshu, order):
 
 	if order.status == 'SH':
-		subject = 'Your order has been shipped!'
+		subject = 'Your order, "' + meshu.title + '" has been shipped!'
 		template = 'order_shipped'
 	elif order.status == 'SE':
-		subject = 'Your order has been sent to the fabricator!'
+		subject = 'Your order, "' + meshu.title + '" has been sent to the fabricator!'
 		template = 'order_sent_to_fabricator'
 
 	# only send an email if it's been Shipped or Sent to the fabricator
