@@ -27,6 +27,9 @@
         {% if view == 'password_reset' %}
             Your password has been reset, please check your email for instructions.
         {% endif %}
+        {% if view == 'password_reset_success' %}
+            Sweet! You're logged in again.
+        {% endif %}
     </h2>
     <div class="inner-content">
     {% block message %}

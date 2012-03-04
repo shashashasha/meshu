@@ -1,0 +1,18 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Meshu - Reset Password{% endblock %}
+
+{% block content %}
+<h2 class="page-header">Oh no! Let's see what we can do.</h2>
+<div class="inner-content">
+	<form class="solo-form" action="/user/password/reset/" method="post">
+		{# put a csrf token in every form in django, for security #}
+		{% csrf_token %}
+		<div class="form-row">
+			<label for="email">Enter the email you signed up as</label>
+			<input type="textarea" name="email"/>
+			<input name="sub" type="submit" id="reset-password" value="Reset!" />
+		</div>
+	</form>
+</div>
+{% endblock %}

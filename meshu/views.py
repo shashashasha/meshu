@@ -247,15 +247,23 @@ def user_profile(request):
 	}, context_instance=RequestContext(request))
 
 def user_forgot_password(request):
-	# show all meshus belonging to the current user
 	profile = current_profile(request)
 
-	if profile.user.username == 'shop':
-		return notify(request, 'authorization_required')
+	email = request.POST.get('email', 'noemail')
+	response_dict = {}
+
+	try:
+		user = User.objects.get(email=email)
+	except User.DoesNotExist:
+		response_dict.update({ 'message' : 'User with that email does not exist' })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
+	if user.username == 'shop':
+		response_dict.update({ 'message' : "You can't reset your password this way" })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 	password = random_password(4)
 
-	user = profile.user
 	user.set_password(password)
 
 	user.save()
@@ -266,12 +274,25 @@ def user_forgot_password(request):
 	return notify(request, 'password_reset')
 
 def user_change_password(request):
-	profile = current_profile(request)
+	user = authenticate(username=request.POST['email'], password=request.POST['password'])
 
-	if profile.user.username == 'shop':
-		return notify(request, 'authorization_required')
+	if user is not None:
+		if user.is_active:
+			response = login(request, user)
 
-	# not done yet
+			# update password
+			if request.POST['new_password'] != '':
+				new_pass = request.POST['new_password']
+				user.set_password(new_pass)
+				user.save()
+
+			return notify(request, 'password_reset_success')
+		else:
+			return user_login_error(request, user)
+	else:
+	    return user_login_error(request, user)
+
+
 
 def mail_viewer(request, template):
 	profile = current_profile(request)

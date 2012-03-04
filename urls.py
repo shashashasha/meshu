@@ -59,6 +59,12 @@ urlpatterns += patterns('meshu.views',
 	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
 
 	# user profile
+	url(r'^user/forgot', direct_to_template, {
+		'template': 'meshu/user/forgot.html'
+	}),
+	url(r'^user/reset', direct_to_template, {
+		'template': 'meshu/user/change.html'
+	}),
 	url(r'^user/password/reset', 'user_forgot_password'),
 	url(r'^user/password/change', 'user_change_password'),
 	url(r'^user/', 'user_profile'),
