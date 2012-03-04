@@ -1,4 +1,4 @@
-Stripe.setPublishableKey('pk_9Lu9WnR6pvkYDKKXFFH5UFF31vQzH');
+Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 
 var orderer = function() {
     var self = {},

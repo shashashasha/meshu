@@ -414,6 +414,7 @@ $(function() {
 
 			switch (this.id) {
 				case 'ship-city':
+				case 'ship-zip':
 					div = $("<span>");
 					break;
 
