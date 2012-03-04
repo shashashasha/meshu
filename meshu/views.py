@@ -424,7 +424,7 @@ def order_new(request):
 def make_order(request, profile, meshu):
 	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
-	stripe.api_key = "4HpS6PRbhNrY0YBLrsGZNietuNJYjNcb" # key the binx gave
+	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
 
 	# get the credit card details submitted by the form
 	token = request.POST['stripeToken']
