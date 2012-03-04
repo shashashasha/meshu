@@ -71,6 +71,7 @@ urlpatterns += patterns('meshu.views',
 
 
 	# order an existing meshu
+	url(r'^order/apply_coupon', 'order_verify_coupon'),
 	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
 	# order a new meshu, not saved yet
 	url(r'^order/', 'order_new'),

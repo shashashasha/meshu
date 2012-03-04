@@ -27,9 +27,16 @@ from datetime import datetime
 # got to get paid.
 import stripe
 
+# YAY!
+import sha
+
 #
 # The views for our Meshu app
 #
+
+# hashed codes
+codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46']
+invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # meshu.views.index
 def index(request):
@@ -50,8 +57,10 @@ def shop(request):
 def invite(request):
 	code = request.POST.get('code', '')
 
+	hashed = sha.new(code).hexdigest()
+
 	# if you found this, you're trying too hard
-	if code == 'IMESHU':
+	if hashed == invite_code:
 		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
 	else:
 		return notify(request, 'invite_failed')
@@ -374,6 +383,20 @@ def notify(request, view):
 #
 # Ordering!
 #
+
+# verify_coupon has to be an xhr request, we don't want to refresh the page
+def order_verify_coupon(request):
+	coupon = request.GET.get('code', '').upper()
+
+	hashed = sha.new(coupon).hexdigest()
+
+	matched = hashed in codes
+
+	response_dict = {}
+	response_dict.update({ 'success' : matched })
+
+	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
 def order_meshu(request, item_id):
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)

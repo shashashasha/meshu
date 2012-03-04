@@ -159,6 +159,11 @@
                 <div id="review-shipping"></div>
                 <h2 class="review-header">Payment:</h2>
                 <p id="review-payment"></p>
+                <h2 class="review-header">Coupon:</h2>
+                <form action="/order/apply_coupon" method="GET" id="coupon-code">
+                    <input id="coupon-code-value" type="text" name="code" />
+                    <input type="submit" value="Apply" />
+                </form>
                 <div id="review-total">
                     <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
                     <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$4.00</span></h2>
