@@ -1,34 +1,19 @@
 $(function() {
-	// var options = {"earrings":
-	// 					{"acrylic":{"price":"75","colors":["Black","Grey","White"]},
-	// 					"wood":{"price":"80","colors":["Amber","Blonde"]},
-	// 					"nylon":{"price":"90","colors":["Black","Grey","White"]},
-	// 					"silver":{"price":"150"}},
-	// 			   "smallNecklace":
-	// 			   		{"acrylic":{"price":"70","colors":["Black","Grey","White"]},
-	// 					"wood":{"price":"75","colors":["Amber","Blonde"]},
-	// 					"nylon":{"price":"85","colors":["Black","Grey","White"]},
-	// 					"silver":{"price":"130"}},
-	// 			   "largeNecklace":
-	// 			   		{"acrylic":{"price":"80","colors":["Black","Grey","White"]},
-	// 					"wood":{"price":"85","colors":["Amber","Blonde"]},
-	// 					"nylon":{"price":"95","colors":["Black","Grey","White"]},
-	// 					"silver":{"price":"150"}}};
 	var options = {"earrings":
-						{"acrylic":{"price":"50","colors":["Black","Grey","White"]},
-						"wood":{"price":"55","colors":["Amber","Blonde"]},
-						"nylon":{"price":"60","colors":["Black","Grey","White"]},
-						"silver":{"price":"120"}},
+						{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
+						"wood":{"price":80,"colors":["Amber","Blonde"]},
+						"nylon":{"price":90,"colors":["Black","Grey","White"]},
+						"silver":{"price":150}},
 				   "smallNecklace":
-				   		{"acrylic":{"price":"45","colors":["Black","Grey","White"]},
-						"wood":{"price":"50","colors":["Amber","Blonde"]},
-						"nylon":{"price":"60","colors":["Black","Grey","White"]},
-						"silver":{"price":"100"}},
+				   		{"acrylic":{"price":70,"colors":["Black","Grey","White"]},
+						"wood":{"price":75,"colors":["Amber","Blonde"]},
+						"nylon":{"price":85,"colors":["Black","Grey","White"]},
+						"silver":{"price":130}},
 				   "largeNecklace":
-				   		{"acrylic":{"price":"50","colors":["Black","Grey","White"]},
-						"wood":{"price":"55","colors":["Amber","Blonde"]},
-						"nylon":{"price":"65","colors":["Black","Grey","White"]},
-						"silver":{"price":"120"}}};
+				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
+						"wood":{"price":85,"colors":["Amber","Blonde"]},
+						"nylon":{"price":95,"colors":["Black","Grey","White"]},
+						"silver":{"price":150}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"smallNecklace":"small pendant necklace",
 						"largeNecklace":"large necklace"};
@@ -218,8 +203,8 @@ $(function() {
 		materialList.each(function(){
 			if ($(this).hasClass("selected")) {
 				objectMaterial = $(this).attr("id");
-				var price = orderer.getPriceString(objectType, objectMaterial);
-				$("#total-cost").text(price);	
+				orderer.updateProduct(objectType, objectMaterial);
+				$("#total-cost").text(orderer.getPriceString());	
 			}
 		});
 
@@ -229,8 +214,8 @@ $(function() {
 	materialList.click(function(){
 		objectMaterial = $(this).attr("id");
 
-		var price = orderer.getPriceString(objectType, objectMaterial);
-		$("#total-cost").text(price);
+		orderer.updateProduct(objectType, objectMaterial);
+		$("#total-cost").text(orderer.getPriceString());
 
 		var colors = orderer.getColors(objectType, objectMaterial);
 		if (colors) {
@@ -312,6 +297,29 @@ $(function() {
 		submitHandler: onFormValidated
 	});
 	
+	$("#coupon-code").submit(function() {
+		var value = $("#coupon-code-value").val();
+		orderer.applyCoupon(value, function(data) {
+			if (data.success) {
+				var couponPrice = data.amount;
+
+				$("<h2>").attr("id","subtotal-coupon")
+					.addClass("review-header")
+					.html("Coupon:<span>-$" + couponPrice + ".00</span>")
+					.insertAfter("#subtotal-price");
+
+				// turn the input form into text
+				$("#coupon-message").show().html(value + ' discount applied.')
+				$(".coupon-form").hide();
+			} else {
+				$("#coupon-message").show().html('Oops, invalid code.');
+			}
+
+			populateReview();
+		});
+
+		return false;
+	});
 
     // 
     $("#submit-button").click(function(){ 
@@ -372,10 +380,15 @@ $(function() {
 		also telling stripe how much to charge once the "submit" button is pressed
 	*/
 	function populateReview() {
+		// let our stripe object know what object we're purchasing
+		// it'll know the price, given the options beforehand
+		// we also can't change options once it's set, so no one can mess with it
+		orderer.updateProduct(objectType, objectMaterial, shipPrice);
+
 		$("#object-type").val(productNames[objectType]);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor.toLowerCase());
-		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial, shipPrice) + "00");
+		$("#object-amount").val(orderer.getTotalCents());
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
@@ -383,11 +396,6 @@ $(function() {
 		$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
-
-		// let our stripe object know what object we're purchasing
-		// it'll know the price, given the options beforehand
-		// we also can't change options once it's set, so no one can mess with it
-		orderer.updateProduct(objectType, objectMaterial, shipPrice);
 
 		// update the review
 		updateReviewText();
@@ -434,8 +442,10 @@ $(function() {
 		var productType = objectColor.toLowerCase() + " " + objectMaterial;
 		$("#review-description").text(product + ", made out of " + productType);
 
-		$("#subtotal-price span").text(orderer.getPriceString(objectType, objectMaterial));
-		$("#shipping-price span").text("$"+shipPrice+".00");
-		$("#total-price span").text(orderer.getPriceString(objectType, objectMaterial, shipPrice));
+		$("#subtotal-price span").text(orderer.getPriceString());
+
+		$("#shipping-price span").text("$" + shipPrice + ".00");
+
+		$("#total-price span").text(orderer.getTotalString());
 	}
 });

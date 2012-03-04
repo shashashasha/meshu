@@ -394,6 +394,7 @@ def order_verify_coupon(request):
 
 	response_dict = {}
 	response_dict.update({ 'success' : matched })
+	response_dict.update({ 'amount' : 25 })
 
 	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
