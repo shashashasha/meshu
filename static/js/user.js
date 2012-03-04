@@ -23,6 +23,7 @@ var user = function() {
         $("#modal-bg").fadeOut();
         $("#login-form").fadeOut();
         $(".login-row").find("input").val('');
+        $(".login-row").find(".error").remove();
     };
 
     self.initialize = function() {
