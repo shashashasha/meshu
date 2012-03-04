@@ -20,7 +20,7 @@
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */
 			
 			body, #backgroundTable{
-				/*@editable*/ background-color:#FFFFFF;
+				/*@editable*/ background-color:#F0F0F0;
 			}
 			
 			#templateContainer{
@@ -33,7 +33,7 @@
 			h1, .h1{
 				/*@editable*/ color:#202020;
 				display:block;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:34px;
 				/*@editable*/ font-weight:bold;
 				/*@editable*/ line-height:100%;
@@ -47,7 +47,7 @@
 			h2, .h2{
 				/*@editable*/ color:#202020;
 				display:block;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica,Arial;
 				/*@editable*/ font-size:30px;
 				/*@editable*/ font-weight:bold;
 				/*@editable*/ line-height:100%;
@@ -61,7 +61,7 @@
 			h3, .h3{
 				/*@editable*/ color:#202020;
 				display:block;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica,Arial;
 				/*@editable*/ font-size:26px;
 				/*@editable*/ font-weight:bold;
 				/*@editable*/ line-height:100%;
@@ -75,9 +75,9 @@
 			h4, .h4{
 				/*@editable*/ color:#202020;
 				display:block;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:22px;
-				/*@editable*/ font-weight:bold;
+				/*@editable*/ font-weight:normal;
 				/*@editable*/ line-height:100%;
 				margin-top:0;
 				margin-right:0;
@@ -89,12 +89,12 @@
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
 			
 			#templatePreheader{
-				/*@editable*/ background-color:#FFFFFF;
+				/*@editable*/ background-color:#F0F0F0;
 			}
 			
 			.preheaderContent div{
 				/*@editable*/ color:#505050;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:10px;
 				/*@editable*/ line-height:100%;
 				/*@editable*/ text-align:left;
@@ -117,7 +117,7 @@
 			
 			.headerContent{
 				/*@editable*/ color:#202020;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:34px;
 				/*@editable*/ font-weight:bold;
 				/*@editable*/ line-height:100%;
@@ -145,7 +145,7 @@
 
 			.bodyContent div{
 				/*@editable*/ color:#505050;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:14px;
 				/*@editable*/ line-height:150%;
 				/*@editable*/ text-align:left;
@@ -171,7 +171,7 @@
 			
 			.footerContent div{
 				/*@editable*/ color:#707070;
-				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-family:Helvetica, Arial;
 				/*@editable*/ font-size:12px;
 				/*@editable*/ line-height:125%;
 				/*@editable*/ text-align:left;
@@ -188,7 +188,7 @@
 			}
 			
 			#social{
-				/*@editable*/ background-color:#FAFAFA;
+				/*background-color:#F0F0F0;*/
 				/*@editable*/ border:0;
 			}
 			
@@ -203,6 +203,12 @@
 
 			#utility div{
 				/*@editable*/ text-align:center;
+			}
+
+
+			/* bold the meshu link */
+			.bodyContent .boldLink {
+				font-weight: bold;
 			}
 		</style>
 	</head>
@@ -222,7 +228,6 @@
                                         	<td valign="top">
                                             	<div>
                                                 	{% block plaintext_header %}
-                                                	Thanks for ordering!
                                                 	{% endblock %}
                                                 </div>
                                             </td>
@@ -240,7 +245,8 @@
                                         <tr>
                                             <td class="headerContent">
                                             	{% block header_image %}
-                                            	<!-- if we want a header image -->
+                                            	<br />
+                                            	<img src="http://meshu.io/static/images/logo_big.png"/>
                                             	{% endblock %}
                                             </td>
                                         </tr>
@@ -263,7 +269,7 @@
                                                             </div>
                                                             {% block content %}
                                                             <img src="http://o7.no/wA9xVQ" style="max-width:560px;" />
-                                                            <br /><br />
+                                                            <br />
                                                             <div>
                                                                 <h3 class="h4">{{ meshu.title }}</h3>
                                                                 <h4 class="h4">Amount: ${{ order.amount }}</h4>
@@ -287,8 +293,11 @@
                                                     <tr>
                                                         <td colspan="2" valign="middle" id="social">
                                                             <div>
+                                                            	<hr>
+                                                            	<br />
                                                             	{% block social_links %}
-                                                                <a href="http://twitter.com/hi_meshu">follow on Twitter</a> | <a href="http://facebook.com/hi.meshu">friend on Facebook</a>
+                                                            	<center>follow us on <a href="http://twitter.com/hi_meshu">twitter</a> | follow us on pinterest: <a href="http://pinterest.com/rachelbinx">rachel</a> + <a href="http://pinterest.com/shashashasha">sha</a>
+	                                                            </center>
                                                                 {% endblock %}
                                                             </div>
                                                         </td>
@@ -298,20 +307,19 @@
                                                             <div mc:edit="std_footer">
 																<em>Copyright &copy; 2012 Meshu, All rights reserved.</em>
 																<br />
-																<strong>Our mailing address is:</strong>
+																<b>Our mailing address is:</b>
 																<br />
-																251 S Van Ness<br />
-																Floor 2<br />
+																251 S Van Ness Fl 2<br />
 																San Francisco CA, 94103
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
+                                                        <!-- <td colspan="2" valign="middle" id="utility">
                                                             <div>
                                                                 <a href="*|UNSUB|*">unsubscribe from this list</a>
                                                             </div>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
                                                 </table>
                                             </td>
