@@ -369,9 +369,9 @@ $(function() {
 		also telling stripe how much to charge once the "submit" button is pressed
 	*/
 	function populateReview() {
-		$("#object-type").val(objectType);
+		$("#object-type").val(displayNames[objectType]);
 		$("#object-material").val(objectMaterial);
-		$("#object-color").val(objectColor);
+		$("#object-color").val(objectColor.toLowerCase());
 		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial, shipPrice) + "00");
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
