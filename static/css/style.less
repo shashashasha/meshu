@@ -191,11 +191,13 @@ h1#meshu {
     bottom: 15px;
     right: 90px;
 }
+
 #form-account p, #form-signin p {
     margin: 15px 20px 0 29px;
     color: @grey;
     font-size: 12px;
 }
+
 #login-form.account .login-cancel {
     right: 150px;
 }
@@ -207,6 +209,10 @@ h1#meshu {
     right: 30px;
 }
 
+#reset-password-form {
+    width: 400px;
+}
+
 #reset-password {
     background-color: @pink;
     font-size: 18px;
@@ -216,15 +222,31 @@ h1#meshu {
 }
 
 .solo-form input.aligned {
-    margin-top: -5px; 
-    position: absolute; 
+    float: right;
+    /*margin-top: -5px; */
+    /*position: absolute; 
     left: 250px; 
-    right:590px;
+    right:590px;*/
+}
+
+.solo-form label {
+    line-height: 30px;
+}
+
+.solo-form label.error {
+    clear: both;
+    font-size: 12px;
+    color: @pink;
+    display: block;
+}
+
+.solo-form input.error {
+    border-color: @pink;
 }
 
 .solo-form .form-row {
     clear: both;
-    height: 33px;
+    min-height: 33px;
 }
 
 #login-form #login-account {
