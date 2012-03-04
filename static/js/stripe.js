@@ -4,7 +4,12 @@ var orderer = function() {
     var self = {},
         //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
-        options;
+        discountAmount = 0,
+        type = null,
+        material = null,
+        product = null,
+        shipping = 4,
+        options = null;
 
     function stripeResponseHandler(status, response) {
         if (response.error) {
@@ -43,7 +48,20 @@ var orderer = function() {
 
         // submit form callback
         return false; 
-    }
+    };
+
+    self.applyCoupon = function(value, callback) {
+        $.get('/order/apply_coupon', {
+            code: value
+        }, function(data) {
+            if (data.success) {
+                discountAmount = parseInt(data.amount);
+            }
+
+            if (callback)
+                callback(data);
+        }, 'json');
+    };
 
     // let's ... not allow anyone to change these options
     self.options = function(o) {
@@ -53,26 +71,48 @@ var orderer = function() {
         return self;
     };
 
-    self.updateProduct = function(type, material, shipping) {
+    self.updateProduct = function(t, m, s) {
         // ignore if we haven't heard about this product before
-        if (!options[type] || !options[type][material]) return;
+        if (!options[t] || !options[t][m]) return;
 
-        shipping = shipping || 0;
-        currentAmount = parseInt(options[type][material].price + shipping) * 100;
+        // update values
+        shipping = s || 4;
+        type = t;
+        material = m;
+
+        // keep currentAmount in cents
+        currentAmount = (options[type][material].price + shipping - discountAmount) * 100;
+        
         return self;
     };
 
-    self.getPrice = function(type, material, shipping) {
+    self.getPrice = function() {
         if (!options) return null;
-        shipping = shipping || 0;
-        return parseInt(options[type][material].price + shipping);
+        return options[type][material].price;
     };
 
-    self.getPriceString = function(type, material, shipping) {
+    self.getPriceString = function() {
         if (!options) return null;
         
-        shipping = shipping || 0;
-        return '$' + (parseInt(options[type][material].price) + shipping) + '.00';
+        return '$' + options[type][material].price + '.00';
+    };
+
+    self.getTotal = function() {
+        if (!options) return null;
+
+        return options[type][material].price + shipping - discountAmount;
+    };
+
+    self.getTotalCents = function() {
+        if (!options) return null;
+
+        return (options[type][material].price + shipping - discountAmount) * 100;
+    };
+
+    self.getTotalString = function() {
+        if (!options) return null;
+
+        return '$' + (options[type][material].price + shipping - discountAmount) + '.00';
     };
 
     self.getColors = function(type, material) {

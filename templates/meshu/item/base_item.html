@@ -161,8 +161,9 @@
                 <p id="review-payment"></p>
                 <h2 class="review-header">Coupon:</h2>
                 <form action="/order/apply_coupon" method="GET" id="coupon-code">
-                    <input id="coupon-code-value" type="text" name="code" />
-                    <input type="submit" value="Apply" />
+                    <input class="coupon-form" id="coupon-code-value" type="text" name="code" />
+                    <input class="coupon-form" type="submit" value="Apply" />
+                    <span id="coupon-message">Oops, invalid coupon.</span>
                 </form>
                 <div id="review-total">
                     <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
