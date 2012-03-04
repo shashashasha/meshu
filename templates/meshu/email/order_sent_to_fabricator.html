@@ -17,7 +17,7 @@ How exciting! Your order is off to the fabricator!
 <br /><br />
 <div>
     <h3 class="h4">{{ meshu.title }} is off to the fabricator!</h3>
-    We've processed your <b>{{ order.color|lower }} {{ order.material }} {{ order.product }}</b> order and have sent it off to the fabricator! We'll let you know when it's en route to you.
+    We've processed your <b>{{ order.get_display_name }}</b> order and have sent it off to the fabricator! We'll let you know when it's en route to you.
     <br />
     Also, in case you forgot, you can check out what your meshu looks like here: <b><a href="http://meshu.io{% shorturl meshu %}">http://meshu.io{% shorturl meshu %}</a></b>.
 </div>

@@ -113,6 +113,9 @@ class Order(models.Model):
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
 	tracking = models.CharField(max_length=140, default='', blank=True)
 
+	def get_display_name(self):
+		return self.color + ' ' + self.material + ' ' + self.product
+
 	def get_status_message(self):
 		if self.status == 'OR':
 			return 'Ordered'

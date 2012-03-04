@@ -30,7 +30,10 @@ $(function() {
 						"nylon":{"price":"65","colors":["Black","Grey","White"]},
 						"silver":{"price":"120"}}};
 	var displayNames = {"earrings":"pair of earrings",
-						"smallNecklace":"small necklace pendant",
+						"smallNecklace":"small pendant necklace",
+						"largeNecklace":"large necklace"};
+	var productNames = {"earrings":"earrings",
+						"smallNecklace":"pendant necklace",
 						"largeNecklace":"large necklace"};
 	var shipPrice = 4;
 
@@ -369,7 +372,7 @@ $(function() {
 		also telling stripe how much to charge once the "submit" button is pressed
 	*/
 	function populateReview() {
-		$("#object-type").val(displayNames[objectType]);
+		$("#object-type").val(productNames[objectType]);
 		$("#object-material").val(objectMaterial);
 		$("#object-color").val(objectColor.toLowerCase());
 		$("#object-amount").val(orderer.getPrice(objectType, objectMaterial, shipPrice) + "00");
@@ -392,15 +395,29 @@ $(function() {
 		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){
 			var div;
+
+			// because i'm anal, sorry
+			// - s.
+			var titleCase = function(str) {
+			    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+			};
+
+			this.value = titleCase(this.value);
+
 			switch (this.id) {
 				case 'ship-city':
+					div = $("<span>");
+					break;
+
 				case 'ship-state':
+					this.value = this.value.toUpperCase();
 					div = $("<span>");
 					break;
 				default:
 					div = $("<p>");
 					break;
 			}
+
 			div.text($(this).val()).appendTo("#review-shipping");
 		});
 		var digits = $("#card-number").val();

@@ -18,7 +18,7 @@ Thanks for ordering!
 <div>
     <h3 class="h4">{{ meshu.title }}</h3>
     <h3 class="h4">Amount: ${{ order.amount }}</h3>
-    Thanks! We've received your order for <b>{{ order.color|lower }} {{ order.material }} {{ order.product }}</b> and will let you know when we've processed it. 
+    Thanks! We've received your order for <b>{{ order.get_display_name }}</b> and will let you know when we've processed it. 
     <br />
     And if you're as excited as we are about this, you can view or share your meshu with this link: <b><a href="http://meshu.io{% shorturl meshu %}">http://meshu.io{% shorturl meshu %}</a></b>.
 </div>
