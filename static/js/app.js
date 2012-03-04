@@ -1,19 +1,34 @@
 $(function() {
+	// var options = {"earrings":
+	// 					{"acrylic":{"price":"75","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"80","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"90","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"150"}},
+	// 			   "smallNecklace":
+	// 			   		{"acrylic":{"price":"70","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"75","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"85","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"130"}},
+	// 			   "largeNecklace":
+	// 			   		{"acrylic":{"price":"80","colors":["Black","Grey","White"]},
+	// 					"wood":{"price":"85","colors":["Amber","Blonde"]},
+	// 					"nylon":{"price":"95","colors":["Black","Grey","White"]},
+	// 					"silver":{"price":"150"}}};
 	var options = {"earrings":
-						{"acrylic":{"price":"75","colors":["Black","Grey","White"]},
-						"wood":{"price":"80","colors":["Amber","Blonde"]},
-						"nylon":{"price":"90","colors":["Black","Grey","White"]},
-						"silver":{"price":"150"}},
+						{"acrylic":{"price":"50","colors":["Black","Grey","White"]},
+						"wood":{"price":"55","colors":["Amber","Blonde"]},
+						"nylon":{"price":"60","colors":["Black","Grey","White"]},
+						"silver":{"price":"120"}},
 				   "smallNecklace":
-				   		{"acrylic":{"price":"70","colors":["Black","Grey","White"]},
-						"wood":{"price":"75","colors":["Amber","Blonde"]},
-						"nylon":{"price":"85","colors":["Black","Grey","White"]},
-						"silver":{"price":"130"}},
+				   		{"acrylic":{"price":"45","colors":["Black","Grey","White"]},
+						"wood":{"price":"50","colors":["Amber","Blonde"]},
+						"nylon":{"price":"60","colors":["Black","Grey","White"]},
+						"silver":{"price":"100"}},
 				   "largeNecklace":
-				   		{"acrylic":{"price":"80","colors":["Black","Grey","White"]},
-						"wood":{"price":"85","colors":["Amber","Blonde"]},
-						"nylon":{"price":"95","colors":["Black","Grey","White"]},
-						"silver":{"price":"150"}}};
+				   		{"acrylic":{"price":"50","colors":["Black","Grey","White"]},
+						"wood":{"price":"55","colors":["Amber","Blonde"]},
+						"nylon":{"price":"65","colors":["Black","Grey","White"]},
+						"silver":{"price":"120"}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"smallNecklace":"small pendant necklace",
 						"largeNecklace":"large necklace"};
@@ -297,22 +312,6 @@ $(function() {
 		submitHandler: onFormValidated
 	});
 	
-	$("#coupon-code").submit(function() {
-		$.get('/order/apply_coupon', {
-			code: $("#coupon-code-value").val()
-		}, function(data) {
-			if (data.success) {
-				var couponPrice = 25;
-				$("<h2>").attr("id","subtotal-coupon")
-					.addClass("review-header")
-					.html("Coupon:<span>-$" + couponPrice + ".00</span>")
-					.insertAfter("#subtotal-price");
-			} else {
-
-			}
-		}, 'json');
-		return false;
-	});
 
     // 
     $("#submit-button").click(function(){ 
@@ -407,9 +406,9 @@ $(function() {
 
 			switch (this.id) {
 				case 'ship-city':
-				case 'ship-zip':
 					div = $("<span>");
 					break;
+
 				case 'ship-state':
 					this.value = this.value.toUpperCase();
 					div = $("<span>");
