@@ -297,6 +297,7 @@ $(function() {
 		submitHandler: onFormValidated
 	});
 	
+<<<<<<< HEAD
 	$("#coupon-code").submit(function() {
 		var value = $("#coupon-code-value").val();
 		orderer.applyCoupon(value, function(data) {
@@ -321,6 +322,8 @@ $(function() {
 
 		return false;
 	});
+=======
+>>>>>>> f4602e370c3af882a4b665f23f8ded007b153155
 
     // 
     $("#submit-button").click(function(){ 
@@ -415,9 +418,9 @@ $(function() {
 
 			switch (this.id) {
 				case 'ship-city':
-				case 'ship-zip':
 					div = $("<span>");
 					break;
+
 				case 'ship-state':
 					this.value = this.value.toUpperCase();
 					div = $("<span>");

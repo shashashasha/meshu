@@ -634,7 +634,17 @@ h1#meshu {
     border: 1px solid @borderGrey;
 }
 .ready .options.left, .ready .options.right {
-    top: 260px;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 20px;
+    display: inline-block;
+}
+.ready .options.left {
+    float: left;
+}
+.ready .options.right {
+    float: right;
 }
 #rotate {
     width: 200px;
@@ -882,13 +892,13 @@ p.note {
 }
 
 #review-total {
-    margin-top: 25px;
+    margin-top: 15px;
     padding-top: 5px;
     border-top: 1px solid black;
     width: 100%;
 }
 #review-total h2 {
-    margin: 7px 0;
+    margin: 4px 0;
     width: 100%;
     color: @grey;
 }
@@ -913,7 +923,10 @@ p.note {
     }
 }
 .ready #total {
-    top: 350px;
+    top: auto;
+    clear: both;
+    position: relative;
+    margin-top: 160px;
 }
 #total-cost {
     float: right;
