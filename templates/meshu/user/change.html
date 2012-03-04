@@ -23,7 +23,7 @@
 		</div>
 		<div class="form-row">
 			<label for="new_password">Re-enter a new password</label>
-			<input id="repeat_password" type="password" class="required aligned"/>
+			<input id="repeat_password" type="password" name="repeat_password" class="required aligned"/>
 		</div>
 		<div class="form-row">
 			<input type="submit" id="reset-password" value="Reset!" />
@@ -36,7 +36,7 @@
 <script type="text/javascript">
     $("#reset-password-form").validate({
         rules: {
-            account_name: {
+            email: {
                 email: true
             },
             repeat_password: {
@@ -44,7 +44,7 @@
             }
         },
         messages: {
-            account_name: "That doesn't look like any email I've seen before...",
+            email: "That doesn't look like any email I've seen before...",
             repeat_password: "Oops, those passwords didn't match. Try again?"
         },
         submitHandler: function(form){
