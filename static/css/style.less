@@ -699,8 +699,15 @@ p.note {
     min-height: 30px;
 }
 
+#checkout label {
+    line-height: 30px;
+}
+
 #checkout input {
     margin-left: 10px;
+}
+#checkout input.right, #checkout span.right {
+    float: right;
 }
 
 #checkout label.error {
@@ -1043,13 +1050,20 @@ circle {
     opacity: 1;
     .transition(opacity);
 
-    div {
+    #zoomin, #zoomout {
         position: relative;
         background: @grey;
         display: block;
         width: 20px;
         height: 20px;
         margin: 5px;
+        cursor: pointer;
+    }
+    #zoomin {
+        background-image: url(../images/zoomin.png);
+    }
+    #zoomout {
+        background-image: url(../images/zoomout.png);
     }
 
     div:hover {
