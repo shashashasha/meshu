@@ -202,6 +202,17 @@ def user_login_error(request, user):
 	else:
 		return notify(request, 'login_error')
 
+def user_duplicate_error(request):
+	xhr = request.POST.has_key('xhr')
+
+	if xhr:
+		response_dict = {}
+		response_dict.update({ 'success' : False })
+		response_dict.update({ 'duplicate' : True })
+		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+	else:
+		return notify(request, 'login_error')
+
 def user_logout(request, *args, **kwargs):
 	xhr = request.GET.has_key('xhr')
 	response = logout(request)
@@ -215,7 +226,11 @@ def user_logout(request, *args, **kwargs):
 
 def user_create(request):
 	username = uuid.uuid4().hex[:30]
-	
+
+	email = request.POST['email']
+	password = request.POST['password']
+
+	# check if we have someone with the same username	
 	try:
 		while True:
 			User.objects.get(username=username)
@@ -223,9 +238,14 @@ def user_create(request):
 	except User.DoesNotExist:
 		pass
 
-	# username = request.POST['username']
-	email = request.POST['email']
-	password = request.POST['password']
+	# check if we have someone with the same email
+	try:
+		while True:
+			user = User.objects.get(email=email)
+			return user_duplicate_error(request)
+	except User.DoesNotExist:
+		pass
+
 
 	# create user shortcut
 	user = User.objects.create_user(username, email, password)
