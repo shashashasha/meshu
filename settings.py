@@ -55,7 +55,7 @@ USE_L10N = True
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://127.0.0.1:8000/static/'
+MEDIA_URL = 'http://meshu.io/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -151,6 +151,6 @@ AUTHENTICATION_BACKENDS = ( 'meshu.backend.EmailBackend', )
 SHORTEN_MODELS = {
     'M': 'meshu.meshu'
 }
-SHORTEN_FULL_BASE_URL = 'http://127.0.0.1:8000'
+SHORTEN_FULL_BASE_URL = 'http://meshu.io'
 
 from settings_local import *

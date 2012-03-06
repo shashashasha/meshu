@@ -431,7 +431,7 @@ def make_order(request, profile, meshu):
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	charge = stripe.Charge.create(
-	    amount=1000, # amount in cents, again
+	    amount=int(float(request.POST.get('amount', '0.0'))), # amount in cents, again
 	    currency="usd",
 	    card=token,
 	    description="hi@meshu.io"

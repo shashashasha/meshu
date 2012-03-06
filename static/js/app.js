@@ -309,10 +309,10 @@ $(function() {
 					.insertAfter("#subtotal-price");
 
 				// turn the input form into text
-				$("#coupon-message").show().html(value + ' discount applied.')
+				$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
 				$(".coupon-form").hide();
 			} else {
-				$("#coupon-message").show().html('Oops, invalid code.');
+				$("#coupon-message").fadeIn('fast').html('Oops, invalid code.');
 			}
 
 			populateReview();
