@@ -17,10 +17,13 @@ class UserProfile(models.Model):
 	def amount_meshus(self):
 		return str(self.meshu_set.all().count()) + ' meshus'
 
+	def date_joined(self):
+		return str(self.user.date_joined)
+
 	# other fields here
 	def __unicode__(self):
 		details = ''
-		details += self.user.username
+		details += self.user.email
 		details += ', ' + str(self.meshu_set.all().count()) + ' meshus'
 		details += ', ' + str(self.order_set.all().count()) + ' orders'
 		return details

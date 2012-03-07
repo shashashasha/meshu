@@ -51,6 +51,6 @@ admin.site.register(Order, OrderAdmin)
 
 class UserProfileAdmin(admin.ModelAdmin):
 	inlines = [OrderInline]
-	list_display = ('user', 'amount_meshus', 'amount_orders')
+	list_display = ('user', 'amount_meshus', 'amount_orders', 'date_joined')
 
 admin.site.register(UserProfile, UserProfileAdmin)
