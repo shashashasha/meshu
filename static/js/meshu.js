@@ -46,6 +46,7 @@ sb.meshu = function(frame) {
         $.ajax({
             url: "http://where.yahooapis.com/geocode?location="+query+"&flags=J&appid="+app_key,
             cache: false,
+            dataType: 'json',
             success: function(data){
                 var results = data.ResultSet.Results;
                 cases.empty().hide();

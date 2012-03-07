@@ -129,8 +129,14 @@ var user = function() {
             $("#login-form").click(function() {
                 $("#login-error").hide();
             });
+
+            if (data.duplicate) {
+                $("#account-message").html("Oops, looks like you already registered with that email.<br />Try logging in?");
+            }
             return;
         }
+
+        $("#account-message").html("Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!");
 
         // format this better
         $("#logout").show().html('logout');
