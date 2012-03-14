@@ -1,0 +1,21 @@
+# log in to meshu server
+ssh meshu@meshu.webfactional.com
+
+# go to our artifactory django app
+cd webapps/meshu/artifactory
+
+# pull updates from github
+git pull origin master
+
+# collect static files to meshu_static
+python2.7 manage.py collectstatic
+
+
+# migrate the db if we need to
+# if the database model has changed
+python2.7 manage.py schemamigration meshu --auto
+python2.7 manage.py migrate meshu
+
+
+# restart the apache server
+../apache2/bin/restart
