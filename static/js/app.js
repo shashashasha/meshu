@@ -104,20 +104,32 @@ $(function() {
 	$(".next").click(function(){
 		if (!$(this).hasClass("active")) return;
 
+		var button = $(this);
+		var view = content.attr("class");
+		var index = views.indexOf(view);
+
+		// if the user is not logged in at any step, we should force them to log in. sorry :(
 		if (!user.loggedIn) {
 			// pass the button, so that on login we can click it
-			var button = $(this);
 			forceUserLogin(function() {
 				button.click();
 			});
 			return;
+		} 
+		// if the user is logged in and we're editing, we need to save the updates
+		else if (user.loggedIn && view == 'edit') {
+			saver.createOrUpdateMeshu();
+
+			// advance to the next view after we save
+			saver.postCreateCallback = function() {
+				content.attr("class", views[index+1]);
+			};
+			return;
 		}
 
-		var view = content.attr("class");
 		makeNextView(view);
 		updateLogoutActions(view);
 
-		var index = views.indexOf(view);
 		content.attr("class", views[index+1]);
 	});
 	
@@ -137,6 +149,7 @@ $(function() {
 				// if we were editing and not logged in, show the modal, and save the meshu
 				meshu.updateBounds();
 				meshu.mesh().updateCircleBehavior();
+
 				break;
 
 			case 'make':
@@ -352,8 +365,6 @@ $(function() {
 					setTimeout(callback, 200);
 				};	
 			}
-
-			saver.createOrUpdateMeshu();
 		};
 	}
 
