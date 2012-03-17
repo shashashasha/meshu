@@ -164,7 +164,6 @@ def item_save(request, item_encoded):
 
 	return item_handler(request, item_id, 'display.html', 'view')
 
-
 #
 # Views for Users
 #
