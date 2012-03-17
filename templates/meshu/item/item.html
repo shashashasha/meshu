@@ -23,3 +23,16 @@
     <!-- <div id="save-progress-button" class="nav">save current</div> -->
     <div id="finish-button" class="nav next start-order">Save and Continue</div>
 {% endblock %}
+
+{% block extra_resources %}
+<script type="text/javascript">
+$("#foursquare-auth").click(function() {
+    var client = 'X1GFQK3OYVBPZPHAEUV50VM50QTF4EWOEN52X4JJ0QNXEHDW';
+    var redirect = 'http://meshu.io/make/foursquare/';
+    var foursquareAuth = 'https://foursquare.com/oauth2/authenticate?client_id={client}&response_type=token&redirect_uri={redirect}';
+    
+    var url = foursquareAuth.replace('{client}', client).replace('{redirect}', redirect);
+    window.location = url;
+});
+</script>
+{% endblock %}
