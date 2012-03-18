@@ -903,14 +903,17 @@ p.note {
     border-top: 1px solid black;
     width: 100%;
 }
+
 #review-total h2 {
     margin: 4px 0;
     width: 100%;
     color: @grey;
 }
+
 #review-total #total-price {
     color: black;
 }
+
 #review-total span {
     float: right;
 }
@@ -1040,7 +1043,8 @@ p.note {
 /* 
 	Map Object Styling
 */
-#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {
+/*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
+path {
     fill: none;
     stroke: black;
     pointer-events: none;
@@ -1073,11 +1077,43 @@ circle {
 #rotate-ui circle {
     fill-opacity: 1;
     cursor: pointer;
-    stroke: transparent;
     stroke-width: 50;
+    stroke: transparent;
 }
 #rotate-ui path {
     stroke: #999;
+}
+
+/* mini meshu */
+#maps {
+    padding: 0 0 60px 15px;
+    float: left;
+}
+
+.mini-meshu {
+    float: left;
+    width: 306px;
+    height: 290px;
+    margin: 0 10px 10px 0;
+    border: 5px solid white;
+
+    &:hover {
+        cursor: pointer;
+        border: 5px solid @blue;
+    }
+
+    .map .layer {
+        opacity: 1;
+    }
+
+    .title {
+        z-index: 2;
+        padding: 5px;
+        width: 296px;
+        font-size: 18px;
+        position: absolute;
+        background: rgba(255, 255, 255, .8);
+    }
 }
 
 /* Map UI */
@@ -1088,19 +1124,19 @@ circle {
 }
 
 .edit .mapui {
-    position: absolute;
-    z-index: 1338;
     opacity: 1;
+    z-index: 1338;
+    position: absolute;
     .transition(opacity);
 
     #zoomin, #zoomout {
-        position: relative;
-        background: @grey;
-        display: block;
+        margin: 5px;
         width: 20px;
         height: 20px;
-        margin: 5px;
+        display: block;
         cursor: pointer;
+        background: @grey;
+        position: relative;
     }
     #zoomin {
         background-image: url(../images/zoomin.png);

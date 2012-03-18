@@ -91,13 +91,15 @@ $(function() {
 		saver.initializeNewMeshu(meshu);
 	}
 
-	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {
+	if (!user.loggedIn && !(loadedMeshu && pageType != "edit") && window.location.hash != '#skipintro') {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
 			$("#edit-help").fadeOut();
 			$("#modal-bg").fadeOut();
 		});
+	} else if (window.location.hash == '#skipintro') {
+		window.location.hash = "";
 	}
 
 	//navigation

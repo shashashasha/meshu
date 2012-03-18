@@ -89,6 +89,11 @@ sb.meshu = function(frame) {
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
         self.updateBounds();
+
+        // pay attention to the number of points
+        var points = mesh.points();
+        if (points.length > 3) $("#finish-button").addClass("active");
+        else $("#finish-button").removeClass("active");
     }
 
     self.locations = function(locations) {
