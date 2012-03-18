@@ -179,7 +179,7 @@ sb.meshu = function(frame) {
             clats = mesh.lats(),
             clons = mesh.lons();
 
-        $.each(places, function(i){
+        $.each(cp, function(i){
             var dataPoint = clats[i] + "\t" + clons[i] + "\t" + cp[i];
             dataString.push(dataPoint);
         });

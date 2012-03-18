@@ -9,6 +9,16 @@
     <div id="maps">
     </div>
     <div id="finish-button" class="nav active">Or, just start making one manually</div>
+    <div style="display:none;">
+        <form action="/make/data/#skipintro" method="POST" id="meshu-select-form">
+        {# put a csrf token in every form in django, for security #}
+        {% csrf_token %}
+        <input type="hidden" id="svg-file" name="svg"/>
+        <input type="hidden" id="svg-theta" name="theta" value="0"/>
+        <input type="hidden" id="meshu-title" name="title"/>
+        <input type="hidden" id="meshu-data" name="location_data"/>
+        </form>
+    </div>
 {% endblock %}
 
 {% block script %}
@@ -33,6 +43,17 @@
         if (!token || !token.length) {
             return;
         }
+
+        var selectMeshu = function(meshu, title) {
+            return function() {
+                $("#svg-file").val(meshu.outputSVG());
+                $("#meshu-data").val(meshu.outputLocationData());
+                $("#meshu-title").val(title);
+
+                $("#meshu-select-form").submit();
+            };
+        };
+        
 
         $("#finish-button").click(function() {
             window.location = "/make/#skipintro";
@@ -111,19 +132,23 @@
                     setTimeout(function() {
                         return function() {
                             var frame = $("<div>").addClass("mini-meshu");
-                            var title = $("<div>").addClass("title").html("Loading " + e.name);
-                            
+                            var title = $("<div>").addClass("title").html(e.name);
+
                             frame.append(title);
+
                             $("#maps").append(frame);
 
                             var meshu = sb.minimeshu(frame[0]);
                             meshu.locations(e.locations);     
+
+                            frame.click(selectMeshu(meshu, e.name));
                         };
                     }(), delay);
                     
                 });
             }
         });
+
     });
 </script>
 {% endblock %}
