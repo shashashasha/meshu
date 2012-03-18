@@ -95,17 +95,10 @@ sb.meshu = function(frame) {
         for (var i = 0; i < locations.length; i++) {
             setTimeout(function(loc) {
                 return function() {
-                    mesh.add(loc.lat, loc.lon, loc.name);
-                    map.updateBounds(mesh.lats(), mesh.lons());                 
+                    addPoint(loc, loc.name);
                 };
             }(locations[i]), i * 400);
         }
-
-        // mesh.locations(locations);
-        // map.updateBounds(mesh.lats(), mesh.lons());
-
-        // refresh should probably be tied to an event or something
-        // mesh.refresh();
     };
 
     self.locationData = function(data) {

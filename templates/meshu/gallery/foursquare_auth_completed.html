@@ -1,0 +1,85 @@
+{% extends "meshu/gallery/gallery.html" %}
+
+{% block title %}Meshu - Use Foursquare Data{% endblock %}
+
+{% block content %}
+    <h2 class="page-header">
+        Each meshu is a different city. Choose one to get started!
+    </h2>
+    <div id="maps">
+    </div>
+{% endblock %}
+
+{% block goback %}
+    <div class="nav back">edit meshu</div>
+{% endblock %}
+
+{% block finish %}
+    <div id="finish-button" class="nav next start-order">Save and Continue</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
+<script type="text/javascript">
+    $(function() {
+
+        var hash = window.location.hash,
+            token = hash.split('=').pop(),
+            api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
+            url = api.replace('{token}', token).replace('{v}', '20120102');
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                var checkins = data.response.checkins.items;
+                var locations = [];
+
+                var cities = {};
+
+                $.each(checkins, function(i, e) {
+                    var location = {
+                        latitude: e.venue.location.lat,
+                        longitude: e.venue.location.lng,
+                        name: e.venue.name
+                    };
+
+                    console.log('adding', e.venue.location.city, e.venue.name);
+                    if (e.venue.location.city) {
+                        var city = e.venue.location.city;
+                        if (!cities[city]) {
+                            cities[city] = {
+                                name: city,
+                                locations: []
+                            };    
+                        }
+
+                        cities[city].locations.push(location);
+                    }
+                });
+
+                $.each(cities, function(i, e) {
+                    if (e.locations.length < 3) {
+                        console.log("ignoring", e.name, "too few checkins!");
+                        return;
+                    }
+
+                    var frame = $("<div>").addClass("frame");
+                    $("#maps").append(frame);
+
+                    var meshu = sb.meshu(frame);
+                    console.log('points loaded:', e.locations);
+                    meshu.locations(e.locations); 
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
