@@ -38,6 +38,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/foursquare', direct_to_template, {
 		'template': 'meshu/gallery/foursquare_auth_completed.html'
 	}),
+	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),

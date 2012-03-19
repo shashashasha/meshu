@@ -122,6 +122,25 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
+def item_from_data(request):
+
+	meshu = Meshu()
+
+	meshu.title = request.POST.get('title', 'My Meshu')
+	meshu.description = request.POST.get('description', '')
+
+	# meshu data
+	meshu.location_data = request.POST['location_data']	
+	meshu.svg = request.POST['svg']
+
+	# wtf dawg
+	meshu.theta = int(float(request.POST.get('theta', '0.0')))
+
+	return render_to_response('meshu/item/item.html', {
+		'meshu': meshu,
+		'view': 'edit'
+	}, context_instance = RequestContext(request))
+
 def item_create(request):
 	xhr = request.POST.has_key('xhr')
 

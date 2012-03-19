@@ -1,11 +1,13 @@
 var sb = sb || {};
-var lats = [],
-    lons = [],
-    places = [];
 
 sb.mesh = function (frame, map, width, height) {
 	var self = {},
 		selfId = parseInt(Math.random() * 10000000000, 10);
+
+    // making this not global ._.
+    var lats = [],
+        lons = [],
+        places = [];
 
     // main svg
     var main = d3.select(frame || "body").append("div")
@@ -176,7 +178,7 @@ sb.mesh = function (frame, map, width, height) {
         else pixel_bounds = [];
     }
 
-    function updateMesh() {
+    function updateMesh(skipAnimation) {
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
@@ -211,7 +213,11 @@ sb.mesh = function (frame, map, width, height) {
             });
 
         // we move the newest point closer and closer to its destination
-        if (new_pt) {
+        if (new_pt && skipAnimation) {
+            clearInterval(updateInterval);
+            new_pt = null;
+        }
+        else if (new_pt) {
             var last = points[points.length-1] || [];
             if (Math.abs(last[0] - new_pt[0]) > .0003) {
                 last[0] += (new_pt[0] - last[0]) / 3;
@@ -227,7 +233,7 @@ sb.mesh = function (frame, map, width, height) {
             if (dlat < .0005 && dlon < .0005) {
                 clearInterval(updateInterval);
                 new_pt = null;
-            }   
+            }
         } else {
             clearInterval(updateInterval);
         }
@@ -417,7 +423,7 @@ sb.mesh = function (frame, map, width, height) {
         });
     }
 
-    self.add = function(latitude, longitude, placename) {
+    self.add = function(latitude, longitude, placename, skipAnimation) {
     	// clear previous update
     	if (updateInterval) {
             clearInterval(updateInterval);
@@ -435,24 +441,31 @@ sb.mesh = function (frame, map, width, height) {
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
-        	new_pt = [lon, lat];
+        	
+            new_pt = [lon, lat];   
+            if (skipAnimation) {
+                points.push([new_pt[0], new_pt[1]]);
 
-        	// make the new point start from the last location
-            var last = points[points.length-1];
-            points.push([last[0], last[1]]);
-            self.updatePixelBounds();
-            update();
+                self.updatePixelBounds();
+                update();
+                updateMesh(skipAnimation);
+            } else { 
 
-            // animate the new point in place
-            updateInterval = setInterval(updateMesh, 40);
+                // make the new point start from the last location
+                var last = points[points.length-1];
+                points.push([last[0], last[1]]);
+                self.updatePixelBounds();
+                update();
+
+                // animate the new point in place
+                updateInterval = setInterval(updateMesh, 40);
+            }
         } else {
             points.push([lon, lat]);
             update();
         }
 
         cases.fadeOut();
-        if (points.length > 3) $("#finish-button").addClass("active");
-        else $("#finish-button").removeClass("active");
 
         return self;
     };
@@ -462,6 +475,7 @@ sb.mesh = function (frame, map, width, height) {
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
+        
         if (points.length < 4) $("#finish-button").removeClass("active");
     };
 

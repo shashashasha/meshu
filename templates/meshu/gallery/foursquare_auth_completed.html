@@ -8,14 +8,17 @@
     </h2>
     <div id="maps">
     </div>
-{% endblock %}
-
-{% block goback %}
-    <div class="nav back">edit meshu</div>
-{% endblock %}
-
-{% block finish %}
-    <div id="finish-button" class="nav next start-order">Save and Continue</div>
+    <div id="finish-button" class="nav active">Or, just start making one manually</div>
+    <div style="display:none;">
+        <form action="/make/data/#skipintro" method="POST" id="meshu-select-form">
+        {# put a csrf token in every form in django, for security #}
+        {% csrf_token %}
+        <input type="hidden" id="svg-file" name="svg"/>
+        <input type="hidden" id="svg-theta" name="theta" value="0"/>
+        <input type="hidden" id="meshu-title" name="title"/>
+        <input type="hidden" id="meshu-data" name="location_data"/>
+        </form>
+    </div>
 {% endblock %}
 
 {% block script %}
@@ -24,16 +27,37 @@
 <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/minimeshu.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
 <script type="text/javascript">
+
+    // load foursquare data
     $(function() {
 
         var hash = window.location.hash,
             token = hash.split('=').pop(),
             api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
             url = api.replace('{token}', token).replace('{v}', '20120102');
+
+        // no token
+        if (!token || !token.length) {
+            return;
+        }
+
+        var selectMeshu = function(meshu, title) {
+            return function() {
+                $("#svg-file").val(meshu.outputSVG());
+                $("#meshu-data").val(meshu.outputLocationData());
+                $("#meshu-title").val(title);
+
+                $("#meshu-select-form").submit();
+            };
+        };
+        
+
+        $("#finish-button").click(function() {
+            window.location = "/make/#skipintro";
+        });
 
         $.ajax({
             url: url,
@@ -42,44 +66,89 @@
                 var checkins = data.response.checkins.items;
                 var locations = [];
 
-                var cities = {};
+                var cities = {
+                    all: {
+                        name: 'All Cities',
+                        locations: []
+                    }
+                };
 
+                var citiesArray = [];
+
+                // go through all checkins
                 $.each(checkins, function(i, e) {
+                    if (!e.venue.location.city) return;
+
                     var location = {
                         latitude: e.venue.location.lat,
                         longitude: e.venue.location.lng,
                         name: e.venue.name
                     };
 
-                    console.log('adding', e.venue.location.city, e.venue.name);
-                    if (e.venue.location.city) {
-                        var city = e.venue.location.city;
-                        if (!cities[city]) {
-                            cities[city] = {
-                                name: city,
-                                locations: []
-                            };    
-                        }
+                    var city = e.venue.location.city;
 
+                    // make new city object
+                    if (!cities[city]) {
+                        cities[city] = {
+                            name: city,
+                            locations: [],
+                            seen: {}
+                        };    
+
+                        cities['all'].locations.push({
+                            name: city,
+                            latitude: location.latitude,
+                            longitude: location.longitude
+                        });
+
+                        citiesArray.push(cities[city]);
+                    }
+
+                    // add location if we haven't seen it before
+                    if (!cities[city].seen[location.name]) {
                         cities[city].locations.push(location);
+                        cities[city].seen[location.name] = true;    
                     }
                 });
+    
+                // sort by number of locations
+                citiesArray.sort(function(a, b) {
+                    return b.locations.length - a.locations.length;
+                });
 
-                $.each(cities, function(i, e) {
+
+                citiesArray.unshift(cities.all);
+
+                var delay = 0;
+
+                $.each(citiesArray, function(i, e) {
                     if (e.locations.length < 3) {
-                        console.log("ignoring", e.name, "too few checkins!");
+                        // console.log("ignoring", e.name, "too few checkins!");
                         return;
                     }
 
-                    var frame = $("<div>").addClass("frame");
-                    $("#maps").append(frame);
+                    delay += e.locations.length > 10 ? 500 : 3000;
 
-                    var meshu = sb.meshu(frame);
-                    console.log('points loaded:', e.locations);
-                    meshu.locations(e.locations); 
+                    setTimeout(function() {
+                        return function() {
+                            var frame = $("<div>").addClass("mini-meshu");
+                            var title = $("<div>").addClass("title").html(e.name);
+
+                            frame.append(title);
+
+                            $("#maps").append(frame);
+
+                            var meshu = sb.minimeshu(frame[0]);
+                            meshu.locations(e.locations);     
+
+                            frame.click(selectMeshu(meshu, e.name));
+                        };
+                    }(), delay);
+                    
                 });
             }
         });
+
     });
 </script>
 {% endblock %}
