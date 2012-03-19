@@ -5,9 +5,9 @@ $(function() {
 						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":150}},
 				   "smallNecklace":
-				   		{"acrylic":{"price":70,"colors":["Black","Grey","White"]},
-						"wood":{"price":75,"colors":["Amber","Blonde"]},
-						"nylon":{"price":85,"colors":["Black","Grey","White"]},
+				   		{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
+						"wood":{"price":80,"colors":["Amber","Blonde"]},
+						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":130}},
 				   "largeNecklace":
 				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
@@ -26,7 +26,7 @@ $(function() {
 	var objectType, objectMaterial, objectColor;
 	
 	// here's the list of views we have in this flow
-	var views = ["edit","make","account","checkout","review"];
+	var views = ["edit","product","make","account","checkout","review"];
 	var content = $("#content");
 
 	// create a stripe payment object
@@ -44,16 +44,16 @@ $(function() {
 		// checking the page view type, setting our flows accordingly
 		switch (pageType) {
 			case 'edit':
-				views = ["edit","make","account","checkout","review"];
+				views = ["edit","product","make","account","checkout","review"];
 				break;
 
 			case 'make':
-				views = ["edit","make","account","checkout","review"];
+				views = ["edit","product","make","account","checkout","review"];
 				sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
 				break;
 
 			case 'view':
-				views = ["view","make","account","checkout","review"];
+				views = ["view","product","make","account","checkout","review"];
 				break;
 
 			default:
@@ -93,7 +93,8 @@ $(function() {
 
 	if (user.loggedIn) {
 		//take out account view
-		views.splice(-3,1);		
+		views.splice(-3,1);	
+		$("#account").hide();
 	}
 
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit")) {
@@ -106,7 +107,7 @@ $(function() {
 	}
 
 	//navigation
-	$(".next").click(function(){
+	$(".next").live("click",function(){
 		if (!$(this).hasClass("active")) return;
 
 		var button = $(this);
@@ -117,7 +118,7 @@ $(function() {
 		};
 
 		// if the user is not logged in at any step, we should force them to log in. sorry :(
-		if (!user.loggedIn && view == 'account') {
+		if (!user.loggedIn && $(this).attr("id") == "forceLogin") {
 			// pass the button, so that on login we can click it
 			forceUserLogin(advanceView);
 			return;
@@ -133,7 +134,6 @@ $(function() {
 
 		makeNextView(view);
 		updateLogoutActions(view);
-
 		content.attr("class", views[index+1]);
 	});
 	

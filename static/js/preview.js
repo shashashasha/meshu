@@ -7,9 +7,12 @@ $(function() {
 		var rotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ";
 
-		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame) {
+		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame, productType) {
 			$(rotateFrame).empty();
 			var main = d3.select(rotateFrame);
+			var product = productType.split("-")[1];
+			var transforms = {'earrings':'scale(.125) translate(650, 540)','pendant':'scale(.075) translate(1030, 1470)',
+							  'necklace':'scale(.125) translate(510, 760)','cufflinks':'scale(.125) translate(510, 760)'};
 			
 			// main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 
@@ -20,16 +23,16 @@ $(function() {
 				.attr('y', 0)
 				.attr('width', 200)
 				.attr('height', 190)
-				.attr('xlink:href', static_url + 'images/preview/preview_earrings.png');
+				.attr('xlink:href', static_url + 'images/preview/preview_'+product+'.png');
 
 			var div = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform", defaultTransform);
+						.attr("transform", transforms[product]);
 
 			var miniDelaunay = $(delaunayFrame).clone().attr("id","mini-delaunay");
 			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
 
-			$("#transform").append(miniDelaunay).append(bounding);
+			$(div[0]).append(miniDelaunay).append(bounding);
 
 			d3.selectAll("circle.hidden").on("mousedown",mousemove);
 			main.on("mouseup",mouseup).on("mousemove",mainmove);
@@ -115,7 +118,7 @@ $(function() {
 		return self;
 	}();
 
-	$(".start-order").live("click",function(){
-		sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
+	$("#product-preview svg").live("click",function(){
+		sb.rotator.initialize("#rotate", "#delaunay", "#hidden", $(this).attr("id"));
 	});	
 });

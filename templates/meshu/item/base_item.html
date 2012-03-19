@@ -36,59 +36,85 @@
     {% block view %}
     {% endblock %}
 
-    {% block make %}
-    <div id="materials">
-        {% block goback %}
-        {% endblock %}
-
-        <div class="make-wrapper">
-
-            {% block options %}
-                <h2>Object</h2>
-                <ul id="object-list" class="option-list">
-                    <li id="earrings">Pair of Earrings <span>(maximum sidelength 2.5")</span></li>
-                    <li id="smallNecklace">Pendant Necklace <span>(maximum sidelength 1.25")</span></li>
-                    <li id="largeNecklace">Large Necklace <span>(maximum sidelength 3")</span></li>
-                </ul>
-                <svg id="rotate">
-                </svg>
-                <div id="rotate-help">
-                    <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
-                    <b class="border-notch notch"></b>
-                    <b class="notch"></b>
+    {% block object %}
+        <div id="product">
+            <div class="back button">edit meshu</div>
+            <div class="make-wrapper">
+                <h2>Choose an object:</h2>
+                <div id="product-preview">
+                    <span class="next active">
+                        <svg id="preview-earrings" width="170" height="160"></svg>
+                    </span>
+                    <span class="next active">
+                        <svg id="preview-pendant" width="170" height="160"></svg>
+                    </span>
+                    <span class="next active">
+                        <svg id="preview-necklace" width="170" height="160"></svg>
+                    </span>
+                    <span class="next active">
+                        <svg id="preview-cufflinks" width="170" height="160"></svg>
+                    </span>
                 </div>
+            </div>
+            <div id="forceLogin" class="next button active">I can't decide, just save my meshu</div>
+        </div>
+    {% endblock %}
+
+    {% block make %}
+        <div id="materials">
+            {% block goback %}
             {% endblock %}
 
-            <div class="options left">
-                <h2>Material</h2>
-                <ul id="material-list" class="option-list">
-                    <li id="nylon">Nylon, 3D-Printed</li>
-                    <li id="silver">Silver, 3D-Printed</li>
-                    <li id="wood">Wood, Lasercut</li>
-                    <li id="acrylic">Acrylic, Lasercut</li>
-                </ul>
-            </div>
-            <div class="options right">
-                <h2>Color</h2>
-                <ul id="color-list" class="option-list">
-                    <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                    <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                    <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                </ul>
-            </div>
-            <div id="total">
-                <span id="total-cost">$50.00</span>
-                <h2>Subtotal</h2>
-                <div id="checkout-button" class="nav next active">Checkout</div>
+            <div class="make-wrapper">
+
+                {% block materials %}
+                    <h2>Object</h2>
+                    <ul id="object-list" class="option-list">
+                        <li id="earrings">Pair of Earrings <span>(maximum sidelength 2.5")</span></li>
+                        <li id="smallNecklace">Pendant Necklace <span>(maximum sidelength 1.25")</span></li>
+                        <li id="largeNecklace">Large Necklace <span>(maximum sidelength 3")</span></li>
+                    </ul>
+                    <svg id="rotate">
+                    </svg>
+                    <div id="rotate-help">
+                        <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+                        <b class="border-notch notch"></b>
+                        <b class="notch"></b>
+                    </div>
+                {% endblock %}
+
+                <div class="options left">
+                    <h2>Material</h2>
+                    <ul id="material-list" class="option-list">
+                        <li id="wood">Wood, Lasercut</li>
+                        <li id="acrylic">Acrylic, Lasercut</li>
+                        <li id="nylon">Nylon, 3D-Printed</li>
+                        <li id="silver">Silver, 3D-Printed</li>
+                    </ul>
+                </div>
+                <div class="options right">
+                    <h2>Color</h2>
+                    <ul id="color-list" class="option-list">
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                    </ul>
+                </div>
+                <div id="total">
+                    <span id="total-cost">$50.00</span>
+                    <h2>Subtotal</h2>
+                    <div id="checkout-button" class="nav next active">Checkout</div>
+                </div>
             </div>
         </div>
-    </div>
     {% endblock %}
 
     <div id="account">
         <div class="back button">back</div>
-        <h2>Great, just sign up or log in to continue</h2>
-        <div id="forceLogin" class="next button active">I'm not ready to decide yet, just save my meshu :(</div>
+        <div class="make-wrapper">
+            <h2>Great, just sign up or log in to continue</h2>
+            <div class="next button active">This will be deleted once we have login forcing.</div>
+        </div>
     </div>
 
     {% block checkout %}
@@ -193,6 +219,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
