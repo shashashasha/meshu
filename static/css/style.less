@@ -1133,10 +1133,15 @@ circle {
         margin: 5px;
         width: 20px;
         height: 20px;
+        opacity: .75;
         display: block;
         cursor: pointer;
         background: @grey;
         position: relative;
+
+        &:hover {
+            opacity: 1;
+        }
     }
     #zoomin {
         background-image: url(../images/zoomin.png);
@@ -1154,19 +1159,19 @@ circle {
     gallery display
 */
 li.object {
-    display: inline-block;
-    border: 1px solid @borderGrey;
-    position: relative;
-    margin-bottom: -3px;
     margin-top: -1px;
     margin-left: -1px;
     margin-right: -4px;
+    position: relative;
+    margin-bottom: -3px;
+    display: inline-block;
+    border: 1px solid @borderGrey;
 
     .image {
         width: 239px;
         height: 290px;
-        border: 5px solid white;
         display: block;
+        border: 5px solid white;
     }
 
     .blank {
@@ -1182,22 +1187,22 @@ li.object {
     }
 
     .clickthrough {
-        background-color: @pink;
-        color: white;
-        position: absolute;
-        padding: 3px 6px;
         right: 10px;
         bottom: 35px;
+        color: white;
         display: none;
+        padding: 3px 6px;
+        position: absolute;
+        background-color: @pink;
     }
 
     .clicknew {
-        position: absolute;
-        width: 180px;
         top: 30px;
         left: 35px;
-        text-align: center;
+        width: 180px;
         font-size: 28px;
+        position: absolute;
+        text-align: center;
     }
 
     /* hover for gallery item */
@@ -1329,7 +1334,6 @@ li.last-object {
 
 .RE {
     background-color: #FFFF66;
-
 }
 
 .PA {
