@@ -1,7 +1,7 @@
 var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
-	var self = {},
+	var self = d3.dispatch("added"),
 		selfId = parseInt(Math.random() * 10000000000, 10);
 
     // making this not global ._.
@@ -141,6 +141,7 @@ sb.mesh = function (frame, map, width, height) {
             });
 
             self.add(loc.lat, loc.lon);
+            self.added();
             map_dragging = null;
             return;
         }

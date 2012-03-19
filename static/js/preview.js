@@ -7,10 +7,9 @@ $(function() {
 		var rotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ";
 
-		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame, productType) {
+		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame, product) {
 			$(rotateFrame).empty();
 			var main = d3.select(rotateFrame);
-			var product = productType.split("-")[1];
 			var transforms = {'earrings':'scale(.125) translate(650, 540)','pendant':'scale(.075) translate(1030, 1470)',
 							  'necklace':'scale(.125) translate(510, 760)','cufflinks':'scale(.125) translate(510, 760)'};
 			
@@ -59,7 +58,7 @@ $(function() {
 				if (isNaN(rotation)) rotation = 0;
 				startX = endX, startY = endY;
 
-				div.attr("transform", defaultTransform + " rotate("+(rotation)+",300,300)");
+				div.attr("transform", transforms[product] + " rotate("+(rotation)+",300,300)");
 			}
 
 			function mouseup(){
@@ -119,6 +118,9 @@ $(function() {
 	}();
 
 	$("#product-preview svg").live("click",function(){
-		sb.rotator.initialize("#rotate", "#delaunay", "#hidden", $(this).attr("id"));
+		var product = $(this).attr("id").split("-")[1];
+		$(".make-option").hide();
+		$("#make-"+product).show();
+		sb.rotator.initialize("#rotate", "#delaunay", "#hidden", product);
 	});	
 });
