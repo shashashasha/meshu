@@ -594,9 +594,7 @@ def order_create(request, profile, meshu):
 
 # Processing Orders!
 def processing_orders(request):
-	profile = current_profile(request)
-
-	if profile.user.is_staff == False:
+	if request.user.is_authenticated() == False or profile.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
 	# get all orders that haven't been shipped

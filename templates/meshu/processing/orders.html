@@ -12,7 +12,7 @@
                     {{ order.status }}
                 </div>
                 <div class="status-information">
-                    <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.meshu.title }} by {{ order.contact }}</a></b>
+                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }} by {{ order.contact }}</a></b>
                     <br /><br />
                     <span class="date">Ordered on {{ order.date_created }}</span>
                     <span class="status">Current Status: {{ order.get_status_message }}</span>
