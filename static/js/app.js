@@ -209,7 +209,13 @@ $(function() {
 	$(".show-places").click(function(){
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
-	})
+	});
+
+	$(".make-option").click(function(){
+		var div = $(this);
+		var select = $("#hidden-select").clone();
+		div.find("type-title").html(select);
+	});
 
 	//materials selection
 	var objectList = $("#object-list li");

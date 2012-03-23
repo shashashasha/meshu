@@ -69,7 +69,7 @@
 
                 {% block materials %}
                     <div id="make-earrings" class="make-option">
-                        <h2>Pair of Earrings</h2>
+                        <h2><span class="type-title">Pair of Earrings</span></h2>
                         <p>Maximum sidelength: 2.5"</p>
                     </div>
                     <div id="make-pendant" class="make-option">
@@ -84,6 +84,13 @@
                         <h2>Pair of Cufflinks</h2>
                         <p>Maximum sidelength: 1"</p>
                     </div>
+
+                    <select id="hidden-select" style="display:none;">
+                        <option>Pair of Earrings</option>
+                        <option>Pendant Necklace</option>
+                        <option>Large Necklace</option>
+                        <option>Cufflinks</option>
+                    </select>
 
                     
                     <!-- <ul id="object-list" class="option-list">
