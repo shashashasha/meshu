@@ -151,6 +151,7 @@ def item_create(request):
 	if xhr:
 		return meshu_xhr_response(meshu)
 
+	return HttpResponseRedirect('/view/' + meshu.get_encoded_id() + '/')
 	return item_handler(request, meshu.id, 'display.html', 'view')
 
 def item_update(request, item_encoded):
