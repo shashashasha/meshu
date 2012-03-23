@@ -1,6 +1,6 @@
 {% extends "meshu/base.html" %}
 
-{% block title %}Meshu - {{ meshu.title }}{% endblock %}
+{% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
 {% block page_type %}{{ view }}{% endblock page_type %}
 
