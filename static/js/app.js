@@ -75,6 +75,7 @@ $(function() {
 			var cols = row.split("\t");
 			if (cols.length == 3) {
 				// decoder div. dumb way to do this
+				// http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
 				var div = document.createElement('div');
 				div.innerHTML = cols[2];
 				var decoded = div.firstChild.nodeValue;

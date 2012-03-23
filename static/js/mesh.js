@@ -278,6 +278,7 @@ sb.mesh = function (frame, map, width, height) {
             .select(".place-text")
             .html(function(d, i) {
                 // decode the text
+                // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
                 decoder.innerHTML = places[i];
                 return decoder.firstChild.nodeValue;
             });
