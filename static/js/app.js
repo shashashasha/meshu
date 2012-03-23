@@ -5,9 +5,9 @@ $(function() {
 						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":150}},
 				   "smallNecklace":
-				   		{"acrylic":{"price":70,"colors":["Black","Grey","White"]},
-						"wood":{"price":75,"colors":["Amber","Blonde"]},
-						"nylon":{"price":85,"colors":["Black","Grey","White"]},
+				   		{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
+						"wood":{"price":80,"colors":["Amber","Blonde"]},
+						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":130}},
 				   "largeNecklace":
 				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
@@ -26,7 +26,7 @@ $(function() {
 	var objectType, objectMaterial, objectColor;
 	
 	// here's the list of views we have in this flow
-	var views = ["edit","make","checkout","review"];
+	var views = ["edit","product","make","account","checkout","review"];
 	var content = $("#content");
 
 	// create a stripe payment object
@@ -44,20 +44,20 @@ $(function() {
 		// checking the page view type, setting our flows accordingly
 		switch (pageType) {
 			case 'edit':
-				views = ["edit","make","checkout","review"];
+				views = ["edit","product","make","account","checkout","review"];
 				break;
 
 			case 'make':
-				views = ["edit","make","checkout","review"];
+				views = ["edit","product","make","account","checkout","review"];
 				sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
 				break;
 
 			case 'view':
-				views = ["view","make","checkout","review"];
+				views = ["view","product","make","account","checkout","review"];
 				break;
 
 			default:
-				views = ["readymade","checkout","review"];
+				views = ["readymade","account","checkout","review"];
 
 				$("#materials").addClass("ready");
 				objectType = loadedMeshu.product.length ? loadedMeshu.product : 'smallNecklace';
@@ -91,6 +91,11 @@ $(function() {
 		saver.initializeNewMeshu(meshu);
 	}
 
+	if (user.loggedIn) {
+		//take out account view
+		views.splice(-3,1);	
+		$("#account").hide();
+	}
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit") && window.location.hash != '#skipintro') {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
@@ -103,35 +108,33 @@ $(function() {
 	}
 
 	//navigation
-	$(".next").click(function(){
+	$(".next").live("click",function(){
 		if (!$(this).hasClass("active")) return;
 
 		var button = $(this);
 		var view = content.attr("class");
-		var index = views.indexOf(view);
+		var index = views.indexOf(view)
+		var advanceView = function() {
+			content.attr("class", views[index+1]);
+		};
 
 		// if the user is not logged in at any step, we should force them to log in. sorry :(
-		if (!user.loggedIn) {
+		if (!user.loggedIn && $(this).attr("id") == "forceLogin") {
 			// pass the button, so that on login we can click it
-			forceUserLogin(function() {
-				button.click();
-			});
+			forceUserLogin(advanceView);
 			return;
 		} 
 		// if the user is logged in and we're editing, we need to save the updates
-		else if (user.loggedIn && view == 'edit') {
+		if (user.loggedIn && view == 'edit') {
 			saver.createOrUpdateMeshu();
 
 			// advance to the next view after we save
-			saver.postCreateCallback = function() {
-				content.attr("class", views[index+1]);
-			};
+			saver.postCreateCallback = advanceView;
 			return;
 		}
 
 		makeNextView(view);
 		updateLogoutActions(view);
-
 		content.attr("class", views[index+1]);
 	});
 	
@@ -206,7 +209,13 @@ $(function() {
 	$(".show-places").click(function(){
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
-	})
+	});
+
+	$(".make-option").click(function(){
+		var div = $(this);
+		var select = $("#hidden-select").clone();
+		div.find("type-title").html(select);
+	});
 
 	//materials selection
 	var objectList = $("#object-list li");
@@ -352,7 +361,7 @@ $(function() {
 			return;
 		}
 
-		content.attr("class","review");
+		content.attr("class", "review");
 		makeNextView('review');
 	}
 
@@ -362,6 +371,7 @@ $(function() {
 		// after a user logs in, click the "save and continue" button
 		user.afterLogIn = function() {
 			if (callback) {
+				saver.createOrUpdateMeshu();
 				saver.postCreateCallback = function() {
 					// wait a bit... 
 					setTimeout(callback, 200);

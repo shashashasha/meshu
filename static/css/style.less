@@ -582,16 +582,14 @@ h1#meshu {
 	height: 600px;
     position: absolute;
     z-index: 1;
-    right: 0;
+    right: 400px;
+    .transition(right);
 }
 .view .frame {
     width: 1000px;
 }
 .edit .frame {
-    .transition(right);
-}
-.make .frame, .checkout .frame, .review .frame, .display .frame, .readymade .frame {
-    right: 400px;
+    right: 0;
     .transition(right);
 }
 
@@ -620,11 +618,11 @@ h1#meshu {
     width: 139px;
 }
 .options.left{
-    top: 295px;
+    top: 255px;
 }
 .options.right{
     left: 221px;
-    top: 297px;
+    top: 257px;
 }
 .color-img {
     position: absolute;
@@ -658,7 +656,7 @@ h1#meshu {
 #rotate-help {
     position: absolute;
     left: 220px;
-    top: 150px;
+    top: 120px;
     width: 124px;
     color: #aaa;
 }
@@ -683,14 +681,53 @@ h1#meshu {
     left: -13px;
 }
 
-#materials, #checkout, #review, #view, #display {
+#product, #materials, #account, #checkout, #review, #view, #display {
     padding: 20px;
     width: 360px;
     min-height: 560px;
     position: absolute;
     top: 0;
 }
-.edit #materials, .view #materials {
+
+#product {
+    right: 400px;
+    .transition(right);
+}
+.edit #product, .view #product {
+    right: -400px;
+    .transition(right);
+}
+.product #product {
+    right: 0;
+    .transition(right);
+}
+#product-preview {
+    margin-top: 20px;
+}
+#product-preview svg {
+    margin-bottom: 5px;
+    border: 5px solid white;
+    cursor: pointer;
+}
+#product-preview svg:hover {    
+    border-color: @pink;
+}
+#product-preview span:nth-child(odd) {
+    margin-right: 10px;
+    margin-left: -5px;
+    float: left;
+}
+#product-preview span:nth-child(even) {
+    margin-right: -5px;
+    float: right;
+}
+
+#forceLogin {
+    position: absolute;
+    bottom: 15px;
+}
+
+.edit #materials, .view #materials, .product #materials {
     right: -400px;
     .transition(right);
 }
@@ -698,7 +735,7 @@ h1#meshu {
     right: 0px;
     .transition(right);
 }
-.checkout #materials, .review #materials {
+.account #materials, .checkout #materials, .review #materials {
     right: 400px;
     .transition(right);
 }
@@ -707,6 +744,19 @@ h1#meshu {
 }
 .readymade #readymade-type {
     color: @pink;
+}
+
+#account {
+    right: -400px;
+    .transition(right);
+}
+.account #account {
+    right: 0;
+    .transition(right);
+}
+.checkout #account, .review #account {
+    right: 400px;
+    .transition(right);
 }
 
 #checkout {
@@ -759,12 +809,12 @@ p.note {
     border-color: @pink;
 }
 
-.review #checkout {
-    right: 400px;
+#review {
+    right: -400px;
     .transition(right);
 }
-.edit #review, .make #review, .checkout #review, .view #review, .readymade #review {
-    right: -400px;
+.review #checkout {
+    right: 400px;
     .transition(right);
 }
 .review #review {
@@ -786,6 +836,10 @@ p.note {
     color: @grey;
 }
 
+#view {
+    right: 400px;
+    .transition(right);
+}
 .edit #view {
     right: -400px;
     .transition(right);
@@ -793,14 +847,11 @@ p.note {
 .view #view {
     top: 20px;
     left: 20px;
+    right: auto;
     z-index: 1;
     padding: 0;
     width: 250px;
     min-height: 0;
-}
-.make #view, .checkout #view, .review #view {
-    right: 400px;
-    .transition(right);
 }
 #view p, #view span, #view ul{
     background-color: rgba(255,255,255,.9);
@@ -857,6 +908,13 @@ p.note {
     &.selected {
         color: @pink;
     }
+}
+
+.make-option {
+    display: none;
+}
+.make-option p {
+    color: @grey;
 }
 
 .option-list li {
@@ -925,7 +983,7 @@ p.note {
     margin-top: 40px;
     padding-top: 10px;
     position: absolute;
-    top: 400px;
+    top: 370px;
 
     h2 {
         margin-top: 0;
@@ -1014,6 +1072,14 @@ p.note {
     left: 20px;
 }
 
+#forceLogin {
+    background-color: @grey;
+    .transition(background-color, .5s);
+}
+#forceLogin:hover {
+    background-color: @blue;
+}
+
 #checkout-button, #review-button {
     position: relative;
     float: right;
@@ -1043,6 +1109,7 @@ p.note {
 /* 
 	Map Object Styling
 */
+
 /*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
 path {
     fill: none;
@@ -1067,7 +1134,7 @@ circle {
 #hidden, #rotate-ui {
     display: none;
 }
-#mini-delaunay path {
+#mini-delaunay path, #product-preview path {
     stroke-width: 15;
 }
 

@@ -37,6 +37,14 @@ sb.meshu = function(frame) {
         searchPlaces();
     });
 
+    mesh.on("added", checkAdded);
+    function checkAdded() { 
+        // pay attention to the number of points
+        var points = mesh.points();
+        if (points.length > 3) $("#finish-button").addClass("active");
+        else $("#finish-button").removeClass("active");
+    }
+
     function searchPlaces() {
         var input = searchbox.val();
         searchbox.val("");
@@ -90,10 +98,7 @@ sb.meshu = function(frame) {
         mesh.add(place.latitude, place.longitude, input);
         self.updateBounds();
 
-        // pay attention to the number of points
-        var points = mesh.points();
-        if (points.length > 3) $("#finish-button").addClass("active");
-        else $("#finish-button").removeClass("active");
+        checkAdded();
     }
 
     self.locations = function(locations) {
