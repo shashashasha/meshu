@@ -9,6 +9,8 @@ sb.mesh = function (frame, map, width, height) {
         lons = [],
         places = [];
 
+    var decoder = document.createElement('div');
+
     // main svg
     var main = d3.select(frame || "body").append("div")
         .attr("id", selfId)
@@ -274,8 +276,10 @@ sb.mesh = function (frame, map, width, height) {
         names.attr("id", function(d, i) { return "p-" + i; })
             .select(".title").each(function(d) { d.edit = false; })
             .select(".place-text")
-            .text(function(d, i) {
-                return places[i];   
+            .html(function(d, i) {
+                // decode the text
+                decoder.innerHTML = places[i];
+                return decoder.firstChild.nodeValue;
             });
 
         placeTitle.data(points)

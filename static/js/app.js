@@ -74,7 +74,12 @@ $(function() {
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
 			if (cols.length == 3) {
-				$("<li>").text(cols[2]).appendTo($("#display-places"));	
+				// decoder div. dumb way to do this
+				var div = document.createElement('div');
+				div.innerHTML = cols[2];
+				var decoded = div.firstChild.nodeValue;
+
+				$("<li>").html(decoded).appendTo($("#display-places"));	
 			}
 		});
 
@@ -82,7 +87,7 @@ $(function() {
 		d3.select("#place-number")
 			.attr("class","")
 			.select(".title-text")
-            .text(function(d){
+            .html(function(d){
                 d.title = loadedMeshu.title;
                 meshu.updateTitle(d.title);
                 return d.title;
