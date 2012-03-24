@@ -29,28 +29,6 @@ $(function() {
 				$(svg[0]).append(miniDelaunay);
 			}
 		}
-
-		// self.switchProduct = function(product) {
-		// 	var imageURL;
-
-		// 	switch(product) {
-		// 		case 'earrings':
-		// 			imageURL = static_url + 'images/preview/preview_earrings.png';
-		// 			defaultTransform = "scale(.125) translate(650, 540) ";
-		// 			break;
-		// 		case 'smallNecklace':
-		// 			imageURL = static_url + 'images/preview/preview_pendant.png';
-		// 			defaultTransform = "scale(.075) translate(1030, 1470) ";
-		// 			break;
-		// 		case 'largeNecklace':
-		// 			imageURL = static_url + 'images/preview/preview_necklace.png';
-		// 			defaultTransform = "scale(.125) translate(510, 760) ";
-		// 			break;
-		// 	}
-
-		// 	d3.select("#previewImage").attr("xlink:href", imageURL);
-		// 	d3.select("#transform").attr("transform", defaultTransform + " rotate(" + rotation + ",300, 300)");
-		// };
 		return self;
 	}();
 

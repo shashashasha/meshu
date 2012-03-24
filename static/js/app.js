@@ -49,7 +49,7 @@ $(function() {
 
 			case 'make':
 				views = ["edit","product","make","account","checkout","review"];
-				sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
+				//sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
 				break;
 
 			case 'view':
