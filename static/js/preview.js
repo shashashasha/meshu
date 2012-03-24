@@ -2,18 +2,22 @@ var sb = sb || {};
 
 $(function() {
 	sb.rotator = function(rotateFrame, delaunayFrame, hiddenFrame) {
-		var self = {};
+		var self = d3.dispatch("rotated");
 
 		var rotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ";
 
-		self.initialize = function(rotateFrame, delaunayFrame, hiddenFrame, product) {
+		var transforms = {	
+			'earrings': 'scale(.125) translate(650, 540)',
+			'pendant': 'scale(.075) translate(1030, 1470)',
+		  	'necklace': 'scale(.125) translate(510, 760)',
+		  	'cufflinks': 'scale(.125) translate(510, 760)'
+		};
+
+		self.update = function(product) {
 			$(rotateFrame).empty();
+
 			var main = d3.select(rotateFrame);
-			var transforms = {'earrings':'scale(.125) translate(650, 540)','pendant':'scale(.075) translate(1030, 1470)',
-							  'necklace':'scale(.125) translate(510, 760)','cufflinks':'scale(.125) translate(510, 760)'};
-			
-			// main.append("svg:rect").attr("width","100%").attr("height","100%").attr("fill","#eee");
 
 			// image bg instead of rect
 			var image = main.append('svg:image')
@@ -22,11 +26,11 @@ $(function() {
 				.attr('y', 0)
 				.attr('width', 200)
 				.attr('height', 190)
-				.attr('xlink:href', static_url + 'images/preview/preview_'+product+'.png');
+				.attr('xlink:href', self.getImage(product));
 
 			var div = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform", transforms[product]);
+						.attr("transform", self.getTransform(product));
 
 			var miniDelaunay = $(delaunayFrame).clone().attr("id","mini-delaunay");
 			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
@@ -38,7 +42,9 @@ $(function() {
 
 			var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
 			var oldtheta = 0;
-			rotation = 0;
+
+			// don't reset rotation because we initialize more than once
+			// rotation = 0;
 
 			function mousemove(){
 				var m = d3.svg.mouse(main.node());
@@ -58,7 +64,10 @@ $(function() {
 				if (isNaN(rotation)) rotation = 0;
 				startX = endX, startY = endY;
 
-				div.attr("transform", transforms[product] + " rotate("+(rotation)+",300,300)");
+				// dispatch rotation event
+				self.rotated(rotation);
+
+				div.attr("transform", self.getTransform(product));
 			}
 
 			function mouseup(){
@@ -70,30 +79,20 @@ $(function() {
 			}
 		};
 
-		self.switchProduct = function(product) {
-			var imageURL;
-
-			switch(product) {
-				case 'earrings':
-					imageURL = static_url + 'images/preview/preview_earrings.png';
-					defaultTransform = "scale(.125) translate(650, 540) ";
-					break;
-				case 'smallNecklace':
-					imageURL = static_url + 'images/preview/preview_pendant.png';
-					defaultTransform = "scale(.075) translate(1030, 1470) ";
-					break;
-				case 'largeNecklace':
-					imageURL = static_url + 'images/preview/preview_necklace.png';
-					defaultTransform = "scale(.125) translate(510, 760) ";
-					break;
-			}
-
-			d3.select("#previewImage").attr("xlink:href", imageURL);
-			d3.select("#transform").attr("transform", defaultTransform + " rotate(" + rotation + ",300, 300)");
+		self.getTransform = function(product) {
+			return transforms[product] + " rotate(" + rotation + ",300,300)";
 		};
 
-		self.rotation = function() {
-			return rotation;
+		self.getImage = function(product) {
+			return static_url + 'images/preview/preview_' + product + '.png';
+		};
+
+		self.rotation = function(r) {
+			if (!arguments.length) return rotation;
+
+			rotation = r;
+
+			return self;
 		};
 				
 		function clockize(x1, y1, x2, y2) {
@@ -115,12 +114,7 @@ $(function() {
 		}
 
 		return self;
-	}();
 
-	$("#product-preview svg").live("click",function(){
-		var product = $(this).attr("id").split("-")[1];
-		$(".make-option").hide();
-		$("#make-"+product).show();
-		sb.rotator.initialize("#rotate", "#delaunay", "#hidden", product);
-	});	
+	// have the ids in here for now, dumb
+	}("#rotate", "#delaunay", "#hidden");
 });
