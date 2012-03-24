@@ -37,7 +37,7 @@ var saver = function() {
             updateMeshuID(data.meshu_id);
 
             if (self.postCreateCallback) {
-              self.postCreateCallback();
+              self.postCreateCallback(data);
             }
 
         }, 'json');
@@ -108,6 +108,10 @@ var saver = function() {
         createNewMeshu();
 
         return self;
+    };
+
+    self.getMeshuID = function() {
+        return $("#meshu-id").val();
     };
 
     return self;

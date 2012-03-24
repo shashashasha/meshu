@@ -42,6 +42,8 @@ $(function() {
 		meshu.locationData(loadedMeshu.location_data);
 
 		// checking the page view type, setting our flows accordingly
+		user.updateLogoutActions(pageType);
+
 		switch (pageType) {
 			case 'edit':
 				views = ["edit","product","make","account","checkout","review"];
@@ -49,11 +51,17 @@ $(function() {
 
 			case 'make':
 				views = ["edit","product","make","account","checkout","review"];
-				sb.rotator.initialize("#rotate", "#delaunay", "#hidden");
 				break;
 
 			case 'view':
 				views = ["view","product","make","account","checkout","review"];
+				break;
+
+			case 'product':
+				views = ["product","make","account","checkout","review"];
+				
+				// initialize product picker
+				sb.product.initialize("#product-preview", "#delaunay");
 				break;
 
 			default:
@@ -124,24 +132,9 @@ $(function() {
 			content.attr("class", views[index+1]);
 		};
 
-		// if the user is not logged in at any step, we should force them to log in. sorry :(
-		if (!user.loggedIn && $(this).attr("id") == "forceLogin") {
-			// pass the button, so that on login we can click it
-			forceUserLogin(advanceView);
-			return;
-		} 
-		// if the user is logged in and we're editing, we need to save the updates
-		if (user.loggedIn && view == 'edit') {
-			saver.createOrUpdateMeshu();
-
-			// advance to the next view after we save
-			saver.postCreateCallback = advanceView;
-			return;
-		}
-
 		makeNextView(view);
-		updateLogoutActions(view);
-		content.attr("class", views[index+1]);
+		user.updateLogoutActions(view);
+		advanceView();
 	});
 	
 	$(".back").click(function(){
@@ -150,6 +143,46 @@ $(function() {
 		content.attr("class", view);
 
 		makePrevView(view);
+	});
+
+	/*
+		Save and View the meshu, go to the view page
+	*/
+	$("#save-and-view").click(function() {
+		// if the user is not logged in we should force them to log in
+		var createAndView = function() {
+			saver.createOrUpdateMeshu();
+
+			saver.postCreateCallback = function(data) {
+				window.location.href = data.meshu_url;
+			};
+		};
+
+		if (!user.loggedIn) {
+			forceUserLogin();
+			user.afterLogIn = createAndView;
+		} 
+		else {
+			createAndView();
+		}	
+	});
+
+	/* 
+		This handles when people select a product to order
+		and go to the materials / color selection page
+	*/
+	$("#product-preview svg").live("click", function() {
+
+		var product = $(this).attr("id").split("-")[1];
+		
+		$(".make-option").hide();
+
+		$("#make-" + product).show();
+
+		sb.rotator.update(product);
+
+		// sync the rotation between the product picker and the product rotator
+		sb.rotator.on("rotated", sb.product.rotation);
 	});
 
 	// called when a next button is clicked
@@ -161,6 +194,8 @@ $(function() {
 				meshu.updateBounds();
 				meshu.mesh().updateCircleBehavior();
 
+				// initialize product picker
+				sb.product.initialize("#product-preview", "#delaunay");
 				break;
 
 			case 'make':
@@ -196,7 +231,9 @@ $(function() {
 		}
 	}
 
-
+	/*
+		How we flip between images of readymades
+	*/
 	var timer;
 	$("#img-thumbs img").click(function(){
 		clearTimeout(timer);
@@ -279,11 +316,6 @@ $(function() {
 		li.addClass("selected");
 	});
 
-	if (pageType && pageType != 'view') {
-		objectList.eq(0).click();
-		materialList.eq(0).click();
-	}
-
 	/*
 		We're using JQuery validate to check all the forms 
 		of our shipping and credit card input
@@ -351,7 +383,6 @@ $(function() {
 		return false;
 	});
 
-    // 
     $("#submit-button").click(function(){ 
         if (!user.loggedIn) {
         	forceUserLogin();
@@ -377,30 +408,13 @@ $(function() {
 		// after a user logs in, click the "save and continue" button
 		user.afterLogIn = function() {
 			if (callback) {
-				saver.createOrUpdateMeshu();
+				saver.createOrUpdateMeshu();	
 				saver.postCreateCallback = function() {
 					// wait a bit... 
 					setTimeout(callback, 200);
-				};	
+				}
 			}
 		};
-	}
-
-	function updateLogoutActions(view) { 
-		switch (view) {
-			case 'user':
-				user.logoutRedirect = '/shop/';
-				break;
-
-			case 'view':
-				// refresh to remove the user buttons
-				user.logoutRedirect = window.location.href;
-				break;
-
-			default:
-				user.logoutRedirect = null;
-				break;
-		}
 	}
 
 	/*

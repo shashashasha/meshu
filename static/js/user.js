@@ -108,6 +108,26 @@ var user = function() {
         }); 
     };
 
+    /*
+        on some views we want logout to redirect people to a new page
+    */
+    self.updateLogoutActions = function(view) {
+        switch (view) {
+            case 'user':
+                self.logoutRedirect = '/shop/';
+                break;
+
+            case 'view':
+                // refresh to remove the user buttons
+                self.logoutRedirect = window.location.href;
+                break;
+
+            default:
+                self.logoutRedirect = null;
+                break;
+        }
+    };
+
     function onLogOut(data) {
         $("#login").show();
         

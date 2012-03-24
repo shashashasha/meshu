@@ -83,7 +83,7 @@ def item_begin_order(request, item_encoded):
 	if request.user.id != item.user_profile.user.id:
 		return notify(request, 'authorization_required')
 
-	return item_handler(request, item_id, 'usermade.html', 'make')
+	return item_handler(request, item_id, 'usermade.html', 'product')
 
 def item_edit(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
