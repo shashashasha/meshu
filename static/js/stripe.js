@@ -117,6 +117,7 @@ var orderer = function() {
 
     self.getColors = function(type, material) {
         if (!options) return null;
+        console.log(type, material);
         return options[type][material].colors;
     };
 
