@@ -14,7 +14,7 @@ sb.minimeshu = function(frame) {
 
     self.locations = function(locations) {
         var seen = {},
-            skip = locations.length > 10 ? locations.length - 10 : 0;
+            skip = true; // locations.length > 10 ? locations.length - 10 : 0;
 
         for (var i = 0; i < locations.length; i++) {
             var loc = locations[i];

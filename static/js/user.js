@@ -189,7 +189,6 @@ var user = function() {
     }
 
     function onLogIn(data) {
-        console.log('log in response:', data, self.afterLogIn);
         // if the login information was incorrect
         if (!data.success) {
             $("#login-error").fadeIn();

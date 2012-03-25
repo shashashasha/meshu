@@ -99,7 +99,6 @@ $(function() {
 			}
 		});
 
-
 		d3.select("#place-number")
 			.attr("class","")
 			.select(".title-text")
@@ -136,13 +135,17 @@ $(function() {
 		var view = content.attr("class");
 		var index = views.indexOf(view)
 		var advanceView = function() {
-			console.log('advancing view');
 			content.attr("class", views[index+1]);
 		};
 
 		if (view == 'make' && !user.loggedIn) {
 			console.log('setting after login');
-			user.afterLogIn = advanceView;
+			user.afterLogIn = function() {
+				saver.createOrUpdateMeshu();
+				saver.postCreateCallback = function() {
+					button.click();
+				};
+			};
 		}
 
 		makeNextView(view);
@@ -427,7 +430,7 @@ $(function() {
 	function forceUserLogin(callback) {
 		user.showModal();
 
-		// after a user logs in, click the "save and continue" button
+		// after a user logs in, click the button
 		user.afterLogIn = function() {
 			if (callback) {
 				saver.createOrUpdateMeshu();	
