@@ -51,20 +51,23 @@ $(function() {
 		// initialize product picker
 		sb.product.initialize("#delaunay");
 
+		console.log(pageType);
+
 		switch (pageType) {
 			case 'edit':
-				views = ["edit","product","make","account","checkout","review"];
-				break;
-
 			case 'make':
 				views = ["edit","product","make","account","checkout","review"];
 				break;
 
 			case 'view':
-				views = ["view","product","make","account","checkout","review"];
+				views = ["view"];
 				break;
 
 			case 'product':
+				var product = $("#product");
+				product.find(".nav").remove();
+				product.find(".make-wrapper").removeClass("make-wrapper");
+
 				views = ["product","make","account","checkout","review"];
 				break;
 
@@ -406,6 +409,12 @@ $(function() {
 		});
 
 		return false;
+	});
+
+	$("#review-button").click(function(){
+		if (!user.loggedIn) {
+        	forceUserLogin();
+        }
 	});
 
     $("#submit-button").click(function(){ 
