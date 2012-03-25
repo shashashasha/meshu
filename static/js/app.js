@@ -13,7 +13,10 @@ $(function() {
 				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
 						"wood":{"price":85,"colors":["Amber","Blonde"]},
 						"nylon":{"price":95,"colors":["Black","Grey","White"]},
-						"silver":{"price":150}}};
+						"silver":{"price":150}},
+					"cufflinks":
+						{"stainless":{"price":85},
+						"silver":{"price":160}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"pendant":"small pendant necklace",
 						"necklace":"large necklace"};
@@ -175,15 +178,6 @@ $(function() {
 		else {
 			createAndView();
 		}	
-	});
-
-	$("#foursquare-auth").click(function() {
-	    var client = 'AJXTWLOH1K5RIWG33XSGQZHRISL5CCJ0XG1VUL3NAKDYYPMM';
-	    var redirect = 'http://meshu.io/make/foursquare/';
-	    var foursquareAuth = 'https://foursquare.com/oauth2/authenticate?client_id={client}&response_type=token&redirect_uri={redirect}';
-	    
-	    var url = foursquareAuth.replace('{client}', client).replace('{redirect}', redirect);
-	    window.location = url;
 	});
 
 	/* 
