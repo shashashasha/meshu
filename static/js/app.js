@@ -72,9 +72,12 @@ $(function() {
 				views = ["readymade","account","checkout","review"];
 
 				$("#materials").addClass("ready");
-				objectType = loadedMeshu.product.length ? loadedMeshu.product : 'smallNecklace';
-
-				var type = displayNames[objectType];
+				
+				product = loadedMeshu.product.length ? loadedMeshu.product : 'smallNecklace';
+				objectMaterial = materialList[0].id;
+				orderer.updateProduct(product, objectMaterial);
+				materialList.eq(0).click();
+				var type = displayNames[product];
 				var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
 				$("#readymade-type").text(capitalized);
 				break;
