@@ -4,13 +4,15 @@ sb.materializer = function() {
 	var self = d3.dispatch("update"),
 		options,
 		display,
+		productNames,
 		product,
 		material,
 		color;
 
-	self.initialize = function(o, d) {
+	self.initialize = function(o, d, p) {
 		options = o;
 		display = d;
+		productNames = p;
 
 		// list elements
 		self.materials = $("#material-list li");
@@ -114,6 +116,14 @@ sb.materializer = function() {
 		self.update();
 
 		return self;
+	};
+
+	self.productName = function() {
+		return productNames[product];
+	};
+
+	self.displayName = function() {
+		return display[product];
 	};
 
 	return self;
