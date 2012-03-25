@@ -1,7 +1,7 @@
 var sb = sb || {};
 
 $(function() {
-	sb.product = function(delaunayFrame) {
+	sb.product = function() {
 		var self = {};
 
 		var products = ["earrings","pendant","necklace","cufflinks"];

@@ -203,7 +203,7 @@ $(function() {
 				meshu.mesh().updateCircleBehavior();
 
 				// initialize product picker
-				sb.product.initialize("#product-preview", "#delaunay");
+				sb.product.initialize("#delaunay");
 				break;
 
 			case 'make':
