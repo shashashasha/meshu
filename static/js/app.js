@@ -133,8 +133,14 @@ $(function() {
 		var view = content.attr("class");
 		var index = views.indexOf(view)
 		var advanceView = function() {
+			console.log('advancing view');
 			content.attr("class", views[index+1]);
 		};
+
+		if (view == 'make' && !user.loggedIn) {
+			console.log('setting after login');
+			user.afterLogIn = advanceView;
+		}
 
 		makeNextView(view);
 		user.updateLogoutActions(view);
