@@ -111,6 +111,10 @@ $(function() {
 		//take out account view
 		checkAccountView();
 	}
+
+	/* 
+		Checking if we need to show the initial helper modal
+	*/	
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit") && window.location.hash != '#skipintro') {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
@@ -137,13 +141,15 @@ $(function() {
 			checkAccountView();
 		}
 
-		if (view == 'make' && !user.loggedIn) {
+		if (view == 'account' && !user.loggedIn) {
 			user.afterLogIn = function() {
 				saver.createOrUpdateMeshu();
 				saver.postCreateCallback = function() {
 					button.click();
 				};
 			};
+
+			return;
 		}
 
 		console.log('clicking next on view:', view);
@@ -421,7 +427,7 @@ $(function() {
 		// we also can't change options once it's set, so no one can mess with it
 		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), shipPrice);
 
-		$("#object-type").val(sb.materializer.productName()]);
+		$("#object-type").val(sb.materializer.productName());
 		$("#object-material").val(sb.materializer.material());
 		$("#object-color").val(sb.materializer.color().toLowerCase());
 		$("#object-amount").val(orderer.getTotalCents());
