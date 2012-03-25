@@ -39,8 +39,9 @@
     {% block object %}
         <div id="product">
             <div class="nav back">edit meshu</div>
+            <div id="save-and-view" class="button nav">save meshu and exit</div>
             <div class="make-wrapper">
-                <h2>Choose an object:</h2>
+                <h2>Choose your piece:</h2>
                 <div id="product-preview">
                     <span class="wrapper">
                         <span class="next active">
@@ -72,7 +73,6 @@
                     </span>
                 </div>
             </div>
-            <div id="save-and-view" class="button">I'll decide later, just save my meshu.</div>
         </div>
     {% endblock %}
 
@@ -151,7 +151,7 @@
                     <input type="password" class="required" name="inline_signin_password" id="inline_signin_password">
                     <label id="login-error" for="inline_signin_password" class="error">Oops, wrong email or password.</label>
                 </div>
-                <p class="note">Forgot your password? Click <a href="/user/forgot/">here</a> to reset it.</p>
+                <p class="note">Forgot your password? Click <a href="/user/forgot/" target="_blank">here</a> to reset it.</p>
                 <div class="login-buttons">
                     <input id="inline-login-signin" class="button next active" type="submit" value="Login">
                 </div>
