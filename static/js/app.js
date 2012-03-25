@@ -19,14 +19,13 @@ $(function() {
 						"silver":{"price":160}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"pendant":"small pendant necklace",
-						"necklace":"large necklace"};
+						"necklace":"large necklace",
+						"cufflinks": "pair of cufflinks"};
 	var productNames = {"earrings":"earrings",
 						"pendant":"pendant necklace",
-						"necklace":"large necklace"};
+						"necklace":"large necklace",
+						"cufflinks": "cufflinks"};
 	var shipPrice = 4;
-
-	// the type of object we're ordering
-	var objectType, objectMaterial, objectColor;
 	
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
@@ -38,6 +37,7 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
+	sb.materializer.initialize(options, displayNames);
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -74,14 +74,9 @@ $(function() {
 				views = ["readymade","account","checkout","review"];
 
 				$("#materials").addClass("ready");
-				
-				product = loadedMeshu.product.length ? loadedMeshu.product : 'smallNecklace';
-				objectMaterial = materialList[0].id;
-				orderer.updateProduct(product, objectMaterial);
-				materialList.eq(0).click();
-				var type = displayNames[product];
-				var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
-				$("#readymade-type").text(capitalized);
+
+				var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
+				sb.materializer.product(product);
 				break;
 		}
 
@@ -141,7 +136,6 @@ $(function() {
 		};
 
 		if (view == 'make' && !user.loggedIn) {
-			console.log('setting after login');
 			user.afterLogIn = function() {
 				saver.createOrUpdateMeshu();
 				saver.postCreateCallback = function() {
@@ -202,10 +196,7 @@ $(function() {
 		/* 
 			i suck.
 		*/
-		objectType = product;
-		objectMaterial = materialList[0].id;
-		orderer.updateProduct(product, objectMaterial);
-		materialList.eq(0).click();
+		sb.materializer.product(product);
 
 		// sync the rotation between the product picker and the product rotator
 		sb.rotator.on("rotated", sb.product.rotation);
@@ -279,68 +270,6 @@ $(function() {
 	$(".show-places").click(function(){
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
-	});
-
-	$(".make-option").click(function(){
-		var div = $(this);
-		var select = $("#hidden-select").clone();
-		div.find("type-title").html(select);
-	});
-
-	//materials selection
-	var objectList = $("#object-list li");
-	var materialList = $("#material-list li");
-	var colorList = $("#color-list li");
-	
-	objectList.click(function(){
-		objectType = $(this).attr("id");
-		materialList.each(function(){
-			if ($(this).hasClass("selected")) {
-				objectMaterial = $(this).attr("id");
-				orderer.updateProduct(objectType, objectMaterial);
-				$("#total-cost").text(orderer.getPriceString());	
-			}
-		});
-
-		sb.rotator.switchProduct(objectType);
-	});
-
-	materialList.click(function(){
-		objectMaterial = $(this).attr("id");
-
-		orderer.updateProduct(objectType, objectMaterial);
-		$("#total-cost").text(orderer.getPriceString());
-
-		var colors = orderer.getColors(objectType, objectMaterial);
-		if (colors) {
-			$(".options.right").fadeIn();
-			colorList.find(".color-title").empty();
-			colorList.find("img").attr("scr","");
-
-			$.each(colors, function(i, value) {
-				var li = colorList.eq(i);
-				var imgURL = static_url + "images/materials/" + objectMaterial + "_" + value.toLowerCase() + ".png";
-
-				li.find(".color-title").text(value);
-				li.find(".color-img img").attr("src", imgURL);
-			});
-
-			// select the first color
-			colorList.eq(0).click();
-		} else {
-			objectColor = "";
-			$(".options.right").fadeOut();
-		}
-	});
-
-	colorList.click(function(){ 
-		objectColor = $(this).find(".color-title").text();
-	});
-
-	$(".option-list li").live("click",function(){
-		var li = $(this);
-		li.parent().find("li").removeClass("selected");
-		li.addClass("selected");
 	});
 
 	/*
@@ -459,11 +388,11 @@ $(function() {
 		// let our stripe object know what object we're purchasing
 		// it'll know the price, given the options beforehand
 		// we also can't change options once it's set, so no one can mess with it
-		orderer.updateProduct(objectType, objectMaterial, shipPrice);
+		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), shipPrice);
 
-		$("#object-type").val(productNames[objectType]);
-		$("#object-material").val(objectMaterial);
-		$("#object-color").val(objectColor.toLowerCase());
+		$("#object-type").val(productNames[sb.materializer.product()]);
+		$("#object-material").val(sb.materializer.material());
+		$("#object-color").val(sb.materializer.color().toLowerCase());
 		$("#object-amount").val(orderer.getTotalCents());
 		
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
@@ -514,8 +443,8 @@ $(function() {
 	*/
 	function updateReviewText() {
 
-		var product = "One " + displayNames[objectType];
-		var productType = objectColor.toLowerCase() + " " + objectMaterial;
+		var product = "One " + displayNames[sb.materializer.product()];
+		var productType = sb.materializer.color() + " " + sb.materializer.material();
 		$("#review-description").text(product + ", made out of " + productType);
 
 		$("#subtotal-price span").text(orderer.getPriceString());
