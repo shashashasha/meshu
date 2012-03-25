@@ -717,15 +717,20 @@ h1#meshu {
     .transition(right);
 }
 #product-preview {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 #product-preview svg {
-    margin-bottom: 5px;
     border: 5px solid white;
     cursor: pointer;
 }
 #product-preview svg:hover {    
     border-color: @pink;
+}
+#product-preview span {
+    margin-bottom: 10px;
+}
+#product-preview p {
+    margin-left: 5px;
 }
 #product-preview span:nth-child(odd) {
     margin-right: 10px;
@@ -737,9 +742,10 @@ h1#meshu {
     float: right;
 }
 
-#forceLogin {
+#save-and-view {
     position: absolute;
     bottom: 15px;
+    background-color: @grey;
 }
 
 .edit #materials, .view #materials, .product #materials {
