@@ -4,22 +4,22 @@ $(function() {
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
 						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":150}},
-				   "smallNecklace":
+				   "pendant":
 				   		{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
 						"nylon":{"price":90,"colors":["Black","Grey","White"]},
 						"silver":{"price":130}},
-				   "largeNecklace":
+				   "necklace":
 				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
 						"wood":{"price":85,"colors":["Amber","Blonde"]},
 						"nylon":{"price":95,"colors":["Black","Grey","White"]},
 						"silver":{"price":150}}};
 	var displayNames = {"earrings":"pair of earrings",
-						"smallNecklace":"small pendant necklace",
-						"largeNecklace":"large necklace"};
+						"pendant":"small pendant necklace",
+						"necklace":"large necklace"};
 	var productNames = {"earrings":"earrings",
-						"smallNecklace":"pendant necklace",
-						"largeNecklace":"large necklace"};
+						"pendant":"pendant necklace",
+						"necklace":"large necklace"};
 	var shipPrice = 4;
 
 	// the type of object we're ordering
@@ -44,6 +44,9 @@ $(function() {
 		// checking the page view type, setting our flows accordingly
 		user.updateLogoutActions(pageType);
 
+		// initialize product picker
+		sb.product.initialize("#delaunay");
+
 		switch (pageType) {
 			case 'edit':
 				views = ["edit","product","make","account","checkout","review"];
@@ -59,9 +62,6 @@ $(function() {
 
 			case 'product':
 				views = ["product","make","account","checkout","review"];
-				
-				// initialize product picker
-				sb.product.initialize("#product-preview", "#delaunay");
 				break;
 
 			default:
@@ -180,6 +180,14 @@ $(function() {
 		$("#make-" + product).show();
 
 		sb.rotator.update(product);
+
+		/* 
+			i suck.
+		*/
+		objectType = product;
+		objectMaterial = materialList[0].id;
+		orderer.updateProduct(product, objectMaterial);
+		materialList.eq(0).click();
 
 		// sync the rotation between the product picker and the product rotator
 		sb.rotator.on("rotated", sb.product.rotation);
