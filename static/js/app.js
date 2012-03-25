@@ -13,7 +13,10 @@ $(function() {
 				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
 						"wood":{"price":85,"colors":["Amber","Blonde"]},
 						"nylon":{"price":95,"colors":["Black","Grey","White"]},
-						"silver":{"price":150}}};
+						"silver":{"price":150}},
+					"cufflinks":
+						{"stainless":{"price":85},
+						"silver":{"price":160}}};
 	var displayNames = {"earrings":"pair of earrings",
 						"pendant":"small pendant necklace",
 						"necklace":"large necklace"};
