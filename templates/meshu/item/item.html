@@ -13,7 +13,6 @@
     <p class="caption right">Connect with Foursquare to use your checkins.</p>
     <p class="title">Some ideas to get you started:</p> 
     <p class="ideas">Cities I’ve Been To, Places I’ve Lived, Countries I Want to Visit, Restaurants I Love, etc...</p>
-    <div id="foursquare-auth">AUTHORIZEME</div>
     <div class="button pink" id="close-help">OK, I'm ready!</div>
 </div>
 {% endblock %}
@@ -22,18 +21,9 @@
     <div class="nav back">choose another product</div>
 {% endblock %}
 {% block finish %}
-    <div id="finish-button" class="nav next start-order">Save and Continue</div>
+    <div id="foursquare-auth" class="button">Connect to Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div>
+    <div id="finish-button" class="nav next start-order">Continue</div>
 {% endblock %}
 
 {% block extra_resources %}
-<script type="text/javascript">
-$("#foursquare-auth").click(function() {
-    var client = 'AJXTWLOH1K5RIWG33XSGQZHRISL5CCJ0XG1VUL3NAKDYYPMM';
-    var redirect = 'http://meshu.io/make/foursquare/';
-    var foursquareAuth = 'https://foursquare.com/oauth2/authenticate?client_id={client}&response_type=token&redirect_uri={redirect}';
-    
-    var url = foursquareAuth.replace('{client}', client).replace('{redirect}', redirect);
-    window.location = url;
-});
-</script>
 {% endblock %}
