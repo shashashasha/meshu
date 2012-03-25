@@ -55,7 +55,6 @@ $(function() {
 
 		switch (pageType) {
 			case 'edit':
-			case 'make':
 				views = ["edit","product","make","account","checkout","review"];
 				break;
 
