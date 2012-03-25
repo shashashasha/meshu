@@ -204,7 +204,7 @@ $(function() {
 				meshu.mesh().updateCircleBehavior();
 
 				// initialize product picker
-				// fix this later
+				// todo - move this elsewhere
 				sb.product.initialize("#delaunay");
 				break;
 
