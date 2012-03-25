@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2 class="page-header">
-        Each meshu is a different city. Choose one to get started!
+        Each meshu is a different set of places. Choose one to get started!
     </h2>
     <div id="maps">
     </div>
@@ -66,14 +66,15 @@
                 var checkins = data.response.checkins.items;
                 var locations = [];
 
-                var cities = {
+                var places = {
                     all: {
                         name: 'All Cities',
                         locations: []
                     }
                 };
 
-                var citiesArray = [];
+                var placesArray = [];
+                var countryArray = [];
 
                 // go through all checkins
                 $.each(checkins, function(i, e) {
@@ -86,48 +87,67 @@
                     };
 
                     var city = e.venue.location.city;
+                    var country = e.venue.location.country;
 
                     // make new city object
-                    if (!cities[city]) {
-                        cities[city] = {
+                    if (!places[city]) {
+                        places[city] = {
                             name: city,
                             locations: [],
                             seen: {}
                         };    
 
-                        cities['all'].locations.push({
+                        places['all'].locations.push({
                             name: city,
                             latitude: location.latitude,
                             longitude: location.longitude
                         });
 
-                        citiesArray.push(cities[city]);
+                        placesArray.push(places[city]);
                     }
 
                     // add location if we haven't seen it before
-                    if (!cities[city].seen[location.name]) {
-                        cities[city].locations.push(location);
-                        cities[city].seen[location.name] = true;    
+                    if (!places[city].seen[location.name]) {
+                        places[city].locations.push(location);
+                        places[city].seen[location.name] = true;    
+                    }
+
+                    if (!places[country]) {
+                        places[country] = {
+                            name: country,
+                            locations: [],
+                            seen: {}
+                        };
+
+                        countryArray.push(places[country]);
+                    }
+
+                    // add location if we haven't seen it before
+                    if (!places[country].seen[city]) {
+                        places[country].locations.push(location);
+                        places[country].seen[city] = true;    
                     }
                 });
     
                 // sort by number of locations
-                citiesArray.sort(function(a, b) {
+                placesArray.sort(function(a, b) {
+                    return b.locations.length - a.locations.length;
+                });
+
+                countryArray.sort(function(a, b) {
                     return b.locations.length - a.locations.length;
                 });
 
 
-                citiesArray.unshift(cities.all);
-
                 var delay = 0;
 
-                $.each(citiesArray, function(i, e) {
+                var addPlace = function(i, e) {
                     if (e.locations.length < 3) {
                         // console.log("ignoring", e.name, "too few checkins!");
                         return;
                     }
 
-                    delay += e.locations.length > 10 ? 500 : 3000;
+                    delay += 500; // e.locations.length > 10 ? 500 : 3000;
 
                     setTimeout(function() {
                         return function() {
@@ -145,7 +165,18 @@
                         };
                     }(), delay);
                     
-                });
+                };
+
+                // add countries first, and if we only've been to one country, 
+                // don't show individual countries
+                if (countryArray.length > 1) {
+                    countryArray.unshift(places.all);
+                    $.each(countryArray, addPlace);    
+                } else {
+                    addPlace(0, places.all);
+                }
+                
+                $.each(placesArray, addPlace);
             }
         });
 

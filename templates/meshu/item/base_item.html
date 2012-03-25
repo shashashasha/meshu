@@ -166,7 +166,6 @@
                     <input id="inline-login-account" class="button" type="submit" value="Create Account">
                 </div>
             </form>
-            <div class="next button active" style="position:absolute;margin-top:70px">This will be deleted once we have login forcing.</div>
         </div>
     </div>
 
@@ -288,7 +287,7 @@
             user: '{{ meshu.user_profile.user.username }}',
             edit_url: '{{ meshu.get_edit_url }}',
             view_url: '{{ meshu.get_absolute_url }}',
-            title: '{{ meshu.title|safe }}',
+            title: '{{ meshu.title }}',
             product: '{{ meshu.product }}',
             location_data: '{{ meshu.location_data }}',
             svg: '{% autoescape off %}{{ meshu.svg }}{% endautoescape %}'
