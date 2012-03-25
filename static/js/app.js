@@ -110,8 +110,7 @@ $(function() {
 
 	if (user.loggedIn) {
 		//take out account view
-		views.splice(-3,1);	
-		$("#account").hide();
+		checkAccountView();
 	}
 	if (!user.loggedIn && !(loadedMeshu && pageType != "edit") && window.location.hash != '#skipintro') {
 		$("#edit-help").fadeIn();
@@ -135,6 +134,10 @@ $(function() {
 			content.attr("class", views[index+1]);
 		};
 
+		if (view == 'make' || view == 'readymade') {
+			checkAccountView();
+		}
+
 		if (view == 'make' && !user.loggedIn) {
 			user.afterLogIn = function() {
 				saver.createOrUpdateMeshu();
@@ -144,17 +147,27 @@ $(function() {
 			};
 		}
 
+		console.log('clicking next on view:', view);
+
 		makeNextView(view);
 		user.updateLogoutActions(view);
 		advanceView();
 	});
 	
 	$(".back").click(function(){
-	    var index = views.indexOf(content.attr("class"));
-	    var view = views[index-1];
-		content.attr("class", view);
+		var view = content.attr("class");
 
-		makePrevView(view);
+	    console.log("clicking back on view:", view, views);
+		if (view == 'checkout') {
+			checkAccountView();
+		}
+
+	    var index = views.indexOf(view);
+	    var prev = views[index-1];
+	    console.log("setting content class:", view, prev, index, views);
+		content.attr("class", prev);
+
+		makePrevView(prev);
 	});
 
 	/*
@@ -246,6 +259,25 @@ $(function() {
 				meshu.mesh().updateCircleBehavior();
 				meshu.animateTransform(0);
 				break;
+		}
+	}
+
+	function checkAccountView() {
+		var i = views.indexOf("account");
+		if (user.loggedIn) {
+			if (i >= 0) {
+				views.splice(i, 1);	
+			}	
+
+			console.log('after removing account:', views);
+			$("#account").hide();
+		} else {
+			if (i == -1) {
+				views.splice(-2, 0, "account");
+			}
+
+			console.log('after adding account:', views);
+			$("#account").show();
 		}
 	}
 

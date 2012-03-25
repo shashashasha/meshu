@@ -96,7 +96,6 @@ var user = function() {
                     'email': $("#inline_signin_name").val(), 
                     'password': $("#inline_signin_password").val() 
                 };
-                console.log(post);
                 $.post('/user/login/', post, onLogIn, 'json');
             }
         });
@@ -189,6 +188,7 @@ var user = function() {
     }
 
     function onLogIn(data) {
+        console.log('logged in:', data, self.afterLogIn);
         // if the login information was incorrect
         if (!data.success) {
             $("#login-error").fadeIn();
