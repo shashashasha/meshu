@@ -271,18 +271,15 @@ $(function() {
 		var i = views.indexOf("account");
 		if (user.loggedIn) {
 			if (i >= 0) {
-				views.splice(i, 1);	
-			}	
-
-			console.log('after removing account:', views);
-			$("#account").hide();
+				views.splice(i, 1);
+			}
+			$("#account").css("visibility","hidden");
+			
 		} else {
 			if (i == -1) {
 				views.splice(-2, 0, "account");
 			}
-
-			console.log('after adding account:', views);
-			$("#account").show();
+			$("#account").css("visibility","visible");
 		}
 	}
 
