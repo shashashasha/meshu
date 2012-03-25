@@ -72,7 +72,6 @@ var orderer = function() {
     };
 
     self.updateProduct = function(t, m, s) {
-        console.log(t, m, s, options);
         // ignore if we haven't heard about this product before
         if (!options[t] || !options[t][m]) return;
 
