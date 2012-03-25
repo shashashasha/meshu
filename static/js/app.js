@@ -35,6 +35,7 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
+
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
 		saver.initialize(meshu, loadedMeshu.view_url);
