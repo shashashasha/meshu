@@ -33,11 +33,10 @@ $(function() {
 
 	// create a stripe payment object
 	orderer.options(options);
+	sb.materializer.initialize(options, displayNames, productNames);
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
-
-	sb.materializer.initialize(options, displayNames);
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -422,7 +421,7 @@ $(function() {
 		// we also can't change options once it's set, so no one can mess with it
 		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), shipPrice);
 
-		$("#object-type").val(productNames[sb.materializer.product()]);
+		$("#object-type").val(sb.materializer.productName()]);
 		$("#object-material").val(sb.materializer.material());
 		$("#object-color").val(sb.materializer.color().toLowerCase());
 		$("#object-amount").val(orderer.getTotalCents());
@@ -475,7 +474,7 @@ $(function() {
 	*/
 	function updateReviewText() {
 
-		var product = "One " + displayNames[sb.materializer.product()];
+		var product = "One " + sb.materializer.displayName();
 		var productType = sb.materializer.color() + " " + sb.materializer.material();
 		$("#review-description").text(product + ", made out of " + productType);
 
