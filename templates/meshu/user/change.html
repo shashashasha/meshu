@@ -19,7 +19,7 @@
 		<br />
 		<div class="form-row">
 			<label for="new_password">Enter a new password</label>
-			<input id="#account_password" type="password" name="new_password" class="required aligned"/>
+			<input id="new_password" type="password" name="new_password" class="required aligned"/>
 		</div>
 		<div class="form-row">
 			<label for="new_password">Re-enter a new password</label>
@@ -40,7 +40,7 @@
                 email: true
             },
             repeat_password: {
-                equalTo: "#account_password"
+                equalTo: "#new_password"
             }
         },
         messages: {

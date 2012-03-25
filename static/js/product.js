@@ -6,7 +6,7 @@ $(function() {
 
 		var products = ["earrings","pendant","necklace","cufflinks"];
 		var transforms = ["scale(.09) translate(830, 710) ","scale(.045) translate(1570, 2200)",
-						  "scale(.09) translate(650, 980) ","scale(.075) translate(1030, 1470) "];
+						  "scale(.09) translate(650, 980) ","scale(.075) translate(870, 1170) "];
 
 		self.initialize = function(delaunayFrame) {
 
