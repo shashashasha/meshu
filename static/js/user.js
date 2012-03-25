@@ -79,6 +79,28 @@ var user = function() {
             }
         });
 
+
+        $("#inline-signin").validate({
+            rules: {
+                inline_signin_name: {
+                    email: true
+                }
+            },
+            messages: {
+                inline_signin_name: "Sorry, that's not a valid email format."
+            },
+            submitHandler: function(){
+                var post = { 
+                    'xhr': 'true', 
+                    'csrfmiddlewaretoken': $("#csrf input").val(),
+                    'email': $("#inline_signin_name").val(), 
+                    'password': $("#inline_signin_password").val() 
+                };
+                console.log(post);
+                $.post('/user/login/', post, onLogIn, 'json');
+            }
+        });
+
         $("#form-account").validate({
             rules: {
                 account_name: {
@@ -99,6 +121,30 @@ var user = function() {
                     'csrfmiddlewaretoken': $("#csrf input").val(),
                     'email': $("#account_name").val(), 
                     'password': $("#account_password").val() 
+                }, onLogIn, 'json');
+            }
+        });
+
+        $("#inline-account").validate({
+            rules: {
+                inline_account_name: {
+                    email: true
+                },
+                inline_repeat_password: {
+                    equalTo: "#inline_account_password"
+                }
+            },
+            messages: {
+                inline_account_name: "Sorry, that's not a valid email format.",
+                inline_repeat_password: "Oops, those passwords didn't match. Try again?"
+            },
+            submitHandler: function(){
+                $.post('/user/create/', {
+                    'xhr': 'true',
+
+                    'csrfmiddlewaretoken': $("#csrf input").val(),
+                    'email': $("#inline_account_name").val(), 
+                    'password': $("#inline_account_password").val() 
                 }, onLogIn, 'json');
             }
         });
@@ -143,6 +189,7 @@ var user = function() {
     }
 
     function onLogIn(data) {
+        console.log('log in response:', data, self.afterLogIn);
         // if the login information was incorrect
         if (!data.success) {
             $("#login-error").fadeIn();
