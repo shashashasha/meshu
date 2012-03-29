@@ -222,10 +222,10 @@ sb.mesh = function (frame, map, width, height) {
         }
         else if (new_pt) {
             var last = points[points.length-1] || [];
-            if (Math.abs(last[0] - new_pt[0]) > .0003) {
+            if (Math.abs(last[0] - new_pt[0]) > .0002) {
                 last[0] += (new_pt[0] - last[0]) / 3;
             }    
-            if (Math.abs(last[1] - new_pt[1]) > .0003) {
+            if (Math.abs(last[1] - new_pt[1]) > .0002) {
                 last[1] += (new_pt[1] - last[1]) / 3;
             }    
 
@@ -233,7 +233,7 @@ sb.mesh = function (frame, map, width, height) {
             
             var dlon = Math.abs(last[0] - new_pt[0]);
             var dlat = Math.abs(last[1] - new_pt[1]);
-            if (dlat < .0005 && dlon < .0005) {
+            if (dlat < .0002 && dlon < .0002) {
                 clearInterval(updateInterval);
                 new_pt = null;
             }
@@ -327,7 +327,7 @@ sb.mesh = function (frame, map, width, height) {
                 var p = map.l2p({ lat: d[1], lon: d[0] });
                 var w = placeHover.width();
                 var top = (p.y - 32) + "px";
-                var left = (p.x - (w/2)) + "px";
+                var left = (p.x - (w/2) - 3) + "px";
                 var bleft = w/2 - 3 + "px";
 
                 

@@ -59,23 +59,23 @@
             window.location = "/make/#skipintro";
         });
 
+        var locations = [];
+
+        var places = {
+            all: {
+                name: 'All Cities',
+                locations: []
+            }
+        };
+
+        var placesArray = [];
+        var countryArray = [];
+
         $.ajax({
             url: url,
             dataType: 'json',
             success: function(data) {
                 var checkins = data.response.checkins.items;
-                var locations = [];
-
-                var places = {
-                    all: {
-                        name: 'All Cities',
-                        locations: []
-                    }
-                };
-
-                var placesArray = [];
-                var countryArray = [];
-
                 // go through all checkins
                 $.each(checkins, function(i, e) {
                     if (!e.venue.location.city) return;
@@ -83,7 +83,8 @@
                     var location = {
                         latitude: e.venue.location.lat,
                         longitude: e.venue.location.lng,
-                        name: e.venue.name
+                        name: e.venue.name,
+                        times: 1
                     };
 
                     var city = e.venue.location.city;
@@ -109,7 +110,9 @@
                     // add location if we haven't seen it before
                     if (!places[city].seen[location.name]) {
                         places[city].locations.push(location);
-                        places[city].seen[location.name] = true;    
+                        places[city].seen[location.name] = location;    
+                    } else {
+                        places[city].seen[location.name].times++;
                     }
 
                     if (!places[country]) {

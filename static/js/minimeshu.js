@@ -24,7 +24,7 @@ sb.minimeshu = function(frame) {
                 // don't animate all the points
                 if (skip) {
                     // skip animation
-                    mesh.add(loc.latitude, loc.longitude, loc.name, true);
+                    mesh.add(loc.latitude, loc.longitude, loc.times && loc.times > 1 ? loc.name + ' (' + loc.times + ')' : loc.name, true);
                     self.updateBounds();
                 }
                 else {
