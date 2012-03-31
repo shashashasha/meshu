@@ -482,7 +482,8 @@ sb.mesh = function (frame, map, width, height) {
         lons.splice(index, 1);
         places.splice(index, 1);
         
-        if (points.length < 4) $("#finish-button").removeClass("active");
+        if (points.length < 3) $("#finish-button").removeClass("active");
+        if (points.length == 1) $("#meshu-container").addClass("inactive");
     };
 
     self.lats = function() {
