@@ -4,12 +4,16 @@ $(function() {
 	d3.selectAll("#delaunay").attr("transform","scale(.37)");
 
 	var prices = {"earrings":"$75-$150",
-						"smallNecklace":"$70-$130",
-						"largeNecklace":"$80-$150"};
+				  "pendant":"$70-$130",
+				  "necklace":"$80-$150"};
+	var displayNames = {"earrings":"Pair of Earrings",
+						"pendant":"Small Pendant Necklace",
+						"necklace":"Large Necklace",
+						"cufflinks": "Pair of Cufflinks"};
 
-	$(".price-range").each(function(){
+	$(".description").each(function(){
 		var type = $(this).text();
-		$(this).text(", " + prices[type]);
+		$(this).text(displayNames[type] + ", " + prices[type]);
 	});
 
 	// if it's a user page, logout redirects to the home page
