@@ -287,17 +287,15 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
-    <script type="text/javascript">
-        Modernizr.load({
-            test: Modernizr.svg,
-            yep : '{{ STATIC_URL }}js/no-svg.js'
-            // nope: ''
-        });
-    </script>
 {% endblock %}
 
 {% block resources %}
     <script type="text/javascript">
+
+    Modernizr.load({
+        test: Modernizr.svg,
+        nope : '{{ STATIC_URL }}js/no-svg.js'
+    });
 
     var pageType = "{{ view }}";
     

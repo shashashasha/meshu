@@ -6,6 +6,6 @@ $(function() {
 		$("<p>").text("Unfortunately, we can't display this page properly in your browser."),
 		$("<p>").html('Why not try with another one, such as <a href="https://www.google.com/chrome" target="_blank">Chrome</a>, <a href="http://www.apple.com/safari/download/" target="_blank">Safari</a>, or <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>?'),
 		$("<h2>").html('Or, just check out <a href="/shop/" class="button pink">our shop!</a>')
-		);
+	);
 	$("#content").append(div).fadeIn();
 });
