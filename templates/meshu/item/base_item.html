@@ -276,6 +276,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
@@ -290,6 +291,11 @@
 
 {% block resources %}
     <script type="text/javascript">
+
+    Modernizr.load({
+        test: Modernizr.svg,
+        nope : '{{ STATIC_URL }}js/no-svg.js'
+    });
 
     var pageType = "{{ view }}";
     
@@ -306,6 +312,9 @@
     {% else %} 
         var loadedMeshu = null;
     {% endif %}
+
+//    If we need to load different JS files, here's where we do it.
+
     </script>  
 
     {% block extra_resources %}

@@ -41,11 +41,11 @@
                     {% endautoescape %}
                 </a>
                 {% if view == 'shop' %}
-                    <p class="description">{{ object.title|safe }}<span class="price-range">{{ object.product }}</span></p>
-                    <a class="clickthrough" href="/shop/{{ object.id }}">click to view</a>
+                    <p class="title">{{ object.title|safe }}</p>
+                    <p class="description">{{ object.product }}</p>
                 {% else %}
-                    <p class="description">{{ object.title|safe }}</p>
-                    <a class="clickthrough" href="{{ object.get_absolute_url }}">click to view</a>
+                    <p class="title">{{ object.title|safe }}</p>
+                    <!-- <a class="clickthrough" href="{{ object.get_absolute_url }}">click to view</a> -->
                 {% endif %}
             </li>
         {% endfor %}
