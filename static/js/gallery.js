@@ -1,7 +1,11 @@
 $(function() {
 
-	d3.selectAll("#master-svg").attr("class","meshu-svg");
-	d3.selectAll("#delaunay").attr("transform","scale(.37)");
+	d3.selectAll("#master-svg").attr("class","meshu-svg")
+	d3.selectAll("#delaunay").each(function(){
+		var node = d3.select(this);
+		var t = node.attr("transform") || "";
+		node.attr("transform","scale(.37) " + t);
+	});
 
 	var prices = {"earrings":"$75-$150",
 				  "pendant":"$70-$130",

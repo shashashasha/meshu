@@ -11,12 +11,16 @@
                 <div class="{{ order.status }} status-block">
                     {{ order.status }}
                 </div>
+                <div class="status-meshu">
+                    {% autoescape off %}
+                        {{ order.meshu.svg }}
+                    {% endautoescape %}
+                </div>
                 <div class="status-information">
                     <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }} by {{ order.contact }}</a></b>
                     <br /><br />
                     <span class="date">Ordered on {{ order.date_created }}</span>
                     <span class="status">Current Status: {{ order.get_status_message }}</span>
-
                     <form action="/orders/{{ order.id }}/update/">
                         <select name="status">
                             <option value="OR">Ordered</option>
@@ -50,4 +54,19 @@
     </ul>
     <br /><br /><br />
     </div>
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
+    <script type="text/javascript">
+
+        d3.selectAll("#master-svg").attr("class","meshu-svg")
+        d3.selectAll("#delaunay").each(function(){
+            var node = d3.select(this);
+            var t = node.attr("transform") || "";
+            node.attr("transform","scale(.15)  translate(-80, -80)" + t);
+        });
+
+    </script>
 {% endblock %}
