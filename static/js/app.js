@@ -38,6 +38,8 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
+	meshu.isReadymade = loadedMeshu.product != '';
+
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
 		saver.initialize(meshu, loadedMeshu.view_url);
@@ -143,10 +145,9 @@ $(function() {
 
 		if (view == 'account' && !user.loggedIn) {
 			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu();
-				saver.postCreateCallback = function() {
+				saver.createOrUpdateMeshu(function() {
 					button.click();
-				};
+				});
 			};
 
 			return;
@@ -181,11 +182,9 @@ $(function() {
 	$("#save-and-view").click(function() {
 		// if the user is not logged in we should force them to log in
 		var createAndView = function() {
-			saver.createOrUpdateMeshu();
-
-			saver.postCreateCallback = function(data) {
+			saver.createOrUpdateMeshu(function(data) {
 				window.location.href = data.meshu_url;
-			};
+			});
 		};
 
 		if (!user.loggedIn) {
@@ -404,11 +403,10 @@ $(function() {
 		// after a user logs in, click the button
 		user.afterLogIn = function() {
 			if (callback) {
-				saver.createOrUpdateMeshu();	
-				saver.postCreateCallback = function() {
+				saver.createOrUpdateMeshu(function() {
 					// wait a bit... 
 					setTimeout(callback, 200);
-				}
+				});	
 			}
 		};
 	}

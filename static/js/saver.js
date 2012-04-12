@@ -103,9 +103,18 @@ var saver = function() {
         return self;
     };
 
-    self.createOrUpdateMeshu = function() {
+    self.createOrUpdateMeshu = function(callback) {
 
-        createNewMeshu();
+        // protect the saving so we don't save readymades
+        if (self.meshu.isReadymade && callback) {
+            callback();
+        } else {
+            createNewMeshu();
+
+            if (callback) {
+              self.postCreateCallback = callback;
+            } 
+        }
 
         return self;
     };
