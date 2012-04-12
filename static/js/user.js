@@ -1,5 +1,6 @@
 var user = function() {
-    var self = {};
+    var self = {},
+        defaultMessage = "Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!";
 
     self.loggedIn = false;
 
@@ -16,6 +17,7 @@ var user = function() {
 
         $("#tab-" + mode).click();
 
+        $(".account-message").html(defaultMessage);
         $(".login-row").find("input").val('');
     };
 
@@ -24,6 +26,7 @@ var user = function() {
         $("#login-form").fadeOut();
         $(".login-row").find("input").val('');
         $(".login-row").find(".error").remove();
+        $(".account-message").html(defaultMessage);
     };
 
     self.initialize = function() {
@@ -197,12 +200,12 @@ var user = function() {
 
             if (data.duplicate) {
                 var duplicateMessage = "Oops, looks like you already registered with that email.<br />Try logging in?";
-                $("#account-message").html(duplicateMessage);
+                $(".account-message").html(duplicateMessage);
             }
             return;
         }
 
-        $("#account-message").html("Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!");
+        $(".account-message").html(defaultMessage);
 
         // format this better
         $("#logout").show().html('logout');
