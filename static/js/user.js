@@ -196,7 +196,8 @@ var user = function() {
             });
 
             if (data.duplicate) {
-                $("#account-message").html("Oops, looks like you already registered with that email.<br />Try logging in?");
+                var duplicateMessage = "Oops, looks like you already registered with that email.<br />Try logging in?";
+                $("#account-message").html(duplicateMessage);
             }
             return;
         }
