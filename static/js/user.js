@@ -10,8 +10,6 @@ var user = function() {
     self.showModal = function(mode) {
         mode = mode || 'account';
 
-        $("#login-error").hide();
-
         $("#modal-bg").fadeIn();
         $("#login-form").fadeIn();
 
@@ -27,6 +25,7 @@ var user = function() {
         $(".login-row").find("input").val('');
         $(".login-row").find(".error").remove();
         $(".account-message").html(defaultMessage);
+        $(".login-error").hide();
     };
 
     self.initialize = function() {
@@ -193,9 +192,9 @@ var user = function() {
     function onLogIn(data) {
         // if the login information was incorrect
         if (!data.success) {
-            $("#login-error").fadeIn();
+            $(".login-error").fadeIn();
             $("#login-form").click(function() {
-                $("#login-error").hide();
+                $(".login-error").hide();
             });
 
             if (data.duplicate) {
