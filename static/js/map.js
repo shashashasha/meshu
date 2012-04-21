@@ -4,7 +4,8 @@ sb.map = function(frame, width, height) {
 	var po = org.polymaps;
 	var self = {};
 
-	var baseURL = "http://tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/22677/256/{Z}/{X}/{Y}.png";
+	// updating to toner tiles
+	var baseURL = "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame || "body").append("div")[0][0];
       
