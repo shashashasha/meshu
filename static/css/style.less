@@ -25,6 +25,12 @@
           box-shadow: 0px 0px @distance @color; 
 }
 
+.borderBox () {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;
+}
+
 .hoverColor (@color: @pink) {
     &:hover {
         color: @pink;

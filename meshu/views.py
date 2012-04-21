@@ -635,16 +635,23 @@ def processing_geocoder(request):
 	location = request.GET.get('location', '')
 
 	url = urllib.quote(location)
-	response = urllib2.urlopen(base + location + key)
-	
-	json = response.read()
-	return HttpResponse(json, mimetype='application/json')
+
+	try:
+		response = urllib2.urlopen(base + location + key)
+		json = response.read()
+		return HttpResponse(json, mimetype='application/json')
+	except urllib2.URLError:
+		return HttpResponse('', mimetype='application/json')
 
 def processing_jsoner(request):
 	url = request.GET.get('url', '')
 
-	response = urllib2.urlopen(url)
-	return HttpResponse(response.read(), mimetype='application/json')
+	try:
+		response = urllib2.urlopen(url)
+		json = response.read()
+		return HttpResponse(json, mimetype='application/json')
+	except urllib2.URLError:
+		return HttpResponse('', mimetype='application/json')
 
 def random_password(length):
 	phrases = ['me', 'mi', 'ma', 'mu', 'shu', 'ki', 'ku', 'shi', 'wa', 'do', 'ka', 'de', 'sa', 'su', 'ji']

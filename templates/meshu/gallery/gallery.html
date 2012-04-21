@@ -36,9 +36,13 @@
                 <a class="image" href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
-                    {% autoescape off %}
-                        {{ object.svg }}
-                    {% endautoescape %}
+                    {% if object.thumbnail %}
+                        <img src="{{ STATIC_URL }}{{ object.thumbnail }}" />
+                    {% else %}
+                        {% autoescape off %}
+                            {{ object.svg }}
+                        {% endautoescape %}
+                    {% endif %}
                 </a>
                 {% if view == 'shop' %}
                     <p class="title">{{ object.title|safe }}</p>
