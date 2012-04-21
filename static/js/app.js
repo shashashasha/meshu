@@ -491,6 +491,7 @@ $(function() {
 $.fn.detect = function() {
         var nav = navigator.userAgent,
         classes = {
+        	win: nav.match(/Windows/i) ? true : false,
             ie: nav.match(/MSIE\s([^;]*)/) ? true : false,
             ios: nav.match(/like Mac OS X/i) ? true : false,
             iphone: nav.match(/iPhone/i) ? true : false,
