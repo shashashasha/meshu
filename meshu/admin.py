@@ -22,6 +22,25 @@ class MeshuAdmin(admin.ModelAdmin):
 admin.site.register(Meshu, MeshuAdmin)
 
 # How Orders are displayed
+class OrderMiniInline(admin.StackedInline):
+	model = Order
+	raw_id_fields = ("user_profile",)
+	extra = 0
+	
+	fieldsets = [
+		('Order Details', {
+			'fields': ('status', 'amount', 'contact')
+		}),
+		('Shipping Information', {
+			'classes': ['collapse'],
+			'fields': ['shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state']
+		}),
+		('Order Shipped Status', {
+			'classes': ['collapse'],
+			'fields': ['ship_date', 'tracking']
+		})
+	]
+
 class OrderInline(admin.StackedInline):
 	model = Order
 	raw_id_fields = ("user_profile",)
@@ -50,7 +69,7 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Order, OrderAdmin)
 
 class UserProfileAdmin(admin.ModelAdmin):
-	inlines = [OrderInline]
-	list_display = ('user', 'amount_meshus', 'amount_orders', 'date_joined')
+	inlines = [OrderMiniInline]
+	list_display = ('user_email', 'amount_meshus', 'amount_orders', 'date_joined')
 
 admin.site.register(UserProfile, UserProfileAdmin)
