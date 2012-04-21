@@ -1,3 +1,6 @@
+/*
+    this is the listener to the "connect with foursquare" button
+*/
 $(".foursquare-auth").click(function() {
     var client = 'AJXTWLOH1K5RIWG33XSGQZHRISL5CCJ0XG1VUL3NAKDYYPMM';
     var redirect = 'http://meshu.io/make/foursquare/';
@@ -21,9 +24,24 @@ sb.foursquare.initialize = function() {
         api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
         url = api.replace('{token}', token).replace('{v}', '20120102');
 
+    // if you want to just go back to manual mode
+    $("#finish-button").click(function() {
+        window.location = "/make/#skipintro";
+    });
+
     // no token
     if (!token || !token.length) {
         return;
+    }
+
+    /*
+        fuck you foursquare
+    */
+    var stateList = "Alabama,AL,Alaska,AK,Arizona,AZ,Arkansas,AR,California,CA,Colorado,CO,Connecticut,CT,Delaware,DE,Florida,FL,Georgia,GA,Hawaii,HI,Idaho,ID,Illinois,IL,Indiana,IN,Iowa,IA,Kansas,KS,Kentucky,KY,Louisiana,LA,Maine,ME,Maryland,MD,Massachusetts,MA,Michigan,MI,Minnesota,MN,Mississippi,MS,Missouri,MO,Montana,MT,Nebraska,NE,Nevada,NV,New Hampshire,NH,New Jersey,NJ,New Mexico,NM,New York,NY,North Carolina,NC,North Dakota,ND,Ohio,OH,Oklahoma,OK,Oregon,OR,Pennsylvania,PA,Rhode Island,RI,South Carolina,SC,South Dakota,SD,Tennessee,TN,Texas,TX,Utah,UT,Vermont,VT,Virginia,VA,Washington,WA,West Virginia,WV,Wisconsin,WI,Wyoming,WY";
+    var pairs = stateList.split(',');
+    var stateAbbreviations = {};
+    for (var i = 1; i < pairs.length; i+=2) {
+        stateAbbreviations[pairs[i]] = pairs[i-1];
     }
 
     var selectMeshu = function(meshu, title) {
@@ -35,10 +53,6 @@ sb.foursquare.initialize = function() {
             $("#meshu-select-form").submit();
         };
     };
-    
-    $("#finish-button").click(function() {
-        window.location = "/make/#skipintro";
-    });
 
     var locations = [];
 
@@ -50,7 +64,65 @@ sb.foursquare.initialize = function() {
     };
 
     var placesArray = [];
+    var statesArray = [];
     var countryArray = [];
+
+    /* 
+        add a "place", this could be a city, country, or state
+    */
+    var delay = 0;
+    var addPlace = function(i, e) {
+        // ignore if there aren't enough locations
+        if (e.locations.length < 3) {
+            return;
+        }
+
+        delay += 500;
+
+        setTimeout(function() {
+            return function() {
+                var frame = $("<div>").addClass("mini-meshu");
+                var title = $("<div>").addClass("title").html(e.name);
+
+                frame.append(title);
+
+                $("#maps").append(frame);
+
+                var meshu = sb.minimeshu(frame[0]);
+                meshu.locations(e.locations);     
+
+                frame.click(selectMeshu(meshu, e.name));
+            };
+        }(), delay);
+    };
+
+    var checkArea = function(areaList, area) {
+        if (!places[area]) {
+            places[area] = {
+                name: area,
+                locations: [],
+                seen: {}
+            };   
+
+            areaList.push(places[area]);
+        }
+    };
+
+    var countVenue = function(areaList, area, location, uniqueCheck) {
+
+        // add location if we haven't seen it before
+        if (!places[area].seen[uniqueCheck]) {
+            places[area].locations.push(location);
+            places[area].seen[uniqueCheck] = location;    
+        } else {
+            places[area].seen[uniqueCheck].times++;
+        }
+
+    };
+
+    var areaSort = function(a, b) {
+        return b.locations.length - a.locations.length;
+    };
 
     $.ajax({
         url: url,
@@ -63,6 +135,9 @@ sb.foursquare.initialize = function() {
             $.each(checkins, function(i, e) {
                 if (!e.venue.location.city) return;
 
+                var city = e.venue.location.city;
+                var country = e.venue.location.country;
+
                 var location = {
                     latitude: e.venue.location.lat,
                     longitude: e.venue.location.lng,
@@ -70,87 +145,39 @@ sb.foursquare.initialize = function() {
                     times: 1
                 };
 
-                var city = e.venue.location.city;
-                var country = e.venue.location.country;
+                var cityLocation = {
+                    name: city,
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                };
 
                 // make new city object
                 if (!places[city]) {
-                    places[city] = {
-                        name: city,
-                        locations: [],
-                        seen: {}
-                    };    
-
-                    places['all'].locations.push({
-                        name: city,
-                        latitude: location.latitude,
-                        longitude: location.longitude
-                    });
-
-                    placesArray.push(places[city]);
+                    places['all'].locations.push(cityLocation);
                 }
 
-                // add location if we haven't seen it before
-                if (!places[city].seen[location.name]) {
-                    places[city].locations.push(location);
-                    places[city].seen[location.name] = location;    
-                } else {
-                    places[city].seen[location.name].times++;
-                }
+                checkArea(placesArray, city);
+                checkArea(countryArray, country);
 
-                if (!places[country]) {
-                    places[country] = {
-                        name: country,
-                        locations: [],
-                        seen: {}
-                    };
+                countVenue(placesArray, city, location, location.name);
+                countVenue(countryArray, country, location, city);
 
-                    countryArray.push(places[country]);
-                }
-
-                // add location if we haven't seen it before
-                if (!places[country].seen[city]) {
-                    places[country].locations.push(location);
-                    places[country].seen[city] = true;    
+                // count states for the usa
+                var state = e.venue.location.state;
+                if (state && country == 'United States') {
+                    // again, fuck you
+                    if (stateAbbreviations[state.toUpperCase()]) {
+                        state = stateAbbreviations[state.toUpperCase()];
+                    }
+                    checkArea(statesArray, state);
+                    countVenue(statesArray, state, cityLocation, cityLocation.name);
                 }
             });
 
             // sort by number of locations
-            placesArray.sort(function(a, b) {
-                return b.locations.length - a.locations.length;
-            });
-
-            countryArray.sort(function(a, b) {
-                return b.locations.length - a.locations.length;
-            });
-
-
-            var delay = 0;
-
-            var addPlace = function(i, e) {
-                if (e.locations.length < 3) {
-                    // console.log("ignoring", e.name, "too few checkins!");
-                    return;
-                }
-
-                delay += 500; // e.locations.length > 10 ? 500 : 3000;
-
-                setTimeout(function() {
-                    return function() {
-                        var frame = $("<div>").addClass("mini-meshu");
-                        var title = $("<div>").addClass("title").html(e.name);
-
-                        frame.append(title);
-
-                        $("#maps").append(frame);
-
-                        var meshu = sb.minimeshu(frame[0]);
-                        meshu.locations(e.locations);     
-
-                        frame.click(selectMeshu(meshu, e.name));
-                    };
-                }(), delay);
-            };
+            placesArray.sort(areaSort);
+            statesArray.sort(areaSort);
+            countryArray.sort(areaSort);
 
             // add countries first, and if we only've been to one country, 
             // don't show individual countries
@@ -159,6 +186,10 @@ sb.foursquare.initialize = function() {
                 $.each(countryArray, addPlace);    
             } else {
                 addPlace(0, places.all);
+            }
+
+            if (statesArray.length > 1) {
+                $.each(statesArray, addPlace);
             }
             
             if (placesArray.length) {
