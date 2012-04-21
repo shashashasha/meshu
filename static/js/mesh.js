@@ -427,7 +427,7 @@ sb.mesh = function (frame, map, width, height) {
             d.edit = false;
             saveText($(this), i, "place");
         });
-    }
+    };
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
     	// clear previous update
@@ -515,9 +515,9 @@ sb.mesh = function (frame, map, width, height) {
         lons = [];
         places = [];
         $.each(locs, function(i, loc) {
-           points.push([loc.lon, loc.lat]);
-           lats.push(loc.lat);
-           lons.push(loc.lon);
+           points.push([loc.longitude, loc.latitude]);
+           lats.push(loc.latitude);
+           lons.push(loc.longitude);
            places.push(loc.name);
         });
 

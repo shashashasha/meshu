@@ -14,30 +14,23 @@ sb.minimeshu = function(frame) {
 
     self.locations = function(locations) {
         var seen = {},
-            skip = true; // locations.length > 10 ? locations.length - 10 : 0;
+            locsToAdd = [];
 
         for (var i = 0; i < locations.length; i++) {
             var loc = locations[i];
-
             if (!seen[loc.name]) {
-
-                // don't animate all the points
-                if (skip) {
-                    // skip animation
-                    mesh.add(loc.latitude, loc.longitude, loc.times && loc.times > 1 ? loc.name + ' (' + loc.times + ')' : loc.name, true);
-                    self.updateBounds();
-                }
-                else {
-                    setTimeout(function(l) {
-                        return function() {
-                            addPoint(l, l.name);
-                        };
-                    }(loc), i * 400);   
-                }
+                locsToAdd.push({
+                    name: loc.times && loc.times > 1 ? loc.name + ' (' + loc.times + ')' : loc.name,
+                    latitude: +loc.latitude,
+                    longitude: +loc.longitude
+                });
 
                 seen[loc.name] = true;
             }
         }
+
+        mesh.locations(locsToAdd);
+        self.updateBounds();
     };
 
     self.locationData = function(data) {
@@ -51,8 +44,8 @@ sb.minimeshu = function(frame) {
             }
 
             newLocs.push({
-                lat: parseFloat(values[0]),
-                lon: parseFloat(values[1]),
+                latitude: parseFloat(values[0]),
+                longitude: parseFloat(values[1]),
                 name: values[2]
             });
         }

@@ -102,15 +102,20 @@ sb.meshu = function(frame) {
         self.updateBounds();
 
         checkAdded();
-    }
+    };
 
-    self.locations = function(locations) {
+    self.locations = function(locations, skipDelay) {
         for (var i = 0; i < locations.length; i++) {
-            setTimeout(function(loc) {
-                return function() {
-                    addPoint(loc, loc.name);
-                };
-            }(locations[i]), i * 400);
+            if (skipDelay) {
+                addPoint(locations[i], locations[i].name);
+            }
+            else {
+                setTimeout(function(loc) {
+                    return function() {
+                        addPoint(loc, loc.name);
+                    };
+                }(locations[i]), i * 400);   
+            }
         }
     };
 
@@ -125,8 +130,8 @@ sb.meshu = function(frame) {
             }
 
             newLocs.push({
-                lat: parseFloat(values[0]),
-                lon: parseFloat(values[1]),
+                latitude: parseFloat(values[0]),
+                longitude: parseFloat(values[1]),
                 name: values[2]
             });
         }

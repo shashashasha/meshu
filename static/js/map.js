@@ -15,7 +15,7 @@ sb.map = function(frame, width, height) {
 
 	var image = po.image()
 		.url(po.url(baseURL)
-	    .hosts(["a.", "b.", "c.", ""]));
+	    .hosts(["a.", "b.", "c.", "d.", ""]));
 	
 	self.dispatch = d3.dispatch("show");
 

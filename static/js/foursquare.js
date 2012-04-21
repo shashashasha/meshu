@@ -21,8 +21,8 @@ sb.foursquare = {};
 sb.foursquare.initialize = function() {
     var hash = window.location.hash,
         token = hash.split('=').pop(),
-        api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
-        url = api.replace('{token}', token).replace('{v}', '20120102');
+        api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250&offset={offset}",
+        baseURL = api.replace('{token}', token).replace('{v}', '20120102');
 
     // if you want to just go back to manual mode
     $("#finish-button").click(function() {
@@ -77,19 +77,19 @@ sb.foursquare.initialize = function() {
             return;
         }
 
-        delay += 500;
+        delay += 250;
 
         setTimeout(function() {
             return function() {
                 var frame = $("<div>").addClass("mini-meshu");
                 var title = $("<div>").addClass("title").html(e.name);
 
-                frame.append(title);
+                frame.append(title).fadeIn();
 
                 $("#maps").append(frame);
 
                 var meshu = sb.minimeshu(frame[0]);
-                meshu.locations(e.locations);     
+                meshu.locations(e.locations);
 
                 frame.click(selectMeshu(meshu, e.name));
             };
@@ -102,14 +102,13 @@ sb.foursquare.initialize = function() {
                 name: area,
                 locations: [],
                 seen: {}
-            };   
+            };
 
             areaList.push(places[area]);
         }
     };
 
     var countVenue = function(areaList, area, location, uniqueCheck) {
-
         // add location if we haven't seen it before
         if (!places[area].seen[uniqueCheck]) {
             places[area].locations.push(location);
@@ -120,86 +119,110 @@ sb.foursquare.initialize = function() {
 
     };
 
-    var areaSort = function(a, b) {
-        return b.locations.length - a.locations.length;
+    /* 
+        add all our places to the page 
+    */
+    var addMeshus = function() {
+        var areaSort = function(a, b) {
+            return b.locations.length - a.locations.length;
+        };
+
+        // sort by number of locations
+        placesArray.sort(areaSort);
+        statesArray.sort(areaSort);
+        countryArray.sort(areaSort);
+
+        // add countries first, and if we only've been to one country, 
+        // don't show individual countries
+        if (countryArray.length > 1) {
+            countryArray.unshift(places.all);
+            $.each(countryArray, addPlace);    
+        } else {
+            addPlace(0, places.all);
+        }
+
+        if (statesArray.length > 1) {
+            $.each(statesArray, addPlace);
+        }
+        
+        if (placesArray.length) {
+            $.each(placesArray, addPlace);
+        } else {
+            // error handling
+            $(".page-header").html("Oh no! Not enough checkins to make any meshus.");
+            $("#finish-button").html("Make one manually");
+        }   
     };
 
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function(data) {
-            var checkins = data.response.checkins.items;
-
-
-            // go through all checkins
-            $.each(checkins, function(i, e) {
-                if (!e.venue.location.city) return;
-
-                var city = e.venue.location.city;
-                var country = e.venue.location.country;
-
-                var location = {
-                    latitude: e.venue.location.lat,
-                    longitude: e.venue.location.lng,
-                    name: e.venue.name,
-                    times: 1
-                };
-
-                var cityLocation = {
-                    name: city,
-                    latitude: location.latitude,
-                    longitude: location.longitude
-                };
-
-                // make new city object
-                if (!places[city]) {
-                    places['all'].locations.push(cityLocation);
+    var totalCheckinsSeen = 0;
+    var loadCheckins = function(url) {
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                var checkins = data.response.checkins.items;
+                if (!checkins || !checkins.length) {
+                    addMeshus();
+                    return;
                 }
 
-                checkArea(placesArray, city);
-                checkArea(countryArray, country);
+                totalCheckinsSeen += data.response.checkins.items.length;
 
-                countVenue(placesArray, city, location, location.name);
-                countVenue(countryArray, country, location, city);
+                // go through all checkins
+                $.each(checkins, function(i, e) {
+                    if (!e.venue || !e.venue.location || !e.venue.location.city) return;
 
-                // count states for the usa
-                var state = e.venue.location.state;
-                if (state && country == 'United States') {
-                    // again, fuck you
-                    if (stateAbbreviations[state.toUpperCase()]) {
-                        state = stateAbbreviations[state.toUpperCase()];
+                    var city = e.venue.location.city;
+                    var country = e.venue.location.country;
+
+                    var location = {
+                        latitude: e.venue.location.lat,
+                        longitude: e.venue.location.lng,
+                        name: e.venue.name,
+                        times: 1
+                    };
+
+                    var cityLocation = {
+                        name: city,
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    };
+
+                    // make new city object
+                    if (!places[city]) {
+                        places['all'].locations.push(cityLocation);
                     }
-                    checkArea(statesArray, state);
-                    countVenue(statesArray, state, cityLocation, cityLocation.name);
+
+                    checkArea(placesArray, city);
+                    checkArea(countryArray, country);
+
+                    countVenue(placesArray, city, location, location.name);
+                    countVenue(countryArray, country, cityLocation, city);
+
+                    // count states for the usa
+                    var state = e.venue.location.state;
+                    if (state && country == 'United States') {
+                        // again, fuck you
+                        if (stateAbbreviations[state.toUpperCase()]) {
+                            state = stateAbbreviations[state.toUpperCase()];
+                        }
+                        checkArea(statesArray, state);
+                        countVenue(statesArray, state, cityLocation, cityLocation.name);
+                    }
+                });
+                
+                // load more if we have to
+                var totes = data.response.checkins.count;
+                if (totalCheckinsSeen < totes) {
+                    $(".page-header").html("Loaded " + totalCheckinsSeen + " of " + totes + " checkins...");
+                    loadCheckins(baseURL.replace('{offset}', totalCheckinsSeen));
+                } else {
+                    $(".page-header").html("Each meshu is a different set of places. Choose one to get started!");
+                    addMeshus();
                 }
-            });
-
-            // sort by number of locations
-            placesArray.sort(areaSort);
-            statesArray.sort(areaSort);
-            countryArray.sort(areaSort);
-
-            // add countries first, and if we only've been to one country, 
-            // don't show individual countries
-            if (countryArray.length > 1) {
-                countryArray.unshift(places.all);
-                $.each(countryArray, addPlace);    
-            } else {
-                addPlace(0, places.all);
             }
+        });
+    };
 
-            if (statesArray.length > 1) {
-                $.each(statesArray, addPlace);
-            }
-            
-            if (placesArray.length) {
-            	$.each(placesArray, addPlace);
-            } else {
-            	// error handling
-            	$(".page-header").html("Oh no! Not enough checkins to make any meshus.");
-            	$("#finish-button").html("Make one manually");
-            }
-            
-        }
-    });
+    loadCheckins(baseURL.replace('{offset}', totalCheckinsSeen));
 };
