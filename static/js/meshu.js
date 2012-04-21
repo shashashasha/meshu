@@ -53,6 +53,9 @@ sb.meshu = function(frame) {
         var query = input.replace(" ","+");
         var url = "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
 
+        // if IE, load this:
+        // "/proxy/geocoder/?location=" + query
+        
         searchbox.val("");
 
         $.ajax({
