@@ -123,7 +123,7 @@ sb.materializer = function() {
 	};
 
 	self.displayName = function() {
-		return display[product];
+		return display[product].toLowerCase();
 	};
 
 	return self;
