@@ -632,6 +632,20 @@ h2.bottom {
     display: inline;
 }
 
+#attribution {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    font-size: 11px;
+    background-color: rgba(255, 255, 255, .6);
+    right: 0;
+    padding: 2px;
+    color: @grey;
+}
+#attribution a {
+    color: @grey;
+}
+
 .frame {
 	width: 600px;
 	height: 600px;
@@ -1220,7 +1234,7 @@ circle {
     fill-opacity: 1;
     cursor: pointer;
 }
-#hidden, #rotate-ui {
+.hidden, #rotate-ui, #hidden {
     display: none;
 }
 #mini-delaunay path, #product-preview path {
@@ -1399,7 +1413,14 @@ li.object:nth-child(4n) {
 li.last-object {
     border-bottom: 0px;
 }
-
+#maps .meshu-svg {
+    border: 1px solid @borderGrey;
+    margin: -1px;
+}
+#maps .mini-meshu:hover .meshu-svg {
+    border: none;
+    margin: 0;
+}
 .gallery .meshu-svg {
     width: 220px;
     height: 220px;

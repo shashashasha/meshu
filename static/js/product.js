@@ -22,7 +22,7 @@ $(function() {
 					.attr('xlink:href', static_url + 'images/preview/preview_' + products[i] + '.png');
 
 				var miniDelaunay = $(delaunayFrame).clone()
-										.attr("id","")
+										// .attr("id","")
 										.attr("class","product-delaunay")
 										.attr("transform",transforms[i]);
 

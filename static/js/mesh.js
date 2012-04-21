@@ -24,11 +24,11 @@ sb.mesh = function (frame, map, width, height) {
         .attr("height", "100%");
 
     var g = main.append("svg:g")
-            .attr("id", "delaunay")
+            .attr("class", "delaunay")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
 
     var hidden = main.append("svg:g")
-                 .attr("id", "hidden");
+                 .attr("class", "hidden");
 
     hidden.append("svg:path");
 
@@ -286,10 +286,10 @@ sb.mesh = function (frame, map, width, height) {
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
 
-        var rotate_pts = hidden.selectAll("circle.hidden").data(pixel_bounds);
+        var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
         rotate_pts.enter()
             .append("svg:circle")
-            .attr("class","hidden")
+            .attr("class","rotation")
             .attr("r","40");
         rotate_pts.exit().remove();
         rotate_pts.attr("cx", function(d, i) {

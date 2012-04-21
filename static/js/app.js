@@ -50,7 +50,7 @@ $(function() {
 		user.updateLogoutActions(pageType);
 
 		// initialize product picker
-		sb.product.initialize("#delaunay");
+		sb.product.initialize(".delaunay");
 
 		console.log(pageType);
 
@@ -230,7 +230,7 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize("#delaunay");
+				sb.product.initialize(".delaunay");
 				break;
 
 			case 'make':
