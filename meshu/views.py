@@ -634,7 +634,8 @@ def processing_geocoder(request):
 	key = '&appid=dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--'
 	location = request.GET.get('location', '')
 
-	url = urllib.quote(location)
+	location = urllib.quote(location)
+	
 	response = urllib2.urlopen(base + location + key)
 	
 	json = response.read()

@@ -661,12 +661,15 @@ h2.bottom {
 }
 
 .frame {
-	width: 400px;
+	width: 600px;
 	height: 600px;
     position: absolute;
     z-index: 1;
     right: 400px;
     .transition(right);
+}
+.frame div {
+    overflow: hidden;
 }
 .view .frame {
     width: 1000px;
@@ -1436,6 +1439,12 @@ li.last-object {
 #maps .meshu-svg {
     border: 1px solid @borderGrey;
     margin: -1px;
+}
+#maps .map {
+    opacity: .3;
+}
+#maps .mini-meshu div {
+    overflow: hidden;
 }
 #maps .mini-meshu:hover .meshu-svg {
     border: none;

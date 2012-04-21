@@ -68,7 +68,8 @@ sb.mesh = function (frame, map, width, height) {
     var content = $("#content"),
         cases = $("#cases");
 
-    d3.select(uiFrame.node())
+    // d3.select(uiFrame.node())
+    d3.select(".frame")
         .on("mousemove", mousemove)
         .on("mousedown", mousedown);
 
@@ -125,6 +126,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function mouseup() {
+        console.log("mouseup");
         mouse_down = null;
         last_mouse = null;
 
@@ -133,7 +135,8 @@ sb.mesh = function (frame, map, width, height) {
 
         // ignore zoom buttons, other ui
         // if it's a circle we need to continue because that means it's a point that's being dragged
-        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node())  return;
+        // image for IE fix!
+        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node() && d3.event.target.tagName != "image")  return;
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {

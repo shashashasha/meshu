@@ -53,7 +53,7 @@ sb.meshu = function(frame) {
         if (input == "add a city, place, or address") return;
 
         var query = input.replace(" ","+");
-        var url = "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
+        var url = "/proxy/geocoder/?location=" + query; // "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
 
         // if IE, load this:
         // "/proxy/geocoder/?location=" + query
