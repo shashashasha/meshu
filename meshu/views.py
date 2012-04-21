@@ -627,6 +627,24 @@ def processing_order_update_status(request, order_id):
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
 
+# proxy yahoo api
+import urllib2, urllib
+def processing_geocoder(request):
+	base = 'http://where.yahooapis.com/geocode?flags=J&location='
+	key = '&appid=dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--'
+	location = request.GET.get('location', '')
+
+	url = urllib.quote(location)
+	response = urllib2.urlopen(base + location + key)
+	
+	json = response.read()
+	return HttpResponse(json, mimetype='application/json')
+
+def processing_jsoner(request):
+	url = request.GET.get('url', '')
+
+	response = urllib2.urlopen(url)
+	return HttpResponse(response.read(), mimetype='application/json')
 
 def random_password(length):
 	phrases = ['me', 'mi', 'ma', 'mu', 'shu', 'ki', 'ku', 'shi', 'wa', 'do', 'ka', 'de', 'sa', 'su', 'ji']

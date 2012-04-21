@@ -20,6 +20,9 @@ class UserProfile(models.Model):
 	def date_joined(self):
 		return str(self.user.date_joined)
 
+	def user_email(self):
+		return str(self.user.email)
+
 	# other fields here
 	def __unicode__(self):
 		details = ''
