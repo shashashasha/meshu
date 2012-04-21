@@ -1,7 +1,12 @@
 $(function() {
 
 	d3.selectAll("#master-svg").attr("class","meshu-svg")
-	d3.selectAll("#delaunay").each(function(){
+	d3.selectAll("#delaunay").each(function(){ ///Until there are no more id'd meshus in the gallery
+		var node = d3.select(this);
+		var t = node.attr("transform") || "";
+		node.attr("transform","scale(.37) " + t);
+	});
+	d3.selectAll(".delaunay").each(function(){
 		var node = d3.select(this);
 		var t = node.attr("transform") || "";
 		node.attr("transform","scale(.37) " + t);

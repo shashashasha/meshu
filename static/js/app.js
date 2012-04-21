@@ -139,6 +139,12 @@ $(function() {
 			content.attr("class", views[index+1]);
 		};
 
+		// if you're logged in, let's just save it as you go
+		if (view == 'edit' && user.loggedIn) {
+			// save this meshu
+			saver.createOrUpdateMeshu();
+		}
+
 		if (view == 'make' || view == 'readymade') {
 			checkAccountView();
 		}
@@ -152,9 +158,7 @@ $(function() {
 
 			return;
 		}
-
-		console.log('clicking next on view:', view);
-
+		
 		makeNextView(view);
 		user.updateLogoutActions(view);
 		advanceView();

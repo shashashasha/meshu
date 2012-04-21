@@ -104,7 +104,6 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
-
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();

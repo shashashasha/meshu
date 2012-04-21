@@ -581,7 +581,7 @@ def order_create(request, profile, meshu):
 	# set the status to ORDERED
 	order.status = 'OR'
 
-	if profile.user.username == 'shop':
+	if request.user.is_authenticated() == False:
 		order.contact = request.POST.get('shipping_contact', '')
 	else:
 		order.contact = profile.user.email
