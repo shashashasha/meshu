@@ -1,4 +1,15 @@
 /*
+    Variables
+*/
+@borderGrey: #e6e6e6;
+@grey: #808080;
+@lightGrey: #8F8F8F;
+@pink: #FF3FB4;
+@blue: #1fcaff;
+
+@pageWidth: 1000px;
+
+/*
     Mixins
 */
 .transition (@property: opacity, @time: .6s) {
@@ -14,14 +25,18 @@
           box-shadow: 0px 0px @distance @color; 
 }
 
-@borderGrey: #e6e6e6;
-@grey: #808080;
-@lightGrey: #8F8F8F;
-@pink: #FF3FB4;
-@blue: #1fcaff;
+.hoverColor (@color: @pink) {
+    &:hover {
+        color: @pink;
+    }
+}
 
-@pageWidth: 1000px;
-
+.hoverBackground (@color) {
+    &:hover {
+        background-color: @color;
+    }
+}
+    
 
 /* main page styles */
 body {
@@ -93,18 +108,20 @@ h1#meshu {
     bottom: 3px;
     right: 0;
     font-size: 18px;
-}
 
-#nav li {
-    display: inline-block;
-    margin-left: 25px;
-    cursor: pointer;
-}
-#nav li:hover, #nav li:hover a {
-    color: @pink;
-}
-#nav li.inactive {
-    display: none;
+    li {
+        display: inline-block;
+        margin-left: 25px;
+        cursor: pointer;
+
+        &:hover, &:hover a {
+            color: @pink;
+        }
+
+        &.inactive {
+            display: none;
+        }
+    }
 }
 
 #login-form label.error.login-error,
@@ -124,67 +141,79 @@ h1#meshu {
     background: white;
     border: 1px solid @borderGrey;
     .shadow(200px);
+
+    h2 {
+        padding: 0 0 10px 17px;
+    }
+
+    ul {
+        border-bottom: 1px solid @borderGrey;
+        height: 28px;
+        padding-left: 20px;
+    }
+
+    li {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid @borderGrey;
+        margin: 0 -3px 0;
+        color: @grey;
+        background-color: white;
+        cursor: pointer;
+
+        .hoverColor(@pink);
+
+        &.active, &.active:hover {
+            border-bottom: 1px solid white;
+            color: black;
+        }
+    }
+
+    form {
+        margin-top: 15px;
+    }
+
+    .login-row {
+        display: block;
+        width: 320px;
+        margin-left: 30px;
+        min-height: 30px;
+    }
+
+    label {
+        width: 70px;
+        line-height: 30px;
+    }
+
+    label.error {
+        color: @pink;
+        width: auto;
+        display: block;
+        font-size: 12px;
+        line-height: 19px;
+        font-family: Helvetica, Arial, sans-serif;
+        clear: both;
+    }
 }
-#login-form h2 {
-    padding: 0 0 10px 17px;
-}
-#login-form ul {
-    border-bottom: 1px solid @borderGrey;
-    height: 28px;
-    padding-left: 20px;
-}
-#login-form li {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid @borderGrey;
-    margin: 0 -3px 0;
-    color: @grey;
-    background-color: white;
-    cursor: pointer;
-}
+
 #login-form.signin .account, #login-form.account .signin {
     display: none;
 }
-#login-form li:hover {
-    color: @pink;
-}
-#login-form li.active, #login-form li.active:hover {
-    border-bottom: 1px solid white;
-    color: black;
-}
-#login-form form {
-    margin-top: 15px;
-}
-#login-form .login-row {
-    display: block;
-    width: 320px;
-    margin-left: 30px;
-    min-height: 30px;
-}
-#login-form label {
-    width: 70px;
-    line-height: 30px;
-}
-#login-form label.error {
-    color: @pink;
-    width: auto;
-    display: block;
-    font-size: 12px;
-    line-height: 19px;
-    font-family: Helvetica, Arial, sans-serif;
-    clear: both;
-}
+
 #login-form input {
     width: 225px;
     margin-left: 20px;
     float: right;
+
+    &.error {
+        border-color: @pink;
+    }
+
+    &.button {
+        border: none;
+    }
 }
-#login-form input.error {
-    border-color: @pink;
-}
-#login-form input.button {
-    border: none;
-}
+
 #login-form .login-buttons {
     margin-top: 40px;
     position: relative;
@@ -494,9 +523,8 @@ h2.bottom {
 .maybe-place {
     color: @grey;
     cursor: pointer;
-}
-.maybe-place:hover {
-    color: black;
+    
+    .hoverColor(black);
 }
 
 #place-hover {
@@ -641,9 +669,10 @@ h2.bottom {
     right: 0;
     padding: 2px;
     color: @grey;
-}
-#attribution a {
-    color: @grey;
+
+    a {
+        color: @grey;
+    }
 }
 
 .frame {
@@ -734,11 +763,10 @@ h2.bottom {
     top: 120px;
     width: 124px;
     color: #aaa;
-}
-#rotate-help {
     border: 1px solid @borderGrey;
     padding: 5px 5px 5px 8px;
 }
+
 #rotate-help .notch {
     top: 38px;
     left: -12px;
@@ -782,24 +810,26 @@ h2.bottom {
 #product-preview svg {
     border: 5px solid white;
     cursor: pointer;
-}
-#product-preview svg:hover {    
-    border-color: @pink;
+
+    &:hover {    
+        border-color: @pink;
+    }
 }
 #product-preview .wrapper {
     margin-bottom: 10px;
+
+    &:nth-child(odd) {
+        margin-right: 10px;
+        margin-left: -5px;
+        float: left;
+    }
+    &:nth-child(even) {
+        margin-right: -5px;
+        float: right;
+    }
 }
 #product-preview p {
     margin-left: 5px;
-}
-#product-preview .wrapper:nth-child(odd) {
-    margin-right: 10px;
-    margin-left: -5px;
-    float: left;
-}
-#product-preview .wrapper:nth-child(even) {
-    margin-right: -5px;
-    float: right;
 }
 
 #save-and-view {
@@ -1004,9 +1034,7 @@ p.note {
 .make-wrapper li {
     color: @grey;
 
-    &:hover {
-        color: black;
-    }
+    .hoverColor(black);
 
     &.selected {
         color: @pink;
@@ -1114,26 +1142,28 @@ p.note {
     -moz-user-select: none;
     user-select: none;
     .transition(background-color, .5s);
+
+    &.next { 
+        cursor: default;
+    }
+
+    .hoverBackground(@blue);
+
+    &.next:hover {
+        background-color: @grey;
+    }
+
+    &.active, &.next.active:hover {
+        background-color: @pink;
+        cursor: pointer;
+    }
 }
-.nav.next {
-    cursor: default;
-}
+
 .nav a {
     color: white;
 }
 .view .nav {
     z-index: 1;
-}
-
-.nav:hover {
-    background-color: @blue;
-}
-.nav.next:hover {
-    background-color: @grey;
-}
-.nav.active, .nav.next.active:hover {
-    background-color: @pink;
-    cursor: pointer;
 }
 
 .back {
@@ -1178,9 +1208,8 @@ p.note {
 #forceLogin {
     background-color: @grey;
     .transition(background-color, .5s);
-}
-#forceLogin:hover {
-    background-color: @blue;
+
+    .hoverBackground(@blue);
 }
 
 #checkout-button, #review-button {
@@ -1221,9 +1250,6 @@ path {
     stroke-width: 5;
     stroke-linejoin: round;
 }
-#rotate-ui path {
-    stroke-dasharray: 20, 15;
-}
 
 circle {
     fill: @pink;
@@ -1244,14 +1270,19 @@ circle {
 #rotate:hover #rotate-ui {
     display: block;
 }
-#rotate-ui circle {
-    fill-opacity: 1;
-    cursor: pointer;
-    stroke-width: 50;
-    stroke: transparent;
-}
-#rotate-ui path {
-    stroke: #999;
+
+#rotate-ui {
+    circle {
+        fill-opacity: 1;
+        cursor: pointer;
+        stroke-width: 50;
+        stroke: transparent;
+    }
+
+    path {
+        stroke: #999;
+        stroke-dasharray: 20, 15;
+    }
 }
 
 /* mini meshu */
@@ -1362,16 +1393,6 @@ li.object {
         bottom: 30px;
     }
 
-/*    .clickthrough {
-        right: 10px;
-        bottom: 35px;
-        color: white;
-        display: none;
-        padding: 3px 6px;
-        position: absolute;
-        background-color: @pink;
-    }*/
-
     .clicknew {
         top: 30px;
         left: 35px;
@@ -1394,11 +1415,6 @@ li.object {
         .description, .title {
             color: black;
         }
-
-/*        .clickthrough {
-            display: block;
-            cursor: pointer;
-        }*/
     }
 }
 

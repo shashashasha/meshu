@@ -289,7 +289,7 @@ def user_profile(request):
 	# show all meshus belonging to the current user
 	profile = current_profile(request)
 
-	if profile.user.username == 'shop':
+	if request.user.is_authenticated() == False:
 		return notify(request, 'authorization_required')
 
 	meshus = Meshu.objects.filter(user_profile=profile)
