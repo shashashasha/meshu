@@ -38,7 +38,10 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
-	meshu.isReadymade = loadedMeshu.product != '';
+	if (loadedMeshu)
+		meshu.isReadymade = loadedMeshu.product;
+	else
+		meshu.isReadymade == false;
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -50,7 +53,7 @@ $(function() {
 		user.updateLogoutActions(pageType);
 
 		// initialize product picker
-		sb.product.initialize("#delaunay");
+		sb.product.initialize(".delaunay");
 
 		console.log(pageType);
 
@@ -230,7 +233,7 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize("#delaunay");
+				sb.product.initialize(".delaunay");
 				break;
 
 			case 'make':

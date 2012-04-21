@@ -37,7 +37,7 @@ $(function() {
 
 			$(div[0]).append(miniDelaunay).append(bounding);
 
-			d3.selectAll("circle.hidden").on("mousedown",mousemove);
+			d3.selectAll("circle.rotation").on("mousedown",mousemove);
 			main.on("mouseup",mouseup).on("mousemove",mainmove);
 
 			var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
@@ -116,5 +116,5 @@ $(function() {
 		return self;
 
 	// have the ids in here for now, dumb
-	}("#rotate", "#delaunay", "#hidden");
+	}("#rotate", ".delaunay", ".hidden");
 });

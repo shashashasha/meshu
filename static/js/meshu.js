@@ -146,7 +146,7 @@ sb.meshu = function(frame) {
         }
 
         var counter = 0;
-        var delaunay = d3.select("#delaunay");
+        var delaunay = d3.select(".delaunay");
         rotateInterval = setInterval(function(){
             if (++counter < 30) {
                 cr += (r - cr) * .33;
