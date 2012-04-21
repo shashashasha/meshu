@@ -144,7 +144,7 @@ sb.mesh = function (frame, map, width, height) {
                 y: m[1]
             });
 
-            self.add(loc.lat, loc.lon);
+            self.add(loc.lat, loc.lon, undefined, false);
             self.added();
             map_dragging = null;
             return;
@@ -218,7 +218,7 @@ sb.mesh = function (frame, map, width, height) {
             });
 
         // we move the newest point closer and closer to its destination
-        if (new_pt && skipAnimation) {
+        if (new_pt && skipAnimation == true) {
             clearInterval(updateInterval);
             new_pt = null;
         }
