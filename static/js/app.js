@@ -52,8 +52,6 @@ $(function() {
 		// initialize product picker
 		sb.product.initialize(".delaunay");
 
-		console.log(pageType);
-
 		switch (pageType) {
 			case 'edit':
 				views = ["edit","product","make","account","checkout","review"];
@@ -158,7 +156,7 @@ $(function() {
 
 			return;
 		}
-		
+
 		makeNextView(view);
 		user.updateLogoutActions(view);
 		advanceView();
@@ -167,14 +165,13 @@ $(function() {
 	$(".back").click(function(){
 		var view = content.attr("class");
 
-	    console.log("clicking back on view:", view, views);
 		if (view == 'checkout') {
 			checkAccountView();
 		}
 
 	    var index = views.indexOf(view);
 	    var prev = views[index-1];
-	    console.log("setting content class:", view, prev, index, views);
+	    
 		content.attr("class", prev);
 
 		makePrevView(prev);
