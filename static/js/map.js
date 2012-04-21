@@ -13,7 +13,6 @@ sb.map = function(frame, width, height) {
     container.style.width = width;
     container.style.height = height;
 
-	// var container = document.getElementById(selector || "body");
 	var image = po.image()
 		.url(po.url(baseURL)
 	    .hosts(["a.", "b.", "c.", ""]));
@@ -27,6 +26,7 @@ sb.map = function(frame, width, height) {
 
 	self.map.add(image);
 
+	// fill the background with white
 	$(".map").find("rect").attr("visibility","visible").attr("fill","white");
 
 	self.frame = function() {
