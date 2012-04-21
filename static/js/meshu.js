@@ -33,7 +33,9 @@ sb.meshu = function(frame) {
        }
     });
 	// this is tied to a global submit button for now
-    $("#submit").click(searchPlaces);
+    $("#submit").click(function(){
+        searchPlaces();
+    });
 
     mesh.on("added", checkAdded);
     function checkAdded() { 
@@ -55,11 +57,19 @@ sb.meshu = function(frame) {
 
         searchbox.val("");
 
+        console.log("ajax");
+
         $.ajax({
             url: url,
             cache: false,
             dataType: 'json',
+            error: function(error, error1, error2){
+                console.log("error");
+                console.log(error2);
+            },
             success: function(data){
+                console.log("data");
+                console.log(data);
                 var results = data.ResultSet.Results;
                 var content = $("#content");
                 cases.empty().hide();

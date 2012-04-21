@@ -75,6 +75,7 @@ sb.mesh = function (frame, map, width, height) {
     d3.select('body').on("mouseup", mouseup);
 
     function mousedown() {
+        console.log("mousedown");
         if (!content.hasClass("edit")) return;
 
         // mouse is down, get ready to track map dragging
