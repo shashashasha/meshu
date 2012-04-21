@@ -33,9 +33,7 @@ sb.meshu = function(frame) {
        }
     });
 	// this is tied to a global submit button for now
-    $("#submit").click(function(){
-        searchPlaces();
-    });
+    $("#submit").click(searchPlaces);
 
     mesh.on("added", checkAdded);
     function checkAdded() { 
@@ -45,20 +43,26 @@ sb.meshu = function(frame) {
         else $("#finish-button").removeClass("active");
     }
 
+    // on click of search button
     function searchPlaces() {
         var input = searchbox.val();
-        searchbox.val("");
+
+        // default input
         if (input == "add a city, place, or address") return;
+
         var query = input.replace(" ","+");
+        var url = "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
+
+        searchbox.val("");
 
         $.ajax({
-            url: "http://where.yahooapis.com/geocode?location="+query+"&flags=J&appid="+app_key,
+            url: url,
             cache: false,
             dataType: 'json',
             success: function(data){
                 var results = data.ResultSet.Results;
-                cases.empty().hide();
                 var content = $("#content");
+                cases.empty().hide();
 
                 if (typeof results == "undefined") {
                     searchbox.blur();
@@ -66,29 +70,28 @@ sb.meshu = function(frame) {
                         $("<p>").text("Hrm, we weren't able to find your search. Try again?"))
                         .fadeIn();
                 }
-                else if (results.length == 1)
+                else if (results.length == 1) {
                     addPoint(results[0],input);
+
+                    // if only one point, let's zoom it to a proper level
+                    if (mesh.points().length == 1) {
+                        var rad = results[0].radius;
+                        if (rad > 1000000) {
+                            map.map.zoom(3);
+                        } else if (rad > 100000) {
+                            map.map.zoom(4);
+                        } else if (rad > 10000) {
+                            map.map.zoom(12);
+                        } else if (rad > 400) {
+                            map.map.zoom(14);
+                        } 
+                    }
+                }
                 else {
                     cases.append(
                         $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
                             .fadeIn();
                         searchbox.blur();
-                    // var list = $("<ul>").append($("<li>").attr("class","title").text("Hrm, did you mean:")).appendTo(cases);
-                    // for (var i = 0; i < results.length; i++) {
-                    //     var r = results[i];
-                    //     $("<li>").text(r.city+", "+r.state+", "+r.country)
-                    //         .addClass("maybe-place")
-                    //         .data("place",r)
-                    //         .appendTo(list);
-                    // }
-                    // content.addClass("cases");
-                    // cases.slideDown('fast');
-                    // $("#cases li").click(function(){
-                    //     var r = $(this);
-                    //     addPoint(r.data("place"),input);
-                    //     content.removeClass("cases");
-                    //     cases.slideUp('fast');
-                    // });
                 }
             }
         });

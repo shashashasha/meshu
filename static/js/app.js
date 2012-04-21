@@ -38,7 +38,7 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
-	meshu.isReadymade = loadedMeshu.product != '';
+	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
