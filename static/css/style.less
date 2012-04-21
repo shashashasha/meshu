@@ -640,6 +640,9 @@ h2.bottom {
     padding: 2px;
     display: inline-block;
 }
+body.ie .place .place-text {
+    width: 235px;
+}
 .place:hover .place-text {
     color: black;
     background-color: #eee;
@@ -668,7 +671,7 @@ h2.bottom {
     right: 400px;
     .transition(right);
 }
-.frame div {
+body.ie .frame div {
     overflow: hidden;
 }
 .view .frame {
@@ -1443,7 +1446,7 @@ li.last-object {
 #maps .map {
     opacity: .3;
 }
-#maps .mini-meshu div {
+body.ie #maps .mini-meshu div {
     overflow: hidden;
 }
 #maps .mini-meshu:hover .meshu-svg {
