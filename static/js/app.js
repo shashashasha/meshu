@@ -1,4 +1,5 @@
 $(function() {
+	$("body").detect();
 	var options = {"earrings":
 						{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
@@ -487,3 +488,22 @@ $(function() {
 		$("#total-price span").text(orderer.getTotalString());
 	}
 });
+$.fn.detect = function() {
+        var nav = navigator.userAgent,
+        classes = {
+        	win: nav.match(/Windows/i) ? true : false,
+            ie: nav.match(/MSIE\s([^;]*)/) ? true : false,
+            ios: nav.match(/like Mac OS X/i) ? true : false,
+            iphone: nav.match(/iPhone/i) ? true : false,
+            ipad: nav.match(/iPad/i) ? true : false,
+            firefox: nav.match(/Firefox/i) ? true : false,
+            webkit: nav.match(/WebKit/i) ? true : false,
+            safari: nav.match(/Safari/i) ? true : false,
+            chrome: nav.match(/Chrome/i) ? true : false,
+            opera: nav.match(/Opera/i) ? true : false
+        };
+    for (var klass in classes) {
+        this.toggleClass(klass, classes[klass]);
+    }
+    return this;
+};

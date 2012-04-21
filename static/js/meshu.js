@@ -33,7 +33,9 @@ sb.meshu = function(frame) {
        }
     });
 	// this is tied to a global submit button for now
-    $("#submit").click(searchPlaces);
+    $("#submit").click(function(){
+        searchPlaces();
+    });
 
     mesh.on("added", checkAdded);
     function checkAdded() { 
@@ -51,18 +53,26 @@ sb.meshu = function(frame) {
         if (input == "add a city, place, or address") return;
 
         var query = input.replace(" ","+");
-        var url = "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
+        var url = "/proxy/geocoder/?location=" + query; // "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
 
         // if IE, load this:
         // "/proxy/geocoder/?location=" + query
         
         searchbox.val("");
 
+        console.log("ajax");
+
         $.ajax({
             url: url,
             cache: false,
             dataType: 'json',
+            error: function(error, error1, error2){
+                console.log("error");
+                console.log(error2);
+            },
             success: function(data){
+                console.log("data");
+                console.log(data);
                 var results = data.ResultSet.Results;
                 var content = $("#content");
                 cases.empty().hide();

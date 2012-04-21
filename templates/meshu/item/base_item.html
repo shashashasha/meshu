@@ -273,9 +273,13 @@
 
 {% block script %}
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.ie.js"></script>
+    <!--[if IE]>
+        <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.ie.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+        <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
+    <![endif]-->
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>

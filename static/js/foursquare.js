@@ -158,8 +158,9 @@ sb.foursquare.initialize = function() {
     var loadCheckins = function(url) {
         $.ajax({
             url: url,
-            dataType: 'json',
+            dataType: 'jsonp',
             success: function(data) {
+                console.log("success");
                 var checkins = data.response.checkins.items;
                 if (!checkins || !checkins.length) {
                     addMeshus();

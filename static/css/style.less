@@ -559,6 +559,9 @@ h2.bottom {
     width: 0;
     height: 0;
 }
+body.win .notch {
+    top: 20px;
+}
 
 .cases #places {
     opacity: 0;
@@ -646,6 +649,9 @@ h2.bottom {
     padding: 2px;
     display: inline-block;
 }
+body.win .place .place-text, body.firefox .place .place-text {
+    width: 235px;
+}
 .place:hover .place-text {
     color: black;
     background-color: #eee;
@@ -673,6 +679,9 @@ h2.bottom {
     z-index: 1;
     right: 400px;
     .transition(right);
+}
+body.ie .frame div {
+    overflow: hidden;
 }
 .view .frame {
     width: 1000px;
@@ -1442,6 +1451,12 @@ li.last-object {
 #maps .meshu-svg {
     border: 1px solid @borderGrey;
     margin: -1px;
+}
+#maps .map {
+    opacity: .3;
+}
+body.ie #maps .mini-meshu div {
+    overflow: hidden;
 }
 #maps .mini-meshu:hover .meshu-svg {
     border: none;

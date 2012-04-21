@@ -68,7 +68,8 @@ sb.mesh = function (frame, map, width, height) {
     var content = $("#content"),
         cases = $("#cases");
 
-    d3.select(uiFrame.node())
+    // d3.select(uiFrame.node())
+    d3.select(".frame")
         .on("mousemove", mousemove)
         .on("mousedown", mousedown);
 
@@ -132,7 +133,8 @@ sb.mesh = function (frame, map, width, height) {
 
         // ignore zoom buttons, other ui
         // if it's a circle we need to continue because that means it's a point that's being dragged
-        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node())  return;
+        // image for IE fix!
+        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node() && d3.event.target.tagName != "image")  return;
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {
@@ -142,7 +144,7 @@ sb.mesh = function (frame, map, width, height) {
                 y: m[1]
             });
 
-            self.add(loc.lat, loc.lon);
+            self.add(loc.lat, loc.lon, undefined, false);
             self.added();
             map_dragging = null;
             return;
@@ -216,7 +218,7 @@ sb.mesh = function (frame, map, width, height) {
             });
 
         // we move the newest point closer and closer to its destination
-        if (new_pt && skipAnimation) {
+        if (new_pt && skipAnimation == true) {
             clearInterval(updateInterval);
             new_pt = null;
         }
@@ -361,6 +363,7 @@ sb.mesh = function (frame, map, width, height) {
         });
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
+            if (node.select("input")) d.edit = true; //IE fix
             if (!d.edit) editText(node,i,"place");
             else saveText(node,i,"place");
             d.edit = !d.edit;
@@ -369,6 +372,7 @@ sb.mesh = function (frame, map, width, height) {
             if (d.edit) return;
             editText($(this).parent(),i,"place");
             d.edit = !d.edit;
+            console.log(d.edit);
         });
 
         placeTitle.attr("class","").select(".title-text")

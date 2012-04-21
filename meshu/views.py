@@ -637,7 +637,7 @@ def processing_geocoder(request):
 	url = urllib.quote(location)
 
 	try:
-		response = urllib2.urlopen(base + location + key)
+		response = urllib2.urlopen(base + url + key)
 		json = response.read()
 		return HttpResponse(json, mimetype='application/json')
 	except urllib2.URLError:
