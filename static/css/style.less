@@ -1379,19 +1379,28 @@ circle {
     gallery display
 */
 li.object {
-    margin-top: -1px;
     margin-left: -1px;
-    margin-right: -4px;
+    margin-top: -1px;
     position: relative;
-    margin-bottom: -3px;
-    display: inline-block;
+    display: block;
+    float: left;
     border: 1px solid @borderGrey;
+    width: 251px;
+    height: 310px;
+    .borderBox();
 
     .image {
-        width: 239px;
-        height: 290px;
+        width: 100%;
+        height: 100%;
         display: block;
-        border: 5px solid white;
+        position: absolute;
+        top: 0;
+        .borderBox();
+    }
+
+    img {
+        width: 100%;
+        max-height: 280px;
     }
 
     .blank {
@@ -1422,6 +1431,8 @@ li.object {
 
     /* hover for gallery item */
     &:hover {
+        border: 1px solid @blue;
+        
         .image {
             border: 5px solid @blue; 
         }
@@ -1438,11 +1449,8 @@ li.object {
 
 /* fix the last item in every row in the store / gallery views */
 li.object:nth-child(4n) {
-    border-right: 0px;
-
-    .image {
-        width: 240px;
-    }
+    width: 251px;
+    border-right: none;
 }
 
 li.last-object {
