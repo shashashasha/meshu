@@ -9,13 +9,21 @@
 {% block materials %}
     <h2>{{ meshu.title }}</h2>
     <p id="readymade-desc">{{ meshu.description }}</p>
+
     {% for object in meshu.meshuimage_set.all %}
-	<img src="{{ STATIC_URL }}{{ object.image }}" class="other-view" id="l-r-{{ forloop.counter }}">
+		<img src="{{ STATIC_URL }}{{ object.image }}" class="other-view" id="l-r-{{ forloop.counter }}">
 	{% endfor %}
+
     <ul id="img-thumbs">
         {% for object in meshu.meshuimage_set.all %}
     	<img src="{{ STATIC_URL }}{{ object.image }}" style="width:25%; height: 25%" id="r-{{ forloop.counter }}">
     	{% endfor %}
+    	<svg id="preview-{{ meshu.product }}" class="readymade-preview" width="90" height="90"></svg>
     </ul>
     <h2 id="readymade-type">Object</h2>
+{% endblock %}
+
+{% block script %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}js/readymade.js"></script>
 {% endblock %}
