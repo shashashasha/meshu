@@ -9,7 +9,7 @@ class UserProfile(models.Model):
 
 	def num_orders(self):
 		# return Order.objects.filter(user=self.user).count()
-		return self.meshu_set.all().count()
+		return self.order_set.all().count()
 
 	def amount_orders(self):
 		return str(self.num_orders()) + ' orders'
@@ -64,7 +64,7 @@ class Meshu(models.Model):
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title
-	
+
 	def get_encoded_id(self):
 		return str(self.id).encode("hex")
 
