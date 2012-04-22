@@ -643,6 +643,7 @@ def processing_geocoder(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+# for potentially having geojson urls
 def processing_jsoner(request):
 	url = request.GET.get('url', '')
 
@@ -653,6 +654,7 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+# don't judge me, i think this is funny
 def random_password(length):
 	phrases = ['me', 'mi', 'ma', 'mu', 'shu', 'ki', 'ku', 'shi', 'wa', 'do', 'ka', 'de', 'sa', 'su', 'ji']
 	numbers = string.digits

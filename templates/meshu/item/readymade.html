@@ -19,3 +19,8 @@
     </ul>
     <h2 id="readymade-type">Object</h2>
 {% endblock %}
+
+{% block script %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}js/readymade.js"></script>
+{% endblock %}
