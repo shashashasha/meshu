@@ -356,13 +356,13 @@ $(function() {
 		return false;
 	});
 
-	$("#review-button").click(function(){
+	$("#review-button").click(function() {
 		if (!user.loggedIn) {
         	forceUserLogin();
         }
 	});
 
-    $("#submit-button").click(function(){ 
+    $("#submit-button").click(function(e) { 
         if (!user.loggedIn) {
         	forceUserLogin();
         	return false;

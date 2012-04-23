@@ -28,12 +28,12 @@ sb.meshu = function(frame) {
     })
 
     searchbox.keypress(function(event) {
-      if ( event.which == 13 ) {
-         searchPlaces();
-       }
+        if ( event.which == 13 ) {
+            searchPlaces();
+        }
     });
 	// this is tied to a global submit button for now
-    $("#submit").click(function(){
+    $("#search-button").click(function(){
         searchPlaces();
     });
 
@@ -53,26 +53,20 @@ sb.meshu = function(frame) {
         if (input == "add a city, place, or address") return;
 
         var query = input.replace(" ","+");
-        var url = "/proxy/geocoder/?location=" + query; // "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
 
-        // if IE, load this:
-        // "/proxy/geocoder/?location=" + query
+        var url = $('body').hasClass('ie') ? "/proxy/geocoder/?location=" + query 
+            : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
         
         searchbox.val("");
-
-        console.log("ajax");
 
         $.ajax({
             url: url,
             cache: false,
             dataType: 'json',
             error: function(error, error1, error2){
-                console.log("error");
                 console.log(error2);
             },
             success: function(data){
-                console.log("data");
-                console.log(data);
                 var results = data.ResultSet.Results;
                 var content = $("#content");
                 cases.empty().hide();
@@ -104,7 +98,7 @@ sb.meshu = function(frame) {
                     cases.append(
                         $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
                             .fadeIn();
-                        searchbox.blur();
+                    searchbox.blur();
                 }
             }
         });
