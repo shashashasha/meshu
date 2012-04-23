@@ -17,7 +17,7 @@ $(function() {
 		// click handler in readymade.js
 		var images = $("#img-thumbs img");
 		if (images.length) {
-			$(images[0]).click();
+			$(images[0]).show().click();
 		}
 	}
 });

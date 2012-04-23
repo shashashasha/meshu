@@ -14,20 +14,25 @@ $(function() {
 
 		var next = $("#l-" + id);
 		if (next.length) {
-			next.removeClass('z-1');
+			next.removeClass('hidden z-1');
 			next.addClass('z-2');
-			next.fadeIn("normal", function() {
+			next.hide().fadeIn("normal", function() {
 				if (previous && previous[0] != next[0]) {
-					previous.hide();
+					// viva pinterest
+					previous.addClass('hidden');
 				}
 
 				previous = next;
 			});	
 		} else if (previous) {
-			previous.fadeOut("normal");
+			previous.fadeOut("normal", function() {
+				// viva pinterest
+				$(this).addClass('hidden');
+			});
 		}
 	};
-	$(".other-view").hide();
+	// viva pinterest
+	$(".other-view").addClass('hidden');
 	$("#img-thumbs img").click(thumbnailHandler);
 	$(".readymade-preview").click(thumbnailHandler);
 
@@ -37,5 +42,6 @@ $(function() {
 	var product = loadedMeshu.product, 
 		transform = 'scale(.175) translate(-30, -30)';
 	sb.product.thumbnail($(".meshu-svg .delaunay"), $(".readymade-preview"), transform);
-});
 
+	$($("#img-thumbs img")[0]).hide();
+});
