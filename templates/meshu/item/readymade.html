@@ -21,7 +21,7 @@
 
     <div id="img-thumbs">
         {% for object in meshu.meshuimage_set.all %}
-    	<img src="{{ STATIC_URL }}{{ object.image }}" style="width:25%; height: 25%" id="r-{{ forloop.counter }}">
+    	<img src="{{ STATIC_URL }}{{ object.image }}" style="width: 90px; height: 90px;" id="r-{{ forloop.counter }}">
     	{% endfor %}
     	<svg class="readymade-preview" width="90" height="90"></svg>
     </div>

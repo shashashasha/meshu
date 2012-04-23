@@ -26,8 +26,8 @@
 }
 
 .borderBox () {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;
 }
 
@@ -46,6 +46,7 @@
 
 /* main page styles */
 body {
+    /*font-family: Helvetica, Arial, sans-serif;*/
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
@@ -200,9 +201,6 @@ h1#meshu {
         clear: both;
     }
 }
-body.win #login-form ul {
-    height: 27px;
-}
 
 #login-form.signin .account, #login-form.account .signin {
     display: none;
@@ -265,6 +263,10 @@ body.win #login-form ul {
 
 .solo-form input.aligned {
     float: right;
+    /*margin-top: -5px; */
+    /*position: absolute; 
+    left: 250px; 
+    right:590px;*/
 }
 
 .solo-form label {
@@ -309,22 +311,22 @@ body.win #login-form ul {
     right: 0;
 }
 
-#main .big {
+#main h2.big {
     font-size: 46px;
     text-align: center;
     margin-top: 45px;
 }
 
-.call {
+h2.call {
     margin: 25px 0 40px;
     text-align: center;
 }
-.call a, .call span {
+h2.call a, h2.call span {
     padding: 6px 10px;
     margin-right: 15px;
 }
 
-.call .shop {
+h2.call .shop {
     background-color: @grey;
 }
 
@@ -357,7 +359,7 @@ body.win #login-form ul {
     text-align: center;
     margin: 30px auto;
 }
-.bottom {
+h2.bottom {
     text-align: center;
     margin-bottom: 50px;
 }
@@ -527,6 +529,7 @@ body.win #login-form ul {
 .maybe-place {
     color: @grey;
     cursor: pointer;
+    
     .hoverColor(black);
 }
 
@@ -558,6 +561,15 @@ body.win #login-form ul {
 }
 body.win .notch {
     top: 20px;
+}
+
+.cases #places {
+    opacity: 0;
+    .transition(opacity);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    z-index:-1;
 }
 
 #places {
@@ -640,8 +652,7 @@ body.firefox #place-number #input {
     padding: 2px;
     display: inline-block;
 }
-body.win .place .place-text, 
-body.firefox .place .place-text {
+body.win .place .place-text, body.firefox .place .place-text {
     width: 235px;
 }
 .place:hover .place-text {
@@ -793,9 +804,6 @@ body.ie .frame div {
     border-right-color: @borderGrey; 
     left: -13px;
 }
-body.firefox.win #rotate-help .border-notch {
-    left: -12px;
-}
 
 #product, #materials, #account, #checkout, #review, #view, #display {
     padding: 20px;
@@ -933,20 +941,6 @@ p.note {
 
 .form-row label {
     line-height: 30px;
-}
-
-.city-input {
-    width: 204px; 
-    margin: 0 31px 0 10px;
-}
-body.firefox .city-input {
-    width: 207px;
-}
-body.firefox.win .city-input {
-    width: 170px;
-}
-body.ie .city-input {
-    width: 190px;
 }
 
 #checkout input {
@@ -1263,7 +1257,6 @@ body.ie .city-input {
 #submit-button.inactive {
     background-color: @grey;
     cursor: auto;
-    pointer-events: none;
 }
 
 /* 
@@ -1352,52 +1345,6 @@ circle {
     }
 }
 
-#gallery {
-    margin-left: 15px;
-}
-
-#gallery li.object {
-    float: left;
-    width: 306px;
-    height: 306px;
-    margin: 0 10px 10px 0;
-    border: 5px solid white;
-
-    a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        border: 1px solid @borderGrey;
-        .borderBox();
-    }
-    img {
-        width: 100%;
-        height: 100%;
-    }
-    .text-block {
-        .borderBox();
-        width: 100%;
-        padding: 5px;
-        position: absolute;
-        background: rgba(255, 255, 255, .8);
-        bottom: 0;
-        color: @grey;
-        border-top: 1px solid @borderGrey;
-    }
-    .title {
-        font-size: 18px;
-    }
-
-    &:hover {
-        border: 5px solid @blue;
-
-        .text-block {
-            color: black;
-        }
-    }
-}
-
 /* Map UI */
 
 .mapui {
@@ -1440,7 +1387,7 @@ circle {
 /*
     gallery display
 */
-#usermade li.object {
+li.object {
     margin-left: -1px;
     margin-top: -1px;
     position: relative;
@@ -1448,7 +1395,7 @@ circle {
     float: left;
     border: 1px solid @borderGrey;
     width: 251px;
-    height: 290px;
+    height: 310px;
     .borderBox();
 
     .image {
@@ -1496,7 +1443,7 @@ circle {
 
     .title {
         font-size: 18px;
-        bottom: 10px;
+        bottom: 30px;
     }
 
     .clicknew {
@@ -1523,6 +1470,12 @@ circle {
         .description, .title {
             color: black;
         }
+    }
+}
+#usermade li.object {
+    height: 290px;
+    .title {
+        bottom: 10px;
     }
 }
 
@@ -1576,6 +1529,11 @@ body.ie #maps .mini-meshu div {
 
 .other-view {
     position: absolute;
+
+    /* viva pinterest */
+    .hidden {
+        left: -100000px;
+    }
 }
 .other-view.z-1{
     z-index: 1;

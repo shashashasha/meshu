@@ -654,6 +654,29 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+# import cairo, rsvg
+# def processing_svg_to_image(request):
+# 	svgString = request.POST.get('svg', '')
+
+# 	svg = rsvg.Handle(data=svgString)
+# 	width = svg.props.width 
+# 	height = svg.props.height
+	
+# 	new_file = File()
+	
+# 	# create image
+# 	png = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+# 	# png = cairo.ImageSurface(request.user.username + '.png', width, height) 
+# 	cr = cairo.Context(surf) 
+# 	svg.render_cairo(cr) 
+# 	png.write_to_png(new_file)
+# 	png.finish()
+
+# 	response = {}
+# 	response.update({ 'success' : True })
+# 	response.update({ 'image_url' : image.get_absolute_url() })
+# 	return HttpResponse(simplejson.dumps(response), mimetype='application/javascript')
+
 # don't judge me, i think this is funny
 def random_password(length):
 	phrases = ['me', 'mi', 'ma', 'mu', 'shu', 'ki', 'ku', 'shi', 'wa', 'do', 'ka', 'de', 'sa', 'su', 'ji']
