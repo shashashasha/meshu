@@ -26,8 +26,8 @@
 }
 
 .borderBox () {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -46,7 +46,6 @@
 
 /* main page styles */
 body {
-    /*font-family: Helvetica, Arial, sans-serif;*/
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
 }
@@ -201,6 +200,9 @@ h1#meshu {
         clear: both;
     }
 }
+body.win #login-form ul {
+    height: 27px;
+}
 
 #login-form.signin .account, #login-form.account .signin {
     display: none;
@@ -263,10 +265,6 @@ h1#meshu {
 
 .solo-form input.aligned {
     float: right;
-    /*margin-top: -5px; */
-    /*position: absolute; 
-    left: 250px; 
-    right:590px;*/
 }
 
 .solo-form label {
@@ -311,22 +309,22 @@ h1#meshu {
     right: 0;
 }
 
-#main h2.big {
+#main .big {
     font-size: 46px;
     text-align: center;
     margin-top: 45px;
 }
 
-h2.call {
+.call {
     margin: 25px 0 40px;
     text-align: center;
 }
-h2.call a, h2.call span {
+.call a, .call span {
     padding: 6px 10px;
     margin-right: 15px;
 }
 
-h2.call .shop {
+.call .shop {
     background-color: @grey;
 }
 
@@ -359,7 +357,7 @@ h2.call .shop {
     text-align: center;
     margin: 30px auto;
 }
-h2.bottom {
+.bottom {
     text-align: center;
     margin-bottom: 50px;
 }
@@ -529,7 +527,6 @@ h2.bottom {
 .maybe-place {
     color: @grey;
     cursor: pointer;
-    
     .hoverColor(black);
 }
 
@@ -561,15 +558,6 @@ h2.bottom {
 }
 body.win .notch {
     top: 20px;
-}
-
-.cases #places {
-    opacity: 0;
-    .transition(opacity);
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    z-index:-1;
 }
 
 #places {
@@ -652,7 +640,8 @@ body.firefox #place-number #input {
     padding: 2px;
     display: inline-block;
 }
-body.win .place .place-text, body.firefox .place .place-text {
+body.win .place .place-text, 
+body.firefox .place .place-text {
     width: 235px;
 }
 .place:hover .place-text {
@@ -804,6 +793,9 @@ body.ie .frame div {
     border-right-color: @borderGrey; 
     left: -13px;
 }
+body.firefox.win #rotate-help .border-notch {
+    left: -12px;
+}
 
 #product, #materials, #account, #checkout, #review, #view, #display {
     padding: 20px;
@@ -941,6 +933,20 @@ p.note {
 
 .form-row label {
     line-height: 30px;
+}
+
+.city-input {
+    width: 204px; 
+    margin: 0 31px 0 10px;
+}
+body.firefox .city-input {
+    width: 207px;
+}
+body.firefox.win .city-input {
+    width: 170px;
+}
+body.ie .city-input {
+    width: 190px;
 }
 
 #checkout input {
@@ -1322,7 +1328,7 @@ circle {
 .mini-meshu {
     float: left;
     width: 306px;
-    height: 290px;
+    height: 306px;
     margin: 0 10px 10px 0;
     border: 5px solid white;
 
@@ -1343,6 +1349,52 @@ circle {
         position: absolute;
         background: rgba(255, 255, 255, .8);
         border-bottom: 1px solid @borderGrey;
+    }
+}
+
+#gallery {
+    margin-left: 15px;
+}
+
+#gallery li.object {
+    float: left;
+    width: 306px;
+    height: 306px;
+    margin: 0 10px 10px 0;
+    border: 5px solid white;
+
+    a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border: 1px solid @borderGrey;
+        .borderBox();
+    }
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    .text-block {
+        .borderBox();
+        width: 100%;
+        padding: 5px;
+        position: absolute;
+        background: rgba(255, 255, 255, .8);
+        bottom: 0;
+        color: @grey;
+        border-top: 1px solid @borderGrey;
+    }
+    .title {
+        font-size: 18px;
+    }
+
+    &:hover {
+        border: 5px solid @blue;
+
+        .text-block {
+            color: black;
+        }
     }
 }
 
@@ -1388,7 +1440,7 @@ circle {
 /*
     gallery display
 */
-li.object {
+#usermade li.object {
     margin-left: -1px;
     margin-top: -1px;
     position: relative;
@@ -1396,7 +1448,7 @@ li.object {
     float: left;
     border: 1px solid @borderGrey;
     width: 251px;
-    height: 310px;
+    height: 290px;
     .borderBox();
 
     .image {
@@ -1444,7 +1496,7 @@ li.object {
 
     .title {
         font-size: 18px;
-        bottom: 30px;
+        bottom: 10px;
     }
 
     .clicknew {
@@ -1471,12 +1523,6 @@ li.object {
         .description, .title {
             color: black;
         }
-    }
-}
-#usermade li.object {
-    height: 290px;
-    .title {
-        bottom: 10px;
     }
 }
 
