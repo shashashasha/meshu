@@ -300,23 +300,23 @@
 
     Modernizr.load({
         test: Modernizr.svg,
-        nope : '{{ STATIC_URL }}js/no-svg.js'
+        nope: '{{ STATIC_URL }}js/no-svg.js'
     });
 
     var pageType = "{{ view }}";
     
     {% if meshu %}
-        var loadedMeshu = {
-            user: '{{ meshu.user_profile.user.username }}',
-            edit_url: '{{ meshu.get_edit_url }}',
-            view_url: '{{ meshu.get_absolute_url }}',
-            title: "{{ meshu.title|safe }}",
-            product: '{{ meshu.product }}',
-            location_data: "{{ meshu.location_data|safe }}",
-            svg: '{{ meshu.svg|safe }}'
-        };
+    var loadedMeshu = {
+        user: '{{ meshu.user_profile.user.username }}',
+        edit_url: '{{ meshu.get_edit_url }}',
+        view_url: '{{ meshu.get_absolute_url }}',
+        title: "{{ meshu.title|safe }}",
+        product: '{{ meshu.product }}',
+        location_data: "{{ meshu.location_data|safe }}",
+        svg: '{{ meshu.svg|safe }}'
+    };
     {% else %} 
-        var loadedMeshu = null;
+    var loadedMeshu = null;
     {% endif %}
     </script>  
 {% endblock %}
