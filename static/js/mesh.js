@@ -297,7 +297,13 @@ sb.mesh = function (frame, map, width, height) {
         rotate_pts.enter()
             .append("svg:circle")
             .attr("class","rotation")
-            .attr("r","40");
+            .attr("r","40")
+            .attr("cx", function(d, i) {
+                return d.x;
+            }).attr("cy", function(d, i) {
+                return d.y;
+            });
+            
         rotate_pts.exit().remove();
         rotate_pts.attr("cx", function(d, i) {
                 return d.x;
