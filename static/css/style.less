@@ -1508,12 +1508,13 @@ body.ie #maps .mini-meshu div {
 }
 
 #img-thumbs {
-    padding: 10px 0 20px;
+    padding: 10px 0 10px;
     margin-left: -5px;
 }
 
 #img-thumbs img, #img-thumbs svg {
     cursor: pointer;
+    margin: 0 4px 5px 0;
     display: inline-block;
     border: 5px solid white;
 
@@ -1521,10 +1522,14 @@ body.ie #maps .mini-meshu div {
         border: 5px solid @blue;
     }
 }
+
+#img-thumbs rect {
+    stroke: @borderGrey;
+    fill: none;
+}
+
 .other-view {
     position: absolute;
-    top: -20px;
-    left: -620px;
 }
 .other-view.z-1{
     z-index: 1;

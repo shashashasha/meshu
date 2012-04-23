@@ -9,9 +9,11 @@
         <span></span>
         <b class="notch"></b>
     </div>
+    {% block map %}
     <div id="meshu-container" class="frame inactive">
         <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
     </div>
+    {% endblock %}
 
     {% block helpedit %}
     {% endblock %}
@@ -306,17 +308,17 @@
     var pageType = "{{ view }}";
     
     {% if meshu %}
-        var loadedMeshu = {
-            user: '{{ meshu.user_profile.user.username }}',
-            edit_url: '{{ meshu.get_edit_url }}',
-            view_url: '{{ meshu.get_absolute_url }}',
-            title: "{{ meshu.title|safe }}",
-            product: '{{ meshu.product }}',
-            location_data: "{{ meshu.location_data|safe }}",
-            svg: '{{ meshu.svg|safe }}'
-        };
+    var loadedMeshu = {
+        user: '{{ meshu.user_profile.user.username }}',
+        edit_url: '{{ meshu.get_edit_url }}',
+        view_url: '{{ meshu.get_absolute_url }}',
+        title: "{{ meshu.title|safe }}",
+        product: '{{ meshu.product }}',
+        location_data: "{{ meshu.location_data|safe }}",
+        svg: '{{ meshu.svg|safe }}'
+    };
     {% else %} 
-        var loadedMeshu = null;
+    var loadedMeshu = null;
     {% endif %}
     </script>  
 {% endblock %}
