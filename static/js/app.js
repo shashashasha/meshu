@@ -460,7 +460,7 @@ $(function() {
 	function updateReviewText() {
 
 		var product = "One " + sb.materializer.displayName();
-		var productType = sb.materializer.color() + " " + sb.materializer.material();
+		var productType = sb.materializer.color().toLowerCase() + " " + sb.materializer.material();
 		$("#review-description").text(product + ", made out of " + productType);
 
 		$("#subtotal-price span").text(orderer.getPriceString());

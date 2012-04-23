@@ -24,7 +24,7 @@
         A collection of our favorite meshus.
     {% endif %}
     </h2>
-    <ul class="gallery">
+    <ul class="gallery" id="{% if view == 'user' %}usermade{% endif %}">
         {% if view == 'user' %}
             <li class="object">
                 <a class="image blank" href="/make/"></a>
@@ -33,10 +33,10 @@
         {% endif %}
         {% for object in meshus reversed %}
             <li class="object">
-                <a class="image" href="
+                <div class="image"></div>
+                <a href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
-                </a>
                 {% if object.thumbnail != 'images/default_thumbnail.png' %}
                     <img src="{{ STATIC_URL }}{{ object.thumbnail }}" />
                 {% else %}
@@ -51,6 +51,7 @@
                     <p class="title">{{ object.title|safe }}</p>
                     <!-- <a class="clickthrough" href="{{ object.get_absolute_url }}">click to view</a> -->
                 {% endif %}
+                </a>
             </li>
         {% endfor %}
     </ul>

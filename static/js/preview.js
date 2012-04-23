@@ -37,6 +37,11 @@ $(function() {
 
 			$(div[0]).append(miniDelaunay).append(bounding);
 
+			if (product == "pendant") {
+				main.select("#rotate-ui").attr("class","hidden pendant")
+					.selectAll("circle").attr("r","55");
+			}
+
 			d3.selectAll("circle.rotation").on("mousedown",mousemove);
 			main.on("mouseup",mouseup).on("mousemove",mainmove);
 
