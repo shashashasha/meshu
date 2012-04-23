@@ -14,13 +14,14 @@
 		<img src="{{ STATIC_URL }}{{ object.image }}" class="other-view" id="l-r-{{ forloop.counter }}">
 	{% endfor %}
 
-    <ul id="img-thumbs">
+    <div id="img-thumbs">
         {% for object in meshu.meshuimage_set.all %}
     	<img src="{{ STATIC_URL }}{{ object.image }}" style="width:25%; height: 25%" id="r-{{ forloop.counter }}">
     	{% endfor %}
-    	<svg id="preview-{{ meshu.product }}" class="readymade-preview" width="90" height="90"></svg>
-    </ul>
-    <h2 id="readymade-type">Object</h2>
+    	<svg class="readymade-preview" width="90" height="90"></svg>
+    	<!-- <svg class="readymade-preview" width="90" height="90"> -->
+    	</svg>
+    </div>
 {% endblock %}
 
 {% block script %}

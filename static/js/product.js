@@ -26,14 +26,32 @@ $(function() {
 				.attr('height', '100%')
 				.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
 
-			var miniDelaunay = $(delaunayFrame).clone()
-									// .attr("id","")
-									.attr("class","product-delaunay")
-									.attr("transform", transform);
-
-			$(svg[0]).append(miniDelaunay);
+			self.attachMeshu(delaunayFrame, $(svg[0]), transform);
 		};
 
+		self.attachMeshu = function(mesh, frame, transform) {
+			var miniDelaunay = $(mesh).clone()
+				.attr("class","product-delaunay")
+				.attr("transform", transform);
+
+			frame.append(miniDelaunay);
+		};
+
+		self.thumbnail = function(mesh, frame, transform) {
+			var miniDelaunay = $(mesh).clone()
+				.attr("class","product-delaunay")
+				.attr("transform", transform);
+
+			d3.select(frame[0])
+				.append('svg:rect')
+					.attr('x', '0')
+					.attr('y', 0)
+					.attr('width', '100%')
+					.attr('height', '100%');
+
+			frame.append(miniDelaunay);
+		};
+		
 		self.rotation = function(r) {
 			d3.selectAll(".product-delaunay")
 				.attr("transform", function(d, i) {
