@@ -51,7 +51,8 @@ sb.mesh = function (frame, map, width, height) {
 
     var list = placeList.append("ul");
 
-    $(".place-text input").live("blur", removeInput);
+    if (!$("body").hasClass("ie"))
+        $(".place-text input").live("blur", removeInput);
 
     var points = [],
     	new_pt = [],
@@ -367,7 +368,6 @@ sb.mesh = function (frame, map, width, height) {
         });
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
-            if (node.has("input").length) d.edit = true; //IE fix
             if (!d.edit) editText(node,i,"place");
             else saveText(node,i,"place");
             d.edit = !d.edit;
@@ -376,7 +376,6 @@ sb.mesh = function (frame, map, width, height) {
             if (d.edit) return;
             editText($(this).parent(),i,"place");
             d.edit = !d.edit;
-            console.log(d.edit);
         });
 
         placeTitle.attr("class","").select(".title-text")
@@ -428,7 +427,7 @@ sb.mesh = function (frame, map, width, height) {
         if (type == "place") places[i] = text;
         else return text;
     }
-    function removeInput(){
+    function removeInput(event){
         var titles = list.selectAll("li.place .title");
         titles.each(function(d, i) {
             if (!d.edit) return;

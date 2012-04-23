@@ -14,7 +14,7 @@ var orderer = function() {
     function stripeResponseHandler(status, response) {
         if (response.error) {
             // re-enable the submit button
-            $('#submit-button').removeAttr("disabled");
+            $('#submit-button').removeAttr("disabled").removeClass("inactive");
             // show the errors on the form
             $(".payment-errors").html(response.error.message);
         } else {
@@ -117,7 +117,6 @@ var orderer = function() {
 
     self.getColors = function(type, material) {
         if (!options) return null;
-        console.log(type, material);
         return options[type][material].colors;
     };
 

@@ -22,7 +22,7 @@
                 <h2>Search</h2>
                 <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
                     onfocus="value=''"/>
-                <div id="submit" class="button">search</div>
+                <div id="search-button" class="button">search</div>
             </div>
             <div id="cases"></div>
             <div id="places">
@@ -184,7 +184,7 @@
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
                 <h2>Shipping</h2>
-                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form">
+                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
                     {# put a csrf token in every form in django, for security #}
                     {% csrf_token %}
                     <div id="hidden-form-values" style="display:none;">
@@ -265,7 +265,7 @@
                     <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$4.00</span></h2>
                     <h2 id="total-price">Total: <span></span></h2>
                 </div>
-                <input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1">
+                <div id="submit-button" class="button" value="Submit Payment" tabindex="-1">Submit Payment</div>
             </div>
         </div>
     {% endblock %}
@@ -300,7 +300,7 @@
 
     Modernizr.load({
         test: Modernizr.svg,
-        nope : '{{ STATIC_URL }}js/no-svg.js'
+        nope: '{{ STATIC_URL }}js/no-svg.js'
     });
 
     var pageType = "{{ view }}";
