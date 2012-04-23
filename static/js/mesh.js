@@ -269,7 +269,11 @@ sb.mesh = function (frame, map, width, height) {
         
         var place = names.enter().append("li").attr("class", "place");
         var title = place.append("span").attr("class", "title");
-            title.append("span").attr("class", "place-text");
+            title.append("span").attr("class", "place-text")
+                .html(function(d, i) {
+                    decoder.innerHTML = places[i];
+                    return decoder.firstChild.nodeValue;
+                });
             title.append("span").attr("class", "place-edit").html("edit");
             place.append("span").attr("class", "place-delete").html("x");
 
@@ -363,7 +367,7 @@ sb.mesh = function (frame, map, width, height) {
         });
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
-            if (node.select("input")) d.edit = true; //IE fix
+            if (node.has("input").length) d.edit = true; //IE fix
             if (!d.edit) editText(node,i,"place");
             else saveText(node,i,"place");
             d.edit = !d.edit;
@@ -460,7 +464,6 @@ sb.mesh = function (frame, map, width, height) {
                 update();
                 updateMesh(skipAnimation);
             } else { 
-
                 // make the new point start from the last location
                 var last = points[points.length-1];
                 points.push([last[0], last[1]]);
