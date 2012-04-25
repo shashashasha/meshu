@@ -27,7 +27,9 @@ sb.map = function(frame, width, height) {
 	self.map.add(image);
 
 	// fill the background with white
-	$(".map").find("rect").attr("visibility","visible").attr("fill","white");
+	var svg = d3.select(".map");
+	svg.attr("width","100%").attr("height","100%");
+	svg.select("rect").attr("visibility","visible").attr("fill","white");
 
 	self.frame = function() {
 		return container;
