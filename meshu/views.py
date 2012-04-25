@@ -124,6 +124,9 @@ def item_handler(request, item_id, template, view):
 
 def item_from_data(request):
 
+	if request.POST.has_key('location_data') == False or request.POST.has_key('location_data') == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
 	meshu = Meshu()
 
 	meshu.title = request.POST.get('title', 'My Meshu')
