@@ -43,5 +43,6 @@ $(function() {
 		transform = 'scale(.175) translate(-30, -30)';
 	sb.product.thumbnail($(".meshu-svg .delaunay"), $(".readymade-preview"), transform);
 
+	
 	$($("#img-thumbs img")[0]).hide();
 });
