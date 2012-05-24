@@ -15,7 +15,7 @@ $(function() {
 	} else if (pageType == 'readymade') {
 		// if we don't have svg, by default show the first image
 		// click handler in readymade.js
-		$("svg").remove();
+		// $("svg").remove();
 		var images = $("#img-thumbs img");
 		if (images.length) {
 			$(images[0]).show().click();
