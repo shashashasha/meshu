@@ -2,6 +2,7 @@ $(function() {
 	/*
 		Only block page interaction if we're on the /make page
 	*/
+
 	if (pageType == 'edit') {
 		$("#modal-bg").fadeIn();
 		$("#edit-help").hide();
