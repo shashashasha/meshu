@@ -528,9 +528,12 @@ po.map = function() {
     if (!size) {
       rect.setAttribute("width", "100%");
       rect.setAttribute("height", "100%");
-      b = rect.getBBox();
-      sizeActual = {x: b.width, y: b.height};
-      resizer.add(map);
+      // ie8 patch
+      if (rect.getBBox) {
+        b = rect.getBBox();
+        sizeActual = {x: b.width, y: b.height};
+        resizer.add(map);  
+      }
     } else {
       sizeActual = size;
       resizer.remove(map);

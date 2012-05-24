@@ -45,7 +45,9 @@ $(function() {
 		// create a saver object, in saver.js
 		saver.initialize(meshu, loadedMeshu.view_url);
 
-		meshu.locationData(loadedMeshu.location_data);
+		if ($("html").hasClass("svg")) {
+			meshu.locationData(loadedMeshu.location_data);
+		}
 
 		// checking the page view type, setting our flows accordingly
 		user.updateLogoutActions(pageType);
