@@ -43,6 +43,9 @@ $(function() {
 		transform = 'scale(.175) translate(-30, -30)';
 	sb.product.thumbnail($(".meshu-svg .delaunay"), $(".readymade-preview"), transform);
 
-	
-	$($("#img-thumbs img")[0]).hide();
+	// remove the first thumbnail if we have the svg version
+	// if we have the svg version
+	if ($("html").hasClass("svg")) {
+		$($("#img-thumbs img")[0]).hide();
+	}
 });
