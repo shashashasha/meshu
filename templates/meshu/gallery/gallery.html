@@ -38,7 +38,7 @@
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
                 {% if object.thumbnail != 'images/default_thumbnail.png' %}
-                    <img src="{{ STATIC_URL }}{{ object.thumbnail }}" />
+                    <img src="{{ object.thumbnail.url }}" />
                 {% else %}
                     {% autoescape off %}
                         {{ object.svg }}
