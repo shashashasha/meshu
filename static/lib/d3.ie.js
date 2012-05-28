@@ -1912,8 +1912,13 @@ function d3_selection(groups) {
     }else{
         // Nothing out of the ordinary
         appendNS = function (node) {
-          return node.appendChild(
-              document.createElementNS(name.space, name.local));
+          // ie8 patches
+          // you know what? fuck ie. the code below still throws errors.
+          // if (document['createElementNS']) {
+          //   return node.appendChild(document.createElementNS(name.space, name.local));
+          // } else {
+          //   return node.appendChild(document.createElement(name.local));
+          // }
         }
         
     }
@@ -1981,7 +1986,7 @@ function d3_selection(groups) {
     // remove the old event listener, and add the new event listener
     return groups.each(function(d, i) {
       if (this[name]) this.removeEventListener(typo, this[name], capture);
-      if (listener) this.addEventListener(typo, this[name] = l, capture);
+      if (listener && this.addEventListener) this.addEventListener(typo, this[name] = l, capture);
 
       // wrapped event listener that preserves i
       var node = this;

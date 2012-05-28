@@ -86,6 +86,8 @@ input {
     border: 1px solid @grey;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 13px;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
 img {
@@ -701,6 +703,9 @@ body.ie .frame div {
         color: @grey;
     }
 }
+.ie8 #attribution {
+    background-color: white;
+}
 
 .view #attribution, .edit #attribution {
     opacity: 1;
@@ -948,6 +953,9 @@ body.firefox.win .city-input {
 body.ie .city-input {
     width: 190px;
 }
+body.ie8 .city-input {
+    width: 170px;
+}
 
 #checkout input {
     /*margin-left: 10px;*/
@@ -1016,6 +1024,9 @@ body.ie .city-input {
 #view p, #view span, #view ul{
     background-color: rgba(255,255,255,.9);
     padding: 3px 10px;  
+}
+.ie8 #view p, .ie8 #view span, .ie8 #view ul {
+    background-color: white;
 }
 #view ul{
     padding-top: 10px;
@@ -1349,6 +1360,9 @@ circle {
         position: absolute;
         background: rgba(255, 255, 255, .8);
         border-bottom: 1px solid @borderGrey;
+    }
+    .ie8 .title {
+        background-color: white;
     }
 }
 
