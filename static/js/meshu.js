@@ -52,7 +52,7 @@ sb.meshu = function(frame) {
         // default input
         if (input == "add a city, place, or address") return;
 
-        var query = input.replace(" ","+");
+        var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
         var url = $('body').hasClass('ie') ? "/proxy/geocoder/?location=" + query 
             : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
