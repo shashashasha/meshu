@@ -296,6 +296,56 @@ body.win #login-form ul {
     width: 50px;
 }
 
+#main .big {
+    font-size: 46px;
+    text-align: center;
+    margin-top: 45px;
+}
+
+#photos {
+    /* bit of pixel twiddling to line up with the banner photos */
+    margin-left: 20px;
+    margin-right: 19px;
+    position: relative;
+    width: 961px;
+    height: 480px;
+
+    text-align: right;
+
+    img {
+        margin: 0;
+        padding: 0;
+        float: left;
+        width: 320px;
+        height: 480px;
+    }
+
+    #intro-text {
+        text-align: right;
+        margin-bottom: 21px;
+        margin-top: 20px;
+        color: @grey;
+
+        .meshu-title {
+            color: black;
+        }
+    }
+
+    .large-button {
+        font-size: 30px;
+        margin-top: 24px;
+        float: right;
+    }
+
+    .button {
+        padding: 5px 11px;
+    }
+
+    .shop { 
+        background-color: @grey;
+    }
+}
+
 #banners {
     height: 384px;
     width: 960px;
@@ -309,12 +359,6 @@ body.win #login-form ul {
     position: absolute;
     top: 0;
     right: 0;
-}
-
-#main .big {
-    font-size: 46px;
-    text-align: center;
-    margin-top: 45px;
 }
 
 .call {
@@ -371,11 +415,14 @@ body.win #login-form ul {
     padding: 10px 0;
     display: inline-block;
     margin: 0 10px;
+
+    &:hover {
+        .shadow(10px, rgba(0, 0, 0, .25));
+    }
 }
 .option.pink {
     background-color: @pink;
 }
-
 
 #content {
     width: @pageWidth;
@@ -502,6 +549,14 @@ body.win #login-form ul {
 
 .button.pink {
     background-color: @pink;
+}
+
+.button:hover {
+    .shadow(10px, rgba(0, 0, 0, .25));
+}
+
+#search-button:hover {
+    .shadow(10px, rgba(0, 0, 0, .1));
 }
 
 #edit .foursquare-auth {
@@ -1194,6 +1249,10 @@ body.ie8 .city-input {
     &.active, &.next.active:hover {
         background-color: @pink;
         cursor: pointer;
+    }
+
+    &:hover {
+        .shadow(10px, rgba(0, 0, 0, .25));
     }
 }
 

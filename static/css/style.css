@@ -39,6 +39,8 @@ input {
   border: 1px solid #808080;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 13px;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 img {
   border: none;
@@ -225,6 +227,48 @@ body.win #login-form ul {
 #login-form #login-signin {
   width: 50px;
 }
+#main .big {
+  font-size: 46px;
+  text-align: center;
+  margin-top: 45px;
+}
+#photos {
+  /* bit of pixel twiddling to line up with the banner photos */
+
+  margin-left: 20px;
+  margin-right: 19px;
+  position: relative;
+  width: 961px;
+  height: 480px;
+  text-align: right;
+}
+#photos img {
+  margin: 0;
+  padding: 0;
+  float: left;
+  width: 320px;
+  height: 480px;
+}
+#photos #intro-text {
+  text-align: right;
+  margin-bottom: 21px;
+  margin-top: 20px;
+  color: #808080;
+}
+#photos #intro-text .meshu-title {
+  color: black;
+}
+#photos .large-button {
+  font-size: 30px;
+  margin-top: 24px;
+  float: right;
+}
+#photos .button {
+  padding: 5px 11px;
+}
+#photos .shop {
+  background-color: #808080;
+}
 #banners {
   height: 384px;
   width: 960px;
@@ -237,11 +281,6 @@ body.win #login-form ul {
   position: absolute;
   top: 0;
   right: 0;
-}
-#main .big {
-  font-size: 46px;
-  text-align: center;
-  margin-top: 45px;
 }
 .call {
   margin: 25px 0 40px;
@@ -294,6 +333,11 @@ body.win #login-form ul {
   padding: 10px 0;
   display: inline-block;
   margin: 0 10px;
+}
+.option:hover {
+  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .option.pink {
   background-color: #ff3fb4;
@@ -438,6 +482,16 @@ body.win #login-form ul {
 }
 .button.pink {
   background-color: #ff3fb4;
+}
+.button:hover {
+  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+#search-button:hover {
+  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 #edit .foursquare-auth {
   position: absolute;
@@ -651,6 +705,9 @@ body.ie .frame div {
 }
 #attribution a {
   color: #808080;
+}
+.ie8 #attribution {
+  background-color: white;
 }
 .view #attribution,
 .edit #attribution {
@@ -967,6 +1024,9 @@ body.firefox.win .city-input {
 body.ie .city-input {
   width: 190px;
 }
+body.ie8 .city-input {
+  width: 170px;
+}
 #checkout input {
   /*margin-left: 10px;*/
 
@@ -1056,6 +1116,11 @@ body.ie .city-input {
 #view ul {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 3px 10px;
+}
+.ie8 #view p,
+.ie8 #view span,
+.ie8 #view ul {
+  background-color: white;
 }
 #view ul {
   padding-top: 10px;
@@ -1206,6 +1271,11 @@ body.ie .city-input {
 .nav.next.active:hover {
   background-color: #ff3fb4;
   cursor: pointer;
+}
+.nav:hover {
+  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 .nav a {
   color: white;
@@ -1371,6 +1441,9 @@ circle.highlight,
   background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #e6e6e6;
 }
+.mini-meshu .ie8 .title {
+  background-color: white;
+}
 #gallery {
   margin-left: 15px;
 }
@@ -1451,10 +1524,10 @@ circle.highlight,
   opacity: 1;
 }
 .edit .mapui #zoomin {
-  background-image: url(../images/zoomin.png);
+  background-image: url(http://127.0.0.1:8000/static/css/../images/zoomin.png);
 }
 .edit .mapui #zoomout {
-  background-image: url(../images/zoomout.png);
+  background-image: url(http://127.0.0.1:8000/static/css/../images/zoomout.png);
 }
 .edit .mapui div:hover {
   pointer: cursor;
