@@ -45,7 +45,7 @@ $(function() {
 
 	// remove the first thumbnail if we have the svg version
 	// if we have the svg version
-	if ($("html").hasClass("svg")) {
+	if ($("html").hasClass("svg") && loadedMeshu.title != "Continental Africa") {
 		$($("#img-thumbs img")[0]).hide();
 	}
 });
