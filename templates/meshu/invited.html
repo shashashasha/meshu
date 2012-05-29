@@ -1,38 +1,13 @@
 {% extends "meshu/base.html" %}
 
-{% block title %}Meshu - Hi, Friend!{% endblock %}
+{% block title %}Meshu - Welcome{% endblock %}
+
+{% block navigation %}
+{% endblock %}
 
 {% block content %}
 <div id="main">
-	<div id="photos">
-		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
-		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
-		<div id="intro-text" class="big">
-			<span class="meshu-title">meshu</span><br/>
-			turns your<br />places into<br />beautiful objects.
-		</div>
-		<div class="large-button">
-		<a href="/make/" class="button pink">Make Your Own</a>
-		</div>
-		<div class="large-button">
-		<a href="/shop/" class="button shop">Shop Our Gallery</a>
-		</div>
-		<div class="large-button">
-		<div class="foursquare-auth button">Start With Foursquare</div>
-		</div>
-	</div>
-
-	<!-- <h2 class="call"><a href="/shop/" class="button shop">Shop Our Gallery</a> <a href="/make/" class="button pink">Make Your Own</a> <span class="foursquare-auth button">Start With Foursquare</span></h2>
- -->
-	<h2 class="big">what people have made:</h2>
-
-	<div id="banners">
-		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-1" src="{{ STATIC_URL }}images/samples/banner3.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-0" src="{{ STATIC_URL }}images/samples/banner1.jpg" />
-	</div>
-
-	<h2 class="big">here's how it works:</h2>
+	<h2 class="big">Say hi to meshu.</h2>
 
 	<ul id="diagram">
 		<li>
@@ -42,8 +17,8 @@
 		</li>
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams/diagrams_02.png">
-			<p>We generate a meshu to order as</p>
-			<p>a necklace, earrings, or cufflinks.</p>
+			<p>We generate a meshu to order</p>
+			<p>as a necklace or earrings.</p>
 		</li>
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams/diagrams_03.png">
@@ -52,18 +27,19 @@
 		</li>
 	</ul>
 
-	<h2 class="big">ready to get started?</h2>
-	<div id="get-started">
-		<a class="option" href="/shop/">Shop Our Gallery</a>
-		<a class="option pink" href="/make/">Make Your Own!</a>
+	<div id="mc_embed_signup">
+		<form action="http://meshu.us4.list-manage.com/subscribe/post?u=ff0ddd123572fdc8891df623e&amp;id=43c8c55de8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+		    <label for="mce-EMAIL">Sign up to be notified when we launch.</label>
+		    <input type="email" value="email address" name="EMAIL" class="email" id="mce-EMAIL" onfocus="value=''" required>
+		    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+		</form>
 	</div>
-	<h2 class="bottom">Or, <span class="foursquare-auth button">connect with Foursquare</span> to use your checkin data.</h2>
 
+	<form action="/invite/" method="post" name="invite-form">
+		{% csrf_token %}
+		<label>Or if you have an invite code, enter it here.</label>
+		<input value="seekrit code" onfocus="value=''" name="code">
+		<input type="submit" value="Let's go!" class="button">
+	</form>
 </div>
-{% endblock %}
-
-{% block script %}
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
 {% endblock %}
