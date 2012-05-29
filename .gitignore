@@ -1,4 +1,5 @@
 settings_local.py
+settings.py
 *.pyc
 
 # Compiled source #
