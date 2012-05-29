@@ -45,7 +45,7 @@ $(function() {
 		// create a saver object, in saver.js
 		saver.initialize(meshu, loadedMeshu.view_url);
 
-		if ($("html").hasClass("svg") && loadedMeshu.title != "Continental Africa") {
+		if ($("html").hasClass("svg")) {
 			meshu.locationData(loadedMeshu.location_data);
 		}
 
