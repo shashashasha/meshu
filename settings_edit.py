@@ -16,7 +16,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'meshu',                      # Or path to database file if using sqlite3.
         'USER': 'meshu',                      # Not used with sqlite3.
-        'PASSWORD': 'm3shm3b4by',                  # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -25,7 +25,7 @@ DATABASES = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'meshu'
-EMAIL_HOST_PASSWORD = 'm3shm3b4by'
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'hi@meshu.io'
 SERVER_EMAIL = 'orders@meshu.io'
 
@@ -55,7 +55,7 @@ USE_L10N = True
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://meshu.io/static/'
+MEDIA_URL = '/media/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
