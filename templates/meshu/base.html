@@ -29,12 +29,13 @@
 	<div id="top">
 		{% block navigation %}
 		<ul id="nav">
+			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
+			
 		    <li class="nav-list"><a href="/make/">make</a></li>
 			<li class="nav-list"><a href="/shop/">shop</a></li>
 			<li class="nav-list"><a href="/about/">about</a></li>
 
 			<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list">login</li>
-			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
 			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
 		</ul>
 
@@ -105,7 +106,8 @@ window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https
 olark.identify('7626-379-10-2860');/*]]>{/literal}*/</script><noscript><a href="https://www.olark.com/site/7626-379-10-2860/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript><!-- end olark code -->
 
 </body>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/user.min.js"></script>
+    // <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/min/user.min.js"></script> -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/user.js"></script>
     <script type="text/javascript">
     	// django static url
     	var static_url = "{{ STATIC_URL }}";
