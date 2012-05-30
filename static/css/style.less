@@ -1360,6 +1360,7 @@ path {
     pointer-events: none;
     stroke-width: 5;
     stroke-linejoin: round;
+    .transition(stroke-width);
 }
 
 circle {
@@ -1374,8 +1375,12 @@ circle {
 .hidden, #rotate-ui, #hidden {
     display: none;
 }
-#mini-delaunay path, #product-preview path {
+.account .delaunay path, .checkout .delaunay path, .review .delaunay path {
     stroke-width: 15;
+    .transition(stroke-width);
+}
+#mini-delaunay path, #product-preview path {
+    stroke-width: 20;
 }
 
 #rotate:hover #rotate-ui {
