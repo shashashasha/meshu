@@ -218,6 +218,7 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
+		$(".render").css("background-image","url(" + static_url + 'images/render/' + product + '_preview.jpg' + ")");
 
 		// sync the rotation between the product picker and the product rotator
 		sb.rotator.on("rotated", sb.product.rotation);
