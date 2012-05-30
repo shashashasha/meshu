@@ -7,7 +7,8 @@ sb.map = function(frame, width, height) {
 	// updating to toner tiles
 	var baseURL = "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
-	var container = d3.select(frame || "body").append("div")[0][0];
+	var container = d3.select(frame).append("div")[0][0];
+		d3.select(frame).append("div").attr("class","render");
       
     container.style.position = "absolute";
     container.style.width = width;

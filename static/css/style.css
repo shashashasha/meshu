@@ -771,7 +771,8 @@ body.ie .frame div {
   right: 0;
   display: none;
 }
-#color-list li:hover .color-img {
+#color-list li:hover .color-img,
+#color-list .selected .color-img {
   display: inline;
 }
 .color-img img {

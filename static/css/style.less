@@ -787,6 +787,18 @@ body.ie .frame div {
     .transition(opacity);
 }
 
+.render {
+    height: 600px;
+    width: 600px;
+    position: absolute;
+    opacity: 0;
+    .transition(opacity);
+}
+.account .render, .checkout .render, .reivew .render {
+    opacity: 1;
+    .transition(opacity);
+}
+
 .options{
     position: absolute;
     width: 139px;
@@ -803,7 +815,8 @@ body.ie .frame div {
     right: 0;
     display: none;
 }
-#color-list li:hover .color-img {
+#color-list li:hover .color-img,
+#color-list .selected .color-img {
     display: inline;
 }
 .color-img img {
