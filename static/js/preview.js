@@ -7,13 +7,6 @@ $(function() {
 		var rotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ";
 
-		var transforms = {	
-			'earrings': 'scale(.125) translate(650, 540)',
-			'pendant': 'scale(.075) translate(1030, 1470)',
-		  	'necklace': 'scale(.125) translate(510, 760)',
-		  	'cufflinks': 'scale(.125) translate(510, 760)'
-		};
-
 		self.update = function(product) {
 			$(rotateFrame).empty();
 
@@ -85,7 +78,7 @@ $(function() {
 		};
 
 		self.getTransform = function(product) {
-			return transforms[product] + " rotate(" + rotation + ",300,300)";
+			return sb.transforms.getTransform(product, "preview") + " rotate(" + rotation + ",300,300)";
 		};
 
 		self.getImage = function(product) {

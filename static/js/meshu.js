@@ -153,9 +153,9 @@ sb.meshu = function(frame) {
     };
 
     // save the rotation for now
-    var cr = 0;
+    var cr = 0, cs = 1, ctx = 0, cty = 0;
     var rotateInterval;
-    self.animateTransform = function(r) {
+    self.animateTransform = function(r, s, tx, ty) {
         if (rotateInterval) {
             clearInterval(rotateInterval);
         }
@@ -165,9 +165,14 @@ sb.meshu = function(frame) {
         rotateInterval = setInterval(function(){
             if (++counter < 30) {
                 cr += (r - cr) * .33;
+                cs += (s - cs) * .33;
+                ctx += (tx - ctx) * .33;
+                cty += (ty - cty) * .33;
 
                 var rotate = "rotate(" + cr + ",300,300)";
-                delaunay.attr("transform", rotate);
+                var scale = "scale(" + cs + ")";
+                var translate = "translate(" + ctx + "," + cty + ")";
+                delaunay.attr("transform", rotate + scale + translate);
             }
             else
                 clearInterval(rotateInterval);
