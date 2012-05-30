@@ -1727,6 +1727,9 @@ body.ie #maps .mini-meshu div {
   float: left;
   margin-top: 50px;
 }
+.about a {
+    color: #1fcaff;
+}
 .about img {
   width: 240px;
   float: left;
