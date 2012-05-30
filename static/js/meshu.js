@@ -165,14 +165,14 @@ sb.meshu = function(frame) {
         rotateInterval = setInterval(function(){
             if (++counter < 30) {
                 cr += (r - cr) * .33;
-                cs += (s - cs) * .33;
-                ctx += (tx - ctx) * .33;
-                cty += (ty - cty) * .33;
+                cs += (s - cs) * .5;
+                ctx += (tx - ctx) * .5;
+                cty += (ty - cty) * .5;
 
-                var rotate = "rotate(" + cr + ",300,300)";
+                var rotate = "rotate(" + cr + ", 300, 300)";
                 var scale = "scale(" + cs + ")";
                 var translate = "translate(" + ctx + "," + cty + ")";
-                delaunay.attr("transform", rotate + scale + translate);
+                delaunay.attr("transform", scale + translate + rotate);
             }
             else
                 clearInterval(rotateInterval);

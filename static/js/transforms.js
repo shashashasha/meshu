@@ -9,8 +9,8 @@ sb.transforms = {
 			transform: {x: 650, y: 540}	
 		},
 		"render": {
-			scale: 1, 
-			transform: {x: 0, y: 0}	
+			scale: .45, 
+			transform: {x: 530, y: 450}	
 		}
 	},
 	"pendant": {
@@ -23,8 +23,8 @@ sb.transforms = {
 			transform: {x: 1030, y: 1470}	
 		},
 		"render": {
-			scale: 1, 
-			transform: {x: 0, y: 0}	
+			scale: .25, 
+			transform: {x: 900, y: 1375}	
 		}
 	},
 	"necklace": {
@@ -37,8 +37,8 @@ sb.transforms = {
 			transform: {x: 510, y: 760}	
 		},
 		"render": {
-			scale: 1, 
-			transform: {x: 0, y: 0}	
+			scale: .4, 
+			transform: {x: 450, y: 750}	
 		}
 	},
 	"cufflinks": {
@@ -51,8 +51,8 @@ sb.transforms = {
 			transform: {x: 510, y: 760}	
 		},
 		"render": {
-			scale: .5, 
-			transform: {x: 0, y: 0}	
+			scale: .4, 
+			transform: {x: 450, y: 750}	
 		} 	
 	}
 };
