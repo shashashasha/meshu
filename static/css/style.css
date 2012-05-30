@@ -771,8 +771,8 @@ body.ie .frame div {
   -o-transition: opacity 0.6s;
 }
 .render {
-  height: 600px;
-  width: 600px;
+  height: 100%;
+  width: 100%;
   position: absolute;
   opacity: 0;
   transition: opacity 0.6s;
