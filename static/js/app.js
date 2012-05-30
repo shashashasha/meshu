@@ -218,6 +218,7 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
+		$(".render").css("background-image","url(" + static_url + 'images/render/' + product + '_preview.jpg' + ")");
 
 		// sync the rotation between the product picker and the product rotator
 		sb.rotator.on("rotated", sb.product.rotation);
@@ -240,7 +241,9 @@ $(function() {
 			case 'make':
 				meshu.mesh().updateCircleBehavior(true);
 				// animate meshu
-				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0);
+				var product = sb.materializer.product();
+				var t = sb.transforms[product]["render"];
+				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
 				break;
 
 			case 'readymade':
@@ -265,7 +268,7 @@ $(function() {
 			case 'make':
 			case 'readymade':
 				meshu.mesh().updateCircleBehavior();
-				meshu.animateTransform(0);
+				meshu.animateTransform(0, 1, 0, 0);
 				break;
 		}
 	}

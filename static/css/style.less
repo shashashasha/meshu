@@ -116,6 +116,14 @@ h1#meshu {
     right: 0;
     font-size: 18px;
 
+    #profile a {
+        color: @blue;
+
+        &:hover {
+            color: @pink;
+        }
+    }
+
     li {
         display: inline-block;
         margin-left: 25px;
@@ -296,6 +304,56 @@ body.win #login-form ul {
     width: 50px;
 }
 
+#main .big {
+    font-size: 46px;
+    text-align: center;
+    margin-top: 45px;
+}
+
+#photos {
+    /* bit of pixel twiddling to line up with the banner photos */
+    margin-left: 20px;
+    margin-right: 19px;
+    position: relative;
+    width: 961px;
+    height: 480px;
+
+    text-align: right;
+
+    img {
+        margin: 0;
+        padding: 0;
+        float: left;
+        width: 320px;
+        height: 480px;
+    }
+
+    #intro-text {
+        text-align: right;
+        margin-bottom: 21px;
+        margin-top: 20px;
+        color: @grey;
+
+        .meshu-title {
+            color: black;
+        }
+    }
+
+    .large-button {
+        font-size: 30px;
+        margin-top: 24px;
+        float: right;
+    }
+
+    .button {
+        padding: 5px 11px;
+    }
+
+    .shop { 
+        background-color: @grey;
+    }
+}
+
 #banners {
     height: 384px;
     width: 960px;
@@ -309,12 +367,6 @@ body.win #login-form ul {
     position: absolute;
     top: 0;
     right: 0;
-}
-
-#main .big {
-    font-size: 46px;
-    text-align: center;
-    margin-top: 45px;
 }
 
 .call {
@@ -371,15 +423,29 @@ body.win #login-form ul {
     padding: 10px 0;
     display: inline-block;
     margin: 0 10px;
+
+    &:hover {
+        .shadow(10px, rgba(0, 0, 0, .25));
+    }
 }
 .option.pink {
     background-color: @pink;
 }
 
+#footer {
+    margin-bottom: 50px;
+}
+
+#footer p {
+    text-align: center;
+}
+#footer a {
+    color: @pink;
+}
 
 #content {
     width: @pageWidth;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 15px auto;
     border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
@@ -502,6 +568,14 @@ body.win #login-form ul {
 
 .button.pink {
     background-color: @pink;
+}
+
+.button:hover {
+    .shadow(10px, rgba(0, 0, 0, .25));
+}
+
+#search-button:hover {
+    .shadow(10px, rgba(0, 0, 0, .1));
 }
 
 #edit .foursquare-auth {
@@ -732,6 +806,18 @@ body.ie .frame div {
     .transition(opacity);
 }
 
+.render {
+    height: 600px;
+    width: 600px;
+    position: absolute;
+    opacity: 0;
+    .transition(opacity);
+}
+.account .render, .checkout .render, .reivew .render {
+    opacity: 1;
+    .transition(opacity);
+}
+
 .options{
     position: absolute;
     width: 139px;
@@ -748,7 +834,8 @@ body.ie .frame div {
     right: 0;
     display: none;
 }
-#color-list li:hover .color-img {
+#color-list li:hover .color-img,
+#color-list .selected .color-img {
     display: inline;
 }
 .color-img img {
@@ -1195,6 +1282,10 @@ body.ie8 .city-input {
         background-color: @pink;
         cursor: pointer;
     }
+
+    &:hover {
+        .shadow(10px, rgba(0, 0, 0, .25));
+    }
 }
 
 .nav a {
@@ -1288,6 +1379,7 @@ path {
     pointer-events: none;
     stroke-width: 5;
     stroke-linejoin: round;
+    .transition(stroke-width);
 }
 
 circle {
@@ -1302,8 +1394,12 @@ circle {
 .hidden, #rotate-ui, #hidden {
     display: none;
 }
-#mini-delaunay path, #product-preview path {
+.account .delaunay path, .checkout .delaunay path, .review .delaunay path {
     stroke-width: 15;
+    .transition(stroke-width);
+}
+#mini-delaunay path, #product-preview path {
+    stroke-width: 20;
 }
 
 #rotate:hover #rotate-ui {

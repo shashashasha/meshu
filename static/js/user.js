@@ -208,7 +208,7 @@ var user = function() {
 
         // format this better
         $("#logout").show().html('logout');
-        $("#profile").show();
+        $("#profile").fadeIn();
 
         $("#login").hide();
         $("#modal-bg").fadeOut();

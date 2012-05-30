@@ -40,16 +40,14 @@ invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # meshu.views.index
 def index(request):
-	if request.user.is_authenticated():
-		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
-		
+	# no more invite code to enter
 	return render_to_response('meshu/index.html', {}, context_instance=RequestContext(request))
 
 # meshu.views.shop
 def shop(request):
-	# assume user__id = 1 is all our admin created readymades
+	# assume username = shop is all our admin created readymades
 	meshus = Meshu.objects.filter(user_profile__user__username='shop')
-	
+
 	return render_to_response('meshu/gallery/gallery.html', {
 		"meshus": meshus,
 		"view": 'shop',
