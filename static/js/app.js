@@ -341,12 +341,22 @@ $(function() {
 		var value = $("#coupon-code-value").val();
 		orderer.applyCoupon(value, function(data) {
 			if (data.success) {
-				var couponPrice = data.amount;
+				var couponPrice = parseFloat(data.amount);
 
-				$("<h2>").attr("id","subtotal-coupon")
-					.addClass("review-header")
-					.html("Coupon:<span>-$" + couponPrice + ".00</span>")
-					.insertAfter("#subtotal-price");
+				// detect whether the coupon is for an amount or a percentage
+				if (couponPrice < 1 && couponPrice > 0) {
+					var amountOff = Math.floor(orderer.getPrice() * (1 - couponPrice));
+					var percentOff = parseInt((1 - couponPrice) * 100);
+					$("<h2>").attr("id","subtotal-coupon")
+						.addClass("review-header")
+						.html("Coupon:<span>" + percentOff + "% off! -$" + amountOff + ".00</span>")
+						.insertAfter("#subtotal-price");
+				} else if (couponPrice > 1) {
+					$("<h2>").attr("id","subtotal-coupon")
+						.addClass("review-header")
+						.html("Coupon:<span>-$" + couponPrice + ".00</span>")
+						.insertAfter("#subtotal-price");
+				}
 
 				// turn the input form into text
 				$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
