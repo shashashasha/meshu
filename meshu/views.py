@@ -267,8 +267,8 @@ def user_create(request):
 
 	# check if we have someone with the same email
 	try:
-		while True:
-			user = User.objects.get(email=email)
+		dupes = User.objects.filter(email=email)
+		if len(dupes) > 0:
 			return user_duplicate_error(request)
 	except User.DoesNotExist:
 		pass
