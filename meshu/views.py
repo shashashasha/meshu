@@ -190,7 +190,16 @@ def item_save(request, item_encoded):
 # Views for Users
 #
 def user_login(request, *args, **kwargs):
-	user = authenticate(username=request.POST['email'], password=request.POST['password'])
+	email = request.POST['email']
+
+	try:
+		dupes = User.objects.filter(email=email)
+		if len(dupes) > 0:
+			return user_duplicate_error(request)
+	except User.DoesNotExist:
+		pass
+
+	user = authenticate(username=email, password=request.POST['password'])
 	if user is not None:
 		if user.is_active:
 			response = login(request, user)
