@@ -24,6 +24,9 @@ sb.foursquare.initialize = function() {
         api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250&offset={offset}",
         baseURL = api.replace('{token}', token).replace('{v}', '20120102');
 
+    // remove the access token from the hash
+    window.location.hash = "#connected";
+
     // if you want to just go back to manual mode
     $("#finish-button").click(function() {
         window.location = "/make/#skipintro";
@@ -160,7 +163,6 @@ sb.foursquare.initialize = function() {
             url: url,
             dataType: 'jsonp',
             success: function(data) {
-                console.log("success");
                 var checkins = data.response.checkins.items;
                 if (!checkins || !checkins.length) {
                     addMeshus();

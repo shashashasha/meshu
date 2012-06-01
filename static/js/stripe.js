@@ -5,6 +5,7 @@ var orderer = function() {
         //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
         discountAmount = 0,
+        discountPercent = 1,
         type = null,
         material = null,
         product = null,
@@ -55,7 +56,16 @@ var orderer = function() {
             code: value
         }, function(data) {
             if (data.success) {
-                discountAmount = parseInt(data.amount);
+                console.log(data);
+
+                var amt = parseFloat(data.amount);
+                if (amt < 1 && amt > 0) {
+                    discountPercent = amt;
+                } else if (amt > 0) {
+                    discountAmount = parseInt(data.amount);    
+                }
+
+                console.log(discountPercent, discountAmount);
             }
 
             if (callback)
@@ -81,7 +91,7 @@ var orderer = function() {
         material = m;
 
         // keep currentAmount in cents
-        currentAmount = (options[type][material].price + shipping - discountAmount) * 100;
+        currentAmount = self.getTotal() * 100;
         
         return self;
     };
@@ -100,19 +110,19 @@ var orderer = function() {
     self.getTotal = function() {
         if (!options) return null;
 
-        return options[type][material].price + shipping - discountAmount;
+        return Math.floor(discountPercent * (options[type][material].price - discountAmount)) + shipping;
     };
 
     self.getTotalCents = function() {
         if (!options) return null;
 
-        return (options[type][material].price + shipping - discountAmount) * 100;
+        return self.getTotal() * 100;
     };
 
     self.getTotalString = function() {
         if (!options) return null;
 
-        return '$' + (options[type][material].price + shipping - discountAmount) + '.00';
+        return '$' + self.getTotal() + '.00';
     };
 
     self.getColors = function(type, material) {
