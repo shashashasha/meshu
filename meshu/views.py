@@ -35,7 +35,8 @@ import sha
 #
 
 # hashed codes
-codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46']
+codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0']
+amounts = [25, .85]
 invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # meshu.views.index
@@ -194,7 +195,7 @@ def user_login(request, *args, **kwargs):
 
 	try:
 		dupes = User.objects.filter(email=email)
-		if len(dupes) > 0:
+		if len(dupes) > 1:
 			return user_duplicate_error(request)
 	except User.DoesNotExist:
 		pass
