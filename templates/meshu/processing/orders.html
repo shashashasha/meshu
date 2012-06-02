@@ -17,9 +17,11 @@
                     {% endautoescape %}
                 </div>
                 <div class="status-information">
-                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }} by {{ order.contact }}, order # {{ order.id }}</a></b>
-                    <br /><br />
-                    <span class="date">Ordered on {{ order.date_created }}</span>
+                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }} by {{ order.contact }}, order #{{ order.id }}</a></b>
+                    <br />
+                    <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu in admin</a> | <a href="/admin/meshu/order/{{ order.id }}/">order in admin</a></span>
+                    <br />
+                    <span class="product">{{ order.color }} {{ order.material }} {{ order.product }}</span>
                     <span class="status">Current Status: {{ order.get_status_message }}</span>
                     <form action="/orders/{{ order.id }}/update/">
                         <select name="status">
