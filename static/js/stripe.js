@@ -56,7 +56,6 @@ var orderer = function() {
             code: value
         }, function(data) {
             if (data.success) {
-                console.log(data);
 
                 var amt = parseFloat(data.amount);
                 if (amt < 1 && amt > 0) {
@@ -64,8 +63,6 @@ var orderer = function() {
                 } else if (amt > 0) {
                     discountAmount = parseInt(data.amount);    
                 }
-
-                console.log(discountPercent, discountAmount);
             }
 
             if (callback)
