@@ -1,19 +1,19 @@
 $(function() {
 	$("body").detect();
 	var options = {"earrings":
-						{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
+						{"acrylic":{"price":75,"colors":["Black","White"]},
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
-						"nylon":{"price":90,"colors":["Black","Grey","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]},
 						"silver":{"price":150}},
 				   "pendant":
-				   		{"acrylic":{"price":75,"colors":["Black","Grey","White"]},
+				   		{"acrylic":{"price":75,"colors":["Black","White"]},
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
-						"nylon":{"price":90,"colors":["Black","Grey","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]},
 						"silver":{"price":130}},
 				   "necklace":
-				   		{"acrylic":{"price":80,"colors":["Black","Grey","White"]},
+				   		{"acrylic":{"price":80,"colors":["Black","White"]},
 						"wood":{"price":85,"colors":["Amber","Blonde"]},
-						"nylon":{"price":95,"colors":["Black","Grey","White"]},
+						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150}},
 					"cufflinks":
 						{"stainless":{"price":85},
@@ -26,7 +26,6 @@ $(function() {
 						"pendant":"pendant necklace",
 						"necklace":"large necklace",
 						"cufflinks": "cufflinks"};
-	var shipPrice = 4;
 	
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
@@ -226,7 +225,6 @@ $(function() {
 
 	// called when a next button is clicked
 	function makeNextView(view) {
-
 		switch (view) {
 			case 'edit':
 				// if we were editing and not logged in, show the modal, and save the meshu
@@ -294,6 +292,18 @@ $(function() {
 		$(".show-places").toggle();
 	});
 
+
+	$("#shipping-destination li").click(function() {		
+        var mode = $(this).attr("id").split("-").pop();
+
+        var form = $("#shipping-destination");
+
+        $("#checkout").attr("class", mode); 
+        form.find("li").removeClass("active");
+        $(this).addClass("active");
+
+        orderer.shippingMode(mode);
+	});
 	/*
 		We're using JQuery validate to check all the forms 
 		of our shipping and credit card input
@@ -302,13 +312,13 @@ $(function() {
 	*/
 	$("#payment-form").validate({
 		rules: {
-			shipping_zip: {
-				digits: true,
-		      	minlength: 5
-		    },
-		    shipping_state: {
-		    	minlength: 2
-		    },
+			// shipping_zip: {
+			// 	digits: true,
+		 //      	minlength: 5
+		 //    },
+		 //    shipping_state: {
+		 //    	minlength: 2
+		 //    },
 		    card_number: {
 		    	creditcard: true
 		    },
@@ -419,7 +429,7 @@ $(function() {
 		// let our stripe object know what object we're purchasing
 		// it'll know the price, given the options beforehand
 		// we also can't change options once it's set, so no one can mess with it
-		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), shipPrice);
+		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), orderer.getShipping());
 
 		$("#object-type").val(sb.materializer.productName());
 		$("#object-material").val(sb.materializer.material());
@@ -480,7 +490,7 @@ $(function() {
 
 		$("#subtotal-price span").text(orderer.getPriceString());
 
-		$("#shipping-price span").text("$" + shipPrice + ".00");
+		$("#shipping-price span").text("$" + orderer.getShipping() + ".00");
 
 		$("#total-price span").text(orderer.getTotalString());
 	}

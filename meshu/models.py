@@ -111,9 +111,11 @@ class Order(models.Model):
 	shipping_name = models.CharField(max_length=200, default='')
 	shipping_address = models.CharField(max_length=200, default='')
 	shipping_address_2 = models.CharField(max_length=140, default='', blank=True)
-	shipping_city = models.CharField(max_length=100, default='')
-	shipping_zip = models.CharField(max_length=5, default='')
+	shipping_city = models.CharField(max_length=100, default='') 
+	shipping_zip = models.CharField(max_length=20, default='') # account for postcodes too hopefully
+	shipping_region = models.CharField(max_length=100, default='', blank=True) # regions, county
 	shipping_state = models.CharField(max_length=2, default='')
+	shipping_country = models.CharField(max_length=100, default='', blank=True)
 
 	# tracking number and shipping date
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)

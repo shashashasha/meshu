@@ -582,7 +582,9 @@ def order_create(request, profile, meshu):
 	order.shipping_address_2 = request.POST['shipping_address_2']
 	order.shipping_city = request.POST['shipping_city']
 	order.shipping_zip = request.POST['shipping_zip']
+	order.shipping_region = request.POST['shipping_region']
 	order.shipping_state = request.POST['shipping_state']
+	order.shipping_country = request.POST['shipping_country']
 
 	# set the meshu materials
 	order.material = request.POST['material']

@@ -542,7 +542,7 @@ sb.mesh = function (frame, map, width, height) {
     self.refresh = function() {
         update();
     };
-
+    
     self.updateTitle = function(t) {
         meshuTitle = t;
     };

@@ -161,29 +161,6 @@ h1#meshu {
         padding: 0 0 10px 17px;
     }
 
-    ul {
-        border-bottom: 1px solid @borderGrey;
-        height: 28px;
-        padding-left: 20px;
-    }
-
-    li {
-        display: inline-block;
-        padding: 5px 10px;
-        border: 1px solid @borderGrey;
-        margin: 0 -3px 0;
-        color: @grey;
-        background-color: white;
-        cursor: pointer;
-
-        .hoverColor(@pink);
-
-        &.active, &.active:hover {
-            border-bottom: 1px solid white;
-            color: black;
-        }
-    }
-
     form {
         margin-top: 15px;
     }
@@ -210,6 +187,32 @@ h1#meshu {
         clear: both;
     }
 }
+
+.tab-switch {
+    ul {
+        border-bottom: 1px solid @borderGrey;
+        height: 28px;
+        padding-left: 20px;
+    }
+
+    li {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid @borderGrey;
+        margin: 0 -3px 0;
+        color: @grey;
+        background-color: white;
+        cursor: pointer;
+
+        .hoverColor(@pink);
+
+        &.active, &.active:hover {
+            border-bottom: 1px solid white;
+            color: black;
+        }
+    }
+}
+
 body.win #login-form ul {
     height: 27px;
 }
@@ -1007,6 +1010,12 @@ body.firefox.win #rotate-help .border-notch {
     .transition(right);
 }
 
+#shipping-destination {
+    height: 28px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid @borderGrey;
+}
+
 p.note {
     color: @lightGrey;
     clear: both;
@@ -1027,10 +1036,37 @@ p.note {
     line-height: 30px;
 }
 
+.ship-row input {
+    width: 290px;
+}
+.ship-row .short-input {
+    width: 130px;
+    margin-left: 60px;
+}
+
+.international .short-input {
+    float: right;
+}
+
+.country-dropdown {
+    clear: both;
+    margin: 2px;
+
+    select {
+        margin: 6px 0 0 0;
+        float: right;
+    }
+}
+
+.short-label {
+    position: absolute;
+}
+
 .city-input {
     width: 204px; 
-    margin: 0 31px 0 10px;
+    /*margin: 0 31px 0 10px;*/
 }
+
 body.firefox .city-input {
     width: 207px;
 }
@@ -1050,6 +1086,15 @@ body.ie8 .city-input {
 #checkout input.right, #checkout span.right {
     float: right;
 }
+
+#checkout.international .domestic {
+    display: none;
+}
+
+#checkout.domestic .international {
+    display: none;
+}
+
 
 #account label.error, #checkout label.error {
     color: @pink;
@@ -1398,6 +1443,7 @@ circle {
     stroke-width: 15;
     .transition(stroke-width);
 }
+
 #mini-delaunay path, #product-preview path {
     stroke-width: 20;
 }
