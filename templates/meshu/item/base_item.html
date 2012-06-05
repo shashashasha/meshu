@@ -188,7 +188,7 @@
             <div class="make-wrapper">
                 <h2>Shipping</h2>
                 <ul id="shipping-destination" class="tab-switch">
-                    <li id="tab-domestic" class="active">Domestic</li>
+                    <li id="tab-domestic" class="active">USA</li>
                     <li id="tab-international">International</li>
                 </ul>
                 <form action="/order/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
@@ -234,7 +234,7 @@
                     </div>
                     <div class="form-row ship-row international country-dropdown">
                         <label>Country</label>
-                        <select id="countries" name="countries">
+                        <select id="countries" name="shipping_country">
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Åland Islands">Åland Islands</option>
                             <option value="Albania">Albania</option>
