@@ -8,8 +8,9 @@ var orderer = function() {
         discountPercent = 1,
         type = null,
         material = null,
-        product = null,
         shipping = 4,
+        domesticShipping = 4,
+        internationalShipping = 20,
         options = null;
 
     function stripeResponseHandler(status, response) {
@@ -49,6 +50,12 @@ var orderer = function() {
 
         // submit form callback
         return false; 
+    };
+
+    // update the shipping value
+    self.shippingMode = function(value) {
+        var amount = value == 'international' ? internationalShipping : domesticShipping;
+        self.updateProduct(type, material, amount);
     };
 
     self.applyCoupon = function(value, callback) {
@@ -102,6 +109,10 @@ var orderer = function() {
         if (!options) return null;
         
         return '$' + options[type][material].price + '.00';
+    };
+
+    self.getShipping = function() {
+        return shipping;
     };
 
     self.getTotal = function() {

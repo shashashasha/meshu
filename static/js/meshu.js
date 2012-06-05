@@ -198,6 +198,14 @@ sb.meshu = function(frame) {
     	return mesh.output();
     };
 
+    self.hideMesh = function() {
+        return self;
+    };
+
+    self.showMesh = function() {
+        return self;
+    };
+
     self.outputLocationData = function() {
         var dataString = [];
         var cp = mesh.places(),
