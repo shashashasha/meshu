@@ -217,7 +217,6 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
-		$(".render").css("background-image","url(" + static_url + 'images/render/' + product + '_preview.jpg' + ")");
 
 		// sync the rotation between the product picker and the product rotator
 		sb.rotator.on("rotated", sb.product.rotation);
@@ -237,15 +236,16 @@ $(function() {
 				break;
 
 			case 'make':
+			case 'readymade':
 				meshu.mesh().updateCircleBehavior(true);
 				// animate meshu
 				var product = sb.materializer.product();
 				var t = sb.transforms[product]["render"];
 				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
-				break;
 
-			case 'readymade':
-				meshu.mesh().updateCircleBehavior(true);
+				// update the render background to be the product preview
+				var productPreview = static_url + 'images/render/' + product + '_preview.jpg';
+				$(".render").css("background-image","url(" + productPreview + ")");
 				break;
 
 			// this doesn't happen because of a 'next' class button
