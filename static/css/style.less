@@ -189,27 +189,29 @@ h1#meshu {
 }
 
 .tab-switch {
-    ul {
-        border-bottom: 1px solid @borderGrey;
-        height: 28px;
-        padding-left: 20px;
-    }
+    border-bottom: 1px solid @borderGrey;
+    height: 28px;
+    padding-left: 20px;
+}
 
-    li {
-        display: inline-block;
-        padding: 5px 10px;
-        border: 1px solid @borderGrey;
-        margin: 0 -3px 0;
-        color: @grey;
-        background-color: white;
-        cursor: pointer;
+#shipping-destination.tab-switch {
+    padding-left: 16px;
+}
 
-        .hoverColor(@pink);
+.tab-switch li {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid @borderGrey;
+    margin: 0 -3px -1px;
+    color: @grey;
+    background-color: white;
+    cursor: pointer;
 
-        &.active, &.active:hover {
-            border-bottom: 1px solid white;
-            color: black;
-        }
+    .hoverColor(@pink);
+
+    &.active, &.active:hover {
+        border-bottom: 1px solid white;
+        color: black;
     }
 }
 
@@ -758,6 +760,7 @@ body.ie .frame div {
     width: 1000px;
     right: 0;
 }
+
 .edit .frame {
     right: 0;
     .transition(right);
@@ -799,7 +802,7 @@ body.ie .frame div {
     .transition(opacity);
 }
 
-.view .map .layer, .edit .map .layer {
+.view .map .layer, .edit .map .layer, .postcard .map .layer {
     opacity: .3;
     .transition(opacity);
 }
@@ -1829,4 +1832,16 @@ body.ie #maps .mini-meshu div {
 
 .SH {
     background-color: #00FF66;
+}
+
+.postcard .frame {
+    width: 1000px;
+    height: 640px;
+    right: 0;
+}
+.postcard #attribution {
+    display: none;
+}
+#content.postcard {
+    overflow: visible;
 }

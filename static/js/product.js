@@ -35,6 +35,21 @@ $(function() {
 			frame.append(miniDelaunay);
 		};
 
+		self.thumbnail = function(mesh, frame, transform) {
+			var miniDelaunay = $(mesh).clone()
+				.attr("class","product-delaunay")
+				.attr("transform", transform);
+
+			d3.select(frame[0])
+				.append('svg:rect')
+					.attr('x', '0')
+					.attr('y', 0)
+					.attr('width', '100%')
+					.attr('height', '100%');
+
+			frame.append(miniDelaunay);
+		};
+
 		self.rotation = function(r) {
 			d3.selectAll(".product-delaunay")
 				.attr("transform", function(d, i) {
