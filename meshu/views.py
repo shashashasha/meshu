@@ -653,6 +653,13 @@ def processing_order_update_status(request, order_id):
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
 
+def processing_all(request):
+	meshus = Meshu.objects.all()
+
+	return render_to_response('meshu/processing/allview.html', {
+		'meshus': meshus
+	}, context_instance=RequestContext(request))
+
 # proxy yahoo api
 import urllib2, urllib
 def processing_geocoder(request):

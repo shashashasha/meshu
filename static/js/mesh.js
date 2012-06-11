@@ -175,13 +175,16 @@ sb.mesh = function (frame, map, width, height) {
         map_dragging = null;
     }
 
-    self.updatePixelBounds = function(){
-        if (lats.length && lons.length)
+    self.updatePixelBounds = function() {
+        if (lats.length && lons.length) {
             pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
                             map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
                             map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
-        else pixel_bounds = [];
+        }
+        else { 
+            pixel_bounds = [];
+        }
     }
 
     function updateMesh(skipAnimation) {
@@ -215,6 +218,7 @@ sb.mesh = function (frame, map, width, height) {
                     var pt = map.l2p(loc);
                     draw.push([pt.x, pt.y]);
                 } 
+
                 return "M" + draw.join("L") + "Z"; 
             });
 

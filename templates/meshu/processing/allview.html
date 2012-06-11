@@ -1,0 +1,57 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}All Meshus{% endblock %}
+
+{% block content %}
+<div id="map" style="width:1000px;height:600px">
+</div>
+{% endblock %}
+
+{% block resources %}
+<script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
+<!--[if IE]>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.ie.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
+<![endif]-->
+<!--[if !IE]> -->
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
+<!-- <![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+<script type="text/javascript">
+	var locations = ""
+		{% for meshu in meshus reversed %}
+	    	+ "{{ meshu.location_data|safe }}\n"
+	    {% endfor %};
+
+	var mapper = sb.map("#map", $("#map").width() + 'px', $("#map").height() + 'px');
+
+	// mapper.map.add(org.polymaps.interact());
+
+	var meshuDatas = locations.split('\n');
+	var meshus = [];
+
+	var mlats = [];
+	var mlons = [];
+	$.each(meshuDatas, function(i, d){
+		var meshur = sb.meshu("#map", mapper);
+		meshus.push(meshur);
+		meshur.locationData(d);
+		mlats = mlats.concat(meshur.mesh().lats());
+		mlons = mlons.concat(meshur.mesh().lons());
+	});
+
+	mapper.map.zoom(2).center({lat: 0, lon: 0});
+
+	setTimeout(function() {
+		mapper.updateBounds(mlats, mlons);
+
+		$.each(meshus, function(i, m) {
+			m.refreshWithBounds(mlats, mlons);
+		});
+	}, 2000);
+</script>
+{% endblock %}

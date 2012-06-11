@@ -1,11 +1,11 @@
 var sb = sb || {};
 var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
 
-sb.meshu = function(frame) {
+sb.meshu = function(frame, existingMap) {
 	var self = {},
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
-		map = sb.map(frame, width, height),
+		map = existingMap || sb.map(frame, width, height),
 		mesh = sb.mesh(frame, map, width, height),
         cases = $("#cases");
 
@@ -152,6 +152,10 @@ sb.meshu = function(frame) {
         return mesh;
     };
 
+    self.map = function() {
+        return map;
+    };
+
     // save the rotation for now
     var cr = 0, cs = 1, ctx = 0, cty = 0;
     var rotateInterval;
@@ -177,6 +181,12 @@ sb.meshu = function(frame) {
             else
                 clearInterval(rotateInterval);
         }, 40);
+    };
+
+    self.refreshWithBounds = function(lats, lons) {
+        map.updateBounds(lats, lons);
+        mesh.updatePixelBounds();
+        mesh.refresh();
     };
 
     self.updateBounds = function() {
