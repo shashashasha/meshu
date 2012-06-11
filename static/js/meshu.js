@@ -67,7 +67,7 @@ sb.meshu = function(frame, existingMap) {
                 console.log(error2);
             },
             success: function(data){
-                var results = data.ResultSet.Results;
+                var results = data.ResultSet.Results || [data.ResultSet.Result];
                 var content = $("#content");
                 cases.empty().hide();
 
