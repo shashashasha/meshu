@@ -99,6 +99,15 @@ def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
 	return item_handler(request, item_id, 'display.html', 'view')
 
+def item_postcard(request, item_id):
+	item = get_object_or_404(Meshu, pk=item_id)
+
+	# don't let people 'shop' for other users items yet
+	if request.user.is_staff == False:
+		return notify(request, 'authorization_required')
+
+	return item_handler(request, item_id, 'postcard.html', 'postcard')
+
 def item_readymade(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 

@@ -1,0 +1,38 @@
+{% extends "meshu/item/base_item.html" %}
+{% load shorturl %}
+
+{% block login_form %}Please sign in{% endblock %}
+
+{% block edit %}
+{% endblock %}
+
+{% block navigation %}
+<ul id="nav">
+	<li class="nav-list"><a href="/orders/">orders</a></li>
+	<li class="nav-list"><a href="/admin/meshu/meshu/{{ meshu.id }}/">meshu #{{ meshu.id }}</a></li>
+	<li class="nav-list"><a href="{{ meshu.get_absolute_url }}">{{ meshu.title }} by {{ meshu.user_profile.user.email }}</a></li>
+</ul>
+{% endblock %}
+
+{% block view %}
+    <div id="view">
+        <h2><span>{{ meshu.title }}</span></h2>
+        <p class="show-places">show places list</p>
+        <p class="show-places" style="display: none;">hide places list</p>
+        <ul id="display-places"></ul>
+    </div>
+{% endblock %}
+
+{% block goback %}
+{% endblock %}
+{% block finish %}
+{% endblock %}
+
+{% block options %}
+{% endblock %}
+
+{% block make %}
+{% endblock %}
+
+{% block checkout %}
+{% endblock %}

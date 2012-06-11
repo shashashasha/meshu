@@ -7,12 +7,12 @@ $(function() {
 						"silver":{"price":150}},
 				   "pendant":
 				   		{"acrylic":{"price":75,"colors":["Black","White"]},
-						"wood":{"price":80,"colors":["Amber","Blonde"]},
+						"wood":{"price":85,"colors":["Amber","Blonde"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
 						"silver":{"price":130}},
 				   "necklace":
 				   		{"acrylic":{"price":80,"colors":["Black","White"]},
-						"wood":{"price":85,"colors":["Amber","Blonde"]},
+						"wood":{"price":90,"colors":["Amber","Blonde"]},
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150}},
 					"cufflinks":
