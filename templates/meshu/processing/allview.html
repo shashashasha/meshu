@@ -47,8 +47,6 @@
 	mapper.map.zoom(2).center({lat: 0, lon: 0});
 
 	setTimeout(function() {
-		mapper.updateBounds(mlats, mlons);
-
 		$.each(meshus, function(i, m) {
 			m.refreshWithBounds(mlats, mlons);
 		});
