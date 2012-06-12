@@ -461,6 +461,7 @@ def order_verify_coupon(request):
 	response_dict = {}
 	response_dict.update({ 'success' : matched })
 
+
 	if matched:
 		amount = amounts[codes.index(hashed)]
 		response_dict.update({ 'amount' : amount })
