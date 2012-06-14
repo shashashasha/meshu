@@ -6,9 +6,11 @@
 {% block edit %}
 {% endblock %}
 
+{% load shorturl %}
+
 {% block navigation %}
 <ul id="nav">
-	<li class="nav-list">{{ meshu.get_absolute_url }}</li>
+	<li class="nav-list">{% shorturl meshu %}</li>
 	<li class="nav-list"><a href="/orders/">orders</a></li>
 	<li class="nav-list"><a href="/admin/meshu/meshu/{{ meshu.id }}/">meshu #{{ meshu.id }}</a></li>
 	<li class="nav-list"><a href="{{ meshu.get_absolute_url }}">{{ meshu.title }} by {{ meshu.user_profile.user.email }}</a></li>
