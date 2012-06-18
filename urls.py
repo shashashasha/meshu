@@ -35,9 +35,12 @@ urlpatterns += patterns('meshu.views',
 	
 	# begin ordering an existing user meshu
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
+
 	url(r'^make/foursquare', direct_to_template, {
 		'template': 'meshu/gallery/foursquare_auth_completed.html'
 	}),
+	
+	url(r'^make/geojson', 'item_from_geojson'),
 	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
 	# root way to begin making a meshu
