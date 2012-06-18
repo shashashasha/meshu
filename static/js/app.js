@@ -117,7 +117,7 @@ $(function() {
 	/* 
 		Checking if we need to show the initial helper modal
 	*/	
-	if (!user.loggedIn && !(loadedMeshu && pageType != "edit") && window.location.hash != '#skipintro') {
+	if (!user.loggedIn && !loadedMeshu && window.location.hash != '#skipintro') {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
