@@ -1,5 +1,4 @@
 $(function() {
-	$("body").detect();
 	var options = {"earrings":
 						{"acrylic":{"price":75,"colors":["Black","White"]},
 						"wood":{"price":80,"colors":["Amber","Blonde"]},
@@ -45,6 +44,11 @@ $(function() {
 		saver.initialize(meshu, loadedMeshu.view_url);
 
 		if ($("html").hasClass("svg")) {
+			if (meshu.isReadymade) {
+				// readymade.js
+				readymade.initialize(meshu);
+			}
+
 			meshu.locationData(loadedMeshu.location_data);
 		}
 
@@ -495,29 +499,3 @@ $(function() {
 		$("#total-price span").text(orderer.getTotalString());
 	}
 });
-$.fn.detect = function() {
-	var nav = navigator.userAgent,
-		classes = {
-			ie: nav.match(/MSIE\s([^;]*)/) ? true : false,
-			ios: nav.match(/like Mac OS X/i) ? true : false,
-			iphone: nav.match(/iPhone/i) ? true : false,
-			ipad: nav.match(/iPad/i) ? true : false,
-			android: nav.match(/Android/i) ? true : false,
-			webos: nav.match(/WebOS/i) ? true : false,
-			firefox: nav.match(/Firefox/i) ? true : false,
-			webkit: nav.match(/WebKit/i) ? true : false,
-			safari: nav.match(/Safari/i) ? true : false,
-			chrome: nav.match(/Chrome/i) ? true : false,
-			opera: nav.match(/Opera/i) ? true : false
-		};
-	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){ 
-		var ieversion= Math.floor(new Number(RegExp.$1));
-		var ieClass = "ie"+ieversion;
-	}
-	classes.mobile = classes.iphone || classes.android;
-	for (var klass in classes) {
-		if (klass == "ie") this.addClass(ieClass);
-		this.toggleClass(klass, classes[klass]);
-	}
-	return this;
-};

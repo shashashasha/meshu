@@ -25,7 +25,7 @@ sb.foursquare.initialize = function() {
         baseURL = api.replace('{token}', token).replace('{v}', '20120102');
 
     // remove the access token from the hash
-    window.location.hash = "#connected";
+    // window.location.hash = "#connected";
 
     // if you want to just go back to manual mode
     $("#finish-button").click(function() {
@@ -80,7 +80,7 @@ sb.foursquare.initialize = function() {
             return;
         }
 
-        delay += 250;
+        delay += 300;
 
         setTimeout(function() {
             return function() {
@@ -92,7 +92,9 @@ sb.foursquare.initialize = function() {
                 $("#maps").append(frame);
 
                 var meshu = sb.minimeshu(frame[0]);
-                meshu.locations(e.locations);
+                setTimeout(function() {
+                    meshu.locations(e.locations);
+                }, 100);
 
                 frame.click(selectMeshu(meshu, e.name));
             };
@@ -163,6 +165,11 @@ sb.foursquare.initialize = function() {
             url: url,
             dataType: 'jsonp',
             success: function(data) {
+                if (!data.response.checkins) {
+                    addMeshus();
+                    return;
+                }
+
                 var checkins = data.response.checkins.items;
                 if (!checkins || !checkins.length) {
                     addMeshus();

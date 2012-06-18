@@ -1,7 +1,7 @@
 var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
-	var self = d3.dispatch("added"),
+	var self = d3.dispatch("added", "refreshed", "locationsSet"),
 		selfId = parseInt(Math.random() * 10000000000, 10);
 
     // making this not global ._.
@@ -146,7 +146,6 @@ sb.mesh = function (frame, map, width, height) {
             });
 
             self.add(loc.lat, loc.lon, undefined, false);
-            self.added();
             map_dragging = null;
             return;
         }
@@ -488,7 +487,8 @@ sb.mesh = function (frame, map, width, height) {
         }
 
         cases.fadeOut();
-
+        
+        self.added();
         return self;
     };
 
@@ -537,14 +537,17 @@ sb.mesh = function (frame, map, width, height) {
            places.push(loc.name);
         });
 
-        // redraw the mesh with new locations
-        update();
+        // don't redraw just yet, we'll call this outside in meshu.js
+        // update();
+        self.locationsSet();
 
         return self;
     };
 
     self.refresh = function() {
         update();
+
+        self.refreshed();
     };
     
     self.updateTitle = function(t) {

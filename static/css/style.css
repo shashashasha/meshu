@@ -108,28 +108,6 @@ h1#meshu {
 #login-form h2 {
   padding: 0 0 10px 17px;
 }
-#login-form ul {
-  border-bottom: 1px solid #e6e6e6;
-  height: 28px;
-  padding-left: 20px;
-}
-#login-form li {
-  display: inline-block;
-  padding: 5px 10px;
-  border: 1px solid #e6e6e6;
-  margin: 0 -3px 0;
-  color: #808080;
-  background-color: white;
-  cursor: pointer;
-}
-#login-form li:hover {
-  color: #ff3fb4;
-}
-#login-form li.active,
-#login-form li.active:hover {
-  border-bottom: 1px solid white;
-  color: black;
-}
 #login-form form {
   margin-top: 15px;
 }
@@ -151,6 +129,31 @@ h1#meshu {
   line-height: 19px;
   font-family: Helvetica, Arial, sans-serif;
   clear: both;
+}
+.tab-switch {
+  border-bottom: 1px solid #e6e6e6;
+  height: 28px;
+  padding-left: 20px;
+}
+#shipping-destination.tab-switch {
+  padding-left: 16px;
+}
+.tab-switch li {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #e6e6e6;
+  margin: 0 -3px -1px;
+  color: #808080;
+  background-color: white;
+  cursor: pointer;
+}
+.tab-switch li:hover {
+  color: #ff3fb4;
+}
+.tab-switch li.active,
+.tab-switch li.active:hover {
+  border-bottom: 1px solid white;
+  color: black;
 }
 body.win #login-form ul {
   height: 27px;
@@ -752,7 +755,8 @@ body.ie .frame div {
   -o-transition: opacity 0.6s;
 }
 .view .map .layer,
-.edit .map .layer {
+.edit .map .layer,
+.postcard .map .layer {
   opacity: .3;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -1032,6 +1036,11 @@ body.firefox.win #rotate-help .border-notch {
   -webkit-transition: right 0.6s;
   -o-transition: right 0.6s;
 }
+#shipping-destination {
+  height: 28px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #e6e6e6;
+}
 p.note {
   color: #8f8f8f;
   clear: both;
@@ -1048,9 +1057,31 @@ p.note {
 .form-row label {
   line-height: 30px;
 }
+.ship-row input {
+  width: 290px;
+}
+.ship-row .short-input {
+  width: 130px;
+  margin-left: 60px;
+}
+.international .short-input {
+  float: right;
+}
+.country-dropdown {
+  clear: both;
+  margin: 2px;
+}
+.country-dropdown select {
+  margin: 6px 0 0 0;
+  float: right;
+}
+.short-label {
+  position: absolute;
+}
 .city-input {
   width: 204px;
-  margin: 0 31px 0 10px;
+  /*margin: 0 31px 0 10px;*/
+
 }
 body.firefox .city-input {
   width: 207px;
@@ -1071,6 +1102,12 @@ body.ie8 .city-input {
 #checkout input.right,
 #checkout span.right {
   float: right;
+}
+#checkout.international .domestic {
+  display: none;
+}
+#checkout.domestic .international {
+  display: none;
 }
 #account label.error,
 #checkout label.error {
@@ -1576,10 +1613,10 @@ circle.highlight,
   opacity: 1;
 }
 .edit .mapui #zoomin {
-  background-image: url(http://127.0.0.1:8000/static/css/../images/zoomin.png);
+  background-image: url(../images/zoomin.png);
 }
 .edit .mapui #zoomout {
-  background-image: url(http://127.0.0.1:8000/static/css/../images/zoomout.png);
+  background-image: url(../images/zoomout.png);
 }
 .edit .mapui div:hover {
   pointer: cursor;
@@ -1722,13 +1759,16 @@ body.ie #maps .mini-meshu div {
   z-index: 2;
 }
 /* about page */
+.about-link {
+  color: #ff3fb4;
+}
 .about {
   width: 460px;
   float: left;
   margin-top: 50px;
 }
 .about a {
-    color: #1fcaff;
+  color: #ff3fb4;
 }
 .about img {
   width: 240px;
@@ -1764,6 +1804,12 @@ body.ie #maps .mini-meshu div {
   margin-left: 10px;
   height: 100px;
 }
+.status-information .link a {
+  text-decoration: underline;
+}
+.status-information a:hover {
+  color: #ff3fb4;
+}
 .status-meshu {
   float: left;
   border: 1px solid #e6e6e6;
@@ -1788,4 +1834,15 @@ body.ie #maps .mini-meshu div {
 }
 .SH {
   background-color: #00FF66;
+}
+.postcard .frame {
+  width: 1000px;
+  height: 640px;
+  right: 0;
+}
+.postcard #attribution {
+  display: none;
+}
+#content.postcard {
+  overflow: visible;
 }

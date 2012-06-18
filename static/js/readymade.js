@@ -1,3 +1,4 @@
+var readymade = {};
 $(function() {
 	/*
 		How we flip between images of readymades
@@ -31,6 +32,7 @@ $(function() {
 			});
 		}
 	};
+
 	var readymadePreview = $(".readymade-preview");
 	// viva pinterest
 	$(".other-view").addClass('hidden');
@@ -47,11 +49,15 @@ $(function() {
 	readymadePreview.click(thumbnailHandler);
 
 	/*
-		Adding the product preview
+		this is called from within app.js to make sure 
+		we don't draw the thumbnail before a mesh is loaded
 	*/
-	var product = loadedMeshu.product, 
-		transform = 'scale(.175) translate(-30, -30)';
-	sb.product.thumbnail($(".meshu-svg .delaunay"), readymadePreview, transform);
+	readymade.initialize = function(meshu) {
+		meshu.mesh().on("refreshed", function() {
+			var transform = 'scale(.175) translate(-30, -30)';
+			sb.product.thumbnail($(".meshu-svg .delaunay"), readymadePreview, transform);	
+		});
+	};
 
 	// remove the first thumbnail if we have the svg version
 	// if we have the svg version

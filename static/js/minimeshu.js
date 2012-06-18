@@ -51,7 +51,6 @@ sb.minimeshu = function(frame) {
         }
 
         mesh.locations(newLocs);
-        self.updateBounds();
         return self;
     };
 
@@ -61,9 +60,14 @@ sb.minimeshu = function(frame) {
 
     self.updateBounds = function() {
         map.updateBounds(mesh.lats(), mesh.lons());
+    };
+
+    map.on("boundsUpdated", function() {
         mesh.updatePixelBounds();
         mesh.refresh();
-    };
+    });
+
+    mesh.on("locationsSet", self.updateBounds);
 
     // output the contents of our mesh as svg
     self.outputSVG = function() {

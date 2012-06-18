@@ -2,17 +2,17 @@ var sb = sb || {};
 
 sb.map = function(frame, width, height) {
 	var po = org.polymaps;
-	var self = {};
+	var self = d3.dispatch("boundsUpdated");
 
 	// updating to toner tiles
 	var baseURL = "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
-		d3.select(frame).append("div").attr("class","render");
-      
     container.style.position = "absolute";
     container.style.width = width;
     container.style.height = height;
+
+    d3.select(frame).append("div").attr("class","render");
 
 	var image = po.image()
 		.url(po.url(baseURL)
@@ -20,17 +20,27 @@ sb.map = function(frame, width, height) {
 	
 	self.dispatch = d3.dispatch("show");
 
+	var svgObject = container.appendChild(po.svg("svg"));
 	self.map = po.map()
-		.container(container.appendChild(po.svg("svg")))
+		.container(svgObject)
 		.zoom(12)
 		.center({ lat: 37.755, lon: -122.445 });
+
+	// set the size, this fixes firefox bugs
+	self.map.size({ 
+		x: $(frame).width(), 
+		y: $(frame).height() 
+	});
 
 	self.map.add(image);
 
 	// fill the background with white
-	var svg = d3.select(".map");
-	svg.attr("width","100%").attr("height","100%");
-	svg.select("rect").attr("visibility","visible").attr("fill","white");
+	d3.select(svgObject)
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.select("rect")
+		.attr("visibility","visible")
+		.attr("fill","white");
 
 	self.frame = function() {
 		return container;
@@ -70,6 +80,8 @@ sb.map = function(frame, width, height) {
 
 		self.map.extent(extent);
 		self.map.zoom(self.map.zoom() - .5);
+
+		self.boundsUpdated();
 	};
 
 	// this was old, from when we were updating the proportions of the map. 
