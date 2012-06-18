@@ -42,7 +42,7 @@ $(function() {
 
 			d3.select(frame[0])
 				.append('svg:rect')
-					.attr('x', '0')
+					.attr('x', 0)
 					.attr('y', 0)
 					.attr('width', '100%')
 					.attr('height', '100%');

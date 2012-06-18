@@ -37,8 +37,7 @@ sb.meshu = function(frame, existingMap) {
         searchPlaces();
     });
 
-    mesh.on("added", checkAdded);
-    function checkAdded() { 
+    self.checkAdded = function() { 
         // pay attention to the number of points
         var points = mesh.points();
         if (points.length > 3) $("#finish-button").addClass("active");
@@ -107,8 +106,6 @@ sb.meshu = function(frame, existingMap) {
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
         self.updateBounds();
-
-        checkAdded();
     };
 
     self.locations = function(locations, skipDelay) {
@@ -144,7 +141,6 @@ sb.meshu = function(frame, existingMap) {
         }
 
         mesh.locations(newLocs);
-        self.updateBounds();
         return self;
     };
 
@@ -185,15 +181,20 @@ sb.meshu = function(frame, existingMap) {
 
     self.refreshWithBounds = function(lats, lons) {
         map.updateBounds(lats, lons);
-        mesh.updatePixelBounds();
-        mesh.refresh();
     };
 
     self.updateBounds = function() {
-        map.updateBounds(mesh.lats(), mesh.lons());
+        self.refreshWithBounds(mesh.lats(), mesh.lons());
+    };
+
+    mesh.on("added", self.checkAdded);
+
+    map.on("boundsUpdated", function() {
         mesh.updatePixelBounds();
         mesh.refresh();
-    };
+    });
+
+    mesh.on("locationsSet", self.updateBounds);
 
     self.updateTitle = function(t) {
         mesh.updateTitle(t);
