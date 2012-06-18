@@ -56,7 +56,7 @@ class OrderAdmin(admin.ModelAdmin):
 		}),
 		('Shipping Information', {
 			'classes': ['collapse'],
-			'fields': ['shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country']
+			'fields': ['shipping_name', 'shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country']
 		}),
 		('Order Shipped Status', {
 			'classes': ['collapse'],
