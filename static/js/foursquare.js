@@ -25,7 +25,7 @@ sb.foursquare.initialize = function() {
         baseURL = api.replace('{token}', token).replace('{v}', '20120102');
 
     // remove the access token from the hash
-    // window.location.hash = "#connected";
+    window.location.hash = "#connected";
 
     // if you want to just go back to manual mode
     $("#finish-button").click(function() {
