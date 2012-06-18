@@ -1,0 +1,65 @@
+{% extends "meshu/item/base_item.html" %}
+
+{% block title %}Meshu - Upload Your Own{% endblock %}
+
+{% block goback %}
+    <div class="nav back">back</div>
+{% endblock %}
+
+{% block finish %}
+    <div id="finish-button" class="nav next start-order">Continue</div>
+{% endblock %}
+
+{% block resources %}
+    <script type="text/javascript">
+
+    Modernizr.load({
+        test: Modernizr.svg,
+        nope: '{{ STATIC_URL }}js/min/no-svg.min.js'
+    });
+
+    var pageType = "{{ view }}";
+    
+    {% if meshu %}
+    var loadedMeshu = {
+        edit_url: '{{ meshu.get_edit_url }}',
+        view_url: '{{ meshu.get_absolute_url }}',
+        title: "{{ meshu.title|safe }}",
+        product: '{{ meshu.product }}'
+    };
+
+    // preprocess the geojson into our location_data ready blob
+    loadedMeshu.geojson = {{ geojson|safe }};
+
+    loadedMeshu.location_array = [];
+    loadedMeshu.locations_seen = {};
+    for (var i = 0; i < loadedMeshu.geojson.features.length; i++) {
+    	var feature = loadedMeshu.geojson.features[i],
+    		geo = feature.geometry,
+    		props = feature.properties;
+
+    	if (geo.type == "Point") {
+    		var lat = geo.coordinates[1],
+    			lon = geo.coordinates[0],
+    			latlon = lat + ', ' + lon,
+    			name = props.name ? props.name : latlon;
+
+    		// don't add duplicate points for now, messes up the meshu
+    		if (loadedMeshu.locations_seen[latlon]) {
+    			continue;
+    		}
+
+    		var blob = [lat, lon, name].join('\t');
+    		loadedMeshu.locations_seen[latlon] = blob;
+    		loadedMeshu.location_array.push(blob);
+    	}
+    }
+
+    // create the blob for location data
+    loadedMeshu.location_data = loadedMeshu.location_array.join('|');
+
+    {% else %} 
+    var loadedMeshu = null;
+    {% endif %}
+    </script>  
+{% endblock %}

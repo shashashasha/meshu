@@ -131,9 +131,30 @@ def item_handler(request, item_id, template, view):
 			'view': view
 		}, context_instance = RequestContext(request))
 
+def item_from_geojson(request):
+	if request.POST.has_key('geojson') == False and request.GET.has_key('url') == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	meshu = Meshu()
+
+	if request.GET.has_key('url'):
+		meshu.title = request.GET.get('title', 'My Meshu')
+		response = urllib2.urlopen(request.GET.get('url'))
+		geojson = response.read()
+
+	if request.POST.has_key('geojson'):
+		meshu.title = request.POST.get('title', 'My Meshu')
+		geojson = request.POST.get('geojson', '')
+
+	return render_to_response('meshu/item/geojson.html', {
+		'meshu': meshu,
+		'geojson' : geojson,
+		'view': 'edit'
+	}, context_instance = RequestContext(request))
+
 def item_from_data(request):
 
-	if request.POST.has_key('location_data') == False or request.POST.has_key('location_data') == False:
+	if request.POST.has_key('location_data') == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
 	meshu = Meshu()
