@@ -675,6 +675,19 @@ def processing_order_update_status(request, order_id):
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
 
+def processing_addresses(request): 
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	# get all orders that haven't been shipped
+	orders = Order.objects.exclude(status='SH')
+	orders_shipped = Order.objects.filter(status='SH')
+
+	return render_to_response('meshu/processing/order_shipping_export.html', {
+			'orders': orders,
+			'orders_shipped' : orders_shipped
+	}, context_instance=RequestContext(request))
+
 def processing_all(request):
 	meshus = Meshu.objects.all()
 
