@@ -66,7 +66,12 @@
         d3.selectAll("#master-svg").attr("class","meshu-svg")
         d3.selectAll(".delaunay").each(function(){
             var node = d3.select(this);
-            var t = node.attr("transform").split(')').pop() || "";
+            var t = node.attr("transform").split('rotate(').pop() || "";
+            
+            if (t.length) {
+                t = 'rotate(' + t;
+            }
+
             node.attr("transform","scale(.15) translate(-80, -80)" + t); // + t);
         });
 
