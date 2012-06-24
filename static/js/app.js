@@ -1,19 +1,19 @@
 $(function() {
 	var options = {"earrings":
 						{"acrylic":{"price":75,"colors":["Black","White"]},
-						"wood":{"price":80,"colors":["Amber","Blonde"]},
+						"wood":{"price":80,"colors":["Amber"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":150}},
+						"silver":{"price":150,"colors":["Sterling Silver"]}},
 				   "pendant":
 				   		{"acrylic":{"price":75,"colors":["Black","White"]},
-						"wood":{"price":85,"colors":["Amber","Blonde"]},
+						"wood":{"price":85,"colors":["Amber"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":130}},
+						"silver":{"price":130,"colors":["Sterling Silver"]}},
 				   "necklace":
 				   		{"acrylic":{"price":80,"colors":["Black","White"]},
-						"wood":{"price":90,"colors":["Amber","Blonde"]},
+						"wood":{"price":90,"colors":["Amber"]},
 						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":150}},
+						"silver":{"price":150,"colors":["Sterling Silver"]}},
 					"cufflinks":
 						{"stainless":{"price":85},
 						"silver":{"price":160}}};
