@@ -39,7 +39,7 @@ sb.minimeshu = function(frame) {
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
-            if (values.length != 3) {
+            if (values.length < 3) {
                 continue;
             }
 
