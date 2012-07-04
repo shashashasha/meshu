@@ -96,6 +96,7 @@ urlpatterns += patterns('meshu.views',
 
 	# backend for our orders
 	url(r'^orders/(?P<order_id>\d+)/update/', 'processing_order_update_status'),
+	url(r'^orders/(?P<order_id>\d+)/toggle_postcard/', 'processing_order_postcard_toggle'),
 	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
 	url(r'^orders/addresses', 'processing_addresses'),
 	url(r'^orders/all', 'processing_all'),

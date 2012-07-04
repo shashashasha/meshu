@@ -11,6 +11,8 @@
                 <div class="{{ order.status }} status-block">
                     {{ order.status }}
                 </div>
+                <div id="order-id-{{ order.id }}" class="postcard-toggle postcard-{{ order.postcard_ordered }} status-block">
+                </div>
                 <div class="status-meshu">
                     {% autoescape off %}
                         {{ order.meshu.svg }}
@@ -21,8 +23,7 @@
                     <br />
                     <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span>
                     <br />
-                    <span class="product">{{ order.color }} {{ order.material }} {{ order.product }}</span>
-                    <span class="status">Current Status: {{ order.get_status_message }}</span>
+                    <span class="product">{{ order.get_display_name }}</span>
                     <form action="/orders/{{ order.id }}/update/">
                         <select name="status">
                             <option value="OR">Ordered</option>
@@ -73,6 +74,20 @@
             }
 
             node.attr("transform","scale(.15) translate(-80, -80)" + t); // + t);
+        });
+
+        $(".postcard-toggle").click(function(e) {
+            var clicked = e.target,
+                id = clicked.id.split('-').pop();
+            $.get('/orders/' + id + '/toggle_postcard/', {}, function(data) {
+                if (data.postcard_ordered == 'true') {
+                    $(clicked).removeClass('postcard-false');
+                    $(clicked).addClass('postcard-true');
+                } else {
+                    $(clicked).removeClass('postcard-true');
+                    $(clicked).addClass('postcard-false');
+                }
+            }, 'json');
         });
 
     </script>
