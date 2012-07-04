@@ -9,10 +9,17 @@ Your order is on its way!
 <!-- <img src="http://o7.no/wA9xVQ" style="max-width:560px;" /> -->
 <br />
 <div>
-    <h3 class="h4"><b>{{ meshu.title }}</b> has shipped!</h3>
+	{% if meshu.title == 'My Meshu' %}
+    <h3 class="h4">Your meshu has shipped!</h3>
+    {% else %}
+    <h3 class="h4"><b>"{{ meshu.title }}"</b> has shipped!</h3>
+    {% endif %}
     Your <b>{{ order.get_display_name }}</b> order has shipped and is on its way to you!
+    {% if order.tracking == '' %}
+    {% else %}
     <br />
     If you want, you can look up this tracking number on <a href="https://tools.usps.com/go/TrackConfirmAction"><b>USPS</b></a>: <br /><br /><b>{{ order.tracking }}</b>
+    {% endif %}
     <br /><br />
     Here's a link to view your meshu: <a href="http://meshu.io{% shorturl meshu %}"><b>http://meshu.io{% shorturl meshu %}</b></a>.
 </div>

@@ -8,8 +8,8 @@ var orderer = function() {
         discountPercent = 1,
         type = null,
         material = null,
-        shipping = 4,
-        domesticShipping = 4,
+        shipping = 5,
+        domesticShipping = 5,
         internationalShipping = 20,
         options = null;
 

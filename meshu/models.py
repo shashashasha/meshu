@@ -117,12 +117,18 @@ class Order(models.Model):
 	shipping_state = models.CharField(max_length=2, default='')
 	shipping_country = models.CharField(max_length=100, default='', blank=True)
 
+	# postcard status
+	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)
+
 	# tracking number and shipping date
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
 	tracking = models.CharField(max_length=140, default='', blank=True)
 
 	def get_display_name(self):
-		return self.color + ' ' + self.material + ' ' + self.product
+		if self.material == 'silver':
+			return self.material + ' ' + self.product
+		else:
+			return self.color + ' ' + self.material + ' ' + self.product
 
 	def get_status_message(self):
 		if self.status == 'OR':
