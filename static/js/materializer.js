@@ -81,11 +81,11 @@ sb.materializer = function() {
 			$(".options.right").fadeIn();
 			$.each(colors, function(i, c) {
 				var li = self.colors.eq(i);
-				var imgURL = static_url + "images/materials/" + material + "_" + c.toLowerCase() + ".png";
+				var imgURL = static_url + "images/materials/" + material + "_" + c.replace(" ","_").toLowerCase() + ".png";
 
 				li.find(".color-title").text(c);
 				li.find(".color-img img").attr("src", imgURL);
-				li.attr("id", "color-" + c.toLowerCase());
+				li.attr("id", "color-" + c.replace(" ","-").toLowerCase());
 			});
 
 			// select the first color
@@ -112,7 +112,7 @@ sb.materializer = function() {
 		color = c;
 
 		self.colors.removeClass("selected");
-		$("#color-" + color.toLowerCase()).addClass("selected");
+		$("#color-" + color.replace(" ","-").toLowerCase()).addClass("selected");
 		self.update();
 
 		return self;
