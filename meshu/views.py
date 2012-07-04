@@ -658,6 +658,10 @@ def processing_orders(request):
 def processing_order_update_status(request, order_id):
 	order = Order.objects.get(id=order_id)
 
+	if request.GET.has_key('postcard_ordered'):
+		postcard_status = request.GET.get('postcard_ordered', '')
+		order.postcard_ordered = postcard_status
+
 	# don't send duplicate emails
 	if order.status != request.GET.get('status'):
 		order.status = request.GET.get('status')
@@ -674,6 +678,21 @@ def processing_order_update_status(request, order_id):
 	
 	# go back to gallery view
 	return HttpResponseRedirect('/orders/')
+
+def processing_order_postcard_toggle(request, order_id):
+	order = Order.objects.get(id=order_id)
+	if order.postcard_ordered == 'true':
+		order.postcard_ordered = 'false'
+	else:
+		order.postcard_ordered = 'true'
+	
+	order.save()
+
+	response_dict = {}
+	response_dict.update({ 'success' : True })
+	response_dict.update({ 'order_id' : order.id })
+	response_dict.update({ 'postcard_ordered' : order.postcard_ordered })
+	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 def processing_addresses(request): 
 	if request.user.is_authenticated() == False or request.user.is_staff == False:

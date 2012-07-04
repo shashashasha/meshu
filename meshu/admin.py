@@ -60,7 +60,7 @@ class OrderAdmin(admin.ModelAdmin):
 		}),
 		('Order Shipped Status', {
 			'classes': ['collapse'],
-			'fields': ['ship_date', 'tracking']
+			'fields': ['postcard_ordered', 'ship_date', 'tracking']
 		})
 	]
 

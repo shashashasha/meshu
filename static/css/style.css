@@ -42,6 +42,9 @@ input {
   -webkit-appearance: none;
   border-radius: 0;
 }
+input[type="checkbox"] {
+  -webkit-appearance: checkbox;
+}
 img {
   border: none;
 }
@@ -1797,10 +1800,12 @@ body.ie #maps .mini-meshu div {
   font-weight: bold;
   text-align: center;
   padding: 17px 18px 8px 18px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 .status-information {
   float: left;
-  width: 500px;
+  width: 650px;
   margin-left: 10px;
   height: 100px;
 }
@@ -1815,9 +1820,9 @@ body.ie #maps .mini-meshu div {
   border: 1px solid #e6e6e6;
   width: 80px;
   height: 78px;
-  margin-left: 10px;
 }
-.OR {
+.OR,
+.postcard-false {
   background-color: #FF0000;
 }
 .PR {
@@ -1832,7 +1837,8 @@ body.ie #maps .mini-meshu div {
 .PA {
   background-color: #66FF66;
 }
-.SH {
+.SH,
+.postcard-true {
   background-color: #00FF66;
 }
 .postcard .frame {
