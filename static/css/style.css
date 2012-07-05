@@ -790,7 +790,7 @@ body.ie .frame div {
 }
 .account .render,
 .checkout .render,
-.reivew .render {
+.review .render {
   opacity: 1;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -1159,9 +1159,33 @@ body.ie8 .city-input {
   margin-right: 10px;
   color: #808080;
 }
+.review-order-block {
+  float: left;
+  width: 170px;
+  margin-bottom: 15px;
+}
+.postcard-form {
+  clear: both;
+}
+#postcard-note {
+  width: 352px;
+  margin-top: 5px;
+}
+.coupon {
+  height: 40px;
+}
+.coupon .review-header {
+  float: left;
+}
+.coupon #coupon-code {
+  float: right;
+  margin-top: 10px;
+}
 #coupon-message {
   display: none;
   color: #808080;
+  margin-right: 3px;
+  line-height: 30px;
 }
 #view {
   right: 400px;

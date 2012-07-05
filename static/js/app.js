@@ -376,7 +376,7 @@ $(function() {
 				$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
 				$(".coupon-form").hide();
 			} else {
-				$("#coupon-message").fadeIn('fast').html('Oops, invalid code.');
+				$("#coupon-message").fadeIn('fast').html('Invalid code.');
 			}
 
 			populateReview();

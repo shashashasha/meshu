@@ -509,16 +509,30 @@
             <div class="make-wrapper">
                 <h2>Your Order</h2>
                 <p id="review-description"></p>
-                <h2 class="review-header">Shipping:</h2>
-                <div id="review-shipping"></div>
-                <h2 class="review-header">Payment:</h2>
-                <p id="review-payment"></p>
-                <h2 class="review-header">Coupon:</h2>
-                <form action="/order/apply_coupon" method="GET" id="coupon-code">
-                    <input class="coupon-form" id="coupon-code-value" type="text" name="code" />
-                    <input class="coupon-form" type="submit" value="Apply" />
-                    <span id="coupon-message">Oops, invalid coupon.</span>
-                </form>
+
+                <div class="review-order-block">
+                    <h2 class="review-header">Shipping:</h2>
+                    <div id="review-shipping"></div>
+                </div>
+                <div class="review-order-block">
+                    <h2 class="review-header">Payment:</h2>
+                    <p id="review-payment"></p>
+                </div>
+
+                <div class="postcard-form">
+                    <h2 class="review-header">Postcard Note:</h2>
+                    <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
+                    <textarea rows="4" cols="45" id="postcard-note"></textarea>
+                </div>
+
+                <div class="coupon">
+                    <h2 class="review-header">Coupon:</h2>
+                    <form action="/order/apply_coupon" method="GET" id="coupon-code">
+                        <span id="coupon-message">Invalid coupon.</span>
+                        <input class="coupon-form" id="coupon-code-value" type="text" name="code" />
+                        <input class="coupon-form" type="submit" value="Apply" />
+                    </form>
+                </div>
                 <div id="review-total">
                     <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
                     <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$4.00</span></h2>
