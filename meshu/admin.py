@@ -49,14 +49,13 @@ class OrderInline(admin.StackedInline):
 class OrderAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Order', {
-			'fields': ('user_profile', 'meshu', 'product', 'material', 'color')
+			'fields': ('user_profile', 'meshu', 'product', 'material', 'color', 'postcard_note')
 		}),
 		('Order Details', {
 			'fields': ('status', 'amount', 'contact')
 		}),
 		('Shipping Information', {
-			'classes': ['collapse'],
-			'fields': ['shipping_name', 'shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country']
+			'fields': ('shipping_name', 'shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country')
 		}),
 		('Order Shipped Status', {
 			'classes': ['collapse'],

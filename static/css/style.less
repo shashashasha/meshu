@@ -825,7 +825,7 @@ body.ie .frame div {
     opacity: 0;
     .transition(opacity);
 }
-.account .render, .checkout .render, .reivew .render {
+.account .render, .checkout .render, .review .render {
     opacity: 1;
     .transition(opacity);
 }
@@ -1136,13 +1136,47 @@ body.ie8 .city-input {
 #review p {
     color: @grey;
 }
+
 #review-shipping span {
     margin-right: 10px;
     color: @grey;
 }
+
+.review-order-block {
+    float: left;
+    width: 170px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.postcard-form {
+    clear: both;
+}
+
+#postcard-note-form {
+    width: 352px;
+    margin-top: 5px;
+}
+.firefox #postcard-note {
+    height: 60px;
+}
+
+.coupon {
+    height: 40px;
+}
+.coupon .review-header {
+    float: left;
+}
+.coupon #coupon-code {
+    float: right;
+    margin-top: 10px;
+}
+
 #coupon-message {
     display: none;
     color: @grey;
+    margin-right: 3px;
+    line-height: 30px
 }
 
 #view {
@@ -1263,6 +1297,12 @@ body.ie8 .city-input {
     p {
         margin: .25em 0;
     }
+}
+.firefox #review h2 {
+    margin-top: 5px;
+}
+.firefox #review p {
+    margin: 0;
 }
 
 #review-total {
