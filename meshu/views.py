@@ -634,6 +634,9 @@ def order_create(request, profile, meshu):
 	else:
 		order.contact = profile.user.email
 	
+	# postcard note
+	order.postcard_note = request.POST.get('postcard_note', '')
+
 	# foreign keys
 	order.user_profile = profile
 	order.meshu = meshu
