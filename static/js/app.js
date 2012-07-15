@@ -350,6 +350,11 @@ $(function() {
 		},
 		submitHandler: onFormValidated
 	});
+
+	$("#postcard-note-form").keyup(function(e) {
+		var note = e.target.value;
+		$("#postcard-note").val(note);
+	});
 	
 	$("#coupon-code").submit(function() {
 		var value = $("#coupon-code-value").val();
@@ -446,6 +451,8 @@ $(function() {
 		$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
+
+		$("#postcard-note").val($("#postcard-note-form").val());
 
 		// update the review
 		updateReviewText();

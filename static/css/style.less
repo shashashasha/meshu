@@ -1136,6 +1136,7 @@ body.ie8 .city-input {
 #review p {
     color: @grey;
 }
+
 #review-shipping span {
     margin-right: 10px;
     color: @grey;
@@ -1145,13 +1146,19 @@ body.ie8 .city-input {
     float: left;
     width: 170px;
     margin-bottom: 15px;
+    font-size: 12px;
 }
+
 .postcard-form {
     clear: both;
 }
-#postcard-note {
+
+#postcard-note-form {
     width: 352px;
     margin-top: 5px;
+}
+.firefox #postcard-note {
+    height: 60px;
 }
 
 .coupon {
@@ -1290,6 +1297,12 @@ body.ie8 .city-input {
     p {
         margin: .25em 0;
     }
+}
+.firefox #review h2 {
+    margin-top: 5px;
+}
+.firefox #review p {
+    margin: 0;
 }
 
 #review-total {

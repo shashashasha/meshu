@@ -1166,13 +1166,17 @@ body.ie8 .city-input {
   float: left;
   width: 170px;
   margin-bottom: 15px;
+  font-size: 12px;
 }
 .postcard-form {
   clear: both;
 }
-#postcard-note {
+#postcard-note-form {
   width: 352px;
   margin-top: 5px;
+}
+.firefox #postcard-note {
+  height: 60px;
 }
 .coupon {
   height: 40px;
@@ -1307,6 +1311,12 @@ body.ie8 .city-input {
 }
 #review p {
   margin: .25em 0;
+}
+.firefox #review h2 {
+  margin-top: 5px;
+}
+.firefox #review p {
+  margin: 0;
 }
 #review-total {
   margin-top: 15px;
