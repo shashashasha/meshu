@@ -1823,6 +1823,10 @@ body.ie #maps .mini-meshu div {
   float: right;
   padding: 0 0 0 10px;
 }
+/* blog */
+#tumblr_controls {
+  display: none;
+}
 /* orders page */
 .status-list {
   height: 100px;
@@ -1869,7 +1873,7 @@ body.ie #maps .mini-meshu div {
   background-color: #FFFF00;
 }
 .RE {
-  background-color: #FFFF66;
+  background-color: #FFAA00;
 }
 .PA {
   background-color: #66FF66;
