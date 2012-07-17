@@ -1823,6 +1823,10 @@ body.ie #maps .mini-meshu div {
   float: right;
   padding: 0 0 0 10px;
 }
+/* blog */
+#tumblr_controls {
+  display: none;
+}
 /* orders page */
 .status-list {
   height: 100px;
