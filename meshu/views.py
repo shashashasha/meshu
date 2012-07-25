@@ -289,7 +289,7 @@ def user_logout(request, *args, **kwargs):
 		response_dict.update({ 'success' : True })
 		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
-	return notify(request, request.GET['xhr'])
+	return notify(request, 'loggedout')
 
 def user_create(request):
 	username = uuid.uuid4().hex[:30]
@@ -316,7 +316,6 @@ def user_create(request):
 
 	# create user shortcut
 	user = User.objects.create_user(username, email, password)
-
 	user.is_staff = False
 	user.save()
 
@@ -325,7 +324,7 @@ def user_create(request):
 	if xhr:
 		return user_login(request)
 	else:
-		return notify('signedup')
+		return notify(request, 'signedup')
 
 def user_profile(request):
 	# show all meshus belonging to the current user
@@ -447,6 +446,16 @@ def mail_forgotten_password(email, password):
 	})
 	return
 
+# mails ordered svg to an ifttt routine 
+# that puts it in our dropbox queue for sending to the manufacturer
+def mail_ordered_svg(order):
+	# has to be my email because ifttt is expecting that
+	from_email = 'shashashasha@gmail.com'
+	to_email = 'trigger@ifttt.com'
+	msg = EmailMultiAlternatives(order.get_svg_filename(), order.meshu.svg, from_email, [to_email])
+	msg.send()
+	return
+
 def mail_template(template, arguments):
 
 	html_content = render_to_string(template, arguments)
@@ -535,6 +544,9 @@ def make_order(request, profile, meshu):
 	# mail the current user if they're logged in
 	if request.user.is_authenticated():
 		mail_order_confirmation(profile.user.email, meshu, order)
+
+	# send a mail to ifttt that creates an svg in our dropbox for processing
+	mail_ordered_svg(order)
 
 	return render_to_response('meshu/notification/ordered.html', {
 			'view' : 'paid',
