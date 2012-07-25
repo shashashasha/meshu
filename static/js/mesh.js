@@ -51,7 +51,7 @@ sb.mesh = function (frame, map, width, height) {
 
     var list = placeList.append("ul");
 
-    if (!$("body").hasClass("ie"))
+    if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
 
     var points = [],
@@ -285,6 +285,7 @@ sb.mesh = function (frame, map, width, height) {
 
         names.attr("id", function(d, i) { return "p-" + i; })
             .select(".title").each(function(d) { d.edit = false; })
+            .attr("class","title")
             .select(".place-text")
             .html(function(d, i) {
                 // decode the text
@@ -443,6 +444,7 @@ sb.mesh = function (frame, map, width, height) {
             d.edit = false;
             saveText($(this), i, "place");
         });
+        return false;
     };
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
