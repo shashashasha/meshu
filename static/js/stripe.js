@@ -90,7 +90,7 @@ var orderer = function() {
         if (!options[t] || !options[t][m]) return;
 
         // update values
-        shipping = s || 4;
+        shipping = s || 5;
         type = t;
         material = m;
 

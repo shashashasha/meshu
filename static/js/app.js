@@ -316,13 +316,6 @@ $(function() {
 	*/
 	$("#payment-form").validate({
 		rules: {
-			// shipping_zip: {
-			// 	digits: true,
-		 //      	minlength: 5
-		 //    },
-		 //    shipping_state: {
-		 //    	minlength: 2
-		 //    },
 		    card_number: {
 		    	creditcard: true
 		    },

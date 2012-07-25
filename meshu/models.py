@@ -131,6 +131,10 @@ class Order(models.Model):
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
 
+	def get_svg_filename(self):
+		# returns "49_294_silver_pendant"
+		return str(self.id) + '_' + str(self.meshu.id) + '_' + self.material + '_' + self.product
+
 	def get_status_message(self):
 		if self.status == 'OR':
 			return 'Ordered'
