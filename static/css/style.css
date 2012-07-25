@@ -657,9 +657,10 @@ body.firefox #place-number #input {
   padding: 2px;
   display: inline-block;
 }
+body.ie .place .place-text,
 body.win .place .place-text,
 body.firefox .place .place-text {
-  width: 235px;
+  width: 232px;
 }
 .place:hover .place-text {
   color: black;

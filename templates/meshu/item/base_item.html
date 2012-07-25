@@ -549,17 +549,12 @@
 {% block script %}
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
-    <!--[if IE]>
-        <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.ie.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
-    <![endif]-->
-    <!--[if !IE]> -->
-        <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
-    <!-- <![endif]-->
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     
-    <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
 
+<!--
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
@@ -571,6 +566,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+-->
 {% endblock %}
 
 {% block resources %}
