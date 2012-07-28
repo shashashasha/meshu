@@ -39,6 +39,10 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/foursquare', direct_to_template, {
 		'template': 'meshu/gallery/foursquare_auth_completed.html'
 	}),
+
+	url(r'^make/facebook', direct_to_template, {
+		'template': 'meshu/gallery/facebook_auth.html'
+	}),
 	
 	url(r'^make/geojson', 'item_from_geojson'),
 	url(r'^make/data', 'item_from_data'),
