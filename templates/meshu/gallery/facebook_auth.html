@@ -3,23 +3,23 @@
 {% block title %}Meshu - Use Facebook Data{% endblock %}
 
 {% block content %}
-    <h2 class="page-header">
-        Each meshu is a different set of places. Choose one to get started!
-    </h2>
-    <div id="maps">
-    </div>
-    <!-- <div id="finish-button" class="nav active">Or, just start making one manually</div> -->
-    <div style="display:none;">
-        <form action="/make/data/#skipintro" method="POST" id="meshu-select-form">
-        {# put a csrf token in every form in django, for security #}
-        {% csrf_token %}
-        <input type="hidden" id="svg-file" name="svg"/>
-        <input type="hidden" id="svg-theta" name="theta" value="0"/>
-        <input type="hidden" id="meshu-title" name="title"/>
-        <input type="hidden" id="meshu-data" name="location_data"/>
-        </form>
-    </div>
-    <div id="fb-root"></div>
+<h2 class="page-header">
+  Each meshu is a different set of places. Choose one to get started!
+</h2>
+<div id="maps">
+</div>
+<!-- <div id="finish-button" class="nav active">Or, just start making one manually</div> -->
+<div style="display:none;">
+  <form action="/make/data/#skipintro" method="POST" id="meshu-select-form">
+    {# put a csrf token in every form in django, for security #}
+    {% csrf_token %}
+    <input type="hidden" id="svg-file" name="svg"/>
+    <input type="hidden" id="svg-theta" name="theta" value="0"/>
+    <input type="hidden" id="meshu-title" name="title"/>
+    <input type="hidden" id="meshu-data" name="location_data"/>
+  </form>
+</div>
+<div id="fb-root"></div>
 {% endblock %}
 
 {% block script %}
@@ -34,55 +34,40 @@
 <script type="text/javascript">
     // load foursquare data
     window.fbAsyncInit = function() {
-        FB.init({
+      FB.init({
             appId      : '324846177609340', // App ID
             status     : true, // check login status
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true  // parse XFBML
-        });
+          });
 
-         FB.login(function(response) {
-           if (response.authResponse) {
-             console.log('Welcome!  Fetching your information.... ');
-             FB.api('/me', function(response) {
-               console.log('Good to see you, ' + response.name + '.');
-             });
-           } else {
-             console.log('User cancelled login or did not fully authorize.');
-           }
-         },{
-            scope: 'user_checkins'
-         });
+      FB.login(function(response) {
+        console.log(response);
+        if (response.authResponse) {
+          console.log('Welcome!  Fetching your information.... ');
+          FB.api('/me', function(response) {
+            console.log(response);
+            console.log('Good to see you, ' + response.name + '.');
+          });
 
-         FB.api('/me?fields=locations', function(response) {
-          console.log(response);
-        });
-        
-
-        // FB.init({appId: '324846177609340', xfbml: true});
-        // FB.Event.subscribe('auth.sessionChange', loginHandler);
-
-        // function loginHandler(response) {
-        //     console.log("login");
-        //     if (response.session) {
-        //         document.getElementById('login').innerHTML = 'Logged in.';
-        //         FB.api('/search?type=checkin&access_token=' + response.session.access_token, placesResponseHandler);
-        //     } else {
-        //         alert("Login was not successful, please try again.");
-        //     }
-        // }
-        // function placesResponseHandler(data) {
-        //     console.log(data);
-        // }
+          FB.api('/me/locations?limit=50', function(response) {
+            console.log(response);
+          });
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      },{
+        scope: 'email, user_photos, friends_photos, user_status, friends_status, user_checkins, friends_checkins'
+      });
     };
 
-        // Load the SDK Asynchronously
+    // Load the SDK Asynchronously
     (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
     }(document));
 </script>
 {% endblock %}
