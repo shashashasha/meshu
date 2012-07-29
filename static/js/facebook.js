@@ -202,16 +202,23 @@ sb.facebook.initialize = function(FB) {
     FB.login(function(response) {
         if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-
-            FB.api('/me/locations?limit=50', function(response) {
-                console.log(response);
-                processLocations(response);
-            });
+            callPlacesAPI();
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
     },{
         scope: 'email, user_photos, friends_photos, user_status, friends_status, user_checkins, friends_checkins'
     });
+
+    function callPlacesAPI() {
+        FB.api('/me/locations?limit=50', function(response) {
+            if (response.error) {
+                console.log(response);
+                callPlacesAPI();
+            }
+            else
+                processLocations(response);
+        });
+    }
 
 };

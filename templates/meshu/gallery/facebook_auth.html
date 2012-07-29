@@ -36,6 +36,7 @@
     window.fbAsyncInit = function() {
         FB.init({
             appId      : '324846177609340', // App ID
+            channelUrl : '{{ STATIC_URL }}lib/channel.html',
             status     : true, // check login status
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true  // parse XFBML
