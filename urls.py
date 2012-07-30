@@ -61,6 +61,8 @@ urlpatterns += patterns('meshu.views',
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
 
 	url(r'^user/login/', 'user_login'),
+	# fb
+    url(r'^user/facebook/inline_login/', 'user_facebook_login'),
 	url(r'^user/logout/', 'user_logout'),
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'user_create'),
@@ -79,7 +81,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^user/password/reset', 'user_forgot_password'),
 	url(r'^user/password/change', 'user_change_password'),
 	url(r'^user/', 'user_profile'),
-
 
 	# order an existing meshu
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
@@ -113,4 +114,10 @@ urlpatterns += patterns('meshu.views',
 
 	# internal to see email templates
 	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
+)
+
+# facebook specific
+urlpatterns += patterns('facebook.views', 
+    url(r'^facebook/login$', 'login'),
+    url(r'^facebook/authentication_callback', 'authentication_callback'),
 )

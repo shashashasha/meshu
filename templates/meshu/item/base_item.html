@@ -145,6 +145,7 @@
         <div class="back button">back</div>
         <div class="make-wrapper">
             <h2>Please log in to continue.</h2>
+            <div id="inline-facebook-signin" class="next active"><fb:login-button onlogin="userFlowFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button></div>
             <form id="inline-signin">
                 <div class="form-row">
                     <label for="inline_signin_name">Email</label>
@@ -566,7 +567,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
-    -->
+-->
+
 {% endblock %}
 
 {% block resources %}

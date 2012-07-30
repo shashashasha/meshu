@@ -1,14 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-import datetime
+import datetime, json, urllib
 
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, default=1)
 
+	# fb specific stuff
+	facebook_id = models.BigIntegerField(default=0, blank=True)
+	access_token = models.CharField(max_length=300, default='', blank=True)
+
+    # fb profile in json
+	def get_facebook_profile(self):
+		fb_profile = urllib.urlopen('https://graph.facebook.com/me?access_token=%s' % self.access_token)
+		return json.load(fb_profile)
+
 	def num_orders(self):
-		# return Order.objects.filter(user=self.user).count()
 		return self.order_set.all().count()
 
 	def amount_orders(self):
@@ -133,7 +141,7 @@ class Order(models.Model):
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"
-		return str(self.id) + '_' + str(self.meshu.id) + '_' + self.material + '_' + self.product
+		return str(self.id) + '_' + str(self.meshu.id) + '_' + self.color + '_' + self.material + '_' + self.product
 
 	def get_status_message(self):
 		if self.status == 'OR':

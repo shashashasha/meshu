@@ -53,6 +53,10 @@
 			</div>
 			<form id="form-signin" class="signin">
 				<div class="login-row">
+					<div class="button facebook-signin">Log in with Facebook</div>
+					<fb:login-button onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+				</div>
+				<div class="login-row">
 					<label for="signin_name">Email</label>
 					<input id="signin_name" class="required email" type="text" name="signin_name" maxlength="30" style="margin-left: 47px;">
 				</div>
@@ -68,6 +72,10 @@
 				</div>
 			</form>
 			<form id="form-account" class="account">
+				<div class="login-row">
+					<div class="button facebook-signin">Sign up with Facebook</div>
+					<fb:login-button onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+				</div>
 				<div class="login-row">
 					<label for="account_name">Email</label>
 					<input id="account_name" class="required email" type="text" name="account_name" maxlength="30" style="margin-left: 47px;">
@@ -107,7 +115,58 @@ window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https
 /* custom configuration goes here (www.olark.com/documentation) */
 olark.identify('7626-379-10-2860');/*]]>{/literal}*/</script><noscript><a href="https://www.olark.com/site/7626-379-10-2860/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript><!-- end olark code -->
 
+<!-- Facebook specific code -->
+<div id="fb-root"></div>
 </body>
+
+	<!-- Facebook specific code -->
+	<script type="text/javascript">
+	    // when the Facebook SDK is loaded, run this
+	    window.fbAsyncInit = function() {
+	        FB.init({
+	            appId      : '324846177609340', // App ID
+	            channelUrl : '{{ STATIC_URL }}lib/channel.html',
+	            status     : true, // check login status
+	            cookie     : true, // enable cookies to allow the server to access the session
+	            xfbml      : true  // parse XFBML
+	        });
+
+	        // facebook specific code that runs on each page
+			{% block fb_code %}
+			{% endblock %}
+	    };
+
+	    // if the user clicks the fb login, log them in to meshu as well
+	    function userFacebookLoggedIn() {
+	    	FB.getLoginStatus(function(response) {
+		        if (response.status == "connected") {
+		            user.facebookLogin(response);
+		        }
+		    });
+	    };
+
+	    // if the user clicks the fb login in the checkout process, advance the view
+	    function userFlowFacebookLoggedIn() {
+	    	FB.getLoginStatus(function(response) {
+		        if (response.status == "connected") {
+		            user.facebookLogin(response, function() {
+		            	// this is a wrapper div around the fb login iframe
+		            	$("#inline-facebook-signin").click();
+		            });
+		        }
+	    	});
+	    }
+
+	    // Load the SDK Asynchronously
+	    (function(d){
+	        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	        if (d.getElementById(id)) {return;}
+	        js = d.createElement('script'); js.id = id; js.async = true;
+	        js.src = "//connect.facebook.net/en_US/all.js";
+	        ref.parentNode.insertBefore(js, ref);
+	    }(document));
+	</script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/user.min.js"></script>
     <script type="text/javascript">
     	// django static url

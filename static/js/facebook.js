@@ -186,7 +186,7 @@ sb.facebook.initialize = function(FB) {
             url: response.paging.next,
             dataType: 'jsonp',
             success: function(response) {
-                if (response.data.length) {
+                if (response.data && response.data.length) {
                     $(".page-header").html("Loaded " + totalCheckinsSeen + " places...");
                     processLocations(response);
                 } else {
@@ -199,26 +199,34 @@ sb.facebook.initialize = function(FB) {
         });
     }
 
-    FB.login(function(response) {
-        if (response.authResponse) {
-            console.log('Welcome!  Fetching your information.... ');
-            callPlacesAPI();
-        } else {
-            console.log('User cancelled login or did not fully authorize.');
-        }
-    },{
-        scope: 'email, user_photos, friends_photos, user_status, friends_status, user_checkins, friends_checkins'
-    });
-
+    // FB.login(function(response) {
+    //     if (response.authResponse) {
+    //         console.log('Welcome!  Fetching your information.... ');
+            
+    //     } else {
+    //         console.log('User cancelled login or did not fully authorize.');
+    //     }
+    // },{
+    //     scope: 'email, user_photos, friends_photos, user_status, friends_status, user_checkins, friends_checkins'
+    // });
+    
+    var erroredAlready = false;
     function callPlacesAPI() {
         FB.api('/me/locations?limit=50', function(response) {
             if (response.error) {
-                console.log(response);
-                callPlacesAPI();
+                if (erroredAlready) {
+                    $(".page-header").html("We're not sure what happened! Try connecting to Facebook again?");    
+                } else {
+                    $(".page-header").html("Oops, there was an error connecting to Facebook. Retrying...");    
+                    setTimeout(callPlacesAPI, 500);
+                    erroredAlready = true;
+                }
             }
             else
                 processLocations(response);
         });
     }
 
+    // wait for the FB SDK to be loaded
+    callPlacesAPI();
 };

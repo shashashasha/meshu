@@ -59,3 +59,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
 )
+
+
+pip install django-social-auth
+
+# saves our current pip installs to requirements.txt
+pip freeze > requirements.txt
+
+88
+86
+85
+82
+81
+78

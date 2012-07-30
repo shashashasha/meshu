@@ -19,7 +19,12 @@
     <input type="hidden" id="meshu-data" name="location_data"/>
 </form>
 </div>
-<div id="fb-root"></div>
+{% endblock %}
+
+{% block fb_code %}
+FB.getLoginStatus(function(response){
+    sb.facebook.initialize(FB);
+});
 {% endblock %}
 
 {% block script %}
@@ -30,30 +35,5 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/min/mesh.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/min/minimeshu.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/min/saver.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/facebook.js"></script>
-<script type="text/javascript">
-    // load foursquare data
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '324846177609340', // App ID
-            channelUrl : '{{ STATIC_URL }}lib/channel.html',
-            status     : true, // check login status
-            cookie     : true, // enable cookies to allow the server to access the session
-            xfbml      : true  // parse XFBML
-        });
-
-        $(function() {
-            sb.facebook.initialize(FB);
-        });
-    };
-
-    // Load the SDK Asynchronously
-    (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-    }(document));
-</script>
-    {% endblock %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/facebook.min.js"></script>
+{% endblock %}

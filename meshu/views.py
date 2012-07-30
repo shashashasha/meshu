@@ -18,8 +18,7 @@ from django.utils.html import strip_tags
 # our models
 from meshu.models import Meshu, Order, UserProfile
 
-import string
-import random
+import string, random
 
 # this is how i get dates. 
 from datetime import datetime
@@ -38,6 +37,10 @@ import sha
 codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313']
 amounts = [25, .85, .85]
 invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
+
+# util function
+def json_dump(json):
+	return HttpResponse(simplejson.dumps(json), mimetype='application/javascript')
 
 # meshu.views.index
 def index(request):
@@ -220,6 +223,16 @@ def item_save(request, item_encoded):
 #
 # Views for Users
 #
+def login_user_flow(request, user):
+	if user is not None:
+		if user.is_active:
+			response = login(request, user)
+			return user_login_success(request, user)
+		else:
+			return user_login_error(request, user)
+	else:
+	    return user_login_error(request, user)
+
 def user_login(request, *args, **kwargs):
 	email = request.POST['email']
 
@@ -231,14 +244,7 @@ def user_login(request, *args, **kwargs):
 		pass
 
 	user = authenticate(username=email, password=request.POST['password'])
-	if user is not None:
-		if user.is_active:
-			response = login(request, user)
-			return user_login_success(request, user)
-		else:
-			return user_login_error(request, user)
-	else:
-	    return user_login_error(request, user)
+	return login_user_flow(request, user)
 
 def user_login_success(request, user):
 	xhr = request.POST.has_key('xhr')
@@ -247,11 +253,12 @@ def user_login_success(request, user):
 	meshus = Meshu.objects.filter(user_profile=profile)
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : True })
-		response_dict.update({ 'username' : user.username })
-		response_dict.update({ 'meshus' : meshus.count() })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'success': True,
+			'username': user.username,
+			'meshus': meshus.count(),
+			'facebook_id': profile.facebook_id
+		})
 	else:
 		return render_to_response('meshu/gallery/gallery.html', {
 				'view' : 'user',
@@ -263,9 +270,9 @@ def user_login_error(request, user):
 	xhr = request.POST.has_key('xhr')
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : False })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'success' : False 
+		})
 	else:
 		return notify(request, 'login_error')
 
@@ -273,10 +280,10 @@ def user_duplicate_error(request):
 	xhr = request.POST.has_key('xhr')
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : False })
-		response_dict.update({ 'duplicate' : True })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'success' : False,
+			'duplicate': True
+		})
 	else:
 		return notify(request, 'login_error')
 
@@ -285,9 +292,9 @@ def user_logout(request, *args, **kwargs):
 	response = logout(request)
 
 	if xhr:
-		response_dict = {}
-		response_dict.update({ 'success' : True })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'success' : False 
+		})
 
 	return notify(request, 'loggedout')
 
@@ -326,6 +333,13 @@ def user_create(request):
 	else:
 		return notify(request, 'signedup')
 
+# 
+def user_facebook_login(request):
+	fb_profile = request.POST
+	access_token = fb_profile['access_token']
+	user = authenticate(token=access_token, request=request, use_token=True)
+	return login_user_flow(request, user)
+
 def user_profile(request):
 	# show all meshus belonging to the current user
 	profile = current_profile(request)
@@ -350,12 +364,14 @@ def user_forgot_password(request):
 	try:
 		user = User.objects.get(email=email)
 	except User.DoesNotExist:
-		response_dict.update({ 'message' : 'User with that email does not exist' })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'message' : 'User with that email does not exist' 
+		})
 
 	if user.username == 'shop':
-		response_dict.update({ 'message' : "You can't reset your password this way" })
-		return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+		return json_dump({
+			'message' : "You can't reset your password this way"
+		})
 
 	password = random_password(4)
 
@@ -488,15 +504,14 @@ def order_verify_coupon(request):
 
 	matched = hashed in codes
 
-	response_dict = {}
-	response_dict.update({ 'success' : matched })
+	response_dict = { 'success' : matched }
 
 	if matched:
 		index = codes.index(hashed)
 		coupon_amount = amounts[index]
 		response_dict.update({ 'amount' : coupon_amount })
 
-	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+	return json_dump(response_dict)
 
 def order_meshu(request, item_id):
 	# gets logged in user profile, or anonymous profile
@@ -602,14 +617,12 @@ def meshu_get_or_create(request, profile):
 	meshu.save()
 	return meshu
 
-
 def meshu_xhr_response(meshu):
-	response_dict = {}
-	response_dict.update({ 'success' : True })
-	response_dict.update({ 'meshu_id' : meshu.id })
-	response_dict.update({ 'meshu_url' : meshu.get_absolute_url() })
-	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
-
+	return json_dump({
+		'success': True,
+		'meshu_id': meshu.id,
+		'meshu_url': meshu.get_absolute_url()
+	})
 
 def meshu_delete(request, item_id):
 	meshu = Meshu.objects.get(id=item_id)
@@ -703,11 +716,11 @@ def processing_order_postcard_toggle(request, order_id):
 	
 	order.save()
 
-	response_dict = {}
-	response_dict.update({ 'success' : True })
-	response_dict.update({ 'order_id' : order.id })
-	response_dict.update({ 'postcard_ordered' : order.postcard_ordered })
-	return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+	return json_dump({
+		'success' : True,
+		'order_id': order.id,
+		'postcard_ordered': order.postcard_ordered
+	})
 
 def processing_addresses(request): 
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
