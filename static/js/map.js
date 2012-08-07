@@ -5,7 +5,7 @@ sb.map = function(frame, width, height) {
 	var self = d3.dispatch("boundsUpdated");
 
 	// updating to toner tiles
-	var baseURL = "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
+	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
     container.style.position = "absolute";
@@ -16,7 +16,8 @@ sb.map = function(frame, width, height) {
 
 	var image = po.image()
 		.url(po.url(baseURL)
-	    .hosts(["a.", "b.", "c.", "d.", ""]));
+	    // .hosts(["a.", "b.", "c.", "d.", ""]));
+		.hosts(["a", "b", "c", "d"]));
 	
 	self.dispatch = d3.dispatch("show");
 

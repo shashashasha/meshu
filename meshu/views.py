@@ -781,8 +781,12 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
-def processing_tiles(request, z, x, y):
-	url = request.GET.get('url', '')
+def processing_tiles(request, subdomain, zoom, x, y):
+	print(subdomain)
+	print(zoom)
+	print('x:' + str(x))
+	print('y:' + str(y))
+	url = 'http://{0}.tile.stamen.com/toner/{1}/{2}/{3}.png'.format(subdomain, zoom, x, y)
 
 	try:
 		response = urllib2.urlopen(url)

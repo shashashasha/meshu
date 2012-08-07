@@ -114,9 +114,9 @@ urlpatterns += patterns('meshu.views',
 	url(r'^orders/', 'processing_orders'),
 
 	# api proxies for loading external resources
+	url(r'^proxy/tiles/(?P<subdomain>\w+)/(?P<zoom>\d+)/(?P<x>\d+)/(?P<y>\d+)', 'processing_tiles'),
 	url(r'^proxy/geocoder/', 'processing_geocoder'),
 	url(r'^proxy/jsoner/', 'processing_jsoner'),
-	url(r'^proxy/tiles/', 'processing_tiles'),
 
 	# internal to see email templates
 	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
