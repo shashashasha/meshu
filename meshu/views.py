@@ -16,7 +16,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 # our models
-from meshu.models import Meshu, Order, UserProfile
+from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
 import string, random
 
@@ -34,8 +34,8 @@ import sha
 #
 
 # hashed codes
-codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313']
-amounts = [25, .85, .85]
+codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313', 'c50086a2272b1848c75174e41bde1b2d6fa44dde']
+amounts = [25, .85, .85, .8]
 invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # util function
@@ -188,7 +188,7 @@ def item_create(request):
 		return meshu_xhr_response(meshu)
 
 	return HttpResponseRedirect('/view/' + meshu.get_encoded_id() + '/')
-	return item_handler(request, meshu.id, 'display.html', 'view')
+	# return item_handler(request, meshu.id, 'display.html', 'view')
 
 def item_update(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
@@ -219,6 +219,14 @@ def item_save(request, item_encoded):
 		return meshu_xhr_response(meshu)
 
 	return item_handler(request, item_id, 'display.html', 'view')
+
+def item_topng(request, item_encoded):
+	xhr = request.GET.has_key('xhr')
+
+	item_id = int(str(item_encoded).decode("hex"))
+	meshu = Meshu.objects.get(id=item_id)
+
+	return processing_make_png(request, meshu, meshu.get_png_filename())
 
 #
 # Views for Users
@@ -596,9 +604,13 @@ def meshu_update(request, meshu):
 
 def meshu_get_or_create(request, profile):
 	has_id = request.POST.has_key('id')
+	has_meshu_id = request.POST.has_key('meshu_id')
 
 	if has_id:
 		meshu_id = int(request.POST['id'])
+		meshu = Meshu.objects.get(id=meshu_id)
+	elif has_meshu_id:
+		meshu_id = int(request.POST['meshu_id'])
 		meshu = Meshu.objects.get(id=meshu_id)
 	else:
 		meshu = Meshu()
@@ -769,6 +781,47 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+def processing_tiles(request, z, x, y):
+	url = request.GET.get('url', '')
+
+	try:
+		response = urllib2.urlopen(url)
+		return HttpResponse(response.read(), mimetype="image/png")
+	except urllib2.URLError:
+		return HttpResponse('', mimetype='application/json')
+    
+
+from django.core.files.images import ImageFile
+import re
+def processing_dataurl_to_image(request, item_encoded=''):
+	name = request.POST.get('filename')
+
+	filename = re.sub(r'\W+','_', name) + '.png'
+
+	meshu = Meshu.objects.get(id=1)
+	filename = str(meshu.id) + '_' + filename.lower()
+
+	return processing_make_png(request, meshu, filename)
+
+def processing_make_png(request, meshu, filename):
+	dataurl = request.POST.get('dataurl')
+	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
+
+	output = open('static/images/meshus/rendered.png', 'r+b')
+	output.write(imgstr.decode('base64'))
+	image = ImageFile(output)
+
+	meshu_image = MeshuImage(meshu=meshu)
+	meshu_image.image.save(filename, image)
+
+	output.close()
+	return json_dump({
+		'success': True,
+		'filename': filename,
+		'id': meshu.id,
+		'url': meshu_image.image.url
+	})
+
 # import cairo, rsvg
 # def processing_svg_to_image(request):
 # 	svgString = request.POST.get('svg', '')
@@ -776,7 +829,9 @@ def processing_jsoner(request):
 # 	svg = rsvg.Handle(data=svgString)
 # 	width = svg.props.width 
 # 	height = svg.props.height
-	
+# 	print(svg)
+# 	print(width)
+# 	print(height)
 # 	new_file = File()
 	
 # 	# create image
@@ -787,10 +842,10 @@ def processing_jsoner(request):
 # 	png.write_to_png(new_file)
 # 	png.finish()
 
-# 	response = {}
-# 	response.update({ 'success' : True })
-# 	response.update({ 'image_url' : image.get_absolute_url() })
-# 	return HttpResponse(simplejson.dumps(response), mimetype='application/javascript')
+# 	return json_dump({
+# 		'success': True,
+# 		'image_url' : image.get_absolute_url()
+# 	})
 
 # don't judge me, i think this is funny
 def random_password(length):

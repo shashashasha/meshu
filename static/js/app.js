@@ -163,6 +163,7 @@ $(function() {
 			return;
 		}
 
+
 		makeNextView(view);
 		user.updateLogoutActions(view);
 		advanceView();
@@ -295,6 +296,11 @@ $(function() {
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
 	});
+
+	$("#share-facebook").click(function() {
+		globalMeshu = meshu;
+		sb.rasterizer.rasterize(meshu);
+	})
 
 
 	$("#shipping-destination li").click(function() {		

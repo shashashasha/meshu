@@ -17,7 +17,6 @@ class FacebookBackend:
             'code': token,
         }
         
-
         # If we already have a good token, just use that shit
         if use_token:
             access_token = token

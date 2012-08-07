@@ -1407,6 +1407,11 @@ body.ie8 .city-input {
   left: auto;
   right: 130px;
 }
+.view .share {
+  position: absolute;
+  right: 230px;
+  top: 20px;
+}
 #finish-button,
 #save-button,
 #update-button,
@@ -1554,6 +1559,7 @@ circle.highlight,
   height: 306px;
   margin: 0 10px 10px 0;
   border: 5px solid white;
+  position: relative;
 }
 .mini-meshu:hover {
   cursor: pointer;

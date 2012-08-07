@@ -66,9 +66,7 @@ pip install django-social-auth
 # saves our current pip installs to requirements.txt
 pip freeze > requirements.txt
 
-88
-86
-85
-82
-81
-78
+brew install cairo
+port install cairo
+http://stackoverflow.com/questions/6886578/how-to-install-pycairo-1-10-on-mac-osx-with-default-python
+https://github.com/pcraciunoiu/kitsune/tree/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload

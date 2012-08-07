@@ -73,6 +73,9 @@ class Meshu(models.Model):
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title
 
+	def get_png_filename(self):
+		return str(self.id) + '_' + self.user_profile.user.username + '.png'
+
 	def get_encoded_id(self):
 		return str(self.id).encode("hex")
 

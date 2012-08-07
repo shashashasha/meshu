@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
@@ -34,7 +35,11 @@ urlpatterns += patterns('meshu.views',
 	url(r'^$', 'index'),
 	
 	# begin ordering an existing user meshu
+	url(r'^make/(?P<item_encoded>\d+)/to_png', 'item_topng'),
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
+
+	
+	url(r'^make/to_png', 'processing_dataurl_to_image'),
 
 	url(r'^make/foursquare', direct_to_template, {
 		'template': 'meshu/gallery/foursquare_auth_completed.html'
@@ -58,6 +63,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
 
 	# display
+	url(r'^view/(?P<item_encoded>\w+)/to_png', 'processing_dataurl_to_image'),
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
 
 	url(r'^user/login/', 'user_login'),
@@ -107,10 +113,10 @@ urlpatterns += patterns('meshu.views',
 	url(r'^orders/all', 'processing_all'),
 	url(r'^orders/', 'processing_orders'),
 
-
 	# api proxies for loading external resources
 	url(r'^proxy/geocoder/', 'processing_geocoder'),
 	url(r'^proxy/jsoner/', 'processing_jsoner'),
+	url(r'^proxy/tiles/', 'processing_tiles'),
 
 	# internal to see email templates
 	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
@@ -121,3 +127,10 @@ urlpatterns += patterns('facebook.views',
     url(r'^facebook/login$', 'login'),
     url(r'^facebook/authentication_callback', 'authentication_callback'),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   )

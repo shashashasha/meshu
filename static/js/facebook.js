@@ -198,17 +198,6 @@ sb.facebook.initialize = function(FB) {
             }
         });
     }
-
-    // FB.login(function(response) {
-    //     if (response.authResponse) {
-    //         console.log('Welcome!  Fetching your information.... ');
-            
-    //     } else {
-    //         console.log('User cancelled login or did not fully authorize.');
-    //     }
-    // },{
-    //     scope: 'email, user_photos, friends_photos, user_status, friends_status, user_checkins, friends_checkins'
-    // });
     
     var erroredAlready = false;
     function callPlacesAPI() {

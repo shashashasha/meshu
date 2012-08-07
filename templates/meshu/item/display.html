@@ -15,6 +15,7 @@
     </div>
     {% if user.is_authenticated %}
     {% if user.id == meshu.user_profile.user.id %}
+    <div id="share-facebook" class="nav share">share on facebook</div>
     <a id="reedit" class="nav back"  href="{{ meshu.get_edit_url }}">edit meshu</a>
     <a id="order-button" class="nav active" href="{{ meshu.get_order_url }}">order meshu</a>
     {% endif %}
