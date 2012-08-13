@@ -70,3 +70,7 @@ brew install cairo
 port install cairo
 http://stackoverflow.com/questions/6886578/how-to-install-pycairo-1-10-on-mac-osx-with-default-python
 https://github.com/pcraciunoiu/kitsune/tree/466b65ad885118f0fb8d14f706ea9efa21f49edd/apps/upload
+
+backup meshu databases:
+http://docs.webfaction.com/user-guide/databases.html
+we have this running on webfaction

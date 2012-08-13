@@ -80,7 +80,11 @@ sb.map = function(frame, width, height) {
 		}];
 
 		self.map.extent(extent);
-		self.map.zoom(self.map.zoom() - .5);
+
+		// keep it to whole number zoom levels
+		// before we were subtracting half a zoom, which gives more room 
+		// but messes up the rasterizer.js
+		self.map.zoom(Math.floor(self.map.zoom())); 
 
 		self.boundsUpdated();
 	};

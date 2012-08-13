@@ -75,6 +75,8 @@
                         <p class="note">$85-160</p>
                     </div>
                 </div>
+
+                <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.meshu.io%2Fmake%2F313237%2F&media=http%3A%2F%2Fdev.meshu.io%2Fmake%2F313237%2F" class="pin-it-button" count-layout="none"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
             </div>
         </div>
     {% endblock %}
@@ -548,6 +550,7 @@
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>

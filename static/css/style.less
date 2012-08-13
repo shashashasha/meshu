@@ -328,22 +328,23 @@ body.win #login-form ul {
     position: relative;
     width: 961px;
     height: 480px;
-
-    text-align: right;
+    color: @grey;
 
     img {
         margin: 0;
         padding: 0;
+        margin-top: 20px;
         float: left;
         width: 320px;
         height: 480px;
     }
 
     #intro-text {
-        text-align: right;
-        margin-bottom: 21px;
-        margin-top: 20px;
-        color: @grey;
+        margin: 20px 0 20px 20px;
+        text-align: left;
+        font-size: 34px;
+        width: 300px;
+        float: left;
 
         .meshu-title {
             color: black;
@@ -352,16 +353,26 @@ body.win #login-form ul {
 
     .large-button {
         font-size: 30px;
-        margin-top: 24px;
-        float: right;
+        margin-top: 20px;
+        margin-left: 20px;
+        float: left;
+    }
+
+    .minor-actions {
+        font-size: 20px;
+        margin-top: 49px;
+        margin-left: 20px;
+        width: 300px;
+        line-height: 1.7;
+        float: left;
     }
 
     .button {
         padding: 5px 11px;
     }
 
-    .shop { 
-        background-color: @grey;
+    .minor { 
+        background-color: @lightGrey;
     }
 }
 
