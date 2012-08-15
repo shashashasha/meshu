@@ -25,10 +25,15 @@ sb.mesh = function (frame, map, width, height) {
 
     var g = main.append("svg:g")
             .attr("class", "delaunay")
-            .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
+            .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
+            .attr("fill","none")
+            .attr("stroke-width","5")
+            .attr("stroke","black")
+            .attr("stroke-linejoin","round");
 
     var hidden = main.append("svg:g")
-                 .attr("class", "hidden");
+                 .attr("class", "hidden")
+                 .style("display","none");
 
     hidden.append("svg:path");
 

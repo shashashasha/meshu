@@ -196,6 +196,10 @@ sb.meshu = function(frame, existingMap) {
 
     mesh.on("locationsSet", self.updateBounds);
 
+    self.getFrame = function() {
+        return frame;
+    };
+
     self.updateTitle = function(t) {
         mesh.updateTitle(t);
     };
@@ -207,6 +211,10 @@ sb.meshu = function(frame, existingMap) {
     // output the contents of our mesh as svg
     self.outputSVG = function() {
     	return mesh.output();
+    };
+
+    self.outputMapSVG = function() {
+        return $(map.map.container()).html();
     };
 
     self.hideMesh = function() {

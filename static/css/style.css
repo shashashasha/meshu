@@ -255,34 +255,45 @@ body.win #login-form ul {
   position: relative;
   width: 961px;
   height: 480px;
-  text-align: right;
+  color: #808080;
 }
 #photos img {
   margin: 0;
   padding: 0;
+  margin-top: 20px;
   float: left;
   width: 320px;
   height: 480px;
 }
 #photos #intro-text {
-  text-align: right;
-  margin-bottom: 21px;
-  margin-top: 20px;
-  color: #808080;
+  margin: 20px 0 20px 20px;
+  text-align: left;
+  font-size: 34px;
+  width: 300px;
+  float: left;
 }
 #photos #intro-text .meshu-title {
   color: black;
 }
 #photos .large-button {
   font-size: 30px;
-  margin-top: 24px;
-  float: right;
+  margin-top: 20px;
+  margin-left: 20px;
+  float: left;
+}
+#photos .minor-actions {
+  font-size: 20px;
+  margin-top: 49px;
+  margin-left: 20px;
+  width: 300px;
+  line-height: 1.7;
+  float: left;
 }
 #photos .button {
   padding: 5px 11px;
 }
-#photos .shop {
-  background-color: #808080;
+#photos .minor {
+  background-color: #8f8f8f;
 }
 #banners {
   height: 384px;
@@ -1407,6 +1418,11 @@ body.ie8 .city-input {
   left: auto;
   right: 130px;
 }
+.view .share {
+  position: absolute;
+  right: 230px;
+  top: 20px;
+}
 #finish-button,
 #save-button,
 #update-button,
@@ -1554,6 +1570,7 @@ circle.highlight,
   height: 306px;
   margin: 0 10px 10px 0;
   border: 5px solid white;
+  position: relative;
 }
 .mini-meshu:hover {
   cursor: pointer;

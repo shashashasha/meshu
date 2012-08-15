@@ -75,6 +75,8 @@
                         <p class="note">$85-160</p>
                     </div>
                 </div>
+
+                <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.meshu.io%2Fmake%2F313237%2F&media=http%3A%2F%2Fdev.meshu.io%2Fmake%2F313237%2F" class="pin-it-button" count-layout="none"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
             </div>
         </div>
     {% endblock %}
@@ -145,6 +147,7 @@
         <div class="back button">back</div>
         <div class="make-wrapper">
             <h2>Please log in to continue.</h2>
+            <div id="inline-facebook-signin" class="next active"><fb:login-button onlogin="userFlowFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button></div>
             <form id="inline-signin">
                 <div class="form-row">
                     <label for="inline_signin_name">Email</label>
@@ -547,18 +550,22 @@
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
+    <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
+    
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script> 
 
-<!--
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
@@ -566,7 +573,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
-    -->
+
 {% endblock %}
 
 {% block resources %}

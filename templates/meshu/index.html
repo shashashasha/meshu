@@ -7,18 +7,18 @@
 	<div id="photos">
 		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
 		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
-		<div id="intro-text" class="big">
+		<div id="intro-text">
 			<span class="meshu-title">meshu</span><br/>
-			turns your<br />places into<br />beautiful objects.
+			turns your places<br />into beautiful objects.
+		</div>
+		<div class="facebook-auth large-button">
+			<a rel="nofollow" class="button" href="/facebook/login">Start with Facebook</a>
 		</div>
 		<div class="large-button">
-		<a href="/make/" class="button pink">Make Your Own</a>
+			<a href="/make/" class="button pink">Make Your Own</a>
 		</div>
-		<div class="large-button">
-		<a href="/shop/" class="button shop">Shop Our Gallery</a>
-		</div>
-		<div class="large-button">
-		<div class="foursquare-auth button">Start With Foursquare</div>
+		<div class="minor-actions">
+			Or you can still <br /><div class="foursquare-auth button minor">connect with Foursquare</div><br />and<br /><a href="/shop/" class="button minor">shop our gallery</a>
 		</div>
 	</div>
 
@@ -60,7 +60,8 @@
 		<a class="option" href="/shop/">Shop Our Gallery</a>
 		<a class="option pink" href="/make/">Make Your Own!</a>
 	</div>
-	<h2 class="bottom">Or, <span class="foursquare-auth button">connect with Foursquare</span> to use your checkin data.</h2>
+	<h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button">Foursquare</span> to use your past places.</h2>
+		</div>
 
 </div>
 {% endblock %}
