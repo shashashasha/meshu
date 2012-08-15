@@ -180,7 +180,8 @@ sb.meshu = function(frame, existingMap) {
     };
 
     self.refreshWithBounds = function(lats, lons) {
-        map.updateBounds(lats, lons);
+        // using a zoomOffset parameter set outside in app.js
+        map.updateBounds(lats, lons, self.zoomOffset);
     };
 
     self.updateBounds = function() {
