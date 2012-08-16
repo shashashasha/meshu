@@ -289,6 +289,19 @@ $(function() {
 				views.splice(-2, 0, "account");
 			}
 			$("#account").css("visibility","visible");
+				$("#account li").click(function(){
+	            var mode = $(this).attr("id").split("-")[1];
+
+	            console.log("click",mode);
+	            var form = $("#account");
+
+	            form.attr("class",mode); 
+	            form.find("li").removeClass("active");
+
+	            $(this).addClass("active");
+
+	            self.mode = mode;
+	        });
 		}
 	}
 

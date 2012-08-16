@@ -93,6 +93,63 @@ h1#meshu {
 #account label.error.login-error {
   display: none;
 }
+#login-form h2,
+#account h2 {
+  text-align: center;
+}
+#login-form form,
+#account form {
+  margin-top: 15px;
+}
+#login-form label,
+#account label {
+  line-height: 30px;
+}
+#login-form .login-row,
+#account .login-row {
+  min-height: 30px;
+}
+#login-form .reenter,
+#account .reenter {
+  bottom: -10px;
+  float: left;
+  line-height: 15px;
+}
+#login-form .fb_iframe_widget,
+#account .fb_iframe_widget {
+  width: 177px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}
+#login-form hr,
+#account hr {
+  margin-top: 20px;
+  border-top: 0px solid #e6e6e6;
+}
+#login-form .or,
+#account .or {
+  margin-top: -20px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #808080;
+}
+#login-form .or span,
+#account .or span {
+  background: white;
+  padding: 0 10px;
+}
+#login-form .tab-switch,
+#account .tab-switch {
+  padding-left: 95px;
+}
+#login-form p,
+#account p {
+  margin: 15px 17px 15px 0;
+  color: #808080;
+  font-size: 12px;
+}
 #login-form {
   display: none;
   position: absolute;
@@ -111,18 +168,13 @@ h1#meshu {
 #login-form h2 {
   padding: 0 0 10px 17px;
 }
-#login-form form {
-  margin-top: 15px;
-}
 #login-form .login-row {
   display: block;
   width: 320px;
   margin-left: 30px;
-  min-height: 30px;
 }
 #login-form label {
   width: 70px;
-  line-height: 30px;
 }
 #login-form label.error {
   color: #ff3fb4;
@@ -132,6 +184,9 @@ h1#meshu {
   line-height: 19px;
   font-family: Helvetica, Arial, sans-serif;
   clear: both;
+}
+#login-form p {
+  margin: 15px 20px 0 29px;
 }
 .tab-switch {
   border-bottom: 1px solid #e6e6e6;
@@ -162,7 +217,9 @@ body.win #login-form ul {
   height: 27px;
 }
 #login-form.signin .account,
-#login-form.account .signin {
+#login-form.account .signin,
+#account.signin .account,
+#account.account .signin {
   display: none;
 }
 #login-form input {
@@ -186,12 +243,6 @@ body.win #login-form ul {
   position: absolute;
   bottom: 15px;
   right: 90px;
-}
-#form-account p,
-#form-signin p {
-  margin: 15px 20px 0 29px;
-  color: #808080;
-  font-size: 12px;
 }
 #login-form.account .login-cancel {
   right: 150px;
