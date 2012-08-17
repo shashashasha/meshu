@@ -143,10 +143,57 @@
         </div>
     {% endblock %}
 
-    <div id="account">
+    <div id="account" class="account">
         <div class="back button">back</div>
         <div class="make-wrapper">
-            <h2>Please log in to continue.</h2>
+            <h2>Please log in to continue</h2>
+
+            <fb:login-button size="large" onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+
+            <hr>
+            <p class="or"><span>or</span></p>
+
+            <ul id="login-form-switch" class="tab-switch">
+                <li id="tab-account" class="active">Create an Account</li>
+                <li id="tab-signin">Log In</li>
+            </ul>
+            <div id="csrf">
+                {% csrf_token %}
+            </div>
+            <form id="form-signin" class="signin">
+                <div class="login-row">
+                    <label for="signin_name">Email</label>
+                    <input id="signin_name" class="required email" type="text" name="signin_name" maxlength="30" style="margin-left: 47px;">
+                </div>
+                <div class="login-row">
+                    <label for="signin_password">Password</label>
+                    <input type="password" class="required" name="signin_password" id="signin_password">
+                    <label for="signin_password" class="error login-error">Oops, wrong email or password.</label>
+                </div>
+                <p>Forgot your password? Click <a href="/user/forgot/">here</a> to reset it.</p>
+                <div class="login-buttons">
+                    <input id="login-signin" class="button" type="submit" value="Login">
+                </div>
+            </form>
+            <form id="form-account" class="account">
+                <div class="login-row">
+                    <label for="account_name">Email</label>
+                    <input id="account_name" class="required email" type="text" name="account_name" maxlength="30" style="margin-left: 47px;">
+                </div>
+                <div class="login-row">
+                    <label for="account_password">Password</label>
+                    <input type="password" class="required" name="account_password" id="account_password">
+                </div>
+                <div class="login-row">
+                    <label for="repeat_password" class="reenter" style="width:70px">Re-enter Password</label>
+                    <input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
+                </div>
+                <p class="account-message">Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!</p>
+                <div class="login-buttons">
+                    <input id="login-account" class="button" type="submit" value="Create Account">
+                </div>
+            </form>
+            <!-- <h2>Please log in to continue.</h2>
             <div id="inline-facebook-signin" class="next active"><fb:login-button onlogin="userFlowFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button></div>
             <form id="inline-signin">
                 <div class="form-row">
@@ -181,7 +228,7 @@
                 <div class="login-buttons">
                     <input id="inline-login-account" class="button next active" type="submit" value="Create Account">
                 </div>
-            </form>
+            </form> -->
         </div>
     </div>
 

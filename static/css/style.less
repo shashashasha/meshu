@@ -147,6 +147,56 @@ h1#meshu {
     display: none;
 }
 
+#login-form,
+#account {
+    h2 {
+        text-align: center;
+    }
+    form {
+        margin-top: 15px;
+    }
+    label {
+        line-height: 30px;
+    }
+    .login-row {
+        min-height: 30px;
+    }
+    .reenter {
+        bottom: -10px; 
+        float: left; 
+        line-height: 15px;
+    }
+    .fb_iframe_widget {
+        width: 177px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 15px;
+    }
+    hr {
+        margin-top: 20px;
+        border-top: 0px solid @borderGrey;
+    }
+    .or {
+        margin-top: -20px;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: @grey;
+    }
+    .or span {
+        background: white;
+        padding: 0 10px;
+    }
+    .tab-switch {
+        padding-left: 95px;
+    } 
+    p {
+        margin: 15px 17px 15px 0;
+        color: @grey;
+        font-size: 12px;
+    }  
+}
+
 #login-form {
     display: none; 
     position: absolute; 
@@ -164,20 +214,14 @@ h1#meshu {
         padding: 0 0 10px 17px;
     }
 
-    form {
-        margin-top: 15px;
-    }
-
     .login-row {
         display: block;
         width: 320px;
         margin-left: 30px;
-        min-height: 30px;
     }
 
     label {
         width: 70px;
-        line-height: 30px;
     }
 
     label.error {
@@ -188,6 +232,9 @@ h1#meshu {
         line-height: 19px;
         font-family: Helvetica, Arial, sans-serif;
         clear: both;
+    }
+    p {
+        margin: 15px 20px 0 29px;
     }
 }
 
@@ -222,7 +269,10 @@ body.win #login-form ul {
     height: 27px;
 }
 
-#login-form.signin .account, #login-form.account .signin {
+#login-form.signin .account, 
+#login-form.account .signin,
+#account.signin .account,
+#account.account .signin {
     display: none;
 }
 
@@ -250,12 +300,6 @@ body.win #login-form ul {
     position: absolute;
     bottom: 15px;
     right: 90px;
-}
-
-#form-account p, #form-signin p {
-    margin: 15px 20px 0 29px;
-    color: @grey;
-    font-size: 12px;
 }
 
 #login-form.account .login-cancel {

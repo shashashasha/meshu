@@ -34,8 +34,8 @@ import sha
 #
 
 # hashed codes
-codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313', 'c50086a2272b1848c75174e41bde1b2d6fa44dde']
-amounts = [25, .85, .85, .8]
+codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313']
+amounts = [25, .85, .85]
 invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # util function

@@ -44,6 +44,12 @@
 		<div id="login-form" class="signin">
 			<h2 class="account">Please sign up to continue</h2>
 			<h2 class="signin">Please log in to continue</h2>
+
+			<fb:login-button size="large" onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+
+			<hr>
+			<p class="or"><span>or</span></p>
+
 			<ul id="login-form-switch" class="tab-switch">
 				<li id="tab-account" class="active">Create an Account</li>
 				<li id="tab-signin">Log In</li>
@@ -52,9 +58,6 @@
 				{% csrf_token %}
 			</div>
 			<form id="form-signin" class="signin">
-				<div class="login-row">
-					<fb:login-button onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
-				</div>
 				<div class="login-row">
 					<label for="signin_name">Email</label>
 					<input id="signin_name" class="required email" type="text" name="signin_name" maxlength="30" style="margin-left: 47px;">
@@ -72,9 +75,6 @@
 			</form>
 			<form id="form-account" class="account">
 				<div class="login-row">
-					<fb:login-button onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
-				</div>
-				<div class="login-row">
 					<label for="account_name">Email</label>
 					<input id="account_name" class="required email" type="text" name="account_name" maxlength="30" style="margin-left: 47px;">
 				</div>
@@ -83,7 +83,7 @@
 					<input type="password" class="required" name="account_password" id="account_password">
 				</div>
 				<div class="login-row">
-					<label for="repeat_password" style="bottom: -10px; float: left; line-height: 15px;">Re-enter Password</label>
+					<label for="repeat_password" class="reenter">Re-enter Password</label>
 					<input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
 				</div>
 				<p class="account-message">Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!</p>
