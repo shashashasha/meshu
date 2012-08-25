@@ -1441,24 +1441,30 @@ body.ie8 .city-input {
 .nav a {
     color: white;
 }
-.view .nav {
-    z-index: 1;
-}
 
 .back {
     position: absolute;
     left: 20px;
     top: 20px;
 }
+
+/* display.html actions, order, edit, share */
+.view .item-actions {
+    position: absolute;
+    z-index: 1;
+    right: 20px;
+    top: 20px;
+    width: auto;
+
+    .action-button {
+        float: right;
+        margin-left: 12px;
+    }
+}
+
 .view .back {
     left: auto;
     right: 130px;
-}
-
-.view .share {
-    position: absolute;
-    right: 230px;
-    top: 20px;
 }
 
 #finish-button, #save-button, #update-button, #cancel-button, #save-progress-button {
@@ -1506,11 +1512,7 @@ body.ie8 .city-input {
     margin-top: 20px;
     border: none;
 }
-#order-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+
 #submit-button {
     border: none;
     font-size: 20px;

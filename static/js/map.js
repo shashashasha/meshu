@@ -2,7 +2,8 @@ var sb = sb || {};
 
 sb.map = function(frame, width, height) {
 	var po = org.polymaps;
-	var self = d3.dispatch("boundsUpdated");
+	var self = d3.dispatch("boundsUpdated"),
+		buffer = .5;
 
 	// updating to toner tiles
 	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
@@ -59,7 +60,12 @@ sb.map = function(frame, width, height) {
 		}
 	};
 
-	self.updateBounds = function(lats, lons) {
+	self.buffer = function(b) {
+		buffer = b;
+		return self;
+	};
+
+	self.updateBounds = function(lats, lons, offset) {
 		if (lats.length == 0 || lons.length == 0) return;
 		if (lats.length == 1 && lons.length == 1) {
 			self.map.center({
@@ -84,7 +90,7 @@ sb.map = function(frame, width, height) {
 		// keep it to whole number zoom levels
 		// before we were subtracting half a zoom, which gives more room 
 		// but messes up the rasterizer.js
-		self.map.zoom(Math.floor(self.map.zoom())); 
+		self.map.zoom(Math.floor(self.map.zoom()) - buffer);
 
 		self.boundsUpdated();
 	};

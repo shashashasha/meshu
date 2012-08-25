@@ -49,6 +49,10 @@ $(function() {
 				readymade.initialize(meshu);
 			}
 
+			if (pageType == 'view') {
+				meshu.map().buffer(0);
+			}
+			
 			meshu.locationData(loadedMeshu.location_data);
 		}
 
