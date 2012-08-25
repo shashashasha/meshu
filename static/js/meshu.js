@@ -125,12 +125,21 @@ sb.meshu = function(frame, existingMap) {
 
     self.locationData = function(data) {
         var locations = data.split('|');
-        var newLocs = [];
+        var newLocs = [],
+            seen = {};
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
             if (values.length < 3) {
                 continue;
+            }
+
+            // check against the lat lon as '37.75--122.45'
+            var hash = values[0] + '-' + values[1];
+            if (seen[hash]) {
+                continue;
+            } else {
+                seen[hash] = true;
             }
 
             newLocs.push({
