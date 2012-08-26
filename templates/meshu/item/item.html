@@ -10,7 +10,7 @@
     <img src="{{ STATIC_URL }}images/diagrams/make_helper_checkins.gif" class="right">
     <p class="caption">Search for cities, addresses, or neighborhoods.</p>
     <p class="caption right">Click on the map to add points.</p>
-    <p class="caption right">Connect with Foursquare to use your checkins.</p>
+    <p class="caption right">Use your checkins from Facebook or Foursquare.</p>
     <p class="title">Some ideas to get you started:</p> 
     <p class="ideas">Cities I’ve Been To, Places I’ve Lived, Countries I Want to Visit, Restaurants I Love, etc...</p>
     <div class="button pink" id="close-help">OK, I'm ready!</div>
@@ -21,6 +21,6 @@
     <div class="nav back">back</div>
 {% endblock %}
 {% block finish %}
-    <div class="foursquare-auth button">Connect to Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div>
+    <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
     <div id="finish-button" class="nav next start-order">Continue</div>
 {% endblock %}

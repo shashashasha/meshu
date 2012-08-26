@@ -356,12 +356,12 @@ body.win #login-form ul {
     width: 50px;
 }
 
-#main .big {
+.big {
     font-size: 46px;
     text-align: center;
     margin-top: 45px;
 }
-#main .centered {
+.centered {
     margin: 20px 20px 0 20px;
 }
 
@@ -644,17 +644,33 @@ body.win #login-form ul {
     .shadow(10px, rgba(0, 0, 0, .1));
 }
 
-#edit .foursquare-auth {
+#edit .connect-wrapper {
     position: absolute;
-    bottom: 20px;
-    margin: 0;
+    bottom: 27px;
+    font-size: 18px;
+}
+#edit .connect-wrapper .title {
+    margin-bottom: 7px;
+}
+
+#edit .foursquare-auth, #edit .facebook-auth {
+    margin: 0 7px 0 0;
     padding: 8px 34px 9px 10px;
+    position: relative;
+    font-size: 14px;
 }
 .foursquare-auth img {
     height: 20px;
     position: absolute;
     right: 7px;
     top: 7px;
+}
+.facebook-auth {
+    background-image: url(../images/f_logo.png);
+    background-position: 92% 50%;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    padding: 8px 30px 9px 10px;
 }
 
 #cases {
@@ -754,7 +770,7 @@ body.firefox #place-number #input {
 }
 
 #places ul {
-    height: 352px;
+    height: 339px;
     overflow-y: auto;
 }
 .place {
