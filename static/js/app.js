@@ -330,8 +330,13 @@ $(function() {
 
 	sb.rasterizer.on("rasterized", function(data) {
 		console.log('rasterizing', data);
+		console.log('saver', saver);
 		saver.updateMeshuData(data);
 
+		var image_url = 'http://dev.meshu.io:8000' + meshu.image_url;
+		var url = 'http://meshu.io' + meshu.view_url;
+
+		$(".share-pinterest").attr("href", "http://pinterest.com/pin/create/button/?url=" + url + "&media=" + image_url)
 		$(".share-buttons").show();
 	});
 
