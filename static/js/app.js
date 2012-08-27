@@ -248,29 +248,6 @@ $(function() {
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
 				sb.rasterizer.rasterize(meshu);
-				sb.rasterizer.on("rasterized", function(data) {
-					saver.updateMeshu(data);
-
-					$(".share-buttons").show();
-
-					// popup the facebook dialog
-					$("#post-facebook").click(function() {
-						FB.ui({
-				        	method: 'feed',
-				        	link: 'http://meshu.io' + data.view_url,
-				        	picture: 'http://dev.meshu.io:8000' + data.url,
-				        	name: data.title,
-				        	caption: "Come see the jewelry I'm making out of places I've been",
-				        	description: ''
-				        }, function(response) {
-			                if (!response || response.error) {
-			                    console.log(response);
-			                } else {
-			                    console.log('Post ID: ' + response.id);
-			                }
-			            });
-					});
-				});
 
 				break;
 
@@ -344,10 +321,36 @@ $(function() {
 		$(".show-places").toggle();
 	});
 
-	$("#share-facebook").click(function() {
-		globalMeshu = meshu;
-		sb.rasterizer.rasterize(meshu);
-	})
+	$(".share-facebook").click(function() {
+		if (!sb.rasterizer.generated) {
+			sb.rasterizer.rasterize(meshu, postOnFacebook);	
+		} else {
+			postOnFacebook();
+		}
+	});
+
+	sb.rasterizer.on("rasterized", function(data) {
+		saver.updateMeshu(data);
+
+		$(".share-buttons").show();
+	});
+
+	var postOnFacebook = function() {
+		FB.ui({
+        	method: 'feed',
+        	link: 'http://meshu.io' + meshu.view_url,
+        	picture: 'http://dev.meshu.io:8000' + meshu.image_url,
+        	name: meshu.outputTitle(),
+        	caption: "Come see the jewelry I'm making out of places I've been",
+        	description: ''
+        }, function(response) {
+            if (!response || response.error) {
+                console.log(response);
+            } else {
+                console.log('Post ID: ' + response.id);
+            }
+        });
+	};
 
 
 	$("#shipping-destination li").click(function() {		

@@ -146,6 +146,8 @@ var saver = function() {
 
     self.updateMeshu = function(data) {
         updateMeshuID(data.id);
+        self.meshu.view_url = data.view_url;
+        self.meshu.image_url = data.image_url;
         self.meshu.username = data.username;
     };
 

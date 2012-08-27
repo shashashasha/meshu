@@ -609,11 +609,10 @@ def meshu_update(request, meshu):
 	return meshu
 
 def meshu_get_or_create(request, profile):
-
-	if request.POST.has_key('id'):
+	if request.POST.has_key('id') and request.POST['id'] != 'None':
 		meshu_id = int(request.POST['id'])
 		meshu = Meshu.objects.get(id=meshu_id)
-	elif request.POST.has_key('meshu_id'):
+	elif request.POST.has_key('meshu_id') and request.POST['meshu_id'] != 'None':
 		meshu_id = int(request.POST['meshu_id'])
 		meshu = Meshu.objects.get(id=meshu_id)
 	else:
@@ -812,6 +811,7 @@ def item_topng(request, item_encoded):
 	return processing_make_png(request, meshu)
 
 def processing_dataurl_to_image(request):
+
 	profile = current_profile(request)
 
 	meshu = meshu_get_or_create(request, profile)
@@ -839,7 +839,7 @@ def processing_make_png(request, meshu):
 		'title': meshu.title,
 		'username': meshu.user_profile.user.username,
 		'view_url': meshu.get_absolute_url(),
-		'url': meshu_image.image.url
+		'image_url': meshu_image.image.url
 	})
 
 # import cairo, rsvg

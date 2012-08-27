@@ -1,7 +1,8 @@
 var sb = sb || {};
 
 sb.rasterizer = function() {
-	var self = d3.dispatch("rasterized");
+	var self = d3.dispatch("rasterized"),
+		generated = false;
 
 	var makeCanvas = function() {
 		var canvas = document.createElement('canvas');
@@ -30,7 +31,7 @@ sb.rasterizer = function() {
 		meshu.mesh().refresh();
 	};
 
-	var drawMeshu = function(frame, canvas, ctx, meshu) {
+	var drawMeshu = function(frame, canvas, ctx, meshu, callback) {
 		var meshuCanvas = document.createElement('canvas');
 		meshuCanvas.width = canvas.width;
 		meshuCanvas.height = canvas.height;
@@ -40,12 +41,12 @@ sb.rasterizer = function() {
 			renderCallback: function() {
 				// combine the canvases
 				ctx.drawImage(meshuCanvas, 0, 0, canvas.width, canvas.height);
-				postMeshu(frame, canvas, ctx, meshu);
+				postMeshu(frame, canvas, ctx, meshu, callback);
 			}
 		});
 	};
 
-	var postMeshu = function(frame, canvas, ctx, meshu) {
+	var postMeshu = function(frame, canvas, ctx, meshu, callback) {
 		/*
 			sending all the meshu information. Since we're saving on 'continue'
 			we want to save a meshu in our db regardless, to associate with the MeshuImage
@@ -75,11 +76,17 @@ sb.rasterizer = function() {
 			var img = document.createElement('img');
 			img.src = data.url;
 			frame.appendChild(img);
+			self.generated = true;
+
 			self.rasterized(data);
+
+			if (callback) {
+				callback(data);
+			}
 		}, 'json');
 	}
 
-	self.rasterize = function(meshu) { 
+	self.rasterize = function(meshu, callback) { 
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content
@@ -98,7 +105,7 @@ sb.rasterizer = function() {
 				lightenCanvas(ctx, .7);
 
 				// draw the meshu onto a canvas
-				drawMeshu(frame, canvas, ctx, meshu);
+				drawMeshu(frame, canvas, ctx, meshu, callback);
 			}
 		});
 	};

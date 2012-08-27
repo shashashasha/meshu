@@ -40,6 +40,7 @@ urlpatterns += patterns('meshu.views',
 
 	
 	url(r'^make/to_png', 'processing_dataurl_to_image'),
+	url(r'^make/data/to_png', 'processing_dataurl_to_image'),
 
 	url(r'^make/foursquare', direct_to_template, {
 		'template': 'meshu/gallery/foursquare_auth_completed.html'
