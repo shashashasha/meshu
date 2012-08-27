@@ -25,7 +25,7 @@ $(function() {
 						"pendant":"pendant necklace",
 						"necklace":"large necklace",
 						"cufflinks": "cufflinks"};
-	
+
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
 	var content = $("#content");
@@ -37,11 +37,13 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
+	// store the meshu id
+	meshu.id = loadedMeshu ? loadedMeshu.id : '';
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
-		saver.initialize(meshu, loadedMeshu.view_url);
+		saver.initialize(meshu);
 
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
@@ -246,6 +248,29 @@ $(function() {
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
 				sb.rasterizer.rasterize(meshu);
+				sb.rasterizer.on("rasterized", function(data) {
+					saver.updateMeshu(data);
+
+					$(".share-buttons").show();
+
+					// popup the facebook dialog
+					$("#post-facebook").click(function() {
+						FB.ui({
+				        	method: 'feed',
+				        	link: 'http://meshu.io' + data.view_url,
+				        	picture: 'http://dev.meshu.io:8000' + data.url,
+				        	name: data.title,
+				        	caption: "Come see the jewelry I'm making out of places I've been",
+				        	description: ''
+				        }, function(response) {
+			                if (!response || response.error) {
+			                    console.log(response);
+			                } else {
+			                    console.log('Post ID: ' + response.id);
+			                }
+			            });
+					});
+				});
 
 				break;
 

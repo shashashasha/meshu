@@ -202,8 +202,7 @@ var user = function() {
                 'last_name': data.last_name,
                 'access_token': response.authResponse.accessToken
             }, onLogIn, 'json');
-        })
-        
+        });
     };
 
     function onLogOut(data) {
