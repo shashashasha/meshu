@@ -1,6 +1,13 @@
 var sb = sb || {};
 sb.facebook = {};
 
+// attach facebook auth
+$(".facebook-auth").click(function() {
+    var url = '/facebook/login';
+    window.location = url;
+});
+
+
 sb.facebook.initialize = function(FB) {
     // if you want to just go back to manual mode
     $("#finish-button").click(function() {
