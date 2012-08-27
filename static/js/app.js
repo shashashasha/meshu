@@ -242,6 +242,11 @@ $(function() {
 				// initialize product picker
 				// todo - fix
 				sb.product.initialize(".delaunay");
+
+				// rasterize the meshu, add it as an image on to the page 
+				// this means we can then pin it / fb it
+				sb.rasterizer.rasterize(meshu);
+
 				break;
 
 			case 'make':
