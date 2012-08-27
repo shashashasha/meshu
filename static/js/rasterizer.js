@@ -87,6 +87,7 @@ sb.rasterizer = function() {
 	}
 
 	self.rasterize = function(meshu, callback) { 
+		console.log('rasterizing inside rasterizer');
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content

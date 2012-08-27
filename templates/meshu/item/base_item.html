@@ -638,7 +638,7 @@
     {% if meshu %}
     var loadedMeshu = {
         id: '{{ meshu.id }}',
-        user: '{{ meshu.user_profile.user.username }}',
+        username: '{{ meshu.user_profile.user.username }}',
         edit_url: '{{ meshu.get_edit_url }}',
         view_url: '{{ meshu.get_absolute_url }}',
         title: "{{ meshu.title|safe }}",

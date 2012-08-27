@@ -37,13 +37,13 @@ $(function() {
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
-	// store the meshu id
-	meshu.id = loadedMeshu ? loadedMeshu.id : '';
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
+
 		// create a saver object, in saver.js
 		saver.initialize(meshu);
+		saver.updateMeshuData(loadedMeshu);
 
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
@@ -248,7 +248,6 @@ $(function() {
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
 				sb.rasterizer.rasterize(meshu);
-
 				break;
 
 			case 'make':
@@ -330,7 +329,8 @@ $(function() {
 	});
 
 	sb.rasterizer.on("rasterized", function(data) {
-		saver.updateMeshu(data);
+		console.log('rasterizing', data);
+		saver.updateMeshuData(data);
 
 		$(".share-buttons").show();
 	});

@@ -17,6 +17,8 @@ var saver = function() {
     function updateMeshuID(id) {
         if (!id) return;
 
+        self.meshu.id = id;
+
         if ($("#meshu-id").length == 0)
           $("#hidden-form-values").append('<input type="hidden" id="meshu-id" name="meshu_id" />');
 
@@ -124,6 +126,7 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
+        console.log('createOrUpdateMeshu', self.meshu.username, self.meshu);
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();
@@ -144,11 +147,14 @@ var saver = function() {
         return self;
     };
 
-    self.updateMeshu = function(data) {
+    self.updateMeshuData = function(data) {
         updateMeshuID(data.id);
+        
         self.meshu.view_url = data.view_url;
-        self.meshu.image_url = data.image_url;
         self.meshu.username = data.username;
+
+        if (data.image_url) 
+          self.meshu.image_url = data.image_url;
     };
 
     self.getMeshuID = function() {
