@@ -52,6 +52,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/geojson', 'item_from_geojson'),
 	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
+	url(r'^make/assign/', 'item_assign'),
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),
 	
@@ -63,7 +64,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
 
 	# display
-	url(r'^view/(?P<item_encoded>\w+)/to_png', 'processing_dataurl_to_image'),
+	url(r'^view/(?P<item_encoded>\w+)/to_png', 'item_topng'),
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
 
 	url(r'^user/login/', 'user_login'),

@@ -187,8 +187,22 @@ def item_create(request):
 	if xhr:
 		return meshu_xhr_response(meshu)
 
-	return HttpResponseRedirect('/view/' + meshu.get_encoded_id() + '/')
-	# return item_handler(request, meshu.id, 'display.html', 'view')
+	return HttpResponseRedirect(meshu.get_absolute_url())
+
+def item_assign(request):
+	xhr = request.POST.has_key('xhr')
+
+	profile = current_profile(request)
+
+	meshu = meshu_get_or_create(request, profile)
+	meshu.user_profile = profile
+	meshu.save()
+
+	if xhr:
+		return meshu_xhr_response(meshu)
+
+	return HttpResponseRedirect(meshu.get_absolute_url())
+
 
 def item_update(request, item_encoded):
 	xhr = request.GET.has_key('xhr')
@@ -219,14 +233,6 @@ def item_save(request, item_encoded):
 		return meshu_xhr_response(meshu)
 
 	return item_handler(request, item_id, 'display.html', 'view')
-
-def item_topng(request, item_encoded):
-	xhr = request.GET.has_key('xhr')
-
-	item_id = int(str(item_encoded).decode("hex"))
-	meshu = Meshu.objects.get(id=item_id)
-
-	return processing_make_png(request, meshu, meshu.get_png_filename())
 
 #
 # Views for Users
@@ -582,12 +588,12 @@ def make_order(request, profile, meshu):
 #
 
 # grab the current user profile, if a user is logged in, 
-# otherwise grabs anonymous profile
+# otherwise grabs guest profile, for saving interim meshus
 def current_profile(request):
 	if request.user.is_authenticated():
 		return request.user.get_profile()
 	else:
-		return UserProfile.objects.get(user__username='shop')
+		return UserProfile.objects.get(user__username='guest')
 
 
 #
@@ -603,13 +609,11 @@ def meshu_update(request, meshu):
 	return meshu
 
 def meshu_get_or_create(request, profile):
-	has_id = request.POST.has_key('id')
-	has_meshu_id = request.POST.has_key('meshu_id')
 
-	if has_id:
+	if request.POST.has_key('id'):
 		meshu_id = int(request.POST['id'])
 		meshu = Meshu.objects.get(id=meshu_id)
-	elif has_meshu_id:
+	elif request.POST.has_key('meshu_id'):
 		meshu_id = int(request.POST['meshu_id'])
 		meshu = Meshu.objects.get(id=meshu_id)
 	else:
@@ -782,10 +786,10 @@ def processing_jsoner(request):
 		return HttpResponse('', mimetype='application/json')
 
 def processing_tiles(request, subdomain, zoom, x, y):
-	print(subdomain)
-	print(zoom)
-	print('x:' + str(x))
-	print('y:' + str(y))
+	# print(subdomain)
+	# print(zoom)
+	# print('x:' + str(x))
+	# print('y:' + str(y))
 	url = 'http://{0}.tile.stamen.com/toner/{1}/{2}/{3}.png'.format(subdomain, zoom, x, y)
 
 	try:
@@ -797,23 +801,32 @@ def processing_tiles(request, subdomain, zoom, x, y):
 
 from django.core.files.images import ImageFile
 import re
-def processing_dataurl_to_image(request, item_encoded=''):
-	name = request.POST.get('filename')
+# convert an existing, where we're guaranteed a meshu
+# ie on /view/3242342 and /make/3242342 pages, not /make/
+def item_topng(request, item_encoded):
+	xhr = request.GET.has_key('xhr')
 
-	filename = re.sub(r'\W+','_', name) + '.png'
+	item_id = int(str(item_encoded).decode("hex"))
+	meshu = Meshu.objects.get(id=item_id)
 
-	meshu = Meshu.objects.get(id=1)
-	filename = str(meshu.id) + '_' + filename.lower()
+	return processing_make_png(request, meshu)
 
-	return processing_make_png(request, meshu, filename)
+def processing_dataurl_to_image(request):
+	profile = current_profile(request)
 
-def processing_make_png(request, meshu, filename):
+	meshu = meshu_get_or_create(request, profile)
+
+	return processing_make_png(request, meshu)
+
+def processing_make_png(request, meshu):
 	dataurl = request.POST.get('dataurl')
 	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
 
 	output = open('static/images/meshus/rendered.png', 'r+b')
 	output.write(imgstr.decode('base64'))
 	image = ImageFile(output)
+
+	filename = meshu.get_png_filename()
 
 	meshu_image = MeshuImage(meshu=meshu)
 	meshu_image.image.save(filename, image)
@@ -823,6 +836,9 @@ def processing_make_png(request, meshu, filename):
 		'success': True,
 		'filename': filename,
 		'id': meshu.id,
+		'title': meshu.title,
+		'username': meshu.user_profile.user.username,
+		'view_url': meshu.get_absolute_url(),
 		'url': meshu_image.image.url
 	})
 

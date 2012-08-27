@@ -23,13 +23,33 @@ var saver = function() {
         $("#meshu-id").val(id);
     };
 
+    function assignGuestMeshu() {
+        var xhr = getMeshuXHR();
+        xhr.csrfmiddlewaretoken = $("#csrf input").val();
+
+        // if we've made one already, set the id
+        if ($("#meshu-id").length)
+            xhr.id = self.getMeshuID();
+
+        // assign this guest meshu to the current logged in user
+        $.post('/make/assign/', xhr, function(data) {
+            // create new meshu_id element in the form
+            updateMeshuID(data.meshu_id);
+
+            if (self.postAssignCallback) {
+              self.postAssignCallback(data);
+            }
+
+        }, 'json');
+    };
+
     function createNewMeshu() {
         var xhr = getMeshuXHR();
         xhr.csrfmiddlewaretoken = $("#csrf input").val();
 
         // if we've made one already, set the id
         if ($("#meshu-id").length)
-            xhr.id = parseInt($("#meshu-id").val());
+            xhr.id = self.getMeshuID();
 
         // push this
         $.post('/make/create/', xhr, function(data) {
@@ -43,11 +63,11 @@ var saver = function() {
         }, 'json');
     }
 
-    self.initialize = function(meshu, view_url) {
+    self.initialize = function(meshu) {
         self.meshu = meshu;
 
         $("#cancel-button").click(function() {
-          window.location.href = view_url;
+          window.location.href = loadedMeshu.view_url;
         });
 
         // this only applies to usermade meshus
@@ -107,6 +127,12 @@ var saver = function() {
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();
+        } else if (self.meshu.username && self.meshu.username == 'guest') { 
+            assignGuestMeshu();
+
+            if (callback) {
+              self.postAssignCallback = callback;
+            }
         } else {
             createNewMeshu();
 
@@ -116,6 +142,11 @@ var saver = function() {
         }
 
         return self;
+    };
+
+    self.updateMeshu = function(data) {
+        updateMeshuID(data.id);
+        self.meshu.username = data.username;
     };
 
     self.getMeshuID = function() {

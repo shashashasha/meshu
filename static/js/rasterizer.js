@@ -46,40 +46,36 @@ sb.rasterizer = function() {
 	};
 
 	var postMeshu = function(frame, canvas, ctx, meshu) {
-		// send it to the server to be saved as a png
-		$.post('to_png', {
+		/*
+			sending all the meshu information. Since we're saving on 'continue'
+			we want to save a meshu in our db regardless, to associate with the MeshuImage
+
+			this starts off as assigned to the 'guest' user_profile, 
+			which once we log in we assign to the logged in user_profile
+		*/
+		var pngPost = {
 			'xhr': 'true', 
 			'csrfmiddlewaretoken': $("#csrf input").val(),
 			'dataurl': canvas.toDataURL(),
-			'filename': meshu.outputTitle()
-		}, function(data) {
+			'title': meshu.outputTitle(),
+			'location_data': meshu.outputLocationData(),
+			'svg': meshu.outputSVG()
+		};
+
+		/* 
+			attach the meshu id if we have one, 
+			this is if we're starting off with a meshu
+		*/
+		if (meshu.id) {
+			pngPost.id = meshu.id;
+		}
+
+		// send it to the server to be saved as a png
+		$.post('to_png', pngPost, function(data) {
 			var img = document.createElement('img');
 			img.src = data.url;
 			frame.appendChild(img);
-
-			self.rasterized(data.url);
-
-
-			// popup the facebook dialog
-			// setTimeout(function() {
-			// 	console.log('http://dev.meshu.io:8000' + data.url);
-		 //        FB.ui({
-		 //        	method: 'feed',
-		 //        	link: 'http://meshu.io',
-		 //        	picture: 'http://dev.meshu.io:8000' + data.url,
-		 //        	name: 'My Meshu',
-		 //        	caption: "Come see the jewelry I'm making out of places I've been",
-		 //        	description: ''
-		 //        }, function(response) {
-	  //               if (!response || response.error) {
-	  //                   console.log(response);
-	  //               } else {
-	  //                   console.log('Post ID: ' + response.id);
-	  //               }
-	  //           });
-			// }, 10);
-
-			
+			self.rasterized(data);
 		}, 'json');
 	}
 
