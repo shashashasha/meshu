@@ -1657,6 +1657,11 @@ circle.highlight,
 .mini-meshu .ie8 .title {
   background-color: white;
 }
+.mini-meshu a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 #gallery {
   margin-left: 15px;
 }
@@ -1850,9 +1855,6 @@ body.ie #maps .mini-meshu div {
 #maps .mini-meshu:hover .meshu-svg {
   border: none;
   margin: 0;
-}
-.gallery .meshu-svg path {
-  stroke-width: 12;
 }
 #img-thumbs {
   padding: 10px 0 10px;
