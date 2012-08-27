@@ -600,7 +600,7 @@ body.win #login-form ul {
   right: 7px;
   top: 7px;
 }
-.facebook-auth {
+#edit .facebook-auth {
   background-image: url(../images/f_logo.png);
   background-position: 92% 50%;
   background-repeat: no-repeat;

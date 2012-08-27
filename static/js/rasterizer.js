@@ -1,7 +1,7 @@
 var sb = sb || {};
 
 sb.rasterizer = function() {
-	var self = {};
+	var self = d3.dispatch("rasterized");
 
 	var makeCanvas = function() {
 		var canvas = document.createElement('canvas');
@@ -57,24 +57,29 @@ sb.rasterizer = function() {
 			img.src = data.url;
 			frame.appendChild(img);
 
+			self.rasterized(data.url);
+
+
 			// popup the facebook dialog
-			setTimeout(function() {
-				console.log('http://dev.meshu.io:8000' + data.url);
-		        FB.ui({
-		        	method: 'feed',
-		        	link: 'http://meshu.io',
-		        	picture: 'http://dev.meshu.io:8000' + data.url,
-		        	name: 'My Meshu',
-		        	caption: "Come see the jewelry I'm making out of places I've been",
-		        	description: ''
-		        }, function(response) {
-	                if (!response || response.error) {
-	                    console.log(response);
-	                } else {
-	                    console.log('Post ID: ' + response.id);
-	                }
-	            });
-			}, 10);
+			// setTimeout(function() {
+			// 	console.log('http://dev.meshu.io:8000' + data.url);
+		 //        FB.ui({
+		 //        	method: 'feed',
+		 //        	link: 'http://meshu.io',
+		 //        	picture: 'http://dev.meshu.io:8000' + data.url,
+		 //        	name: 'My Meshu',
+		 //        	caption: "Come see the jewelry I'm making out of places I've been",
+		 //        	description: ''
+		 //        }, function(response) {
+	  //               if (!response || response.error) {
+	  //                   console.log(response);
+	  //               } else {
+	  //                   console.log('Post ID: ' + response.id);
+	  //               }
+	  //           });
+			// }, 10);
+
+			
 		}, 'json');
 	}
 
