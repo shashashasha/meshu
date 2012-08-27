@@ -90,7 +90,10 @@ sb.map = function(frame, width, height) {
 		// keep it to whole number zoom levels
 		// before we were subtracting half a zoom, which gives more room 
 		// but messes up the rasterizer.js
-		self.map.zoom(Math.floor(self.map.zoom()) + .2);
+
+		console.log(offset);
+
+		self.map.zoom(Math.floor(self.map.zoom()) + (offset || 0)); //  + .2
 
 		self.boundsUpdated();
 	};

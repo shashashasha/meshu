@@ -30,7 +30,6 @@ sb.minimeshu = function(frame) {
         }
 
         mesh.locations(locsToAdd);
-        self.updateBounds();
     };
 
     self.locationData = function(data) {
@@ -67,8 +66,8 @@ sb.minimeshu = function(frame) {
         return mesh;
     };
 
-    self.updateBounds = function() {
-        map.updateBounds(mesh.lats(), mesh.lons());
+    self.updateBounds = function(offset) {
+        map.updateBounds(mesh.lats(), mesh.lons(), offset);
     };
 
     map.on("boundsUpdated", function() {
@@ -76,7 +75,10 @@ sb.minimeshu = function(frame) {
         mesh.refresh();
     });
 
-    mesh.on("locationsSet", self.updateBounds);
+    // offset the zoom a bit for legibility
+    mesh.on("locationsSet", function() {
+        self.updateBounds(-.2); 
+    });
 
     // output the contents of our mesh as svg
     self.outputSVG = function() {
