@@ -327,6 +327,11 @@ $(function() {
 			postOnFacebook();
 		}
 	});
+	$(".share-twitter").click(function() {
+		var start = "https://twitter.com/intent/tweet?text="
+		this.href = start+encodeURIComponent("Check out this meshu I just made at http://meshu.io") + "&url=" + encodeURIComponent(meshu.image_url);
+		console.log(this.href,meshu.image_url,encodeURIComponent(meshu.image_url));
+	});
 
 	sb.rasterizer.on("rasterized", function(data) {
 		console.log('rasterizing', data);
