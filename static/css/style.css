@@ -1025,7 +1025,8 @@ body.firefox.win #rotate-help .border-notch {
   display: none;
 }
 .share-facebook,
-.share-twitter {
+.share-twitter,
+.share-pinterest {
   position: relative;
   display: inline-block;
   margin: 0 0 0 5px;
@@ -1045,6 +1046,15 @@ body.firefox.win #rotate-help .border-notch {
   vertical-align: top;
   cursor: pointer;
 }
+.view .share-facebook,
+.view .share-twitter,
+.view .share-pinterest {
+  font-size: 14px;
+  border-radius: 0;
+  padding: 4px 8px 4px 27px;
+  display: block;
+  margin-bottom: 5px;
+}
 .share-facebook i {
   background-image: url(../images/social/facebook.png);
   background-position: 92% 50%;
@@ -1057,6 +1067,10 @@ body.firefox.win #rotate-help .border-notch {
   top: 2px;
   left: 4px;
 }
+.view .share-facebook i {
+  top: 5px;
+  left: 6px;
+}
 .share-twitter i {
   background-image: url(../images/social/larry.gif);
   height: 16px;
@@ -1065,6 +1079,20 @@ body.firefox.win #rotate-help .border-notch {
   position: absolute;
   top: 2px;
   left: 4px;
+}
+.share-pinterest i {
+  background-image: url(../images/pinterest.png);
+  background-size: 16px 16px;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+}
+.view .share-twitter i {
+  top: 5px;
+  left: 7px;
 }
 .edit #materials,
 .view #materials,
@@ -1371,8 +1399,17 @@ body.ie8 .city-input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+#view h2 span {
+  float: left;
+}
 #view .show-places {
   cursor: pointer;
+}
+.view .share-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
 }
 .display #display {
   right: 0;
@@ -1527,10 +1564,9 @@ body.ie8 .city-input {
 }
 /* display.html actions, order, edit, share */
 .view .item-actions {
-  position: absolute;
-  z-index: 1;
-  right: 20px;
-  top: 20px;
+  font-size: 14px;
+  float: left;
+  margin-top: 6px;
   width: auto;
 }
 .view .item-actions .action-button {
