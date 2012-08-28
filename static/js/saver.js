@@ -126,7 +126,6 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
-        console.log('createOrUpdateMeshu', self.meshu.username, self.meshu);
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();
@@ -149,7 +148,7 @@ var saver = function() {
 
     self.updateMeshuData = function(data) {
         updateMeshuID(data.id);
-        
+
         self.meshu.view_url = data.view_url;
         self.meshu.username = data.username;
 

@@ -301,8 +301,6 @@ $(function() {
 			$("#account").css("visibility","visible");
 				$("#account li").click(function(){
 	            var mode = $(this).attr("id").split("-")[1];
-
-	            console.log("click",mode);
 	            var form = $("#account");
 
 	            form.attr("class",mode); 
@@ -320,6 +318,7 @@ $(function() {
 		$(".show-places").toggle();
 	});
 
+
 	$(".share-facebook").click(function() {
 		if (!sb.rasterizer.generated) {
 			sb.rasterizer.rasterize(meshu, postOnFacebook);	
@@ -327,22 +326,22 @@ $(function() {
 			postOnFacebook();
 		}
 	});
-	$(".share-twitter").click(function() {
-		var start = "https://twitter.com/intent/tweet?text="
-		this.href = start+encodeURIComponent("Check out this meshu I just made at http://meshu.io") + "&url=" + encodeURIComponent(meshu.image_url);
-		console.log(this.href,meshu.image_url,encodeURIComponent(meshu.image_url));
-	});
 
 	sb.rasterizer.on("rasterized", function(data) {
-		console.log('rasterizing', data);
-		console.log('saver', saver);
 		saver.updateMeshuData(data);
 
-		var image_url = 'http://dev.meshu.io:8000' + meshu.image_url;
-		var url = 'http://meshu.io' + meshu.view_url;
+		var twitterBase = "https://twitter.com/intent/tweet?text=";
+		var pinterestBase = "http://pinterest.com/pin/create/button/?url=";
+		var base = 'http://' + window.location.host;
+		var image_url = base + meshu.image_url;
+		var url = encodeURIComponent(base + meshu.view_url);
+		
+		var msg = "Check out this meshu I just made of the places I've been ";
 
-		$(".share-pinterest").attr("href", "http://pinterest.com/pin/create/button/?url=" + url + "&media=" + image_url)
-		$(".share-buttons").show();
+		$(".share-pinterest").attr("href", pinterestBase + url + "&media=" + image_url);
+		$(".share-twitter").attr("href", twitterBase + msg + '&url=' + url);
+
+		$(".social-media").fadeIn();
 	});
 
 	var postOnFacebook = function() {
@@ -355,9 +354,7 @@ $(function() {
         	description: ''
         }, function(response) {
             if (!response || response.error) {
-                console.log(response);
             } else {
-                console.log('Post ID: ' + response.id);
             }
         });
 	};
