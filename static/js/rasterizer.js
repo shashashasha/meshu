@@ -2,7 +2,8 @@ var sb = sb || {};
 
 sb.rasterizer = function() {
 	var self = d3.dispatch("rasterized"),
-		generated = false;
+		generated = false,
+		canvases = [];
 
 	var makeCanvas = function() {
 		var canvas = document.createElement('canvas');
@@ -11,6 +12,10 @@ sb.rasterizer = function() {
 		canvas.style.position = 'absolute';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
+
+		$(canvas).addClass("hidden");
+
+		canvases.push(canvas);
 		return canvas;
 	};
 
@@ -32,9 +37,7 @@ sb.rasterizer = function() {
 	};
 
 	var drawMeshu = function(frame, canvas, ctx, meshu, callback) {
-		var meshuCanvas = document.createElement('canvas');
-		meshuCanvas.width = canvas.width;
-		meshuCanvas.height = canvas.height;
+		var meshuCanvas = makeCanvas();
 		frame.appendChild(meshuCanvas);
 
 		canvg(meshuCanvas, meshu.outputSVG(), {
@@ -74,11 +77,18 @@ sb.rasterizer = function() {
 		// send it to the server to be saved as a png
 		$.post('to_png', pngPost, function(data) {
 			var img = document.createElement('img');
-			img.src = data.url;
+			img.src = data.image_url;
+
+			// luvs da binxes
+			$(img).addClass("hidden");
+
 			frame.appendChild(img);
 			self.generated = true;
-
 			self.rasterized(data);
+
+			$.each(canvases, function(i, e) {
+				$(e).remove();
+			});
 
 			if (callback) {
 				callback(data);
@@ -86,8 +96,7 @@ sb.rasterizer = function() {
 		}, 'json');
 	}
 
-	self.rasterize = function(meshu, callback) { 
-		console.log('rasterizing inside rasterizer');
+	self.rasterize = function(meshu, callback) {
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content
