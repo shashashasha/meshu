@@ -1044,7 +1044,7 @@ body.firefox.win #rotate-help .border-notch {
   vertical-align: top;
 }
 .share-facebook i {
-  background-image: url(../images/f_logo.png);
+  background-image: url(../images/social/f_logo.png);
   background-position: 92% 50%;
   background-repeat: no-repeat;
   background-size: 15px 15px;
@@ -1056,7 +1056,7 @@ body.firefox.win #rotate-help .border-notch {
   left: 4px;
 }
 .share-twitter i {
-  background-image: url(../images/larry.gif);
+  background-image: url(../images/social/larry.gif);
   height: 16px;
   width: 16px;
   display: inline-block;
