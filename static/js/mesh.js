@@ -32,8 +32,7 @@ sb.mesh = function (frame, map, width, height) {
             .attr("stroke-linejoin","round");
 
     var hidden = main.append("svg:g")
-                 .attr("class", "hidden")
-                 .style("display","none");
+                 .attr("class", "hidden");
 
     hidden.append("svg:path");
 

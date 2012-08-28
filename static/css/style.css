@@ -1026,7 +1026,7 @@ body.firefox.win #rotate-help .border-notch {
 }
 .share-facebook,
 .share-twitter,
-.share-pinterest {
+.view .share-pinterest {
   position: relative;
   display: inline-block;
   margin: 0 0 0 5px;
