@@ -74,21 +74,21 @@ sb.rasterizer = function() {
 			pngPost.id = meshu.id;
 		}
 
+		// clear canvases
+		while (canvases.length) {
+			var c = canvases.pop()
+			$(c).remove();
+		}
+
 		// send it to the server to be saved as a png
 		$.post('to_png', pngPost, function(data) {
 			var img = document.createElement('img');
 			img.src = data.image_url;
-
-			// luvs da binxes
 			$(img).addClass("hidden");
 
 			frame.appendChild(img);
 			self.generated = true;
 			self.rasterized(data);
-
-			$.each(canvases, function(i, e) {
-				$(e).remove();
-			});
 
 			if (callback) {
 				callback(data);
