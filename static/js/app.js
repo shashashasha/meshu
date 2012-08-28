@@ -345,12 +345,13 @@ $(function() {
 	});
 
 	var postOnFacebook = function() {
+		var base = 'http://' + window.location.host;
 		FB.ui({
         	method: 'feed',
-        	link: 'http://meshu.io' + meshu.view_url,
-        	picture: 'http://dev.meshu.io:8000' + meshu.image_url,
-        	name: meshu.outputTitle(),
-        	caption: "Come see the jewelry I'm making out of places I've been",
+        	link: base + meshu.view_url,
+        	picture: base + meshu.image_url,
+        	name: meshu.outputTitle() + ' on meshu.io',
+        	caption: "meshu turns your places into beautiful objects.",
         	description: ''
         }, function(response) {
             if (!response || response.error) {
