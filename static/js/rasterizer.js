@@ -44,7 +44,12 @@ sb.rasterizer = function() {
 			renderCallback: function() {
 				// combine the canvases
 				ctx.drawImage(meshuCanvas, 0, 0, canvas.width, canvas.height);
-				postMeshu(frame, canvas, ctx, meshu, callback);
+				var logo = new Image();
+				logo.onload = function(){
+					ctx.drawImage(logo, canvas.width-180, canvas.height-50, 159, 29);
+					postMeshu(frame, canvas, ctx, meshu, callback);
+				};
+				logo.src = '../images/logo_io.png';
 			}
 		});
 	};
