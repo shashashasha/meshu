@@ -8,7 +8,7 @@
 	    <script type="text/javascript" src="{{ STATIC_URL }}js/ie.patches.js"></script>
     <![endif]-->
     <title>{% block title %}Meshu{% endblock %}</title>
-    <meta name="description" content="Meshu turns your places and into beautiful jewelry.">
+    <meta name="description" content="Meshu turns your places into beautiful, unique jewelry.">
     <meta name="keywords" content="jewelry,generative,lasercut,earrings,cufflinks,necklaces,gift ideas,foursquare">
 	<script type="text/javascript">
 
@@ -44,6 +44,12 @@
 		<div id="login-form" class="signin">
 			<h2 class="account">Please sign up to continue</h2>
 			<h2 class="signin">Please log in to continue</h2>
+
+			<fb:login-button size="large" onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+
+			<hr>
+			<p class="or"><span>or</span></p>
+
 			<ul id="login-form-switch" class="tab-switch">
 				<li id="tab-account" class="active">Create an Account</li>
 				<li id="tab-signin">Log In</li>
@@ -77,7 +83,7 @@
 					<input type="password" class="required" name="account_password" id="account_password">
 				</div>
 				<div class="login-row">
-					<label for="repeat_password" style="bottom: -10px; float: left; line-height: 15px;">Re-enter Password</label>
+					<label for="repeat_password" class="reenter">Re-enter Password</label>
 					<input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
 				</div>
 				<p class="account-message">Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!</p>
@@ -107,7 +113,28 @@ window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https
 /* custom configuration goes here (www.olark.com/documentation) */
 olark.identify('7626-379-10-2860');/*]]>{/literal}*/</script><noscript><a href="https://www.olark.com/site/7626-379-10-2860/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript><!-- end olark code -->
 
+<!-- Facebook specific code -->
+<div id="fb-root"></div>
 </body>
+
+	<!-- Facebook specific code -->
+	<script type="text/javascript">
+	// when the Facebook SDK is loaded, run this
+	window.fbAsyncInit = function() {
+	    FB.init({
+	        appId      : '324846177609340', // App ID
+	        channelUrl : '{{ STATIC_URL }}lib/channel.html',
+	        status     : true, // check login status
+	        cookie     : true, // enable cookies to allow the server to access the session
+	        xfbml      : true  // parse XFBML
+	    });
+
+	    // facebook specific code that runs on each page
+		{% block fb_code %}
+		{% endblock %}
+	};
+	</script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/facebookapp.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/user.min.js"></script>
     <script type="text/javascript">
     	// django static url

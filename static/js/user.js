@@ -3,7 +3,7 @@ var user = function() {
         defaultMessage = "Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!";
 
     self.loggedIn = false;
-
+    self.fbID = 0;
     self.mode = 'account';
 
 
@@ -62,6 +62,10 @@ var user = function() {
         /* 
             when logging in 
         */
+        $(".facebook-signin").click(function() {
+            window.location = '/facebook/login';
+        });
+
         $("#form-signin").validate({
             rules: {
                 signin_name: {
@@ -151,6 +155,10 @@ var user = function() {
         });
 
         $("#logout").click(function(e) {
+            // if we have facebook on the page, we should log out of that too
+            if (FB && self.fbID) {
+                FB.logout();
+            }
             $.get('/user/logout/', { 'xhr': 'true' }, onLogOut, 'json');
         }); 
     };
@@ -175,6 +183,28 @@ var user = function() {
         }
     };
 
+    /* if the user has logged in via the facebook button, log them into meshu as well */
+    self.facebookLogin = function(response, callback) {
+        if (!response.authResponse || self.loggedIn) return;
+
+        FB.api('/me', function(data) {
+            if (callback) {
+                self.afterLogIn = callback;
+            }
+
+            $.post('/user/facebook/inline_login/', {
+                'xhr': 'true',
+                'csrfmiddlewaretoken': $("#csrf input").val(),
+
+                'email': data.email,
+                'id': data.id,
+                'first_name': data.first_name,
+                'last_name': data.last_name,
+                'access_token': response.authResponse.accessToken
+            }, onLogIn, 'json');
+        });
+    };
+
     function onLogOut(data) {
         $("#login").show();
         
@@ -182,6 +212,7 @@ var user = function() {
         $("#logout").hide().html('');
 
         self.loggedIn = false;
+        self.fbID = 0;
 
         // if we want to redirect on logout, set this property
         if (self.logoutRedirect) {
@@ -215,6 +246,11 @@ var user = function() {
         $("#login-form").hide();
 
         self.loggedIn = true;
+
+        // store the facebook id if we have one
+        if (data.facebook_id) {
+            self.fbID = data.facebook_id;
+        }
 
         if (self.afterLogIn) {
             self.afterLogIn();

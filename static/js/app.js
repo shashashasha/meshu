@@ -25,7 +25,7 @@ $(function() {
 						"pendant":"pendant necklace",
 						"necklace":"large necklace",
 						"cufflinks": "cufflinks"};
-	
+
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
 	var content = $("#content");
@@ -40,8 +40,10 @@ $(function() {
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
+
 		// create a saver object, in saver.js
-		saver.initialize(meshu, loadedMeshu.view_url);
+		saver.initialize(meshu);
+		saver.updateMeshuData(loadedMeshu);
 
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
@@ -49,6 +51,10 @@ $(function() {
 				readymade.initialize(meshu);
 			}
 
+			if (pageType == 'view') {
+				meshu.map().buffer(0);
+			}
+			
 			meshu.locationData(loadedMeshu.location_data);
 		}
 
@@ -163,6 +169,7 @@ $(function() {
 			return;
 		}
 
+
 		makeNextView(view);
 		user.updateLogoutActions(view);
 		advanceView();
@@ -237,6 +244,10 @@ $(function() {
 				// initialize product picker
 				// todo - fix
 				sb.product.initialize(".delaunay");
+
+				// rasterize the meshu, add it as an image on to the page 
+				// this means we can then pin it / fb it
+				sb.rasterizer.rasterize(meshu);
 				break;
 
 			case 'make':
@@ -288,6 +299,17 @@ $(function() {
 				views.splice(-2, 0, "account");
 			}
 			$("#account").css("visibility","visible");
+				$("#account li").click(function(){
+	            var mode = $(this).attr("id").split("-")[1];
+	            var form = $("#account");
+
+	            form.attr("class",mode); 
+	            form.find("li").removeClass("active");
+
+	            $(this).addClass("active");
+
+	            self.mode = mode;
+	        });
 		}
 	}
 
@@ -295,6 +317,47 @@ $(function() {
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
 	});
+
+
+	$(".share-facebook").click(function() {
+		if (!sb.rasterizer.generated) {
+			sb.rasterizer.rasterize(meshu, postOnFacebook);	
+		} else {
+			postOnFacebook();
+		}
+	});
+
+	sb.rasterizer.on("rasterized", function(data) {
+		saver.updateMeshuData(data);
+
+		var twitterBase = "https://twitter.com/intent/tweet?text=";
+		var pinterestBase = "http://pinterest.com/pin/create/button/?url=";
+		var base = 'http://' + window.location.host;
+		var image_url = base + meshu.image_url;
+		var url = encodeURIComponent(base + meshu.view_url);
+		
+		var msg = "Check out this meshu I just made of the places I've been ";
+
+		$(".share-pinterest").attr("href", pinterestBase + url + "&media=" + image_url);
+		$(".share-twitter").attr("href", twitterBase + msg + '&url=' + url);
+
+		$(".social-media").fadeIn();
+	});
+
+	var postOnFacebook = function() {
+		FB.ui({
+        	method: 'feed',
+        	link: 'http://meshu.io' + meshu.view_url,
+        	picture: 'http://dev.meshu.io:8000' + meshu.image_url,
+        	name: meshu.outputTitle(),
+        	caption: "Come see the jewelry I'm making out of places I've been",
+        	description: ''
+        }, function(response) {
+            if (!response || response.error) {
+            } else {
+            }
+        });
+	};
 
 
 	$("#shipping-destination li").click(function() {		

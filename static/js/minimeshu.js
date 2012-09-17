@@ -30,17 +30,25 @@ sb.minimeshu = function(frame) {
         }
 
         mesh.locations(locsToAdd);
-        self.updateBounds();
     };
 
     self.locationData = function(data) {
         var locations = data.split('|');
-        var newLocs = [];
+        var newLocs = [],
+            seen = {};
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
             if (values.length < 3) {
                 continue;
+            }
+
+            // check against the lat lon as '37.75--122.45'
+            var hash = values[0] + '-' + values[1];
+            if (seen[hash]) {
+                continue;
+            } else {
+                seen[hash] = true;
             }
 
             newLocs.push({
@@ -58,8 +66,8 @@ sb.minimeshu = function(frame) {
         return mesh;
     };
 
-    self.updateBounds = function() {
-        map.updateBounds(mesh.lats(), mesh.lons());
+    self.updateBounds = function(offset) {
+        map.updateBounds(mesh.lats(), mesh.lons(), offset);
     };
 
     map.on("boundsUpdated", function() {
@@ -67,7 +75,10 @@ sb.minimeshu = function(frame) {
         mesh.refresh();
     });
 
-    mesh.on("locationsSet", self.updateBounds);
+    // offset the zoom a bit for legibility
+    mesh.on("locationsSet", function() {
+        self.updateBounds(-.2); 
+    });
 
     // output the contents of our mesh as svg
     self.outputSVG = function() {

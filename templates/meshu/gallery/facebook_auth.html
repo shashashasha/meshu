@@ -1,0 +1,39 @@
+{% extends "meshu/gallery/gallery.html" %}
+
+{% block title %}Meshu - Use Facebook Data{% endblock %}
+
+{% block content %}
+<h2 class="page-header">
+  Loading places...
+</h2>
+<div id="maps">
+</div>
+<div id="finish-button" class="nav active">Or, just start making one manually</div>
+<div style="display:none;">
+  <form action="/make/data/#skipintro" method="POST" id="meshu-select-form">
+    {# put a csrf token in every form in django, for security #}
+    {% csrf_token %}
+    <input type="hidden" id="svg-file" name="svg"/>
+    <input type="hidden" id="svg-theta" name="theta" value="0"/>
+    <input type="hidden" id="meshu-title" name="title"/>
+    <input type="hidden" id="meshu-data" name="location_data"/>
+</form>
+</div>
+{% endblock %}
+
+{% block fb_code %}
+FB.getLoginStatus(function(response){
+    sb.facebook.initialize(FB);
+});
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/d3.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geom.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/map.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/mesh.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/minimeshu.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/saver.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/min/facebook.min.js"></script>
+{% endblock %}

@@ -93,6 +93,63 @@ h1#meshu {
 #account label.error.login-error {
   display: none;
 }
+#login-form h2,
+#account h2 {
+  text-align: center;
+}
+#login-form form,
+#account form {
+  margin-top: 15px;
+}
+#login-form label,
+#account label {
+  line-height: 30px;
+}
+#login-form .login-row,
+#account .login-row {
+  min-height: 30px;
+}
+#login-form .reenter,
+#account .reenter {
+  bottom: -10px;
+  float: left;
+  line-height: 15px;
+}
+#login-form .fb_iframe_widget,
+#account .fb_iframe_widget {
+  width: 177px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}
+#login-form hr,
+#account hr {
+  margin-top: 20px;
+  border-top: 0px solid #e6e6e6;
+}
+#login-form .or,
+#account .or {
+  margin-top: -20px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #808080;
+}
+#login-form .or span,
+#account .or span {
+  background: white;
+  padding: 0 10px;
+}
+#login-form .tab-switch,
+#account .tab-switch {
+  padding-left: 95px;
+}
+#login-form p,
+#account p {
+  margin: 15px 17px 15px 0;
+  color: #808080;
+  font-size: 12px;
+}
 #login-form {
   display: none;
   position: absolute;
@@ -111,18 +168,13 @@ h1#meshu {
 #login-form h2 {
   padding: 0 0 10px 17px;
 }
-#login-form form {
-  margin-top: 15px;
-}
 #login-form .login-row {
   display: block;
   width: 320px;
   margin-left: 30px;
-  min-height: 30px;
 }
 #login-form label {
   width: 70px;
-  line-height: 30px;
 }
 #login-form label.error {
   color: #ff3fb4;
@@ -132,6 +184,9 @@ h1#meshu {
   line-height: 19px;
   font-family: Helvetica, Arial, sans-serif;
   clear: both;
+}
+#login-form p {
+  margin: 15px 20px 0 29px;
 }
 .tab-switch {
   border-bottom: 1px solid #e6e6e6;
@@ -162,7 +217,9 @@ body.win #login-form ul {
   height: 27px;
 }
 #login-form.signin .account,
-#login-form.account .signin {
+#login-form.account .signin,
+#account.signin .account,
+#account.account .signin {
   display: none;
 }
 #login-form input {
@@ -186,12 +243,6 @@ body.win #login-form ul {
   position: absolute;
   bottom: 15px;
   right: 90px;
-}
-#form-account p,
-#form-signin p {
-  margin: 15px 20px 0 29px;
-  color: #808080;
-  font-size: 12px;
 }
 #login-form.account .login-cancel {
   right: 150px;
@@ -239,12 +290,12 @@ body.win #login-form ul {
 #login-form #login-signin {
   width: 50px;
 }
-#main .big {
+.big {
   font-size: 46px;
   text-align: center;
   margin-top: 45px;
 }
-#main .centered {
+.centered {
   margin: 20px 20px 0 20px;
 }
 #photos {
@@ -255,34 +306,45 @@ body.win #login-form ul {
   position: relative;
   width: 961px;
   height: 480px;
-  text-align: right;
+  color: #808080;
 }
 #photos img {
   margin: 0;
   padding: 0;
+  margin-top: 20px;
   float: left;
   width: 320px;
   height: 480px;
 }
 #photos #intro-text {
-  text-align: right;
-  margin-bottom: 21px;
-  margin-top: 20px;
-  color: #808080;
+  margin: 20px 0 20px 20px;
+  text-align: left;
+  font-size: 34px;
+  width: 300px;
+  float: left;
 }
 #photos #intro-text .meshu-title {
   color: black;
 }
 #photos .large-button {
   font-size: 30px;
-  margin-top: 24px;
-  float: right;
+  margin-top: 20px;
+  margin-left: 20px;
+  float: left;
+}
+#photos .minor-actions {
+  font-size: 20px;
+  margin-top: 49px;
+  margin-left: 20px;
+  width: 300px;
+  line-height: 1.7;
+  float: left;
 }
 #photos .button {
   padding: 5px 11px;
 }
-#photos .shop {
-  background-color: #808080;
+#photos .minor {
+  background-color: #8f8f8f;
 }
 #banners {
   height: 384px;
@@ -517,17 +579,33 @@ body.win #login-form ul {
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-#edit .foursquare-auth {
+#edit .connect-wrapper {
   position: absolute;
-  bottom: 20px;
-  margin: 0;
+  bottom: 27px;
+  font-size: 18px;
+}
+#edit .connect-wrapper .title {
+  margin-bottom: 7px;
+}
+#edit .foursquare-auth,
+#edit .facebook-auth {
+  margin: 0 7px 0 0;
   padding: 8px 34px 9px 10px;
+  position: relative;
+  font-size: 14px;
 }
 .foursquare-auth img {
   height: 20px;
   position: absolute;
   right: 7px;
   top: 7px;
+}
+#edit .facebook-auth {
+  background-image: url(../images/social/facebook.png);
+  background-position: 92% 50%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  padding: 8px 30px 9px 10px;
 }
 #cases {
   margin: 3px 0;
@@ -630,7 +708,7 @@ body.firefox #place-number #input {
   cursor: auto;
 }
 #places ul {
-  height: 352px;
+  height: 339px;
   overflow-y: auto;
 }
 .place {
@@ -941,6 +1019,81 @@ body.firefox.win #rotate-help .border-notch {
   margin: 0;
   background-color: #808080;
 }
+.social-media {
+  clear: both;
+  padding-top: 31px;
+  display: none;
+}
+.share-facebook,
+.share-twitter,
+.view .share-pinterest {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 0 5px;
+  font-size: 12px;
+  color: #333;
+  background-color: #EEE;
+  background-image: -moz-linear-gradient(top, #ffffff, #dedede);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dedede));
+  background-image: -ms-linear-gradient(top, #ffffff, #dedede);
+  background-image: linear-gradient(top, #ffffff, #dedede);
+  background-image: -o-linear-gradient(top, #ffffff, #dedede);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  padding: 2px 5px 2px 23px;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+}
+.view .share-facebook,
+.view .share-twitter,
+.view .share-pinterest {
+  font-size: 14px;
+  border-radius: 0;
+  padding: 4px 8px 4px 27px;
+  display: block;
+  margin-bottom: 5px;
+}
+.share-facebook i {
+  background-image: url(../images/social/facebook.png);
+  background-position: 92% 50%;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  position: absolute;
+  top: 2px;
+  left: 4px;
+}
+.view .share-facebook i {
+  top: 5px;
+  left: 6px;
+}
+.share-twitter i {
+  background-image: url(../images/social/larry.gif);
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  position: absolute;
+  top: 2px;
+  left: 4px;
+}
+.share-pinterest i {
+  background-image: url(../images/pinterest.png);
+  background-size: 16px 16px;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+}
+.view .share-twitter i {
+  top: 5px;
+  left: 7px;
+}
 .edit #materials,
 .view #materials,
 .product #materials {
@@ -1246,8 +1399,17 @@ body.ie8 .city-input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+#view h2 span {
+  float: left;
+}
 #view .show-places {
   cursor: pointer;
+}
+.view .share-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
 }
 .display #display {
   right: 0;
@@ -1395,13 +1557,21 @@ body.ie8 .city-input {
 .nav a {
   color: white;
 }
-.view .nav {
-  z-index: 1;
-}
 .back {
   position: absolute;
   left: 20px;
   top: 20px;
+}
+/* display.html actions, order, edit, share */
+.view .item-actions {
+  font-size: 14px;
+  float: left;
+  margin-top: 6px;
+  width: auto;
+}
+.view .item-actions .action-button {
+  float: right;
+  margin-left: 12px;
 }
 .view .back {
   left: auto;
@@ -1464,11 +1634,6 @@ body.ie8 .city-input {
 #review-button {
   margin-top: 20px;
   border: none;
-}
-#order-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
 }
 #submit-button {
   border: none;
@@ -1554,6 +1719,7 @@ circle.highlight,
   height: 306px;
   margin: 0 10px 10px 0;
   border: 5px solid white;
+  position: relative;
 }
 .mini-meshu:hover {
   cursor: pointer;
@@ -1573,6 +1739,11 @@ circle.highlight,
 }
 .mini-meshu .ie8 .title {
   background-color: white;
+}
+.mini-meshu a {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 #gallery {
   margin-left: 15px;
@@ -1767,9 +1938,6 @@ body.ie #maps .mini-meshu div {
 #maps .mini-meshu:hover .meshu-svg {
   border: none;
   margin: 0;
-}
-.gallery .meshu-svg path {
-  stroke-width: 12;
 }
 #img-thumbs {
   padding: 10px 0 10px;

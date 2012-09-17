@@ -147,6 +147,56 @@ h1#meshu {
     display: none;
 }
 
+#login-form,
+#account {
+    h2 {
+        text-align: center;
+    }
+    form {
+        margin-top: 15px;
+    }
+    label {
+        line-height: 30px;
+    }
+    .login-row {
+        min-height: 30px;
+    }
+    .reenter {
+        bottom: -10px; 
+        float: left; 
+        line-height: 15px;
+    }
+    .fb_iframe_widget {
+        width: 177px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 15px;
+    }
+    hr {
+        margin-top: 20px;
+        border-top: 0px solid @borderGrey;
+    }
+    .or {
+        margin-top: -20px;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: @grey;
+    }
+    .or span {
+        background: white;
+        padding: 0 10px;
+    }
+    .tab-switch {
+        padding-left: 95px;
+    } 
+    p {
+        margin: 15px 17px 15px 0;
+        color: @grey;
+        font-size: 12px;
+    }  
+}
+
 #login-form {
     display: none; 
     position: absolute; 
@@ -164,20 +214,14 @@ h1#meshu {
         padding: 0 0 10px 17px;
     }
 
-    form {
-        margin-top: 15px;
-    }
-
     .login-row {
         display: block;
         width: 320px;
         margin-left: 30px;
-        min-height: 30px;
     }
 
     label {
         width: 70px;
-        line-height: 30px;
     }
 
     label.error {
@@ -188,6 +232,9 @@ h1#meshu {
         line-height: 19px;
         font-family: Helvetica, Arial, sans-serif;
         clear: both;
+    }
+    p {
+        margin: 15px 20px 0 29px;
     }
 }
 
@@ -222,7 +269,10 @@ body.win #login-form ul {
     height: 27px;
 }
 
-#login-form.signin .account, #login-form.account .signin {
+#login-form.signin .account, 
+#login-form.account .signin,
+#account.signin .account,
+#account.account .signin {
     display: none;
 }
 
@@ -250,12 +300,6 @@ body.win #login-form ul {
     position: absolute;
     bottom: 15px;
     right: 90px;
-}
-
-#form-account p, #form-signin p {
-    margin: 15px 20px 0 29px;
-    color: @grey;
-    font-size: 12px;
 }
 
 #login-form.account .login-cancel {
@@ -312,12 +356,12 @@ body.win #login-form ul {
     width: 50px;
 }
 
-#main .big {
+.big {
     font-size: 46px;
     text-align: center;
     margin-top: 45px;
 }
-#main .centered {
+.centered {
     margin: 20px 20px 0 20px;
 }
 
@@ -328,22 +372,23 @@ body.win #login-form ul {
     position: relative;
     width: 961px;
     height: 480px;
-
-    text-align: right;
+    color: @grey;
 
     img {
         margin: 0;
         padding: 0;
+        margin-top: 20px;
         float: left;
         width: 320px;
         height: 480px;
     }
 
     #intro-text {
-        text-align: right;
-        margin-bottom: 21px;
-        margin-top: 20px;
-        color: @grey;
+        margin: 20px 0 20px 20px;
+        text-align: left;
+        font-size: 34px;
+        width: 300px;
+        float: left;
 
         .meshu-title {
             color: black;
@@ -352,16 +397,26 @@ body.win #login-form ul {
 
     .large-button {
         font-size: 30px;
-        margin-top: 24px;
-        float: right;
+        margin-top: 20px;
+        margin-left: 20px;
+        float: left;
+    }
+
+    .minor-actions {
+        font-size: 20px;
+        margin-top: 49px;
+        margin-left: 20px;
+        width: 300px;
+        line-height: 1.7;
+        float: left;
     }
 
     .button {
         padding: 5px 11px;
     }
 
-    .shop { 
-        background-color: @grey;
+    .minor { 
+        background-color: @lightGrey;
     }
 }
 
@@ -589,17 +644,33 @@ body.win #login-form ul {
     .shadow(10px, rgba(0, 0, 0, .1));
 }
 
-#edit .foursquare-auth {
+#edit .connect-wrapper {
     position: absolute;
-    bottom: 20px;
-    margin: 0;
+    bottom: 27px;
+    font-size: 18px;
+}
+#edit .connect-wrapper .title {
+    margin-bottom: 7px;
+}
+
+#edit .foursquare-auth, #edit .facebook-auth {
+    margin: 0 7px 0 0;
     padding: 8px 34px 9px 10px;
+    position: relative;
+    font-size: 14px;
 }
 .foursquare-auth img {
     height: 20px;
     position: absolute;
     right: 7px;
     top: 7px;
+}
+#edit .facebook-auth {
+    background-image: url(../images/social/facebook.png);
+    background-position: 92% 50%;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    padding: 8px 30px 9px 10px;
 }
 
 #cases {
@@ -699,7 +770,7 @@ body.firefox #place-number #input {
 }
 
 #places ul {
-    height: 352px;
+    height: 339px;
     overflow-y: auto;
 }
 .place {
@@ -954,6 +1025,78 @@ body.firefox.win #rotate-help .border-notch {
     right: 20px;
     margin: 0;
     background-color: @grey;
+}
+
+.social-media {
+    clear: both;
+    padding-top: 31px;    
+    display: none;
+}
+.share-facebook, .share-twitter, .view .share-pinterest {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 5px;
+    font-size: 12px;
+    color: #333;
+    background-color: #EEE;
+    background-image: -moz-linear-gradient(top, white, #DEDEDE);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#DEDEDE));
+    background-image: -ms-linear-gradient(top, white, #DEDEDE);
+    background-image: linear-gradient(top, white, #DEDEDE);
+    background-image: -o-linear-gradient(top, white, #DEDEDE);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    padding: 2px 5px 2px 23px;
+    white-space: nowrap;
+    vertical-align: top;
+    cursor: pointer;
+}
+.view .share-facebook, .view .share-twitter, .view .share-pinterest {
+    font-size: 14px;
+    border-radius: 0;
+    padding: 4px 8px 4px 27px;
+    display: block;
+    margin-bottom: 5px;
+}
+.share-facebook i {
+    background-image: url(../images/social/facebook.png);
+    background-position: 92% 50%;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+}
+.view .share-facebook i {
+    top: 5px;
+    left: 6px;
+}
+.share-twitter i {
+    background-image: url(../images/social/larry.gif);
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+}
+.share-pinterest i {
+    background-image: url(../images/pinterest.png);
+    background-size: 16px 16px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: 6px;
+}
+.view .share-twitter i {
+    top: 5px;
+    left: 7px;
 }
 
 .edit #materials, .view #materials, .product #materials {
@@ -1219,8 +1362,17 @@ body.ie8 .city-input {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#view h2 span {
+    float: left;
+}
 #view .show-places {
     cursor: pointer;
+}
+.view .share-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
 }
 
 .display #display {
@@ -1386,15 +1538,26 @@ body.ie8 .city-input {
 .nav a {
     color: white;
 }
-.view .nav {
-    z-index: 1;
-}
 
 .back {
     position: absolute;
     left: 20px;
     top: 20px;
 }
+
+/* display.html actions, order, edit, share */
+.view .item-actions {
+    font-size: 14px;
+    float: left;
+    margin-top: 6px;
+    width: auto;
+
+    .action-button {
+        float: right;
+        margin-left: 12px;
+    }
+}
+
 .view .back {
     left: auto;
     right: 130px;
@@ -1445,11 +1608,7 @@ body.ie8 .city-input {
     margin-top: 20px;
     border: none;
 }
-#order-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+
 #submit-button {
     border: none;
     font-size: 20px;
@@ -1534,6 +1693,8 @@ circle {
     height: 306px;
     margin: 0 10px 10px 0;
     border: 5px solid white;
+    
+    position: relative;
 
     &:hover {
         cursor: pointer;
@@ -1555,6 +1716,11 @@ circle {
     }
     .ie8 .title {
         background-color: white;
+    }
+    a {
+        width: 100%;
+        height: 100%;
+        display: block;
     }
 }
 
@@ -1754,9 +1920,6 @@ body.ie #maps .mini-meshu div {
 #maps .mini-meshu:hover .meshu-svg {
     border: none;
     margin: 0;
-}
-.gallery .meshu-svg path {
-    stroke-width: 12;
 }
 
 #img-thumbs {

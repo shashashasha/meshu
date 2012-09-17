@@ -23,3 +23,6 @@ TEMPLATE_DIRS = (
     '/Users/shahwang/Dropbox/shashi/2012/artifactory/templates/',	
     # os.path.join(SITE_ROOT, 'templates/'),
 )
+
+FACEBOOK_APP_ID              = ''
+FACEBOOK_API_SECRET          = ''

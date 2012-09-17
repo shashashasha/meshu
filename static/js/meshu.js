@@ -125,12 +125,21 @@ sb.meshu = function(frame, existingMap) {
 
     self.locationData = function(data) {
         var locations = data.split('|');
-        var newLocs = [];
+        var newLocs = [],
+            seen = {};
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
             if (values.length < 3) {
                 continue;
+            }
+
+            // check against the lat lon as '37.75--122.45'
+            var hash = values[0] + '-' + values[1];
+            if (seen[hash]) {
+                continue;
+            } else {
+                seen[hash] = true;
             }
 
             newLocs.push({
@@ -180,7 +189,8 @@ sb.meshu = function(frame, existingMap) {
     };
 
     self.refreshWithBounds = function(lats, lons) {
-        map.updateBounds(lats, lons);
+        // using a zoomOffset parameter set outside in app.js
+        map.updateBounds(lats, lons, self.zoomOffset);
     };
 
     self.updateBounds = function() {
@@ -196,6 +206,10 @@ sb.meshu = function(frame, existingMap) {
 
     mesh.on("locationsSet", self.updateBounds);
 
+    self.getFrame = function() {
+        return frame;
+    };
+
     self.updateTitle = function(t) {
         mesh.updateTitle(t);
     };
@@ -207,6 +221,10 @@ sb.meshu = function(frame, existingMap) {
     // output the contents of our mesh as svg
     self.outputSVG = function() {
     	return mesh.output();
+    };
+
+    self.outputMapSVG = function() {
+        return $(map.map.container()).html();
     };
 
     self.hideMesh = function() {
