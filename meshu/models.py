@@ -64,7 +64,7 @@ class Meshu(models.Model):
 	theta = models.IntegerField(default=0, blank=True)
 
 	# marathon etc
-	# promo = models.CharField(max_length=140, default='', blank=True)
+	promo = models.CharField(max_length=140, default='', blank=True)
 
 	# if it's a readymade, we need to define what product it is
 	product = models.CharField(max_length=140, default='', blank=True)
@@ -84,7 +84,7 @@ class Meshu(models.Model):
 
 	def get_order_url(self):
 		# if self.promo:
-			# return "/" + self.promo + "/make/%s/" % self.get_encoded_id()
+		# 	return "/" + self.promo + "/make/%s/" % self.get_encoded_id()
 		# else:
 			return "/make/%s/" % self.get_encoded_id()
 

@@ -4,13 +4,45 @@ $(function() {
 	sb.product = function() {
 		var self = {};
 
-		var products = ["earrings","pendant","necklace","cufflinks"];
+		var products = [];
 
-		self.initialize = function(delaunayFrame) {
+		self.initialize = function(delaunayFrame, catalog) {
+			products = catalog.getProducts();
+
+			/* 
+				pretty hacky, but seeing which products are used and hiding the rest
+			*/
+			var seenProducts = {};
+
 			// initialize all products
 			for (var i = 0; i < products.length; i++) {
-				self.initializeProduct(products[i], delaunayFrame);
+				var product = products[i],
+					prices = product.prices;
+
+
+				self.initializeProduct(product.type, delaunayFrame);
+				seenProducts[product.type] = true;
+
+				var range = prices.length == 1 
+					? "$" + prices[0] 
+					: "$" + prices[0] + "-" + prices[prices.length - 1];
+
+				if (product.discount != undefined) {
+					range += product.discount < 1 
+						? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
+						: " ($" + product.discount + " off!)";
+				}
+				console.log(product, product.discount, range);
+				
+				$("#range-" + product.type).html(range);
 			}
+
+			$("#product-preview .wrapper").each(function(i, e) {
+				var id = e.id.split('-').pop();
+				if (!seenProducts[id]) {
+					$(e).hide();
+				}
+			});
 		};
 
 		self.initializeProduct = function(product, delaunayFrame) {

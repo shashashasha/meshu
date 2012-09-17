@@ -46,33 +46,33 @@
             <div class="make-wrapper">
                 <h2>Choose your piece:</h2>
                 <div id="product-preview">
-                    <div class="wrapper">
+                    <div class="wrapper" id="wrapper-earrings">
                         <div class="next active">
                             <svg id="preview-earrings" width="170" height="160"></svg>
                         </div>
                         <p>Pair of Earrings</p>
-                        <p class="note">$75-150</p>
+                        <p class="note" id="range-earrings">$75-150</p>
                     </div>
-                    <div class="wrapper">
+                    <div class="wrapper" id="wrapper-pendant">
                         <div class="next active">
                             <svg id="preview-pendant" width="170" height="160"></svg>
                         </div>
                         <p>Pendant Necklace</p>
-                        <p class="note">$75-130</p>
+                        <p class="note" id="range-pendant">$75-130</p>
                     </div>
-                    <div class="wrapper">
+                    <div class="wrapper" id="wrapper-necklace">
                         <div class="next active">
                             <svg id="preview-necklace" width="170" height="160"></svg>
                         </div>
                         <p>Large Necklace</p>
-                        <p class="note">$80-150</p>
+                        <p class="note" id="range-necklace">$80-150</p>
                     </div>
-                    <div class="wrapper">
+                    <div class="wrapper" id="wrapper-cufflinks">
                         <div class="next active">
                             <svg id="preview-cufflinks" width="170" height="160"></svg>
                         </div>
                         <p>Pair of Cufflinks</p>
-                        <p class="note">$85-160</p>
+                        <p class="note" id="range-cufflinks">$85-160</p>
                     </div>
                 </div>
 
@@ -573,7 +573,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     
-    <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/catalog{{ meshu.promo }}.js"></script> -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/catalog{{ meshu.promo }}.js"></script>
     <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
     
     <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 

@@ -784,6 +784,7 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+# proxying the tiles to draw them in canvas
 def processing_tiles(request, subdomain, zoom, x, y):
 	# print(subdomain)
 	# print(zoom)
@@ -822,7 +823,7 @@ def processing_make_png(request, meshu):
 	dataurl = request.POST.get('dataurl')
 	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
 
-	output = open(settings.STATIC_ROOT + '/images/meshus/rendered.png', 'r+b')
+	output = open(settings.STATIC_ROOT + 'images/meshus/rendered.png', 'r+b')
 	output.write(imgstr.decode('base64'))
 	image = ImageFile(output)
 

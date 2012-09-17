@@ -11,7 +11,7 @@ var orderer = function() {
         shipping = 5,
         domesticShipping = 5,
         internationalShipping = 20,
-        options = null;
+        catalog = null;
 
     function stripeResponseHandler(status, response) {
         // if (response.error) {
@@ -84,17 +84,17 @@ var orderer = function() {
         }, 'json');
     };
 
-    // let's ... not allow anyone to change these options
-    self.options = function(o) {
-        if (options) return;
+    // let's ... not allow anyone to change these catalog options
+    self.catalog = function(o) {
+        if (catalog) return;
 
-        options = o;
+        catalog = o;
         return self;
     };
 
     self.updateProduct = function(t, m, s) {
         // ignore if we haven't heard about this product before
-        if (!options[t] || !options[t][m]) return;
+        if (!catalog.check(t, m))   return;
 
         // update values
         shipping = s || 5;
@@ -108,14 +108,13 @@ var orderer = function() {
     };
 
     self.getPrice = function() {
-        if (!options) return null;
-        return options[type][material].price;
+        return catalog.getPrice(type, material);
     };
 
     self.getPriceString = function() {
-        if (!options) return null;
+        if (!catalog) return null;
         
-        return '$' + options[type][material].price + '.00';
+        return '$' + self.getPrice() + '.00';
     };
 
     self.getShipping = function() {
@@ -123,26 +122,26 @@ var orderer = function() {
     };
 
     self.getTotal = function() {
-        if (!options) return null;
+        if (!catalog) return null;
 
-        return Math.floor(discountPercent * (options[type][material].price - discountAmount)) + shipping;
+        return Math.floor(discountPercent * (self.getPrice() - discountAmount)) + shipping;
     };
 
     self.getTotalCents = function() {
-        if (!options) return null;
+        if (!catalog) return null;
 
         return self.getTotal() * 100;
     };
 
     self.getTotalString = function() {
-        if (!options) return null;
+        if (!catalog) return null;
 
         return '$' + self.getTotal() + '.00';
     };
 
     self.getColors = function(type, material) {
-        if (!options) return null;
-        return options[type][material].colors;
+        if (!catalog) return null;
+        return catalog.getColors(type, material);
     };
 
     return self;

@@ -2,7 +2,7 @@ var sb = sb || {};
 
 sb.materializer = function() {
 	var self = d3.dispatch("update"),
-		options,
+		catalog,
 		display,
 		productNames,
 		product,
@@ -10,7 +10,7 @@ sb.materializer = function() {
 		color;
 
 	self.initialize = function(o, d, p) {
-		options = o;
+		catalog = o;
 		display = d;
 		productNames = p;
 
@@ -37,7 +37,7 @@ sb.materializer = function() {
 		if (!arguments.length) return product;
 
 		product = p;
-		var materials = options[p];
+		var materials = catalog.getMaterials(p);
 
 		self.materials.hide();
 
@@ -45,12 +45,13 @@ sb.materializer = function() {
 		material = null;
 
 		// loop through the material options
-		for (var i in materials) {
+		for (var i = 0; i < materials.length; i++) {
+			var current = materials[i];
 			if (!material) {
-				self.material(i);
+				self.material(current);
 			}
 
-			$("#" + i).show();
+			$("#" + current).show();
 		}
 
 		var type = display[product];
@@ -73,7 +74,7 @@ sb.materializer = function() {
 		self.materials.removeClass("selected");
 		$("#" + material).addClass("selected");
 
-		var colors = options[product][material].colors;
+		var colors = catalog.getColors(product, material);
 		if (colors) {
 			self.colors.find(".color-title").empty();
 			self.colors.find("img").attr("src","");
