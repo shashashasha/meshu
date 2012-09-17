@@ -257,6 +257,7 @@ $(function() {
 				var product = sb.materializer.product();
 				var t = sb.transforms[product]["render"];
 				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
+				d3.select(".delaunay").attr("class","delaunay "+product);
 
 				// update the render background to be the product preview
 				var productPreview = static_url + 'images/render/' + product + '_preview.jpg';

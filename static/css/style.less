@@ -1648,13 +1648,19 @@ circle {
 .hidden, #rotate-ui, #hidden {
     display: none;
 }
-.account .delaunay path, .checkout .delaunay path, .review .delaunay path {
-    stroke-width: 15;
+.account .delaunay.earrings path, .checkout .delaunay.earrings path, .review .delaunay.earrings path,
+.account .delaunay.necklace path, .checkout .delaunay.necklace path, .review .delaunay.necklace path {
+    stroke-width: 20;
+    .transition(stroke-width);
+}
+.account .delaunay.cufflinks path, .checkout .delaunay.cufflinks path, .review .delaunay.cufflinks path,
+.account .delaunay.pendant path, .checkout .delaunay.pendant path, .review .delaunay.pendant path {
+    stroke-width: 35;
     .transition(stroke-width);
 }
 
 #mini-delaunay path, #product-preview path {
-    stroke-width: 20;
+    stroke-width: 35;
 }
 
 #rotate:hover #rotate-ui {
