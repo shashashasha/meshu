@@ -327,8 +327,29 @@ $(function() {
 		}
 	});
 
+	$(".action-button").click(function() {
+		var button = this;
+
+		if (!sb.rasterizer.generated) {
+			sb.rasterizer.rasterize(meshu, function(data) {
+				button.click();
+			});	
+			return false;
+		} 
+	});
+
 	sb.rasterizer.on("rasterized", function(data) {
 		saver.updateMeshuData(data);
+
+		/* 
+			prep all social buttons
+		*/	
+		prepShareButtons();
+
+		$(".social-media").fadeIn();
+	});
+
+	var prepShareButtons = function(data) {
 
 		var twitterBase = "https://twitter.com/intent/tweet?text=";
 		var pinterestBase = "http://pinterest.com/pin/create/button/?url=";
@@ -341,8 +362,7 @@ $(function() {
 		$(".share-pinterest").attr("href", pinterestBase + url + "&media=" + image_url);
 		$(".share-twitter").attr("href", twitterBase + msg + '&url=' + url);
 
-		$(".social-media").fadeIn();
-	});
+	};
 
 	var postOnFacebook = function() {
 		var base = 'http://' + window.location.host;
@@ -350,7 +370,7 @@ $(function() {
         	method: 'feed',
         	link: base + meshu.view_url,
         	picture: base + meshu.image_url,
-        	name: meshu.outputTitle() + ' on meshu.io',
+        	name: meshu.title + ' on meshu.io',
         	caption: "meshu turns your places into beautiful objects.",
         	description: ''
         }, function(response) {

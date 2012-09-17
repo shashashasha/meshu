@@ -529,6 +529,19 @@ sb.mesh = function (frame, map, width, height) {
     	return self;
     };
 
+    /* 
+        this bit of code is called by rasterizer.js because
+        we need explicit styling for the canvg code to 
+        rasterize it correctly - yikes!
+    */
+    self.hideRotator = function() {
+        hidden.style("display", "none");
+    };
+
+    self.showRotator = function() {
+        hidden.style("display", "");
+    };
+
     self.locations = function(locs) {
         new_pt = null;
 

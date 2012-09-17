@@ -6,7 +6,7 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('sha', 'shashashasha@gmail.com'),
-    ('binx', 'rachelbinx@gmail.com'),
+    # ('binx', 'rachelbinx@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -25,9 +25,9 @@ DATABASES = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'meshu'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'm3shm3b4by'
 DEFAULT_FROM_EMAIL = 'hi@meshu.io'
-SERVER_EMAIL = 'orders@meshu.io'
+SERVER_EMAIL = 'server@meshu.io'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -156,5 +156,10 @@ SHORTEN_MODELS = {
     'M': 'meshu.meshu'
 }
 SHORTEN_FULL_BASE_URL = 'http://meshu.io'
+
+FACEBOOK_APP_ID              = '324846177609340'
+FACEBOOK_APP_SECRET          = 'f1a4e511ea4abc1e0e16558f5213e3af'
+FACEBOOK_SCOPE = 'email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins'
+LOGIN_REDIRECT_URL = '/make/facebook'
 
 from settings_local import *
