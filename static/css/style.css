@@ -590,22 +590,22 @@ body.win #login-form ul {
 #edit .foursquare-auth,
 #edit .facebook-auth {
   margin: 0 7px 0 0;
-  padding: 8px 34px 9px 10px;
+  padding: 8px 9px 9px 34px;
   position: relative;
   font-size: 14px;
 }
 .foursquare-auth img {
   height: 20px;
   position: absolute;
-  right: 7px;
+  left: 7px;
   top: 7px;
 }
 #edit .facebook-auth {
   background-image: url(../images/social/facebook.png);
-  background-position: 92% 50%;
+  background-position: 8% 50%;
   background-repeat: no-repeat;
   background-size: 20px 20px;
-  padding: 8px 30px 9px 10px;
+  padding: 8px 5px 9px 34px;
 }
 #cases {
   margin: 3px 0;
@@ -1825,10 +1825,10 @@ circle.highlight,
   opacity: 1;
 }
 .edit .mapui #zoomin {
-  background-image: url(../images/zoomin.png);
+  background-image: url(../images/ui/zoomin.png);
 }
 .edit .mapui #zoomout {
-  background-image: url(../images/zoomout.png);
+  background-image: url(../images/ui/zoomout.png);
 }
 .edit .mapui div:hover {
   pointer: cursor;
