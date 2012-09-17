@@ -63,6 +63,9 @@ class Meshu(models.Model):
 	# rotation angle, around the center
 	theta = models.IntegerField(default=0, blank=True)
 
+	# marathon etc
+	# promo = models.CharField(max_length=140, default='', blank=True)
+
 	# if it's a readymade, we need to define what product it is
 	product = models.CharField(max_length=140, default='', blank=True)
 	
@@ -80,7 +83,10 @@ class Meshu(models.Model):
 		return str(self.id).encode("hex")
 
 	def get_order_url(self):
-		return "/make/%s/" % self.get_encoded_id()
+		# if self.promo:
+			# return "/" + self.promo + "/make/%s/" % self.get_encoded_id()
+		# else:
+			return "/make/%s/" % self.get_encoded_id()
 
 	def get_edit_url(self):
 		return "/edit/%s/" % self.get_encoded_id()

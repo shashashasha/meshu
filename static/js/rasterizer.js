@@ -40,9 +40,12 @@ sb.rasterizer = function() {
 		var meshuCanvas = makeCanvas();
 		frame.appendChild(meshuCanvas);
 
+		meshu.mesh().hideRotator();
+
 		canvg(meshuCanvas, meshu.outputSVG(), {
 			renderCallback: function() {
 				// combine the canvases
+				meshu.mesh().showRotator();
 				ctx.drawImage(meshuCanvas, 0, 0, canvas.width, canvas.height);
 				var logo = new Image();
 				logo.onload = function(){

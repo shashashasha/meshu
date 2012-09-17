@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 
@@ -36,7 +37,6 @@ import sha
 # hashed codes
 codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313']
 amounts = [25, .85, .85]
-invite_code = '241b1e96d1666f7d38ff6ffe155f0e563bb294c3'
 
 # util function
 def json_dump(json):
@@ -822,7 +822,7 @@ def processing_make_png(request, meshu):
 	dataurl = request.POST.get('dataurl')
 	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
 
-	output = open('static/images/meshus/rendered.png', 'r+b')
+	output = open(settings.STATIC_ROOT + '/images/meshus/rendered.png', 'r+b')
 	output.write(imgstr.decode('base64'))
 	image = ImageFile(output)
 
@@ -841,31 +841,6 @@ def processing_make_png(request, meshu):
 		'view_url': meshu.get_absolute_url(),
 		'image_url': meshu_image.image.url
 	})
-
-# import cairo, rsvg
-# def processing_svg_to_image(request):
-# 	svgString = request.POST.get('svg', '')
-
-# 	svg = rsvg.Handle(data=svgString)
-# 	width = svg.props.width 
-# 	height = svg.props.height
-# 	print(svg)
-# 	print(width)
-# 	print(height)
-# 	new_file = File()
-	
-# 	# create image
-# 	png = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-# 	# png = cairo.ImageSurface(request.user.username + '.png', width, height) 
-# 	cr = cairo.Context(surf) 
-# 	svg.render_cairo(cr) 
-# 	png.write_to_png(new_file)
-# 	png.finish()
-
-# 	return json_dump({
-# 		'success': True,
-# 		'image_url' : image.get_absolute_url()
-# 	})
 
 # don't judge me, i think this is funny
 def random_password(length):
