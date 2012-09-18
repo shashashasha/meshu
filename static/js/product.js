@@ -16,24 +16,13 @@ $(function() {
 
 			// initialize all products
 			for (var i = 0; i < products.length; i++) {
-				var product = products[i],
-					prices = product.prices;
+				var product = products[i];
 
 
 				self.initializeProduct(product.type, delaunayFrame);
 				seenProducts[product.type] = true;
 
-				var range = prices.length == 1 
-					? "$" + prices[0] 
-					: "$" + prices[0] + "-" + prices[prices.length - 1];
-
-				if (product.discount != undefined) {
-					range += product.discount < 1 
-						? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
-						: " ($" + product.discount + " off!)";
-				}
-				console.log(product, product.discount, range);
-				
+				var range = self.describeProductRange(product);
 				$("#range-" + product.type).html(range);
 			}
 
@@ -57,6 +46,28 @@ $(function() {
 				.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
 
 			self.attachMeshu(delaunayFrame, $(svg[0]), sb.transforms.getTransform(product, "product"));
+		};
+
+		self.range = function(prices) {
+			return prices.length == 1 
+					? "$" + prices[0] 
+					: "$" + prices[0] + "-" + prices[prices.length - 1];
+		};
+
+		self.describeProductRange = function(product) {
+			if (product.discount != undefined) {
+				var range = "<del>" + self.range(product.originals) + "</del>";
+				
+				range += " " + self.range(product.prices);
+
+				range += product.discount < 1 
+					? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
+					: " ($" + product.discount + " off!)";
+					
+				return range;
+			} else {
+				return self.range(product.prices);
+			}
 		};
 
 		self.attachMeshu = function(mesh, frame, transform) {
@@ -85,7 +96,7 @@ $(function() {
 		self.rotation = function(r) {
 			d3.selectAll(".product-delaunay")
 				.attr("transform", function(d, i) {
-					var transform = sb.transforms.getTransform(products[i], "product");
+					var transform = sb.transforms.getTransform(products[i].type, "product");
 					return transform + " rotate(" + r + ", 300, 300)";
 				});
 		};

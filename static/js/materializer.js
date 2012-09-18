@@ -9,10 +9,19 @@ sb.materializer = function() {
 		material,
 		color;
 
-	self.initialize = function(o, d, p) {
+	// moved from app.js
+	display = {"earrings":"pair of earrings",
+						"pendant":"small pendant necklace",
+						"necklace":"large necklace",
+						"cufflinks": "pair of cufflinks"};
+
+	productNames = {"earrings":"earrings",
+						"pendant":"pendant necklace",
+						"necklace":"large necklace",
+						"cufflinks": "cufflinks"};
+
+	self.initialize = function(o) {
 		catalog = o;
-		display = d;
-		productNames = p;
 
 		// list elements
 		self.materials = $("#material-list li");

@@ -1,12 +1,4 @@
 $(function() {
-	var displayNames = {"earrings":"pair of earrings",
-						"pendant":"small pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "pair of cufflinks"};
-	var productNames = {"earrings":"earrings",
-						"pendant":"pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "cufflinks"};
 
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
@@ -14,7 +6,7 @@ $(function() {
 
 	// create a stripe payment object
 	orderer.catalog(sb.catalog);
-	sb.materializer.initialize(sb.catalog, displayNames, productNames);
+	sb.materializer.initialize(sb.catalog);
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
@@ -22,7 +14,6 @@ $(function() {
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
-
 		// create a saver object, in saver.js
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);

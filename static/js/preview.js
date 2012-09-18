@@ -41,9 +41,6 @@ $(function() {
 			var startX, startY, endX, endY, theta, oldtheta, dragging, ccw;
 			var oldtheta = 0;
 
-			// don't reset rotation because we initialize more than once
-			// rotation = 0;
-
 			function mousemove(){
 				var m = d3.svg.mouse(main.node());
 				startX = m[0] - 100, startY = m[1] - 100;

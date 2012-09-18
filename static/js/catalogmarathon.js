@@ -2,11 +2,11 @@ var sb = sb || {};
 sb.catalog = function() {
 	var self = {};
 	var options = {"earrings":
-						{"wood":{"price":64,"colors":["Amber"], "discount": .85}},
+						{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
 				   "pendant":
-				   		{"wood":{"price":64,"colors":["Amber"], "discount": .85}},
+				   		{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
 				   "necklace":
-				   		{"wood":{"price":68,"colors":["Amber"], "discount": .85}}
+				   		{"wood":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
 				   	};
 
 	// check if this exists
@@ -34,15 +34,27 @@ sb.catalog = function() {
 
 		for (var type in options) {
 			var prices = [],
+				originals = [],
+				discounts = [],
 				product = options[type];
+
 			for (var material in product) {
 				prices.push(product[material].price);
+
+				if (product[material].originalPrice)
+					originals.push(product[material].originalPrice);
+
+				if (product[material].discount)
+					discounts.push(product[material].discount);
 			}
 
 			products.push({
 				type: type,
 				prices: prices,
-				discount: .85
+				originals: originals,
+				// just use one discount for now
+				// assuming we won't have multiple different ones
+				discount: discounts.length ? discounts[0] : undefined
 			});
 		}
 
