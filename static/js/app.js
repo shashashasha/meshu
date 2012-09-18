@@ -36,7 +36,7 @@ $(function() {
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
-
+	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.5 : 0;
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
