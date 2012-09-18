@@ -14,12 +14,12 @@ var orderer = function() {
         catalog = null;
 
     function stripeResponseHandler(status, response) {
-        // if (response.error) {
-        //     // re-enable the submit button
-        //     $('#submit-button').removeAttr("disabled").removeClass("inactive");
-        //     // show the errors on the form
-        //     $(".payment-errors").html(response.error.message);
-        // } else {
+        if (response.error) {
+            // re-enable the submit button
+            $('#submit-button').removeAttr("disabled").removeClass("inactive");
+            // show the errors on the form
+            $(".payment-errors").html(response.error.message);
+        } else {
             var form$ = $("#payment-form");
             // token contains id, last4, and card type
             var token = response['id'];
@@ -27,14 +27,13 @@ var orderer = function() {
             form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
             // and submit
             
-            //
             var action = form$.attr("action");
             if (action.search('None') > 0) {
                 form$.attr("action", "/order/");
             }
 
             form$.get(0).submit();
-        // }
+        }
     }
 
     self.submit = function() {
