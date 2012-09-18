@@ -590,22 +590,22 @@ body.win #login-form ul {
 #edit .foursquare-auth,
 #edit .facebook-auth {
   margin: 0 7px 0 0;
-  padding: 8px 34px 9px 10px;
+  padding: 8px 9px 9px 34px;
   position: relative;
   font-size: 14px;
 }
 .foursquare-auth img {
   height: 20px;
   position: absolute;
-  right: 7px;
+  left: 7px;
   top: 7px;
 }
 #edit .facebook-auth {
   background-image: url(../images/social/facebook.png);
-  background-position: 92% 50%;
+  background-position: 8% 50%;
   background-repeat: no-repeat;
   background-size: 20px 20px;
-  padding: 8px 30px 9px 10px;
+  padding: 8px 5px 9px 34px;
 }
 #cases {
   margin: 3px 0;
@@ -1678,10 +1678,26 @@ circle.highlight,
 #hidden {
   display: none;
 }
-.account .delaunay path,
-.checkout .delaunay path,
-.review .delaunay path {
-  stroke-width: 15;
+.account .delaunay.earrings path,
+.checkout .delaunay.earrings path,
+.review .delaunay.earrings path,
+.account .delaunay.necklace path,
+.checkout .delaunay.necklace path,
+.review .delaunay.necklace path {
+  stroke-width: 20;
+  transition: stroke-width 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: stroke-width 0.6s;
+  -o-transition: stroke-width 0.6s;
+}
+.account .delaunay.cufflinks path,
+.checkout .delaunay.cufflinks path,
+.review .delaunay.cufflinks path,
+.account .delaunay.pendant path,
+.checkout .delaunay.pendant path,
+.review .delaunay.pendant path {
+  stroke-width: 35;
   transition: stroke-width 0.6s;
   /*-moz-transition: @property @time;*/
 
@@ -1690,7 +1706,7 @@ circle.highlight,
 }
 #mini-delaunay path,
 #product-preview path {
-  stroke-width: 20;
+  stroke-width: 35;
 }
 #rotate:hover #rotate-ui {
   display: block;
@@ -1825,10 +1841,10 @@ circle.highlight,
   opacity: 1;
 }
 .edit .mapui #zoomin {
-  background-image: url(../images/zoomin.png);
+  background-image: url(../images/ui/zoomin.png);
 }
 .edit .mapui #zoomout {
-  background-image: url(../images/zoomout.png);
+  background-image: url(../images/ui/zoomout.png);
 }
 .edit .mapui div:hover {
   pointer: cursor;
