@@ -558,7 +558,7 @@ def make_order(request, profile, meshu):
 	# get the credit card details submitted by the form
 	token = request.POST['stripeToken']
 	email = profile.user.email
-	desc = email + ", meshu id " + meshu.id
+	desc = str(email) + ", meshu id " + str(meshu.id)
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	charge = stripe.Charge.create(
