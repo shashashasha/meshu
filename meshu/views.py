@@ -557,13 +557,14 @@ def make_order(request, profile, meshu):
 
 	# get the credit card details submitted by the form
 	token = request.POST['stripeToken']
+	email = profile.user.email
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	charge = stripe.Charge.create(
 	    amount=int(float(request.POST.get('amount', '0.0'))), # amount in cents, again
 	    currency="usd",
 	    card=token,
-	    description="hi@meshu.io"
+	    description=email + ", meshu id " + meshu.id
 	)
 
 	# create a new order
@@ -572,7 +573,7 @@ def make_order(request, profile, meshu):
 
 	# mail the current user if they're logged in
 	if request.user.is_authenticated():
-		mail_order_confirmation(profile.user.email, meshu, order)
+		mail_order_confirmation(email, meshu, order)
 
 	# send a mail to ifttt that creates an svg in our dropbox for processing
 	mail_ordered_svg(order)
