@@ -80,11 +80,13 @@ def item_make(request):
 
 def item_begin_order(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
-	item = get_object_or_404(Meshu, pk=item_id)
-
+	
 	# check user id
-	if request.user.id != item.user_profile.user.id:
-		return notify(request, 'authorization_required')
+	# for the marathon, we can just let anyone order anything
+
+	# item = get_object_or_404(Meshu, pk=item_id)
+	# if request.user.id != item.user_profile.user.id:
+	# 	return notify(request, 'authorization_required')
 
 	return item_handler(request, item_id, 'usermade.html', 'product')
 
@@ -149,9 +151,34 @@ def item_from_geojson(request):
 		meshu.title = request.POST.get('title', 'My Meshu')
 		geojson = request.POST.get('geojson', '')
 
+	meshu.save()
+
 	return render_to_response('meshu/item/geojson.html', {
 		'meshu': meshu,
 		'geojson' : geojson,
+		'view': 'edit'
+	}, context_instance = RequestContext(request))
+
+def item_from_preset(request, item_encoded):
+	item_id = int(str(item_encoded).decode("hex"))
+	item = get_object_or_404(Meshu, pk=item_id)
+
+	meshu = Meshu()
+
+	meshu.title = item.title
+	meshu.description = item.description
+
+	# meshu data
+	meshu.location_data = item.location_data
+	meshu.svg = item.svg
+
+	meshu.promo = item.promo
+
+	# wtf dawg
+	meshu.theta = item.theta
+
+	return render_to_response('meshu/item/item.html', {
+		'meshu': meshu,
 		'view': 'edit'
 	}, context_instance = RequestContext(request))
 

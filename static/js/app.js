@@ -216,7 +216,7 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize(".delaunay");
+				sb.product.initialize(".delaunay", sb.catalog);
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
