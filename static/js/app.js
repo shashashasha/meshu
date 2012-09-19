@@ -161,9 +161,23 @@ $(function() {
 
 		if (view == 'make' || view == 'readymade') {
 			checkAccountView();
-		}
 
+			/*
+				if we're on a readymade or make page, 
+				we need to click the next button after we log in
+			*/
+			user.afterLogIn = function() {
+				saver.createOrUpdateMeshu(function() {
+					button.click();
+				});
+			};
+		}
+		
 		if (view == 'account' && !user.loggedIn) {
+			/*
+				i don't understand why this callback is not... getting called back anymore
+				but it may have something to do with user.js and the facebook login flow
+			*/
 			user.afterLogIn = function() {
 				saver.createOrUpdateMeshu(function() {
 					button.click();
@@ -184,6 +198,19 @@ $(function() {
 
 		if (view == 'checkout') {
 			checkAccountView();
+		}
+
+		/*
+			if we logged ourselves out during the flow, 
+			make sure that the next time we hit the login screen
+			we click 'a' next button. this is dumb.
+		*/
+		if (!user.loggedIn) {
+			user.afterLogIn = function() {
+				saver.createOrUpdateMeshu(function() {
+					$($(".next")[0]).click();
+				});
+			};
 		}
 
 	    var index = views.indexOf(view);
