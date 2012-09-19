@@ -288,10 +288,13 @@ def user_login(request, *args, **kwargs):
 	return login_user_flow(request, user)
 
 def user_login_success(request, user):
+	print('logging in')
 	xhr = request.POST.has_key('xhr')
 
 	profile = user.get_profile()
 	meshus = Meshu.objects.filter(user_profile=profile)
+	
+	print(user.username)
 
 	if xhr:
 		return json_dump({
@@ -652,6 +655,8 @@ def meshu_get_or_create(request, profile):
 	# meshu data
 	meshu.location_data = request.POST['location_data']	
 	meshu.svg = request.POST['svg']
+
+	meshu.promo = request.POST['promo']
 
 	# wtf dawg
 	meshu.theta = int(float(request.POST.get('theta', '0.0')))

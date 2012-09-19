@@ -166,33 +166,33 @@
             <div id="csrf">
                 {% csrf_token %}
             </div>
-            <form id="form-signin" class="signin">
+            <form id="inline-signin" class="signin">
                 <div class="login-row">
-                    <label for="signin_name">Email</label>
-                    <input id="signin_name" class="required email" type="text" name="signin_name" maxlength="30" style="margin-left: 47px;">
+                    <label for="inline_signin_name">Email</label>
+                    <input id="inline_signin_name" class="required email" type="text" name="inline_signin_name" maxlength="30" style="margin-left: 47px;">
                 </div>
                 <div class="login-row">
-                    <label for="signin_password">Password</label>
-                    <input type="password" class="required" name="signin_password" id="signin_password">
-                    <label for="signin_password" class="error login-error">Oops, wrong email or password.</label>
+                    <label for="inline_signin_password">Password</label>
+                    <input type="password" class="required" name="inline_signin_password" id="inline_signin_password">
+                    <label for="inline_signin_password" class="error login-error">Oops, wrong email or password.</label>
                 </div>
                 <p>Forgot your password? Click <a href="/user/forgot/">here</a> to reset it.</p>
                 <div class="login-buttons">
                     <input id="login-signin" class="button" type="submit" value="Login">
                 </div>
             </form>
-            <form id="form-account" class="account">
+            <form id="inline-account" class="account">
                 <div class="login-row">
-                    <label for="account_name">Email</label>
-                    <input id="account_name" class="required email" type="text" name="account_name" maxlength="30" style="margin-left: 47px;">
+                    <label for="inline_account_name">Email</label>
+                    <input id="inline_account_name" class="required email" type="text" name="inline_account_name" maxlength="30" style="margin-left: 47px;">
                 </div>
                 <div class="login-row">
-                    <label for="account_password">Password</label>
-                    <input type="password" class="required" name="account_password" id="account_password">
+                    <label for="inline_account_password">Password</label>
+                    <input type="password" class="required" name="inline_account_password" id="inline_account_password">
                 </div>
                 <div class="login-row">
-                    <label for="repeat_password" class="reenter" style="width:70px">Re-enter Password</label>
-                    <input type="password" class="required" name="repeat_password" id="repeat_password" style="margin-left: 14px;">
+                    <label for="inline_repeat_password" class="reenter" style="width:70px">Re-enter Password</label>
+                    <input type="password" class="required" name="inline_repeat_password" id="inline_repeat_password" style="margin-left: 14px;">
                 </div>
                 <p class="account-message">Don't worry, we'll never give your email address to anyone else. We hate spam as much as you do!</p>
                 <div class="login-buttons">
@@ -615,7 +615,8 @@
         title: "{{ meshu.title|safe }}",
         product: '{{ meshu.product }}',
         location_data: "{{ meshu.location_data|safe }}",
-        svg: '{{ meshu.svg|safe }}'
+        svg: '{{ meshu.svg|safe }}',
+        promo: '{{ meshu.promo }}'
     };
     {% else %} 
     var loadedMeshu = null;
