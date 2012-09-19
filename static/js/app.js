@@ -130,6 +130,11 @@ $(function() {
 
 		if (view == 'make' || view == 'readymade') {
 			checkAccountView();
+			user.afterLogIn = function() {
+				saver.createOrUpdateMeshu(function() {
+					button.click();
+				});
+			};
 		}
 
 		if (view == 'account' && !user.loggedIn) {
@@ -153,6 +158,14 @@ $(function() {
 
 		if (view == 'checkout') {
 			checkAccountView();
+		}
+
+		if (!user.loggedIn) {
+			user.afterLogIn = function() {
+				saver.createOrUpdateMeshu(function() {
+					$($(".next")[0]).click();
+				});
+			};
 		}
 
 	    var index = views.indexOf(view);
