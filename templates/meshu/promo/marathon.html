@@ -23,19 +23,26 @@
 			Or you can still <br /><div class="foursquare-auth button minor">connect with Foursquare</div><br />and<br /><a href="/shop/" class="button minor">shop our gallery</a>
 		</div>
 	</div> -->
+	<div class="ribbon"></div>
+	<div class="white-ribbon"></div>
+	<div class="triangle-ribbon">SPECIAL EVENT!</div>
 	<h2 class="big">the perfect memento.</h2>
 
 	<img src="{{ STATIC_URL }}images/marathon/marathon_meshu_jewellery.jpg" class="centered" >
 
 	<h2 class="big">turn your half marathon into a memory:</h2>
-	<img src="{{ STATIC_URL }}images/marathon/marathon_macro.jpg" class="centered">
-	<a class="half">
-		<img src="">
-		<div href="/make/template/313939/" class="button">View the Half Marathon Necklace</div>
+	<img src="{{ STATIC_URL }}images/marathon/marathon_macro.jpg" class="centered" style="float:left;">
+	<a class="half" href="/make/template/313939/">
+		<img src="{{ STATIC_URL }}images/marathon/marathon_meshu.jpg">
+		<div class="tri"></div>
+		<div class="triangle">15% OFF</div>
+		<div class="button">View the Half Marathon Necklace</div>
 	</a>
-	<a class="half">
-		<img src="">
-		<div href="/make/template/313939/" class="button pink">Choose Your Own Landmarks</div>
+	<a class="half" href="/make/template/313939/">
+		<img src="{{ STATIC_URL }}images/marathon/marathon_necklace.jpg">
+		<div class="tri"></div>
+		<div class="triangle">15% OFF</div>
+		<div class="button pink">Choose Your Own Landmarks</div>
 	</a>
 	<!-- <div id="banners">
 		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" style="display: none;"/>
@@ -91,12 +98,13 @@
 		.half {
 			width: 480px;
 			display: inline-block;
-			height: 300px;
+			height: 260px;
 			position: relative;
 			font-size: 25px;
 			float: left;
+			margin-bottom: 45px;
 		}
-		.half:nth-child(odd) {
+		.half:nth-child(even) {
 			margin-left: 20px;
 		}
 		.half img {
@@ -108,7 +116,47 @@
 			width: 100%;
 			color: white;
 			margin: 0;
-			padding: 3px 0;
+			padding: 5px 0;
+		}
+		.tri, .ribbon, .white-ribbon {
+			border-width: 40px;
+			border-color: #000 transparent transparent #000;
+			border-style: solid;
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			height: 0;
+			width: 0;
+		}
+		.half:hover .tri, .ribbon {
+			border-color: #FF3FB4 transparent transparent #FF3FB4;
+		}
+		.white-ribbon {
+			border-color: #FFF transparent transparent #FFF;
+		}
+		.ribbon {
+			border-width: 70px;
+		}
+		.triangle, .triangle-ribbon {
+			font-size: 16px;
+			color: white;
+			position: absolute;
+			top: 22px;
+			left: -3px;
+			z-index: 2;
+			-moz-transform: rotate(315deg);
+			-moz-transform-origin: 50% 50%;
+			-webkit-transform: rotate(315deg);
+			-webkit-transform-origin: 50% 50%;
+			-o-transform: rotate(315deg);
+			-o-transform-origin: 50% 50%;
+			filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+		}
+		.triangle-ribbon {
+			font-size: 18px;
+			top: 46px;
+			left: -12px;
 		}
 	</style>
 {% endblock %}
