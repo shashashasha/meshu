@@ -1825,10 +1825,10 @@ circle.highlight,
   opacity: 1;
 }
 .edit .mapui #zoomin {
-  background-image: url(../images/zoomin.png);
+  background-image: url(../images/ui/zoomin.png);
 }
 .edit .mapui #zoomout {
-  background-image: url(../images/zoomout.png);
+  background-image: url(../images/ui/zoomout.png);
 }
 .edit .mapui div:hover {
   pointer: cursor;

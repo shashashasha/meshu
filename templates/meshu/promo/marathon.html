@@ -3,7 +3,7 @@
 {% block title %}Meshu - Turn your places into beautiful objects.{% endblock %}
 
 {% block content %}
-	<div id="photos">
+	<!-- <div id="photos">
 		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
 		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
 		<div id="intro-text">
@@ -22,28 +22,39 @@
 		<div class="minor-actions">
 			Or you can still <br /><div class="foursquare-auth button minor">connect with Foursquare</div><br />and<br /><a href="/shop/" class="button minor">shop our gallery</a>
 		</div>
-	</div>
+	</div> -->
+	<h2 class="big">the perfect memento.</h2>
 
-	<h2 class="big">what people have made:</h2>
-	<a href="/make/template/313939/" class="button pink">Customize Landmarks</a>
-	<div id="banners">
+	<img src="{{ STATIC_URL }}images/marathon/marathon_meshu_jewellery.jpg" class="centered" >
+
+	<h2 class="big">turn your half marathon into a memory:</h2>
+	<img src="{{ STATIC_URL }}images/marathon/marathon_macro.jpg" class="centered">
+	<a class="half">
+		<img src="">
+		<div href="/make/template/313939/" class="button">View the Half Marathon Necklace</div>
+	</a>
+	<a class="half">
+		<img src="">
+		<div href="/make/template/313939/" class="button pink">Choose Your Own Landmarks</div>
+	</a>
+	<!-- <div id="banners">
 		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" style="display: none;"/>
 		<img class="bleed" id="banner-1" src="{{ STATIC_URL }}images/samples/banner3.jpg" style="display: none;"/>
 		<img class="bleed" id="banner-0" src="{{ STATIC_URL }}images/samples/banner1.jpg" />
-	</div>
+	</div> -->
 
 	<h2 class="big">here's how it works:</h2>
 
 	<ul id="diagram">
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams/diagrams_01.png">
-			<p>Enter in cities you've been to,</p>
+			<p>Enter in points along the route,</p>
 			<p>or any places you like.</p>
 		</li>
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams/diagrams_02.png">
 			<p>We generate a meshu to order as</p>
-			<p>a necklace, earrings, or cufflinks.</p>
+			<p>a bamboo necklace or earrings.</p>
 		</li>
 		<li>
 			<img src="{{ STATIC_URL }}images/diagrams/diagrams_03.png">
@@ -60,7 +71,7 @@
 		<a class="option" href="/shop/">Shop Our Gallery</a>
 		<a class="option pink" href="/make/">Make Your Own!</a>
 	</div>
-	<h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button">Foursquare</span> to use your past places.</h2>
+	<!-- <h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button">Foursquare</span> to use your past places.</h2> -->
 {% endblock %}
 
 {% block footer %}
@@ -73,4 +84,31 @@
 	<script src="{{ STATIC_URL }}lib/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
+	<style>
+		.centered {
+			width: 960px;
+		}
+		.half {
+			width: 480px;
+			display: inline-block;
+			height: 300px;
+			position: relative;
+			font-size: 25px;
+			float: left;
+		}
+		.half:nth-child(odd) {
+			margin-left: 20px;
+		}
+		.half img {
+			width: 100%;
+		}
+		.half .button {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			color: white;
+			margin: 0;
+			padding: 3px 0;
+		}
+	</style>
 {% endblock %}
