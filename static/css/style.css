@@ -2017,6 +2017,9 @@ body.ie #maps .mini-meshu div {
   height: 100px;
   margin-bottom: 10px;
 }
+.status-list path {
+  stroke-width: 15;
+}
 .status-block {
   float: left;
   width: 54px;
