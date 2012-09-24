@@ -908,7 +908,7 @@ body.ie .frame div {
   position: relative;
   top: auto;
   left: auto;
-  margin-top: 20px;
+  margin: 20px 0 40px;
   display: inline-block;
 }
 .ready .options.left {
@@ -1514,7 +1514,6 @@ body.ie8 .city-input {
   top: auto;
   clear: both;
   position: relative;
-  margin-top: 160px;
 }
 #total-cost {
   float: right;
