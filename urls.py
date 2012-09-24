@@ -113,6 +113,9 @@ urlpatterns += patterns('meshu.views',
 	}),
 
 	# promo
+	url(r'^marathon/', direct_to_template, {
+		'template': 'meshu/promo/marathon.html'
+	}),
 	url(r'^royalparkshalf/', direct_to_template, {
 		'template': 'meshu/promo/marathon.html'
 	}),

@@ -14,7 +14,6 @@ $(function() {
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.5 : 0;
 
-	
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
@@ -105,14 +104,21 @@ $(function() {
 	/* 
 		Checking if we need to show the initial helper modal
 	*/	
-	if (!user.loggedIn && !loadedMeshu && window.location.hash != '#skipintro') {
+	var hash = window.location.hash;
+	var showIntro = function() {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
 			$("#edit-help").fadeOut();
 			$("#modal-bg").fadeOut();
 		});
-	} else if (window.location.hash == '#skipintro') {
+	};
+	if (!user.loggedIn && !loadedMeshu && hash != '#skipintro') {
+		showIntro();
+	} else if (hash == '#showintro') {
+		showIntro();
+		window.location.hash = "";
+	} else if (hash == '#skipintro') {
 		window.location.hash = "";
 	}
 
