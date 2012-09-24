@@ -17,5 +17,9 @@ python2.7 manage.py schemamigration meshu --auto
 python2.7 manage.py migrate meshu
 
 
+# local
+python manage.py schemamigration meshu --auto
+python manage.py migrate meshu
+
 # restart the apache server
 ../apache2/bin/restart

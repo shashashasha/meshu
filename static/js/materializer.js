@@ -2,17 +2,26 @@ var sb = sb || {};
 
 sb.materializer = function() {
 	var self = d3.dispatch("update"),
-		options,
+		catalog,
 		display,
 		productNames,
 		product,
 		material,
 		color;
 
-	self.initialize = function(o, d, p) {
-		options = o;
-		display = d;
-		productNames = p;
+	// moved from app.js
+	display = {"earrings":"pair of earrings",
+						"pendant":"small pendant necklace",
+						"necklace":"large necklace",
+						"cufflinks": "pair of cufflinks"};
+
+	productNames = {"earrings":"earrings",
+						"pendant":"pendant necklace",
+						"necklace":"large necklace",
+						"cufflinks": "cufflinks"};
+
+	self.initialize = function(o) {
+		catalog = o;
 
 		// list elements
 		self.materials = $("#material-list li");
@@ -37,7 +46,7 @@ sb.materializer = function() {
 		if (!arguments.length) return product;
 
 		product = p;
-		var materials = options[p];
+		var materials = catalog.getMaterials(p);
 
 		self.materials.hide();
 
@@ -45,12 +54,13 @@ sb.materializer = function() {
 		material = null;
 
 		// loop through the material options
-		for (var i in materials) {
+		for (var i = 0; i < materials.length; i++) {
+			var current = materials[i];
 			if (!material) {
-				self.material(i);
+				self.material(current);
 			}
 
-			$("#" + i).show();
+			$("#" + current).show();
 		}
 
 		var type = display[product];
@@ -73,7 +83,7 @@ sb.materializer = function() {
 		self.materials.removeClass("selected");
 		$("#" + material).addClass("selected");
 
-		var colors = options[product][material].colors;
+		var colors = catalog.getColors(product, material);
 		if (colors) {
 			self.colors.find(".color-title").empty();
 			self.colors.find("img").attr("src","");

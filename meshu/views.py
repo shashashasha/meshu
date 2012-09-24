@@ -80,11 +80,13 @@ def item_make(request):
 
 def item_begin_order(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
-	item = get_object_or_404(Meshu, pk=item_id)
-
+	
 	# check user id
-	if request.user.id != item.user_profile.user.id:
-		return notify(request, 'authorization_required')
+	# for the marathon, we can just let anyone order anything
+
+	# item = get_object_or_404(Meshu, pk=item_id)
+	# if request.user.id != item.user_profile.user.id:
+	# 	return notify(request, 'authorization_required')
 
 	return item_handler(request, item_id, 'usermade.html', 'product')
 
@@ -115,7 +117,7 @@ def item_readymade(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 
 	# don't let people 'shop' for other users items yet
-	if item.user_profile.user.username != 'shop':
+	if item.user_profile.user.is_staff != False:
 		return notify(request, 'authorization_required')
 
 	return item_handler(request, item_id, 'readymade.html', 'readymade')
@@ -149,9 +151,34 @@ def item_from_geojson(request):
 		meshu.title = request.POST.get('title', 'My Meshu')
 		geojson = request.POST.get('geojson', '')
 
+	meshu.save()
+
 	return render_to_response('meshu/item/geojson.html', {
 		'meshu': meshu,
 		'geojson' : geojson,
+		'view': 'edit'
+	}, context_instance = RequestContext(request))
+
+def item_from_preset(request, item_encoded):
+	item_id = int(str(item_encoded).decode("hex"))
+	item = get_object_or_404(Meshu, pk=item_id)
+
+	meshu = Meshu()
+
+	meshu.title = item.title
+	meshu.description = item.description
+
+	# meshu data
+	meshu.location_data = item.location_data
+	meshu.svg = item.svg
+
+	meshu.promo = item.promo
+
+	# wtf dawg
+	meshu.theta = item.theta
+
+	return render_to_response('meshu/item/item.html', {
+		'meshu': meshu,
 		'view': 'edit'
 	}, context_instance = RequestContext(request))
 
@@ -261,10 +288,13 @@ def user_login(request, *args, **kwargs):
 	return login_user_flow(request, user)
 
 def user_login_success(request, user):
+	print('logging in')
 	xhr = request.POST.has_key('xhr')
 
 	profile = user.get_profile()
 	meshus = Meshu.objects.filter(user_profile=profile)
+	
+	print(user.username)
 
 	if xhr:
 		return json_dump({
@@ -628,6 +658,8 @@ def meshu_get_or_create(request, profile):
 	meshu.location_data = request.POST['location_data']	
 	meshu.svg = request.POST['svg']
 
+	meshu.promo = request.POST['promo']
+
 	# wtf dawg
 	meshu.theta = int(float(request.POST.get('theta', '0.0')))
 
@@ -786,6 +818,7 @@ def processing_jsoner(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+# proxying the tiles to draw them in canvas
 def processing_tiles(request, subdomain, zoom, x, y):
 	# print(subdomain)
 	# print(zoom)
@@ -824,7 +857,7 @@ def processing_make_png(request, meshu):
 	dataurl = request.POST.get('dataurl')
 	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
 
-	output = open(settings.STATIC_ROOT + '/images/meshus/rendered.png', 'r+b')
+	output = open(settings.STATIC_ROOT + 'images/meshus/rendered.png', 'r+b')
 	output.write(imgstr.decode('base64'))
 	image = ImageFile(output)
 
