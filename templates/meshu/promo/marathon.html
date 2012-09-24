@@ -7,9 +7,9 @@
 	<div class="white-ribbon"></div>
 	<div class="triangle-ribbon">SPECIAL EVENT!</div>
 
-	<img src="{{ STATIC_URL }}images/marathon/marathon_meshu_logos.jpg" >
+	<img id="logos" src="{{ STATIC_URL }}images/marathon/marathon_meshu_logos.jpg" >
 
-	<h2 class="big">the perfect memento.</h2>
+	<h2 class="big" style="margin-top: 0;">the perfect memento.</h2>
 
 	<img src="{{ STATIC_URL }}images/marathon/marathon_meshu_jewellery.jpg" class="centered" >
 
@@ -64,7 +64,7 @@
 
 	<h2 class="big">ready to get started?</h2>
 	<div id="get-started">
-		<a class="option" href="/shop/">Shop Our Gallery</a>
+		<a class="option" href="/shop/">View The Necklace</a>
 		<a class="option pink" href="/make/">Make Your Own!</a>
 	</div>
 	<!-- <h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button">Foursquare</span> to use your past places.</h2> -->
@@ -81,6 +81,12 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
 	<style>
+		#logos {
+			width: 448px;
+			margin: 0 auto;
+			display: block;
+			margin-top: 30px;
+		}
 		.centered {
 			width: 960px;
 		}
@@ -151,6 +157,9 @@
 			font-size: 18px;
 			top: 46px;
 			left: -12px;
+		}
+		.option {
+			width: 320px;
 		}
 	</style>
 	<script>
