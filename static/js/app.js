@@ -18,6 +18,7 @@ $(function() {
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);
 
+		// if svg is enabled
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
 				// readymade.js
