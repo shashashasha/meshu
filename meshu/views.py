@@ -658,7 +658,7 @@ def meshu_get_or_create(request, profile):
 	meshu.location_data = request.POST['location_data']	
 	meshu.svg = request.POST['svg']
 
-	meshu.promo = request.POST['promo']
+	meshu.promo = request.POST.get('promo', '')
 
 	# wtf dawg
 	meshu.theta = int(float(request.POST.get('theta', '0.0')))
