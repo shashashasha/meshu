@@ -17,7 +17,7 @@
 
 {% block materials %}
     <h2>{{ meshu.title }}</h2>
-    <p id="readymade-desc">{{ meshu.description }}</p>
+    <p id="readymade-desc">{{ meshu.description|safe }}</p>
 
     <div id="img-thumbs">
         {% for object in meshu.meshuimage_set.all %}
