@@ -10,7 +10,8 @@ var saver = function() {
           'xhr': 'true',
           'title' : self.meshu.outputTitle(),
           'svg': self.meshu.outputSVG(),
-          'location_data' : self.meshu.outputLocationData()
+          'location_data' : self.meshu.outputLocationData(),
+          'promo': self.meshu.promo
         };
     }
 
@@ -152,6 +153,7 @@ var saver = function() {
         self.meshu.view_url = data.view_url;
         self.meshu.username = data.username;
         self.meshu.title = data.title;
+        self.meshu.promo = data.promo;
 
         if (data.image_url) 
           self.meshu.image_url = data.image_url;

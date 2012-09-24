@@ -37,6 +37,8 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
+	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
+	
 	# begin ordering an existing user meshu
 	url(r'^make/(?P<item_encoded>\d+)/to_png', 'item_topng'),
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
@@ -108,6 +110,14 @@ urlpatterns += patterns('meshu.views',
 	# about page
 	url(r'^about/', direct_to_template, {
 		'template': 'meshu/base_about.html'
+	}),
+
+	# promo
+	url(r'^marathon/', direct_to_template, {
+		'template': 'meshu/promo/marathon.html'
+	}),
+	url(r'^royalparkshalf/', direct_to_template, {
+		'template': 'meshu/promo/marathon.html'
 	}),
 
 	# backend for our orders

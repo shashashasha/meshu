@@ -4,13 +4,34 @@ $(function() {
 	sb.product = function() {
 		var self = {};
 
-		var products = ["earrings","pendant","necklace","cufflinks"];
+		var products = [];
 
-		self.initialize = function(delaunayFrame) {
+		self.initialize = function(delaunayFrame, catalog) {
+			products = catalog.getProducts();
+
+			/* 
+				pretty hacky, but seeing which products are used and hiding the rest
+			*/
+			var seenProducts = {};
+
 			// initialize all products
 			for (var i = 0; i < products.length; i++) {
-				self.initializeProduct(products[i], delaunayFrame);
+				var product = products[i];
+
+
+				self.initializeProduct(product.type, delaunayFrame);
+				seenProducts[product.type] = true;
+
+				var range = self.describeProductRange(product);
+				$("#range-" + product.type).html(range);
 			}
+
+			$("#product-preview .wrapper").each(function(i, e) {
+				var id = e.id.split('-').pop();
+				if (!seenProducts[id]) {
+					$(e).hide();
+				}
+			});
 		};
 
 		self.initializeProduct = function(product, delaunayFrame) {
@@ -25,6 +46,28 @@ $(function() {
 				.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
 
 			self.attachMeshu(delaunayFrame, $(svg[0]), sb.transforms.getTransform(product, "product"));
+		};
+
+		self.range = function(prices) {
+			return prices.length == 1 
+					? "$" + prices[0] 
+					: "$" + prices[0] + "-" + prices[prices.length - 1];
+		};
+
+		self.describeProductRange = function(product) {
+			if (product.discount != undefined) {
+				var range = "<del>" + self.range(product.originals) + "</del>";
+				
+				range += " " + self.range(product.prices);
+
+				range += product.discount < 1 
+					? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
+					: " ($" + product.discount + " off!)";
+					
+				return range;
+			} else {
+				return self.range(product.prices);
+			}
 		};
 
 		self.attachMeshu = function(mesh, frame, transform) {
@@ -53,7 +96,7 @@ $(function() {
 		self.rotation = function(r) {
 			d3.selectAll(".product-delaunay")
 				.attr("transform", function(d, i) {
-					var transform = sb.transforms.getTransform(products[i], "product");
+					var transform = sb.transforms.getTransform(products[i].type, "product");
 					return transform + " rotate(" + r + ", 300, 300)";
 				});
 		};

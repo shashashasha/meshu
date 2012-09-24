@@ -1,38 +1,12 @@
 $(function() {
-	var options = {"earrings":
-						{"wood":{"price":75,"colors":["Amber"]},
-						"acrylic":{"price":80,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
-				   "pendant":
-				   		{"wood":{"price":75,"colors":["Amber"]},
-				   		"acrylic":{"price":85,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":130,"colors":["Sterling Silver"]}},
-				   "necklace":
-				   		{"wood":{"price":80,"colors":["Amber"]},
-				   		"acrylic":{"price": 90,"colors":["Black","White"]},
-						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
-					"cufflinks":
-						{"stainless":{"price":85},
-						"silver":{"price":160}}};
-	var displayNames = {"earrings":"pair of earrings",
-						"pendant":"small pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "pair of cufflinks"};
-	var productNames = {"earrings":"earrings",
-						"pendant":"pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "cufflinks"};
 
 	// here's the list of views we have in this flow
 	var views = ["edit","product","make","account","checkout","review"];
 	var content = $("#content");
 
 	// create a stripe payment object
-	orderer.options(options);
-	sb.materializer.initialize(options, displayNames, productNames);
+	orderer.catalog(sb.catalog);
+	sb.materializer.initialize(sb.catalog);
 
 	// create a meshu object for a single meshu container
 	var meshu = sb.meshu($("#meshu-container")[0]);
@@ -40,15 +14,14 @@ $(function() {
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.5 : 0;
 
-	
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	if (loadedMeshu) {
-
 		// create a saver object, in saver.js
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);
 
+		// if svg is enabled
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
 				// readymade.js
@@ -66,7 +39,7 @@ $(function() {
 		user.updateLogoutActions(pageType);
 
 		// initialize product picker
-		sb.product.initialize(".delaunay");
+		sb.product.initialize(".delaunay", sb.catalog);
 
 		switch (pageType) {
 			case 'edit':
@@ -131,14 +104,21 @@ $(function() {
 	/* 
 		Checking if we need to show the initial helper modal
 	*/	
-	if (!user.loggedIn && !loadedMeshu && window.location.hash != '#skipintro') {
+	var hash = window.location.hash;
+	var showIntro = function() {
 		$("#edit-help").fadeIn();
 		$("#modal-bg").fadeIn();
 		$("#close-help").click(function(){
 			$("#edit-help").fadeOut();
 			$("#modal-bg").fadeOut();
 		});
-	} else if (window.location.hash == '#skipintro') {
+	};
+	if (!user.loggedIn && !loadedMeshu && hash != '#skipintro') {
+		showIntro();
+	} else if (hash == '#showintro') {
+		showIntro();
+		window.location.hash = "";
+	} else if (hash == '#skipintro') {
 		window.location.hash = "";
 	}
 
@@ -274,7 +254,7 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize(".delaunay");
+				sb.product.initialize(".delaunay", sb.catalog);
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
