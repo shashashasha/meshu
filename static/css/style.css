@@ -1126,6 +1126,9 @@ body.firefox.win #rotate-help .border-notch {
 .readymade #readymade-desc {
   color: #808080;
 }
+.readymade #readymade-desc br {
+  font-size: 1.3em;
+}
 .readymade #readymade-type {
   color: #ff3fb4;
 }
