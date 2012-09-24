@@ -14,7 +14,13 @@
 	<img src="{{ STATIC_URL }}images/marathon/marathon_meshu_jewellery.jpg" class="centered" >
 
 	<h2 class="big">turn your half marathon into a memory:</h2>
-	<img src="{{ STATIC_URL }}images/marathon/marathon_macro.jpg" class="centered" style="float:left;">
+	<div id="route-animation">
+		<div id="place-hover">
+	        <span>London Eye</span>
+	        <b class="notch" style="left: 28px; "></b>
+	    </div>
+		<img src="{{ STATIC_URL }}images/marathon/marathon_macro.jpg" class="centered" style="float:left;">
+	</div>
 	<a class="half" href="/shop/199/">
 		<img src="{{ STATIC_URL }}images/marathon/marathon_meshu.jpg">
 		<div class="tri"></div>
@@ -78,6 +84,11 @@
 		.centered {
 			width: 960px;
 		}
+		#route-animation {
+			position: relative;
+		}
+		#place-hover {
+		}
 		.half {
 			width: 480px;
 			display: inline-block;
@@ -87,7 +98,7 @@
 			float: left;
 			margin-bottom: 45px;
 		}
-		.half:nth-child(even) {
+		.half:nth-child(odd) {
 			margin-left: 20px;
 		}
 		.half img {
@@ -142,4 +153,40 @@
 			left: -12px;
 		}
 	</style>
+	<script>
+		var placeHover = $("#place-hover");
+		places = [{"title":"Houses of Parliment","x":810,"y":308},
+				  {"title":"Buckingham Palace","x":612,"y":272},
+				  {"title":"London Eye","x":875,"y":239},
+				  {"title":"Marble Arch","x":420,"y":58},
+				  {"title":"Wellington Arch","x":520,"y":253},
+				  {"title":"Royal Albert Hall","x":213,"y":278},
+				  {"title":"Admirality Arch","x":797,"y":196},
+				  {"title":"Kensington Palace","x":92,"y":210}];
+		var placeIndex = 0;
+
+		var fadeInterval = setInterval(function(){
+			placeIndex = (placeIndex+1)%places.length;
+			fadeInOutPlace(placeIndex);
+		},4000);
+
+		fadeInOutPlace(placeIndex);
+
+		function fadeInOutPlace(i) {
+			var p = places[i];
+			placeHover.find("span").text(p.title);
+			placeHover.fadeIn('fast');
+                
+            var w = placeHover.width();
+            var ptop = p.y + "px";
+            var left = p.x - (w/2) + "px";
+            var bleft = w/2 - 3 + "px";
+
+            placeHover.css({"top": ptop, "left": left})
+                .find("b").css("left", bleft);
+            var timer = setTimeout(function(){
+				placeHover.fadeOut('slow');
+			},3000);
+		}
+	</script>
 {% endblock %}
