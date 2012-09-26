@@ -10,7 +10,7 @@
 
 	{{ block.super }}
 	{% for object in meshu.meshuimage_set.all %}
-		<img src="{{ object.image.url }}" class="other-view" id="l-r-{{ forloop.counter }}">
+		<img src="{{ object.image.url }}" class="other-view" id="main-image-{{ forloop.counter }}">
 	{% endfor %}
 
 {% endblock %}
@@ -21,7 +21,7 @@
 
     <div id="img-thumbs">
         {% for object in meshu.meshuimage_set.all %}
-    	<img src="{{ object.image.url }}" style="width: 80px; height: 80px;" id="r-{{ forloop.counter }}">
+    	<img src="{{ object.image.url }}" style="width: 80px; height: 80px;" id="image-{{ forloop.counter }}">
     	{% endfor %}
     	<svg class="readymade-preview" width="80" height="80"></svg>
     </div>

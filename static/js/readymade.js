@@ -5,32 +5,48 @@ $(function() {
 	*/
 	var previous = null;
 	var thumbnailHandler = function(){
-		var id = $(this).attr("id");
+		// looks like "image-1", "image-2"
+		var id = $(this).attr("id").split('-').pop();
 
-		// handle the image thumbnails
-		if (previous) {
-			previous.removeClass('z-2');
-			previous.addClass('z-1');
-		}
+		$(".other-view").each(function(i, e) {
+			// clear all previous ones
+			var current = $(e);
+			if (current.hasClass('hidden') && i == id) {
+				current.removeClass('hidden z-1');
+				current.addClass('z-2');
+				current.hide().fadeIn('normal', function() {
 
-		var next = $("#l-" + id);
-		if (next.length) {
-			next.removeClass('hidden z-1');
-			next.addClass('z-2');
-			next.hide().fadeIn("normal", function() {
-				if (previous && previous[0] != next[0]) {
-					// viva pinterest
-					previous.addClass('hidden');
+				});
+			} else if (i != id && !current.hasClass('hidden')) {
+				if (current.hasClass('z-2')) {
+					current.removeClass('z-2');
+					current.addClass('z-1');
 				}
+				current.fadeOut('normal', function() {
+					$(this).addClass('hidden');
+				})
+			}
+		});
 
-				previous = next;
-			});	
-		} else if (previous) {
-			previous.fadeOut("normal", function() {
-				// viva pinterest
-				$(this).addClass('hidden');
-			});
-		}
+		// looks like "main-image-2"
+		// var current = $("#main-" + id);
+		// if (current.length) {
+		// 	next.removeClass('hidden z-1');
+		// 	next.addClass('z-2');
+		// 	next.hide().fadeIn("normal", function() {
+		// 		if (previous && previous[0] != next[0]) {
+		// 			// viva pinterest
+		// 			previous.addClass('hidden');
+		// 		}
+
+		// 		previous = next;
+		// 	});	
+		// } else if (previous) {
+		// 	previous.fadeOut("normal", function() {
+		// 		// viva pinterest
+		// 		$(this).addClass('hidden');
+		// 	});
+		// }
 	};
 
 	var readymadePreview = $(".readymade-preview");
