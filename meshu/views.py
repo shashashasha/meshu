@@ -845,7 +845,7 @@ def item_topng(request, item_encoded):
 
 	return processing_make_png(request, meshu)
 
-def processing_dataurl_to_image(request):
+def processing_dataurl_to_image(request, item_encoded=0):
 
 	profile = current_profile(request)
 

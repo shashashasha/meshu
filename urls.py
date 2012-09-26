@@ -37,6 +37,7 @@ urlpatterns += patterns('meshu.views',
 	# meshu begin
 	url(r'^$', 'index'),
 	
+	url(r'^make/template/(?P<item_encoded>\d+)/to_png', 'processing_dataurl_to_image'),
 	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
 	
 	# begin ordering an existing user meshu

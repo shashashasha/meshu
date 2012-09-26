@@ -258,6 +258,7 @@ $(function() {
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
+				console.log('rasterizing', meshu);
 				sb.rasterizer.rasterize(meshu);
 				break;
 
@@ -383,7 +384,7 @@ $(function() {
         	link: base + meshu.view_url,
         	picture: base + meshu.image_url,
         	name: meshu.title + ' on meshu.io',
-        	caption: "meshu turns your places into beautiful objects.",
+        	caption: '',
         	description: ''
         }, function(response) {
             if (!response || response.error) {
