@@ -6,18 +6,20 @@ $(function() {
 	var previous = null;
 	var thumbnailHandler = function(){
 		// looks like "image-1", "image-2"
-		var id = $(this).attr("id").split('-').pop();
+		var id = $(this).attr("id");
+			checkId = "main-" + id;
 
 		$(".other-view").each(function(i, e) {
 			// clear all previous ones
 			var current = $(e);
-			if (current.hasClass('hidden') && i == id) {
+			var currentId = current.attr("id");
+			if (current.hasClass('hidden') && currentId == checkId) {
 				current.removeClass('hidden z-1');
 				current.addClass('z-2');
 				current.hide().fadeIn('normal', function() {
 
 				});
-			} else if (i != id && !current.hasClass('hidden')) {
+			} else if (currentId != checkId && !current.hasClass('hidden')) {
 				if (current.hasClass('z-2')) {
 					current.removeClass('z-2');
 					current.addClass('z-1');
