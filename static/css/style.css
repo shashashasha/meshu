@@ -1126,6 +1126,9 @@ body.firefox.win #rotate-help .border-notch {
 .readymade #readymade-desc {
   color: #808080;
 }
+.readymade #readymade-desc br {
+  font-size: 1.3em;
+}
 .readymade #readymade-type {
   color: #ff3fb4;
 }
@@ -1961,7 +1964,9 @@ body.ie #maps .mini-meshu div {
 #img-thumbs img,
 #img-thumbs svg {
   cursor: pointer;
-  margin: 0 4px 5px 0;
+  /*margin: 0 4px 5px 0;*/
+
+  margin: 0 -2px 5px 0;
   display: inline-block;
   border: 5px solid white;
 }
