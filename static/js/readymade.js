@@ -13,7 +13,11 @@ $(function() {
 			// clear all previous ones
 			var current = $(e);
 			var currentId = current.attr("id");
-			if (current.hasClass('hidden') && currentId == checkId) {
+			if (id == undefined) {
+				current.fadeOut("normal", function() {
+					$(this).addClass('hidden');
+				});
+			} else if (current.hasClass('hidden') && currentId == checkId) {
 				current.removeClass('hidden z-1');
 				current.addClass('z-2');
 				current.hide().fadeIn('normal', function() {
@@ -24,9 +28,7 @@ $(function() {
 					current.removeClass('z-2');
 					current.addClass('z-1');
 				}
-				current.fadeOut('normal', function() {
-					$(this).addClass('hidden');
-				})
+				current.addClass('hidden');
 			}
 		});
 
