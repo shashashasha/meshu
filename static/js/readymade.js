@@ -14,20 +14,27 @@ $(function() {
 			var current = $(e);
 			var currentId = current.attr("id");
 
-			console.log(i, e, checkId, id, currentId);
-
+			// this happens if someone clicks on the svg
 			if (id == undefined) {
+				if (current.hasClass('z-1')) {
+					current.addClass('hidden');
+				}
+
 				current.fadeOut("normal", function() {
 					$(this).removeClass('z-2');
 					$(this).removeClass('z-1');
 					$(this).addClass('hidden');
 				});
-			} else if (current.hasClass('hidden') && currentId == checkId) {
+
+			// if we've clicked on a photo that's currently hidden
+			} if (current.hasClass('hidden') && currentId == checkId) {
 				current.removeClass('hidden z-1');
 				current.addClass('z-2');
-				current.hide().fadeIn('normal', function() {
 
-				});
+				// fade it in
+				current.hide().fadeIn('normal');
+
+			// any other photos get hidden
 			} else if (currentId != checkId) {
 				if (current.hasClass('z-2')) {
 					current.removeClass('z-2');
@@ -39,26 +46,6 @@ $(function() {
 				current.addClass('hidden');
 			}
 		});
-
-		// looks like "main-image-2"
-		// var current = $("#main-" + id);
-		// if (current.length) {
-		// 	next.removeClass('hidden z-1');
-		// 	next.addClass('z-2');
-		// 	next.hide().fadeIn("normal", function() {
-		// 		if (previous && previous[0] != next[0]) {
-		// 			// viva pinterest
-		// 			previous.addClass('hidden');
-		// 		}
-
-		// 		previous = next;
-		// 	});	
-		// } else if (previous) {
-		// 	previous.fadeOut("normal", function() {
-		// 		// viva pinterest
-		// 		$(this).addClass('hidden');
-		// 	});
-		// }
 	};
 
 	var readymadePreview = $(".readymade-preview");
