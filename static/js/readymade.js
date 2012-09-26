@@ -27,7 +27,10 @@ $(function() {
 				if (current.hasClass('z-2')) {
 					current.removeClass('z-2');
 					current.addClass('z-1');
+				} else if (current.hasClass('z-1')) {
+					current.removeClass('z-1');
 				}
+				
 				current.addClass('hidden');
 			}
 		});
