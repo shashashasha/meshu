@@ -13,6 +13,9 @@ $(function() {
 			// clear all previous ones
 			var current = $(e);
 			var currentId = current.attr("id");
+
+			console.log(i, e, checkId, id, currentId);
+			
 			if (id == undefined) {
 				current.fadeOut("normal", function() {
 					$(this).addClass('hidden');
@@ -30,7 +33,7 @@ $(function() {
 				} else if (current.hasClass('z-1')) {
 					current.removeClass('z-1');
 				}
-				
+
 				current.addClass('hidden');
 			}
 		});
