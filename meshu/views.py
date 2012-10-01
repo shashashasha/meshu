@@ -123,7 +123,6 @@ def item_readymade(request, item_id):
 	return item_handler(request, item_id, 'readymade.html', 'readymade')
 
 def item_delete(request, item_id):
-	# item_permissions(request, item_id)
 
 	meshu = meshu_delete(request, item_id)
 	return notify(request, 'meshu_deleted')
@@ -246,7 +245,7 @@ def item_update(request, item_encoded):
 	return item_handler(request, item_id, 'display.html', 'view')
 
 def item_save(request, item_encoded):
-	xhr = request.GET.has_key('xhr')
+	xhr = request.POST.has_key('xhr')
 
 	item_id = int(str(item_encoded).decode("hex"))
 	old = Meshu.objects.get(id=item_id)
@@ -632,12 +631,12 @@ def current_profile(request):
 # creating or updating model functions, saves them to databases
 #
 def meshu_update(request, meshu):
-	meshu.title = request.GET.get('title', meshu.title)
-	meshu.description = request.GET.get('description', meshu.description)
+	meshu.title = request.POST.get('title', meshu.title)
+	meshu.description = request.POST.get('description', meshu.description)
 
-	meshu.location_data = request.GET.get('location_data', meshu.location_data)
-	meshu.svg = request.GET.get('svg', meshu.svg)
-	meshu.theta = request.GET.get('theta', meshu.theta)
+	meshu.location_data = request.POST.get('location_data', meshu.location_data)
+	meshu.svg = request.POST.get('svg', meshu.svg)
+	meshu.theta = request.POST.get('theta', meshu.theta)
 	return meshu
 
 def meshu_get_or_create(request, profile):

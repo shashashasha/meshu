@@ -80,7 +80,7 @@ var saver = function() {
           $("#save-button").html('saving');
 
           var saveurl = loadedMeshu.edit_url + 'save';
-          $.get(saveurl, getMeshuXHR(), function(data) {
+          $.post(saveurl, getMeshuXHR(), function(data) {
 
               // create new meshu_id element in the form
               updateMeshuID(data.meshu_id);
@@ -102,7 +102,7 @@ var saver = function() {
           $("#update-button").html('updating');
 
           var updateurl = loadedMeshu.edit_url + 'update';
-          $.get(updateurl, getMeshuXHR(), function(data) {
+          $.post(updateurl, getMeshuXHR(), function(data) {
 
               // create new meshu_id element in the form
               updateMeshuID(data.meshu_id);
