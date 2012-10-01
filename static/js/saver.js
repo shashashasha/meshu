@@ -8,6 +8,7 @@ var saver = function() {
     function getMeshuXHR() {
         return {
           'xhr': 'true',
+          'csrfmiddlewaretoken' : $("#csrf input").val(),
           'title' : self.meshu.outputTitle(),
           'svg': self.meshu.outputSVG(),
           'location_data' : self.meshu.outputLocationData(),
@@ -28,7 +29,6 @@ var saver = function() {
 
     function assignGuestMeshu() {
         var xhr = getMeshuXHR();
-        xhr.csrfmiddlewaretoken = $("#csrf input").val();
 
         // if we've made one already, set the id
         if ($("#meshu-id").length)
@@ -48,7 +48,6 @@ var saver = function() {
 
     function createNewMeshu() {
         var xhr = getMeshuXHR();
-        xhr.csrfmiddlewaretoken = $("#csrf input").val();
 
         // if we've made one already, set the id
         if ($("#meshu-id").length)
