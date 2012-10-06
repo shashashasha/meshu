@@ -557,18 +557,30 @@ def order_verify_coupon(request):
 	return json_dump(response_dict)
 
 def order_meshu(request, item_id):
+	# check if we have location data, otherwise we 404
+	# to protect against malicious requests
+	loc_check = request.POST.get('location_data', 'blank')
+	if loc_check == 'blank':
+		raise Http404
+		
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 
 	item_id = request.POST.get('meshu_id', item_id)
 	
 	# get existing meshu
-	meshu = Meshu.objects.get(id=item_id)
+	meshu = get_object_or_404(Meshu, pk=item_id)
 
 	return make_order(request, profile, meshu)
 
 # ordering a new meshu
 def order_new(request):
+	# check if we have location data, otherwise we 404
+	# to protect against malicious requests
+	loc_check = request.POST.get('location_data', 'blank')
+	if loc_check == 'blank':
+		raise Http404
+
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 
@@ -591,7 +603,7 @@ def make_order(request, profile, meshu):
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	charge = stripe.Charge.create(
-	    amount=int(float(request.POST.get('amount', '0.0'))), # amount in cents, again
+	    amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
 	    currency="usd",
 	    card=token,
 	    description=desc
@@ -637,30 +649,26 @@ def meshu_update(request, meshu):
 	meshu.location_data = request.POST.get('location_data', meshu.location_data)
 	meshu.svg = request.POST.get('svg', meshu.svg)
 	meshu.theta = request.POST.get('theta', meshu.theta)
+
+	meshu.promo = request.POST.get('promo', meshu.promo)
 	return meshu
 
 def meshu_get_or_create(request, profile):
 	if request.POST.has_key('id') and request.POST['id'] != 'None':
 		meshu_id = int(request.POST['id'])
-		meshu = Meshu.objects.get(id=meshu_id)
+		meshu = get_object_or_404(Meshu, pk=meshu_id)
 	elif request.POST.has_key('meshu_id') and request.POST['meshu_id'] != 'None':
 		meshu_id = int(request.POST['meshu_id'])
-		meshu = Meshu.objects.get(id=meshu_id)
+		meshu = get_object_or_404(Meshu, pk=meshu_id) # Meshu.objects.get(id=meshu_id)
 	else:
 		meshu = Meshu()
 		meshu.user_profile = profile
 
-	meshu.title = request.POST.get('title', 'My Meshu')
-	meshu.description = request.POST.get('description', '')
-
-	# meshu data
-	meshu.location_data = request.POST['location_data']	
-	meshu.svg = request.POST['svg']
-
-	meshu.promo = request.POST.get('promo', '')
+	# use our existing update function, less repetitive
+	meshu = meshu_update(request, meshu)
 
 	# wtf dawg
-	meshu.theta = int(float(request.POST.get('theta', '0.0')))
+	meshu.theta = int(float(request.POST.get('theta', 0.0)))
 
 	meshu.save()
 	return meshu
@@ -695,7 +703,7 @@ def order_create(request, profile, meshu):
 	order.color = request.POST['color']
 	order.product = request.POST['product']
 
-	# stripe uses cents, which makes none
+	# stripe uses cents
 	amount = float(request.POST.get('amount', '0.0')) / 100.0
 	order.amount = str(amount)
 

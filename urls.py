@@ -12,7 +12,7 @@ from django.http import HttpResponse
 # separate these patterns because they don't use the polls.views prefix
 urlpatterns = patterns('',
 	# robots.txt
-	(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /view/4e6f6e65*", mimetype="text/plain")),
+	(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /view/4e6f6e65*\nDisallow: /edit/4e6f6e65*", mimetype="text/plain")),
 
 	# Uncomment the admin/doc line below to enable admin documentation:
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
