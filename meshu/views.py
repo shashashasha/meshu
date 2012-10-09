@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import uuid
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils import simplejson
 
 # for emailing html
@@ -188,6 +188,7 @@ def item_from_data(request):
 
 	meshu = Meshu()
 
+
 	meshu.title = request.POST.get('title', 'My Meshu')
 	meshu.description = request.POST.get('description', '')
 
@@ -196,7 +197,9 @@ def item_from_data(request):
 	meshu.svg = request.POST['svg']
 
 	# wtf dawg
-	meshu.theta = int(float(request.POST.get('theta', '0.0')))
+	theta = request.POST.get('theta', 0.0)
+	if theta:
+		meshu.theta = int(float(theta))
 
 	return render_to_response('meshu/item/item.html', {
 		'meshu': meshu,
@@ -560,9 +563,9 @@ def order_meshu(request, item_id):
 	# check if we have location data, otherwise we 404
 	# to protect against malicious requests
 	loc_check = request.POST.get('location_data', 'blank')
-	if loc_check == 'blank':
+	if loc_check == 'blank' or loc_check == '':
 		raise Http404
-		
+
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 
@@ -578,7 +581,7 @@ def order_new(request):
 	# check if we have location data, otherwise we 404
 	# to protect against malicious requests
 	loc_check = request.POST.get('location_data', 'blank')
-	if loc_check == 'blank':
+	if loc_check == 'blank' or loc_check == '':
 		raise Http404
 
 	# gets logged in user profile, or anonymous profile
@@ -668,7 +671,9 @@ def meshu_get_or_create(request, profile):
 	meshu = meshu_update(request, meshu)
 
 	# wtf dawg
-	meshu.theta = int(float(request.POST.get('theta', 0.0)))
+	theta = request.POST.get('theta', 0.0)
+	if theta:
+		meshu.theta = int(float(theta))
 
 	meshu.save()
 	return meshu
