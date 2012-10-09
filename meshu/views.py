@@ -474,6 +474,22 @@ def mail_order_confirmation(email, meshu, order):
 		'meshu': meshu,
 		'order': order
 	})
+
+	if (meshu.promo == 'marathon'):
+		mail_template('meshu/email/order_confirmation.html', {
+			'subject' : 'Order Confirmation: ' + meshu.title,
+			'from' : 'orders@meshu.io',
+			'to': 'area@royalparksfoundation.org',
+			'meshu': meshu,
+			'order': order
+		})
+		mail_template('meshu/email/order_confirmation.html', {
+			'subject' : 'Order Confirmation: ' + meshu.title,
+			'from' : 'orders@meshu.io',
+			'to': 'sbarney@royalparksfoundation.org',
+			'meshu': meshu,
+			'order': order
+		})
 	return
 
 def mail_order_status_change(email, meshu, order):
