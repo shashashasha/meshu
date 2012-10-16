@@ -2084,4 +2084,5 @@ body.ie #maps .mini-meshu div {
 }
 #content.postcard {
   overflow: visible;
+  width: 900px;
 }
