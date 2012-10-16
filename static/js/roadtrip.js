@@ -435,6 +435,22 @@ sb.mesh = function (frame, map, width, height) {
             d.edit = !d.edit;
         });
 
+        $( "#places ul" ).sortable();
+        $( "#places ul" ).disableSelection();
+        $("#places ul").mouseup(function(){
+            var dataNew = [];
+            setTimeout(function(){
+                $("#places li").each(function(e,i){
+                    d3.select(this).each(function(d){
+                        dataNew.push(d);
+                    })  
+                });
+                points = dataNew;
+                update();
+                showRoutes();
+            },100);
+        });
+
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
                 if (d && d.title) return d.title;
