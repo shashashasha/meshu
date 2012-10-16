@@ -1633,14 +1633,16 @@ path {
     fill: none;
     stroke: black;
     pointer-events: none;
-    stroke-width: 5;
+    stroke-width: 10;
     stroke-linejoin: round;
     .transition(stroke-width);
 }
 
 circle {
-    fill: @pink;
-    fill-opacity: 0;
+    /*fill: @pink;
+    fill-opacity: 0;*/
+    fill-opacity: 1;
+    fill: #000;
 }
 
 .edit circle:hover, circle.highlight, .edit .inactive circle:first-child {
