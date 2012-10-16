@@ -429,15 +429,15 @@ sb.mesh = function (frame, map, width, height) {
             else saveText(node,i,"place");
             d.edit = !d.edit;
         });
-        names.select(".place-text").on("click",function(d,i){
-            if (d.edit) return;
-            editText($(this).parent(),i,"place");
-            d.edit = !d.edit;
-        });
+        // names.select(".place-text").on("click",function(d,i){
+        //     if (d.edit) return;
+        //     editText($(this).parent(),i,"place");
+        //     d.edit = !d.edit;
+        // });
 
         $( "#places ul" ).sortable();
         $( "#places ul" ).disableSelection();
-        $("#places ul").mouseup(function(){
+        $(".place-text").mouseup(function(){
             var dataNew = [];
             setTimeout(function(){
                 $("#places li").each(function(e,i){
