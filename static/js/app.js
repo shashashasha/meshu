@@ -23,9 +23,14 @@ $(function() {
 
 		// if svg is enabled
 		if ($("html").hasClass("svg")) {
-			if (meshu.isReadymade && readymade != undefined) {
+			if (meshu.isReadymade) {
 				// readymade.js
-				readymade.initialize(meshu);
+				try {
+					readymade.initialize(meshu);	
+				}
+				catch(e) {
+					// ignore if we don't have readymade.js
+				}
 			}
 
 			if (pageType == 'view') {
