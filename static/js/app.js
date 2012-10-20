@@ -23,7 +23,7 @@ $(function() {
 
 		// if svg is enabled
 		if ($("html").hasClass("svg")) {
-			if (meshu.isReadymade && readymade) {
+			if (meshu.isReadymade && readymade != undefined) {
 				// readymade.js
 				readymade.initialize(meshu);
 			}
