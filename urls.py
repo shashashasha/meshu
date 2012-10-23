@@ -108,6 +108,11 @@ urlpatterns += patterns('meshu.views',
 
 	url(r'^invite/', 'invite'),
 
+	# gallery of meshus
+	url(r'^gallery/', direct_to_template, {
+		'template': 'meshu/base_gallery.html'
+	}),
+
 	# about page
 	url(r'^about/', direct_to_template, {
 		'template': 'meshu/base_about.html'

@@ -1732,16 +1732,18 @@ circle {
     }
 }
 
-#gallery {
+#shop, #gallery {
     margin-left: 15px;
 }
 
+#shop li.object, 
 #gallery li.object {
     float: left;
     width: 306px;
     height: 306px;
     margin: 0 10px 10px 0;
     border: 5px solid white;
+    position: relative;
 
     a {
         display: block;
@@ -1768,7 +1770,12 @@ circle {
     .title {
         font-size: 18px;
     }
+    .price {
+        float: right;
+    }
+}
 
+#shop li.object {
     &:hover {
         border: 5px solid @blue;
 
