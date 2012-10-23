@@ -12,7 +12,7 @@ $(function() {
 	var meshu = sb.meshu($("#meshu-container")[0]);
 
 	// hotfix for postcard pages
-	// meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.5 : 0;
+	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
 
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
@@ -25,7 +25,12 @@ $(function() {
 		if ($("html").hasClass("svg")) {
 			if (meshu.isReadymade) {
 				// readymade.js
-				readymade.initialize(meshu);
+				try {
+					readymade.initialize(meshu);	
+				}
+				catch(e) {
+					// ignore if we don't have readymade.js
+				}
 			}
 
 			if (pageType == 'view') {
