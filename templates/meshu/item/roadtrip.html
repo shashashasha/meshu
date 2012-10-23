@@ -2,7 +2,9 @@
 
 {% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
-{% block page_type %}edit roadtrip{% endblock page_type %}
+{% block body_class %}roadtrip{% endblock body_class %}
+
+{% block page_type %}edit{% endblock page_type %}
 
 {% block content %}
     <div id="place-hover">
@@ -32,6 +34,7 @@
             </div>
 
             {% block finish %}
+                <div id="finish-button" class="nav next start-order">Continue</div>
             {% endblock %}
         </div>
     {% endblock %}
@@ -46,6 +49,13 @@
             <div class="make-wrapper">
                 <h2>Choose your piece:</h2>
                 <div id="product-preview">
+                    <div class="wrapper" id="wrapper-necklace">
+                        <div class="next active">
+                            <svg id="preview-necklace" width="360" height="200"></svg>
+                        </div>
+                        <p>Large Necklace</p>
+                        <p class="note" id="range-necklace">$80-150</p>
+                    </div>
                     <div class="wrapper" id="wrapper-earrings">
                         <div class="next active">
                             <svg id="preview-earrings" width="170" height="160"></svg>
@@ -60,20 +70,13 @@
                         <p>Pendant Necklace</p>
                         <p class="note" id="range-pendant">$75-130</p>
                     </div>
-                    <div class="wrapper" id="wrapper-necklace">
-                        <div class="next active">
-                            <svg id="preview-necklace" width="170" height="160"></svg>
-                        </div>
-                        <p>Large Necklace</p>
-                        <p class="note" id="range-necklace">$80-150</p>
-                    </div>
-                    <div class="wrapper" id="wrapper-cufflinks">
+                    <!-- <div class="wrapper" id="wrapper-cufflinks">
                         <div class="next active">
                             <svg id="preview-cufflinks" width="170" height="160"></svg>
                         </div>
                         <p>Pair of Cufflinks</p>
                         <p class="note" id="range-cufflinks">$85-160</p>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="social-media">
@@ -90,6 +93,7 @@
     {% block make %}
         <div id="materials">
             {% block goback %}
+                <div class="nav back">back</div>
             {% endblock %}
 
             <div class="make-wrapper">

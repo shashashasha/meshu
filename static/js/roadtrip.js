@@ -27,8 +27,6 @@ sb.mesh = function (frame, map, width, height) {
             .attr("class", "delaunay")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
             .attr("fill","none")
-            .attr("stroke-width","5")
-            .attr("stroke","black")
             .attr("stroke-linejoin","round");
 
     var hidden = main.append("svg:g")
@@ -167,7 +165,8 @@ sb.mesh = function (frame, map, width, height) {
 
             map.updateBounds(lats, lons);
             self.updatePixelBounds();
-            update();
+            update(true);
+            // showRoutes();
         } else {
             mousemove();
         }
@@ -226,7 +225,7 @@ sb.mesh = function (frame, map, width, height) {
         lines.attr("d", function(d) {
                 var p = [d.from[1],d.from[0],d.to[1],d.to[0]];
                 return makeRoute(p);
-            });
+            }).classed("straight",true);
 
         // we move the newest point closer and closer to its destination
         if (new_pt && skipAnimation == true) {
@@ -259,14 +258,15 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function showRoutes() {
+        console.log("showRoutes");
         g.selectAll("path").each(function(d){
             var line = d3.select(this);
             var pairKey = d.from[0]+"-"+d.to[1];
             if (pairKey in routes) {
-                line.attr("d",makeRoute(routes[pairKey]));
+                line.attr("d",makeRoute(routes[pairKey])).classed("straight",false);
             } else  {
                 $.ajax({
-                    url: "http://open.mapquestapi.com/directions/v1/route?generalize=10&outFormat=json&shapeFormat=raw&from="+
+                    url: "http://open.mapquestapi.com/directions/v1/route?generalize=10&outFormat=json&shapeFormat=raw&generalize=200&from="+
                     d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
                     // cache: false,
                     dataType: 'jsonp',
@@ -274,7 +274,7 @@ sb.mesh = function (frame, map, width, height) {
                         var wayPoints = data.route.shape.shapePoints;
                         routes[pairKey] = wayPoints;
 
-                        line.attr("d",makeRoute(wayPoints));
+                        line.attr("d",makeRoute(wayPoints)).classed("straight",false);
                     }
                 });
             }
@@ -295,7 +295,7 @@ sb.mesh = function (frame, map, width, height) {
         return "M" + draw.join("L");
     }
 
-    function update(){
+    function update(needsRoutes){
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
             .data(points);
@@ -304,7 +304,7 @@ sb.mesh = function (frame, map, width, height) {
         circles.enter()
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 10)
+            .attr("r", 12)
             .on("mousedown", function(d) {
                 selected = dragging = d;
 
@@ -374,6 +374,7 @@ sb.mesh = function (frame, map, width, height) {
         self.updateCircleBehavior();
         updateListBehavior();
         updateMesh();
+        if (needsRoutes) showRoutes();
     };
 
     self.updateCircleBehavior = function(off) {
@@ -414,7 +415,7 @@ sb.mesh = function (frame, map, width, height) {
             self.remove(i);
             self.updatePixelBounds();
             map.updateBounds(lats, lons);
-            update();
+            update(true);
         });
 
         names.on("mouseover",function(d,i){
@@ -446,8 +447,7 @@ sb.mesh = function (frame, map, width, height) {
                     })  
                 });
                 points = dataNew;
-                update();
-                showRoutes();
+                update(true);
             },100);
         });
 
@@ -563,7 +563,7 @@ sb.mesh = function (frame, map, width, height) {
         lons.splice(index, 1);
         places.splice(index, 1);
         
-        if (points.length < 3) $("#finish-button").removeClass("active");
+        if (points.length < 2) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     };
 
@@ -623,7 +623,7 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.refresh = function() {
-        update();
+        update(true);
 
         self.refreshed();
     };

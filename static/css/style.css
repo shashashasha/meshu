@@ -771,6 +771,7 @@ body.firefox .place .place-text {
   position: absolute;
   z-index: 1;
   right: 400px;
+  border-right: 1px solid #e6e6e6;
   transition: right 0.6s;
   /*-moz-transition: @property @time;*/
 
@@ -1670,6 +1671,9 @@ path {
 }
 .roadtrip path {
   stroke-width: 10;
+}
+.roadtrip .straight {
+  stroke-opacity: .5;
 }
 circle {
   fill: #ff3fb4;

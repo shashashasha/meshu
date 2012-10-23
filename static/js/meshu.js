@@ -40,7 +40,7 @@ sb.meshu = function(frame, existingMap) {
     self.checkAdded = function() { 
         // pay attention to the number of points
         var points = mesh.points();
-        if (points.length > 3) $("#finish-button").addClass("active");
+        if (points.length > 1) $("#finish-button").addClass("active");
         else $("#finish-button").removeClass("active");
     }
 
