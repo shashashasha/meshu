@@ -131,6 +131,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^orders/(?P<order_id>\d+)/toggle_postcard/', 'processing_order_postcard_toggle'),
 	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
 	url(r'^orders/addresses', 'processing_addresses'),
+	url(r'^orders/quotes', 'processing_quotes'),
 	url(r'^orders/all', 'processing_all'),
 	url(r'^orders/', 'processing_orders'),
 
