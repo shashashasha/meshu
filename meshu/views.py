@@ -817,7 +817,7 @@ def processing_notes(request):
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
 	# get all orders that haven't been shipped
-	orders = Order.objects
+	orders = Order.objects.all()
 
 	return render_to_response('meshu/processing/notes.html', {
 			'orders': orders,

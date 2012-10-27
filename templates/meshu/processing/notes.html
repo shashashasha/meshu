@@ -5,11 +5,12 @@
 {% block content %}
     <ul class="gallery">
         {% for order in orders reversed %}
+        {% if order.postcard_note %}
             <li>
                 <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.meshu.title }} by {{ order.contact }}, {{ order.id }}</a></b>
                 <div class="date">{{ order.postcard_note }}</div>
-                <br /><br />
             </li>
+           {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}
