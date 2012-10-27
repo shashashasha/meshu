@@ -2100,3 +2100,9 @@ body.ie #maps .mini-meshu div {
 #content.postcard {
   width: 1000px;
 }
+.notes {
+  margin: 20px;
+}
+.notes li {
+  margin-bottom: 20px;
+}
