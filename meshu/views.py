@@ -812,6 +812,17 @@ def processing_addresses(request):
 			'orders_shipped' : orders_shipped
 	}, context_instance=RequestContext(request))
 
+def processing_notes(request): 
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	# get all orders that haven't been shipped
+	orders = Order.objects.all()
+
+	return render_to_response('meshu/processing/notes.html', {
+			'orders': orders,
+	}, context_instance=RequestContext(request))
+
 def processing_all(request):
 	meshus = Meshu.objects.all()
 

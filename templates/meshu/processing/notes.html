@@ -1,0 +1,17 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Postcard Notes{% endblock %}
+
+{% block content %}
+	<h2 class="page-header">Postcard Notes :)</h2>
+    <ul class="notes">
+        {% for order in orders reversed %}
+        {% if order.postcard_note %}
+            <li>
+                <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.id }} — {{ order.meshu.title }} by {{ order.contact }}</a></b>
+                <div class="date">{{ order.postcard_note }}</div>
+            </li>
+           {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

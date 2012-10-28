@@ -17,8 +17,9 @@ sb.catalog = function() {
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150,"colors":["Sterling Silver"]}},
 					"cufflinks":
-						{"stainless":{"price":85},
-						"silver":{"price":160}}};
+						{
+						// "stainless":{"price":85},
+						"silver":{"price":150}}};
 
 	// check if this exists
 	self.check = function(type, material) {

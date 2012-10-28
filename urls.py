@@ -108,6 +108,11 @@ urlpatterns += patterns('meshu.views',
 
 	url(r'^invite/', 'invite'),
 
+	# gallery of meshus
+	url(r'^gallery/', direct_to_template, {
+		'template': 'meshu/base_gallery.html'
+	}),
+
 	# about page
 	url(r'^about/', direct_to_template, {
 		'template': 'meshu/base_about.html'
@@ -126,6 +131,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^orders/(?P<order_id>\d+)/toggle_postcard/', 'processing_order_postcard_toggle'),
 	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
 	url(r'^orders/addresses', 'processing_addresses'),
+	url(r'^orders/notes', 'processing_notes'),
 	url(r'^orders/all', 'processing_all'),
 	url(r'^orders/', 'processing_orders'),
 

@@ -1763,16 +1763,20 @@ circle.highlight,
   height: 100%;
   display: block;
 }
+#shop,
 #gallery {
   margin-left: 15px;
 }
+#shop li.object,
 #gallery li.object {
   float: left;
   width: 306px;
   height: 306px;
   margin: 0 10px 10px 0;
   border: 5px solid white;
+  position: relative;
 }
+#shop li.object a,
 #gallery li.object a {
   display: block;
   width: 100%;
@@ -1783,10 +1787,12 @@ circle.highlight,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+#shop li.object img,
 #gallery li.object img {
   width: 100%;
   height: 100%;
 }
+#shop li.object .text-block,
 #gallery li.object .text-block {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1799,13 +1805,22 @@ circle.highlight,
   color: #808080;
   border-top: 1px solid #e6e6e6;
 }
+#shop li.object .title,
 #gallery li.object .title {
   font-size: 18px;
 }
-#gallery li.object:hover {
+#shop li.object .price,
+#gallery li.object .price {
+  float: right;
+}
+#gallery li.object img {
+  border: 1px solid white;
+  box-sizing: border-box;
+}
+#shop li.object:hover {
   border: 5px solid #1fcaff;
 }
-#gallery li.object:hover .text-block {
+#shop li.object:hover .text-block {
   color: black;
 }
 /* Map UI */
@@ -2083,6 +2098,11 @@ body.ie #maps .mini-meshu div {
   display: none;
 }
 #content.postcard {
-  overflow: visible;
-  width: 900px;
+  width: 1000px;
+}
+.notes {
+  margin: 20px;
+}
+.notes li {
+  margin-bottom: 20px;
 }
