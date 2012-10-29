@@ -1,8 +1,8 @@
 var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
-	var self = d3.dispatch("added", "refreshed", "locationsSet"),
-		selfId = parseInt(Math.random() * 10000000000, 10);
+    var self = d3.dispatch("added", "refreshed", "locationsSet"),
+        selfId = parseInt(Math.random() * 10000000000, 10);
 
     // making this not global ._.
     var lats = [],
@@ -58,9 +58,9 @@ sb.mesh = function (frame, map, width, height) {
 
     var points = [],
         routes = {},
-    	new_pt = [],
+        new_pt = [],
         pixel_bounds = [],
-    	updateInterval = 0,
+        updateInterval = 0,
         selected = null,
         moved = false,
         dragging = null,
@@ -214,8 +214,14 @@ sb.mesh = function (frame, map, width, height) {
         var lines = g.selectAll("path")
             .data(function(){
                 var lineArray = [];
-                for (var i = 0; i < points.length-1; i++) {
-                    lineArray.push({"from":points[i],"to":points[i+1]});
+                // for regular roadtrip
+                // for (var i = 0; i < points.length-1; i++) {
+                //     lineArray.push({"from":points[i],"to":points[i+1]});
+                // }
+
+                // for radial
+                for (var i = 0; i < points.length; i++) {
+                    lineArray.push({"from":points[0],"to":points[i]});
                 }
                 return lineArray;
             });
@@ -266,7 +272,7 @@ sb.mesh = function (frame, map, width, height) {
                 line.attr("d",makeRoute(routes[pairKey])).classed("straight",false);
             } else  {
                 $.ajax({
-                    url: "http://open.mapquestapi.com/directions/v1/route?generalize=10&outFormat=json&shapeFormat=raw&generalize=200&from="+
+                    url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
                     d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
                     // cache: false,
                     dataType: 'jsonp',
@@ -300,11 +306,11 @@ sb.mesh = function (frame, map, width, height) {
         var circles = ui.selectAll("circle")
             .data(points);
 
-        // new circles
+        // new radial circles
         circles.enter()
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 12)
+            .attr("r", 2)
             .on("mousedown", function(d) {
                 selected = dragging = d;
 
@@ -511,10 +517,10 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
-    	// clear previous update
-    	if (updateInterval) {
+        // clear previous update
+        if (updateInterval) {
             clearInterval(updateInterval);
-    	}
+        }
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -528,7 +534,7 @@ sb.mesh = function (frame, map, width, height) {
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
-        	
+            
             new_pt = [lon, lat];   
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
@@ -568,11 +574,11 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.lats = function() {
-    	return lats;
+        return lats;
     };
 
     self.lons = function() {
-    	return lons;
+        return lons;
     };
 
     self.places = function() {
@@ -580,12 +586,12 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.points = function(pts) {
-    	if (!arguments.length) {
-    		return points;
-    	}
+        if (!arguments.length) {
+            return points;
+        }
 
-    	points = pts;
-    	return self;
+        points = pts;
+        return self;
     };
 
     /* 
@@ -638,8 +644,8 @@ sb.mesh = function (frame, map, width, height) {
 
     // outputs svg data
     self.output = function() {
-    	return $('#' + selfId).html();
+        return $('#' + selfId).html();
     };
 
-	return self;
+    return self;
 };
