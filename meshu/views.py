@@ -72,6 +72,12 @@ def invite(request):
 # Views for Items
 #
 
+# starburst!
+def starburst_make(request):
+	return render_to_response('meshu/item/starburst.html', {
+			'view' : 'edit'
+		}, context_instance=RequestContext(request))
+
 # meshu.views.make
 def item_make(request):
 	return render_to_response('meshu/item/item.html', {
