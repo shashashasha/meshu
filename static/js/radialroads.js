@@ -56,6 +56,9 @@ sb.mesh = function (frame, map, width, height) {
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
 
+    // radial path drawer
+    var pathdrawer = sb.pathdrawer(map);
+
     var points = [],
         routes = {},
         new_pt = [],
@@ -265,6 +268,8 @@ sb.mesh = function (frame, map, width, height) {
 
     function showRoutes() {
         console.log("showRoutes");
+        var pathArray = [];
+
         g.selectAll("path").each(function(d){
             var line = d3.select(this);
             var pairKey = d.from[0]+"-"+d.to[1];
@@ -280,11 +285,17 @@ sb.mesh = function (frame, map, width, height) {
                         var wayPoints = data.route.shape.shapePoints;
                         routes[pairKey] = wayPoints;
 
+                        // draw into test svg
+                        pathdrawer.addRoute(wayPoints);
+
                         line.attr("d",makeRoute(wayPoints)).classed("straight",false);
                     }
                 });
             }
         });
+
+        var routePaths = g.selectAll("path.routes")
+            .data()
     }
 
     function makeRoute(p) {
