@@ -120,6 +120,11 @@ urlpatterns += patterns('meshu.views',
 		'template': 'meshu/base_about.html'
 	}),
 
+	# radial road test
+	url(r'^radialroads/', direct_to_template, {
+		'template': 'meshu/item/radialroads.html'
+	}),
+
 	# promo
 	url(r'^marathon/', direct_to_template, {
 		'template': 'meshu/promo/marathon.html'

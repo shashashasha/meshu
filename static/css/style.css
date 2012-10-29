@@ -730,6 +730,9 @@ body.firefox #place-number #input {
   display: inline-block;
   cursor: text;
 }
+.roadtrip .place .title {
+  cursor: move;
+}
 .place .place-text {
   width: 241px;
   padding: 2px;
@@ -768,6 +771,7 @@ body.firefox .place .place-text {
   position: absolute;
   z-index: 1;
   right: 400px;
+  border-right: 1px solid #e6e6e6;
   transition: right 0.6s;
   /*-moz-transition: @property @time;*/
 
@@ -1665,9 +1669,19 @@ path {
   -webkit-transition: stroke-width 0.6s;
   -o-transition: stroke-width 0.6s;
 }
+.roadtrip path {
+  stroke-width: 5;
+}
+.roadtrip .straight {
+  stroke-opacity: .5;
+}
 circle {
   fill: #ff3fb4;
   fill-opacity: 0;
+}
+.roadtrip circle {
+  fill-opacity: 1;
+  fill: #000;
 }
 .edit circle:hover,
 circle.highlight,
