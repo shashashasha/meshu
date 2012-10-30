@@ -253,13 +253,14 @@
                         <label class="short-label">Region, County or State</label>
                         <input type="text" id="ship-region" class="required region-input short-input" name="shipping_region"/>
                     </div>
+                    <div class="form-row ship-row domestic">
+                            <label class="domestic short-label">State</label>
+                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
+                    </div>
                     <div class="form-row ship-row">
                         <label class="domestic short-label">Zip Code</label>
                         <label class="international short-label">Postcode or Zip Code</label>
                         <input type="text" size="5" maxlength="20" id="ship-zip" class="required short-input" name="shipping_zip"/>
-                    <div class="form-row ship-row domestic">
-                            <label class="domestic short-label">State</label>
-                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
                     </div>
                     <div class="form-row ship-row international country-dropdown">
                         <label>Country</label>
