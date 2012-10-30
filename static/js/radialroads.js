@@ -7,7 +7,7 @@ sb.mesh = function (frame, map, width, height) {
     // making this not global ._.
     var lats = [],
         lons = [],
-        places = [];
+        meshuTitle;
 
     var decoder = document.createElement('div');
 
@@ -46,12 +46,12 @@ sb.mesh = function (frame, map, width, height) {
     var ui = svg.append("svg:g")
         .attr("id", "delaunay-ui");
 
-    var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-number").attr("class", "inactive");
+    // var placeList = d3.select("#places");
+    var placeTitle = d3.select("#place-title").attr("class", "inactive");
         placeTitle.append("span").attr("class", "title-text");
         placeTitle.append("span").attr("class", "title-edit").html("edit");
 
-    var list = placeList.append("ul");
+    // var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
@@ -60,7 +60,8 @@ sb.mesh = function (frame, map, width, height) {
     var pathdrawer = sb.pathdrawer(map);
 
     var points = [],
-        routes = {},
+        routes = [],
+        paths = [],
         new_pt = [],
         pixel_bounds = [],
         updateInterval = 0,
@@ -72,8 +73,8 @@ sb.mesh = function (frame, map, width, height) {
         last_mouse = null,
         meshuTitle = null;
 
-    var content = $("#content"),
-        cases = $("#cases");
+    var content = $("#content");
+        // cases = $("#cases");
 
     // d3.select(uiFrame.node())
     d3.select(".frame")
@@ -199,6 +200,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateMesh(skipAnimation) {
+
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
@@ -214,97 +216,89 @@ sb.mesh = function (frame, map, width, height) {
             });
 
         // the delaunay mesh paths
-        var lines = g.selectAll("path")
-            .data(function(){
-                var lineArray = [];
-                // for regular roadtrip
-                // for (var i = 0; i < points.length-1; i++) {
-                //     lineArray.push({"from":points[i],"to":points[i+1]});
-                // }
+        // var lines = g.selectAll("path")
+        //     .data(function(){
+        //         var lineArray = [];
+        //         // for regular roadtrip
+        //         // for (var i = 0; i < points.length-1; i++) {
+        //         //     lineArray.push({"from":points[i],"to":points[i+1]});
+        //         // }
 
-                // for radial
-                for (var i = 0; i < points.length; i++) {
-                    lineArray.push({"from":points[0],"to":points[i]});
-                }
-                return lineArray;
-            });
+        //         // for radial
+        //         for (var i = 1; i < points.length; i++) {
+        //             lineArray.push({"from":points[0],"to":points[i]});
+        //         }
+        //         return lineArray;
+        //     });
 
+        // lines.enter().append("svg:path");
+        // lines.exit().remove();
+        // lines.attr("d", function(d) {
+        //         var p = [d.from[1],d.from[0],d.to[1],d.to[0]];
+        //         return makeRoute(p);
+        //     }).classed("straight",true);
+
+        // // we move the newest point closer and closer to its destination
+        // if (new_pt && skipAnimation == true) {
+        //     clearInterval(updateInterval);
+        //     new_pt = null;
+        //     showRoutes();
+        // }
+        // else if (new_pt) {
+        //     var last = points[points.length-1] || [];
+        //     if (Math.abs(last[0] - new_pt[0]) > .0002) {
+        //         last[0] += (new_pt[0] - last[0]) / 3;
+        //     }    
+        //     if (Math.abs(last[1] - new_pt[1]) > .0002) {
+        //         last[1] += (new_pt[1] - last[1]) / 3;
+        //     }    
+
+        //     points[points.length - 1] = last;
+            
+        //     var dlon = Math.abs(last[0] - new_pt[0]);
+        //     var dlat = Math.abs(last[1] - new_pt[1]);
+        //     if (dlat < .0002 && dlon < .0002) {
+        //         //finished!
+        //         clearInterval(updateInterval);
+        //         new_pt = null;
+        //         showRoutes();
+        //     }
+        // } else {
+        //     clearInterval(updateInterval);
+        // }
+    }
+
+    function updateRoutes() {
+        // console.log(paths, 'updating');
+
+        var lines = g.selectAll("path").data(paths);
         lines.enter().append("svg:path");
         lines.exit().remove();
+
         lines.attr("d", function(d) {
-                var p = [d.from[1],d.from[0],d.to[1],d.to[0]];
-                return makeRoute(p);
-            }).classed("straight",true);
-
-        // we move the newest point closer and closer to its destination
-        if (new_pt && skipAnimation == true) {
-            clearInterval(updateInterval);
-            new_pt = null;
-            showRoutes();
-        }
-        else if (new_pt) {
-            var last = points[points.length-1] || [];
-            if (Math.abs(last[0] - new_pt[0]) > .0002) {
-                last[0] += (new_pt[0] - last[0]) / 3;
-            }    
-            if (Math.abs(last[1] - new_pt[1]) > .0002) {
-                last[1] += (new_pt[1] - last[1]) / 3;
-            }    
-
-            points[points.length - 1] = last;
-            
-            var dlon = Math.abs(last[0] - new_pt[0]);
-            var dlat = Math.abs(last[1] - new_pt[1]);
-            if (dlat < .0002 && dlon < .0002) {
-                //finished!
-                clearInterval(updateInterval);
-                new_pt = null;
-                showRoutes();
-            }
-        } else {
-            clearInterval(updateInterval);
-        }
-    }
-
-    function showRoutes() {
-        console.log("showRoutes");
-        var pathArray = [];
-
-        g.selectAll("path").each(function(d){
-            var line = d3.select(this);
-            var pairKey = d.from[0]+"-"+d.to[1];
-            if (pairKey in routes) {
-                line.attr("d",makeRoute(routes[pairKey])).classed("straight",false);
-            } else  {
-                $.ajax({
-                    url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
-                    d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
-                    // cache: false,
-                    dataType: 'jsonp',
-                    success: function(data) {
-                        var wayPoints = data.route.shape.shapePoints;
-                        routes[pairKey] = wayPoints;
-
-                        // draw into test svg
-                        pathdrawer.addRoute(wayPoints);
-
-                        // line.attr("d",makeRoute(wayPoints)).classed("straight",false);
-                    }
-                });
-            }
+            return drawPath(d.pts);
         });
 
-        // var routePaths = g.selectAll("path.routes")
-        //     .data()
+        lines.attr("stroke", "black")
+            .attr("fill", "none")
+            .attr("stroke-linecap", "round");
+
+        lines.attr("stroke-width", function(d, i) {
+            return 20 * Math.pow(1 - d.d, .5) + "px";
+        });
+
+        lines.style("stroke-width", function(d, i) {
+            return 20 * Math.pow(1 - d.d, .5) + "px";
+        });
     }
 
-    function makeRoute(p) {
+    function drawPath(p) {
         var draw = [];
         var l = p.length;
-        for (var i = 0; i < l; i+=2){
+        for (var i = 0; i < l; i++){
             var loc = {
-                lat: p[i],
-                lon: p[i+1]
+                lat: p[i][0],
+                lon: p[i][1]
             };
             var pt = map.l2p(loc);
             draw.push([pt.x, pt.y]);
@@ -312,16 +306,51 @@ sb.mesh = function (frame, map, width, height) {
         return "M" + draw.join("L");
     }
 
+    function addRoute(waypoints) {
+        routes.push(waypoints);
+
+        var l = waypoints.length;
+        for (var i = 0; i < l-2; i+=2){
+            var start = [waypoints[i], waypoints[i+1]];
+            var end = [waypoints[i+2], waypoints[i+3]];
+            paths.push({
+                pts: [start, end], // start and end
+                d: i / waypoints.length // use distance as the index for now
+            });
+        }
+
+        updateRoutes();
+    }
+
+    function showRoutes() {
+        console.log("showRoutes");
+
+        for (var i = 1; i < points.length; i++) {
+            $.ajax({
+                url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
+                // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
+                points[0][1]+","+points[0][0]+"&to="+points[i][1]+","+points[i][0],
+                // cache: false,
+                dataType: 'jsonp',
+                success: function(data) {
+                    var wayPoints = data.route.shape.shapePoints;
+
+                    addRoute(wayPoints);
+                }
+            });
+        }
+    }
+
     function update(needsRoutes){
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
-            .data(points);
+            .data([points[0]]);
 
         // new radial circles
         circles.enter()
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 2)
+            .attr("r", 10)
             .on("mousedown", function(d) {
                 selected = dragging = d;
 
@@ -332,31 +361,31 @@ sb.mesh = function (frame, map, width, height) {
         circles.exit().remove();
 
         // place names for the points
-        var names = list.selectAll("li.place")
-            .data(points);
+        // var names = list.selectAll("li.place")
+        //     .data([points[0]]);
         
-        var place = names.enter().append("li").attr("class", "place");
-        var title = place.append("span").attr("class", "title");
-            title.append("span").attr("class", "place-text")
-                .html(function(d, i) {
-                    decoder.innerHTML = places[i];
-                    return decoder.firstChild.nodeValue;
-                });
-            title.append("span").attr("class", "place-edit").html("edit");
-            place.append("span").attr("class", "place-delete").html("x");
+        // var place = names.enter().append("li").attr("class", "place");
+        // var title = place.append("span").attr("class", "title");
+        //     title.append("span").attr("class", "place-text")
+        //         .html(function(d, i) {
+        //             decoder.innerHTML = places[i];
+        //             return decoder.firstChild.nodeValue;
+        //         });
+        //     title.append("span").attr("class", "place-edit").html("edit");
+        //     place.append("span").attr("class", "place-delete").html("x");
 
-        names.exit().remove();
+        // names.exit().remove();
 
-        names.attr("id", function(d, i) { return "p-" + i; })
-            .select(".title").each(function(d) { d.edit = false; })
-            .attr("class","title")
-            .select(".place-text")
-            .html(function(d, i) {
-                // decode the text
-                // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
-                decoder.innerHTML = places[i];
-                return decoder.firstChild.nodeValue;
-            });
+        // names.attr("id", function(d, i) { return "p-" + i; })
+        //     .select(".title").each(function(d) { d.edit = false; })
+        //     .attr("class","title")
+        //     .select(".place-text")
+        //     .html(function(d, i) {
+        //         // decode the text
+        //         // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
+        //         decoder.innerHTML = places[i];
+        //         return decoder.firstChild.nodeValue;
+        //     });
 
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
@@ -392,7 +421,7 @@ sb.mesh = function (frame, map, width, height) {
         updateListBehavior();
         updateMesh();
         if (needsRoutes) showRoutes();
-    };
+    }
 
     self.updateCircleBehavior = function(off) {
         var editMode = content.hasClass("edit");
@@ -404,7 +433,7 @@ sb.mesh = function (frame, map, width, height) {
             else if (editMode)
                 list.select("#p-" + i).attr("class", "place highlight");
             else {
-                placeHover.addClass("active").find("span").text(places[i]);
+                placeHover.addClass("active").find("span").text(meshuTitle);
                 
                 var p = map.l2p({ lat: d[1], lon: d[0] });
                 var w = placeHover.width();
@@ -427,51 +456,52 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateListBehavior() {
-        var names = list.selectAll("li.place");
-        names.select(".place-delete").on("click",function(d,i){
-            self.remove(i);
-            self.updatePixelBounds();
-            map.updateBounds(lats, lons);
-            update(true);
-        });
+        // var names = list.selectAll("li.place");
+        // names.select(".place-delete").on("click",function(d,i){
+        //     self.remove(i);
+        //     self.updatePixelBounds();
+        //     map.updateBounds(lats, lons);
+        //     update(true);
+        // });
 
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-        names.select(".place-edit").on("click",function(d,i){
-            var node = $(this).parent();
-            if (!d.edit) editText(node,i,"place");
-            else saveText(node,i,"place");
-            d.edit = !d.edit;
-        });
+        // names.on("mouseover",function(d,i){
+        //     ui.select("#c-"+i).attr("class","highlight");
+        // });
+        // names.on("mouseout",function(d,i){
+        //     ui.select("#c-"+i).attr("class","");
+        // });
+        // names.select(".place-edit").on("click",function(d,i){
+        //     var node = $(this).parent();
+        //     if (!d.edit) editText(node,i,"place");
+        //     else saveText(node,i,"place");
+        //     d.edit = !d.edit;
+        // });
         // names.select(".place-text").on("click",function(d,i){
         //     if (d.edit) return;
         //     editText($(this).parent(),i,"place");
         //     d.edit = !d.edit;
         // });
 
-        $( "#places ul" ).sortable();
-        $( "#places ul" ).disableSelection();
-        $(".place-text").mouseup(function(){
-            var dataNew = [];
-            setTimeout(function(){
-                $("#places li").each(function(e,i){
-                    d3.select(this).each(function(d){
-                        dataNew.push(d);
-                    })  
-                });
-                points = dataNew;
-                update(true);
-            },100);
-        });
+        //for draggable
+        // $( "#places ul" ).sortable();
+        // $( "#places ul" ).disableSelection();
+        // $(".place-text").mouseup(function(){
+        //     var dataNew = [];
+        //     setTimeout(function(){
+        //         $("#places li").each(function(e,i){
+        //             d3.select(this).each(function(d){
+        //                 dataNew.push(d);
+        //             })  
+        //         });
+        //         points = dataNew;
+        //         update(true);
+        //     },100);
+        // });
 
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
                 if (d && d.title) return d.title;
-                else return "My Meshu";
+                else return meshuTitle;
             });
 
         placeTitle.select(".title-text").on("click",function(d){
@@ -491,7 +521,7 @@ sb.mesh = function (frame, map, width, height) {
     function editText(node,i,type) {
         var button = node.find("." + type + "-edit").text("save");
         var field = node.find("." + type + "-text");
-        var value = ((type == "title") ? field.text() : places[i]);
+        var value = ((type == "title") ? field.text() : meshuTitle);
 
         node.addClass("active");
         field.html('<input value="' + value + '">').find("input").focus();
@@ -514,7 +544,7 @@ sb.mesh = function (frame, map, width, height) {
         node.removeClass("active");
         node.find("." + type + "-text").text(text);
 
-        if (type == "place") places[i] = text;
+        if (type == "place") meshuTitle = text;
         else return text;
     }
     function removeInput(event){
@@ -533,60 +563,69 @@ sb.mesh = function (frame, map, width, height) {
             clearInterval(updateInterval);
         }
 
+        g.selectAll("path").data([]);
+
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
 
-        lats.push(lat);
-        lons.push(lon);
+        lats = [lat];
+        lons = [lon];
 
-        points.push([lon,lat]);
+        points = [[lon,lat]];
 
         if (placename == undefined)
-            places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
+            meshuTitle = latitude.toFixed(3)+", "+longitude.toFixed(3);
         else
-            places.push(placename);
+            meshuTitle = placename;
+
+        var r = .015;
+        map.updateBounds([lat-r, lat+r], [lon-r, lon+r]);
 
         var tempLat, tempLon;
 
         for (var i = 0; i < 18; i++) {
             var theta = i*(Math.PI/9);
-            tempLon = lon+(Math.sin(theta)*.02);
-            tempLat = lat+(Math.cos(theta)*.015);
+            var l = map.p2l({
+                x: 300+Math.sin(theta)*200,
+                y: 300+Math.cos(theta)*200
+            });
+            tempLon = l.lon;
+            tempLat = l.lat;
             lats.push(tempLat);
             lons.push(tempLon);
             points.push([tempLon, tempLat]);
-            places.push(tempLat.toFixed(3)+", "+tempLon.toFixed(3));
         }
 
-        if (points.length) {
-            $("#meshu-container").removeClass("inactive");
+        // if (points.length) {
+        //     $("#meshu-container").removeClass("inactive");
             
-            new_pt = [lon, lat];   
-            if (skipAnimation) {
-                points.push([new_pt[0], new_pt[1]]);
+        //     new_pt = [lon, lat];   
+        //     if (skipAnimation) {
+        //         points.push([new_pt[0], new_pt[1]]);
 
-                self.updatePixelBounds();
-                update();
-                updateMesh(skipAnimation);
-            } else { 
-                // make the new point start from the last location
-                var last = points[points.length-1];
-                points.push([last[0], last[1]]);
-                self.updatePixelBounds();
-                update();
+        //         self.updatePixelBounds();
+        //         update();
+        //         updateMesh(skipAnimation);
+        //     } else { 
+        //         // make the new point start from the last location
+        //         var last = points[points.length-1];
+        //         points.push([last[0], last[1]]);
+        //         self.updatePixelBounds();
+        //         update();
 
-                // animate the new point in place
-                updateInterval = setInterval(updateMesh, 40);
-            }
-        } else {
-            // points.push([lon, lat]);
+        //         // animate the new point in place
+        //         updateInterval = setInterval(updateMesh, 40);
+        //     }
+        // } else {
+        //     // points.push([lon, lat]);
             
-            update();
-        }
+        //     update();
+        // }
 
-        cases.fadeOut();
+        update();
+
+        // cases.fadeOut();
         
-        self.added();
         return self;
     };
 
@@ -594,7 +633,7 @@ sb.mesh = function (frame, map, width, height) {
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
-        places.splice(index, 1);
+        // places.splice(index, 1);
         
         if (points.length < 2) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
@@ -609,7 +648,7 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.places = function() {
-        return places;
+        return meshuTitle;
     };
 
     self.points = function(pts) {
@@ -640,12 +679,12 @@ sb.mesh = function (frame, map, width, height) {
         points = [];
         lats = [];
         lons = [];
-        places = [];
+        // places = [];
         $.each(locs, function(i, loc) {
            points.push([loc.longitude, loc.latitude]);
            lats.push(loc.latitude);
            lons.push(loc.longitude);
-           places.push(loc.name);
+           // places.push(loc.name);
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js

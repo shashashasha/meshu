@@ -663,7 +663,7 @@ body.win .notch {
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
 }
-#place-number .title-text {
+#place-title .title-text {
   display: inline-block;
   width: 290px;
   position: relative;
@@ -673,7 +673,7 @@ body.win .notch {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#place-number input {
+#place-title input {
   width: 282px;
   position: absolute;
   top: 0;
@@ -681,17 +681,17 @@ body.win .notch {
   padding: 4px 3px 3px;
   margin: 0;
 }
-body.firefox #place-number #input {
+body.firefox #place-title #input {
   margin: 3px;
 }
-#place-number:hover .title-text {
+#place-title:hover .title-text {
   background-color: #eee;
   cursor: auto;
 }
-#place-number.inactive:hover .title-text {
+#place-title.inactive:hover .title-text {
   background-color: #fff;
 }
-#place-number .title-edit {
+#place-title .title-edit {
   display: none;
   background-color: #ff3fb4;
   float: right;
@@ -699,11 +699,11 @@ body.firefox #place-number #input {
   color: white;
   cursor: pointer;
 }
-#place-number:hover .title-edit,
-#place-number.active .title-edit {
+#place-title:hover .title-edit,
+#place-title.active .title-edit {
   display: inline-block;
 }
-#place-number.inactive:hover .title-edit {
+#place-title.inactive:hover .title-edit {
   display: none;
   cursor: auto;
 }
@@ -1681,7 +1681,6 @@ circle {
 }
 .roadtrip circle {
   fill-opacity: 1;
-  fill: #000;
 }
 .edit circle:hover,
 circle.highlight,

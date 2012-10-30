@@ -2,7 +2,7 @@
 
 {% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
-{% block body_class %}roadtrip{% endblock body_class %}
+{% block body_class %}radial{% endblock body_class %}
 
 {% block page_type %}edit{% endblock page_type %}
 
@@ -28,10 +28,11 @@
                     onfocus="value=''"/>
                 <div id="search-button" class="button">search</div>
             </div>
-            <div id="cases"></div>
-            <div id="places">
+            <!-- <div id="cases"></div> -->
+            <h2 id="place-title"></h2>
+            <!-- <div id="places">
             <h2 id="place-number"></h2>
-            </div>
+            </div> -->
 
             {% block finish %}
                 <div id="finish-button" class="nav next start-order">Continue</div>
@@ -51,7 +52,7 @@
                 <div id="product-preview">
                     <div class="wrapper" id="wrapper-necklace">
                         <div class="next active">
-                            <svg id="preview-necklace" width="360" height="200"></svg>
+                            <svg id="preview-necklace" width="170" height="160"></svg>
                         </div>
                         <p>Large Necklace</p>
                         <p class="note" id="range-necklace">$80-150</p>
@@ -63,13 +64,13 @@
                         <p>Pair of Earrings</p>
                         <p class="note" id="range-earrings">$75-150</p>
                     </div>
-                    <div class="wrapper" id="wrapper-pendant">
+                    <!-- <div class="wrapper" id="wrapper-pendant">
                         <div class="next active">
                             <svg id="preview-pendant" width="170" height="160"></svg>
                         </div>
                         <p>Pendant Necklace</p>
                         <p class="note" id="range-pendant">$75-130</p>
-                    </div>
+                    </div> -->
                     <!-- <div class="wrapper" id="wrapper-cufflinks">
                         <div class="next active">
                             <svg id="preview-cufflinks" width="170" height="160"></svg>
