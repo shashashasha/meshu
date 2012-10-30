@@ -1760,7 +1760,7 @@ circle.highlight,
 /* radial */
 .radial #place-title {
   color: #808080;
-  margin-bottom: 10px;
+  height: 40px;
 }
 .radial #place-title:hover {
   color: black;
