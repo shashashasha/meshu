@@ -288,14 +288,14 @@ sb.mesh = function (frame, map, width, height) {
                         // draw into test svg
                         pathdrawer.addRoute(wayPoints);
 
-                        line.attr("d",makeRoute(wayPoints)).classed("straight",false);
+                        // line.attr("d",makeRoute(wayPoints)).classed("straight",false);
                     }
                 });
             }
         });
 
-        var routePaths = g.selectAll("path.routes")
-            .data()
+        // var routePaths = g.selectAll("path.routes")
+        //     .data()
     }
 
     function makeRoute(p) {
@@ -538,10 +538,25 @@ sb.mesh = function (frame, map, width, height) {
 
         lats.push(lat);
         lons.push(lon);
+
+        points.push([lon,lat]);
+
         if (placename == undefined)
             places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
         else
             places.push(placename);
+
+        var tempLat, tempLon;
+
+        for (var i = 0; i < 18; i++) {
+            var theta = i*(Math.PI/9);
+            tempLon = lon+(Math.sin(theta)*.02);
+            tempLat = lat+(Math.cos(theta)*.015);
+            lats.push(tempLat);
+            lons.push(tempLon);
+            points.push([tempLon, tempLat]);
+            places.push(tempLat.toFixed(3)+", "+tempLon.toFixed(3));
+        }
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
@@ -564,7 +579,8 @@ sb.mesh = function (frame, map, width, height) {
                 updateInterval = setInterval(updateMesh, 40);
             }
         } else {
-            points.push([lon, lat]);
+            // points.push([lon, lat]);
+            
             update();
         }
 

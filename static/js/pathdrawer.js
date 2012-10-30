@@ -5,7 +5,7 @@ sb.pathdrawer = function (map) {
 		routes = [],
 		paths = [];
 
-    var main = d3.select("body").append("div")
+    var main = d3.select("#meshu-container").append("div")
         .style("width", "600px")
         .style("height", "600px")
         .style("position", "absolute")
@@ -34,11 +34,11 @@ sb.pathdrawer = function (map) {
 	    	.attr("stroke-linecap", "round");
 
 	    lines.attr("stroke-width", function(d, i) {
-	    	return 15 * Math.pow(1 - d.d, .5) + "px";
+	    	return 20 * Math.pow(1 - d.d, .5) + "px";
 	    });
 
 	    lines.style("stroke-width", function(d, i) {
-	    	return 15 * Math.pow(1 - d.d, .5) + "px";
+	    	return 20 * Math.pow(1 - d.d, .5) + "px";
 	    });
     };
 
