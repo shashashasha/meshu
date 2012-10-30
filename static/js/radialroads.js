@@ -23,11 +23,21 @@ sb.mesh = function (frame, map, width, height) {
         .attr("width", "100%")
         .attr("height", "100%");
 
-    var g = main.append("svg:g")
-            .attr("class", "delaunay")
+    var wrapper = main.append("svg:g").attr("class","delaunay");
+
+    wrapper.append("svg:circle").attr("class","circleFrame")
+        .attr("cx",300).attr("cy",300)
+        .attr("r",0).attr("stroke-width",0);
+
+    var g = wrapper.append("svg:g")
+            .attr("class", "radial")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
             .attr("fill","none")
-            .attr("stroke-linejoin","round");
+            .attr("stroke-linejoin","round")
+            .attr("clip-path","url(#radialClip)");
+
+    wrapper.append("svg:clipPath").attr("id","radialClip")
+        .append("svg:circle").attr("cx",300).attr("cy",300).attr("r",200);
 
     var hidden = main.append("svg:g")
                  .attr("class", "hidden");
@@ -56,8 +66,15 @@ sb.mesh = function (frame, map, width, height) {
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
 
+    $("#radial-knockout").click(function(){
+        $("body").addClass("knockout");
+    });
+    $("#radial-frame").click(function(){
+        $("body").removeClass("knockout");
+    })
+
     // radial path drawer
-    var pathdrawer = sb.pathdrawer(map);
+    // var pathdrawer = sb.pathdrawer(map);
 
     var points = [],
         routes = [],
@@ -563,7 +580,11 @@ sb.mesh = function (frame, map, width, height) {
             clearInterval(updateInterval);
         }
 
-        g.selectAll("path").data([]);
+        main.selectAll("path").attr("d",null);
+        main.select(".circleFrame")
+            .attr("r",0).attr("stroke-width",0)
+            .transition().delay(250).duration(500)
+            .attr("r",204).attr("stroke-width",20);
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -583,8 +604,8 @@ sb.mesh = function (frame, map, width, height) {
 
         var tempLat, tempLon;
 
-        for (var i = 0; i < 18; i++) {
-            var theta = i*(Math.PI/9);
+        for (var i = 0; i < 24; i++) {
+            var theta = i*(Math.PI/12);
             var l = map.p2l({
                 x: 300+Math.sin(theta)*200,
                 y: 300+Math.cos(theta)*200
@@ -595,6 +616,7 @@ sb.mesh = function (frame, map, width, height) {
             lons.push(tempLon);
             points.push([tempLon, tempLat]);
         }
+        $("#places").removeClass("inactive");
 
         // if (points.length) {
         //     $("#meshu-container").removeClass("inactive");
@@ -623,6 +645,7 @@ sb.mesh = function (frame, map, width, height) {
         // }
 
         update();
+        self.added();
 
         // cases.fadeOut();
         
@@ -635,8 +658,8 @@ sb.mesh = function (frame, map, width, height) {
         lons.splice(index, 1);
         // places.splice(index, 1);
         
-        if (points.length < 2) $("#finish-button").removeClass("active");
-        if (points.length == 1) $("#meshu-container").addClass("inactive");
+        if (points.length == 0) $("#finish-button").removeClass("active");
+        // if (points.length == 0) $("#meshu-container").addClass("inactive");
     };
 
     self.lats = function() {

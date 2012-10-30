@@ -725,6 +725,9 @@ body.win .notch {
     opacity: 1;
     .transition(opacity);
 }
+#places.inactive {
+    display: none;
+}
 #place-title .title-text {
     display: inline-block;
     width: 290px;
@@ -1655,10 +1658,25 @@ circle {
 .roadtrip circle {
     fill-opacity: 1;
 }
+.circleFrame {
+    stroke: black;
+    fill: none;
+}
+.knockout .circleFrame {
+    fill: black;
+    fill-opacity: 1;
+    opacity: .8;
+}
+.knockout path {
+    stroke: white;
+}
 
 .edit circle:hover, circle.highlight, .edit .inactive circle:first-child {
     fill-opacity: 1;
     cursor: pointer;
+}
+.radial #delaunay-ui circle {
+    fill-opacity: 0;
 }
 .hidden, #rotate-ui, #hidden {
     display: none;
@@ -1700,6 +1718,29 @@ circle {
     path {
         stroke-width: 20;
     }
+}
+
+/* radial */
+
+.radial #place-title {
+    color: @grey;
+    margin-bottom: 10px;
+}
+.radial #place-title:hover {
+    color: black;
+}
+
+.fill-option {
+    width: 170px;
+    height: 170px;
+    background: #eee;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+}
+
+.fill-option:nth-child(even) {
+    margin-right: 20px;
 }
 
 /* mini meshu */

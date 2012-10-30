@@ -12,7 +12,7 @@
         <b class="notch"></b>
     </div>
     {% block map %}
-    <div id="meshu-container" class="frame inactive">
+    <div id="meshu-container" class="frame">
         <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
     </div>
     {% endblock %}
@@ -29,10 +29,13 @@
                 <div id="search-button" class="button">search</div>
             </div>
             <!-- <div id="cases"></div> -->
-            <h2 id="place-title"></h2>
-            <!-- <div id="places">
-            <h2 id="place-number"></h2>
-            </div> -->
+            <div id="places" class="inactive">
+                <h2>Your Radial:</h2>
+                <hr>
+                <h2 id="place-title"></h2>
+                <div id="radial-frame" class="fill-option">View Outline</div>
+                <div id="radial-knockout" class="fill-option">View Knockout</div>
+            </div>
 
             {% block finish %}
                 <div id="finish-button" class="nav next start-order">Continue</div>

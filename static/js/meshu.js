@@ -40,7 +40,10 @@ sb.meshu = function(frame, existingMap) {
     self.checkAdded = function() { 
         // pay attention to the number of points
         var points = mesh.points();
-        if (points.length > 1) $("#finish-button").addClass("active");
+        var minPoints = 3;
+        if ($("body").hasClass("radial")) minPoints = 1;
+        console.log("checkAdded",minPoints);
+        if (points.length >= minPoints) $("#finish-button").addClass("active");
         else $("#finish-button").removeClass("active");
     }
 
