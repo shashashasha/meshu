@@ -1733,10 +1733,14 @@ circle {
 .fill-option {
     width: 75px;
     height: 75px;
-    background: #eee;
     display: inline-block;
     float: left;
     cursor: pointer;
+    border: 5px solid white;
+    padding: 2px;
+}
+.fill-option.active {
+    border: 5px solid @grey;
 }
 
 .fill-option:nth-child(even) {

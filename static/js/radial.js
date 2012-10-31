@@ -44,17 +44,17 @@ sb.mesh = function (frame, map, width, height) {
 
     hidden.append("svg:path");
 
-    var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;")
-        .style("width", width)
-        .style("height", height);
+    // var uiFrame = d3.select(frame || "body").append("div")
+    //     .attr("style", "position:absolute;z-index:1337;")
+    //     .style("width", width)
+    //     .style("height", height);
 
-    var svg = uiFrame.append("svg:svg")
-        .attr("width", "100%")
-        .attr("height", "100%");
+    // var svg = uiFrame.append("svg:svg")
+    //     .attr("width", "100%")
+    //     .attr("height", "100%");
 
-    var ui = svg.append("svg:g")
-        .attr("id", "delaunay-ui");
+    // var ui = svg.append("svg:g")
+    //     .attr("id", "delaunay-ui");
 
     // var placeList = d3.select("#places");
     var placeTitle = d3.select("#place-title").attr("class", "inactive");
@@ -68,9 +68,13 @@ sb.mesh = function (frame, map, width, height) {
 
     $("#radial-knockout").click(function(){
         $("body").addClass("knockout");
+        $(this).addClass("active");
+        $("#radial-frame").removeClass("active");
     });
     $("#radial-frame").click(function(){
         $("body").removeClass("knockout");
+        $(this).addClass("active");
+        $("#radial-knockout").removeClass("active");
     })
 
     // radial path drawer
@@ -119,20 +123,20 @@ sb.mesh = function (frame, map, width, height) {
         var m = d3.svg.mouse(main.node());
 
         // if we're dragging a point, we need to update its data
-        if (dragging) {
-            var l = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
-            dragging[0] = l.lon;
-            dragging[1] = l.lat;
+        // if (dragging) {
+        //     var l = map.p2l({
+        //         x: m[0],
+        //         y: m[1]
+        //     });
+        //     dragging[0] = l.lon;
+        //     dragging[1] = l.lat;
 
-            var index = points.indexOf(dragging);
-            lats[index] = l.lat;
-            lons[index] = l.lon;
+        //     var index = points.indexOf(dragging);
+        //     lats[index] = l.lat;
+        //     lons[index] = l.lon;
         
-            update();
-        }
+        //     update();
+        // }
 
         if (moved && mouse_down) {
             // if we've moved and the mouse is down, we're dragging the map
@@ -160,7 +164,7 @@ sb.mesh = function (frame, map, width, height) {
         // ignore zoom buttons, other ui
         // if it's a circle we need to continue because that means it's a point that's being dragged
         // image for IE fix!
-        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node() && d3.event.target.tagName != "image")  return;
+        if (d3.event.target.tagName != 'circle' && d3.event.target != main.node() && d3.event.target.tagName != "image")  return;
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {
@@ -175,22 +179,22 @@ sb.mesh = function (frame, map, width, height) {
             return;
         }
 
-        if (dragging) {
-            showRoutes();
-        }
+        // if (dragging) {
+        //     showRoutes();
+        // }
 
         // delete the point if we mouseup on a point 
-        if (!moved && dragging) {
-            var index = points.indexOf(dragging);
-            self.remove(index);
+        // if (!moved && dragging) {
+        //     var index = points.indexOf(dragging);
+        //     self.remove(index);
 
-            map.updateBounds(lats, lons);
-            self.updatePixelBounds();
-            update(true);
-            // showRoutes();
-        } else {
-            mousemove();
-        }
+        //     map.updateBounds(lats, lons);
+        //     self.updatePixelBounds();
+        //     update(true);
+        //     // showRoutes();
+        // } else {
+        //     mousemove();
+        // }
 
         // ignore other events
         if (d3.event) {
@@ -297,9 +301,10 @@ sb.mesh = function (frame, map, width, height) {
                 // cache: false,
                 dataType: 'jsonp',
                 success: function(data) {
-                    var wayPoints = data.route.shape.shapePoints;
-
-                    addRoute(wayPoints);
+                    if (data.route.shape) {
+                        var wayPoints = data.route.shape.shapePoints;
+                        addRoute(wayPoints);
+                    }
                 }
             });
         }
@@ -307,22 +312,22 @@ sb.mesh = function (frame, map, width, height) {
 
     function update(needsRoutes){
         // the transparent circles that serve as ui, allowing for dragging and deleting
-        var circles = ui.selectAll("circle")
-            .data([points[0]]);
+        // var circles = ui.selectAll("circle")
+        //     .data([points[0]]);
 
-        // new radial circles
-        circles.enter()
-            .append("svg:circle")
-            .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 10)
-            .on("mousedown", function(d) {
-                selected = dragging = d;
+        // // new radial circles
+        // circles.enter()
+        //     .append("svg:circle")
+        //     .attr("id",function(d, i){ return "c-" + i; })
+        //     .attr("r", 10)
+        //     .on("mousedown", function(d) {
+        //         selected = dragging = d;
 
-                // stop prop to prevent map dragging
-                d3.event.stopPropagation();
-            });
+        //         // stop prop to prevent map dragging
+        //         d3.event.stopPropagation();
+        //     });
         
-        circles.exit().remove();
+        // circles.exit().remove();
 
         // place names for the points
         // var names = list.selectAll("li.place")
@@ -388,37 +393,37 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     self.updateCircleBehavior = function(off) {
-        var editMode = content.hasClass("edit");
-        var placeHover = $("#place-hover");
-        var circles = ui.selectAll("circle");
+        // var editMode = content.hasClass("edit");
+        // var placeHover = $("#place-hover");
+        // var circles = ui.selectAll("circle");
 
-        circles.on("mouseover", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                // list.select("#p-" + i).attr("class", "place highlight");
-                return
-            else {
-                placeHover.addClass("active").find("span").text(meshuTitle);
+        // circles.on("mouseover", function(d, i) {
+        //     if (off) return;
+        //     else if (editMode)
+        //         // list.select("#p-" + i).attr("class", "place highlight");
+        //         return
+        //     else {
+        //         placeHover.addClass("active").find("span").text(meshuTitle);
                 
-                var p = map.l2p({ lat: d[1], lon: d[0] });
-                var w = placeHover.width();
-                var top = (p.y - 32) + "px";
-                var left = (p.x - (w/2) - 3) + "px";
-                var bleft = w/2 - 3 + "px";
+        //         var p = map.l2p({ lat: d[1], lon: d[0] });
+        //         var w = placeHover.width();
+        //         var top = (p.y - 32) + "px";
+        //         var left = (p.x - (w/2) - 3) + "px";
+        //         var bleft = w/2 - 3 + "px";
 
                 
-                placeHover.css({"top": top, "left": left})
-                    .find("b").css("left", bleft);
-            }
-        });
-        circles.on("mouseout", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                // list.select("#p-"+i).attr("class","place");
-                return;
-            else
-                placeHover.removeClass("active");
-        });
+        //         placeHover.css({"top": top, "left": left})
+        //             .find("b").css("left", bleft);
+        //     }
+        // });
+        // circles.on("mouseout", function(d, i) {
+        //     if (off) return;
+        //     else if (editMode)
+        //         // list.select("#p-"+i).attr("class","place");
+        //         return;
+        //     else
+        //         placeHover.removeClass("active");
+        // });
     }
 
     function updateListBehavior() {
@@ -530,6 +535,7 @@ sb.mesh = function (frame, map, width, height) {
         }
 
         main.selectAll("path").remove();
+        paths = [];
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -596,6 +602,7 @@ sb.mesh = function (frame, map, width, height) {
         // }
 
         update();
+        showRoutes();
         self.added();
 
         // cases.fadeOut();

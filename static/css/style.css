@@ -1768,10 +1768,14 @@ circle.highlight,
 .fill-option {
   width: 75px;
   height: 75px;
-  background: #eee;
   display: inline-block;
   float: left;
   cursor: pointer;
+  border: 5px solid white;
+  padding: 2px;
+}
+.fill-option.active {
+  border: 5px solid #808080;
 }
 .fill-option:nth-child(even) {
   margin-right: 20px;
