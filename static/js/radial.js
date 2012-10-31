@@ -25,7 +25,8 @@ sb.mesh = function (frame, map, width, height) {
 
     var wrapper = main.append("svg:g").attr("class","delaunay");
 
-    wrapper.append("svg:circle").attr("class","circleFrame")
+    wrapper.append("svg:circle").data([[-122.445,37.755]])
+        .attr("class","circleFrame")
         .attr("cx",300).attr("cy",300)
         .attr("r",0).attr("stroke-width",0);
 
@@ -37,24 +38,14 @@ sb.mesh = function (frame, map, width, height) {
             .attr("clip-path","url(#radialClip)");
 
     wrapper.append("svg:clipPath").attr("id","radialClip")
-        .append("svg:circle").attr("cx",300).attr("cy",300).attr("r",200);
+        .append("svg:circle")
+        .data([[-122.445,37.755]])
+        .attr("cx",300).attr("cy",300).attr("r",200);
 
     var hidden = main.append("svg:g")
                  .attr("class", "hidden");
 
     hidden.append("svg:path");
-
-    // var uiFrame = d3.select(frame || "body").append("div")
-    //     .attr("style", "position:absolute;z-index:1337;")
-    //     .style("width", width)
-    //     .style("height", height);
-
-    // var svg = uiFrame.append("svg:svg")
-    //     .attr("width", "100%")
-    //     .attr("height", "100%");
-
-    // var ui = svg.append("svg:g")
-    //     .attr("id", "delaunay-ui");
 
     // var placeList = d3.select("#places");
     var placeTitle = d3.select("#place-title").attr("class", "inactive");
@@ -85,6 +76,7 @@ sb.mesh = function (frame, map, width, height) {
         paths = [],
         new_pt = [],
         pixel_bounds = [],
+        // requests = [],
         updateInterval = 0,
         selected = null,
         moved = false,
@@ -147,7 +139,6 @@ sb.mesh = function (frame, map, width, height) {
                 map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
 
             update();
-            updateRoutes();
         }
 
         moved = true;
@@ -237,7 +228,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateRoutes() {
-        // console.log(paths, 'updating');
+        console.log(paths.length, 'updating');
 
         var lines = g.selectAll("path").data(paths);
         lines.enter().append("svg:path");
@@ -292,6 +283,7 @@ sb.mesh = function (frame, map, width, height) {
 
     function showRoutes() {
         for (var i = 1; i < points.length; i++) {
+            // requests[i] = 
             $.ajax({
                 url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
                 // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
@@ -303,12 +295,15 @@ sb.mesh = function (frame, map, width, height) {
                         var wayPoints = data.route.shape.shapePoints;
                         addRoute(wayPoints);
                     }
+                    // requests.splice(i, 1);
                 }
             });
         }
     }
 
-    function update(needsRoutes){
+    function update(){
+        // var radius = Math.sqrt(Math.pow((r0[0]-r1[0],2)+Math.pow((r0[1]-r1[1]),2)));
+        // main.select(".circleFrame").attr("r",radius);
         // the transparent circles that serve as ui, allowing for dragging and deleting
         // var circles = ui.selectAll("circle")
         //     .data([points[0]]);
@@ -326,33 +321,6 @@ sb.mesh = function (frame, map, width, height) {
         //     });
         
         // circles.exit().remove();
-
-        // place names for the points
-        // var names = list.selectAll("li.place")
-        //     .data([points[0]]);
-        
-        // var place = names.enter().append("li").attr("class", "place");
-        // var title = place.append("span").attr("class", "title");
-        //     title.append("span").attr("class", "place-text")
-        //         .html(function(d, i) {
-        //             decoder.innerHTML = places[i];
-        //             return decoder.firstChild.nodeValue;
-        //         });
-        //     title.append("span").attr("class", "place-edit").html("edit");
-        //     place.append("span").attr("class", "place-delete").html("x");
-
-        // names.exit().remove();
-
-        // names.attr("id", function(d, i) { return "p-" + i; })
-        //     .select(".title").each(function(d) { d.edit = false; })
-        //     .attr("class","title")
-        //     .select(".place-text")
-        //     .html(function(d, i) {
-        //         // decode the text
-        //         // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
-        //         decoder.innerHTML = places[i];
-        //         return decoder.firstChild.nodeValue;
-        //     });
 
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
@@ -384,89 +352,12 @@ sb.mesh = function (frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         }).attr("class","hiddenFrame")
 
-        self.updateCircleBehavior();
         updateListBehavior();
         updateMesh();
-        if (needsRoutes) showRoutes();
-    }
-
-    self.updateCircleBehavior = function(off) {
-        // var editMode = content.hasClass("edit");
-        // var placeHover = $("#place-hover");
-        // var circles = ui.selectAll("circle");
-
-        // circles.on("mouseover", function(d, i) {
-        //     if (off) return;
-        //     else if (editMode)
-        //         // list.select("#p-" + i).attr("class", "place highlight");
-        //         return
-        //     else {
-        //         placeHover.addClass("active").find("span").text(meshuTitle);
-                
-        //         var p = map.l2p({ lat: d[1], lon: d[0] });
-        //         var w = placeHover.width();
-        //         var top = (p.y - 32) + "px";
-        //         var left = (p.x - (w/2) - 3) + "px";
-        //         var bleft = w/2 - 3 + "px";
-
-                
-        //         placeHover.css({"top": top, "left": left})
-        //             .find("b").css("left", bleft);
-        //     }
-        // });
-        // circles.on("mouseout", function(d, i) {
-        //     if (off) return;
-        //     else if (editMode)
-        //         // list.select("#p-"+i).attr("class","place");
-        //         return;
-        //     else
-        //         placeHover.removeClass("active");
-        // });
+        updateRoutes();
     }
 
     function updateListBehavior() {
-        // var names = list.selectAll("li.place");
-        // names.select(".place-delete").on("click",function(d,i){
-        //     self.remove(i);
-        //     self.updatePixelBounds();
-        //     map.updateBounds(lats, lons);
-        //     update(true);
-        // });
-
-        // names.on("mouseover",function(d,i){
-        //     ui.select("#c-"+i).attr("class","highlight");
-        // });
-        // names.on("mouseout",function(d,i){
-        //     ui.select("#c-"+i).attr("class","");
-        // });
-        // names.select(".place-edit").on("click",function(d,i){
-        //     var node = $(this).parent();
-        //     if (!d.edit) editText(node,i,"place");
-        //     else saveText(node,i,"place");
-        //     d.edit = !d.edit;
-        // });
-        // names.select(".place-text").on("click",function(d,i){
-        //     if (d.edit) return;
-        //     editText($(this).parent(),i,"place");
-        //     d.edit = !d.edit;
-        // });
-
-        //for draggable
-        // $( "#places ul" ).sortable();
-        // $( "#places ul" ).disableSelection();
-        // $(".place-text").mouseup(function(){
-        //     var dataNew = [];
-        //     setTimeout(function(){
-        //         $("#places li").each(function(e,i){
-        //             d3.select(this).each(function(d){
-        //                 dataNew.push(d);
-        //             })  
-        //         });
-        //         points = dataNew;
-        //         update(true);
-        //     },100);
-        // });
-
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
                 if (d && d.title) return d.title;
@@ -526,14 +417,34 @@ sb.mesh = function (frame, map, width, height) {
         return false;
     };
 
+    function addRadialPoints() {
+        main.selectAll("path").remove();
+        paths = [];
+        points = [points[0]];
+        lats = [lats[0]];
+        lons = [lons[0]];
+
+        var tempLat, tempLon;
+
+        for (var i = 0; i < 24; i++) {
+            var theta = i*(Math.PI/12);
+            var l = map.p2l({
+                x: 300+Math.sin(theta)*200,
+                y: 300+Math.cos(theta)*200
+            });
+            tempLon = l.lon;
+            tempLat = l.lat;
+            lats.push(tempLat);
+            lons.push(tempLon);
+            points.push([tempLon, tempLat]);
+        }
+    }
+
     self.add = function(latitude, longitude, placename, skipAnimation) {
         // clear previous update
         if (updateInterval) {
             clearInterval(updateInterval);
         }
-
-        main.selectAll("path").remove();
-        paths = [];
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -554,56 +465,16 @@ sb.mesh = function (frame, map, width, height) {
         else
             meshuTitle = placename;
 
+        $("#places").removeClass("inactive");
+
         var r = .015;
         map.updateBounds([lat-r, lat+r], [lon-r, lon+r]);
 
-        var tempLat, tempLon;
-
-        for (var i = 0; i < 24; i++) {
-            var theta = i*(Math.PI/12);
-            var l = map.p2l({
-                x: 300+Math.sin(theta)*200,
-                y: 300+Math.cos(theta)*200
-            });
-            tempLon = l.lon;
-            tempLat = l.lat;
-            lats.push(tempLat);
-            lons.push(tempLon);
-            points.push([tempLon, tempLat]);
-        }
-        $("#places").removeClass("inactive");
-
-        // if (points.length) {
-        //     $("#meshu-container").removeClass("inactive");
-            
-        //     new_pt = [lon, lat];   
-        //     if (skipAnimation) {
-        //         points.push([new_pt[0], new_pt[1]]);
-
-        //         self.updatePixelBounds();
-        //         update();
-        //         updateMesh(skipAnimation);
-        //     } else { 
-        //         // make the new point start from the last location
-        //         var last = points[points.length-1];
-        //         points.push([last[0], last[1]]);
-        //         self.updatePixelBounds();
-        //         update();
-
-        //         // animate the new point in place
-        //         updateInterval = setInterval(updateMesh, 40);
-        //     }
-        // } else {
-        //     // points.push([lon, lat]);
-            
-        //     update();
-        // }
-
-        update();
+        addRadialPoints();
         showRoutes();
-        self.added();
+        update();
 
-        // cases.fadeOut();
+        self.added();
         
         return self;
     };
@@ -674,7 +545,17 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.refresh = function() {
-        update(true);
+        // $.each(requests, function(i,r){
+        //     if (r !== undefined) {
+        //         console.log(r);
+        //         r.abort();
+        //     }
+        //     requests.splice(i,1);
+        // })
+
+        addRadialPoints();
+        showRoutes();
+        update();
 
         self.refreshed();
     };

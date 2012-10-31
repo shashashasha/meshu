@@ -1774,11 +1774,14 @@ circle.highlight,
   border: 5px solid white;
   padding: 2px;
 }
+.fill-option img {
+  opacity: .5;
+}
 .fill-option.active {
   border: 5px solid #808080;
 }
 .fill-option:hover {
-  border: 5px solid #ff3fb4;
+  border: 5px solid black;
 }
 .fill-option:nth-child(even) {
   margin-right: 20px;
