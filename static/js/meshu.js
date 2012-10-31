@@ -42,7 +42,6 @@ sb.meshu = function(frame, existingMap) {
         var points = mesh.points();
         var minPoints = 3;
         if ($("body").hasClass("radial")) minPoints = 1;
-        console.log("checkAdded",minPoints);
         if (points.length >= minPoints) $("#finish-button").addClass("active");
         else $("#finish-button").removeClass("active");
     }

@@ -291,8 +291,6 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function showRoutes() {
-        console.log("showRoutes");
-
         for (var i = 1; i < points.length; i++) {
             $.ajax({
                 url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+

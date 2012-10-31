@@ -1777,6 +1777,9 @@ circle.highlight,
 .fill-option.active {
   border: 5px solid #808080;
 }
+.fill-option:hover {
+  border: 5px solid #ff3fb4;
+}
 .fill-option:nth-child(even) {
   margin-right: 20px;
 }

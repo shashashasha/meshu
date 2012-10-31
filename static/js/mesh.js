@@ -49,7 +49,7 @@ sb.mesh = function (frame, map, width, height) {
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-number").attr("class", "inactive");
+    var placeTitle = placeList.select("#place-title").attr("class", "inactive");
         placeTitle.append("span").attr("class", "title-text");
         placeTitle.append("span").attr("class", "title-edit").html("edit");
 
