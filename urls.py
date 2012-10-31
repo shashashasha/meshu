@@ -62,8 +62,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/assign/', 'item_assign'),
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),
-
-	url(r'^starburst/', 'starburst_make'),
 	
 	# save/new always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
