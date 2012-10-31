@@ -143,6 +143,7 @@ sb.mesh = function (frame, map, width, height) {
                 map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
 
             update();
+            updateRoutes();
         }
 
         moved = true;
@@ -175,7 +176,6 @@ sb.mesh = function (frame, map, width, height) {
         }
 
         if (dragging) {
-            console.log(routes);
             showRoutes();
         }
 
@@ -217,8 +217,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateMesh(skipAnimation) {
-
-        var circles = ui.selectAll("circle");
+        var circles = wrapper.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -231,58 +230,6 @@ sb.mesh = function (frame, map, width, height) {
                     lon: d[0]
                 }).y;
             });
-
-        // the delaunay mesh paths
-        // var lines = g.selectAll("path")
-        //     .data(function(){
-        //         var lineArray = [];
-        //         // for regular roadtrip
-        //         // for (var i = 0; i < points.length-1; i++) {
-        //         //     lineArray.push({"from":points[i],"to":points[i+1]});
-        //         // }
-
-        //         // for radial
-        //         for (var i = 1; i < points.length; i++) {
-        //             lineArray.push({"from":points[0],"to":points[i]});
-        //         }
-        //         return lineArray;
-        //     });
-
-        // lines.enter().append("svg:path");
-        // lines.exit().remove();
-        // lines.attr("d", function(d) {
-        //         var p = [d.from[1],d.from[0],d.to[1],d.to[0]];
-        //         return makeRoute(p);
-        //     }).classed("straight",true);
-
-        // // we move the newest point closer and closer to its destination
-        // if (new_pt && skipAnimation == true) {
-        //     clearInterval(updateInterval);
-        //     new_pt = null;
-        //     showRoutes();
-        // }
-        // else if (new_pt) {
-        //     var last = points[points.length-1] || [];
-        //     if (Math.abs(last[0] - new_pt[0]) > .0002) {
-        //         last[0] += (new_pt[0] - last[0]) / 3;
-        //     }    
-        //     if (Math.abs(last[1] - new_pt[1]) > .0002) {
-        //         last[1] += (new_pt[1] - last[1]) / 3;
-        //     }    
-
-        //     points[points.length - 1] = last;
-            
-        //     var dlon = Math.abs(last[0] - new_pt[0]);
-        //     var dlat = Math.abs(last[1] - new_pt[1]);
-        //     if (dlat < .0002 && dlon < .0002) {
-        //         //finished!
-        //         clearInterval(updateInterval);
-        //         new_pt = null;
-        //         showRoutes();
-        //     }
-        // } else {
-        //     clearInterval(updateInterval);
-        // }
     }
 
     function updateRoutes() {
@@ -448,7 +395,8 @@ sb.mesh = function (frame, map, width, height) {
         circles.on("mouseover", function(d, i) {
             if (off) return;
             else if (editMode)
-                list.select("#p-" + i).attr("class", "place highlight");
+                // list.select("#p-" + i).attr("class", "place highlight");
+                return
             else {
                 placeHover.addClass("active").find("span").text(meshuTitle);
                 
@@ -466,7 +414,8 @@ sb.mesh = function (frame, map, width, height) {
         circles.on("mouseout", function(d, i) {
             if (off) return;
             else if (editMode)
-                list.select("#p-"+i).attr("class","place");
+                // list.select("#p-"+i).attr("class","place");
+                return;
             else
                 placeHover.removeClass("active");
         });
@@ -580,14 +529,16 @@ sb.mesh = function (frame, map, width, height) {
             clearInterval(updateInterval);
         }
 
-        main.selectAll("path").attr("d",null);
-        main.select(".circleFrame")
-            .attr("r",0).attr("stroke-width",0)
-            .transition().delay(250).duration(500)
-            .attr("r",204).attr("stroke-width",20);
+        main.selectAll("path").remove();
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
+
+        main.select("#radialClip circle").data([[lon,lat]]);
+        main.select(".circleFrame").data([[lon,lat]])
+            .attr("r",0).attr("stroke-width",0)
+            .transition().delay(250).duration(500)
+            .attr("r",204).attr("stroke-width",20);
 
         lats = [lat];
         lons = [lon];
