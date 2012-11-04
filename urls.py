@@ -97,6 +97,16 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/assign/', 'item_assign'),
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),
+
+	# radial road test
+	url(r'^make_new/', direct_to_template, {
+		'template': 'meshu/make_new.html'
+	}),
+
+	# radial road test
+	url(r'^radial/', direct_to_template, {
+		'template': 'meshu/item/radial.html'
+	}),
 	
 	# save/new always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
