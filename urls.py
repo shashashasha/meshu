@@ -36,7 +36,42 @@ urlpatterns += patterns('meshu.views',
 
 	# meshu begin
 	url(r'^$', 'index'),
-	
+	# order an existing meshu
+	url(r'^order/apply_coupon', 'order_verify_coupon'),
+	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
+	# order a new meshu, not saved yet
+	url(r'^order/', 'order_new'),
+
+	url(r'^invite/', 'invite'),
+
+	# gallery of meshus
+	url(r'^gallery/', direct_to_template, {
+		'template': 'meshu/base_gallery.html'
+	}),
+
+	# about page
+	url(r'^about/', direct_to_template, {
+		'template': 'meshu/base_about.html'
+	}),
+
+	# radial road test
+	url(r'^radial/', direct_to_template, {
+		'template': 'meshu/item/radial.html'
+	}),
+
+	# promo
+	url(r'^marathon/', direct_to_template, {
+		'template': 'meshu/promo/marathon.html'
+	}),
+	url(r'^royalparkshalf/', direct_to_template, {
+		'template': 'meshu/promo/marathon.html'
+	}),
+
+	# internal to see email templates
+	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
+)
+
+urlpatterns += patterns('meshu.item',
 	url(r'^make/template/(?P<item_encoded>\d+)/to_png', 'processing_dataurl_to_image'),
 	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
 	
@@ -84,16 +119,19 @@ urlpatterns += patterns('meshu.views',
 	url(r'^view/(?P<item_encoded>\w+)/to_png', 'item_topng'),
 	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
 
+	# users own meshus
+	url(r'^user/(?P<item_encoded>\d+)/save', 'item_save'),
+	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
+)
+
+# meshu/accounts.py
+urlpatterns += patterns('meshu.accounts', 
 	url(r'^user/login/', 'user_login'),
 	# fb
     url(r'^user/facebook/inline_login/', 'user_facebook_login'),
 	url(r'^user/logout/', 'user_logout'),
 	# after successful signup we run the create user view
 	url(r'^user/create/', 'user_create'),
-
-	# users own meshus
-	url(r'^user/(?P<item_encoded>\d+)/save', 'item_save'),
-	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
 
 	# user profile
 	url(r'^user/forgot', direct_to_template, {
@@ -105,39 +143,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^user/password/reset', 'user_forgot_password'),
 	url(r'^user/password/change', 'user_change_password'),
 	url(r'^user/', 'user_profile'),
-
-	# order an existing meshu
-	url(r'^order/apply_coupon', 'order_verify_coupon'),
-	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
-	# order a new meshu, not saved yet
-	url(r'^order/', 'order_new'),
-
-	# shopping for readymades
-	url(r'^shop/(?P<item_id>\d+)', 'item_readymade'),
-	url(r'^shop/', 'shop'),
-
-	url(r'^invite/', 'invite'),
-
-	# gallery of meshus
-	url(r'^gallery/', direct_to_template, {
-		'template': 'meshu/base_gallery.html'
-	}),
-
-	# about page
-	url(r'^about/', direct_to_template, {
-		'template': 'meshu/base_about.html'
-	}),
-
-	# promo
-	url(r'^marathon/', direct_to_template, {
-		'template': 'meshu/promo/marathon.html'
-	}),
-	url(r'^royalparkshalf/', direct_to_template, {
-		'template': 'meshu/promo/marathon.html'
-	}),
-	
-	# internal to see email templates
-	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
 )
 
 # meshu/processing.py

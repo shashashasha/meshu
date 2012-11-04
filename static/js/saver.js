@@ -101,6 +101,7 @@ var saver = function() {
           $("#update-button").html('updating');
 
           var updateurl = loadedMeshu.edit_url + 'update';
+          console.log(getMeshuXHR());
           $.post(updateurl, getMeshuXHR(), function(data) {
 
               // create new meshu_id element in the form
