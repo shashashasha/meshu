@@ -489,8 +489,8 @@ sb.mesh = function (frame, map, width, height) {
 
         $("#places").removeClass("inactive");
 
-        var r = .015;
-        map.updateBounds([lat-r, lat+r], [lon-r, lon+r]);
+        var r = map.getMapRadius();
+        map.updateBounds([lat-r.lat, lat+r.lat], [lon-r.lon, lon+r.lon]);
 
         addRadialPoints();
         showRoutes();
