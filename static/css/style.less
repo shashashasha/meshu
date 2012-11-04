@@ -725,7 +725,10 @@ body.win .notch {
     opacity: 1;
     .transition(opacity);
 }
-#place-number .title-text {
+#places.inactive {
+    display: none;
+}
+#place-title .title-text {
     display: inline-block;
     width: 290px;
     position: relative;
@@ -735,7 +738,7 @@ body.win .notch {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-#place-number input {
+#place-title input {
     width: 282px;
     position: absolute;
     top: 0;
@@ -743,17 +746,17 @@ body.win .notch {
     padding: 4px 3px 3px;
     margin: 0;
 }
-body.firefox #place-number #input {
+body.firefox #place-title #input {
     margin: 3px;
 }
-#place-number:hover .title-text{
+#place-title:hover .title-text{
     background-color: #eee;
     cursor: auto;
 }
-#place-number.inactive:hover .title-text{
+#place-title.inactive:hover .title-text{
     background-color: #fff;
 }
-#place-number .title-edit{
+#place-title .title-edit{
     display: none;
     background-color: @pink;
     float: right;
@@ -761,10 +764,10 @@ body.firefox #place-number #input {
     color: white;
     cursor: pointer;
 }
-#place-number:hover .title-edit, #place-number.active .title-edit{
+#place-title:hover .title-edit, #place-title.active .title-edit{
     display: inline-block;
 }
-#place-number.inactive:hover .title-edit{
+#place-title.inactive:hover .title-edit{
     display: none;
     cursor: auto;
 }
@@ -1642,7 +1645,7 @@ path {
     .transition(stroke-width);
 }
 .roadtrip path {
-    stroke-width: 10;
+    stroke-width: 5;
 }
 .roadtrip .straight {
     stroke-opacity: .5;
@@ -1654,12 +1657,26 @@ circle {
 }
 .roadtrip circle {
     fill-opacity: 1;
-    fill: #000;
+}
+.circleFrame {
+    stroke: black;
+    fill: none;
+}
+.knockout .circleFrame {
+    fill: black;
+    fill-opacity: 1;
+    opacity: .8;
+}
+.knockout path {
+    stroke: white;
 }
 
 .edit circle:hover, circle.highlight, .edit .inactive circle:first-child {
     fill-opacity: 1;
     cursor: pointer;
+}
+.radial #delaunay-ui circle {
+    fill-opacity: 0;
 }
 .hidden, #rotate-ui, #hidden {
     display: none;
@@ -1701,6 +1718,39 @@ circle {
     path {
         stroke-width: 20;
     }
+}
+
+/* radial */
+
+.radial #place-title {
+    color: @grey;
+    height: 40px;
+}
+.radial #place-title:hover {
+    color: black;
+}
+
+.fill-option {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    border: 5px solid white;
+    padding: 2px;
+}
+.fill-option img {
+    opacity: .5;
+}
+.fill-option.active {
+    border: 5px solid @grey;
+}
+.fill-option:hover {
+    border: 5px solid black;
+}
+
+.fill-option:nth-child(even) {
+    margin-right: 20px;
 }
 
 /* mini meshu */

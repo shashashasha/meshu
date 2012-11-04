@@ -1,13 +1,13 @@
 var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
-	var self = d3.dispatch("added", "refreshed", "locationsSet"),
-		selfId = parseInt(Math.random() * 10000000000, 10);
+    var self = d3.dispatch("added", "refreshed", "locationsSet"),
+        selfId = parseInt(Math.random() * 10000000000, 10);
 
     // making this not global ._.
     var lats = [],
         lons = [],
-        places = [];
+        meshuTitle;
 
     var decoder = document.createElement('div');
 
@@ -23,45 +23,61 @@ sb.mesh = function (frame, map, width, height) {
         .attr("width", "100%")
         .attr("height", "100%");
 
-    var g = main.append("svg:g")
-            .attr("class", "delaunay")
+    var wrapper = main.append("svg:g").attr("class","delaunay");
+
+    wrapper.append("svg:circle").data([[-122.445,37.755]])
+        .attr("class","circleFrame")
+        .attr("cx",300).attr("cy",300)
+        .attr("r",0).attr("stroke-width",0);
+
+    var g = wrapper.append("svg:g")
+            .attr("class", "radial")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
             .attr("fill","none")
-            .attr("stroke-width","5")
-            .attr("stroke","black")
-            .attr("stroke-linejoin","round");
+            .attr("stroke-linejoin","round")
+            .attr("clip-path","url(#radialClip)");
+
+    wrapper.append("svg:clipPath").attr("id","radialClip")
+        .append("svg:circle")
+        .data([[-122.445,37.755]])
+        .attr("cx",300).attr("cy",300).attr("r",200);
 
     var hidden = main.append("svg:g")
                  .attr("class", "hidden");
 
     hidden.append("svg:path");
 
-    var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;")
-        .style("width", width)
-        .style("height", height);
-
-    var svg = uiFrame.append("svg:svg")
-        .attr("width", "100%")
-        .attr("height", "100%");
-
-    var ui = svg.append("svg:g")
-        .attr("id", "delaunay-ui");
-
-    var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-title").attr("class", "inactive");
+    // var placeList = d3.select("#places");
+    var placeTitle = d3.select("#place-title").attr("class", "inactive");
         placeTitle.append("span").attr("class", "title-text");
         placeTitle.append("span").attr("class", "title-edit").html("edit");
 
-    var list = placeList.append("ul");
+    // var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
 
+    $("#radial-knockout").click(function(){
+        $("body").addClass("knockout");
+        $(this).addClass("active");
+        $("#radial-frame").removeClass("active");
+    });
+    $("#radial-frame").click(function(){
+        $("body").removeClass("knockout");
+        $(this).addClass("active");
+        $("#radial-knockout").removeClass("active");
+    })
+
+    // radial path drawer
+    // var pathdrawer = sb.pathdrawer(map);
+
     var points = [],
-    	new_pt = [],
+        routes = [],
+        paths = [],
+        new_pt = [],
         pixel_bounds = [],
-    	updateInterval = 0,
+        // requests = [],
+        updateInterval = 0,
         selected = null,
         moved = false,
         dragging = null,
@@ -70,8 +86,8 @@ sb.mesh = function (frame, map, width, height) {
         last_mouse = null,
         meshuTitle = null;
 
-    var content = $("#content"),
-        cases = $("#cases");
+    var content = $("#content");
+        // cases = $("#cases");
 
     // d3.select(uiFrame.node())
     d3.select(".frame")
@@ -99,20 +115,20 @@ sb.mesh = function (frame, map, width, height) {
         var m = d3.svg.mouse(main.node());
 
         // if we're dragging a point, we need to update its data
-        if (dragging) {
-            var l = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
-            dragging[0] = l.lon;
-            dragging[1] = l.lat;
+        // if (dragging) {
+        //     var l = map.p2l({
+        //         x: m[0],
+        //         y: m[1]
+        //     });
+        //     dragging[0] = l.lon;
+        //     dragging[1] = l.lat;
 
-            var index = points.indexOf(dragging);
-            lats[index] = l.lat;
-            lons[index] = l.lon;
+        //     var index = points.indexOf(dragging);
+        //     lats[index] = l.lat;
+        //     lons[index] = l.lon;
         
-            update();
-        }
+        //     update();
+        // }
 
         if (moved && mouse_down) {
             // if we've moved and the mouse is down, we're dragging the map
@@ -139,7 +155,7 @@ sb.mesh = function (frame, map, width, height) {
         // ignore zoom buttons, other ui
         // if it's a circle we need to continue because that means it's a point that's being dragged
         // image for IE fix!
-        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node() && d3.event.target.tagName != "image")  return;
+        if (d3.event.target.tagName != 'circle' && d3.event.target != main.node() && d3.event.target.tagName != "image")  return;
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {
@@ -154,17 +170,22 @@ sb.mesh = function (frame, map, width, height) {
             return;
         }
 
-        // delete the point if we mouseup on a point 
-        if (!moved && dragging) {
-            var index = points.indexOf(dragging);
-            self.remove(index);
+        // if (dragging) {
+        //     showRoutes();
+        // }
 
-            map.updateBounds(lats, lons);
-            self.updatePixelBounds();
-            update();
-        } else {
-            mousemove();
-        }
+        // delete the point if we mouseup on a point 
+        // if (!moved && dragging) {
+        //     var index = points.indexOf(dragging);
+        //     self.remove(index);
+
+        //     map.updateBounds(lats, lons);
+        //     self.updatePixelBounds();
+        //     update(true);
+        //     // showRoutes();
+        // } else {
+        //     mousemove();
+        // }
 
         // ignore other events
         if (d3.event) {
@@ -191,7 +212,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateMesh(skipAnimation) {
-        var circles = ui.selectAll("circle");
+        var circles = wrapper.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -204,99 +225,102 @@ sb.mesh = function (frame, map, width, height) {
                     lon: d[0]
                 }).y;
             });
-        // the delaunay mesh paths
-        var lines = g.selectAll("path")
-            .data(d3.geom.delaunay(points));
+    }
 
+    function updateRoutes() {
+        console.log(paths.length, 'updating');
+
+        var lines = g.selectAll("path").data(paths);
         lines.enter().append("svg:path");
         lines.exit().remove();
+
         lines.attr("d", function(d) {
-                var l = d.length;
-                var draw = [];
-                for (var i = 0; i < l; i++){
-                    var loc = {
-                        lat: parseFloat(d[i][1]),
-                        lon: parseFloat(d[i][0])
-                    };
-                    var pt = map.l2p(loc);
-                    draw.push([pt.x, pt.y]);
-                } 
+            return drawPath(d.pts);
+        });
 
-                return "M" + draw.join("L") + "Z"; 
-            });
+        lines.attr("stroke", "black")
+            .attr("fill", "none")
+            .attr("stroke-linecap", "round");
 
-        // we move the newest point closer and closer to its destination
-        if (new_pt && skipAnimation == true) {
-            clearInterval(updateInterval);
-            new_pt = null;
+        lines.attr("stroke-width", function(d, i) {
+            return 20 * Math.pow(1 - d.d, .5) + "px";
+        });
+
+        lines.style("stroke-width", function(d, i) {
+            return 20 * Math.pow(1 - d.d, .5) + "px";
+        });
+    }
+
+    function drawPath(p) {
+        var draw = [];
+        var l = p.length;
+        for (var i = 0; i < l; i++){
+            var loc = {
+                lat: p[i][0],
+                lon: p[i][1]
+            };
+            var pt = map.l2p(loc);
+            draw.push([pt.x, pt.y]);
         }
-        else if (new_pt) {
-            var last = points[points.length-1] || [];
-            if (Math.abs(last[0] - new_pt[0]) > .0002) {
-                last[0] += (new_pt[0] - last[0]) / 3;
-            }    
-            if (Math.abs(last[1] - new_pt[1]) > .0002) {
-                last[1] += (new_pt[1] - last[1]) / 3;
-            }    
+        return "M" + draw.join("L");
+    }
 
-            points[points.length - 1] = last;
-            
-            var dlon = Math.abs(last[0] - new_pt[0]);
-            var dlat = Math.abs(last[1] - new_pt[1]);
-            if (dlat < .0002 && dlon < .0002) {
-                clearInterval(updateInterval);
-                new_pt = null;
-            }
-        } else {
-            clearInterval(updateInterval);
+    function addRoute(waypoints) {
+        routes.push(waypoints);
+
+        var l = waypoints.length;
+        for (var i = 0; i < l-2; i+=2){
+            var start = [waypoints[i], waypoints[i+1]];
+            var end = [waypoints[i+2], waypoints[i+3]];
+            paths.push({
+                pts: [start, end], // start and end
+                d: i / waypoints.length // use distance as the index for now
+            });
+        }
+
+        updateRoutes();
+    }
+
+    function showRoutes() {
+        for (var i = 1; i < points.length; i++) {
+            // requests[i] = 
+            $.ajax({
+                url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
+                // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
+                points[0][1]+","+points[0][0]+"&to="+points[i][1]+","+points[i][0],
+                // cache: false,
+                dataType: 'jsonp',
+                success: function(data) {
+                    if (data.route.shape) {
+                        var wayPoints = data.route.shape.shapePoints;
+                        addRoute(wayPoints);
+                    }
+                    // requests.splice(i, 1);
+                }
+            });
         }
     }
 
     function update(){
+        // var radius = Math.sqrt(Math.pow((r0[0]-r1[0],2)+Math.pow((r0[1]-r1[1]),2)));
+        // main.select(".circleFrame").attr("r",radius);
         // the transparent circles that serve as ui, allowing for dragging and deleting
-        var circles = ui.selectAll("circle")
-            .data(points);
+        // var circles = ui.selectAll("circle")
+        //     .data([points[0]]);
 
-        // new circles
-        circles.enter()
-            .append("svg:circle")
-            .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 7)
-            .on("mousedown", function(d) {
-                selected = dragging = d;
+        // // new radial circles
+        // circles.enter()
+        //     .append("svg:circle")
+        //     .attr("id",function(d, i){ return "c-" + i; })
+        //     .attr("r", 10)
+        //     .on("mousedown", function(d) {
+        //         selected = dragging = d;
 
-                // stop prop to prevent map dragging
-                d3.event.stopPropagation();
-            });
+        //         // stop prop to prevent map dragging
+        //         d3.event.stopPropagation();
+        //     });
         
-        circles.exit().remove();
-
-        // place names for the points
-        var names = list.selectAll("li.place")
-            .data(points);
-        
-        var place = names.enter().append("li").attr("class", "place");
-        var title = place.append("span").attr("class", "title");
-            title.append("span").attr("class", "place-text")
-                .html(function(d, i) {
-                    decoder.innerHTML = places[i];
-                    return decoder.firstChild.nodeValue;
-                });
-            title.append("span").attr("class", "place-edit").html("edit");
-            place.append("span").attr("class", "place-delete").html("x");
-
-        names.exit().remove();
-
-        names.attr("id", function(d, i) { return "p-" + i; })
-            .select(".title").each(function(d) { d.edit = false; })
-            .attr("class","title")
-            .select(".place-text")
-            .html(function(d, i) {
-                // decode the text
-                // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
-                decoder.innerHTML = places[i];
-                return decoder.firstChild.nodeValue;
-            });
+        // circles.exit().remove();
 
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
@@ -328,74 +352,16 @@ sb.mesh = function (frame, map, width, height) {
             return "M" + draw.join("L") + "Z"; 
         }).attr("class","hiddenFrame")
 
-        self.updateCircleBehavior();
         updateListBehavior();
         updateMesh();
-    };
-
-    self.updateCircleBehavior = function(off) {
-        var editMode = content.hasClass("edit");
-        var placeHover = $("#place-hover");
-        var circles = ui.selectAll("circle");
-
-        circles.on("mouseover", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-" + i).attr("class", "place highlight");
-            else {
-                placeHover.addClass("active").find("span").text(places[i]);
-                
-                var p = map.l2p({ lat: d[1], lon: d[0] });
-                var w = placeHover.width();
-                var top = (p.y - 32) + "px";
-                var left = (p.x - (w/2) - 3) + "px";
-                var bleft = w/2 - 3 + "px";
-
-                
-                placeHover.css({"top": top, "left": left})
-                    .find("b").css("left", bleft);
-            }
-        });
-        circles.on("mouseout", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-"+i).attr("class","place");
-            else
-                placeHover.removeClass("active");
-        });
+        updateRoutes();
     }
 
     function updateListBehavior() {
-        var names = list.selectAll("li.place");
-        names.select(".place-delete").on("click",function(d,i){
-            self.remove(i);
-            self.updatePixelBounds();
-            map.updateBounds(lats, lons);
-            update();
-        });
-
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-        names.select(".place-edit").on("click",function(d,i){
-            var node = $(this).parent();
-            if (!d.edit) editText(node,i,"place");
-            else saveText(node,i,"place");
-            d.edit = !d.edit;
-        });
-        names.select(".place-text").on("click",function(d,i){
-            if (d.edit) return;
-            editText($(this).parent(),i,"place");
-            d.edit = !d.edit;
-        });
-
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
                 if (d && d.title) return d.title;
-                else return "My Meshu";
+                else return meshuTitle;
             });
 
         placeTitle.select(".title-text").on("click",function(d){
@@ -415,7 +381,7 @@ sb.mesh = function (frame, map, width, height) {
     function editText(node,i,type) {
         var button = node.find("." + type + "-edit").text("save");
         var field = node.find("." + type + "-text");
-        var value = ((type == "title") ? field.text() : places[i]);
+        var value = ((type == "title") ? field.text() : meshuTitle);
 
         node.addClass("active");
         field.html('<input value="' + value + '">').find("input").focus();
@@ -438,7 +404,7 @@ sb.mesh = function (frame, map, width, height) {
         node.removeClass("active");
         node.find("." + type + "-text").text(text);
 
-        if (type == "place") places[i] = text;
+        if (type == "place") meshuTitle = text;
         else return text;
     }
     function removeInput(event){
@@ -451,50 +417,65 @@ sb.mesh = function (frame, map, width, height) {
         return false;
     };
 
+    function addRadialPoints() {
+        main.selectAll("path").remove();
+        paths = [];
+        points = [points[0]];
+        lats = [lats[0]];
+        lons = [lons[0]];
+
+        var tempLat, tempLon;
+
+        for (var i = 0; i < 24; i++) {
+            var theta = i*(Math.PI/12);
+            var l = map.p2l({
+                x: 300+Math.sin(theta)*200,
+                y: 300+Math.cos(theta)*200
+            });
+            tempLon = l.lon;
+            tempLat = l.lat;
+            lats.push(tempLat);
+            lons.push(tempLon);
+            points.push([tempLon, tempLat]);
+        }
+    }
+
     self.add = function(latitude, longitude, placename, skipAnimation) {
-    	// clear previous update
-    	if (updateInterval) {
+        // clear previous update
+        if (updateInterval) {
             clearInterval(updateInterval);
-    	}
+        }
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
 
-        lats.push(lat);
-        lons.push(lon);
+        main.select("#radialClip circle").data([[lon,lat]]);
+        main.select(".circleFrame").data([[lon,lat]])
+            .attr("r",0).attr("stroke-width",0)
+            .transition().delay(250).duration(500)
+            .attr("r",204).attr("stroke-width",20);
+
+        lats = [lat];
+        lons = [lon];
+
+        points = [[lon,lat]];
+
         if (placename == undefined)
-            places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
+            meshuTitle = latitude.toFixed(3)+", "+longitude.toFixed(3);
         else
-            places.push(placename);
+            meshuTitle = placename;
 
-        if (points.length) {
-            $("#meshu-container").removeClass("inactive");
-        	
-            new_pt = [lon, lat];   
-            if (skipAnimation) {
-                points.push([new_pt[0], new_pt[1]]);
+        $("#places").removeClass("inactive");
 
-                self.updatePixelBounds();
-                update();
-                updateMesh(skipAnimation);
-            } else { 
-                // make the new point start from the last location
-                var last = points[points.length-1];
-                points.push([last[0], last[1]]);
-                self.updatePixelBounds();
-                update();
+        var r = .015;
+        map.updateBounds([lat-r, lat+r], [lon-r, lon+r]);
 
-                // animate the new point in place
-                updateInterval = setInterval(updateMesh, 40);
-            }
-        } else {
-            points.push([lon, lat]);
-            update();
-        }
+        addRadialPoints();
+        showRoutes();
+        update();
 
-        cases.fadeOut();
-        
         self.added();
+        
         return self;
     };
 
@@ -502,31 +483,31 @@ sb.mesh = function (frame, map, width, height) {
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
-        places.splice(index, 1);
+        // places.splice(index, 1);
         
-        if (points.length < 3) $("#finish-button").removeClass("active");
-        if (points.length == 1) $("#meshu-container").addClass("inactive");
+        if (points.length == 0) $("#finish-button").removeClass("active");
+        // if (points.length == 0) $("#meshu-container").addClass("inactive");
     };
 
     self.lats = function() {
-    	return lats;
+        return lats;
     };
 
     self.lons = function() {
-    	return lons;
+        return lons;
     };
 
     self.places = function() {
-        return places;
+        return meshuTitle;
     };
 
     self.points = function(pts) {
-    	if (!arguments.length) {
-    		return points;
-    	}
+        if (!arguments.length) {
+            return points;
+        }
 
-    	points = pts;
-    	return self;
+        points = pts;
+        return self;
     };
 
     /* 
@@ -548,12 +529,12 @@ sb.mesh = function (frame, map, width, height) {
         points = [];
         lats = [];
         lons = [];
-        places = [];
+        // places = [];
         $.each(locs, function(i, loc) {
            points.push([loc.longitude, loc.latitude]);
            lats.push(loc.latitude);
            lons.push(loc.longitude);
-           places.push(loc.name);
+           // places.push(loc.name);
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js
@@ -564,6 +545,16 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.refresh = function() {
+        // $.each(requests, function(i,r){
+        //     if (r !== undefined) {
+        //         console.log(r);
+        //         r.abort();
+        //     }
+        //     requests.splice(i,1);
+        // })
+
+        addRadialPoints();
+        showRoutes();
         update();
 
         self.refreshed();
@@ -579,8 +570,8 @@ sb.mesh = function (frame, map, width, height) {
 
     // outputs svg data
     self.output = function() {
-    	return $('#' + selfId).html();
+        return $('#' + selfId).html();
     };
 
-	return self;
+    return self;
 };

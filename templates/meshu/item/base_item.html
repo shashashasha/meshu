@@ -28,7 +28,7 @@
             </div>
             <div id="cases"></div>
             <div id="places">
-            <h2 id="place-number"></h2>
+            <h2 id="place-title"></h2>
             </div>
 
             {% block finish %}
@@ -245,13 +245,14 @@
                         <label class="short-label">Region, County or State</label>
                         <input type="text" id="ship-region" class="required region-input short-input" name="shipping_region"/>
                     </div>
+                    <div class="form-row ship-row domestic">
+                            <label class="domestic short-label">State</label>
+                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
+                    </div>
                     <div class="form-row ship-row">
                         <label class="domestic short-label">Zip Code</label>
                         <label class="international short-label">Postcode or Zip Code</label>
                         <input type="text" size="5" maxlength="20" id="ship-zip" class="required short-input" name="shipping_zip"/>
-                    <div class="form-row ship-row domestic">
-                            <label class="domestic short-label">State</label>
-                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
                     </div>
                     <div class="form-row ship-row international country-dropdown">
                         <label>Country</label>
@@ -500,8 +501,7 @@
                             <option value="Yemen">Yemen</option>
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
-                            </select>
-                        </div>
+                        </select>
                     </div>
                     <p class="note domestic">Please allow 3-4 weeks for acrylic and wood orders,<br />and 5-6 weeks for nylon or silver.</p>
                     <p class="note international">Please allow 4-5 weeks for acrylic and wood orders,<br />and 6-7 weeks for nylon or silver.</p>

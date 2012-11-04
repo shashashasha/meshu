@@ -272,7 +272,7 @@
                                                             <br />
                                                             <div>
                                                                 <h3 class="h4">{{ meshu.title }}</h3>
-                                                                <h4 class="h4">Amount: ${{ order.amount }}</h4>
+                                                                <h4 class="h4">Amount: ${{ order.amount|floatformat:2 }}</h4>
                                                                 <strong>Thanks {{ meshu.user.username }}!</strong> We've received your order and will let you know when we've processed it. Beep a boop.
                                                             </div>
                                                             {% endblock %}

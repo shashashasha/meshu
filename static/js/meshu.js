@@ -40,7 +40,9 @@ sb.meshu = function(frame, existingMap) {
     self.checkAdded = function() { 
         // pay attention to the number of points
         var points = mesh.points();
-        if (points.length > 1) $("#finish-button").addClass("active");
+        var minPoints = 3;
+        if ($("body").hasClass("radial")) minPoints = 1;
+        if (points.length >= minPoints) $("#finish-button").addClass("active");
         else $("#finish-button").removeClass("active");
     }
 
@@ -70,13 +72,15 @@ sb.meshu = function(frame, existingMap) {
                 var content = $("#content");
                 cases.empty().hide();
 
+                console.log("data",data);
+
                 if (typeof results == "undefined") {
                     searchbox.blur();
                     cases.append(
                         $("<p>").text("Hrm, we weren't able to find your search. Try again?"))
                         .fadeIn();
                 }
-                else if (results.length == 1) {
+                else if (results.length > 0) {
                     addPoint(results[0],input);
 
                     // if only one point, let's zoom it to a proper level
@@ -93,12 +97,12 @@ sb.meshu = function(frame, existingMap) {
                         } 
                     }
                 }
-                else {
-                    cases.append(
-                        $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
-                            .fadeIn();
-                    searchbox.blur();
-                }
+                // else {
+                //     cases.append(
+                //         $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
+                //             .fadeIn();
+                //     searchbox.blur();
+                // }
             }
         });
     }

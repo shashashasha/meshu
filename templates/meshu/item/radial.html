@@ -2,7 +2,7 @@
 
 {% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
-{% block body_class %}roadtrip{% endblock body_class %}
+{% block body_class %}radial{% endblock body_class %}
 
 {% block page_type %}edit{% endblock page_type %}
 
@@ -12,7 +12,7 @@
         <b class="notch"></b>
     </div>
     {% block map %}
-    <div id="meshu-container" class="frame inactive">
+    <div id="meshu-container" class="frame">
         <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
     </div>
     {% endblock %}
@@ -29,8 +29,16 @@
                 <div id="search-button" class="button">search</div>
             </div>
             <div id="cases"></div>
-            <div id="places">
-            <h2 id="place-number"></h2>
+            <div id="places" class="inactive">
+                <h2>Your Radial:</h2>
+                <hr>
+                <h2 id="place-title"></h2>
+                <div id="radial-frame" class="fill-option active">
+                    <img src="{{ STATIC_URL }}/images/radial/outline.jpg">
+                </div>
+                <div id="radial-knockout" class="fill-option">
+                    <img src="{{ STATIC_URL }}/images/radial/knockout.jpg">
+                </div>
             </div>
 
             {% block finish %}
@@ -51,7 +59,7 @@
                 <div id="product-preview">
                     <div class="wrapper" id="wrapper-necklace">
                         <div class="next active">
-                            <svg id="preview-necklace" width="360" height="200"></svg>
+                            <svg id="preview-necklace" width="170" height="160"></svg>
                         </div>
                         <p>Large Necklace</p>
                         <p class="note" id="range-necklace">$80-150</p>
@@ -63,13 +71,13 @@
                         <p>Pair of Earrings</p>
                         <p class="note" id="range-earrings">$75-150</p>
                     </div>
-                    <div class="wrapper" id="wrapper-pendant">
+                    <!-- <div class="wrapper" id="wrapper-pendant">
                         <div class="next active">
                             <svg id="preview-pendant" width="170" height="160"></svg>
                         </div>
                         <p>Pendant Necklace</p>
                         <p class="note" id="range-pendant">$75-130</p>
-                    </div>
+                    </div> -->
                     <!-- <div class="wrapper" id="wrapper-cufflinks">
                         <div class="next active">
                             <svg id="preview-cufflinks" width="170" height="160"></svg>
@@ -249,13 +257,14 @@
                         <label class="short-label">Region, County or State</label>
                         <input type="text" id="ship-region" class="required region-input short-input" name="shipping_region"/>
                     </div>
+                    <div class="form-row ship-row domestic">
+                            <label class="domestic short-label">State</label>
+                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
+                    </div>
                     <div class="form-row ship-row">
                         <label class="domestic short-label">Zip Code</label>
                         <label class="international short-label">Postcode or Zip Code</label>
                         <input type="text" size="5" maxlength="20" id="ship-zip" class="required short-input" name="shipping_zip"/>
-                    <div class="form-row ship-row domestic">
-                            <label class="domestic short-label">State</label>
-                            <input type="text" size="2" maxlength="2" id="ship-state" class="required domestic short-input" name="shipping_state" style="margin-right:0;" />
                     </div>
                     <div class="form-row ship-row international country-dropdown">
                         <label>Country</label>
@@ -527,7 +536,7 @@
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
                     <input class="nav active" type="submit" id="review-button" value="Review Your Order">
                 </form>
-            </div>
+            <!-- </div> -->
         </div>
         <div id="review">
             <div class="nav back">edit information</div>
@@ -575,7 +584,6 @@
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog{{ meshu.promo }}.js"></script>
@@ -587,7 +595,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
 
-    <script type="text/javascript" src="{{ STATIC_URL }}js/roadtrip.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/radial.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
