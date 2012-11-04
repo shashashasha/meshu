@@ -17,7 +17,7 @@ sb.mesh = function (frame, map, width, height) {
         .style("width", width)
         .style("height", height)
         .style("position", "absolute")
-        .style("z-index", "100")
+        // .style("z-index", "100")
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
@@ -92,7 +92,9 @@ sb.mesh = function (frame, map, width, height) {
     // d3.select(uiFrame.node())
     d3.select(".frame")
         .on("mousemove", mousemove)
-        .on("mousedown", mousedown);
+        .on("mousedown", mousedown)
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
 
     d3.select('body').on("mouseup", mouseup);
 
@@ -101,6 +103,19 @@ sb.mesh = function (frame, map, width, height) {
 
         // mouse is down, get ready to track map dragging
         mouse_down = true;
+    }
+
+    var tooltipTimeout;
+
+    function mouseover() {
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = setTimeout(function(){
+            $(".map-hint").fadeIn();
+        },500);
+    }
+    function mouseout() {
+        // clearTimeout(tooltipTimeout);
+        $(".map-hint").fadeOut();
     }
 
     function mousemove() {

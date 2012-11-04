@@ -17,7 +17,7 @@ sb.mesh = function (frame, map, width, height) {
         .style("width", width)
         .style("height", height)
         .style("position", "absolute")
-        .style("z-index", "100")
+        .style("z-index", "1")
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
@@ -37,7 +37,7 @@ sb.mesh = function (frame, map, width, height) {
     hidden.append("svg:path");
 
     var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;")
+        .attr("style", "position:absolute;z-index:2;")
         .style("width", width)
         .style("height", height);
 

@@ -1669,6 +1669,7 @@ circle {
 }
 .knockout path {
     stroke: white;
+    stroke-width: 3 !important;
 }
 
 .edit circle:hover, circle.highlight, .edit .inactive circle:first-child {
@@ -1728,6 +1729,18 @@ circle {
 }
 .radial #place-title:hover {
     color: black;
+}
+.radial .map-hint {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(255,255,255,.8);
+    color: @grey;
+    width: 300px;
+    left: 150px;
+    top: 5px;
+    padding: 2px 5px;
+    .shadow(50px);
 }
 
 .fill-option {
@@ -1862,7 +1875,7 @@ circle {
 
 .edit .mapui {
     opacity: 1;
-    z-index: 1338;
+    z-index: 2;
     position: absolute;
     .transition(opacity);
 
