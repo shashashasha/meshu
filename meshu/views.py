@@ -234,7 +234,7 @@ def item_assign(request):
 
 
 def item_update(request, item_encoded):
-	xhr = request.GET.has_key('xhr')
+	xhr = request.POST.has_key('xhr')
 
 	item_id = int(str(item_encoded).decode("hex"))
 	old = Meshu.objects.get(id=item_id)
