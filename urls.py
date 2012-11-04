@@ -130,23 +130,28 @@ urlpatterns += patterns('meshu.views',
 	url(r'^royalparkshalf/', direct_to_template, {
 		'template': 'meshu/promo/marathon.html'
 	}),
+	# internal to see email templates
+	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
+)
 
+# meshu/processing.py
+urlpatterns += patterns('meshu.pipeline', 
 	# backend for our orders
 	url(r'^orders/(?P<order_id>\d+)/update/', 'processing_order_update_status'),
 	url(r'^orders/(?P<order_id>\d+)/toggle_postcard/', 'processing_order_postcard_toggle'),
-	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
-	url(r'^orders/addresses', 'processing_addresses'),
-	url(r'^orders/notes', 'processing_notes'),
-	url(r'^orders/all', 'processing_all'),
-	url(r'^orders/', 'processing_orders'),
 
-	# api proxies for loading external resources
+	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
+	url(r'^orders/addresses', 'view_addresses'),
+	url(r'^orders/notes', 'view_notes'),
+	url(r'^orders/all', 'view_all'),
+	url(r'^orders/', 'view_orders'),
+)
+
+# api proxies for loading external resources
+urlpatterns += patterns('meshu.proxy',
 	url(r'^proxy/tiles/(?P<subdomain>\w+)/(?P<zoom>\d+)/(?P<x>\d+)/(?P<y>\d+)', 'processing_tiles'),
 	url(r'^proxy/geocoder/', 'processing_geocoder'),
 	url(r'^proxy/jsoner/', 'processing_jsoner'),
-
-	# internal to see email templates
-	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
 )
 
 # facebook specific
