@@ -1704,8 +1704,10 @@ circle.highlight,
   fill-opacity: 1;
   cursor: pointer;
 }
-.radial #delaunay-ui circle {
+.radial #delaunay-ui circle,
+.radial circle:hover {
   fill-opacity: 0;
+  cursor: default;
 }
 .hidden,
 #rotate-ui,
@@ -1779,6 +1781,7 @@ circle.highlight,
   -webkit-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 .fill-option {
   width: 75px;

@@ -1676,8 +1676,9 @@ circle {
     fill-opacity: 1;
     cursor: pointer;
 }
-.radial #delaunay-ui circle {
+.radial #delaunay-ui circle, .radial circle:hover {
     fill-opacity: 0;
+    cursor: default;
 }
 .hidden, #rotate-ui, #hidden {
     display: none;
@@ -1741,6 +1742,7 @@ circle {
     top: 5px;
     padding: 2px 5px;
     .shadow(50px);
+    text-align: center;
 }
 
 .fill-option {

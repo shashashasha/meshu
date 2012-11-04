@@ -17,7 +17,7 @@ sb.mesh = function (frame, map, width, height) {
         .style("width", width)
         .style("height", height)
         .style("position", "absolute")
-        // .style("z-index", "100")
+        // .style("z-index", "1")
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
@@ -46,6 +46,13 @@ sb.mesh = function (frame, map, width, height) {
                  .attr("class", "hidden");
 
     hidden.append("svg:path");
+
+    var uiShield = d3.select(frame)
+        .append("div")
+        .attr("id","ui-shield")
+        .style("width","100%")
+        .style("height","100%")
+        .style("position","absolute");
 
     // var placeList = d3.select("#places");
     var placeTitle = d3.select("#place-title").attr("class", "inactive");
@@ -89,10 +96,11 @@ sb.mesh = function (frame, map, width, height) {
     var content = $("#content");
         // cases = $("#cases");
 
-    // d3.select(uiFrame.node())
     d3.select(".frame")
         .on("mousemove", mousemove)
         .on("mousedown", mousedown)
+        
+    d3.select(uiShield.node())
         .on("mouseover", mouseover)
         .on("mouseout", mouseout);
 
@@ -108,13 +116,12 @@ sb.mesh = function (frame, map, width, height) {
     var tooltipTimeout;
 
     function mouseover() {
-        clearTimeout(tooltipTimeout);
         tooltipTimeout = setTimeout(function(){
             $(".map-hint").fadeIn();
         },500);
     }
     function mouseout() {
-        // clearTimeout(tooltipTimeout);
+        clearTimeout(tooltipTimeout);
         $(".map-hint").fadeOut();
     }
 
@@ -170,7 +177,7 @@ sb.mesh = function (frame, map, width, height) {
         // ignore zoom buttons, other ui
         // if it's a circle we need to continue because that means it's a point that's being dragged
         // image for IE fix!
-        if (d3.event.target.tagName != 'circle' && d3.event.target != main.node() && d3.event.target.tagName != "image")  return;
+        if (d3.event.target.id != 'ui-shield' && d3.event.target != main.node() && d3.event.target.tagName != "image")  return;
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!dragging && !map_dragging) {
