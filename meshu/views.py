@@ -104,15 +104,6 @@ def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
 	return item_handler(request, item_id, 'display.html', 'view')
 
-def item_postcard(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# don't let people 'shop' for other users items yet
-	if request.user.is_staff == False:
-		return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'postcard.html', 'postcard')
-
 def item_readymade(request, item_id):
 	item = get_object_or_404(Meshu, pk=item_id)
 
@@ -745,132 +736,7 @@ def order_create(request, profile, meshu):
 
 	order.save()
 	return order
-
-# Processing Orders!
-def processing_orders(request):
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
-
-	return render_to_response('meshu/processing/orders.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
-	}, context_instance=RequestContext(request))
-
-def processing_order_update_status(request, order_id):
-	order = Order.objects.get(id=order_id)
-
-	if request.GET.has_key('postcard_ordered'):
-		postcard_status = request.GET.get('postcard_ordered', '')
-		order.postcard_ordered = postcard_status
-
-	# don't send duplicate emails
-	if order.status != request.GET.get('status'):
-		order.status = request.GET.get('status')
-		order.tracking = request.GET.get('tracking', '')
-
-		# update the ship date
-		if order.status == 'SH':
-			order.ship_date = datetime.now()
-
-		order.save()
-
-		if order.status == 'SE' or order.status == 'SH':
-			mail_order_status_change(order.contact, order.meshu, order)
 	
-	# go back to gallery view
-	return HttpResponseRedirect('/orders/')
-
-def processing_order_postcard_toggle(request, order_id):
-	order = Order.objects.get(id=order_id)
-	if order.postcard_ordered == 'true':
-		order.postcard_ordered = 'false'
-	else:
-		order.postcard_ordered = 'true'
-	
-	order.save()
-
-	return json_dump({
-		'success' : True,
-		'order_id': order.id,
-		'postcard_ordered': order.postcard_ordered
-	})
-
-def processing_addresses(request): 
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
-
-	return render_to_response('meshu/processing/order_shipping_export.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
-	}, context_instance=RequestContext(request))
-
-def processing_notes(request): 
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.all()
-
-	return render_to_response('meshu/processing/notes.html', {
-			'orders': orders,
-	}, context_instance=RequestContext(request))
-
-def processing_all(request):
-	meshus = Meshu.objects.all()
-
-	return render_to_response('meshu/processing/allview.html', {
-		'meshus': meshus
-	}, context_instance=RequestContext(request))
-
-# proxy yahoo api
-import urllib2, urllib
-def processing_geocoder(request):
-	base = 'http://where.yahooapis.com/geocode?flags=J&location='
-	key = '&appid=dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--'
-	location = request.GET.get('location', '')
-
-	url = urllib.quote(location)
-
-	try:
-		response = urllib2.urlopen(base + url + key)
-		json = response.read()
-		return HttpResponse(json, mimetype='application/json')
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-
-# for potentially having geojson urls
-def processing_jsoner(request):
-	url = request.GET.get('url', '')
-
-	try:
-		response = urllib2.urlopen(url)
-		json = response.read()
-		return HttpResponse(json, mimetype='application/json')
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-
-# proxying the tiles to draw them in canvas
-def processing_tiles(request, subdomain, zoom, x, y):
-	# print(subdomain)
-	# print(zoom)
-	# print('x:' + str(x))
-	# print('y:' + str(y))
-	url = 'http://{0}.tile.stamen.com/toner/{1}/{2}/{3}.png'.format(subdomain, zoom, x, y)
-
-	try:
-		response = urllib2.urlopen(url)
-		return HttpResponse(response.read(), mimetype="image/png")
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-    
 
 from django.core.files.images import ImageFile
 import re
