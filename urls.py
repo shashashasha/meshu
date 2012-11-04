@@ -130,6 +130,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^royalparkshalf/', direct_to_template, {
 		'template': 'meshu/promo/marathon.html'
 	}),
+	
 	# internal to see email templates
 	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
 )
