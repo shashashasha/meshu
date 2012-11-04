@@ -66,7 +66,7 @@ sb.mesh = function (frame, map, width, height) {
         $("body").removeClass("knockout");
         $(this).addClass("active");
         $("#radial-knockout").removeClass("active");
-    })
+    });
 
     // radial path drawer
     // var pathdrawer = sb.pathdrawer(map);
