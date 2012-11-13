@@ -1,9 +1,5 @@
 $(function() {
 
-	// here's the list of views we have in this flow
-	var views = ["edit","product","make","account","checkout","review"];
-	var content = $("#content");
-
 	// create a stripe payment object
 	orderer.catalog(sb.catalog);
 	sb.materializer.initialize(sb.catalog);
@@ -17,10 +13,19 @@ $(function() {
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	// initialize ordering ui
+	// it listens to when the form ui is validated, then moves to the review view
 	sb.ui.orderer(meshu).on("validated", function() {
 		content.attr("class", "review");
 		makeNextView('review');
 	});
+
+	// initialize the social sharing ui
+	// facebook, twitter, pinterest buttons
+	sb.ui.socialsharer(meshu);
+
+	// initialize the viewhandler
+	sb.viewhandler.initialize();
+
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -52,26 +57,17 @@ $(function() {
 		// initialize product picker
 		sb.product.initialize(".delaunay", sb.catalog);
 
+		// viewhandler handles next / prev buttons, shuffling account view
+		sb.viewhandler.updateViews(pageType);
+
 		switch (pageType) {
-			case 'edit':
-				views = ["edit","product","make","account","checkout","review"];
-				break;
-
-			case 'view':
-				views = ["view"];
-				break;
-
 			case 'product':
 				var product = $("#product");
 				product.find(".nav").remove();
 				product.find(".make-wrapper").removeClass("make-wrapper");
-
-				views = ["product","make","account","checkout","review"];
 				break;
 
 			default:
-				views = ["readymade","account","checkout","review"];
-
 				$("#materials").addClass("ready");
 
 				var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
@@ -107,10 +103,10 @@ $(function() {
 		saver.initializeNewMeshu(meshu);
 	}
 
-	if (user.loggedIn) {
-		//take out account view
-		checkAccountView();
-	}
+	// check if we need an account screen
+	sb.viewhandler.updateAccountView();
+	sb.viewhandler.on("next", makeNextView);
+	sb.viewhandler.on("prev", makePrevView);
 
 	/* 
 		Checking if we need to show the initial helper modal
@@ -132,105 +128,6 @@ $(function() {
 	} else if (hash == '#skipintro') {
 		window.location.hash = "";
 	}
-
-	//navigation
-	$(".next").live("click",function(){
-		if (!$(this).hasClass("active")) return;
-
-		var button = $(this);
-		var view = content.attr("class");
-		var index = views.indexOf(view)
-		var advanceView = function() {
-			content.attr("class", views[index+1]);
-		};
-
-		// if you're logged in, let's just save it as you go
-		if (view == 'edit' && user.loggedIn) {
-			// save this meshu
-			saver.createOrUpdateMeshu();
-		}
-
-		if (view == 'make' || view == 'readymade') {
-			checkAccountView();
-
-			/*
-				if we're on a readymade or make page, 
-				we need to click the next button after we log in
-			*/
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					button.click();
-				});
-			};
-		}
-		
-		if (view == 'account' && !user.loggedIn) {
-			/*
-				i don't understand why this callback is not... getting called back anymore
-				but it may have something to do with user.js and the facebook login flow
-			*/
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					button.click();
-				});
-			};
-
-			return;
-		}
-
-
-		makeNextView(view);
-		user.updateLogoutActions(view);
-		advanceView();
-	});
-	
-	$(".back").click(function(){
-		var view = content.attr("class");
-
-		if (view == 'checkout') {
-			checkAccountView();
-		}
-
-		/*
-			if we logged ourselves out during the flow, 
-			make sure that the next time we hit the login screen
-			we click 'a' next button. this is dumb.
-		*/
-		if (!user.loggedIn) {
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					$($(".next")[0]).click();
-				});
-			};
-		}
-
-	    var index = views.indexOf(view);
-	    var prev = views[index-1];
-	    
-		content.attr("class", prev);
-
-		makePrevView(prev);
-	});
-
-	/*
-		Save and View the meshu, go to the view page
-	*/
-	$("#save-and-view").click(function() {
-		// if the user is not logged in we should force them to log in
-		var createAndView = function() {
-			saver.createOrUpdateMeshu(function(data) {
-				window.location.href = data.meshu_url;
-			});
-		};
-
-		if (!user.loggedIn) {
-			forceUserLogin();
-			user.afterLogIn = createAndView;
-		} 
-		else {
-			createAndView();
-		}	
-	});
 
 	/* 
 		This handles when people select a product to order
@@ -256,10 +153,10 @@ $(function() {
 	});
 
 	// called when a next button is clicked
-	function makeNextView(view) {
+	function makeNextView() {
+		var view = sb.viewhandler.view();
 		switch (view) {
 			case 'edit':
-				// if we were editing and not logged in, show the modal, and save the meshu
 				meshu.updateBounds();
 
 				meshu.mesh().updateCircleBehavior();
@@ -287,17 +184,12 @@ $(function() {
 				var productPreview = static_url + 'images/render/' + product + '_preview.jpg';
 				$(".render").css("background-image","url(" + productPreview + ")");
 				break;
-
-			// this doesn't happen because of a 'next' class button
-			// it's a little weird but it's because of jquery validate
-			case 'review':
-				populateReview();
-				break;
 		}
 	}
 
 	// called when a back button is clicked
-	function makePrevView(view) {
+	function makePrevView() {
+		var view = sb.viewhandler.view();
 		switch (view) {
 			case 'edit':
 				meshu.mesh().updateCircleBehavior();
@@ -311,99 +203,8 @@ $(function() {
 		}
 	}
 
-	function checkAccountView() {
-		var i = views.indexOf("account");
-		if (user.loggedIn) {
-			if (i >= 0) {
-				views.splice(i, 1);
-			}
-			$("#account").css("visibility","hidden");
-			
-		} else {
-			if (i == -1) {
-				views.splice(-2, 0, "account");
-			}
-			$("#account").css("visibility","visible");
-				$("#account li").click(function(){
-	            var mode = $(this).attr("id").split("-")[1];
-	            var form = $("#account");
-
-	            form.attr("class",mode); 
-	            form.find("li").removeClass("active");
-
-	            $(this).addClass("active");
-
-	            self.mode = mode;
-	        });
-		}
-	}
-
 	$(".show-places").click(function(){
 		$("#display-places").slideToggle();
 		$(".show-places").toggle();
 	});
-
-
-	$(".share-facebook").click(function() {
-		if (!sb.rasterizer.generated) {
-			sb.rasterizer.rasterize(meshu, postOnFacebook);	
-		} else {
-			postOnFacebook();
-		}
-	});
-
-	$(".action-button").click(function() {
-		var button = this;
-
-		if (!sb.rasterizer.generated) {
-			sb.rasterizer.rasterize(meshu, function(data) {
-				button.click();
-			});	
-			return false;
-		} 
-	});
-
-	sb.rasterizer.on("rasterized", function(data) {
-		saver.updateMeshuData(data);
-
-		/* 
-			prep all social buttons
-		*/	
-		prepShareButtons();
-
-		$(".social-media").fadeIn();
-	});
-
-	var prepShareButtons = function(data) {
-
-		var twitterBase = "https://twitter.com/intent/tweet?text=";
-		var pinterestBase = "http://pinterest.com/pin/create/button/?url=";
-		var base = 'http://' + window.location.host;
-		var image_url = base + meshu.image_url;
-		var url = encodeURIComponent(base + meshu.view_url);
-		
-		var msg = "Check out this meshu I just made of the places I've been ";
-
-		$(".share-pinterest").attr("href", pinterestBase + url + "&media=" + image_url);
-		$(".share-twitter").attr("href", twitterBase + msg + '&url=' + url);
-
-	};
-
-	var postOnFacebook = function() {
-		var base = 'http://' + window.location.host;
-		FB.ui({
-        	method: 'feed',
-        	link: base + meshu.view_url,
-        	picture: base + meshu.image_url,
-        	name: meshu.title + ' on meshu.io',
-        	caption: '',
-        	description: ''
-        }, function(response) {
-            if (!response || response.error) {
-            } else {
-            }
-        });
-	};
-
-
 });

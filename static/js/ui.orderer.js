@@ -113,6 +113,26 @@ sb.ui.orderer = function(meshu) {
 		},
 		submitHandler: onFormValidated
 	});
+	
+	/*
+		Save and View the meshu, go to the view page
+	*/
+	$("#save-and-view").click(function() {
+		// if the user is not logged in we should force them to log in
+		var createAndView = function() {
+			saver.createOrUpdateMeshu(function(data) {
+				window.location.href = data.meshu_url;
+			});
+		};
+
+		if (!user.loggedIn) {
+			forceUserLogin();
+			user.afterLogIn = createAndView;
+		} 
+		else {
+			createAndView();
+		}	
+	});
 
 	$("#review-button").click(function() {
 		if (!user.loggedIn) {
