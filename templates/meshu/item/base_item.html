@@ -2,6 +2,8 @@
 
 {% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
+{% block body_class %}{% endblock body_class %}
+
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
@@ -11,6 +13,7 @@
     </div>
     {% block map %}
     <div id="meshu-container" class="frame inactive">
+        {% block maphint %}{% endblock %}
         <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
     </div>
     {% endblock %}
@@ -27,8 +30,10 @@
                 <div id="search-button" class="button">search</div>
             </div>
             <div id="cases"></div>
-            <div id="places">
-            <h2 id="place-title"></h2>
+            {% block places %}
+                <div id="places">
+                <h2 id="place-title"></h2>
+            {% endblock %}
             </div>
 
             {% block finish %}
@@ -46,34 +51,8 @@
             <div class="make-wrapper">
                 <h2>Choose your piece:</h2>
                 <div id="product-preview">
-                    <div class="wrapper" id="wrapper-earrings">
-                        <div class="next active">
-                            <svg id="preview-earrings" width="170" height="160"></svg>
-                        </div>
-                        <p>Pair of Earrings</p>
-                        <p class="note" id="range-earrings">$75-150</p>
-                    </div>
-                    <div class="wrapper" id="wrapper-pendant">
-                        <div class="next active">
-                            <svg id="preview-pendant" width="170" height="160"></svg>
-                        </div>
-                        <p>Pendant Necklace</p>
-                        <p class="note" id="range-pendant">$75-130</p>
-                    </div>
-                    <div class="wrapper" id="wrapper-necklace">
-                        <div class="next active">
-                            <svg id="preview-necklace" width="170" height="160"></svg>
-                        </div>
-                        <p>Large Necklace</p>
-                        <p class="note" id="range-necklace">$80-150</p>
-                    </div>
-                    <div class="wrapper" id="wrapper-cufflinks">
-                        <div class="next active">
-                            <svg id="preview-cufflinks" width="170" height="160"></svg>
-                        </div>
-                        <p>Pair of Cufflinks</p>
-                        <p class="note" id="range-cufflinks">$150</p>
-                    </div>
+                    {% block products %}
+                    {% endblock %}
                 </div>
 
                 <div class="social-media">
