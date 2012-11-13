@@ -28,6 +28,21 @@ def processing_geocoder(request):
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
 
+def processing_router(request):
+	base = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="
+	start = request.GET.get('from', '')
+	end = request.GET.get('to', '')
+	print(start)
+	print(end)
+
+	try:
+		response = urllib2.urlopen(base + start + '&to=' + end)
+		json = response.read()
+		return HttpResponse(json, mimetype='application/json')
+	except urllib2.URLError:
+		return HttpResponse('', mimetype='application/json')
+
+
 # for potentially having geojson urls
 def processing_jsoner(request):
 	url = request.GET.get('url', '')

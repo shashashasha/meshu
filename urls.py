@@ -162,6 +162,7 @@ urlpatterns += patterns('meshu.pipeline',
 urlpatterns += patterns('meshu.proxy',
 	url(r'^proxy/tiles/(?P<subdomain>\w+)/(?P<zoom>\d+)/(?P<x>\d+)/(?P<y>\d+)', 'processing_tiles'),
 	url(r'^proxy/geocoder/', 'processing_geocoder'),
+	url(r'^proxy/router/', 'processing_router'),
 	url(r'^proxy/jsoner/', 'processing_jsoner'),
 )
 

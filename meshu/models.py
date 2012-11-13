@@ -72,6 +72,10 @@ class Meshu(models.Model):
 	# thumbnail in case we need gallery views	
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/default_thumbnail.png")
 
+	# store visual style, zoom level, etc. 
+	# format is "product:radial&zoom:10"
+	metadata = models.CharField(max_length=1000, default='', blank=True)
+
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title
@@ -128,7 +132,7 @@ class Order(models.Model):
 	shipping_city = models.CharField(max_length=100, default='') 
 	shipping_zip = models.CharField(max_length=20, default='') # account for postcodes too hopefully
 	shipping_region = models.CharField(max_length=100, default='', blank=True) # regions, county
-	shipping_state = models.CharField(max_length=2, default='')
+	shipping_state = models.CharField(max_length=2, default='', blank=True)
 	shipping_country = models.CharField(max_length=100, default='', blank=True)
 
 	# postcard status

@@ -6,7 +6,9 @@ sb.map = function(frame, width, height) {
 		buffer = .5;
 
 	// updating to toner tiles
-	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
+	var baseURL = "http://tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/22677/256/{Z}/{X}/{Y}.png";
+    // "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
+
 
 	var container = d3.select(frame).append("div")[0][0];
     container.style.position = "absolute";

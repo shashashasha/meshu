@@ -53,7 +53,7 @@ def item_delete(request, item_id):
 # generalized handler for all our item pages
 def item_handler(request, item_id, template, view):
 	item = get_object_or_404(Meshu, pk=item_id)
-	print(item)
+	
 	return render_to_response('meshu/item/' + template, {
 			'meshu': item,
 			'view': view

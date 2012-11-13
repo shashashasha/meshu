@@ -83,7 +83,7 @@ sb.mesh = function (frame, map, width, height) {
         paths = [],
         new_pt = [],
         pixel_bounds = [],
-        // requests = [],
+        requests = {},
         updateInterval = 0,
         selected = null,
         moved = false,
@@ -250,7 +250,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateRoutes() {
-        console.log(paths.length, 'updating');
+        // console.log(paths.length, 'updating');
 
         var lines = g.selectAll("path").data(paths);
         lines.enter().append("svg:path");
@@ -265,11 +265,11 @@ sb.mesh = function (frame, map, width, height) {
             .attr("stroke-linecap", "round");
 
         lines.attr("stroke-width", function(d, i) {
-            return 20 * Math.pow(1 - d.d, .5) + "px";
+            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
         });
 
         lines.style("stroke-width", function(d, i) {
-            return 20 * Math.pow(1 - d.d, .5) + "px";
+            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
         });
     }
 
@@ -304,21 +304,28 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function showRoutes() {
+        var zoom = map.map.zoom();
+        requests[zoom] = [];
         for (var i = 1; i < points.length; i++) {
-            // requests[i] = 
-            $.ajax({
-                url: "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
+            requests[zoom][i] = $.ajax({
+                url: "/proxy/router/?from=" + 
+                // "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
                 // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
                 points[0][1]+","+points[0][0]+"&to="+points[i][1]+","+points[i][0],
                 // cache: false,
-                dataType: 'jsonp',
-                success: function(data) {
-                    if (data.route.shape) {
+                dataType: 'json',
+                success: function() {
+                    var j = i;
+                    return function(data) {
+                        if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined) {
+                            return;
+                        }
+
                         var wayPoints = data.route.shape.shapePoints;
                         addRoute(wayPoints);
-                    }
-                    // requests.splice(i, 1);
-                }
+                        requests[zoom][j] = 'done';
+                    };
+                }()
             });
         }
     }
@@ -567,13 +574,19 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.refresh = function() {
-        // $.each(requests, function(i,r){
-        //     if (r !== undefined) {
-        //         console.log(r);
-        //         r.abort();
-        //     }
-        //     requests.splice(i,1);
-        // })
+        console.log(requests);
+        $.each(requests, function(i, spokes){
+            $.each(spokes, function(i, r) {
+                if (r == undefined || r == 'done')
+                    return;
+
+                console.log('aborting', r);
+                r.abort();
+            });
+
+            delete requests[i];
+        });
+        console.log(requests);
 
         addRadialPoints();
         showRoutes();
