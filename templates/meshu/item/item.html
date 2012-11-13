@@ -24,3 +24,34 @@
     <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
     <div id="finish-button" class="nav next start-order">Continue</div>
 {% endblock %}
+
+{% block products %}
+    <div class="wrapper" id="wrapper-earrings">
+        <div class="next active">
+            <svg id="preview-earrings" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Earrings</p>
+        <p class="note" id="range-earrings">$75-150</p>
+    </div>
+    <div class="wrapper" id="wrapper-pendant">
+        <div class="next active">
+            <svg id="preview-pendant" width="170" height="160"></svg>
+        </div>
+        <p>Pendant Necklace</p>
+        <p class="note" id="range-pendant">$75-130</p>
+    </div>
+    <div class="wrapper" id="wrapper-necklace">
+        <div class="next active">
+            <svg id="preview-necklace" width="170" height="160"></svg>
+        </div>
+        <p>Large Necklace</p>
+        <p class="note" id="range-necklace">$80-150</p>
+    </div>
+    <div class="wrapper" id="wrapper-cufflinks">
+        <div class="next active">
+            <svg id="preview-cufflinks" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Cufflinks</p>
+        <p class="note" id="range-cufflinks">$150</p>
+    </div>
+{% endblock %}
