@@ -2,7 +2,9 @@
 
 {% block title %}Meshu - Make Your Own{% endblock %}
 
-{% block body_class %}radial edit{% endblock body_class %}
+{% block body_class %}radial{% endblock body_class %}
+
+{% block page_type %}edit{% endblock page_type %}
 
 {% block maphint %}
     <div class="map-hint">
@@ -59,4 +61,9 @@
         <p>Pair of Earrings</p>
         <p class="note" id="range-earrings">$75-150</p>
     </div>
+{% endblock %}
+
+
+{% block meshu_type %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/radial.js"></script>
 {% endblock %}

@@ -13,7 +13,8 @@
     </div>
     {% block map %}
     <div id="meshu-container" class="frame inactive">
-        {% block maphint %}{% endblock %}
+        {% block maphint %}
+        {% endblock %}
         <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
     </div>
     {% endblock %}
@@ -33,8 +34,8 @@
             {% block places %}
                 <div id="places">
                 <h2 id="place-title"></h2>
+                </div>
             {% endblock %}
-            </div>
 
             {% block finish %}
             {% endblock %}
@@ -561,7 +562,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
 
+    {% block meshu_type %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+    {% endblock %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
