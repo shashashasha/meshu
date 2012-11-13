@@ -157,6 +157,14 @@ sb.map = function(frame, width, height) {
 		};
 	};
 
+	self.getMapRadius = function() {
+		var e = self.map.extent();
+		return {
+			lat: Math.abs(e[0].lat - e[1].lat)/3,
+			lon: Math.abs(e[0].lon - e[1].lon)/3
+		}
+	}
+
 	// location to point converter
 	self.l2p = function(loc) {
 		return self.map.locationPoint(loc);
