@@ -54,12 +54,9 @@ sb.mesh = function (frame, map, width, height) {
         .style("height","100%")
         .style("position","absolute");
 
-    // var placeList = d3.select("#places");
     var placeTitle = d3.select("#place-title").attr("class", "inactive");
         placeTitle.append("span").attr("class", "title-text");
         placeTitle.append("span").attr("class", "title-edit").html("edit");
-
-    // var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", removeInput);
@@ -74,9 +71,6 @@ sb.mesh = function (frame, map, width, height) {
         $(this).addClass("active");
         $("#radial-knockout").removeClass("active");
     });
-
-    // radial path drawer
-    // var pathdrawer = sb.pathdrawer(map);
 
     var points = [],
         routes = [],
@@ -94,7 +88,6 @@ sb.mesh = function (frame, map, width, height) {
         meshuTitle = null;
 
     var content = $("#content");
-        // cases = $("#cases");
 
     d3.select(".frame")
         .on("mousemove", mousemove)
@@ -136,22 +129,6 @@ sb.mesh = function (frame, map, width, height) {
 
         var m = d3.svg.mouse(main.node());
 
-        // if we're dragging a point, we need to update its data
-        // if (dragging) {
-        //     var l = map.p2l({
-        //         x: m[0],
-        //         y: m[1]
-        //     });
-        //     dragging[0] = l.lon;
-        //     dragging[1] = l.lat;
-
-        //     var index = points.indexOf(dragging);
-        //     lats[index] = l.lat;
-        //     lons[index] = l.lon;
-        
-        //     update();
-        // }
-
         if (moved && mouse_down) {
             // if we've moved and the mouse is down, we're dragging the map
             map_dragging = true;
@@ -191,23 +168,6 @@ sb.mesh = function (frame, map, width, height) {
             map_dragging = null;
             return;
         }
-
-        // if (dragging) {
-        //     showRoutes();
-        // }
-
-        // delete the point if we mouseup on a point 
-        // if (!moved && dragging) {
-        //     var index = points.indexOf(dragging);
-        //     self.remove(index);
-
-        //     map.updateBounds(lats, lons);
-        //     self.updatePixelBounds();
-        //     update(true);
-        //     // showRoutes();
-        // } else {
-        //     mousemove();
-        // }
 
         // ignore other events
         if (d3.event) {
