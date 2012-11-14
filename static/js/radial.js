@@ -17,7 +17,6 @@ sb.mesh = function (frame, map, width, height) {
         .style("width", width)
         .style("height", height)
         .style("position", "absolute")
-        // .style("z-index", "1")
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
