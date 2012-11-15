@@ -264,7 +264,7 @@ sb.meshbase = function (frame, map, width, height) {
             style[i] = s[i];
         }
         self.styled(style);
-        
+
         console.log('applied style:', self.outputStyle());
     };
 
@@ -288,6 +288,10 @@ sb.meshbase = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
     	return $('#' + selfId).html();
+    };
+
+    self.outputMesh = function() {
+        return ".delaunay";
     };
 
 	return self;

@@ -74,7 +74,15 @@ $(function() {
 
 		// initialize product picker
 		// this needs to be after the meshu is initialized because it needs to copy the mesh over
-		sb.product.initialize(".delaunay", sb.catalog);
+		switch (loadedMeshu.renderer) {
+			case 'facet':
+				sb.product.initialize('.delaunay', sb.catalog);
+				break;
+			case 'radial':
+				sb.product.initialize(loadedMeshu.svg, sb.catalog);
+				break;	
+		}
+		
 
 		$("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");

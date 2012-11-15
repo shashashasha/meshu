@@ -433,8 +433,9 @@ sb.mesh = function (frame, map, width, height) {
             delete requests[i];
         });
 
-        addRadialPoints();
-        showRoutes();
+        // addRadialPoints();
+        // showRoutes();
+        
         update();
 
         // update the zoom
