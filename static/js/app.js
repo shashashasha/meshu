@@ -69,7 +69,7 @@ $(function() {
 			}
 
 			// render the meshu
-			meshu.locationData(loadedMeshu.location_data, loadedMeshu.metadata);
+			meshu.locationData(loadedMeshu.location_data, loadedMeshu.metadata, loadedMeshu.svg);
 		}
 
 		// initialize product picker

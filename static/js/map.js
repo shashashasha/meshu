@@ -6,7 +6,8 @@ sb.map = function(frame, width, height) {
 		buffer = .5;
 
 	// updating to toner tiles
-	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
+	// using subdomains on meshu.io for performance
+	var baseURL = "http://{S}.meshu.io/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
     container.style.position = "absolute";

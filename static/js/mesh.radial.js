@@ -135,9 +135,11 @@ sb.mesh = function (frame, map, width, height) {
         }
 
         if (style.zoom) {
+            console.log('has zoom', style.zoom, map.map.zoom());
             if (style.zoom != map.map.zoom()) {
                 map.map.zoom(style.zoom);   
             }
+            console.log('set zoom', style.zoom, map.map.zoom());
         }
     })
 
@@ -159,8 +161,6 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function updateRoutes() {
-        // console.log(paths.length, 'updating');
-
         var lines = g.selectAll("path").data(paths);
         lines.enter().append("svg:path");
         lines.exit().remove();
@@ -240,7 +240,7 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function update(){
-
+        console.log('updating');
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
 
@@ -345,8 +345,8 @@ sb.mesh = function (frame, map, width, height) {
         var r = map.getMapRadius();
         map.updateBounds([lat-r.lat, lat+r.lat], [lon-r.lon, lon+r.lon]);
 
-        addRadialPoints();
-        showRoutes();
+        // here's where we want to recalculate stuff, because the points have changed
+        self.recalculate();
         update();
 
         self.added();
@@ -418,9 +418,14 @@ sb.mesh = function (frame, map, width, height) {
         return self;
     };
 
-    self.refresh = function() {
-        console.log('refreshing', requests);
+    self.prerender = function(svg) {
+        // copy over the svg instead of doing all the routing again
+        $('#' + selfId).html(svg);
+        $('.circleFrame').attr("cx", $(frame).width() / 2);
+        $('.circleFrame').attr("cy", $(frame).height() / 2);
+    };
 
+    self.recalculate = function() {
         $.each(requests, function(i, spokes){
             $.each(spokes, function(i, r) {
                 if (r == undefined || r == 'done')
@@ -433,16 +438,17 @@ sb.mesh = function (frame, map, width, height) {
             delete requests[i];
         });
 
-        // addRadialPoints();
-        // showRoutes();
-        
-        update();
+        addRadialPoints();
+        showRoutes();
 
         // update the zoom
         self.style({
             zoom: map.map.zoom()
         });
+    };
 
+    self.refresh = function() {
+        update();
         self.refreshed();
     };
     
@@ -457,6 +463,10 @@ sb.mesh = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
         return $('#' + selfId).html();
+    };
+
+    self.id = function() {
+        return selfId;
     };
 
     return self;

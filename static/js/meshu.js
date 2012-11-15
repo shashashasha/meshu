@@ -72,8 +72,6 @@ sb.meshu = function(frame, existingMap) {
                 var content = $("#content");
                 cases.empty().hide();
 
-                console.log("data",data);
-
                 if (typeof results == "undefined") {
                     searchbox.blur();
                     cases.append(
@@ -97,12 +95,6 @@ sb.meshu = function(frame, existingMap) {
                         } 
                     }
                 }
-                // else {
-                //     cases.append(
-                //         $("<p>").text("Oops, we're not sure which place you meant. Try a more specific search?"))
-                //             .fadeIn();
-                //     searchbox.blur();
-                // }
             }
         });
     }
@@ -127,7 +119,7 @@ sb.meshu = function(frame, existingMap) {
         }
     };
 
-    self.locationData = function(data, style) {
+    function parseLocationData(data) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};
@@ -154,7 +146,14 @@ sb.meshu = function(frame, existingMap) {
             });
         }
 
-        mesh.locations(newLocs);
+        return newLocs;
+    }
+
+    self.locationData = function(data, style, svg) {
+        mesh.prerender(svg);
+
+        var locations = parseLocationData(data);
+        mesh.locations(locations);   
 
         // 'drawStyle:knockout|zoom:12' for example
         if (style) {

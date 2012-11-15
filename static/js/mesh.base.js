@@ -245,6 +245,11 @@ sb.meshbase = function (frame, map, width, height) {
         self.refreshed();
     };
 
+    // before loading in new locations, we can blit the svg onto the screen
+    self.prerender = function() {
+
+    };
+
     self.applyStyle = function(styleString) {
         var styles = styleString.split("|");
 
