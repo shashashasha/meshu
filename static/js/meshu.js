@@ -127,10 +127,11 @@ sb.meshu = function(frame, existingMap) {
         }
     };
 
-    self.locationData = function(data) {
+    self.locationData = function(data, style) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};
+
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
@@ -154,6 +155,11 @@ sb.meshu = function(frame, existingMap) {
         }
 
         mesh.locations(newLocs);
+
+        // 'drawStyle:knockout|zoom:12' for example
+        if (style) {
+            mesh.applyStyle(style);
+        }
         return self;
     };
 
@@ -251,6 +257,18 @@ sb.meshu = function(frame, existingMap) {
         });
 
         return dataString.join("|");
+    };
+
+    self.xhr = function() {
+        return {
+          'xhr': 'true',
+          'title' : self.outputTitle(),
+          'svg': self.outputSVG(),
+          'location_data' : self.outputLocationData(),
+          'renderer': mesh.name,
+          'metadata': mesh.outputStyle(),
+          'promo': meshu.promo
+        };
     };
 
 	return self;

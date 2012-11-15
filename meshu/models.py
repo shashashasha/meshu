@@ -72,6 +72,9 @@ class Meshu(models.Model):
 	# thumbnail in case we need gallery views	
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/default_thumbnail.png")
 
+	# whether or not its facet or radial
+	renderer = models.CharField(max_length=140, default='', blank=True)
+
 	# store visual style, zoom level, etc. 
 	# format is "product:radial&zoom:10"
 	metadata = models.CharField(max_length=1000, default='', blank=True)

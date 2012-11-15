@@ -229,12 +229,12 @@ def make_order(request, profile, meshu):
 	desc = str(email) + ", meshu id " + str(meshu.id)
 
 	# create the charge on Stripe's servers - this will charge the user's card
-	charge = stripe.Charge.create(
-	    amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
-	    currency="usd",
-	    card=token,
-	    description=desc
-	)
+	# charge = stripe.Charge.create(
+	#     amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
+	#     currency="usd",
+	#     card=token,
+	#     description=desc
+	# )
 
 	# create a new order
 	# every order is new
@@ -276,6 +276,9 @@ def meshu_update(request, meshu):
 	meshu.location_data = request.POST.get('location_data', meshu.location_data)
 	meshu.svg = request.POST.get('svg', meshu.svg)
 	meshu.theta = request.POST.get('theta', meshu.theta)
+
+	meshu.renderer = request.POST.get('renderer', meshu.renderer)
+	meshu.metadata = request.POST.get('metadata', meshu.metadata)
 
 	meshu.promo = request.POST.get('promo', meshu.promo)
 	return meshu

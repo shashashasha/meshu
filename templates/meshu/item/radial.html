@@ -45,6 +45,9 @@
 {% block goback %}
     <div class="nav back">back</div>
 {% endblock %}
+{% block finish %}
+    <div id="finish-button" class="nav next start-order">Continue</div>
+{% endblock %}
 
 {% block products %}
     <div class="wrapper" id="wrapper-necklace">
@@ -63,7 +66,6 @@
     </div>
 {% endblock %}
 
-
-{% block meshu_type %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/radial.js"></script>
+{% block meshu_renderer %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
 {% endblock %}

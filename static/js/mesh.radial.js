@@ -1,8 +1,11 @@
 var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
-    var self = d3.dispatch("added", "refreshed", "locationsSet"),
+    var self = sb.meshbase(frame, map, width, height),
         selfId = parseInt(Math.random() * 10000000000, 10);
+
+    // the name of the product line
+    self.name = 'radial';
 
     // making this not global ._.
     var lats = [],
@@ -58,17 +61,17 @@ sb.mesh = function (frame, map, width, height) {
         placeTitle.append("span").attr("class", "title-edit").html("edit");
 
     if (!$("body").hasClass("firefox"))
-        $(".place-text input").live("blur", removeInput);
+        $(".place-text input").live("blur", self.removeInput);
 
     $("#radial-knockout").click(function(){
-        $("body").addClass("knockout");
-        $(this).addClass("active");
-        $("#radial-frame").removeClass("active");
+        self.style({
+            drawStyle: "knockout"
+        });
     });
     $("#radial-frame").click(function(){
-        $("body").removeClass("knockout");
-        $(this).addClass("active");
-        $("#radial-knockout").removeClass("active");
+        self.style({
+            drawStyle: "outline"
+        });
     });
 
     var points = [],
@@ -77,36 +80,15 @@ sb.mesh = function (frame, map, width, height) {
         new_pt = [],
         pixel_bounds = [],
         requests = {},
-        updateInterval = 0,
-        selected = null,
-        moved = false,
-        dragging = null,
-        mouse_down = null,
-        map_dragging = null,
-        last_mouse = null,
         meshuTitle = null;
 
     var content = $("#content");
 
-    d3.select(".frame")
-        .on("mousemove", mousemove)
-        .on("mousedown", mousedown)
-        
     d3.select(uiShield.node())
         .on("mouseover", mouseover)
         .on("mouseout", mouseout);
 
-    d3.select('body').on("mouseup", mouseup);
-
-    function mousedown() {
-        if (!content.hasClass("edit")) return;
-
-        // mouse is down, get ready to track map dragging
-        mouse_down = true;
-    }
-
     var tooltipTimeout;
-
     function mouseover() {
         tooltipTimeout = setTimeout(function(){
             $(".map-hint").fadeIn();
@@ -117,80 +99,48 @@ sb.mesh = function (frame, map, width, height) {
         $(".map-hint").fadeOut();
     }
 
-    function mousemove() {
-        // disable mousemove detection when we're not editing
-        if (!content.hasClass("edit")) return;
+    self.hittest = function(target) {
+        return d3.event.target != uiShield.node();
+    };
 
-        // if we're not dragging anything and the mouse isn't down, ignore
-        if (!dragging && !mouse_down) {
-            return;
+    self.on("draggedMap", function() {
+        update();
+    });
+
+    self.on("clickedMap", function(loc) {
+        self.add(loc.lat, loc.lon, undefined, false);
+    });
+
+    self.on("removed", function() {
+        if (points.length == 0)
+             $("#finish-button").removeClass("active");
+    });
+
+    self.on("styled", function(style) {
+        if (style.drawStyle) {
+            switch (style.drawStyle) {
+                case "knockout":
+                    $("body").addClass("knockout");
+                    $(this).addClass("active");
+                    $("#radial-frame").removeClass("active");
+                    break;
+
+                case "outline":
+                default:
+                    $("body").removeClass("knockout");
+                    $(this).addClass("active");
+                    $("#radial-knockout").removeClass("active");
+                    break;
+            }
         }
 
-        var m = d3.svg.mouse(main.node());
-
-        if (moved && mouse_down) {
-            // if we've moved and the mouse is down, we're dragging the map
-            map_dragging = true;
-
-            // move the map by the delta
-            if (last_mouse)
-                map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
-
-            update();
+        if (style.zoom) {
+            if (style.zoom != map.map.zoom()) {
+                map.map.zoom(style.zoom);   
+            }
         }
+    })
 
-        moved = true;
-        last_mouse = m;
-    }
-
-    function mouseup() {
-        mouse_down = null;
-        last_mouse = null;
-
-        // if we're not on the right page, ignore
-        if (!content.hasClass("edit")) return;
-
-        // ignore zoom buttons, other ui
-        // if it's a circle we need to continue because that means it's a point that's being dragged
-        // image for IE fix!
-        if (d3.event.target.id != 'ui-shield' && d3.event.target != main.node() && d3.event.target.tagName != "image")  return;
-
-        // if we're not dragging and we're not dragging the map, we're adding a point
-        if (!dragging && !map_dragging) {
-            var m = d3.svg.mouse(main.node());
-            var loc = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
-
-            self.add(loc.lat, loc.lon, undefined, false);
-            map_dragging = null;
-            return;
-        }
-
-        // ignore other events
-        if (d3.event) {
-          d3.event.preventDefault();
-          d3.event.stopPropagation();
-        }
-
-        // reset the dragging flags
-        moved = false;
-        dragging = null;
-        map_dragging = null;
-    }
-
-    self.updatePixelBounds = function() {
-        if (lats.length && lons.length) {
-            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
-                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
-        }
-        else { 
-            pixel_bounds = [];
-        }
-    }
 
     function updateMesh(skipAnimation) {
         var circles = wrapper.selectAll("circle");
@@ -290,25 +240,6 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     function update(){
-        // var radius = Math.sqrt(Math.pow((r0[0]-r1[0],2)+Math.pow((r0[1]-r1[1]),2)));
-        // main.select(".circleFrame").attr("r",radius);
-        // the transparent circles that serve as ui, allowing for dragging and deleting
-        // var circles = ui.selectAll("circle")
-        //     .data([points[0]]);
-
-        // // new radial circles
-        // circles.enter()
-        //     .append("svg:circle")
-        //     .attr("id",function(d, i){ return "c-" + i; })
-        //     .attr("r", 10)
-        //     .on("mousedown", function(d) {
-        //         selected = dragging = d;
-
-        //         // stop prop to prevent map dragging
-        //         d3.event.stopPropagation();
-        //     });
-        
-        // circles.exit().remove();
 
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
@@ -354,56 +285,17 @@ sb.mesh = function (frame, map, width, height) {
 
         placeTitle.select(".title-text").on("click",function(d){
             if (d.edit) return;
-            editText($(this).parent(),0,"title");
+            self.editText($(this).parent(),0,"title");
             d.edit = !d.edit;
         });
 
         placeTitle.select(".title-edit").on("click",function(d){
             var node = $(this).parent();
-            if (!d.edit) editText(node,0,"title");
-            else d.title = meshuTitle = saveText(node,0,"title");
+            if (!d.edit) self.editText(node,0,"title");
+            else d.title = meshuTitle = self.saveText(node,0,"title");
             d.edit = !d.edit;
         });
     }
-
-    function editText(node,i,type) {
-        var button = node.find("." + type + "-edit").text("save");
-        var field = node.find("." + type + "-text");
-        var value = ((type == "title") ? field.text() : meshuTitle);
-
-        node.addClass("active");
-        field.html('<input value="' + value + '">').find("input").focus();
-
-        // TODO: pressing enter saves the value
-        // right now has issues with event propogation 
-        // also going from one edit field to another
-
-        // field.keyup(function(event) {
-        //     if (event.which != 13) return;
-        //     saveText(node, i, type);
-        //     button.text("edit");
-        //     field.unbind('keyup'); 
-        // });
-    }
-    function saveText(node, i, type) {
-        var button = node.find("." + type + "-edit").text("edit");
-        var text = node.find("input").val();
-
-        node.removeClass("active");
-        node.find("." + type + "-text").text(text);
-
-        if (type == "place") meshuTitle = text;
-        else return text;
-    }
-    function removeInput(event){
-        var titles = list.selectAll("li.place .title");
-        titles.each(function(d, i) {
-            if (!d.edit) return;
-            d.edit = false;
-            saveText($(this), i, "place");
-        });
-        return false;
-    };
 
     function addRadialPoints() {
         main.selectAll("path").remove();
@@ -429,11 +321,6 @@ sb.mesh = function (frame, map, width, height) {
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
-        // clear previous update
-        if (updateInterval) {
-            clearInterval(updateInterval);
-        }
-
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
 
@@ -486,7 +373,7 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.places = function() {
-        return meshuTitle;
+        return [meshuTitle];
     };
 
     self.points = function(pts) {
@@ -526,30 +413,34 @@ sb.mesh = function (frame, map, width, height) {
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js
-        // update();
         self.locationsSet();
 
         return self;
     };
 
     self.refresh = function() {
-        console.log(requests);
+        console.log('refreshing', requests);
+
         $.each(requests, function(i, spokes){
             $.each(spokes, function(i, r) {
                 if (r == undefined || r == 'done')
                     return;
 
-                console.log('aborting', r);
-                r.abort();
+                // console.log('aborting', r);
+                // r.abort();
             });
 
             delete requests[i];
         });
-        console.log(requests);
 
         addRadialPoints();
         showRoutes();
         update();
+
+        // update the zoom
+        self.style({
+            zoom: map.map.zoom()
+        });
 
         self.refreshed();
     };

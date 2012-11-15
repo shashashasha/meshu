@@ -1,11 +1,12 @@
 $(function() {
+	var svgEnabled = $("html").hasClass("svg");
 
 	// create a stripe payment object
 	orderer.catalog(sb.catalog);
 	sb.materializer.initialize(sb.catalog);
 
 	// create a meshu object for a single meshu container
-	var meshu = sb.meshu($("#meshu-container")[0]);
+	meshu = sb.meshu($("#meshu-container")[0]);
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
@@ -14,9 +15,11 @@ $(function() {
 
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
-	sb.ui.orderer(meshu).on("validated", function() {
-		content.attr("class", "review");
+	var orderForm = sb.ui.orderer(meshu);
+	orderForm.on("validated", function() {
+		sb.viewhandler.view('review');
 		makeNextView('review');
+		return false;
 	});
 
 	// initialize the social sharing ui
@@ -32,35 +35,18 @@ $(function() {
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);
 
-		// if svg is enabled
-		if ($("html").hasClass("svg")) {
-			if (meshu.isReadymade) {
-				// readymade.js
-				try {
-					readymade.initialize(meshu);	
-				}
-				catch(e) {
-					// ignore if we don't have readymade.js
-				}
-			}
-
-			if (pageType == 'view') {
-				meshu.map().buffer(0);
-			}
-			
-			meshu.locationData(loadedMeshu.location_data);
-		}
-
 		// checking the page view type, setting our flows accordingly
 		user.updateLogoutActions(pageType);
-
-		// initialize product picker
-		sb.product.initialize(".delaunay", sb.catalog);
 
 		// viewhandler handles next / prev buttons, shuffling account view
 		sb.viewhandler.updateViews(pageType);
 
 		switch (pageType) {
+			case 'view':
+				if (svgEnabled) 
+					meshu.map().buffer(0);
+				break;
+			
 			case 'product':
 				var product = $("#product");
 				product.find(".nav").remove();
@@ -75,8 +61,25 @@ $(function() {
 				break;
 		}
 
+		// if svg is enabled
+		if (svgEnabled) {
+			// readymade.js
+			if (meshu.isReadymade && readymade) {
+				readymade.initialize(meshu);
+			}
+
+			// render the meshu
+			meshu.locationData(loadedMeshu.location_data, loadedMeshu.metadata);
+		}
+
+		// initialize product picker
+		// this needs to be after the meshu is initialized because it needs to copy the mesh over
+		sb.product.initialize(".delaunay", sb.catalog);
+
 		$("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");
+
+		// creates the location list
 		var rows = loadedMeshu.location_data.split("|");
 		$.each(rows,function(i,row){
 			var cols = row.split("\t");
@@ -99,6 +102,7 @@ $(function() {
                 meshu.updateTitle(d.title);
                 return d.title;
             });
+
 	} else {
 		saver.initializeNewMeshu(meshu);
 	}
@@ -158,8 +162,7 @@ $(function() {
 		switch (view) {
 			case 'edit':
 				meshu.updateBounds();
-
-				meshu.mesh().updateCircleBehavior();
+				meshu.mesh().interactive(true);
 
 				// initialize product picker
 				// todo - fix
@@ -173,7 +176,8 @@ $(function() {
 
 			case 'make':
 			case 'readymade':
-				meshu.mesh().updateCircleBehavior(true);
+				meshu.mesh().interactive(false);
+
 				// animate meshu
 				var product = sb.materializer.product();
 				var t = sb.transforms[product]["render"];
@@ -184,6 +188,10 @@ $(function() {
 				var productPreview = static_url + 'images/render/' + product + '_preview.jpg';
 				$(".render").css("background-image","url(" + productPreview + ")");
 				break;
+
+			case 'review':
+				orderForm.updated();
+				break;
 		}
 	}
 
@@ -192,12 +200,12 @@ $(function() {
 		var view = sb.viewhandler.view();
 		switch (view) {
 			case 'edit':
-				meshu.mesh().updateCircleBehavior();
+				meshu.mesh().interactive(true);
 				break;
 
 			case 'make':
 			case 'readymade':
-				meshu.mesh().updateCircleBehavior();
+				meshu.mesh().interactive(true);
 				meshu.animateTransform(0, 1, 0, 0);
 				break;
 		}

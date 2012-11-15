@@ -53,6 +53,34 @@
                 <h2>Choose your piece:</h2>
                 <div id="product-preview">
                     {% block products %}
+                    <div class="wrapper" id="wrapper-earrings">
+                        <div class="next active">
+                            <svg id="preview-earrings" width="170" height="160"></svg>
+                        </div>
+                        <p>Pair of Earrings</p>
+                        <p class="note" id="range-earrings">$75-150</p>
+                    </div>
+                    <div class="wrapper" id="wrapper-pendant">
+                        <div class="next active">
+                            <svg id="preview-pendant" width="170" height="160"></svg>
+                        </div>
+                        <p>Pendant Necklace</p>
+                        <p class="note" id="range-pendant">$75-130</p>
+                    </div>
+                    <div class="wrapper" id="wrapper-necklace">
+                        <div class="next active">
+                            <svg id="preview-necklace" width="170" height="160"></svg>
+                        </div>
+                        <p>Large Necklace</p>
+                        <p class="note" id="range-necklace">$80-150</p>
+                    </div>
+                    <div class="wrapper" id="wrapper-cufflinks">
+                        <div class="next active">
+                            <svg id="preview-cufflinks" width="170" height="160"></svg>
+                        </div>
+                        <p>Pair of Cufflinks</p>
+                        <p class="note" id="range-cufflinks">$150</p>
+                    </div>
                     {% endblock %}
                 </div>
 
@@ -202,6 +230,8 @@
                         <input type="hidden" id="svg-file" name="svg"/>
                         <input type="hidden" id="svg-theta" name="theta"/>
                         <input type="hidden" id="meshu-title" name="title"/>
+                        <input type="hidden" id="meshu-renderer" name="renderer"/>
+                        <input type="hidden" id="meshu-metadata" name="metadata"/>
                         <input type="hidden" id="meshu-data" name="location_data"/>
                         <input type="hidden" id="postcard-note" name="postcard_note"/>
                     </div>
@@ -562,8 +592,13 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
 
-    {% block meshu_type %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+    {% block meshu_renderer %}
+    {% if meshu %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.{{ meshu.renderer }}.js"></script>
+    {% else %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+    {% endif %}
     {% endblock %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
@@ -601,6 +636,8 @@
         view_url: '{{ meshu.get_absolute_url }}',
         title: "{{ meshu.title|safe }}",
         product: '{{ meshu.product }}',
+        renderer: '{{ meshu.renderer }}',
+        metadata: '{{ meshu.metadata }}',
         location_data: "{{ meshu.location_data|safe }}",
         svg: '{{ meshu.svg|safe }}',
         promo: '{{ meshu.promo }}'

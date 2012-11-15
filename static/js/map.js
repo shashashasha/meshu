@@ -72,6 +72,8 @@ sb.map = function(frame, width, height) {
 				lat: lats[0],
 				lon: lons[0]
 			}).zoom(10);
+			
+			self.boundsUpdated();
 			return;
 		}
 

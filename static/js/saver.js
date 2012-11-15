@@ -6,14 +6,9 @@ var saver = function() {
 
     // the object we send to the server to be saved/updated
     function getMeshuXHR() {
-        return {
-          'xhr': 'true',
-          'csrfmiddlewaretoken' : $("#csrf input").val(),
-          'title' : self.meshu.outputTitle(),
-          'svg': self.meshu.outputSVG(),
-          'location_data' : self.meshu.outputLocationData(),
-          'promo': self.meshu.promo
-        };
+        var xhr = self.meshu.xhr();
+        xhr.csrfmiddlewaretoken = $("#csrf input").val();
+        return xhr;
     }
 
     function updateMeshuID(id) {
@@ -127,6 +122,7 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
+      console.log('creatingorupdating', getMeshuXHR());
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();

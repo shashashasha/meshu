@@ -113,7 +113,7 @@ sb.ui.orderer = function(meshu) {
 		},
 		submitHandler: onFormValidated
 	});
-	
+
 	/*
 		Save and View the meshu, go to the view page
 	*/
@@ -155,7 +155,9 @@ sb.ui.orderer = function(meshu) {
 			return;
 		}
 
+		self.updated();
 		self.validated();
+		return false;
 	}
 
 	function forceUserLogin(callback) {
@@ -195,6 +197,9 @@ sb.ui.orderer = function(meshu) {
 		$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
+
+		$("#meshu-renderer").val(meshu.mesh().name);
+		$("#meshu-metadata").val(meshu.mesh().outputStyle());
 
 		$("#postcard-note").val($("#postcard-note-form").val());
 	}

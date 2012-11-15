@@ -46,8 +46,6 @@ def user_login_success(request, user):
 
 	profile = user.get_profile()
 	meshus = Meshu.objects.filter(user_profile=profile)
-	
-	print(user.username)
 
 	if xhr:
 		return json_dump({

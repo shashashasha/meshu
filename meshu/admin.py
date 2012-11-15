@@ -13,7 +13,7 @@ class MeshuInline(admin.TabularInline):
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {
-            'fields': ('user_profile', 'title', 'description', 'location_data', 'svg', 'theta', 'product', 'promo', 'metadata', 'thumbnail')
+            'fields': ('user_profile', 'title', 'description', 'location_data', 'svg', 'theta', 'renderer', 'metadata', 'product', 'promo', 'thumbnail')
         }),
 	]
 	inlines = [ MeshuImageInline, ]

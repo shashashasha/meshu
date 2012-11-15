@@ -32,8 +32,6 @@ def processing_router(request):
 	base = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="
 	start = request.GET.get('from', '')
 	end = request.GET.get('to', '')
-	print(start)
-	print(end)
 
 	try:
 		response = urllib2.urlopen(base + start + '&to=' + end)
@@ -56,10 +54,6 @@ def processing_jsoner(request):
 
 # proxying the tiles to draw them in canvas
 def processing_tiles(request, subdomain, zoom, x, y):
-	# print(subdomain)
-	# print(zoom)
-	# print('x:' + str(x))
-	# print('y:' + str(y))
 	url = 'http://{0}.tile.stamen.com/toner/{1}/{2}/{3}.png'.format(subdomain, zoom, x, y)
 
 	try:

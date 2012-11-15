@@ -65,21 +65,16 @@ sb.rasterizer = function() {
 			this starts off as assigned to the 'guest' user_profile, 
 			which once we log in we assign to the logged in user_profile
 		*/
-		var pngPost = {
-			'xhr': 'true', 
-			'csrfmiddlewaretoken': $("#csrf input").val(),
-			'dataurl': canvas.toDataURL(),
-			'title': meshu.outputTitle(),
-			'location_data': meshu.outputLocationData(),
-			'svg': meshu.outputSVG()
-		};
+		var xhr = meshu.xhr();
+		xhr.csrfmiddlewaretoken = $("#csrf input").val();
+		xhr.dataurl = canvas.toDataURL();
 
 		/* 
 			attach the meshu id if we have one, 
 			this is if we're starting off with a meshu
 		*/
 		if (meshu.id) {
-			pngPost.id = meshu.id;
+			xhr.id = meshu.id;
 		}
 
 		// clear canvases
@@ -89,7 +84,7 @@ sb.rasterizer = function() {
 		}
 
 		// send it to the server to be saved as a png
-		$.post('to_png', pngPost, function(data) {
+		$.post('to_png', xhr, function(data) {
 			var img = document.createElement('img');
 			img.src = data.image_url;
 			$(img).addClass("hidden");

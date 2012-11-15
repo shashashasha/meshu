@@ -112,7 +112,6 @@ def item_from_data(request):
 
 	meshu = Meshu()
 
-
 	meshu.title = request.POST.get('title', 'My Meshu')
 	meshu.description = request.POST.get('description', '')
 

@@ -44,32 +44,3 @@
 
 {% block checkout %}
 {% endblock %}
-
-
-{% block resources %}
-    <script type="text/javascript">
-
-    Modernizr.load({
-        test: Modernizr.svg,
-        nope: '{{ STATIC_URL }}js/min/no-svg.min.js'
-    });
-
-    var pageType = "{{ view }}";
-    
-    {% if meshu %}
-    var loadedMeshu = {
-        id: '{{ meshu.id }}',
-        username: '{{ meshu.user_profile.user.username }}',
-        edit_url: '{{ meshu.get_edit_url }}',
-        view_url: '{{ meshu.get_absolute_url }}',
-        title: "{{ meshu.title|safe }}",
-        product: '{{ meshu.product }}',
-        location_data: "{{ meshu.location_data|safe }}",
-        svg: '{{ meshu.svg|safe }}',
-        promo: '{{ meshu.promo }}'
-    };
-    {% else %} 
-    var loadedMeshu = null;
-    {% endif %}
-    </script>  
-{% endblock %}
