@@ -53,10 +53,10 @@ sb.mesh.radial = function (frame, map, width, height) {
         .data([[-122.445,37.755]])
         .attr("cx",300).attr("cy",300).attr("r",200);
 
-    var hidden = main.append("svg:g")
-                 .attr("class", "hidden");
+    // var hidden = main.append("svg:g")
+    //              .attr("class", "hidden");
 
-    hidden.append("svg:path");
+    // hidden.append("svg:path");
 
     var uiShield = d3.select(frame)
         .append("div")
@@ -264,32 +264,32 @@ sb.mesh.radial = function (frame, map, width, height) {
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
 
-        var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
-        rotate_pts.enter()
-            .append("svg:circle")
-            .attr("class","rotation")
-            .attr("r","40")
-            .attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
+        // var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
+        // rotate_pts.enter()
+        //     .append("svg:circle")
+        //     .attr("class","rotation")
+        //     .attr("r","40")
+        //     .attr("cx", function(d, i) {
+        //         return d.x;
+        //     }).attr("cy", function(d, i) {
+        //         return d.y;
+        //     });
             
-        rotate_pts.exit().remove();
-        rotate_pts.attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
-        var bounding_box = hidden.select("path");
-        bounding_box.attr("d", function() {
-            if (pixel_bounds.length == 0) return;
-            var draw = [];
-            $.each(pixel_bounds, function(i, p) {
-                draw.push([p.x,p.y]);
-            });
-            return "M" + draw.join("L") + "Z"; 
-        }).attr("class","hiddenFrame")
+        // rotate_pts.exit().remove();
+        // rotate_pts.attr("cx", function(d, i) {
+        //         return d.x;
+        //     }).attr("cy", function(d, i) {
+        //         return d.y;
+        //     });
+        // var bounding_box = hidden.select("path");
+        // bounding_box.attr("d", function() {
+        //     if (pixel_bounds.length == 0) return;
+        //     var draw = [];
+        //     $.each(pixel_bounds, function(i, p) {
+        //         draw.push([p.x,p.y]);
+        //     });
+        //     return "M" + draw.join("L") + "Z"; 
+        // }).attr("class","hiddenFrame")
 
         updateListBehavior();
         updateBorderCircle();
@@ -441,11 +441,16 @@ sb.mesh.radial = function (frame, map, width, height) {
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
         $('#' + selfId + 'prerendered').html(svg);
+        var pathGroup = $('#' + selfId + 'prerendered').find(".delaunay");
+        $('#' + selfId + 'prerendered').remove();
+        $('#' + selfId).find(".delaunay").replaceWith(pathGroup);
+
 
         var fw = $(frame).width(),
             fh = $(frame).height();
         if (fw > fh)
-            $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+(fw-fh)/2+",0)")
+            // $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+(fw-fh)/2+",0)")
+            $('#' + selfId + " .delaunay").attr("transform","translate("+(fw-fh)/2+",0)")
     };
 
     self.recalculate = function() {

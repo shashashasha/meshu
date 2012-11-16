@@ -17,7 +17,7 @@ $(function() {
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// hotfix for postcard pages
-	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
+	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : -1;
 
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block view %}
-    <div id="view">
+    <div id="view" class="{{ meshu.renderer }}">
         <h2>
             <span>{{ meshu.title }}</span>
             {% if user.is_authenticated %}
