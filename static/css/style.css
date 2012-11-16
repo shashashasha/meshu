@@ -946,6 +946,9 @@ body.ie .frame div {
   height: 190px;
   margin-top: 15px;
 }
+.radial #rotate-help {
+  display: none;
+}
 #rotate-help {
   position: absolute;
   left: 220px;

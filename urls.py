@@ -105,18 +105,7 @@ urlpatterns += patterns('meshu.item',
 
 	# root way to begin making a meshu
 	url(r'^make/', direct_to_template, {
-		'template': 'meshu/item/make_landing.html'
-	}),
-
-
-	# radial road test
-	url(r'^make_new/', direct_to_template, {
-		'template': 'meshu/make_new.html'
-	}),
-
-	# radial road test
-	url(r'^radial/', direct_to_template, {
-		'template': 'meshu/item/radial.html'
+		'template': 'meshu/make_landing.html'
 	}),
 	
 	# save/new always creates a new meshu
