@@ -1,12 +1,20 @@
 $(function() {
 	var svgEnabled = $("html").hasClass("svg");
 
+	// initialize the catalog with the current promotion if any
+	// sorry about this, future us. signed, past sha.
+	var promotion = loadedMeshu ? loadedMeshu.promo : null,
+		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
+							$("body").hasClass("radial") ? 'radial' : null;
+
+	var catalog = sb.catalog(promotion);
+
 	// create a stripe payment object
-	orderer.catalog(sb.catalog);
-	sb.materializer.initialize(sb.catalog);
+	orderer.catalog(catalog);
+	sb.materializer.initialize(catalog);
 
 	// create a meshu object for a single meshu container
-	meshu = sb.meshu($("#meshu-container")[0]);
+	meshu = sb.meshu($("#meshu-container")[0], null, currentRenderer);
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
@@ -74,12 +82,12 @@ $(function() {
 
 		// initialize product picker
 		// this needs to be after the meshu is initialized because it needs to copy the mesh over
-		switch (loadedMeshu.renderer) {
+		switch (currentRenderer) {
 			case 'facet':
-				sb.product.initialize('.delaunay', sb.catalog);
+				sb.product.initialize('.delaunay', catalog);
 				break;
 			case 'radial':
-				sb.product.initialize(loadedMeshu.svg, sb.catalog);
+				sb.product.initialize(loadedMeshu.svg, catalog);
 				break;	
 		}
 		
@@ -174,7 +182,7 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize(".delaunay", sb.catalog);
+				sb.product.initialize(".delaunay", catalog);
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it

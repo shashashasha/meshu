@@ -40,10 +40,10 @@
                 {% if object.thumbnail != 'images/default_thumbnail.png' %}
                     <img src="{{ object.thumbnail.url }}" />
                 {% else %}
-                    <!-- <p class="hidden">{{ object.location_data }}</p> -->
-                    {% autoescape off %}
+                    <p class="hidden">{{ object.location_data }}</p>
+                    <!-- {% autoescape off %}
                         {{ object.svg }}
-                    {% endautoescape %}
+                    {% endautoescape %} -->
                 {% endif %}
                 {% if view == 'shop' %}
                     <div class="text-block">
@@ -66,13 +66,17 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/minimeshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript">
 
-        // $(".mini-meshu").each(function(i){
-        //     var meshu = sb.minimeshu($(this).find("a")[0]);
-        //     var locations = meshu.locationData($(this).find(".hidden").html());
-        // });
+        $(".mini-meshu").each(function(i){
+            var meshu = sb.minimeshu($(this).find("a")[0]);
+            var data = $(this).find(".hidden").html();
+
+            var locations = meshu.locationData(data);
+        });
 
         /*
             Fixing last row of objects bottom border.

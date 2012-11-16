@@ -1,3 +1,6 @@
+/*
+	Slideshow for the index.html page
+*/
 $(function() {
 	var index = 0;
 	var sum = $(".bleed").length;

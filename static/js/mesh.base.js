@@ -1,6 +1,7 @@
 var sb = sb || {};
 
-sb.meshbase = function (frame, map, width, height) {
+sb.mesh = {};
+sb.mesh.base = function (frame, map, width, height) {
 	var self = d3.dispatch("added", 
                             "refreshed", 
                             "locationsSet", 

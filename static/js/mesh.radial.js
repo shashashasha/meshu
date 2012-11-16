@@ -1,7 +1,7 @@
 var sb = sb || {};
 
-sb.mesh = function (frame, map, width, height) {
-    var self = sb.meshbase(frame, map, width, height),
+sb.mesh.radial = function (frame, map, width, height) {
+    var self = sb.mesh.base(frame, map, width, height),
         selfId = parseInt(Math.random() * 10000000000, 10),
         hosts = ['a', 'b', 'c', 'd'];
 
@@ -140,7 +140,7 @@ sb.mesh = function (frame, map, width, height) {
                 map.map.zoom(style.zoom);   
             }
         }
-    })
+    });
 
 
     function updateMesh(skipAnimation) {
@@ -426,6 +426,9 @@ sb.mesh = function (frame, map, width, height) {
         $('#' + selfId).html(svg);
         $('.circleFrame').attr("cx", $(frame).width() / 2);
         $('.circleFrame').attr("cy", $(frame).height() / 2);
+
+        // move over the .delaunay class instead of each element individually
+        // thanks binx!
     };
 
     self.recalculate = function() {

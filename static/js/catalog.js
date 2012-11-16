@@ -1,5 +1,5 @@
 var sb = sb || {};
-sb.catalog = function() {
+sb.catalog = function(promo) {
 	var self = {};
 	var options = {"earrings":
 						{"wood":{"price":75,"colors":["Amber"]},
@@ -17,9 +17,21 @@ sb.catalog = function() {
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150,"colors":["Sterling Silver"]}},
 					"cufflinks":
-						{
-						// "stainless":{"price":85},
-						"silver":{"price":150}}};
+						{"silver":{"price":150}}};
+
+	var promotions = {};
+	promotions.marathon = {
+					"earrings":
+						{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+				   	"pendant":
+				   		{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+				   	"necklace":
+				   		{"wood":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
+				   	};
+
+	if (promo && promotions[promo]) {
+		options = promotions[promo];
+	}
 
 	// check if this exists
 	self.check = function(type, material) {
@@ -71,4 +83,4 @@ sb.catalog = function() {
 	};
 
 	return self;
-}();
+};

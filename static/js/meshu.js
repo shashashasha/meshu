@@ -1,12 +1,14 @@
 var sb = sb || {};
 var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
 
-sb.meshu = function(frame, existingMap) {
+sb.meshu = function(frame, existingMap, renderer) {
 	var self = {},
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
 		map = existingMap || sb.map(frame, width, height),
-		mesh = sb.mesh(frame, map, width, height),
+        renderer = renderer || 'facet',
+        // use the renderer given
+		mesh = sb.mesh[renderer](frame, map, width, height),
         cases = $("#cases");
 
     // need to make these controls optional....
@@ -25,7 +27,7 @@ sb.meshu = function(frame, existingMap) {
 
     searchbox.focus(function(){
         cases.fadeOut();
-    })
+    });
 
     searchbox.keypress(function(event) {
         if ( event.which == 13 ) {
@@ -89,7 +91,7 @@ sb.meshu = function(frame, existingMap) {
                         } else if (rad > 100000) {
                             map.map.zoom(4);
                         } else if (rad > 10000) {
-                            map.map.zoom(12);
+                            map.map.zoom(13);
                         } else if (rad > 400) {
                             map.map.zoom(14);
                         } 

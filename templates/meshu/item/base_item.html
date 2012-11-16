@@ -583,24 +583,19 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     
-    <script type="text/javascript" src="{{ STATIC_URL }}js/catalog{{ meshu.promo }}.js"></script>
     <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
     
     <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
     <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script> 
 
+    <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
-    {% block meshu_renderer %}
-    {% if meshu %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.{{ meshu.renderer }}.js"></script>
-    {% else %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
-    {% endif %}
-    {% endblock %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+    
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>

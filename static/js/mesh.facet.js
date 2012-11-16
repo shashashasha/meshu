@@ -1,7 +1,7 @@
 var sb = sb || {};
 
-sb.mesh = function (frame, map, width, height) {
-    var self = sb.meshbase(frame, map, width, height),
+sb.mesh.facet = function (frame, map, width, height) {
+    var self = sb.mesh.base(frame, map, width, height),
         selfId = parseInt(Math.random() * 10000000000, 10);
 
     // the name of the product line
