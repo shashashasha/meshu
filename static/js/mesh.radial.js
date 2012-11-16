@@ -441,6 +441,10 @@ sb.mesh.radial = function (frame, map, width, height) {
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
         $('#' + selfId + 'prerendered').html(svg);
+        var pathGroup = $('#' + selfId + 'prerendered').find(".delaunay");
+        $('#' + selfId + 'prerendered').remove();
+        $('#' + selfId).find(".delaunay").replaceWith(pathGroup);
+
 
         var fw = $(frame).width(),
             fh = $(frame).height();
