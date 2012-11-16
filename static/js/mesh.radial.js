@@ -450,7 +450,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     self.recalculate = function() {
         // clear prerendered
-        $('#' + selfId + "prerendered").empty();
+        $('#' + selfId + "prerendered").remove();
 
         $.each(requests, function(i, spokes){
             $.each(spokes, function(i, r) {
