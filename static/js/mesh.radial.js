@@ -424,7 +424,10 @@ sb.mesh.radial = function (frame, map, width, height) {
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
         $('#' + selfId).html(svg);
-        $('.delaunay').attr("transform","translate("+($(frame).width()-600)/2+",0)")
+        var fw = $(frame).width(),
+            fh = $(frame).height();
+        if (fw > fh)
+            $('.delaunay').attr("transform","translate("+(fw-fh)/2+",0)")
     };
 
     self.recalculate = function() {
