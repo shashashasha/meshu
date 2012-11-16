@@ -128,6 +128,23 @@ $(function() {
 	sb.viewhandler.on("next", makeNextView);
 	sb.viewhandler.on("prev", makePrevView);
 
+	/*
+		Checking if we have tooltips to show
+
+		Hide them if we click anywhere on the screen
+	*/
+	if (!user.loggedIn && !loadedMeshu && window.location.hash != '#skipintro') {
+		$(".tooltip").each(function(i, e) {
+			setTimeout(function() {
+				$(e).fadeIn();
+			}, i * 1000);
+		});
+
+		$(document).click(function() {
+			$(".tooltip").fadeOut();
+		});
+	}
+
 	/* 
 		Checking if we need to show the initial helper modal
 	*/	

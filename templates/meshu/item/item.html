@@ -4,6 +4,21 @@
 
 {% block page_type %}edit{% endblock page_type %}
 
+{% block tooltips %}
+<div class="tooltip top" style="top: 100px; left: 20px;">
+    <span>Start by searching for an address or city</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="top: 280px; right: 175px;">
+    <span>Or add points by clicking on the map</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="bottom: 95px; left: 20px;">
+    <span>You can also use your checkins!</span>
+    <b class="notch"></b>
+</div>
+{% endblock %}
+
 {% block helpedit %}
 <div id="edit-help">
     <h2>Three ways to make your meshu:</h2>

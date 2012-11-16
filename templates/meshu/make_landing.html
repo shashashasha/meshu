@@ -1,0 +1,34 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Meshu - Make Your Own Unique Jewelry{% endblock %}
+
+
+{% block content %}
+<div class="splitimages">
+    <a href="/make/facet">
+        <img src="/static/images/meshus/facet.jpg" id="facet" />
+    </a>
+    <div class="button">Map your travels with Facet</div>
+</div>
+<div class="splitimages">
+    <a href="/make/radial">
+        <img src="/static/images/meshus/radial.jpg" id="radial" />
+    </a>
+    <div class="button pink">Or mark your home with Radial</div>
+</div>
+<div class="content-banner">Meshu now comes in two flavors!</div>
+{% endblock %}
+
+{% block resources %}
+    <script type="text/javascript">
+
+    $(".splitimages img").mouseover(function() {
+        var id = this.id;
+        $('#' + id).attr("src", "/static/images/meshus/" + id + ".hover.jpg");
+    }).mouseout(function() {
+        var id = this.id;
+        $('#' + id).attr("src", "/static/images/meshus/" + id + ".jpg");
+    });
+
+    </script>  
+{% endblock %}

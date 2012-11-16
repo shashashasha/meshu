@@ -7,6 +7,10 @@
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
+    <div id="tooltip-container">
+        {% block tooltips %}
+        {% endblock %}
+    </div>
     <div id="place-hover">
         <span></span>
         <b class="notch"></b>
