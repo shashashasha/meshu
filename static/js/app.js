@@ -14,7 +14,7 @@ $(function() {
 	sb.materializer.initialize(catalog);
 
 	// create a meshu object for a single meshu container
-	meshu = sb.meshu($("#meshu-container")[0], null, currentRenderer);
+	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
@@ -77,7 +77,7 @@ $(function() {
 			}
 
 			// render the meshu
-			meshu.locationData(loadedMeshu.location_data, loadedMeshu.metadata, loadedMeshu.svg);
+			meshu.initializeFromData(loadedMeshu.location_data, loadedMeshu.metadata, loadedMeshu.svg);
 		}
 
 		// initialize product picker

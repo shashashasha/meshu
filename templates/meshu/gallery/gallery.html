@@ -72,10 +72,12 @@
     <script type="text/javascript">
 
         $(".mini-meshu").each(function(i){
-            var meshu = sb.minimeshu($(this).find("a")[0]);
             var data = $(this).find(".hidden").html();
+            
+            var meshu = sb.minimeshu($(this).find("a")[0]);
+            
 
-            var locations = meshu.locationData(data);
+            var locations = meshu.initializeFromData(data);
         });
 
         /*

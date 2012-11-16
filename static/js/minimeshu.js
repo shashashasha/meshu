@@ -1,11 +1,12 @@
 var sb = sb || {};
 
-sb.minimeshu = function(frame) {
+sb.minimeshu = function(frame, renderer) {
 	var self = {},
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
 		map = sb.map(frame, width, height),
-		mesh = sb.mesh(frame, map, width, height);
+        renderer = renderer || 'facet',
+		mesh = sb.mesh[renderer](frame, map, width, height);
 
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
@@ -32,7 +33,7 @@ sb.minimeshu = function(frame) {
         mesh.locations(locsToAdd);
     };
 
-    self.locationData = function(data) {
+    self.initializeFromData = function(data, style, svg) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};

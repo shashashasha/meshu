@@ -1,7 +1,7 @@
 var sb = sb || {};
 var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
 
-sb.meshu = function(frame, existingMap, renderer) {
+sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
@@ -151,7 +151,7 @@ sb.meshu = function(frame, existingMap, renderer) {
         return newLocs;
     }
 
-    self.locationData = function(data, style, svg) {
+    self.initializeFromData = function(data, style, svg) {
         mesh.prerender(svg);
 
         var locations = parseLocationData(data);
