@@ -16,11 +16,11 @@ sb.meshu = function(frame, renderer, existingMap) {
 
     $("#zoomin").mousedown(function(e) {
         map.map.zoom(map.map.zoom() + 1);
-        mesh.refresh();
+        mesh.refresh(true);
     });
     $("#zoomout").mousedown(function(e) {
         map.map.zoom(map.map.zoom() - 1);
-        mesh.refresh();
+        mesh.refresh(true);
     });
 
     var searchbox = $("#searchbox");

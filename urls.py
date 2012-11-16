@@ -95,8 +95,17 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
 	url(r'^make/assign/', 'item_assign'),
+
+	url(r'^make/facet', direct_to_template, {
+		'template': 'meshu/item/item.html'
+	}),
+	url(r'^make/radial', direct_to_template, {
+		'template': 'meshu/item/radial.html'
+	}),
+
 	# root way to begin making a meshu
 	url(r'^make/', 'item_make'),
+
 
 	# radial road test
 	url(r'^make_new/', direct_to_template, {
