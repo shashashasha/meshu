@@ -41,9 +41,9 @@
                     <img src="{{ object.thumbnail.url }}" />
                 {% else %}
                     <p class="hidden">{{ object.location_data }}</p>
-                    <!-- {% autoescape off %}
-                        {{ object.svg }}
-                    {% endautoescape %} -->
+                    <p class="hidden renderer">{{ object.renderer }}</p>
+                    <p class="hidden metadata">{{ object.metadata }}</p>
+                    <p class="hidden svg">{% autoescape off %}{{ object.svg }}{% endautoescape %}</p>
                 {% endif %}
                 {% if view == 'shop' %}
                     <div class="text-block">
@@ -72,12 +72,14 @@
     <script type="text/javascript">
 
         $(".mini-meshu").each(function(i){
-            var data = $(this).find(".hidden").html();
+            var frame = $(this).find("a")[0],
+                data = $(this).find(".hidden").html(),
+                renderer = $(this).find(".renderer").html(),
+                metadata = $(this).find(".metadata").html(),
+                svg = $(this).find(".svg").html();
             
-            var meshu = sb.minimeshu($(this).find("a")[0]);
-            
-
-            var locations = meshu.initializeFromData(data);
+            var meshu = sb.minimeshu(frame, renderer);
+            meshu.initializeFromData(data, metadata, svg);
         });
 
         /*

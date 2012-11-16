@@ -33,10 +33,12 @@ sb.minimeshu = function(frame, renderer) {
         mesh.locations(locsToAdd);
     };
 
-    self.initializeFromData = function(data, style, svg) {
+
+    function parseLocationData(data) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};
+
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
@@ -59,7 +61,19 @@ sb.minimeshu = function(frame, renderer) {
             });
         }
 
-        mesh.locations(newLocs);
+        return newLocs;
+    }
+
+    self.initializeFromData = function(data, style, svg) {
+        mesh.prerender(svg);
+
+        var locations = parseLocationData(data);
+        mesh.locations(locations);   
+
+        // 'drawStyle:knockout|zoom:12' for example
+        if (style) {
+            mesh.applyStyle(style);
+        }
         return self;
     };
 
