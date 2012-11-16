@@ -4,12 +4,6 @@ from meshu.views import *
 # Views for Items
 #
 
-# meshu.views.make
-def item_make(request):
-	return render_to_response('meshu/item/item.html', {
-			'view' : 'edit'
-		}, context_instance=RequestContext(request))
-
 def item_begin_order(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
 	

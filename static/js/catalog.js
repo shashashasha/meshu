@@ -53,25 +53,62 @@ sb.catalog = function(promo) {
 		return self.get(type, material, 'colors');
 	};
 
-	self.getProducts = function() {
-		var products = [];
+	/*
+		this is ugly, but I want to remove catalog.marathon.js
+	*/
+	if (promo) {
+		self.getProducts = function() {
+			var products = [];
 
-		for (var type in options) {
-			var prices = [],
-				product = options[type];
-			for (var material in product) {
-				prices.push(product[material].price);
+			for (var type in options) {
+				var prices = [],
+					originals = [],
+					discounts = [],
+					product = options[type];
+
+				for (var material in product) {
+					prices.push(product[material].price);
+
+					if (product[material].originalPrice)
+						originals.push(product[material].originalPrice);
+
+					if (product[material].discount)
+						discounts.push(product[material].discount);
+				}
+
+				products.push({
+					type: type,
+					prices: prices,
+					originals: originals,
+					// just use one discount for now
+					// assuming we won't have multiple different ones
+					discount: discounts.length ? discounts[0] : undefined
+				});
 			}
 
-			products.push({
-				type: type,
-				prices: prices,
-				discount: product.discount
-			});
-		}
+			return products;
+		};
+	} else {
+		self.getProducts = function() {
+			var products = [];
 
-		return products;
-	};
+			for (var type in options) {
+				var prices = [],
+					product = options[type];
+				for (var material in product) {
+					prices.push(product[material].price);
+				}
+
+				products.push({
+					type: type,
+					prices: prices,
+					discount: product.discount
+				});
+			}
+
+			return products;
+		};
+	}
 
 	self.getMaterials = function(type) {
 		var materials = [];

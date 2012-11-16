@@ -2,7 +2,7 @@ var sb = sb || {};
 
 sb.mesh.radial = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
-        selfId = parseInt(Math.random() * 10000000000, 10),
+        selfId = 'm' + parseInt(Math.random() * 10000000000, 10),
         hosts = ['a', 'b', 'c', 'd'];
 
     // the name of the product line
@@ -11,16 +11,24 @@ sb.mesh.radial = function (frame, map, width, height) {
     // making this not global ._.
     var lats = [],
         lons = [],
-        meshuTitle;
+        meshuTitle,
+        lastZoom;
 
     var decoder = document.createElement('div');
 
-    // main svg
-    var main = d3.select(frame || "body").append("div")
-        .attr("id", selfId)
-        .style("width", width)
-        .style("height", height)
-        .style("position", "absolute")
+    var meshContainer = d3.select(frame || "body").append("div")
+            .attr("id", selfId)
+            .style("width", width)
+            .style("height", height)
+            .style("position", "absolute");
+
+    var meshPrerendered = d3.select(frame || "body").append("div")
+            .attr("id", selfId + 'prerendered')
+            .style("width", width)
+            .style("height", height)
+            .style("position", "absolute");
+
+    var main = d3.select('#' + selfId)
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
@@ -78,7 +86,6 @@ sb.mesh.radial = function (frame, map, width, height) {
     var points = [],
         routes = [],
         paths = [],
-        new_pt = [],
         pixel_bounds = [],
         requests = {},
         meshuTitle = null;
@@ -142,8 +149,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         }
     });
 
-
-    function updateMesh(skipAnimation) {
+    // update the border circle
+    function updateBorderCircle() {
         var circles = wrapper.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
@@ -181,6 +188,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
     }
 
+    // draw the path based on an array of points
     function drawPath(p) {
         var draw = [];
         var l = p.length;
@@ -195,6 +203,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         return "M" + draw.join("L");
     }
 
+    // add a route as a series of segments
     function addRoute(waypoints) {
         routes.push(waypoints);
 
@@ -211,25 +220,33 @@ sb.mesh.radial = function (frame, map, width, height) {
         updateRoutes();
     }
 
-    function showRoutes() {
-        var zoom = map.map.zoom();
+    // make all the route requests
+    function requestRoutes() {
+        var zoom = map.map.zoom(),
+            start = points[0];
+
+        lastZoom = zoom;
+
         requests[zoom] = [];
 
         var host = hosts.pop();
         hosts.unshift(host);
 
         for (var i = 1; i < points.length; i++) {
+            var end = points[i];
+
+            // "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
+            // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
+
             requests[zoom][i] = $.ajax({
-                url: "/proxy/router/?from=" + 
-                // "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
-                // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
-                points[0][1]+","+points[0][0]+"&to="+points[i][1]+","+points[i][0],
+                url: "/proxy/router/?from=" + start[1]+","+start[0]+"&to="+end[1]+","+end[0],
                 // cache: false,
                 dataType: 'json',
                 success: function() {
                     var j = i;
                     return function(data) {
-                        if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined) {
+                        console.log()
+                        if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
                             return;
                         }
 
@@ -242,8 +259,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         }
     }
 
+    // update rotation and bounding box stuff
     function update(){
-        console.log('updating');
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
 
@@ -275,10 +292,11 @@ sb.mesh.radial = function (frame, map, width, height) {
         }).attr("class","hiddenFrame")
 
         updateListBehavior();
-        updateMesh();
+        updateBorderCircle();
         updateRoutes();
     }
 
+    // update the place title editing
     function updateListBehavior() {
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
@@ -300,8 +318,10 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
     }
 
+    // take a single point and turn it a ring of points
     function addRadialPoints() {
         main.selectAll("path").remove();
+
         paths = [];
         points = [points[0]];
         lats = [lats[0]];
@@ -327,8 +347,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
 
-        main.select("#radialClip circle").data([[lon,lat]]);
-        main.select(".circleFrame").data([[lon,lat]])
+        meshContainer.select("#radialClip circle").data([[lon,lat]]);
+        meshContainer.select(".circleFrame").data([[lon,lat]])
             .attr("r",0).attr("stroke-width",0)
             .transition().delay(250).duration(500)
             .attr("r",204).attr("stroke-width",20);
@@ -364,7 +384,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         // places.splice(index, 1);
         
         if (points.length == 0) $("#finish-button").removeClass("active");
-        // if (points.length == 0) $("#meshu-container").addClass("inactive");
     };
 
     self.lats = function() {
@@ -402,17 +421,14 @@ sb.mesh.radial = function (frame, map, width, height) {
     };
 
     self.locations = function(locs) {
-        new_pt = null;
-
         points = [];
         lats = [];
         lons = [];
-        // places = [];
+
         $.each(locs, function(i, loc) {
            points.push([loc.longitude, loc.latitude]);
            lats.push(loc.latitude);
            lons.push(loc.longitude);
-           // places.push(loc.name);
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js
@@ -423,11 +439,14 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
-        $('#' + selfId).html(svg);
-        $('.delaunay').attr("transform","translate("+($(frame).width()-600)/2+",0)")
+        $('#' + selfId + 'prerendered').html(svg);
+        $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+($(frame).width()-600)/2+",0)");
     };
 
     self.recalculate = function() {
+        // clear prerendered
+        $('#' + selfId + "prerendered").empty();
+
         $.each(requests, function(i, spokes){
             $.each(spokes, function(i, r) {
                 if (r == undefined || r == 'done')
@@ -437,11 +456,11 @@ sb.mesh.radial = function (frame, map, width, height) {
                 // r.abort();
             });
 
-            delete requests[i];
+            requests[i] = 'inactive';
         });
 
         addRadialPoints();
-        showRoutes();
+        requestRoutes();
 
         // update the zoom
         self.style({
@@ -449,9 +468,14 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
     };
 
-    self.refresh = function() {
-        update();
-        self.refreshed();
+    self.refresh = function(zoomed) {
+        if (zoomed) {
+            console.log(lats, lons);
+            self.add(lats[0], lons[0], meshuTitle);
+        } else {
+            update();
+            self.refreshed();
+        }
     };
     
     self.updateTitle = function(t) {
