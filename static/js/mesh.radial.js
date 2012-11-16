@@ -2,7 +2,8 @@ var sb = sb || {};
 
 sb.mesh = function (frame, map, width, height) {
     var self = sb.meshbase(frame, map, width, height),
-        selfId = parseInt(Math.random() * 10000000000, 10);
+        selfId = parseInt(Math.random() * 10000000000, 10),
+        hosts = ['a', 'b', 'c', 'd'];
 
     // the name of the product line
     self.name = 'radial';
@@ -135,11 +136,9 @@ sb.mesh = function (frame, map, width, height) {
         }
 
         if (style.zoom) {
-            console.log('has zoom', style.zoom, map.map.zoom());
             if (style.zoom != map.map.zoom()) {
                 map.map.zoom(style.zoom);   
             }
-            console.log('set zoom', style.zoom, map.map.zoom());
         }
     })
 
@@ -215,6 +214,10 @@ sb.mesh = function (frame, map, width, height) {
     function showRoutes() {
         var zoom = map.map.zoom();
         requests[zoom] = [];
+
+        var host = hosts.pop();
+        hosts.unshift(host);
+
         for (var i = 1; i < points.length; i++) {
             requests[zoom][i] = $.ajax({
                 url: "/proxy/router/?from=" + 
