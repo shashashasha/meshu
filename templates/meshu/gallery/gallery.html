@@ -80,6 +80,8 @@
             
             var meshu = sb.minimeshu(frame, renderer);
             meshu.initializeFromData(data, metadata, svg);
+            if (renderer == "radial")
+                $(this).find(".delaunay").attr("transform","scale(.5)");
         });
 
         /*
