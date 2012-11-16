@@ -131,23 +131,23 @@ $(function() {
 	/* 
 		Checking if we need to show the initial helper modal
 	*/	
-	var hash = window.location.hash;
-	var showIntro = function() {
-		$("#edit-help").fadeIn();
-		$("#modal-bg").fadeIn();
-		$("#close-help").click(function(){
-			$("#edit-help").fadeOut();
-			$("#modal-bg").fadeOut();
-		});
-	};
-	if (!user.loggedIn && !loadedMeshu && hash != '#skipintro') {
-		showIntro();
-	} else if (hash == '#showintro') {
-		showIntro();
-		window.location.hash = "";
-	} else if (hash == '#skipintro') {
-		window.location.hash = "";
-	}
+	// var hash = window.location.hash;
+	// var showIntro = function() {
+	// 	$("#edit-help").fadeIn();
+	// 	$("#modal-bg").fadeIn();
+	// 	$("#close-help").click(function(){
+	// 		$("#edit-help").fadeOut();
+	// 		$("#modal-bg").fadeOut();
+	// 	});
+	// };
+	// if (!user.loggedIn && !loadedMeshu && hash != '#skipintro') {
+	// 	showIntro();
+	// } else if (hash == '#showintro') {
+	// 	showIntro();
+	// 	window.location.hash = "";
+	// } else if (hash == '#skipintro') {
+	// 	window.location.hash = "";
+	// }
 
 	/* 
 		This handles when people select a product to order

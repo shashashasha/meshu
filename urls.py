@@ -104,7 +104,9 @@ urlpatterns += patterns('meshu.item',
 	}),
 
 	# root way to begin making a meshu
-	url(r'^make/', 'item_make'),
+	url(r'^make/', direct_to_template, {
+		'template': 'meshu/item/make_landing.html'
+	}),
 
 
 	# radial road test
