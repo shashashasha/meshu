@@ -424,11 +424,7 @@ sb.mesh.radial = function (frame, map, width, height) {
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
         $('#' + selfId).html(svg);
-        $('.circleFrame').attr("cx", $(frame).width() / 2);
-        $('.circleFrame').attr("cy", $(frame).height() / 2);
-
-        // move over the .delaunay class instead of each element individually
-        // thanks binx!
+        $('.delaunay').attr("transform","translate("+($(frame).width()-600)/2+",0)")
     };
 
     self.recalculate = function() {
