@@ -365,6 +365,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         $("#places").removeClass("inactive");
 
+        map.map.zoom(map.map.zoom()+1);
         var r = map.getMapRadius();
         map.updateBounds([lat-r.lat, lat+r.lat], [lon-r.lon, lon+r.lon]);
 
@@ -440,7 +441,11 @@ sb.mesh.radial = function (frame, map, width, height) {
     self.prerender = function(svg) {
         // copy over the svg instead of doing all the routing again
         $('#' + selfId + 'prerendered').html(svg);
-        $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+($(frame).width()-600)/2+",0)");
+
+        var fw = $(frame).width(),
+            fh = $(frame).height();
+        if (fw > fh)
+            $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+(fw-fh)/2+",0)")
     };
 
     self.recalculate = function() {
