@@ -16,24 +16,23 @@ sb.meshu = function(frame, renderer, existingMap) {
 
     $("#zoomin").mousedown(function(e) {
         map.map.zoom(map.map.zoom() + 1);
-        mesh.refresh(true);
+        mesh.refresh("zoomed");
     });
     $("#zoomout").mousedown(function(e) {
         map.map.zoom(map.map.zoom() - 1);
-        mesh.refresh(true);
+        mesh.refresh("zoomed");
     });
 
     var searchbox = $("#searchbox");
-
     searchbox.focus(function(){
         cases.fadeOut();
-    });
-
-    searchbox.keypress(function(event) {
+    })
+    .keypress(function(event) {
         if ( event.which == 13 ) {
             searchPlaces();
         }
     });
+
 	// this is tied to a global submit button for now
     $("#search-button").click(function(){
         searchPlaces();
@@ -71,53 +70,92 @@ sb.meshu = function(frame, renderer, existingMap) {
             },
             success: function(data){
                 var results = data.ResultSet.Results || [data.ResultSet.Result];
-                var content = $("#content");
                 cases.empty().hide();
 
                 if (typeof results == "undefined") {
                     searchbox.blur();
-                    cases.append(
-                        $("<p>").text("Hrm, we weren't able to find your search. Try again?"))
-                        .fadeIn();
+
+                    var msg = "Hrm, we weren't able to find your search. Try again?";
+
+                    // show the message
+                    cases.append($("<p>").text(msg)).fadeIn();
                 }
                 else if (results.length > 0) {
-                    addPoint(results[0],input);
+                    var first = results[0];
 
-                    // if only one point, let's zoom it to a proper level
-                    if (mesh.points().length == 1) {
-                        var rad = results[0].radius;
-                        if (rad > 1000000) {
-                            map.map.zoom(3);
-                        } else if (rad > 100000) {
-                            map.map.zoom(4);
-                        } else if (rad > 10000) {
-                            map.map.zoom(13);
-                        } else if (rad > 400) {
-                            map.map.zoom(14);
-                        } 
+                    switch (mesh.name) {
+                        case 'facet':
+                            mesh.add(first.latitude, first.longitude, input);
+                            self.updateBounds();
+
+                            // set the zoom for first point
+                            if (mesh.points().length == 1) {
+                                setZoomRadius(first.radius);
+                            }
+                            break;
+                        case 'radial':
+                            // set the zoom based on radius
+                            setZoomRadius(first.radius);
+                            mesh.add(first.latitude, first.longitude, input);
+                            break;
+
                     }
                 }
             }
         });
     }
 
-    function addPoint(place, input) {
-        mesh.add(place.latitude, place.longitude, input);
-        self.updateBounds();
+    /*
+        Zoom level reference for various levels of granularity of the geocoder
+    */
+    function getZoom(rad) {
+        // region
+        if (rad > 100000) {
+            return 4;
+        } 
+        // bigger city
+        else if (rad > 10000) {
+            return 12;
+        } 
+        // small town
+        else if (rad > 1000) {
+            return 13;
+        } 
+        // address
+        else if (rad > 400) {
+            return 14;
+        } 
+
+        // default
+        return 12;
+    };
+
+    function setZoomRadius(rad) {
+        var zoom = getZoom(rad);
+
+        // don't change it unless it's different
+        if (zoom != map.map.zoom()) {
+            map.map.zoom(zoom);   
+        }
     };
 
     self.locations = function(locations, skipDelay) {
         for (var i = 0; i < locations.length; i++) {
             if (skipDelay) {
-                addPoint(locations[i], locations[i].name);
+                mesh.add(locations[i].latitude, location[i].longitude, locations[i].name);
             }
             else {
                 setTimeout(function(loc) {
                     return function() {
-                        addPoint(loc, loc.name);
+                        mesh.add(loc.latitude, loc.longitude, loc.name);
+                        self.updateBounds();
                     };
                 }(locations[i]), i * 400);   
             }
+        }
+
+        if (skipDelay) {
+            self.updateBounds();
         }
     };
 

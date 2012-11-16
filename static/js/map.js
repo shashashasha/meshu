@@ -72,7 +72,7 @@ sb.map = function(frame, width, height) {
 			self.map.center({
 				lat: lats[0],
 				lon: lons[0]
-			}).zoom(10);
+			});
 			
 			self.boundsUpdated();
 			return;

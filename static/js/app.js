@@ -17,7 +17,7 @@ $(function() {
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// hotfix for postcard pages
-	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : -1;
+	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
 
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
@@ -199,7 +199,17 @@ $(function() {
 
 				// initialize product picker
 				// todo - fix
-				sb.product.initialize(".delaunay", catalog);
+				if (meshu.mesh().name == "facet") {
+					sb.product.initialize(".delaunay", catalog);
+				}
+				else if (meshu.mesh().name == "radial") {
+					console.log('rasterizing thumbnail for the products');
+					sb.rasterizer.thumbnail(meshu, function(canvas) {
+						console.log(canvas);
+						sb.product.initialize($(canvas), catalog);
+					});
+				}
+
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
@@ -214,12 +224,16 @@ $(function() {
 				// animate meshu
 				var product = sb.materializer.product();
 				var t = sb.transforms[product]["render"];
+
 				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
+
+				// add the product class to the mesh
 				d3.select(".delaunay").attr("class","delaunay "+product);
 
 				// update the render background to be the product preview
-				var productPreview = static_url + 'images/render/' + product + '_preview.jpg';
-				$(".render").css("background-image","url(" + productPreview + ")");
+				var productPreview = static_url + 'images/render/' + product + '_preview.jpg',
+					url = "url(" + productPreview + ")";
+				$(".render").css("background-image", url);
 				break;
 
 			case 'review':

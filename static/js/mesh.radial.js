@@ -124,6 +124,14 @@ sb.mesh.radial = function (frame, map, width, height) {
              $("#finish-button").removeClass("active");
     });
 
+    /*
+        This is how we're listening to style changes
+        here we're listening for something like 
+        {
+            'drawStyle': 'knockout',
+            'zoom': 12
+        }
+    */
     self.on("styled", function(style) {
         if (style.drawStyle) {
             switch (style.drawStyle) {
@@ -142,10 +150,8 @@ sb.mesh.radial = function (frame, map, width, height) {
             }
         }
 
-        if (style.zoom) {
-            if (style.zoom != map.map.zoom()) {
-                map.map.zoom(style.zoom);   
-            }
+        if (style.zoom && style.zoom != map.map.zoom()) {
+            map.map.zoom(style.zoom);
         }
     });
 
@@ -245,7 +251,6 @@ sb.mesh.radial = function (frame, map, width, height) {
                 success: function() {
                     var j = i;
                     return function(data) {
-                        console.log()
                         if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
                             return;
                         }
@@ -261,35 +266,9 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     // update rotation and bounding box stuff
     function update(){
+        console.log('updating');
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
-
-        // var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
-        // rotate_pts.enter()
-        //     .append("svg:circle")
-        //     .attr("class","rotation")
-        //     .attr("r","40")
-        //     .attr("cx", function(d, i) {
-        //         return d.x;
-        //     }).attr("cy", function(d, i) {
-        //         return d.y;
-        //     });
-            
-        // rotate_pts.exit().remove();
-        // rotate_pts.attr("cx", function(d, i) {
-        //         return d.x;
-        //     }).attr("cy", function(d, i) {
-        //         return d.y;
-        //     });
-        // var bounding_box = hidden.select("path");
-        // bounding_box.attr("d", function() {
-        //     if (pixel_bounds.length == 0) return;
-        //     var draw = [];
-        //     $.each(pixel_bounds, function(i, p) {
-        //         draw.push([p.x,p.y]);
-        //     });
-        //     return "M" + draw.join("L") + "Z"; 
-        // }).attr("class","hiddenFrame")
 
         updateListBehavior();
         updateBorderCircle();
@@ -358,20 +337,22 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         points = [[lon,lat]];
 
-        if (placename == undefined)
+        if (placename == undefined) {
             meshuTitle = latitude.toFixed(3)+", "+longitude.toFixed(3);
-        else
-            meshuTitle = placename;
+        }
+        else {
+            meshuTitle = placename[0].toUpperCase() + placename.substr(1, placename.length-1);
+        }
+            
 
         $("#places").removeClass("inactive");
 
-        map.map.zoom(map.map.zoom()+1);
         var r = map.getMapRadius();
         map.updateBounds([lat-r.lat, lat+r.lat], [lon-r.lon, lon+r.lon]);
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
-        update();
+        // update();
 
         self.added();
         
@@ -414,11 +395,9 @@ sb.mesh.radial = function (frame, map, width, height) {
         rasterize it correctly - yikes!
     */
     self.hideRotator = function() {
-        hidden.style("display", "none");
     };
 
     self.showRotator = function() {
-        hidden.style("display", "");
     };
 
     self.locations = function(locs) {
@@ -478,9 +457,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
     };
 
-    self.refresh = function(zoomed) {
-        if (zoomed) {
-            console.log(lats, lons);
+    self.refresh = function(flag) {
+        if (flag == 'zoomed') {
             self.add(lats[0], lons[0], meshuTitle);
         } else {
             update();

@@ -84,13 +84,12 @@ sb.viewhandler = function() {
 			return;
 		}
 
-
 		self.next();
 		user.updateLogoutActions(view);
 		advanceView();
 	};
 	
-	function onPrev(){
+	function onPrev() {
 		var view = self.view();
 
 		if (view == 'checkout') {

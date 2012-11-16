@@ -270,8 +270,6 @@ sb.mesh.base = function (frame, map, width, height) {
             style[i] = s[i];
         }
         self.styled(style);
-
-        console.log('applied style:', self.outputStyle());
     };
 
     self.outputStyle = function() {

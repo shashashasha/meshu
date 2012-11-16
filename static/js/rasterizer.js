@@ -1,7 +1,7 @@
 var sb = sb || {};
 
 sb.rasterizer = function() {
-	var self = d3.dispatch("rasterized"),
+	var self = d3.dispatch("rasterized", "rasterizedThumbnail"),
 		generated = false,
 		canvases = [];
 
@@ -19,6 +19,7 @@ sb.rasterizer = function() {
 		return canvas;
 	};
 
+	// lighten the canvas for the map tiles, then draw the meshu
 	var lightenCanvas = function(ctx, percent) {
 		ctx.fillStyle = 'rgba(255, 255, 255, ' + percent + ')';
 		ctx.fillRect(0, 0, ctx.width, ctx.height);
@@ -32,8 +33,11 @@ sb.rasterizer = function() {
 
 	var snapZoom = function(meshu) {
 		var zoom = meshu.map().map.zoom();
+		console.log(zoom);
 		meshu.map().map.zoom(Math.round(zoom));
+		console.log(meshu.map().map.zoom());
 		meshu.mesh().refresh();
+		console.log('refreshed');
 	};
 
 	var drawMeshu = function(frame, canvas, ctx, meshu, callback) {
@@ -119,6 +123,30 @@ sb.rasterizer = function() {
 
 				// draw the meshu onto a canvas
 				drawMeshu(frame, canvas, ctx, meshu, callback);
+			}
+		});
+	};
+
+	// create a canvas version of the mesh that we can use as a thumbnail
+	// for products, etc
+	self.thumbnail = function(meshu, callback) {
+		meshu.mesh().hideRotator();
+
+		// draw the mesh object
+		var canvas = makeCanvas(), 
+			frame = meshu.getFrame(),
+			ctx = canvas.getContext('2d'),
+			str = meshu.outputSVG();
+
+		// we need the canvas on the DOM to draw it
+		frame.appendChild(canvas);
+
+		canvg(canvas, str, {
+			renderCallback: function() {
+				// combine the canvases
+				meshu.mesh().showRotator();
+				
+				self.rasterizedThumbnail(canvas);
 			}
 		});
 	};
