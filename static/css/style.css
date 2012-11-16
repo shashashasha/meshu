@@ -1415,6 +1415,10 @@ body.ie8 .city-input {
 #view .show-places {
   cursor: pointer;
 }
+#view.radial .show-places,
+#view.radial #display-places {
+  display: none;
+}
 .view .share-buttons {
   position: absolute;
   top: 20px;
