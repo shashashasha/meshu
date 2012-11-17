@@ -203,12 +203,12 @@ $(function() {
 					sb.product.initialize(".delaunay", catalog);
 				}
 				else if (meshu.mesh().name == "radial") {
-					sb.product.initialize(".delaunay", catalog);
+					// sb.product.initialize(".delaunay", catalog);
 					console.log('rasterizing thumbnail for the products');
-					// sb.rasterizer.thumbnail(meshu, function(canvas) {
-					// 	console.log(canvas);
-					// 	sb.product.initialize($(canvas), catalog);
-					// });
+					sb.rasterizer.thumbnail(meshu, function(canvas) {
+						console.log(canvas);
+						sb.product.initialize($(canvas), catalog);
+					});
 				}
 
 

@@ -144,16 +144,16 @@ sb.rasterizer = function() {
 			str = meshu.outputSVG();
 
 		// we need the canvas on the DOM to draw it
-		frame.appendChild(canvas);
+		$("body").appendChild(canvas);
 
-		// canvg(canvas, str, {
-		// 	renderCallback: function() {
-		// 		// combine the canvases
-		// 		meshu.mesh().showRotator();
+		canvg(canvas, str, {
+			renderCallback: function() {
+				// combine the canvases
+				meshu.mesh().showRotator();
 
-		// 		self.rasterizedThumbnail(canvas);
-		// 	}
-		// });
+				self.rasterizedThumbnail(canvas);
+			}
+		});
 	};
 
 	return self;

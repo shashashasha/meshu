@@ -185,13 +185,12 @@ sb.mesh.radial = function (frame, map, width, height) {
             .attr("fill", "none")
             .attr("stroke-linecap", "round");
 
-        lines.attr("stroke-width", function(d, i) {
-            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
-        });
+        var strokeWidth = function(d, i) {
+            return Math.min(20, d.total) * ((1 - Math.pow(d.d, .5)) + .1) + "px";
+        };
 
-        lines.style("stroke-width", function(d, i) {
-            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
-        });
+        lines.attr("stroke-width", strokeWidth);
+        lines.style("stroke-width", strokeWidth);
     }
 
     // draw the path based on an array of points
@@ -219,6 +218,7 @@ sb.mesh.radial = function (frame, map, width, height) {
             var end = [waypoints[i+2], waypoints[i+3]];
             paths.push({
                 pts: [start, end], // start and end
+                total: waypoints.length,
                 d: i / waypoints.length // use distance as the index for now
             });
         }
