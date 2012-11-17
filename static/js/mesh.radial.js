@@ -439,6 +439,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js
+        self.dirty = true;
         self.locationsSet();
 
         return self;
