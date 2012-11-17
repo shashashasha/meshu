@@ -1840,7 +1840,10 @@ circle.highlight,
 .splitimages {
   float: left;
   width: 50%;
-  margin-top: 50px;
+  margin-top: 60px;
+}
+.splitimages img {
+  float: left;
 }
 .splitimages .button {
   width: 100%;
