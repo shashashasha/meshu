@@ -271,7 +271,7 @@ sb.mesh.base = function (frame, map, width, height) {
     };
 
     self.style = function(s) {
-        if (!arguments.length) return s;
+        if (!arguments.length) return style;
 
         for (var i in s) {
             style[i] = s[i];

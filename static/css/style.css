@@ -1696,6 +1696,9 @@ path {
   -webkit-transition: stroke-width 0.6s;
   -o-transition: stroke-width 0.6s;
 }
+.radial path {
+  stroke-width: 0;
+}
 .roadtrip path {
   stroke-width: 5;
 }
