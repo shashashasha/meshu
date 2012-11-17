@@ -346,8 +346,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         var tempLat, tempLon;
 
         // before i < 24, PI/12
-        for (var i = 0; i < 4; i++) {
-            var theta = i*(Math.PI/2);
+        for (var i = 0; i < 24; i++) {
+            var theta = i*(Math.PI/12);
             var l = map.p2l({
                 x: 300+Math.sin(theta)*200,
                 y: 300+Math.cos(theta)*200
