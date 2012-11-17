@@ -86,6 +86,8 @@ sb.mesh.facet = function (frame, map, width, height) {
         var index = points.indexOf(dragging);
         lats[index] = loc.lat;
         lons[index] = loc.lon;
+
+        self.dirty = true;
     
         update();
     });
@@ -102,6 +104,8 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         map.updateBounds(lats, lons);
         self.updatePixelBounds();
+
+        self.dirty = false;
         update();
     });
 
@@ -377,6 +381,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             update();
         }
         
+        self.dirty = true;
         self.added();
         return self;
     };

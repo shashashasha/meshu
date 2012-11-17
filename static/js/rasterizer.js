@@ -31,13 +31,18 @@ sb.rasterizer = function() {
 		return serializer.serializeToString(svg);
 	};
 
+	/*
+		only snap if we have to
+	*/
 	var snapZoom = function(meshu) {
-		var zoom = meshu.map().map.zoom();
-		console.log(zoom);
-		meshu.map().map.zoom(Math.round(zoom));
-		console.log(meshu.map().map.zoom());
-		meshu.mesh().refresh();
-		console.log('refreshed');
+		var map = meshu.map().map,
+			zoom = map.zoom(),
+			roundedZoom = Math.round(zoom);
+
+		if (zoom != roundedZoom) {
+			map.zoom(roundedZoom);	
+			meshu.mesh().refresh();
+		}
 	};
 
 	var drawMeshu = function(frame, canvas, ctx, meshu, callback) {
@@ -141,14 +146,14 @@ sb.rasterizer = function() {
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);
 
-		canvg(canvas, str, {
-			renderCallback: function() {
-				// combine the canvases
-				meshu.mesh().showRotator();
-				
-				self.rasterizedThumbnail(canvas);
-			}
-		});
+		// canvg(canvas, str, {
+		// 	renderCallback: function() {
+		// 		// combine the canvases
+		// 		meshu.mesh().showRotator();
+
+		// 		self.rasterizedThumbnail(canvas);
+		// 	}
+		// });
 	};
 
 	return self;

@@ -76,6 +76,7 @@ sb.mesh.base = function (frame, map, width, height) {
             if (last_mouse)
                 map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
 
+            self.dirty = true;
             self.draggedMap();
         }
 

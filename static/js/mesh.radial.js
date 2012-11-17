@@ -455,6 +455,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         self.style({
             zoom: map.map.zoom()
         });
+
+        self.dirty = false;
     };
 
     self.refresh = function(flag) {

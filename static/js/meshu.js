@@ -243,7 +243,11 @@ sb.meshu = function(frame, renderer, existingMap) {
     };
 
     self.updateBounds = function() {
-        self.refreshWithBounds(mesh.lats(), mesh.lons());
+        console.log('updating bounds', mesh.dirty);
+        if (mesh.dirty) {
+            self.refreshWithBounds(mesh.lats(), mesh.lons());
+            mesh.dirty = false;
+        }
     };
 
     mesh.on("added", self.checkAdded);
