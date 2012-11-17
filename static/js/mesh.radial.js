@@ -226,6 +226,28 @@ sb.mesh.radial = function (frame, map, width, height) {
         updateRoutes();
     }
 
+    function checkRequests(zoom) {
+        console.log(zoom, requests);
+        var allDone = true,
+            calculated = 0;
+        for (var i = 1; i < points.length; i++) {
+            if (requests[zoom][i] != 'done') {
+                allDone = false;
+            } else {
+                calculated++;
+            }
+        }
+
+        var progress = calculated + '/' + (points.length-1);
+
+        $("#radial-heading").html("Generating radial... " + progress);
+
+        if (allDone) {
+            $("#radial-heading").html("Your radial is done!");
+            self.added();
+        }
+    }
+
     // make all the route requests
     function requestRoutes() {
         var zoom = map.map.zoom(),
@@ -233,7 +255,8 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         lastZoom = zoom;
 
-        requests[zoom] = [];
+        // first request is done, requests starts at index 1
+        requests[zoom] = ["done"];
 
         var host = hosts.pop();
         hosts.unshift(host);
@@ -251,13 +274,18 @@ sb.mesh.radial = function (frame, map, width, height) {
                 success: function() {
                     var j = i;
                     return function(data) {
-                        if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
+                        if (!data.route.shape) {
+                            requests[zoom][j] = 'done';
+                            return;
+                        } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
                             return;
                         }
 
                         var wayPoints = data.route.shape.shapePoints;
                         addRoute(wayPoints);
                         requests[zoom][j] = 'done';
+
+                        checkRequests(zoom);
                     };
                 }()
             });
@@ -352,9 +380,8 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
-        // update();
 
-        self.added();
+        // self.added();
         
         return self;
     };
@@ -456,6 +483,10 @@ sb.mesh.radial = function (frame, map, width, height) {
             zoom: map.map.zoom()
         });
 
+        /*
+            when we recalculate, things are recentered around the central point
+            so our bounds are clean
+        */
         self.dirty = false;
     };
 
