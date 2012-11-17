@@ -98,11 +98,15 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     var tooltipTimeout;
     function mouseover() {
+        if (!$("#content").hasClass("edit"))
+            return;
         tooltipTimeout = setTimeout(function(){
             $(".map-hint").fadeIn();
         },500);
     }
     function mouseout() {
+        if (!$("#content").hasClass("edit"))
+            return;
         clearTimeout(tooltipTimeout);
         $(".map-hint").fadeOut();
     }
@@ -243,7 +247,7 @@ sb.mesh.radial = function (frame, map, width, height) {
             }
         }
 
-        var progress = calculated + '/' + (points.length-1);
+        var progress = (calculated/(points.length-1)*100).toFixed(0) + "%";
 
         $("#radial-heading").html("Generating radial... " + progress);
 
