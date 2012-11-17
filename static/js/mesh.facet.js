@@ -87,6 +87,10 @@ sb.mesh.facet = function (frame, map, width, height) {
         lats[index] = loc.lat;
         lons[index] = loc.lon;
 
+        /*
+            the point was dragged
+            so our bounds for this shape may not be correct anymore
+        */
         self.dirty = true;
     
         update();
@@ -105,6 +109,10 @@ sb.mesh.facet = function (frame, map, width, height) {
         map.updateBounds(lats, lons);
         self.updatePixelBounds();
 
+        /*
+            the map was updated
+            so our bounds aren't dirty
+        */
         self.dirty = false;
         update();
     });
@@ -381,6 +389,10 @@ sb.mesh.facet = function (frame, map, width, height) {
             update();
         }
         
+
+        /*
+            we've added a point but haven't updated the bounds
+        */
         self.dirty = true;
         self.added();
         return self;

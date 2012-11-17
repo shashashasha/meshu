@@ -13,7 +13,7 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		$(canvas).addClass("hidden");
+		// $(canvas).addClass("hidden");
 
 		canvases.push(canvas);
 		return canvas;
@@ -87,10 +87,7 @@ sb.rasterizer = function() {
 		}
 
 		// clear canvases
-		while (canvases.length) {
-			var c = canvases.pop()
-			$(c).remove();
-		}
+		self.clearCanvases();
 
 		// send it to the server to be saved as a png
 		$.post('to_png', xhr, function(data) {
@@ -106,7 +103,14 @@ sb.rasterizer = function() {
 				callback(data);
 			}
 		}, 'json');
-	}
+	};
+
+	self.clearCanvases = function() {
+		while (canvases.length) {
+			var c = canvases.pop()
+			$(c).remove();
+		}
+	};
 
 	self.rasterize = function(meshu, callback) {
 		snapZoom(meshu);
@@ -146,14 +150,16 @@ sb.rasterizer = function() {
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);
 
-		// canvg(canvas, str, {
-		// 	renderCallback: function() {
-		// 		// combine the canvases
-		// 		meshu.mesh().showRotator();
+		canvg(canvas, str, {
+			renderCallback: function() {
+				// combine the canvases
+				meshu.mesh().showRotator();
 
-		// 		self.rasterizedThumbnail(canvas);
-		// 	}
-		// });
+				if (callback) {
+					callback(canvas);
+				}
+			}
+		});
 	};
 
 	return self;

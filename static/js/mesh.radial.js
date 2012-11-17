@@ -185,13 +185,12 @@ sb.mesh.radial = function (frame, map, width, height) {
             .attr("fill", "none")
             .attr("stroke-linecap", "round");
 
-        lines.attr("stroke-width", function(d, i) {
-            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
-        });
+        var strokeWidth = function(d, i) {
+            return Math.min(20, d.total) * ((1 - Math.pow(d.d, .5)) + .1) + "px";
+        };
 
-        lines.style("stroke-width", function(d, i) {
-            return 20 * ((1 - Math.pow(d.d, .5)) + .1) + "px";
-        });
+        lines.attr("stroke-width", strokeWidth);
+        lines.style("stroke-width", strokeWidth);
     }
 
     // draw the path based on an array of points
@@ -219,11 +218,34 @@ sb.mesh.radial = function (frame, map, width, height) {
             var end = [waypoints[i+2], waypoints[i+3]];
             paths.push({
                 pts: [start, end], // start and end
+                total: waypoints.length,
                 d: i / waypoints.length // use distance as the index for now
             });
         }
 
         updateRoutes();
+    }
+
+    function checkRequests(zoom) {
+        console.log(zoom, requests);
+        var allDone = true,
+            calculated = 0;
+        for (var i = 1; i < points.length; i++) {
+            if (requests[zoom][i] != 'done') {
+                allDone = false;
+            } else {
+                calculated++;
+            }
+        }
+
+        var progress = calculated + '/' + (points.length-1);
+
+        $("#radial-heading").html("Generating radial... " + progress);
+
+        if (allDone) {
+            $("#radial-heading").html("Your radial is done!");
+            self.added();
+        }
     }
 
     // make all the route requests
@@ -233,7 +255,8 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         lastZoom = zoom;
 
-        requests[zoom] = [];
+        // first request is done, requests starts at index 1
+        requests[zoom] = ["done"];
 
         var host = hosts.pop();
         hosts.unshift(host);
@@ -251,13 +274,18 @@ sb.mesh.radial = function (frame, map, width, height) {
                 success: function() {
                     var j = i;
                     return function(data) {
-                        if (!data.route.shape || requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
+                        if (!data.route.shape) {
+                            requests[zoom][j] = 'done';
+                            return;
+                        } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
                             return;
                         }
 
                         var wayPoints = data.route.shape.shapePoints;
                         addRoute(wayPoints);
                         requests[zoom][j] = 'done';
+
+                        checkRequests(zoom);
                     };
                 }()
             });
@@ -308,8 +336,9 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         var tempLat, tempLon;
 
-        for (var i = 0; i < 24; i++) {
-            var theta = i*(Math.PI/12);
+        // before i < 24, PI/12
+        for (var i = 0; i < 4; i++) {
+            var theta = i*(Math.PI/2);
             var l = map.p2l({
                 x: 300+Math.sin(theta)*200,
                 y: 300+Math.cos(theta)*200
@@ -327,10 +356,15 @@ sb.mesh.radial = function (frame, map, width, height) {
         var lon = parseFloat(longitude);
 
         meshContainer.select("#radialClip circle").data([[lon,lat]]);
+
+        // hardcoding these styles because drawing it in canvas requires it.
         meshContainer.select(".circleFrame").data([[lon,lat]])
             .attr("r",0).attr("stroke-width",0)
             .transition().delay(250).duration(500)
-            .attr("r",204).attr("stroke-width",20);
+            .attr("r", 204)
+            .attr("stroke-width", 20)
+            .attr("stroke", "black")
+            .attr("fill", "none");
 
         lats = [lat];
         lons = [lon];
@@ -352,9 +386,8 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
-        // update();
 
-        self.added();
+        // self.added();
         
         return self;
     };
@@ -412,6 +445,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         });
 
         // don't redraw just yet, we'll call this outside in meshu.js
+        self.dirty = true;
         self.locationsSet();
 
         return self;
@@ -456,6 +490,10 @@ sb.mesh.radial = function (frame, map, width, height) {
             zoom: map.map.zoom()
         });
 
+        /*
+            when we recalculate, things are recentered around the central point
+            so our bounds are clean
+        */
         self.dirty = false;
     };
 

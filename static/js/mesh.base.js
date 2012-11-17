@@ -14,6 +14,9 @@ sb.mesh.base = function (frame, map, width, height) {
                             "interactiveToggled"),
 		selfId = parseInt(Math.random() * 10000000000, 10);
 
+    // iz alwayz durty
+    self.dirty = true;
+
     // making this not global ._.
     var lats = [],
         lons = [],
@@ -76,6 +79,9 @@ sb.mesh.base = function (frame, map, width, height) {
             if (last_mouse)
                 map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
 
+            /*
+                the map is dirty when its been dragged
+            */
             self.dirty = true;
             self.draggedMap();
         }
