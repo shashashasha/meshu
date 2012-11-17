@@ -336,8 +336,9 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         var tempLat, tempLon;
 
-        for (var i = 0; i < 24; i++) {
-            var theta = i*(Math.PI/12);
+        // before i < 24, PI/12
+        for (var i = 0; i < 4; i++) {
+            var theta = i*(Math.PI/2);
             var l = map.p2l({
                 x: 300+Math.sin(theta)*200,
                 y: 300+Math.cos(theta)*200
@@ -355,10 +356,15 @@ sb.mesh.radial = function (frame, map, width, height) {
         var lon = parseFloat(longitude);
 
         meshContainer.select("#radialClip circle").data([[lon,lat]]);
+
+        // hardcoding these styles because drawing it in canvas requires it.
         meshContainer.select(".circleFrame").data([[lon,lat]])
             .attr("r",0).attr("stroke-width",0)
             .transition().delay(250).duration(500)
-            .attr("r",204).attr("stroke-width",20);
+            .attr("r", 204)
+            .attr("stroke-width", 20)
+            .attr("stroke", "black")
+            .attr("fill", "none");
 
         lats = [lat];
         lons = [lon];
