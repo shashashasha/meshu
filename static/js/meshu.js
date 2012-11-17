@@ -242,8 +242,12 @@ sb.meshu = function(frame, renderer, existingMap) {
         map.updateBounds(lats, lons, self.zoomOffset);
     };
 
+    /*
+        because this forces us to load tiles and stuff
+        only actually refresh the bounds if the map is dirty
+        ie, if it's been panned, or if points have been added without refreshing
+    */
     self.updateBounds = function() {
-        console.log('updating bounds', mesh.dirty);
         if (mesh.dirty) {
             self.refreshWithBounds(mesh.lats(), mesh.lons());
             mesh.dirty = false;
