@@ -143,6 +143,7 @@ sb.mesh.radial = function (frame, map, width, height) {
                     $("body").addClass("knockout");
                     $(this).addClass("active");
                     $("#radial-frame").removeClass("active");
+                    updateRoutes();
                     break;
 
                 case "outline":
@@ -150,6 +151,7 @@ sb.mesh.radial = function (frame, map, width, height) {
                     $("body").removeClass("knockout");
                     $(this).addClass("active");
                     $("#radial-knockout").removeClass("active");
+                    updateRoutes();
                     break;
             }
         }
@@ -177,29 +179,37 @@ sb.mesh.radial = function (frame, map, width, height) {
     }
 
     function updateRoutes() {
-        var lines = g.selectAll("path").data(paths);
-        lines.enter().append("svg:path");
-        lines.exit().remove();
-
-        lines.attr("d", function(d) {
-            return drawPath(d.pts);
-        });
-
-        var stroke = "black";
-        if (self.style() != undefined) {
-            stroke = self.style().drawStyle == "outline" ? "black" : "white";
-        }
-
-        lines.attr("stroke", stroke)
-            .attr("fill", "none")
-            .attr("stroke-linecap", "round");
-
         var strokeWidth = function(d, i) {
             return Math.min(20, d.total) * ((1 - Math.pow(d.d, .5)) + .1) + "px";
         };
 
-        lines.attr("stroke-width", strokeWidth);
-        lines.style("stroke-width", strokeWidth);
+        var stroke = "black";
+        if (self.style() != undefined && self.style().drawStyle) {
+            stroke = self.style().drawStyle == "outline" ? "black" : "white";
+        }
+
+        var lines = g.selectAll("path").data(paths);
+
+        lines.enter()
+            .append("svg:path")
+            .style("stroke-width", 0);
+
+        lines.exit().remove();
+
+        console.log('updating routes', stroke, self.style());
+        lines.attr("d", function(d) {
+                return drawPath(d.pts);
+            })
+            .attr("stroke", stroke)
+            .attr("fill", "none")
+            .attr("stroke-linecap", "round");
+
+        // lines.attr("stroke-width", strokeWidth);
+
+        lines
+            .transition()
+            .duration(500)
+            .style("stroke-width", strokeWidth);
     }
 
     // draw the path based on an array of points

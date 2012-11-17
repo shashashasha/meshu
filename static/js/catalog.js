@@ -1,7 +1,10 @@
 var sb = sb || {};
-sb.catalog = function(promo) {
-	var self = {};
-	var options = {"earrings":
+sb.catalog = function(renderer, promo) {
+	var self = {},
+		materialOptions = {},
+		renderer = renderer || 'facet';
+
+	materialOptions.facet = {"earrings":
 						{"wood":{"price":75,"colors":["Amber"]},
 						"acrylic":{"price":80,"colors":["Black","White"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
@@ -17,7 +20,22 @@ sb.catalog = function(promo) {
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150,"colors":["Sterling Silver"]}},
 					"cufflinks":
-						{"silver":{"price":150}}};
+						{"silver":{"price":150}}
+					};
+
+	materialOptions.radial = {"earrings":
+						{"wood":{"price":75,"colors":["Amber"]},
+						"acrylic":{"price":80,"colors":["Black","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]}},
+				   "pendant":
+				   		{"wood":{"price":75,"colors":["Amber"]},
+				   		"acrylic":{"price":85,"colors":["Black","White"]},
+						"nylon":{"price":95,"colors":["Black","White"]},
+						"silver":{"price":140,"colors":["Sterling Silver"]}}
+					};
+
+	// set the product type options with either facet or radial
+	var options = materialOptions[renderer];
 
 	var promotions = {};
 	promotions.marathon = {
