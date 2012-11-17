@@ -37,7 +37,6 @@ $(function() {
 	// initialize the viewhandler
 	sb.viewhandler.initialize();
 
-
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
 		saver.initialize(meshu);
@@ -110,10 +109,12 @@ $(function() {
 			}
 		});
 
-		d3.select("#place-number")
+		d3.select("#places").attr("class","")
+			.select("#place-title")
 			.attr("class","")
 			.select(".title-text")
             .html(function(d){
+            	console.log("ok",loadedMeshu.title)
                 d.title = loadedMeshu.title;
                 meshu.updateTitle(d.title);
                 return d.title;

@@ -24,7 +24,10 @@ def item_edit(request, item_encoded):
 	if request.user.id != item.user_profile.user.id:
 		return notify(request, 'authorization_required')
 
-	return item_handler(request, item_id, 'usermade.html', 'edit')
+	if item.renderer == "radial":
+		return item_handler(request, item_id, 'usermade_radial.html', 'radial edit')
+	else:
+		return item_handler(request, item_id, 'usermade.html', 'edit')
 
 def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
