@@ -33,7 +33,7 @@
         {% endif %} -->
         {% for object in meshus reversed %}
             <li class="{% if view == 'user' %}mini-meshu{% else %}object{% endif %}">
-                <div class="image"></div>
+                <!-- <div class="image"></div> -->
                 <a href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">

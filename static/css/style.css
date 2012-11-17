@@ -1939,10 +1939,6 @@ circle.highlight,
 #gallery li.object .price {
   float: right;
 }
-#gallery li.object img {
-  border: 1px solid white;
-  box-sizing: border-box;
-}
 #shop li.object:hover {
   border: 5px solid #1fcaff;
 }
