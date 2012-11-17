@@ -4,10 +4,12 @@ $(function() {
 	// initialize the catalog with the current promotion if any
 	// sorry about this, future us. signed, past sha.
 	var promotion = loadedMeshu ? loadedMeshu.promo : null,
+		isReadymade = loadedMeshu && loadedMeshu.product != '',
+		zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0,
 		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
 							$("body").hasClass("radial") ? 'radial' : null;
 
-	var catalog = sb.catalog(promotion);
+	var catalog = sb.catalog(currentRenderer, promotion);
 
 	// create a stripe payment object
 	orderer.catalog(catalog);
@@ -17,9 +19,8 @@ $(function() {
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// hotfix for postcard pages
-	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
-
-	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
+	meshu.zoomOffset = zoomOffset;
+	meshu.isReadymade = isReadymade;
 
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
@@ -137,27 +138,6 @@ $(function() {
 			$(".tooltip").fadeOut();
 		});
 	}
-
-	/* 
-		Checking if we need to show the initial helper modal
-	*/	
-	// var hash = window.location.hash;
-	// var showIntro = function() {
-	// 	$("#edit-help").fadeIn();
-	// 	$("#modal-bg").fadeIn();
-	// 	$("#close-help").click(function(){
-	// 		$("#edit-help").fadeOut();
-	// 		$("#modal-bg").fadeOut();
-	// 	});
-	// };
-	// if (!user.loggedIn && !loadedMeshu && hash != '#skipintro') {
-	// 	showIntro();
-	// } else if (hash == '#showintro') {
-	// 	showIntro();
-	// 	window.location.hash = "";
-	// } else if (hash == '#skipintro') {
-	// 	window.location.hash = "";
-	// }
 
 	/* 
 		This handles when people select a product to order
