@@ -181,7 +181,12 @@ sb.mesh.radial = function (frame, map, width, height) {
             return drawPath(d.pts);
         });
 
-        lines.attr("stroke", "black")
+        var stroke = "black";
+        if (self.style() != undefined) {
+            stroke = self.style().drawStyle == "outline" ? "black" : "white";
+        }
+
+        lines.attr("stroke", stroke)
             .attr("fill", "none")
             .attr("stroke-linecap", "round");
 
@@ -441,7 +446,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         $(".circleFrame").attr("stroke", "")
             .attr("fill", "");
 
-        $(".radial path").css("stroke", "black");
+        $(".radial path").css("stroke", "");
     };
 
     self.locations = function(locs) {

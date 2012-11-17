@@ -81,14 +81,7 @@ $(function() {
 
 		// initialize product picker
 		// this needs to be after the meshu is initialized because it needs to copy the mesh over
-		switch (currentRenderer) {
-			case 'facet':
-				sb.product.initialize('.delaunay', catalog);
-				break;
-			case 'radial':
-				sb.product.initialize(loadedMeshu.svg, catalog);
-				break;	
-		}
+		generateProductThumbnails();
 		
 
 		$("#finish-button").addClass("active");
@@ -114,7 +107,6 @@ $(function() {
 			.attr("class","")
 			.select(".title-text")
             .html(function(d){
-            	console.log("ok",loadedMeshu.title)
                 d.title = loadedMeshu.title;
                 meshu.updateTitle(d.title);
                 return d.title;
@@ -190,6 +182,24 @@ $(function() {
 		sb.rotator.on("rotated", sb.product.rotation);
 	});
 
+	function generateProductThumbnails() {
+		// initialize product picker
+		// todo - fix
+		if (meshu.mesh().name == "facet") {
+			sb.product.initialize(".delaunay", catalog);
+
+			// rasterize the meshu, add it as an image on to the page 
+			// this means we can then pin it / fb it
+			sb.rasterizer.rasterize(meshu);
+		}
+		else if (meshu.mesh().name == "radial") {
+			sb.rasterizer.thumbnail(meshu, function(canvas) {
+				sb.product.initialize(canvas, catalog);
+				sb.rasterizer.rasterize(meshu);
+			});
+		}
+	}
+
 	// called when a next button is clicked
 	function makeNextView() {
 		var view = sb.viewhandler.view();
@@ -198,22 +208,7 @@ $(function() {
 				meshu.updateBounds();
 				meshu.mesh().interactive(true);
 
-				// initialize product picker
-				// todo - fix
-				if (meshu.mesh().name == "facet") {
-					sb.product.initialize(".delaunay", catalog);
-
-					// rasterize the meshu, add it as an image on to the page 
-					// this means we can then pin it / fb it
-					sb.rasterizer.rasterize(meshu);
-				}
-				else if (meshu.mesh().name == "radial") {
-					sb.rasterizer.thumbnail(meshu, function(canvas) {
-						sb.product.initialize(canvas, catalog);
-						sb.rasterizer.rasterize(meshu);
-					});
-				}
-
+				generateProductThumbnails();
 
 				break;
 
