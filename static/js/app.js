@@ -109,7 +109,8 @@ $(function() {
 			}
 		});
 
-		d3.select("#place-title")
+		d3.select("#places").attr("class","")
+			.select("#place-title")
 			.attr("class","")
 			.select(".title-text")
             .html(function(d){
