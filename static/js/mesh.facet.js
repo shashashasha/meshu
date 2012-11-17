@@ -434,11 +434,11 @@ sb.mesh.facet = function (frame, map, width, height) {
         we need explicit styling for the canvg code to 
         rasterize it correctly - yikes!
     */
-    self.hideRotator = function() {
+    self.bakeStyles = function() {
         hidden.style("display", "none");
     };
 
-    self.showRotator = function() {
+    self.unBakeStyles = function() {
         hidden.style("display", "");
     };
 

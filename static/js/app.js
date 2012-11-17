@@ -204,15 +204,12 @@ $(function() {
 
 					// rasterize the meshu, add it as an image on to the page 
 					// this means we can then pin it / fb it
-					console.log('rasterizing', meshu);
 					sb.rasterizer.rasterize(meshu);
 				}
 				else if (meshu.mesh().name == "radial") {
-					// sb.product.initialize(".delaunay", catalog);
-					console.log('rasterizing thumbnail for the products');
 					sb.rasterizer.thumbnail(meshu, function(canvas) {
-						console.log('rendered thumbnail, sending canvas', canvas);
 						sb.product.initialize(canvas, catalog);
+						sb.rasterizer.rasterize(meshu);
 					});
 				}
 

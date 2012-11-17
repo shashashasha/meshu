@@ -1720,7 +1720,6 @@ circle {
 }
 .knockout path {
   stroke: white;
-  stroke-width: 3 !important;
 }
 .edit circle:hover,
 circle.highlight,

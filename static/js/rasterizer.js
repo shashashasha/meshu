@@ -49,24 +49,24 @@ sb.rasterizer = function() {
 		var meshuCanvas = makeCanvas();
 		frame.appendChild(meshuCanvas);
 
-		meshu.mesh().hideRotator();
+		meshu.mesh().bakeStyles();
 
 		canvg(meshuCanvas, meshu.outputSVG(), {
 			renderCallback: function() {
 				// combine the canvases
-				meshu.mesh().showRotator();
+				meshu.mesh().unBakeStyles();
 				ctx.drawImage(meshuCanvas, 0, 0, canvas.width, canvas.height);
 				var logo = new Image();
 				logo.onload = function(){
 					ctx.drawImage(logo, canvas.width-130, canvas.height-35, 117, 22);
-					postMeshu(frame, canvas, ctx, meshu, callback);
+					postMeshu(frame, canvas, meshu, callback);
 				};
 				logo.src = '/static/images/logo_io.png';
 			}
 		});
 	};
 
-	var postMeshu = function(frame, canvas, ctx, meshu, callback) {
+	var postMeshu = function(frame, canvas, meshu, callback) {
 		/*
 			sending all the meshu information. Since we're saving on 'continue'
 			we want to save a meshu in our db regardless, to associate with the MeshuImage
@@ -86,7 +86,6 @@ sb.rasterizer = function() {
 			xhr.id = meshu.id;
 		}
 
-		// clear canvases
 		self.clearCanvases();
 
 		// send it to the server to be saved as a png
@@ -139,7 +138,7 @@ sb.rasterizer = function() {
 	// create a canvas version of the mesh that we can use as a thumbnail
 	// for products, etc
 	self.thumbnail = function(meshu, callback) {
-		meshu.mesh().hideRotator();
+		meshu.mesh().bakeStyles();
 
 		// draw the mesh object
 		var canvas = makeCanvas(), 
@@ -153,7 +152,7 @@ sb.rasterizer = function() {
 		canvg(canvas, str, {
 			renderCallback: function() {
 				// combine the canvases
-				meshu.mesh().showRotator();
+				meshu.mesh().unBakeStyles();
 
 				if (callback) {
 					callback(canvas);

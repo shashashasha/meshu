@@ -362,9 +362,7 @@ sb.mesh.radial = function (frame, map, width, height) {
             .attr("r",0).attr("stroke-width",0)
             .transition().delay(250).duration(500)
             .attr("r", 204)
-            .attr("stroke-width", 20)
-            .attr("stroke", "black")
-            .attr("fill", "none");
+            .attr("stroke-width", 20);
 
         lats = [lat];
         lons = [lon];
@@ -427,10 +425,23 @@ sb.mesh.radial = function (frame, map, width, height) {
         we need explicit styling for the canvg code to 
         rasterize it correctly - yikes!
     */
-    self.hideRotator = function() {
+    self.bakeStyles = function() {
+        var stroke = $(".circleFrame").css("stroke"),
+            fill = $(".circleFrame").css("fill"),
+            pathStroke = $(".radial path").css("stroke");
+
+        $(".circleFrame").attr("stroke", stroke);
+
+        $(".circleFrame").attr("fill", fill);
+
+        $(".radial path").attr("stroke", pathStroke);
     };
 
-    self.showRotator = function() {
+    self.unBakeStyles = function() {
+        $(".circleFrame").attr("stroke", "")
+            .attr("fill", "");
+
+        $(".radial path").css("stroke", "black");
     };
 
     self.locations = function(locs) {
