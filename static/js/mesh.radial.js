@@ -180,7 +180,13 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     function updateRoutes() {
         var strokeWidth = function(d, i) {
-            return Math.min(20, d.total) * ((1 - Math.pow(d.d, .5)) + .1) + "px";
+            var max = Math.min(16, d.total - 4),
+                min = 5,
+                percent = (1 - Math.sqrt(d.d)),
+                thickness = (max * percent) + min;
+
+            console.log(thickness);
+            return thickness + "px";
         };
 
         var stroke = "black";
