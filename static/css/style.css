@@ -1841,11 +1841,12 @@ circle.highlight,
 }
 .splitimages {
   float: left;
-  width: 50%;
-  margin-top: 60px;
+  width: 48%;
+  margin: 60px 1% 0;
 }
 .splitimages img {
   float: left;
+  width: 50%;
 }
 .splitimages .button {
   width: 100%;

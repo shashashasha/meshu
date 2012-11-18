@@ -10,7 +10,7 @@ var orderer = function() {
         material = null,
         shipping = 5,
         domesticShipping = 5,
-        internationalShipping = 20,
+        internationalShipping = 17,
         catalog = null;
 
     function stripeResponseHandler(status, response) {
