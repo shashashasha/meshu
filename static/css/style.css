@@ -2140,7 +2140,8 @@ body.ie #maps .mini-meshu div {
   float: left;
   margin-top: 50px;
 }
-.about a {
+.about a,
+.paid a {
   color: #ff3fb4;
 }
 .about img {

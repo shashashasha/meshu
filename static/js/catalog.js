@@ -5,17 +5,17 @@ sb.catalog = function(renderer, promo) {
 		renderer = renderer || 'facet';
 
 	materialOptions.facet = {"earrings":
-						{"wood":{"price":75,"colors":["Amber"]},
+						{"bamboo":{"price":75,"colors":["Amber"]},
 						"acrylic":{"price":80,"colors":["Black","White"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
 						"silver":{"price":150,"colors":["Sterling Silver"]}},
 				   "pendant":
-				   		{"wood":{"price":75,"colors":["Amber"]},
+				   		{"bamboo":{"price":75,"colors":["Amber"]},
 				   		"acrylic":{"price":85,"colors":["Black","White"]},
 						"nylon":{"price":90,"colors":["Black","White"]},
 						"silver":{"price":130,"colors":["Sterling Silver"]}},
 				   "necklace":
-				   		{"wood":{"price":80,"colors":["Amber"]},
+				   		{"bamboo":{"price":80,"colors":["Amber"]},
 				   		"acrylic":{"price": 90,"colors":["Black","White"]},
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":150,"colors":["Sterling Silver"]}},
@@ -24,11 +24,11 @@ sb.catalog = function(renderer, promo) {
 					};
 
 	materialOptions.radial = {"earrings":
-						{"wood":{"price":75,"colors":["Amber"]},
+						{"bamboo":{"price":75,"colors":["Amber"]},
 						"acrylic":{"price":80,"colors":["Black","White"]},
 						"nylon":{"price":90,"colors":["Black","White"]}},
 				   "pendant":
-				   		{"wood":{"price":75,"colors":["Amber"]},
+				   		{"bamboo":{"price":75,"colors":["Amber"]},
 				   		"acrylic":{"price":85,"colors":["Black","White"]},
 						"nylon":{"price":95,"colors":["Black","White"]},
 						"silver":{"price":140,"colors":["Sterling Silver"]}}
@@ -40,11 +40,11 @@ sb.catalog = function(renderer, promo) {
 	var promotions = {};
 	promotions.marathon = {
 					"earrings":
-						{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+						{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
 				   	"pendant":
-				   		{"wood":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+				   		{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
 				   	"necklace":
-				   		{"wood":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
+				   		{"bamboo":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
 				   	};
 
 	if (promo && promotions[promo]) {

@@ -196,7 +196,6 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         lines.exit().remove();
 
-        console.log('updating routes', stroke, self.style());
         lines.attr("d", function(d) {
                 return drawPath(d.pts);
             })
@@ -246,7 +245,6 @@ sb.mesh.radial = function (frame, map, width, height) {
     }
 
     function checkRequests(zoom) {
-        console.log(zoom, requests);
         var allDone = true,
             calculated = 0;
         for (var i = 1; i < points.length; i++) {
@@ -257,6 +255,11 @@ sb.mesh.radial = function (frame, map, width, height) {
             }
         }
 
+        /*
+            update progress bar for the radial calculations
+            and only let you click "continue"
+            when they're all done
+        */
         var progress = (calculated/(points.length-1)*100).toFixed(0) + "%";
 
         $("#radial-heading").html("Generating radial... " + progress);
@@ -528,7 +531,7 @@ sb.mesh.radial = function (frame, map, width, height) {
     };
 
     self.refresh = function(flag) {
-        if (flag == 'zoomed') {
+        if (flag == 'zoomed' && lats.length > 0 && lons.length > 0) {
             self.add(lats[0], lons[0], meshuTitle);
         } else {
             update();
