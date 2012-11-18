@@ -6,13 +6,16 @@ Thanks for ordering!
 {% endblock %}
 
 {% block content %}
-<!-- <img src="http://o7.no/wA9xVQ" style="max-width:560px;" /> -->
 <br />
 <div>
     <h3 class="h4"><b>{{ meshu.title }}</b></h3>
     <h3 class="h4">Total: ${{ order.amount|floatformat:2 }}</h3>
-    Thanks! We've received your <b>{{ order.get_display_name }}</b> order. What happens now is we'll process your order and send it off to the fabricator, and then they'll send it back to us for finishing and packaging. It's not as fast as we'd like, but it should take somewhere between 4-6 weeks for us to get you your meshu.
+    Thanks! We've received your <b>{{ order.get_display_name }}</b> order. What happens now is we'll review your meshu, process it, and send it off to the fabricator. Once they send your meshu back to us ({{ order.get_processing_time }}) we finish it, package it, and send it on your way!. We'll also email you updates as your meshu is made.
     <br /><br />
     You can also view or share your meshu with this link: <a href="http://meshu.io{% shorturl meshu %}"><b>http://meshu.io{% shorturl meshu %}</b></a>.
+    <br /><br />
+    Best,
+    <br />
+    Rachel + Sha
 </div>
 {% endblock %}

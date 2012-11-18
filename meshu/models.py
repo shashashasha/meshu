@@ -123,7 +123,7 @@ class Order(models.Model):
 	contact = models.CharField(max_length=200, default='')
 
 	# order information
-	material = models.CharField(max_length=140) # acrylic, silver, wood
+	material = models.CharField(max_length=140) # acrylic, silver, bamboo
 	color = models.CharField(max_length=140, blank=True) # black, white, grey
 	product = models.CharField(max_length=140) # necklace, pendant, etc
 	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
@@ -151,6 +151,16 @@ class Order(models.Model):
 			return self.material + ' ' + self.product
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
+
+	def get_processing_time(self):
+		if self.material == 'silver':
+			return '4-5 weeks for silver'
+		elif self.material == 'nylon':
+			return '4-5 weeks for nylon'
+		elif self.material == 'acrylic':
+			return '3-4 weeks for acrylic'
+		elif self.material == 'bamboo':
+			return '2-3 weeks for bamboo'
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"

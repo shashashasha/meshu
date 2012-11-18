@@ -18,6 +18,7 @@ from datetime import datetime
 
 
 from meshu.views import *
+from meshu.item import *
 
 # not sure if this should go in views.py, but here for now. this is also why we need the previous import statement
 

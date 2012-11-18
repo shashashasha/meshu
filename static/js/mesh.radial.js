@@ -180,7 +180,13 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     function updateRoutes() {
         var strokeWidth = function(d, i) {
-            return Math.min(20, d.total) * ((1 - Math.pow(d.d, .5)) + .1) + "px";
+            var max = Math.min(16, d.total - 4),
+                min = 5,
+                percent = (1 - Math.sqrt(d.d)),
+                thickness = (max * percent) + min;
+
+            console.log(thickness);
+            return thickness + "px";
         };
 
         var stroke = "black";
@@ -196,7 +202,6 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         lines.exit().remove();
 
-        console.log('updating routes', stroke, self.style());
         lines.attr("d", function(d) {
                 return drawPath(d.pts);
             })
@@ -246,7 +251,6 @@ sb.mesh.radial = function (frame, map, width, height) {
     }
 
     function checkRequests(zoom) {
-        console.log(zoom, requests);
         var allDone = true,
             calculated = 0;
         for (var i = 1; i < points.length; i++) {
@@ -257,6 +261,11 @@ sb.mesh.radial = function (frame, map, width, height) {
             }
         }
 
+        /*
+            update progress bar for the radial calculations
+            and only let you click "continue"
+            when they're all done
+        */
         var progress = (calculated/(points.length-1)*100).toFixed(0) + "%";
 
         $("#radial-heading").html("Generating radial... " + progress);
@@ -528,7 +537,7 @@ sb.mesh.radial = function (frame, map, width, height) {
     };
 
     self.refresh = function(flag) {
-        if (flag == 'zoomed') {
+        if (flag == 'zoomed' && lats.length > 0 && lons.length > 0) {
             self.add(lats[0], lons[0], meshuTitle);
         } else {
             update();
