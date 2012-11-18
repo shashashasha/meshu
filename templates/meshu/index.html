@@ -13,16 +13,20 @@
 		so please order by the following dates to ensure that we can send off your presents in time for Christmas!</p>
 		<p>Silver/Nylon: <b>Nov 16th</b>, Acrylic: <b>Nov 30th</b>, Bamboo: <b>Dec 7th</b></p>
 	</div>
-	<div id="introducing" style="margin: 20px;">
-		<img src="{{ STATIC_URL }}images/radial/radial_ts.jpg">
-		<h2>Introducing: Radial</h2>
-		<p>Radial is a portrait of a place, wherever you like.</p>
-		<div class="large-button">
-			<a href="/make/" class="button pink">Make Your Own</a>
+	<div id="introducing" style="margin: 20px; height:280px; margin-bottom: 20px; border: 1px solid lightGrey; overflow:hidden;">
+		<img src="{{ STATIC_URL }}images/radial/16s.png" style="float:right; width:280px;">
+		<img src="{{ STATIC_URL }}images/gallery/r1.jpg" style="float:right; width:280px;">
+		<div class="text" style="width:400px; padding: 20px;">
+			<h2 class="big" style="text-align:left; margin-top:0;">Introducing: Radial</h2>
+			<h2 style="color:gray; margin: 10px 0;">Radial is a portrait of a place. Mark where you live, where you fell in love, or where you'd like to go.</h2>
+			<div class="large-button" style="font-size: 20px; margin-top: 15px;">
+				<a href="/make/" class="button pink" style="padding:5px 11px">Try It Out</a>
+			</div>
 		</div>
+	</div>
 	<div id="photos">
-		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
-		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
+		<img src="{{ STATIC_URL }}images/photos/meshu04.jpg" />
+		<img src="{{ STATIC_URL }}images/photos/meshu03.jpg" />
 		<div id="intro-text">
 			<span class="meshu-title">meshu</span><br/>
 			turns your places<br />into beautiful objects.
@@ -40,13 +44,14 @@
 
 	<!-- <h2 class="call"><a href="/shop/" class="button shop">Shop Our Gallery</a> <a href="/make/" class="button pink">Make Your Own</a> <span class="foursquare-auth button">Start With Foursquare</span></h2>
  -->
-	<!-- <h2 class="big">what people have made:</h2>
+
+	<h2 class="big">each meshu tells a story:</h2>
 
 	<div id="banners">
-		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-1" src="{{ STATIC_URL }}images/samples/banner3.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-0" src="{{ STATIC_URL }}images/samples/banner1.jpg" />
-	</div> -->
+		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/samples/macro0.jpg" />
+		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/samples/macro1.jpg" style="display: none;"/>
+		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/samples/macro2.jpg" style="display: none;"/>
+	</div>
 
 	<h2 class="big">here's how it works:</h2>
 
@@ -87,6 +92,6 @@
 
 {% block script %}
 	<script src="{{ STATIC_URL }}lib/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
 {% endblock %}
