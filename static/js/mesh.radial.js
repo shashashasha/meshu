@@ -185,7 +185,6 @@ sb.mesh.radial = function (frame, map, width, height) {
                 percent = (1 - Math.sqrt(d.d)),
                 thickness = (max * percent) + min;
 
-            console.log(thickness);
             return thickness + "px";
         };
 
@@ -211,10 +210,13 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // lines.attr("stroke-width", strokeWidth);
 
-        lines
-            .transition()
-            .duration(500)
-            .style("stroke-width", strokeWidth);
+        if ($("body").hasClass("firefox"))
+            lines.style("stroke-width", strokeWidth);
+        else
+            lines
+                .transition()
+                .duration(500)
+                .style("stroke-width", strokeWidth);
     }
 
     // draw the path based on an array of points
