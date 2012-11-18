@@ -263,7 +263,7 @@ $(function() {
 
 				// rasterize the meshu, add it as an image on to the page 
 				// this means we can then pin it / fb it
-				console.log('rasterizing', meshu);
+				// console.log('rasterizing', meshu);
 				sb.rasterizer.rasterize(meshu);
 				break;
 
