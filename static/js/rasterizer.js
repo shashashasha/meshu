@@ -13,7 +13,7 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		// $(canvas).addClass("hidden");
+		$(canvas).addClass("hidden");
 
 		canvases.push(canvas);
 		return canvas;
