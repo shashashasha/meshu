@@ -1793,21 +1793,6 @@ circle.highlight,
 .radial #place-title:hover {
   color: black;
 }
-.radial .map-hint {
-  display: none;
-  position: absolute;
-  z-index: 2;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #808080;
-  width: 300px;
-  left: 150px;
-  top: 5px;
-  padding: 2px 5px;
-  -webkit-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
 .fill-option {
   width: 75px;
   height: 75px;

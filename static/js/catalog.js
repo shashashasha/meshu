@@ -5,22 +5,22 @@ sb.catalog = function(renderer, promo) {
 		renderer = renderer || 'facet';
 
 	materialOptions.facet = {"earrings":
-						{"bamboo":{"price":75,"colors":["Amber"]},
-						"acrylic":{"price":80,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
+						{"bamboo":{"price":68,"colors":["Amber"]},
+						"acrylic":{"price":75,"colors":["Black","White"]},
+						"nylon":{"price":85,"colors":["Black","White"]},
+						"silver":{"price":145,"colors":["Sterling Silver"]}},
 				   "pendant":
-				   		{"bamboo":{"price":75,"colors":["Amber"]},
-				   		"acrylic":{"price":85,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":130,"colors":["Sterling Silver"]}},
+				   		{"bamboo":{"price":68,"colors":["Amber"]},
+				   		"acrylic":{"price":80,"colors":["Black","White"]},
+						"nylon":{"price":85,"colors":["Black","White"]},
+						"silver":{"price":125,"colors":["Sterling Silver"]}},
 				   "necklace":
-				   		{"bamboo":{"price":80,"colors":["Amber"]},
-				   		"acrylic":{"price": 90,"colors":["Black","White"]},
-						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
+				   		{"bamboo":{"price":75,"colors":["Amber"]},
+				   		"acrylic":{"price": 85,"colors":["Black","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]},
+						"silver":{"price":145,"colors":["Sterling Silver"]}},
 					"cufflinks":
-						{"silver":{"price":150}}
+						{"silver":{"price":145}}
 					};
 
 	materialOptions.radial = {"earrings":

@@ -92,25 +92,6 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     var content = $("#content");
 
-    d3.select(uiShield.node())
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout);
-
-    var tooltipTimeout;
-    function mouseover() {
-        if (!$("#content").hasClass("edit"))
-            return;
-        tooltipTimeout = setTimeout(function(){
-            $(".map-hint").fadeIn();
-        },500);
-    }
-    function mouseout() {
-        if (!$("#content").hasClass("edit"))
-            return;
-        clearTimeout(tooltipTimeout);
-        $(".map-hint").fadeOut();
-    }
-
     self.hittest = function(target) {
         return d3.event.target != uiShield.node();
     };
