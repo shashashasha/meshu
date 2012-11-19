@@ -7,7 +7,6 @@ sb.mesh.radial = function (frame, map, width, height) {
     // the name of the product line
     self.name = 'radial';
 
-    // making this not global ._.
     var lats = [],
         lons = [],
         meshuTitle,
@@ -175,26 +174,30 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         var lines = g.selectAll("path").data(paths);
 
-        lines.enter()
-            .append("svg:path")
-            .style("stroke-width", 0);
+        if ($("body").hasClass("firefox")) {
+            lines.enter()
+                .append("svg:path")
+                .attr("fill", "none")
+                .attr("stroke-linecap", "round")
+                .style("stroke-width", strokeWidth);
+        }
+        else {
+            lines.enter()
+                .append("svg:path")
+                .attr("fill", "none")
+                .attr("stroke-linecap", "round")
+                .style("stroke-width", 0)
+                .transition()
+                .duration(500)
+                .style("stroke-width", strokeWidth);   
+        }
 
         lines.exit().remove();
 
         lines.attr("d", function(d) {
                 return drawPath(d.pts);
             })
-            .attr("stroke", stroke)
-            .attr("fill", "none")
-            .attr("stroke-linecap", "round");
-
-        if ($("body").hasClass("firefox"))
-            lines.style("stroke-width", strokeWidth);
-        else
-            lines
-                .transition()
-                .duration(500)
-                .style("stroke-width", strokeWidth);
+            .attr("stroke", stroke);
     }
 
     // draw the path based on an array of points
@@ -273,31 +276,30 @@ sb.mesh.radial = function (frame, map, width, height) {
         var base = mapquest + '{start}&to={end}';
 
         for (var i = 1; i < points.length; i++) {
-            var end = points[i],
-                endCoords = end[1]+","+end[0],
-                url = base.replace("{start}", startCoords).replace("{end}", endCoords);
+                var end = points[i],
+                    endCoords = end[1]+","+end[0],
+                    url = base.replace("{start}", startCoords).replace("{end}", endCoords);
 
-            requests[zoom][i] = $.jsonp({
-                url: url,
-                callbackParameter: 'callback',
-                success: function() {
-                    var j = i;
-                    return function(data) {
-                        if (!data.route.shape) {
+                requests[zoom][i] = $.jsonp({
+                    url: url,
+                    callbackParameter: 'callback',
+                    success: function(j) {
+                        return function(data) {
+                            if (!data.route.shape) {
+                                requests[zoom][j] = 'done';
+                                return;
+                            } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
+                                return;
+                            }
+
+                            var wayPoints = data.route.shape.shapePoints;
+                            addRoute(wayPoints);
                             requests[zoom][j] = 'done';
-                            return;
-                        } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
-                            return;
-                        }
 
-                        var wayPoints = data.route.shape.shapePoints;
-                        addRoute(wayPoints);
-                        requests[zoom][j] = 'done';
-
-                        checkRequests(zoom);
-                    };
-                }()
-            });
+                            checkRequests(zoom);
+                        };
+                    }(i)
+                });
         }
     }
 
@@ -392,6 +394,12 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         $("#places").removeClass("inactive");
 
+        /* 
+            just recentering so we don't clear out all the tiles 
+            (meshu.js handles zooming if it's a searched result)
+            but we also have to run boundsUpdated() so that 
+            the title / pixelbounds / etc are updated
+        */
         var r = map.getMapRadius();
         map.map.center({ lat: lat, lon: lon });
         map.boundsUpdated();
