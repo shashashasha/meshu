@@ -9,10 +9,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     var lats = [],
         lons = [],
-        meshuTitle,
-        lastZoom;
-
-    var decoder = document.createElement('div');
+        meshuTitle;
 
     var meshContainer = d3.select(frame || "body").append("div")
             .attr("id", selfId)
@@ -265,41 +262,38 @@ sb.mesh.radial = function (frame, map, width, height) {
             start = points[0]
             startCoords = start[1]+","+start[0];
 
-        lastZoom = zoom;
-
         // first request is done, requests starts at index 1
         requests[zoom] = ["done"];
 
         // jquery automatically adds a callback param
         var mapquest = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
-        // var base = 'http://' + host + '.' + window.location.host + '/proxy/router/?from={start}&to={end}';
         var base = mapquest + '{start}&to={end}';
 
         for (var i = 1; i < points.length; i++) {
-                var end = points[i],
-                    endCoords = end[1]+","+end[0],
-                    url = base.replace("{start}", startCoords).replace("{end}", endCoords);
+            var end = points[i],
+                endCoords = end[1]+","+end[0],
+                url = base.replace("{start}", startCoords).replace("{end}", endCoords);
 
-                requests[zoom][i] = $.jsonp({
-                    url: url,
-                    callbackParameter: 'callback',
-                    success: function(j) {
-                        return function(data) {
-                            if (!data.route.shape) {
-                                requests[zoom][j] = 'done';
-                                return;
-                            } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
-                                return;
-                            }
-
-                            var wayPoints = data.route.shape.shapePoints;
-                            addRoute(wayPoints);
+            requests[zoom][i] = $.jsonp({
+                url: url,
+                callbackParameter: 'callback',
+                success: function(j) {
+                    return function(data) {
+                        if (!data.route.shape) {
                             requests[zoom][j] = 'done';
+                            return;
+                        } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
+                            return;
+                        }
 
-                            checkRequests(zoom);
-                        };
-                    }(i)
-                });
+                        var wayPoints = data.route.shape.shapePoints;
+                        addRoute(wayPoints);
+                        requests[zoom][j] = 'done';
+
+                        checkRequests(zoom);
+                    };
+                }(i)
+            });
         }
     }
 
