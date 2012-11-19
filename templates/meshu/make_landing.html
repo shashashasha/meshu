@@ -26,21 +26,12 @@
 {% block resources %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
-
-    <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/map.min.js"></script>
 
     <script type="text/javascript">
-    $(function() {
-        var map = sb.map("#bg-map", "100%", "100%");
-    });
-
-    // $(".splitimages img").mouseover(function() {
-    //     var id = this.id;
-    //     $('#' + id).attr("src", "/static/images/meshus/" + id + ".hover.jpg");
-    // }).mouseout(function() {
-    //     var id = this.id;
-    //     $('#' + id).attr("src", "/static/images/meshus/" + id + ".jpg");
-    // });
-
+        $(function() {
+            var map = sb.map("#bg-map", "100%", "100%");
+        });
     </script>  
 {% endblock %}
