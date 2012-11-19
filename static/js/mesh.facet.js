@@ -188,6 +188,18 @@ sb.mesh.facet = function (frame, map, width, height) {
         }
     }
 
+    self.updatePixelBounds = function() {
+        if (lats.length && lons.length) {
+            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+        }
+        else { 
+            pixel_bounds = [];
+        }
+    };
+
     function update(){
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
