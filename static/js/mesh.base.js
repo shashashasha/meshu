@@ -134,17 +134,17 @@ sb.mesh.base = function (frame, map, width, height) {
         map_dragging = null;
     }
 
-    self.updatePixelBounds = function() {
-        if (lats.length && lons.length) {
-            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
-                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
-        }
-        else { 
-            pixel_bounds = [];
-        }
-    };
+    // self.updatePixelBounds = function() {
+    //     if (lats.length && lons.length) {
+    //         pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+    //                         map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+    //                         map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+    //                         map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+    //     }
+    //     else { 
+    //         pixel_bounds = [];
+    //     }
+    // };
 
     self.editText = function(node,i,type) {
         var button = node.find("." + type + "-edit").text("save");

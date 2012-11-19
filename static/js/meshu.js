@@ -257,7 +257,8 @@ sb.meshu = function(frame, renderer, existingMap) {
     mesh.on("added", self.checkAdded);
 
     map.on("boundsUpdated", function() {
-        mesh.updatePixelBounds();
+        if (mesh.updatePixelBounds)
+            mesh.updatePixelBounds();
         mesh.refresh();
     });
 
