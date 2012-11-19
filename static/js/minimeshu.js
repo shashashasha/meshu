@@ -86,7 +86,8 @@ sb.minimeshu = function(frame, renderer) {
     };
 
     map.on("boundsUpdated", function() {
-        mesh.updatePixelBounds();
+        if (mesh.updatePixelBounds)
+            mesh.updatePixelBounds();
         mesh.refresh();
     });
 

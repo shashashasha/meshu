@@ -485,10 +485,9 @@ sb.mesh.radial = function (frame, map, width, height) {
 
 
         var fw = $(frame).width(),
-            fh = $(frame).height();
-        if (fw > fh)
-            // $('#' + selfId + "prerendered" + ' .delaunay').attr("transform","translate("+(fw-fh)/2+",0)")
-            $('#' + selfId + " .delaunay").attr("transform","translate("+(fw-fh)/2+",0)")
+            fh = $(frame).height(),
+            r = 600;
+        $('#' + selfId + " .delaunay").attr("transform","translate("+(fw-r)/2+","+(fh-r)/2+")")
     };
 
     self.recalculate = function() {
