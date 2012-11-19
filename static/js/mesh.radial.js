@@ -277,6 +277,12 @@ sb.mesh.radial = function (frame, map, width, height) {
             requests[zoom][i] = $.jsonp({
                 url: url,
                 callbackParameter: 'callback',
+                error: function(j) {
+                    return function(data) {
+                        requests[zoom][j] = 'done';
+                        checkRequests(zoom);
+                    };
+                }(i),
                 success: function(j) {
                     return function(data) {
                         if (!data.route.shape) {
