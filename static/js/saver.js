@@ -96,7 +96,6 @@ var saver = function() {
           $("#update-button").html('updating');
 
           var updateurl = loadedMeshu.edit_url + 'update';
-          console.log(getMeshuXHR());
           $.post(updateurl, getMeshuXHR(), function(data) {
 
               // create new meshu_id element in the form
@@ -122,7 +121,6 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
-      console.log('creatingorupdating', getMeshuXHR());
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();

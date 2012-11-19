@@ -19,8 +19,6 @@ sb.pathdrawer = function (map) {
 
 
     self.update = function() {
-    	console.log(paths, 'updating');
-
 		var lines = g.selectAll("path").data(paths);
 		lines.enter().append("svg:path");
 		lines.exit().remove();

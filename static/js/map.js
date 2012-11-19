@@ -82,8 +82,6 @@ sb.map = function(frame, width, height) {
 				lat: lats[0],
 				lon: lons[0]
 			});
-
-			console.log(self.map.center(), self.map.zoom());
 			
 			self.boundsUpdated();
 			return;
@@ -144,9 +142,6 @@ sb.map = function(frame, width, height) {
 		container.style.height = (height) + 'px';
 
 		self.map.extent(extent);
-
-		// console.log(extent[0].lat - self.map.extent()[0].lat, extent[0].lon - self.map.extent()[0].lon);
-		// console.log('w:', width, 'h:', height);
 		
 		var dif = self.l2p(extent[0]).y - self.l2p(self.map.extent()[0]).y;
 		

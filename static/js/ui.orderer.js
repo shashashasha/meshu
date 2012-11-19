@@ -186,13 +186,10 @@ sb.ui.orderer = function(meshu) {
 		// we also can't change options once it's set, so no one can mess with it
 		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), orderer.getShipping());
 
-		console.log('updating form', sb.materializer.color().toLowerCase());
 		$("#object-type").val(sb.materializer.productName());
 		$("#object-material").val(sb.materializer.material());
 		$("#object-color").val(sb.materializer.color().toLowerCase());
 		$("#object-amount").val(orderer.getTotalCents());
-		
-		console.log($("#object-color").val());
 
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
