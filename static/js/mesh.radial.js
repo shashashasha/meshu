@@ -371,7 +371,7 @@ sb.mesh.radial = function (frame, map, width, height) {
             .attr("r",0).attr("stroke-width",0)
             .transition().delay(250).duration(500)
             .attr("r", 204)
-            .attr("stroke-width", 20);
+            .attr("stroke-width", 17);
 
         lats = [lat];
         lons = [lon];

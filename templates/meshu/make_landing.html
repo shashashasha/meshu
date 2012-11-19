@@ -4,30 +4,42 @@
 
 
 {% block content %}
-<div class="content-banner">Meshu now comes in two flavors!</div>   
-<div class="splitimages">
-    <a href="/make/facet">
-        <div class="button">Map your travels with Facet</div>
-        <img src="{{ STATIC_URL }}images/gallery/m2.jpg" id="facet" />
-        <img src="{{ STATIC_URL }}images/gallery/m0.jpg" id="facet" />
-        <!-- <h2 class="big">Facet</h2> -->
-        
-    </a>
+<div id="bg-map" style="position: absolute; width: 100%; height: 100%;">
 </div>
-<div class="splitimages">
-    <a href="/make/radial">
-        <div class="button pink">Or mark your home with Radial</div>
-        <img src="{{ STATIC_URL }}images/gallery/r2.jpg" id="facet" />
-        <img src="{{ STATIC_URL }}images/gallery/r1.jpg" id="facet" />
-        <!-- <h2 class="big">Radial</h2> -->
-        
-        <!-- <img src="/static/images/meshus/radial.jpg" id="radial" /> -->
-    </a>
+<div id="make-landing">
+    <div class="content-banner">Meshu now comes in two flavors!</div>   
+    <div class="splitimages">
+        <a href="/make/facet">
+            <div class="button">Map your travels with Facet</div>
+            <img src="{{ STATIC_URL }}images/gallery/m2.jpg" id="facet" />
+            <!-- <img src="{{ STATIC_URL }}images/gallery/m0.jpg" id="facet" /> -->
+            <!-- <h2 class="big">Facet</h2> -->
+            
+        </a>
+    </div>
+    <div class="splitimages">
+        <a href="/make/radial">
+            <div class="button pink">Or mark your home with Radial</div>
+            <img src="{{ STATIC_URL }}images/gallery/r2.jpg" id="facet" />
+            <!-- <img src="{{ STATIC_URL }}images/gallery/r1.jpg" id="facet" /> -->
+            <!-- <h2 class="big">Radial</h2> -->
+            
+            <!-- <img src="/static/images/meshus/radial.jpg" id="radial" /> -->
+        </a>
+    </div>
 </div>
 {% endblock %}
 
 {% block resources %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+
     <script type="text/javascript">
+    $(function() {
+        var map = sb.map("#bg-map", "100%", "100%");
+    });
 
     // $(".splitimages img").mouseover(function() {
     //     var id = this.id;
