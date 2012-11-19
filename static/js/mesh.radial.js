@@ -315,8 +315,13 @@ sb.mesh.radial = function (frame, map, width, height) {
     function updateListBehavior() {
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
-                if (d && d.title) return d.title;
-                else return meshuTitle;
+                if (d && d.title) {
+                    return d.title;
+                }
+                else {
+                    return meshuTitle;
+                } 
+                    
             });
 
         placeTitle.select(".title-text").on("click",function(d){
@@ -389,6 +394,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         var r = map.getMapRadius();
         map.map.center({ lat: lat, lon: lon });
+        map.boundsUpdated();
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();

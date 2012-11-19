@@ -8,6 +8,7 @@
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
+  font-weight: 300;
 }
 ul {
   margin: 0;
@@ -15,7 +16,7 @@ ul {
   list-style-type: none;
 }
 h2 {
-  font-weight: normal;
+  font-weight: 300;
   font-size: 28px;
   margin: 0;
 }
@@ -63,7 +64,7 @@ image {
 }
 h1#meshu {
   margin: 0;
-  font-weight: normal;
+  font-weight: 300;
 }
 #nav {
   position: absolute;
