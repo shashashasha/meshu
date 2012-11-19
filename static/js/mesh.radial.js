@@ -388,12 +388,10 @@ sb.mesh.radial = function (frame, map, width, height) {
         $("#places").removeClass("inactive");
 
         var r = map.getMapRadius();
-        map.updateBounds([lat-r.lat, lat+r.lat], [lon-r.lon, lon+r.lon]);
+        map.map.center({ lat: lat, lon: lon });
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
-
-        // self.added();
         
         return self;
     };
