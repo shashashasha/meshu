@@ -2,8 +2,7 @@ var sb = sb || {};
 
 sb.mesh.radial = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
-        selfId = 'm' + parseInt(Math.random() * 10000000000, 10),
-        hosts = ['a', 'b', 'c', 'd'];
+        selfId = 'm' + parseInt(Math.random() * 10000000000, 10);
 
     // the name of the product line
     self.name = 'radial';
@@ -189,8 +188,6 @@ sb.mesh.radial = function (frame, map, width, height) {
             .attr("fill", "none")
             .attr("stroke-linecap", "round");
 
-        // lines.attr("stroke-width", strokeWidth);
-
         if ($("body").hasClass("firefox"))
             lines.style("stroke-width", strokeWidth);
         else
@@ -262,26 +259,27 @@ sb.mesh.radial = function (frame, map, width, height) {
     // make all the route requests
     function requestRoutes() {
         var zoom = map.map.zoom(),
-            start = points[0];
+            start = points[0]
+            startCoords = start[1]+","+start[0];
 
         lastZoom = zoom;
 
         // first request is done, requests starts at index 1
         requests[zoom] = ["done"];
 
-        var host = hosts.pop();
-        hosts.unshift(host);
+        // jquery automatically adds a callback param
+        var mapquest = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
+        // var base = 'http://' + host + '.' + window.location.host + '/proxy/router/?from={start}&to={end}';
+        var base = mapquest + '{start}&to={end}';
 
         for (var i = 1; i < points.length; i++) {
-            var end = points[i];
+            var end = points[i],
+                endCoords = end[1]+","+end[0],
+                url = base.replace("{start}", startCoords).replace("{end}", endCoords);
 
-            // "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="+
-            // d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
-
-            requests[zoom][i] = $.ajax({
-                url: "/proxy/router/?from=" + start[1]+","+start[0]+"&to="+end[1]+","+end[0],
-                // cache: false,
-                dataType: 'json',
+            requests[zoom][i] = $.jsonp({
+                url: url,
+                callbackParameter: 'callback',
                 success: function() {
                     var j = i;
                     return function(data) {
@@ -492,11 +490,13 @@ sb.mesh.radial = function (frame, map, width, height) {
         $('#' + selfId + "prerendered").remove();
 
         $.each(requests, function(i, spokes){
-            $.each(spokes, function(i, r) {
+            $.each(spokes, function(j, r) {
                 if (r == undefined || r == 'done')
                     return;
 
-                // r.abort();
+                if (r.abort) {
+                    r.abort();    
+                }
             });
 
             requests[i] = 'inactive';

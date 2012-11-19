@@ -31,7 +31,7 @@ sb.catalog = function(renderer, promo) {
 				   		{"bamboo":{"price":75,"colors":["Amber"]},
 				   		"acrylic":{"price":85,"colors":["Black","White"]},
 						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":140,"colors":["Sterling Silver"]}}
+						"silver":{"price":160,"colors":["Sterling Silver"]}}
 					};
 
 	// set the product type options with either facet or radial

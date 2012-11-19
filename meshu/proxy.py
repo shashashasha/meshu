@@ -32,9 +32,10 @@ def processing_router(request):
 	base = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="
 	start = request.GET.get('from', '')
 	end = request.GET.get('to', '')
+	callback = request.GET.get('callback', '')
 
 	try:
-		response = urllib2.urlopen(base + start + '&to=' + end)
+		response = urllib2.urlopen(base + start + '&to=' + end + '&callback=' + callback)
 		json = response.read()
 		return HttpResponse(json, mimetype='application/json')
 	except urllib2.URLError:

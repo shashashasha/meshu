@@ -24,7 +24,7 @@ sb.map = function(frame, width, height) {
 	self.dispatch = d3.dispatch("show");
 
 	var cities = [{"name":"San Francisco","lat":37.775,"lon":-122.43,"zoom":13},
-				  {"name":"New York City","lat":40.718,"lon":-73.997,"zoom":14},
+				  {"name":"New York City","lat":40.718,"lon":-73.997,"zoom":13},
 				  {"name":"London","lat":51.506325,"lon":-0.127144,"zoom":13},
 				  {"name":"Paris","lat":48.85693,"lon":2.3412,"zoom":14},
 				  {"name":"Moscow","lat":55.75695,"lon":37.614975,"zoom":14},
