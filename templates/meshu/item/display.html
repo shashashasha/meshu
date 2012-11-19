@@ -13,8 +13,8 @@
             {% if user.is_authenticated %}
             {% if user.id == meshu.user_profile.user.id %}
                 <div class="item-actions">
-                    <a id="order-button" class="action-button nav active" href="{{ meshu.get_order_url }}">order meshu</a>
-                    <a id="reedit" class="action-button nav"  href="{{ meshu.get_edit_url }}">edit meshu</a>
+                    <a id="order-button" class="nav active" href="{{ meshu.get_order_url }}">order meshu</a>
+                    <a id="reedit" class="nav"  href="{{ meshu.get_edit_url }}">edit meshu</a>
                 </div>
             {% endif %}
             {% endif %}
