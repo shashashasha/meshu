@@ -305,7 +305,6 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     // update rotation and bounding box stuff
     function update(){
-        console.log('updating');
         placeTitle.data(points)
             .each(function(d){ d.edit = false; });
 
@@ -497,7 +496,6 @@ sb.mesh.radial = function (frame, map, width, height) {
                 if (r == undefined || r == 'done')
                     return;
 
-                // console.log('aborting', r);
                 // r.abort();
             });
 
