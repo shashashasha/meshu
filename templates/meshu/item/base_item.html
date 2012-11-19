@@ -27,7 +27,7 @@
     {% block edit %}
         <div id="edit">
             <div id="search">
-                <h2>Search</h2>
+                <h2>{% block page_title %}{% endblock %}</h2>
                 <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
                     onfocus="value=''"/>
                 <div id="search-button" class="button">search</div>
