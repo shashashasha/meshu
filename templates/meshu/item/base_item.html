@@ -585,12 +585,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
-    
-    <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
-    
     <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
     <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script> 
-
+    
+    {% if DEBUG == false %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
+    {% else %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
@@ -613,6 +613,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/viewhandler.js"></script>
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+    {% endif %}
 
 {% endblock %}
 

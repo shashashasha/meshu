@@ -93,6 +93,12 @@
 
 {% block script %}
 	<script src="{{ STATIC_URL }}lib/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
+
+    {% if DEBUG == false %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
+    {% else %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
+	{% endif %}
 {% endblock %}
