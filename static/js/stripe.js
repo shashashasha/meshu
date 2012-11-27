@@ -69,7 +69,6 @@ var orderer = function() {
             code: value
         }, function(data) {
             if (data.success) {
-
                 var amt = parseFloat(data.amount);
                 if (amt < 1 && amt > 0) {
                     discountPercent = amt;
@@ -78,8 +77,9 @@ var orderer = function() {
                 }
             }
 
-            if (callback)
+            if (callback) {
                 callback(data);
+            }
         }, 'json');
     };
 

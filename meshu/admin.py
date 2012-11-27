@@ -52,7 +52,7 @@ class OrderAdmin(admin.ModelAdmin):
 			'fields': ('user_profile', 'meshu', 'product', 'material', 'color', 'postcard_note')
 		}),
 		('Order Details', {
-			'fields': ('status', 'amount', 'contact', 'special_instructions')
+			'fields': ('status', 'amount', 'contact', 'coupon', 'special_instructions')
 		}),
 		('Shipping Information', {
 			'fields': ('shipping_name', 'shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country')

@@ -145,6 +145,9 @@ class Order(models.Model):
 	# special instructions
 	special_instructions = models.CharField(max_length=200, default='', blank=True)
 
+	# track the coupon codes used
+	coupon = models.CharField(max_length=100, default='', blank=True)
+
 	# tracking number and shipping date
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
 	tracking = models.CharField(max_length=140, default='', blank=True)
