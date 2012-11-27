@@ -354,7 +354,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         placeTitle.select(".title-edit").on("click",function(d){
             var node = $(this).parent();
-            if (!d.edit) editText(node,0,"title");
+            if (!d.edit) self.editText(node,0,"title");
             else d.title = meshuTitle = self.saveText(node,0,"title");
             d.edit = !d.edit;
         });

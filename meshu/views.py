@@ -335,7 +335,7 @@ def order_create(request, profile, meshu):
 	order.color = request.POST['color']
 	order.product = request.POST['product']
 
-	order.coupon = request.POST['coupon']
+	order.coupon = request.POST.get('coupon', '')
 
 	# stripe uses cents
 	amount = float(request.POST.get('amount', '0.0')) / 100.0
