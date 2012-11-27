@@ -51,8 +51,8 @@ sb.ui.orderer = function(meshu) {
 
 				// detect whether the coupon is for an amount or a percentage
 				if (couponPrice < 1 && couponPrice > 0) {
-					var amountOff = Math.floor(orderer.getPrice() * (1 - couponPrice));
-					var percentOff = parseInt((1 - couponPrice) * 100);
+					var amountOff = Math.round(orderer.getPrice() * (1 - couponPrice));
+					var percentOff = Math.round((1 - couponPrice) * 100);
 					$("<h2>").attr("id","subtotal-coupon")
 						.addClass("review-header")
 						.html("Coupon:<span>" + percentOff + "% off! -$" + amountOff + ".00</span>")
@@ -221,7 +221,10 @@ sb.ui.orderer = function(meshu) {
 
 		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){
-			var div;
+			// skip it if we don't have a value
+			if (this.value.length == 0) {
+				return;
+			}
 
 			// because i'm anal, sorry
 			// - s.
@@ -231,6 +234,7 @@ sb.ui.orderer = function(meshu) {
 
 			this.value = titleCase(this.value);
 
+			var div;
 			switch (this.id) {
 				case 'ship-city':
 				case 'ship-zip':
@@ -248,6 +252,7 @@ sb.ui.orderer = function(meshu) {
 
 			div.text($(this).val()).appendTo("#review-shipping");
 		});
+		
 		var digits = $("#card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
 	}

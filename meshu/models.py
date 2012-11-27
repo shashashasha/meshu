@@ -142,6 +142,9 @@ class Order(models.Model):
 	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)
 	postcard_note = models.CharField(max_length=1300, default='', blank=True)
 
+	# special instructions
+	special_instructions = models.CharField(max_length=200, default='', blank=True)
+
 	# tracking number and shipping date
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
 	tracking = models.CharField(max_length=140, default='', blank=True)

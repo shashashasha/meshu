@@ -189,7 +189,6 @@ $(function() {
 				meshu.mesh().interactive(true);
 
 				generateProductThumbnails();
-
 				break;
 
 			case 'make':
