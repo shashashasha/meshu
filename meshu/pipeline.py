@@ -48,6 +48,7 @@ def view_orders(request):
 
 def processing_order_update_status(request, order_id):
 	order = Order.objects.get(id=order_id)
+	last_status = order.status
 
 	if request.GET.has_key('postcard_ordered'):
 		postcard_status = request.GET.get('postcard_ordered', '')
@@ -67,8 +68,15 @@ def processing_order_update_status(request, order_id):
 		if order.status == 'SE' or order.status == 'SH' or order.status == 'RE':
 			mail_order_status_change(order.contact, order.meshu, order)
 	
+	return json_dump({
+		'success' : True,
+		'order_id': order.id,
+		'last_status' : last_status,
+		'order_status': order.status
+	})
+
 	# go back to gallery view
-	return HttpResponseRedirect('/orders/')
+	# return HttpResponseRedirect('/orders/')
 
 def processing_order_postcard_toggle(request, order_id):
 	order = Order.objects.get(id=order_id)
