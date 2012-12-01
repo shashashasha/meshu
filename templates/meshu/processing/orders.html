@@ -21,7 +21,7 @@
                     <br />
                     <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span>
                     <br />
-                    <span class="note">{{ order.postcard_note }}</span>
+                    <span class="instructions">{{ order.special_instructions }}</span>
                     <br />
                     <select name="status" id="new-order-status-{{ order.id}}">
                         <option value="OR">Ordered</option>
