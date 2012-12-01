@@ -2,15 +2,14 @@
 {% load shorturl %}
 
 {% block email_title %}
-Your order is on its way!
+Meshu: Your order is on its way!
 {% endblock %}
 
 {% block content %}
-<!-- <img src="http://o7.no/wA9xVQ" style="max-width:560px;" /> -->
 <br />
 <div>
 	{% if meshu.title == 'My Meshu' %}
-    <h3 class="h4">Your meshu has shipped!</h3>
+    <h3 class="h4">Your Meshu has shipped!</h3>
     {% else %}
     <h3 class="h4"><b>"{{ meshu.title }}"</b> has shipped!</h3>
     {% endif %}
