@@ -64,7 +64,7 @@ def processing_order_update_status(request, order_id):
 
 		order.save()
 
-		if order.status == 'SE' or order.status == 'SH':
+		if order.status == 'SE' or order.status == 'SH' or order.status == 'RE':
 			mail_order_status_change(order.contact, order.meshu, order)
 	
 	# go back to gallery view

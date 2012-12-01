@@ -103,11 +103,17 @@ def mail_order_confirmation(email, meshu, order):
 def mail_order_status_change(email, meshu, order):
 
 	if order.status == 'SH':
-		subject = 'Your order, "' + meshu.title + '" has been shipped!'
+		subject = 'Meshu: Your order, "' + meshu.title + '" has been shipped!'
 		template = 'order_shipped'
+
+	elif order.status == 'RE':
+		subject = 'Meshu: We\'ve received your order from the fabricator!'
+		template = 'order_received_from_fabricator'
+
 	elif order.status == 'SE':
-		subject = 'Your order, "' + meshu.title + '" has been sent to the fabricator!'
+		subject = 'Meshu: Your order, "' + meshu.title + '" has been sent to the fabricator!'
 		template = 'order_sent_to_fabricator'
+
 
 	# only send an email if it's been Shipped or Sent to the fabricator
 	if order.status == 'SH' or order.status == 'SE':
