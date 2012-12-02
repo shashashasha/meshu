@@ -266,9 +266,10 @@ sb.mesh.radial = function (frame, map, width, height) {
         requests[zoom] = ["done"];
 
         // jquery automatically adds a callback param
+        // use https proxy for apis that don't support
         var mapquest = $('body').hasClass('ie') || window.location.protocol == 'https:' 
-            ? "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from="
-            : "https://meshu.io/proxy/router/?from=";
+            ? "https://meshu.io/proxy/router/?from="
+            : "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
 
         var base = mapquest + '{start}&to={end}';
 
