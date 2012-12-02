@@ -9,13 +9,13 @@
 <div id="make-landing">
     <div class="content-banner">Meshu now comes in two flavors!</div>   
     <div class="splitimages">
-        <a href="/make/facet">
+        {% if debug == false %}<a href="https://meshu.io/make/facet">{% else %}<a href="/make/facet">{% endif %}
             <img src="{{ STATIC_URL }}images/gallery/m2.jpg"/>
             <div class="button">Map your travels with Facet</div>
         </a>
     </div>
     <div class="splitimages">
-        <a href="/make/radial">
+        {% if debug == false %}<a href="https://meshu.io/make/radial">{% else %}<a href="/make/radial">{% endif %}
             <img src="{{ STATIC_URL }}images/gallery/r2.jpg"/>
             <div class="button pink">Or mark your home with Radial</div>
         </a>
