@@ -38,20 +38,6 @@
             </li>
         {% endfor %}
     </ul>
-
-    <br />
-    <h2>{{ orders_shipped|length }} orders have been shipped! Yay!</h2>
-    <br /><br />
-    <ul class="gallery">
-        {% for order in orders_shipped reversed %}
-            <li>
-                <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.meshu.title }} by {{ order.contact }}</a></b>
-                <span class="date">Ordered on {{ order.date_created }}</span>
-                <span class="date">Shipped on {{ order.ship_date }}</span>
-                <br /><br />
-            </li>
-        {% endfor %}
-    </ul>
     <br /><br /><br />
     </div>
 {% endblock %}

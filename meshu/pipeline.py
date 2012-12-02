@@ -38,15 +38,27 @@ def view_orders(request):
 
 	# get all orders that haven't been shipped
 	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
 
 	return render_to_response('meshu/processing/orders.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
+			'orders': orders
+	}, context_instance=RequestContext(request))
+
+def view_orders_shipped(request):
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	# get all orders that have been shipped
+	orders = Order.objects.filter(status='SH')
+
+	return render_to_response('meshu/processing/shipped.html', {
+			'orders': orders
 	}, context_instance=RequestContext(request))
 
 
 def processing_order_update_status(request, order_id):
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return json_dump({})
+		
 	order = Order.objects.get(id=order_id)
 	last_status = order.status
 
@@ -55,8 +67,9 @@ def processing_order_update_status(request, order_id):
 		order.postcard_ordered = postcard_status
 
 	# don't send duplicate emails
-	if order.status != request.GET.get('status'):
-		order.status = request.GET.get('status')
+	status = request.GET.get('status', '')
+	if order.status != status:
+		order.status = status
 		order.tracking = request.GET.get('tracking', '')
 
 		# update the ship date
@@ -68,6 +81,7 @@ def processing_order_update_status(request, order_id):
 		if order.status == 'SE' or order.status == 'SH' or order.status == 'RE':
 			mail_order_status_change(order.contact, order.meshu, order)
 	
+	# returning json now, the orders status updating is all ajax
 	return json_dump({
 		'success' : True,
 		'order_id': order.id,
@@ -75,11 +89,12 @@ def processing_order_update_status(request, order_id):
 		'order_status': order.status
 	})
 
-	# go back to gallery view
-	# return HttpResponseRedirect('/orders/')
-
 def processing_order_postcard_toggle(request, order_id):
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return json_dump({})
+
 	order = Order.objects.get(id=order_id)
+
 	if order.postcard_ordered == 'true':
 		order.postcard_ordered = 'false'
 	else:
@@ -87,6 +102,7 @@ def processing_order_postcard_toggle(request, order_id):
 	
 	order.save()
 
+	# returning json now, the orders status updating is all ajax
 	return json_dump({
 		'success' : True,
 		'order_id': order.id,
@@ -99,19 +115,17 @@ def view_addresses(request):
 
 	# get all orders that haven't been shipped
 	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
 
 	return render_to_response('meshu/processing/order_shipping_export.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
+			'orders': orders
 	}, context_instance=RequestContext(request))
 
 def view_notes(request): 
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
-	# get all orders that haven't been shipped
-	orders = Order.objects.all()
+	# get all orders that have notes
+	orders = Order.objects.exclude(postcard_note='')
 
 	return render_to_response('meshu/processing/notes.html', {
 			'orders': orders,
