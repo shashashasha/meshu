@@ -56,7 +56,8 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
-        var url = $('body').hasClass('ie') ? "/proxy/geocoder/?location=" + query 
+        var url = $('body').hasClass('ie') || window.location.protocol == 'https:' 
+            ? "/proxy/geocoder/?location=" + query 
             : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
         
         searchbox.val("");

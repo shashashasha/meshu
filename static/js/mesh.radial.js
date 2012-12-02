@@ -267,6 +267,9 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // jquery automatically adds a callback param
         var mapquest = "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
+        if (window.location.protocol == 'https:')
+            mapquest = "https://meshu.io/proxy/router/";
+
         var base = mapquest + '{start}&to={end}';
 
         for (var i = 1; i < points.length; i++) {
