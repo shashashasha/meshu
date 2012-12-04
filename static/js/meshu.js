@@ -29,13 +29,27 @@ sb.meshu = function(frame, renderer, existingMap) {
     })
     .keypress(function(event) {
         if ( event.which == 13 ) {
-            searchPlaces();
+            var input = searchbox.val();
+            searchPlaces(input);
         }
     });
 
 	// this is tied to a global submit button for now
     $("#search-button").click(function(){
-        searchPlaces();
+        var input = searchbox.val();
+        if (input.split('|').length > 2) {
+            var inputs = input.split('|');
+            for (var i = 0; i < inputs.length; i++) {
+                setTimeout(function(searchPhrase) {
+                    return function() {
+                        searchPlaces(searchPhrase);
+                    }
+                }(inputs[i]), i * 1000);
+            }
+        }
+        else {
+            searchPlaces(input);
+        }
     });
 
     self.checkAdded = function() { 
@@ -48,9 +62,7 @@ sb.meshu = function(frame, renderer, existingMap) {
     }
 
     // on click of search button
-    function searchPlaces() {
-        var input = searchbox.val();
-
+    function searchPlaces(input) {
         // default input
         if (input == "add a city, place, or address") return;
 
