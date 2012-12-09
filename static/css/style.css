@@ -2158,6 +2158,14 @@ body.ie #maps .mini-meshu div {
   width: 80px;
   height: 78px;
 }
+.order-status-updater {
+  color: black;
+  border-color: black;
+  background-color: #ddd;
+}
+.instructions {
+  color: #ff3fb4;
+}
 .OR,
 .postcard-false {
   background-color: #FF0000;
