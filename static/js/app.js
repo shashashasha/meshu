@@ -82,7 +82,9 @@ $(function() {
 
 		// initialize product picker
 		// this needs to be after the meshu is initialized because it needs to copy the mesh over
-		generateProductThumbnails();
+		if (pageType != 'postcard') {
+			generateProductThumbnails();
+		}
 		
 
 		$("#finish-button").addClass("active");

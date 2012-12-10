@@ -486,18 +486,24 @@ sb.mesh.radial = function (frame, map, width, height) {
         return self;
     };
 
-    self.prerender = function(svg) {
+    self.prerender = function(svg, multiplier) {
+        multiplier = multiplier || 1;
+
         // copy over the svg instead of doing all the routing again
         $('#' + selfId + 'prerendered').html(svg);
         var pathGroup = $('#' + selfId + 'prerendered').find(".delaunay");
-        $('#' + selfId + 'prerendered').remove();
+        // $('#' + selfId + 'prerendered').remove();
+        
         $('#' + selfId).find(".delaunay").replaceWith(pathGroup);
 
 
         var fw = $(frame).width(),
             fh = $(frame).height(),
-            r = 600;
-        $('#' + selfId + " .delaunay").attr("transform","translate("+(fw-r)/2+","+(fh-r)/2+")")
+            r = 600 * multiplier,
+            translate = "translate("+(fw-r)/2+","+(fh-r)/2+") ",
+            scale = " scale(" + multiplier + "," + multiplier + ")";
+
+        $('#' + selfId + " .delaunay").attr("transform", translate + scale);
     };
 
     self.recalculate = function() {
