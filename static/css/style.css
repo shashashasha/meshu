@@ -2162,6 +2162,7 @@ body.ie #maps .mini-meshu div {
   color: black;
   border-color: black;
   background-color: #ddd;
+  cursor: pointer;
 }
 .instructions {
   color: #ff3fb4;
