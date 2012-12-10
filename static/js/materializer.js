@@ -32,7 +32,8 @@ sb.materializer = function() {
 		});
 
 		self.colors.click(function(e) {
-			self.color(e.target.innerHTML);
+			var c = e.currentTarget.id.split("-")[1]
+			self.color(c);
 		});
 
 		$(".option-list li").live("click",function(){
@@ -117,6 +118,7 @@ sb.materializer = function() {
 		And adds a 'selected' class to the list element
 	*/
 	self.color = function(c) {
+		console.log(arguments, color, self)
 		if (!arguments.length) return color;
 
 		color = c;
