@@ -20,14 +20,12 @@ var front = require('webpage').create(),
 	fs = require('fs'),
     system = require('system');
 
-if (phantom.args.length != 1) {
+if (phantom.args.length < 1) {
     console.log('Usage: postcard.js order-id');
     phantom.exit();
-    return;
 } 
 
-
-var base = phantom.args[1] || "http://dev.meshu.io:8000",
+var base = "http://meshu.io",
 	frontURL = base + "/orders/processing/postcard/front/{id}/",
 	backURL  = base + "/orders/processing/postcard/back/{id}/",
 	directory = "/Users/sha/Dropbox/Meshu/raw_postcards/";
@@ -54,7 +52,7 @@ back.open(backURL.replace("{id}", id), function(status) {
 	console.log(id, 'rendered back');	
 });
 
-console.log('rendering front');
+console.log(id, 'rendering front');
 front.open(frontURL.replace('{id}', id), function (status) {
 	if (status == 'fail') {
 		console.log('failed to load', frontURL.replace('{id}', id));
@@ -72,6 +70,11 @@ front.open(frontURL.replace('{id}', id), function (status) {
 		front.evaluate(function() {
 			meshu.map().map.zoomBy(1);
 			meshu.mesh().prerender(loadedMeshu.svg, 2);
+		});
+	} else if (phantom.args[1] == 'zoomin') {
+		front.evaluate(function() {	
+			meshu.map().map.zoomBy(1);
+			meshu.mesh().refresh();
 		});
 	} 
 
