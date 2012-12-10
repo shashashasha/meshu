@@ -1648,7 +1648,7 @@ path {
   fill: none;
   stroke: black;
   pointer-events: none;
-  stroke-width: 5;
+  stroke-width: 8;
   stroke-linejoin: round;
   transition: stroke-width 0.6s;
   /*-moz-transition: @property @time;*/
@@ -2157,6 +2157,15 @@ body.ie #maps .mini-meshu div {
   border: 1px solid #e6e6e6;
   width: 80px;
   height: 78px;
+}
+.order-status-updater {
+  color: black;
+  border-color: black;
+  background-color: #ddd;
+  cursor: pointer;
+}
+.instructions {
+  color: #ff3fb4;
 }
 .OR,
 .postcard-false {
