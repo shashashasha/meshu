@@ -118,7 +118,6 @@ sb.materializer = function() {
 		And adds a 'selected' class to the list element
 	*/
 	self.color = function(c) {
-		console.log(arguments, color, self)
 		if (!arguments.length) return color;
 
 		color = c;
