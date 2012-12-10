@@ -2193,6 +2193,7 @@ body.ie #maps .mini-meshu div {
 .postcard {
   font-family: 'Helvetica';
   font-weight: normal;
+  line-height: 1.5;
   color: #808080;
   /* for the back of the postcard */
 
@@ -2232,9 +2233,8 @@ body.ie #maps .mini-meshu div {
   text-align: center;
 }
 .postcard .order-note-inner p {
-  font-size: 32px;
+  font-size: 34px;
   padding: 0 400px;
-  line-height: 1.5;
 }
 .postcard #postcard-logo {
   position: absolute;
