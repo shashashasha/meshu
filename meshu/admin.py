@@ -17,6 +17,8 @@ class MeshuAdmin(admin.ModelAdmin):
         }),
 	]
 	inlines = [ MeshuImageInline, ]
+	
+	raw_id_fields = ('user_profile', )
 	list_display = ('title', 'date_created', 'user_profile')
 
 admin.site.register(Meshu, MeshuAdmin)
@@ -63,6 +65,7 @@ class OrderAdmin(admin.ModelAdmin):
 		})
 	]
 
+	raw_id_fields = ('meshu', 'user_profile')
 	list_display = ('__unicode__', 'user_profile', 'meshu', 'product', 'amount', 'status', 'date_created')
 
 admin.site.register(Order, OrderAdmin)

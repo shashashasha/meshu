@@ -2186,17 +2186,66 @@ body.ie #maps .mini-meshu div {
     background-color: #00FF66;
 }
 
-.postcard .frame {
-    width: 1100px;
-    height: 733px;
-    right: 0;
-}
-.postcard #attribution {
-    display: none;
-}
-#content.postcard {
-    width: 1100px;
-    height: 733px;
+/*
+    Postcard specific css
+*/
+.postcard {
+    font-family: 'Helvetica';
+    font-weight: normal;
+    line-height: 1.5;
+    color: @grey;
+
+    #content {
+        /*width: 1100px; 
+        height: 733px;*/
+        width: 1680px;
+        height: 1275px;
+    }
+
+    .frame {
+        /*width: 1100px; 
+        height: 733px;*/
+        width: 1680px;
+        height: 1275px;
+        right: 0;
+    }
+
+    path {
+        stroke-width: 10;
+    }
+
+    #attribution {
+        display: none;
+    }
+
+    /* for the back of the postcard */
+
+    .order-note-outer {
+        display: table;
+        width: 100%;
+        height: 1000px;
+        overflow: hidden;
+    }
+    .order-note-inner {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .order-note-inner p {
+        font-size: 45px;
+        padding: 0 350px;
+    }
+
+    #postcard-logo {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        height: 140px;
+        bottom: 135px;
+        font-size: 24px;
+    }
 }
 
 .notes {

@@ -31,6 +31,21 @@ def item_postcard(request, item_id):
 
 	return item_handler(request, item_id, 'postcard.html', 'postcard')
 
+def processing_postcard_front(request, order_id):
+	order = get_object_or_404(Order, pk=order_id)
+
+	return render_to_response('meshu/processing/postcard_front.html', {
+		'meshu': order.meshu,
+		'view': 'postcard'
+	}, context_instance = RequestContext(request))
+
+def processing_postcard_back(request, order_id):
+	order = get_object_or_404(Order, pk=order_id)
+
+	return render_to_response('meshu/processing/postcard_back.html', {
+		'order': order
+	}, context_instance=RequestContext(request))
+
 
 def view_orders(request):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
