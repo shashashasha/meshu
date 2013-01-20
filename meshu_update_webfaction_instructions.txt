@@ -23,3 +23,14 @@ python manage.py migrate meshu
 
 # restart the apache server
 ../apache2/bin/restart
+
+
+
+# performance
+# http://docs.webfaction.com/software/general.html#memory-usage
+# command to look at performance
+ps -u meshu -o rss,etime,pid,command
+
+
+# import contacts for usps
+# https://gab.usps.com/addrBook/Secure/YourContactsAction_input.action

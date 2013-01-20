@@ -1,0 +1,27 @@
+{% extends "meshu/base.html" %}
+{% load shorturl %}
+
+{% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
+
+{% block body_class %}postcard{% endblock body_class %}
+
+{% block page_type %}{{ view }}{% endblock page_type %}
+
+{% block content %}
+	<div class="order-note-outer">
+		<div class="order-note-inner">
+			<i>{{ order.postcard_note|linebreaks }}</i>
+		</div>
+	</div>
+
+	<div id="postcard-logo">
+		<img src="{{ STATIC_URL }}images/logo_postcard_back.png" alt="meshu"/>
+		<div>
+			<span style="width:10px; display:inline-block;"> </span>your meshu has a home online<br />
+			meshu.io{% shorturl order.meshu %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block olark %}{% endblock olark %}
+{% block facebook_init %}{% endblock facebook_init %}

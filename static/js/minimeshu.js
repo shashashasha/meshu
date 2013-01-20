@@ -1,11 +1,12 @@
 var sb = sb || {};
 
-sb.minimeshu = function(frame) {
+sb.minimeshu = function(frame, renderer) {
 	var self = {},
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
 		map = sb.map(frame, width, height),
-		mesh = sb.mesh(frame, map, width, height);
+        renderer = renderer || 'facet',
+		mesh = sb.mesh[renderer](frame, map, width, height);
 
     function addPoint(place, input) {
         mesh.add(place.latitude, place.longitude, input);
@@ -32,10 +33,12 @@ sb.minimeshu = function(frame) {
         mesh.locations(locsToAdd);
     };
 
-    self.locationData = function(data) {
+
+    function parseLocationData(data) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};
+
 
         for (var i = 0; i < locations.length; i++) {
             var values = locations[i].split('\t');
@@ -58,7 +61,19 @@ sb.minimeshu = function(frame) {
             });
         }
 
-        mesh.locations(newLocs);
+        return newLocs;
+    }
+
+    self.initializeFromData = function(data, style, svg) {
+        mesh.prerender(svg);
+
+        var locations = parseLocationData(data);
+        mesh.locations(locations);   
+
+        // 'drawStyle:knockout|zoom:12' for example
+        if (style) {
+            mesh.applyStyle(style);
+        }
         return self;
     };
 
@@ -71,7 +86,8 @@ sb.minimeshu = function(frame) {
     };
 
     map.on("boundsUpdated", function() {
-        mesh.updatePixelBounds();
+        if (mesh.updatePixelBounds)
+            mesh.updatePixelBounds();
         mesh.refresh();
     });
 

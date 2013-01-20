@@ -6,7 +6,7 @@ $(function() {
 
 		var products = [];
 
-		self.initialize = function(delaunayFrame, catalog) {
+		self.initialize = function(meshTarget, catalog) {
 			products = catalog.getProducts();
 
 			/* 
@@ -18,8 +18,14 @@ $(function() {
 			for (var i = 0; i < products.length; i++) {
 				var product = products[i];
 
+				self.resetPreviewImage(product.type);
 
-				self.initializeProduct(product.type, delaunayFrame);
+				if (typeof meshTarget == "string") {
+					self.previewFromSelector(product.type, meshTarget);
+				} else {
+					self.previewFromElement(product.type, meshTarget);
+				}
+				
 				seenProducts[product.type] = true;
 
 				var range = self.describeProductRange(product);
@@ -34,8 +40,10 @@ $(function() {
 			});
 		};
 
-		self.initializeProduct = function(product, delaunayFrame) {
-			var svg = d3.select("#preview-" + product);
+		self.resetPreviewImage = function(product) {
+			var svg = d3.select("#preview-" + product),
+				transform = sb.transforms.getTransform(product, "product");
+
 			svg.selectAll("*").remove();
 			
 			svg.append("svg:image")
@@ -44,8 +52,30 @@ $(function() {
 				.attr('width', '100%')
 				.attr('height', '100%')
 				.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
+		};
 
-			self.attachMeshu(delaunayFrame, $(svg[0]), sb.transforms.getTransform(product, "product"));
+		self.previewFromSelector = function(product, meshSelector) {
+			var svg = d3.select("#preview-" + product),
+				transform = sb.transforms.getTransform(product, "product");
+
+			var miniDelaunay = $(meshSelector).clone()
+				.attr("class","product-delaunay")
+				.attr("transform", transform);
+
+			$(svg[0]).append(miniDelaunay);
+		};
+
+		self.previewFromElement = function(product, element) {
+			var svg = d3.select("#preview-" + product),
+				transform = sb.transforms.getTransform(product, "product");
+
+			svg.append("svg:image")
+				.attr('x', 0)
+				.attr('y', 0)
+				.attr('width', '600px')
+				.attr('height', '600px')
+				.attr("transform", transform)
+				.attr('xlink:href', element.toDataURL());
 		};
 
 		self.range = function(prices) {
@@ -71,11 +101,6 @@ $(function() {
 		};
 
 		self.attachMeshu = function(mesh, frame, transform) {
-			var miniDelaunay = $(mesh).clone()
-				.attr("class","product-delaunay")
-				.attr("transform", transform);
-
-			frame.append(miniDelaunay);
 		};
 
 		self.thumbnail = function(mesh, frame, transform) {

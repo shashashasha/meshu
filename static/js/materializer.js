@@ -32,7 +32,8 @@ sb.materializer = function() {
 		});
 
 		self.colors.click(function(e) {
-			self.color(e.target.innerHTML);
+			var c = e.currentTarget.id.split("-")[1]
+			self.color(c);
 		});
 
 		$(".option-list li").live("click",function(){

@@ -2,18 +2,14 @@
 saver.js connects to #save-button and #update-button to save as new and update the current meshu, respectively
 */
 var saver = function() {
-    var self = {};
+    var self = {},
+        meshuID = "#meshu-id";
 
     // the object we send to the server to be saved/updated
     function getMeshuXHR() {
-        return {
-          'xhr': 'true',
-          'csrfmiddlewaretoken' : $("#csrf input").val(),
-          'title' : self.meshu.outputTitle(),
-          'svg': self.meshu.outputSVG(),
-          'location_data' : self.meshu.outputLocationData(),
-          'promo': self.meshu.promo
-        };
+        var xhr = self.meshu.xhr();
+        xhr.csrfmiddlewaretoken = $("#csrf input").val();
+        return xhr;
     }
 
     function updateMeshuID(id) {
@@ -21,17 +17,17 @@ var saver = function() {
 
         self.meshu.id = id;
 
-        if ($("#meshu-id").length == 0)
+        if ($(meshuID).length == 0)
           $("#hidden-form-values").append('<input type="hidden" id="meshu-id" name="meshu_id" />');
 
-        $("#meshu-id").val(id);
+        $(meshuID).val(id);
     };
 
     function assignGuestMeshu() {
         var xhr = getMeshuXHR();
 
         // if we've made one already, set the id
-        if ($("#meshu-id").length)
+        if ($(meshuID).length)
             xhr.id = self.getMeshuID();
 
         // assign this guest meshu to the current logged in user
@@ -50,7 +46,7 @@ var saver = function() {
         var xhr = getMeshuXHR();
 
         // if we've made one already, set the id
-        if ($("#meshu-id").length)
+        if ($(meshuID).length)
             xhr.id = self.getMeshuID();
 
         // push this
@@ -73,10 +69,11 @@ var saver = function() {
         });
 
         // this only applies to usermade meshus
-        $("#save-button").click(function() {
+        var saveButton = "#save-button";
+        $(saveButton).click(function() {
           if (!loadedMeshu) return;
           
-          $("#save-button").html('saving');
+          $(saveButton).html('saving');
 
           var saveurl = loadedMeshu.edit_url + 'save';
           $.post(saveurl, getMeshuXHR(), function(data) {
@@ -85,7 +82,7 @@ var saver = function() {
               updateMeshuID(data.meshu_id);
 
               setTimeout(function() {
-                $("#save-button").html('saved!');
+                $(saveButton).html('saved!');
               }, 200);
 
               setTimeout(function() {
@@ -95,10 +92,11 @@ var saver = function() {
         });
 
         // update this meshu
-        $("#update-button").click(function() {
+        var updateButton = "#update-button";
+        $(updateButton).click(function() {
           if (!loadedMeshu) return;
 
-          $("#update-button").html('updating');
+          $(updateButton).html('updating');
 
           var updateurl = loadedMeshu.edit_url + 'update';
           $.post(updateurl, getMeshuXHR(), function(data) {
@@ -107,7 +105,7 @@ var saver = function() {
               updateMeshuID(data.meshu_id);
 
               setTimeout(function() {
-                $("#update-button").html('saved!');
+                $(updateButton).html('saved!');
               }, 200);
 
               setTimeout(function() {
@@ -159,7 +157,7 @@ var saver = function() {
     };
 
     self.getMeshuID = function() {
-        return $("#meshu-id").val();
+        return $(meshuID).val();
     };
 
     return self;

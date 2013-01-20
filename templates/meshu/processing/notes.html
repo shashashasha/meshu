@@ -8,8 +8,8 @@
         {% for order in orders reversed %}
         {% if order.postcard_note %}
             <li>
-                <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.id }} — {{ order.meshu.title }} by {{ order.contact }}</a></b>
-                <div class="date">{{ order.postcard_note }}</div>
+                <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.id }} — {{ order.meshu.id }} — {{ order.meshu.title }} by {{ order.contact }}</a></b>
+                <div class="date">{{ order.postcard_note|linebreaks }}</div>
             </li>
            {% endif %}
         {% endfor %}
