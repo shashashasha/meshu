@@ -1,25 +1,59 @@
 var sb = sb || {};
-sb.catalog = function() {
-	var self = {};
-	var options = {"earrings":
-						{"wood":{"price":75,"colors":["Amber"]},
-						"acrylic":{"price":80,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
+sb.catalog = function(renderer, promo) {
+	var self = {},
+		materialOptions = {},
+		renderer = renderer || 'facet';
+
+	materialOptions.facet = {"earrings":
+						{"bamboo":{"price":68,"colors":["Amber"]},
+						"acrylic":{"price":75,"colors":["Black","White"]},
+						"nylon":{"price":85,"colors":["Black","White"]}
+						// "silver":{"price":145,"colors":["Sterling Silver"]}
+					},
 				   "pendant":
-				   		{"wood":{"price":75,"colors":["Amber"]},
-				   		"acrylic":{"price":85,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]},
-						"silver":{"price":130,"colors":["Sterling Silver"]}},
+				   		{"bamboo":{"price":68,"colors":["Amber"]},
+				   		"acrylic":{"price":80,"colors":["Black","White"]},
+						"nylon":{"price":85,"colors":["Black","White"]}
+						// "silver":{"price":125,"colors":["Sterling Silver"]}
+					},
 				   "necklace":
-				   		{"wood":{"price":80,"colors":["Amber"]},
-				   		"acrylic":{"price": 90,"colors":["Black","White"]},
-						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":150,"colors":["Sterling Silver"]}},
-					"cufflinks":
-						{
-						// "stainless":{"price":85},
-						"silver":{"price":150}}};
+				   		{"bamboo":{"price":75,"colors":["Amber"]},
+				   		"acrylic":{"price": 85,"colors":["Black","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]}
+						// "silver":{"price":145,"colors":["Sterling Silver"]}
+					}
+					// "cufflinks":
+					// 	{"silver":{"price":145}}
+					};
+
+	materialOptions.radial = {"earrings":
+						{"bamboo":{"price":75,"colors":["Amber"]},
+						"acrylic":{"price":80,"colors":["Black","White"]},
+						"nylon":{"price":90,"colors":["Black","White"]}},
+				   "pendant":
+				   		{"bamboo":{"price":75,"colors":["Amber"]},
+				   		"acrylic":{"price":85,"colors":["Black","White"]},
+						"nylon":{"price":95,"colors":["Black","White"]}
+						// "silver":{"price":160,"colors":["Sterling Silver"]}
+					}
+					};
+
+	// set the product type options with either facet or radial
+	var options = materialOptions[renderer];
+
+	var promotions = {};
+	promotions.marathon = {
+					"earrings":
+						{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+				   	"pendant":
+				   		{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
+				   	"necklace":
+				   		{"bamboo":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
+				   	};
+
+	if (promo && promotions[promo]) {
+		options = promotions[promo];
+	}
 
 	// check if this exists
 	self.check = function(type, material) {
@@ -41,25 +75,62 @@ sb.catalog = function() {
 		return self.get(type, material, 'colors');
 	};
 
-	self.getProducts = function() {
-		var products = [];
+	/*
+		this is ugly, but I want to remove catalog.marathon.js
+	*/
+	if (promo) {
+		self.getProducts = function() {
+			var products = [];
 
-		for (var type in options) {
-			var prices = [],
-				product = options[type];
-			for (var material in product) {
-				prices.push(product[material].price);
+			for (var type in options) {
+				var prices = [],
+					originals = [],
+					discounts = [],
+					product = options[type];
+
+				for (var material in product) {
+					prices.push(product[material].price);
+
+					if (product[material].originalPrice)
+						originals.push(product[material].originalPrice);
+
+					if (product[material].discount)
+						discounts.push(product[material].discount);
+				}
+
+				products.push({
+					type: type,
+					prices: prices,
+					originals: originals,
+					// just use one discount for now
+					// assuming we won't have multiple different ones
+					discount: discounts.length ? discounts[0] : undefined
+				});
 			}
 
-			products.push({
-				type: type,
-				prices: prices,
-				discount: product.discount
-			});
-		}
+			return products;
+		};
+	} else {
+		self.getProducts = function() {
+			var products = [];
 
-		return products;
-	};
+			for (var type in options) {
+				var prices = [],
+					product = options[type];
+				for (var material in product) {
+					prices.push(product[material].price);
+				}
+
+				products.push({
+					type: type,
+					prices: prices,
+					discount: product.discount
+				});
+			}
+
+			return products;
+		};
+	}
 
 	self.getMaterials = function(type) {
 		var materials = [];
@@ -71,4 +142,4 @@ sb.catalog = function() {
 	};
 
 	return self;
-}();
+};

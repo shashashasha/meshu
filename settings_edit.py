@@ -155,15 +155,6 @@ AUTHENTICATION_BACKENDS = (
 SHORTEN_MODELS = {
     'M': 'meshu.meshu'
 }
-SHORTEN_FULL_BASE_URL = 'http://meshu.io'
-
-<<<<<<< HEAD
-FACEBOOK_APP_ID              = '324846177609340'
-FACEBOOK_APP_SECRET          = 'f1a4e511ea4abc1e0e16558f5213e3af'
-FACEBOOK_SCOPE = 'email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins'
-LOGIN_REDIRECT_URL = '/make/facebook'
+SHORTEN_FULL_BASE_URL = 'https://meshu.io'
 
 from settings_local import *
-=======
-from settings_local import *
->>>>>>> e2389efcf46d8e24562b78f99dc9b0be5de1aaa7

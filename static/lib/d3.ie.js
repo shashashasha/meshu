@@ -1281,7 +1281,7 @@ if (typeof jQuery == "function") {
       try {
         style.setAttribute(name, value, priority);
       } catch (except) {
-        console.warn('unable to style.setAttribute("' + name + '", "' + value + '"): ' + except);
+        // console.warn('unable to style.setAttribute("' + name + '", "' + value + '"): ' + except);
         // style[name] = value;
       }
     }

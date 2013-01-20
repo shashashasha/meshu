@@ -6,7 +6,8 @@ sb.map = function(frame, width, height) {
 		buffer = .5;
 
 	// updating to toner tiles
-	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png";
+	// using subdomains on meshu.io for performance
+	var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png"; // http://{S}.meshu.io
 
 	var container = d3.select(frame).append("div")[0][0];
     container.style.position = "absolute";
@@ -22,11 +23,20 @@ sb.map = function(frame, width, height) {
 	
 	self.dispatch = d3.dispatch("show");
 
+	var cities = [{"name":"San Francisco","lat":37.775,"lon":-122.43,"zoom":13},
+				  {"name":"New York City","lat":40.718,"lon":-73.997,"zoom":14},
+				  {"name":"London","lat":51.506325,"lon":-0.127144,"zoom":13},
+				  {"name":"Paris","lat":48.85693,"lon":2.3412,"zoom":14},
+				  {"name":"Moscow","lat":55.75,"lon":37.614975,"zoom":14},
+				  {"name":"Montreal","lat":45.512303,"lon":-73.554431,"zoom":13},
+				  {"name":"Tokyo","lat":35.70,"lon":139.774414,"zoom":14}];
+
 	var svgObject = container.appendChild(po.svg("svg"));
+	var c = Math.floor(Math.random()*cities.length);
 	self.map = po.map()
 		.container(svgObject)
-		.zoom(12)
-		.center({ lat: 37.755, lon: -122.445 });
+		.zoom(cities[c].zoom)
+		.center({ lat: cities[c].lat, lon: cities[c].lon });
 
 	// set the size, this fixes firefox bugs
 	self.map.size({ 
@@ -71,7 +81,9 @@ sb.map = function(frame, width, height) {
 			self.map.center({
 				lat: lats[0],
 				lon: lons[0]
-			}).zoom(10);
+			});
+			
+			self.boundsUpdated();
 			return;
 		}
 
@@ -91,7 +103,9 @@ sb.map = function(frame, width, height) {
 		// before we were subtracting half a zoom, which gives more room 
 		// but messes up the rasterizer.js
 		offset = offset || 0;
-		self.map.zoom(Math.floor(self.map.zoom()) + offset);
+		var zoom = Math.floor(self.map.zoom()) + offset;
+		if (zoom != self.map.zoom())
+			self.map.zoom(zoom);
 
 		self.boundsUpdated();
 	};
@@ -130,9 +144,6 @@ sb.map = function(frame, width, height) {
 		container.style.height = (height) + 'px';
 
 		self.map.extent(extent);
-
-		// console.log(extent[0].lat - self.map.extent()[0].lat, extent[0].lon - self.map.extent()[0].lon);
-		// console.log('w:', width, 'h:', height);
 		
 		var dif = self.l2p(extent[0]).y - self.l2p(self.map.extent()[0]).y;
 		
@@ -154,6 +165,14 @@ sb.map = function(frame, width, height) {
 			r: ne_pt.x
 		};
 	};
+
+	self.getMapRadius = function() {
+		var e = self.map.extent();
+		return {
+			lat: Math.abs(e[0].lat - e[1].lat)/3,
+			lon: Math.abs(e[0].lon - e[1].lon)/3
+		}
+	}
 
 	// location to point converter
 	self.l2p = function(loc) {

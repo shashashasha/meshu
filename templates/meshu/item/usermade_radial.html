@@ -1,0 +1,16 @@
+{% extends "meshu/item/radial.html" %}
+
+{% load shorturl %}
+
+{% block title %}Meshu - {{ meshu.title }}{% endblock %}
+
+{% block login_form %}Please sign in{% endblock %}
+
+{% block goback %}
+    <div class="nav back">choose another product</div>
+{% endblock %}
+{% block finish %}
+    <div id="cancel-button" class="nav">Cancel</div>
+    <div id="save-button" class="nav">Save as New</div>
+    <div id="update-button" class="nav active">Save Current</div>
+{% endblock %}

@@ -13,10 +13,12 @@ class MeshuInline(admin.TabularInline):
 class MeshuAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {
-            'fields': ('user_profile', 'title', 'description', 'location_data', 'svg', 'theta', 'product', 'promo', 'thumbnail')
+            'fields': ('user_profile', 'title', 'description', 'location_data', 'svg', 'theta', 'renderer', 'metadata', 'product', 'promo', 'thumbnail')
         }),
 	]
 	inlines = [ MeshuImageInline, ]
+	
+	raw_id_fields = ('user_profile', )
 	list_display = ('title', 'date_created', 'user_profile')
 
 admin.site.register(Meshu, MeshuAdmin)
@@ -52,7 +54,7 @@ class OrderAdmin(admin.ModelAdmin):
 			'fields': ('user_profile', 'meshu', 'product', 'material', 'color', 'postcard_note')
 		}),
 		('Order Details', {
-			'fields': ('status', 'amount', 'contact')
+			'fields': ('status', 'amount', 'contact', 'coupon', 'special_instructions')
 		}),
 		('Shipping Information', {
 			'fields': ('shipping_name', 'shipping_address', 'shipping_address_2', 'shipping_city', 'shipping_zip', 'shipping_state', 'shipping_region', 'shipping_country')
@@ -63,6 +65,7 @@ class OrderAdmin(admin.ModelAdmin):
 		})
 	]
 
+	raw_id_fields = ('meshu', 'user_profile')
 	list_display = ('__unicode__', 'user_profile', 'meshu', 'product', 'amount', 'status', 'date_created')
 
 admin.site.register(Order, OrderAdmin)

@@ -3,19 +3,20 @@
 {% block title %}Meshu - Turn your places into beautiful objects.{% endblock %}
 
 {% block content %}
-	<div id="announcement" style="
-    text-align: center;
-    margin: 20px 20px 0 20px;
-    border: 1px solid #FF3FB4;
-    padding: 20px;">
-		<h2 style="color: #FF3FB4;">Attention Holiday Shoppers!</h2>
-		<p style="margin: 10px 0;">The time it takes us to make your special gifts varies based on the material,<br>
-		so please order by the following dates to ensure that we can send off your presents in time for Christmas!</p>
-		<p>Silver/Nylon: <b>Nov 16th</b>, Acrylic: <b>Nov 30th</b>, Bamboo: <b>Dec 7th</b></p>
+	<div id="introducing" style="margin: 20px; height:260px; margin-bottom: 20px; border: 1px solid lightGrey; overflow:hidden;">
+		<img src="{{ STATIC_URL }}images/radial/radial_index_map.jpg" style="float:right; width:260px;">
+		<img src="{{ STATIC_URL }}images/radial/radial_index_pendant.jpg" style="float:right; width:260px;">
+		<div class="text" style="width:420px; padding: 20px;">
+			<h2 class="big" style="text-align:left; margin-top:0;">introducing: radial</h2>
+			<h2 style="color:gray; margin: 10px 0 20px; font-size: 34px;">radial is a portrait of a place that's important to you.</h2>
+			<div class="large-button" style="font-size: 20px; margin-top: 15px;">
+				<a href="/make/radial" class="button pink" style="padding:5px 11px">Try It Out</a>
+			</div>
+		</div>
 	</div>
 	<div id="photos">
-		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
-		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
+		<img src="{{ STATIC_URL }}images/photos/meshu04.jpg" />
+		<img src="{{ STATIC_URL }}images/photos/meshu03.jpg" />
 		<div id="intro-text">
 			<span class="meshu-title">meshu</span><br/>
 			turns your places<br />into beautiful objects.
@@ -27,39 +28,41 @@
 			<a href="/make/" class="button pink">Make Your Own</a>
 		</div>
 		<div class="minor-actions">
-			Or you can still <br /><div class="foursquare-auth button minor">connect with Foursquare</div><br />and<br /><a href="/gallery/" class="button minor">view our gallery</a>
+			or you can still <br /><div class="foursquare-auth button minor">connect with Foursquare</div><br />and<br /><a href="/gallery/" class="button minor">view our gallery</a>
 		</div>
 	</div>
 
 	<!-- <h2 class="call"><a href="/shop/" class="button shop">Shop Our Gallery</a> <a href="/make/" class="button pink">Make Your Own</a> <span class="foursquare-auth button">Start With Foursquare</span></h2>
  -->
-	<h2 class="big">what people have made:</h2>
+
+	<h2 class="big">each meshu tells a story:</h2>
 
 	<div id="banners">
-		<img class="bleed" id="banner-2" src="{{ STATIC_URL }}images/samples/banner2.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-1" src="{{ STATIC_URL }}images/samples/banner3.jpg" style="display: none;"/>
-		<img class="bleed" id="banner-0" src="{{ STATIC_URL }}images/samples/banner1.jpg" />
+		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/samples/macro0.jpg" />
+		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/samples/macro1.jpg" style="display: none;"/>
+		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/samples/macro2.jpg" style="display: none;"/>
+		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/samples/macro3.jpg" style="display: none;"/>
 	</div>
 
 	<h2 class="big">here's how it works:</h2>
 
-	<ul id="diagram">
-		<li>
-			<img src="{{ STATIC_URL }}images/diagrams/diagrams_01.png">
-			<p>Enter in cities you've been to,</p>
-			<p>or any places you like.</p>
-		</li>
-		<li>
-			<img src="{{ STATIC_URL }}images/diagrams/diagrams_02.png">
-			<p>We generate a meshu to order as</p>
-			<p>a necklace, earrings, or cufflinks.</p>
-		</li>
-		<li>
-			<img src="{{ STATIC_URL }}images/diagrams/diagrams_03.png">
-			<p>We fabricate and ship you</p>
-			<p>your finished piece!</p>
-		</li>
-	</ul>
+    <ul id="diagram">
+        <li>
+            <img src="{{ STATIC_URL }}images/diagrams/diagrams_01.png">
+            <p>Enter in cities you've been to,</p>
+            <p>or any places you like.</p>
+        </li>
+        <li>
+            <img src="{{ STATIC_URL }}images/diagrams/diagrams_02.png">
+            <p>We generate a meshu to order as</p>
+            <p>a necklace, earrings, or cufflinks.</p>
+        </li>
+        <li>
+            <img src="{{ STATIC_URL }}images/diagrams/diagrams_03.png">
+            <p>We fabricate and ship you</p>
+            <p>your finished piece!</p>
+        </li>
+    </ul>
 
 	<h2 class="big">each meshu comes with its own map postcard:</h2>
 	<img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" class="centered">
@@ -80,6 +83,12 @@
 
 {% block script %}
 	<script src="{{ STATIC_URL }}lib/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
+
+    {% if debug == false %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
+    {% else %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
+	{% endif %}
 {% endblock %}
