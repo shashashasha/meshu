@@ -1,8 +1,11 @@
 var sb = sb || {};
 
-sb.mesh = function (frame, map, width, height) {
-	var self = d3.dispatch("added", "refreshed", "locationsSet"),
-		selfId = parseInt(Math.random() * 10000000000, 10);
+sb.mesh.facet = function (frame, map, width, height) {
+    var self = sb.mesh.base(frame, map, width, height),
+        selfId = parseInt(Math.random() * 10000000000, 10);
+
+    // the name of the product line
+    self.name = 'facet';
 
     // making this not global ._.
     var lats = [],
@@ -17,7 +20,7 @@ sb.mesh = function (frame, map, width, height) {
         .style("width", width)
         .style("height", height)
         .style("position", "absolute")
-        .style("z-index", "100")
+        .style("z-index", "1")
         .append("svg:svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
@@ -37,7 +40,7 @@ sb.mesh = function (frame, map, width, height) {
     hidden.append("svg:path");
 
     var uiFrame = d3.select(frame || "body").append("div")
-        .attr("style", "position:absolute;z-index:1337;")
+        .attr("style", "position:absolute;z-index:2;")
         .style("width", width)
         .style("height", height);
 
@@ -56,139 +59,72 @@ sb.mesh = function (frame, map, width, height) {
     var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
-        $(".place-text input").live("blur", removeInput);
+        $(".place-text input").live("blur", self.removeInput);
 
     var points = [],
-    	new_pt = [],
+        new_pt = [],
         pixel_bounds = [],
-    	updateInterval = 0,
-        selected = null,
-        moved = false,
-        dragging = null,
-        mouse_down = null,
-        map_dragging = null,
-        last_mouse = null,
+        updateInterval = 0,
         meshuTitle = null;
 
-    var content = $("#content"),
-        cases = $("#cases");
+    var content = $("#content");
 
-    // d3.select(uiFrame.node())
-    d3.select(".frame")
-        .on("mousemove", mousemove)
-        .on("mousedown", mousedown);
+    self.hittest = function(target) {
+        return d3.event.target != svg.node();
+    };
 
-    d3.select('body').on("mouseup", mouseup);
+    // update on map drag
+    self.on("draggedMap", function() {
+        update();
+    });
 
-    function mousedown() {
-        if (!content.hasClass("edit")) return;
+    // point being dragged, location being dragged to
+    self.on("draggedPoint", function(dragging, loc) {
+        dragging[0] = loc.lon;
+        dragging[1] = loc.lat;
 
-        // mouse is down, get ready to track map dragging
-        mouse_down = true;
-    }
+        var index = points.indexOf(dragging);
+        lats[index] = loc.lat;
+        lons[index] = loc.lon;
 
-    function mousemove() {
-        // disable mousemove detection when we're not editing
-        if (!content.hasClass("edit")) return;
+        /*
+            the point was dragged
+            so our bounds for this shape may not be correct anymore
+        */
+        self.dirty = true;
+    
+        update();
+    });
 
-        // if we're not dragging anything and the mouse isn't down, ignore
-        if (!dragging && !mouse_down) {
-            return;
-        }
+    // location on the map
+    self.on("clickedMap", function(loc) {
+        self.add(loc.lat, loc.lon, undefined, false);
+    });
 
-        var m = d3.svg.mouse(main.node());
+    // point being clicked
+    self.on("clickedPoint", function(pt) {
+        var index = points.indexOf(pt);
+        self.remove(index);
 
-        // if we're dragging a point, we need to update its data
-        if (dragging) {
-            var l = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
-            dragging[0] = l.lon;
-            dragging[1] = l.lat;
+        map.updateBounds(lats, lons);
+        self.updatePixelBounds();
 
-            var index = points.indexOf(dragging);
-            lats[index] = l.lat;
-            lons[index] = l.lon;
-        
-            update();
-        }
+        /*
+            the map was updated
+            so our bounds aren't dirty
+        */
+        self.dirty = false;
+        update();
+    });
 
-        if (moved && mouse_down) {
-            // if we've moved and the mouse is down, we're dragging the map
-            map_dragging = true;
+    self.on("removed", function() {
+        if (points.length < 3) $("#finish-button").removeClass("active");
+        if (points.length == 1) $("#meshu-container").addClass("inactive");
+    });
 
-            // move the map by the delta
-            if (last_mouse)
-                map.map.panBy({ x: m[0] - last_mouse[0], y: m[1] - last_mouse[1] });
-
-            update();
-        }
-
-        moved = true;
-        last_mouse = m;
-    }
-
-    function mouseup() {
-        mouse_down = null;
-        last_mouse = null;
-
-        // if we're not on the right page, ignore
-        if (!content.hasClass("edit")) return;
-
-        // ignore zoom buttons, other ui
-        // if it's a circle we need to continue because that means it's a point that's being dragged
-        // image for IE fix!
-        if (d3.event.target.tagName != 'circle' && d3.event.target != svg.node() && d3.event.target.tagName != "image")  return;
-
-        // if we're not dragging and we're not dragging the map, we're adding a point
-        if (!dragging && !map_dragging) {
-            var m = d3.svg.mouse(main.node());
-            var loc = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
-
-            self.add(loc.lat, loc.lon, undefined, false);
-            map_dragging = null;
-            return;
-        }
-
-        // delete the point if we mouseup on a point 
-        if (!moved && dragging) {
-            var index = points.indexOf(dragging);
-            self.remove(index);
-
-            map.updateBounds(lats, lons);
-            self.updatePixelBounds();
-            update();
-        } else {
-            mousemove();
-        }
-
-        // ignore other events
-        if (d3.event) {
-          d3.event.preventDefault();
-          d3.event.stopPropagation();
-        }
-
-        // reset the dragging flags
-        moved = false;
-        dragging = null;
-        map_dragging = null;
-    }
-
-    self.updatePixelBounds = function() {
-        if (lats.length && lons.length) {
-            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
-                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
-                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
-        }
-        else { 
-            pixel_bounds = [];
-        }
-    }
+    self.on("interactiveToggled", function(bool) {
+        self.updateCircleBehavior(bool);
+    });
 
     function updateMesh(skipAnimation) {
         var circles = ui.selectAll("circle");
@@ -252,6 +188,18 @@ sb.mesh = function (frame, map, width, height) {
         }
     }
 
+    self.updatePixelBounds = function() {
+        if (lats.length && lons.length) {
+            pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+                            map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+                            map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+        }
+        else { 
+            pixel_bounds = [];
+        }
+    };
+
     function update(){
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
@@ -263,7 +211,7 @@ sb.mesh = function (frame, map, width, height) {
             .attr("id",function(d, i){ return "c-" + i; })
             .attr("r", 7)
             .on("mousedown", function(d) {
-                selected = dragging = d;
+                self.dragging = d;
 
                 // stop prop to prevent map dragging
                 d3.event.stopPropagation();
@@ -382,13 +330,13 @@ sb.mesh = function (frame, map, width, height) {
         });
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
-            if (!d.edit) editText(node,i,"place");
-            else saveText(node,i,"place");
+            if (!d.edit) self.editText(node,i,"place");
+            else self.saveText(node,i,"place");
             d.edit = !d.edit;
         });
         names.select(".place-text").on("click",function(d,i){
             if (d.edit) return;
-            editText($(this).parent(),i,"place");
+            self.editText($(this).parent(),i,"place");
             d.edit = !d.edit;
         });
 
@@ -400,62 +348,23 @@ sb.mesh = function (frame, map, width, height) {
 
         placeTitle.select(".title-text").on("click",function(d){
             if (d.edit) return;
-            editText($(this).parent(),0,"title");
+            self.editText($(this).parent(),0,"title");
             d.edit = !d.edit;
         });
 
         placeTitle.select(".title-edit").on("click",function(d){
             var node = $(this).parent();
-            if (!d.edit) editText(node,0,"title");
-            else d.title = meshuTitle = saveText(node,0,"title");
+            if (!d.edit) self.editText(node,0,"title");
+            else d.title = meshuTitle = self.saveText(node,0,"title");
             d.edit = !d.edit;
         });
     }
 
-    function editText(node,i,type) {
-        var button = node.find("." + type + "-edit").text("save");
-        var field = node.find("." + type + "-text");
-        var value = ((type == "title") ? field.text() : places[i]);
-
-        node.addClass("active");
-        field.html('<input value="' + value + '">').find("input").focus();
-
-        // TODO: pressing enter saves the value
-        // right now has issues with event propogation 
-        // also going from one edit field to another
-
-        // field.keyup(function(event) {
-        //     if (event.which != 13) return;
-        //     saveText(node, i, type);
-        //     button.text("edit");
-        //     field.unbind('keyup'); 
-        // });
-    }
-    function saveText(node, i, type) {
-        var button = node.find("." + type + "-edit").text("edit");
-        var text = node.find("input").val();
-
-        node.removeClass("active");
-        node.find("." + type + "-text").text(text);
-
-        if (type == "place") places[i] = text;
-        else return text;
-    }
-    function removeInput(event){
-        var titles = list.selectAll("li.place .title");
-        titles.each(function(d, i) {
-            if (!d.edit) return;
-            d.edit = false;
-            saveText($(this), i, "place");
-        });
-        return false;
-    };
-
     self.add = function(latitude, longitude, placename, skipAnimation) {
-    	// clear previous update
-    	if (updateInterval) {
+        // clear previous update
+        if (updateInterval) {
             clearInterval(updateInterval);
-    	}
+        }
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -469,7 +378,7 @@ sb.mesh = function (frame, map, width, height) {
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
-        	
+            
             new_pt = [lon, lat];   
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
@@ -491,9 +400,12 @@ sb.mesh = function (frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
-
-        cases.fadeOut();
         
+
+        /*
+            we've added a point but haven't updated the bounds
+        */
+        self.dirty = true;
         self.added();
         return self;
     };
@@ -509,11 +421,11 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.lats = function() {
-    	return lats;
+        return lats;
     };
 
     self.lons = function() {
-    	return lons;
+        return lons;
     };
 
     self.places = function() {
@@ -521,12 +433,12 @@ sb.mesh = function (frame, map, width, height) {
     };
 
     self.points = function(pts) {
-    	if (!arguments.length) {
-    		return points;
-    	}
+        if (!arguments.length) {
+            return points;
+        }
 
-    	points = pts;
-    	return self;
+        points = pts;
+        return self;
     };
 
     /* 
@@ -534,11 +446,11 @@ sb.mesh = function (frame, map, width, height) {
         we need explicit styling for the canvg code to 
         rasterize it correctly - yikes!
     */
-    self.hideRotator = function() {
+    self.bakeStyles = function() {
         hidden.style("display", "none");
     };
 
-    self.showRotator = function() {
+    self.unBakeStyles = function() {
         hidden.style("display", "");
     };
 
@@ -579,8 +491,8 @@ sb.mesh = function (frame, map, width, height) {
 
     // outputs svg data
     self.output = function() {
-    	return $('#' + selfId).html();
+        return $('#' + selfId).html();
     };
 
-	return self;
+    return self;
 };

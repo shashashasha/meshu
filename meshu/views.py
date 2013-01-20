@@ -35,8 +35,8 @@ import sha
 #
 
 # hashed codes
-codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313', 'bbf5865f40e0701ee165f953ca455909b21db589']
-amounts = [25, .85, .85, .79]
+codes = ['5976bfc9a4dce7b1c50a537a9c18f76d0bc5fc46', 'a058609e29ab93bc9bf43ff86575d96e14e7caa0', '344ad3cafaee08927ce5ac4b6922ddd6a78f0313', 'bbf5865f40e0701ee165f953ca455909b21db589', 'ad6843e764700703d03b44fec642869ec3da6ffe', '7c487b3f575a1875203982915af081aa3099c85c']
+amounts = [25, .85, .85, .79, .8, 17]
 
 # util function
 def json_dump(json):
@@ -46,16 +46,6 @@ def json_dump(json):
 def index(request):
 	# no more invite code to enter
 	return render_to_response('meshu/index.html', {}, context_instance=RequestContext(request))
-
-# meshu.views.shop
-def shop(request):
-	# assume username = shop is all our admin created readymades
-	meshus = Meshu.objects.filter(user_profile__user__username='shop')
-
-	return render_to_response('meshu/gallery/gallery.html', {
-		"meshus": meshus,
-		"view": 'shop',
-	}, context_instance=RequestContext(request))
 
 def invite(request):
 	code = request.POST.get('code', '')
@@ -67,388 +57,6 @@ def invite(request):
 		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
 	else:
 		return notify(request, 'invite_failed')
-
-#
-# Views for Items
-#
-
-# meshu.views.make
-def item_make(request):
-	return render_to_response('meshu/item/item.html', {
-			'view' : 'edit'
-		}, context_instance=RequestContext(request))
-
-def item_begin_order(request, item_encoded):
-	item_id = int(str(item_encoded).decode("hex"))
-	
-	# check user id
-	# for the marathon, we can just let anyone order anything
-
-	# item = get_object_or_404(Meshu, pk=item_id)
-	# if request.user.id != item.user_profile.user.id:
-	# 	return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'usermade.html', 'product')
-
-def item_edit(request, item_encoded):
-	item_id = int(str(item_encoded).decode("hex"))
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# check user id
-	if request.user.id != item.user_profile.user.id:
-		return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'usermade.html', 'edit')
-
-def item_display(request, item_encoded):
-	item_id = int(str(item_encoded).decode("hex"))
-	return item_handler(request, item_id, 'display.html', 'view')
-
-def item_postcard(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# don't let people 'shop' for other users items yet
-	if request.user.is_staff == False:
-		return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'postcard.html', 'postcard')
-
-def item_readymade(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# don't let people 'shop' for other users items yet
-	if item.user_profile.user.is_staff == False:
-		return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'readymade.html', 'readymade')
-
-def item_delete(request, item_id):
-
-	meshu = meshu_delete(request, item_id)
-	return notify(request, 'meshu_deleted')
-
-# generalized handler for all our item pages
-def item_handler(request, item_id, template, view):
-	item = get_object_or_404(Meshu, pk=item_id)
-	return render_to_response('meshu/item/' + template, {
-			'meshu': item,
-			'view': view
-		}, context_instance = RequestContext(request))
-
-def item_from_geojson(request):
-	if request.POST.has_key('geojson') == False and request.GET.has_key('url') == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	meshu = Meshu()
-
-	if request.GET.has_key('url'):
-		meshu.title = request.GET.get('title', 'My Meshu')
-		response = urllib2.urlopen(request.GET.get('url'))
-		geojson = response.read()
-
-	if request.POST.has_key('geojson'):
-		meshu.title = request.POST.get('title', 'My Meshu')
-		geojson = request.POST.get('geojson', '')
-
-	meshu.save()
-
-	return render_to_response('meshu/item/geojson.html', {
-		'meshu': meshu,
-		'geojson' : geojson,
-		'view': 'edit'
-	}, context_instance = RequestContext(request))
-
-def item_from_preset(request, item_encoded):
-	item_id = int(str(item_encoded).decode("hex"))
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	meshu = Meshu()
-
-	meshu.title = item.title
-	meshu.description = item.description
-
-	# meshu data
-	meshu.location_data = item.location_data
-	meshu.svg = item.svg
-
-	meshu.promo = item.promo
-
-	# wtf dawg
-	meshu.theta = item.theta
-
-	return render_to_response('meshu/item/item.html', {
-		'meshu': meshu,
-		'view': 'edit'
-	}, context_instance = RequestContext(request))
-
-def item_from_data(request):
-
-	if request.POST.has_key('location_data') == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	meshu = Meshu()
-
-
-	meshu.title = request.POST.get('title', 'My Meshu')
-	meshu.description = request.POST.get('description', '')
-
-	# meshu data
-	meshu.location_data = request.POST['location_data']	
-	meshu.svg = request.POST['svg']
-
-	# wtf dawg
-	theta = request.POST.get('theta', 0.0)
-	if theta:
-		meshu.theta = int(float(theta))
-
-	return render_to_response('meshu/item/item.html', {
-		'meshu': meshu,
-		'view': 'edit'
-	}, context_instance = RequestContext(request))
-
-def item_create(request):
-	xhr = request.POST.has_key('xhr')
-
-	profile = current_profile(request)
-
-	meshu = meshu_get_or_create(request, profile)
-
-	if xhr:
-		return meshu_xhr_response(meshu)
-
-	return HttpResponseRedirect(meshu.get_absolute_url())
-
-def item_assign(request):
-	xhr = request.POST.has_key('xhr')
-
-	profile = current_profile(request)
-
-	meshu = meshu_get_or_create(request, profile)
-	meshu.user_profile = profile
-	meshu.save()
-
-	if xhr:
-		return meshu_xhr_response(meshu)
-
-	return HttpResponseRedirect(meshu.get_absolute_url())
-
-
-def item_update(request, item_encoded):
-	xhr = request.POST.has_key('xhr')
-
-	item_id = int(str(item_encoded).decode("hex"))
-	old = Meshu.objects.get(id=item_id)
-
-	old = meshu_update(request, old)
-	old.save()
-
-	if xhr:
-		return meshu_xhr_response(old)
-
-	return item_handler(request, item_id, 'display.html', 'view')
-
-def item_save(request, item_encoded):
-	xhr = request.POST.has_key('xhr')
-
-	item_id = int(str(item_encoded).decode("hex"))
-	old = Meshu.objects.get(id=item_id)
-
-	meshu = Meshu()
-	meshu.user_profile = old.user_profile
-	meshu = meshu_update(request, meshu)
-	meshu.save()
-
-	if xhr:
-		return meshu_xhr_response(meshu)
-
-	return item_handler(request, item_id, 'display.html', 'view')
-
-#
-# Views for Users
-#
-def login_user_flow(request, user):
-	if user is not None:
-		if user.is_active:
-			response = login(request, user)
-			return user_login_success(request, user)
-		else:
-			return user_login_error(request, user)
-	else:
-	    return user_login_error(request, user)
-
-def user_login(request, *args, **kwargs):
-	email = request.POST['email']
-
-	try:
-		dupes = User.objects.filter(email=email)
-		if len(dupes) > 1:
-			return user_duplicate_error(request)
-	except User.DoesNotExist:
-		pass
-
-	user = authenticate(username=email, password=request.POST['password'])
-	return login_user_flow(request, user)
-
-def user_login_success(request, user):
-	print('logging in')
-	xhr = request.POST.has_key('xhr')
-
-	profile = user.get_profile()
-	meshus = Meshu.objects.filter(user_profile=profile)
-	
-	print(user.username)
-
-	if xhr:
-		return json_dump({
-			'success': True,
-			'username': user.username,
-			'meshus': meshus.count(),
-			'facebook_id': profile.facebook_id
-		})
-	else:
-		return render_to_response('meshu/gallery/gallery.html', {
-				'view' : 'user',
-				'profile' : profile,
-				'meshus': meshus
-		}, context_instance=RequestContext(request))
-
-def user_login_error(request, user):
-	xhr = request.POST.has_key('xhr')
-
-	if xhr:
-		return json_dump({
-			'success' : False 
-		})
-	else:
-		return notify(request, 'login_error')
-
-def user_duplicate_error(request):
-	xhr = request.POST.has_key('xhr')
-
-	if xhr:
-		return json_dump({
-			'success' : False,
-			'duplicate': True
-		})
-	else:
-		return notify(request, 'login_error')
-
-def user_logout(request, *args, **kwargs):
-	xhr = request.GET.has_key('xhr')
-	response = logout(request)
-
-	if xhr:
-		return json_dump({
-			'success' : False 
-		})
-
-	return notify(request, 'loggedout')
-
-def user_create(request):
-	username = uuid.uuid4().hex[:30]
-
-	email = request.POST['email']
-	password = request.POST['password']
-
-	# check if we have someone with the same username	
-	try:
-		while True:
-			User.objects.get(username=username)
-			username = uuid.uuid4().hex[:30]
-	except User.DoesNotExist:
-		pass
-
-	# check if we have someone with the same email
-	try:
-		dupes = User.objects.filter(email=email)
-		if len(dupes) > 0:
-			return user_duplicate_error(request)
-	except User.DoesNotExist:
-		pass
-
-
-	# create user shortcut
-	user = User.objects.create_user(username, email, password)
-	user.is_staff = False
-	user.save()
-
-	# if it's an ajax request, assume you want to log in immediately
-	xhr = request.POST.has_key('xhr')
-	if xhr:
-		return user_login(request)
-	else:
-		return notify(request, 'signedup')
-
-# 
-def user_facebook_login(request):
-	fb_profile = request.POST
-	access_token = fb_profile['access_token']
-	user = authenticate(token=access_token, request=request, use_token=True)
-	return login_user_flow(request, user)
-
-def user_profile(request):
-	# show all meshus belonging to the current user
-	profile = current_profile(request)
-
-	if request.user.is_authenticated() == False:
-		return notify(request, 'authorization_required')
-
-	meshus = Meshu.objects.filter(user_profile=profile)
-
-	return render_to_response('meshu/gallery/gallery.html', {
-			'view' : 'user',
-			'profile' : profile,
-			'meshus': meshus
-	}, context_instance=RequestContext(request))
-
-def user_forgot_password(request):
-	profile = current_profile(request)
-
-	email = request.POST.get('email', 'noemail')
-	response_dict = {}
-
-	try:
-		user = User.objects.get(email=email)
-	except User.DoesNotExist:
-		return json_dump({
-			'message' : 'User with that email does not exist' 
-		})
-
-	if user.username == 'shop':
-		return json_dump({
-			'message' : "You can't reset your password this way"
-		})
-
-	password = random_password(4)
-
-	user.set_password(password)
-
-	user.save()
-
-	# mail the user the reset password
-	mail_forgotten_password(user.email, password)
-
-	return notify(request, 'password_reset')
-
-def user_change_password(request):
-	user = authenticate(username=request.POST['email'], password=request.POST['password'])
-
-	if user is not None:
-		if user.is_active:
-			response = login(request, user)
-
-			# update password
-			if request.POST['new_password'] != '':
-				new_pass = request.POST['new_password']
-				user.set_password(new_pass)
-				user.save()
-
-			return notify(request, 'password_reset_success')
-		else:
-			return user_login_error(request, user)
-	else:
-	    return user_login_error(request, user)
-
 
 
 def mail_viewer(request, template):
@@ -494,15 +102,23 @@ def mail_order_confirmation(email, meshu, order):
 
 def mail_order_status_change(email, meshu, order):
 
+	print(order.status)
+
 	if order.status == 'SH':
-		subject = 'Your order, "' + meshu.title + '" has been shipped!'
+		subject = 'Meshu: Your order has been shipped!'
 		template = 'order_shipped'
+
+	elif order.status == 'RE':
+		subject = 'Meshu: We\'ve received your order from the fabricator!'
+		template = 'order_received_from_fabricator'
+
 	elif order.status == 'SE':
-		subject = 'Your order, "' + meshu.title + '" has been sent to the fabricator!'
+		subject = 'Meshu: Your order has been sent to the fabricator!'
 		template = 'order_sent_to_fabricator'
 
-	# only send an email if it's been Shipped or Sent to the fabricator
-	if order.status == 'SH' or order.status == 'SE':
+	print(subject)
+
+	if order.status == 'SH' or order.status == 'SE' or order.status == 'RE':
 		mail_template('meshu/email/' + template + '.html', {
 			'subject' : subject,
 			'from' : 'orders@meshu.io',
@@ -669,6 +285,9 @@ def meshu_update(request, meshu):
 	meshu.svg = request.POST.get('svg', meshu.svg)
 	meshu.theta = request.POST.get('theta', meshu.theta)
 
+	meshu.renderer = request.POST.get('renderer', meshu.renderer)
+	meshu.metadata = request.POST.get('metadata', meshu.metadata)
+
 	meshu.promo = request.POST.get('promo', meshu.promo)
 	return meshu
 
@@ -724,6 +343,8 @@ def order_create(request, profile, meshu):
 	order.color = request.POST['color']
 	order.product = request.POST['product']
 
+	order.coupon = request.POST.get('coupon', '')
+
 	# stripe uses cents
 	amount = float(request.POST.get('amount', '0.0')) / 100.0
 	order.amount = str(amount)
@@ -745,176 +366,7 @@ def order_create(request, profile, meshu):
 
 	order.save()
 	return order
-
-# Processing Orders!
-def processing_orders(request):
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
-
-	return render_to_response('meshu/processing/orders.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
-	}, context_instance=RequestContext(request))
-
-def processing_order_update_status(request, order_id):
-	order = Order.objects.get(id=order_id)
-
-	if request.GET.has_key('postcard_ordered'):
-		postcard_status = request.GET.get('postcard_ordered', '')
-		order.postcard_ordered = postcard_status
-
-	# don't send duplicate emails
-	if order.status != request.GET.get('status'):
-		order.status = request.GET.get('status')
-		order.tracking = request.GET.get('tracking', '')
-
-		# update the ship date
-		if order.status == 'SH':
-			order.ship_date = datetime.now()
-
-		order.save()
-
-		if order.status == 'SE' or order.status == 'SH':
-			mail_order_status_change(order.contact, order.meshu, order)
 	
-	# go back to gallery view
-	return HttpResponseRedirect('/orders/')
-
-def processing_order_postcard_toggle(request, order_id):
-	order = Order.objects.get(id=order_id)
-	if order.postcard_ordered == 'true':
-		order.postcard_ordered = 'false'
-	else:
-		order.postcard_ordered = 'true'
-	
-	order.save()
-
-	return json_dump({
-		'success' : True,
-		'order_id': order.id,
-		'postcard_ordered': order.postcard_ordered
-	})
-
-def processing_addresses(request): 
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.exclude(status='SH')
-	orders_shipped = Order.objects.filter(status='SH')
-
-	return render_to_response('meshu/processing/order_shipping_export.html', {
-			'orders': orders,
-			'orders_shipped' : orders_shipped
-	}, context_instance=RequestContext(request))
-
-def processing_notes(request): 
-	if request.user.is_authenticated() == False or request.user.is_staff == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
-
-	# get all orders that haven't been shipped
-	orders = Order.objects.all()
-
-	return render_to_response('meshu/processing/notes.html', {
-			'orders': orders,
-	}, context_instance=RequestContext(request))
-
-def processing_all(request):
-	meshus = Meshu.objects.all()
-
-	return render_to_response('meshu/processing/allview.html', {
-		'meshus': meshus
-	}, context_instance=RequestContext(request))
-
-# proxy yahoo api
-import urllib2, urllib
-def processing_geocoder(request):
-	base = 'http://where.yahooapis.com/geocode?flags=J&location='
-	key = '&appid=dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--'
-	location = request.GET.get('location', '')
-
-	url = urllib.quote(location)
-
-	try:
-		response = urllib2.urlopen(base + url + key)
-		json = response.read()
-		return HttpResponse(json, mimetype='application/json')
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-
-# for potentially having geojson urls
-def processing_jsoner(request):
-	url = request.GET.get('url', '')
-
-	try:
-		response = urllib2.urlopen(url)
-		json = response.read()
-		return HttpResponse(json, mimetype='application/json')
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-
-# proxying the tiles to draw them in canvas
-def processing_tiles(request, subdomain, zoom, x, y):
-	# print(subdomain)
-	# print(zoom)
-	# print('x:' + str(x))
-	# print('y:' + str(y))
-	url = 'http://{0}.tile.stamen.com/toner/{1}/{2}/{3}.png'.format(subdomain, zoom, x, y)
-
-	try:
-		response = urllib2.urlopen(url)
-		return HttpResponse(response.read(), mimetype="image/png")
-	except urllib2.URLError:
-		return HttpResponse('', mimetype='application/json')
-    
-
-from django.core.files.images import ImageFile
-import re
-# convert an existing, where we're guaranteed a meshu
-# ie on /view/3242342 and /make/3242342 pages, not /make/
-def item_topng(request, item_encoded):
-	xhr = request.GET.has_key('xhr')
-
-	item_id = int(str(item_encoded).decode("hex"))
-	meshu = Meshu.objects.get(id=item_id)
-
-	return processing_make_png(request, meshu)
-
-def processing_dataurl_to_image(request, item_encoded=0):
-
-	profile = current_profile(request)
-
-	meshu = meshu_get_or_create(request, profile)
-
-	return processing_make_png(request, meshu)
-
-def processing_make_png(request, meshu):
-	dataurl = request.POST.get('dataurl')
-	imgstr = re.search(r'base64,(.*)', dataurl).group(1)
-
-	output = open(settings.STATIC_ROOT + 'images/meshus/rendered.png', 'r+b')
-	output.write(imgstr.decode('base64'))
-	image = ImageFile(output)
-
-	filename = meshu.get_png_filename()
-
-	meshu_image = MeshuImage(meshu=meshu)
-	meshu_image.image.save(filename, image)
-
-	output.close()
-	return json_dump({
-		'success': True,
-		'filename': filename,
-		'id': meshu.id,
-		'title': meshu.title,
-		'username': meshu.user_profile.user.username,
-		'view_url': meshu.get_absolute_url(),
-		'image_url': meshu_image.image.url
-	})
 
 # don't judge me, i think this is funny
 def random_password(length):

@@ -8,6 +8,7 @@
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
+  font-weight: 300;
 }
 ul {
   margin: 0;
@@ -15,7 +16,7 @@ ul {
   list-style-type: none;
 }
 h2 {
-  font-weight: normal;
+  font-weight: 300;
   font-size: 28px;
   margin: 0;
 }
@@ -63,7 +64,7 @@ image {
 }
 h1#meshu {
   margin: 0;
-  font-weight: normal;
+  font-weight: 300;
 }
 #nav {
   position: absolute;
@@ -347,13 +348,12 @@ body.win #login-form ul {
   background-color: #8f8f8f;
 }
 #banners {
-  height: 384px;
+  height: 375px;
   width: 960px;
   margin: 20px;
   position: relative;
-  border: 1px solid lightgrey;
 }
-.bleed {
+.macro {
   width: 100%;
   position: absolute;
   top: 0;
@@ -472,47 +472,6 @@ body.win #login-form ul {
 #no-svg h2 {
   margin-top: 15px;
 }
-#edit-help {
-  position: absolute;
-  top: 100px;
-  left: 190px;
-  width: 580px;
-  height: 280px;
-  z-index: 4;
-  background: white;
-  border: 1px solid #e6e6e6;
-  padding: 20px;
-  -webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
-  display: none;
-}
-#edit-help h2 {
-  margin-bottom: 10px;
-}
-#edit-help img {
-  border: 1px solid #e6e6e6;
-}
-#edit-help .caption {
-  width: 178px;
-  display: inline-block;
-}
-#edit-help .right {
-  margin-left: 19px;
-}
-#edit-help .title {
-  margin-top: 25px;
-}
-#edit-help .ideas {
-  color: #808080;
-}
-#edit-help #close-help {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 20px;
-  margin: 0;
-}
 #modal-bg {
   width: 100%;
   height: 100%;
@@ -629,7 +588,7 @@ body.win #login-form ul {
   display: block;
   background: #ff3fb4;
   color: white;
-  padding: 2px 5px;
+  padding: 3px 6px 4px 5px;
   display: none;
   white-space: nowrap;
 }
@@ -638,7 +597,7 @@ body.win #login-form ul {
 }
 .notch {
   position: absolute;
-  top: 21px;
+  top: 24px;
   left: 20px;
   margin: 0;
   border-top: 6px solid #ff3fb4;
@@ -651,6 +610,23 @@ body.win #login-form ul {
 }
 body.win .notch {
   top: 20px;
+}
+.tooltip {
+  position: absolute;
+  z-index: 1339;
+  display: block;
+  background: #ff3fb4;
+  color: white;
+  padding: 3px 6px 4px 5px;
+  display: none;
+  white-space: nowrap;
+}
+.top .notch {
+  border-top: 0;
+  border-bottom: 6px solid #ff3fb4;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  top: -6px;
 }
 #places {
   position: absolute;
@@ -928,6 +904,9 @@ body.ie .frame div {
   width: 200px;
   height: 190px;
   margin-top: 15px;
+}
+.radial #rotate-help {
+  display: none;
 }
 #rotate-help {
   position: absolute;
@@ -1331,6 +1310,7 @@ body.ie8 .city-input {
   width: 170px;
   margin-bottom: 15px;
   font-size: 12px;
+  line-height: 1;
 }
 .postcard-form {
   clear: both;
@@ -1414,6 +1394,10 @@ body.ie8 .city-input {
 }
 #view .show-places {
   cursor: pointer;
+}
+#view.radial .show-places,
+#view.radial #display-places {
+  display: none;
 }
 .view .share-buttons {
   position: absolute;
@@ -1578,7 +1562,7 @@ body.ie8 .city-input {
   margin-top: 6px;
   width: auto;
 }
-.view .item-actions .action-button {
+.view .item-actions .nav {
   float: right;
   margin-left: 12px;
 }
@@ -1664,13 +1648,16 @@ path {
   fill: none;
   stroke: black;
   pointer-events: none;
-  stroke-width: 5;
+  stroke-width: 8;
   stroke-linejoin: round;
   transition: stroke-width 0.6s;
   /*-moz-transition: @property @time;*/
 
   -webkit-transition: stroke-width 0.6s;
   -o-transition: stroke-width 0.6s;
+}
+.radial path {
+  stroke-width: 0;
 }
 .roadtrip path {
   stroke-width: 5;
@@ -1694,7 +1681,7 @@ circle {
   fill-opacity: 1;
   opacity: .8;
 }
-.knockout path {
+.knockout .radial path {
   stroke: white;
 }
 .edit circle:hover,
@@ -1703,8 +1690,10 @@ circle.highlight,
   fill-opacity: 1;
   cursor: pointer;
 }
-.radial #delaunay-ui circle {
+.radial #delaunay-ui circle,
+.radial circle:hover {
   fill-opacity: 0;
+  cursor: default;
 }
 .hidden,
 #rotate-ui,
@@ -1785,6 +1774,49 @@ circle.highlight,
 }
 .fill-option:nth-child(even) {
   margin-right: 20px;
+}
+/* make landing page choice */
+#make-landing {
+  position: absolute;
+  top: 80px;
+  left: 160px;
+  width: 640px;
+  height: 400px;
+  z-index: 4;
+  background: white;
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+}
+.content-banner {
+  margin: auto;
+  width: 640px;
+  text-align: center;
+  font-size: 34px;
+  padding: 10px 0 20px 0;
+}
+.splitimages {
+  float: left;
+  width: 46%;
+  margin: 0 2% 0;
+}
+.splitimages img {
+  width: 100%;
+}
+.splitimages img:hover {
+  opacity: .9;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+}
+.splitimages .button {
+  width: 100%;
+  margin: -3px 0 0 0;
+  padding: 3px 0;
+  display: block;
+  font-size: 20px;
 }
 /* mini meshu */
 #maps {
@@ -1873,10 +1905,6 @@ circle.highlight,
 #gallery li.object .price {
   float: right;
 }
-#gallery li.object img {
-  border: 1px solid white;
-  box-sizing: border-box;
-}
 #shop li.object:hover {
   border: 5px solid #1fcaff;
 }
@@ -1894,7 +1922,7 @@ circle.highlight,
 }
 .edit .mapui {
   opacity: 1;
-  z-index: 1338;
+  z-index: 2;
   position: absolute;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -2071,7 +2099,8 @@ body.ie #maps .mini-meshu div {
   float: left;
   margin-top: 50px;
 }
-.about a {
+.about a,
+.paid a {
   color: #ff3fb4;
 }
 .about img {
@@ -2129,6 +2158,15 @@ body.ie #maps .mini-meshu div {
   width: 80px;
   height: 78px;
 }
+.order-status-updater {
+  color: black;
+  border-color: black;
+  background-color: #ddd;
+  cursor: pointer;
+}
+.instructions {
+  color: #ff3fb4;
+}
 .OR,
 .postcard-false {
   background-color: #FF0000;
@@ -2149,16 +2187,62 @@ body.ie #maps .mini-meshu div {
 .postcard-true {
   background-color: #00FF66;
 }
+/*
+    Postcard specific css
+*/
+.postcard {
+  font-family: 'Helvetica';
+  font-weight: normal;
+  line-height: 1.5;
+  color: #808080;
+  /* for the back of the postcard */
+
+}
+.postcard #content {
+  /*width: 1100px; 
+        height: 733px;*/
+
+  width: 1680px;
+  height: 1275px;
+}
 .postcard .frame {
-  width: 1000px;
-  height: 640px;
+  /*width: 1100px; 
+        height: 733px;*/
+
+  width: 1680px;
+  height: 1275px;
   right: 0;
+}
+.postcard path {
+  stroke-width: 10;
 }
 .postcard #attribution {
   display: none;
 }
-#content.postcard {
-  width: 1000px;
+.postcard .order-note-outer {
+  display: table;
+  width: 100%;
+  height: 1000px;
+  overflow: hidden;
+}
+.postcard .order-note-inner {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.postcard .order-note-inner p {
+  font-size: 45px;
+  padding: 0 350px;
+}
+.postcard #postcard-logo {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  height: 140px;
+  bottom: 135px;
+  font-size: 24px;
 }
 .notes {
   margin: 20px;

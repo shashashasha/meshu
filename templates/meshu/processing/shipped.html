@@ -1,0 +1,54 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}Current Orders{% endblock %}
+
+{% block content %}
+    <h2 class="page-header">{{ orders|length }} orders shipped! Yay!</h2>
+    <div class="inner-content">
+    <ul class="gallery">
+        {% for order in orders reversed %}
+            <li class="status-list">
+                <div class="status-meshu">
+                    {% autoescape off %}
+                        {{ order.meshu.svg }}
+                    {% endautoescape %}
+                </div>
+                <div class="status-information">
+                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }}, {{ order.get_display_name }} for {{ order.shipping_name }}, {{ order.contact }}</a></b>
+                    <br />
+                    <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span> | <span>Shipped {{ order.ship_date }}</span> | <span>{{ order.coupon }}</span>
+                    <br />
+                    <span class="instructions">{{ order.postcard_note }}</span>
+                    <br />
+                    
+                    <br />
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <br /><br /><br />
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
+    <script type="text/javascript">
+
+        d3.selectAll("#master-svg").attr("class","meshu-svg")
+        d3.selectAll(".delaunay").each(function(){
+            var node = d3.select(this);
+            var transform = node.attr("transform");
+            if (transform) {
+                var t = node.attr("transform").split('rotate(').pop() || "";
+                
+                if (t.length) {
+                    t = 'rotate(' + t;
+                }
+
+                node.attr("transform","scale(.15) translate(-80, -80)" + t); // + t);   
+            }
+        });
+
+    </script>
+{% endblock %}

@@ -1,9 +1,13 @@
+/*
+	Slideshow for the index.html page
+*/
 $(function() {
 	var index = 0;
-	var sum = $(".bleed").length;
+	var sum = $(".macro").length;
 	setInterval(function(){
-		$("#banner-" + index).hide('slide', {direction: 'left'}, 1000);
-		$("#banner-" + (index + 1) % sum).show('slide', {direction: 'right'}, 1000);
+		$("#macro-" + index).fadeOut('slow');
+		$("#macro-" + (index + 1) % sum).fadeIn('slow');
 		index = (index + 1) % sum;
 	}, 7000);
+
 });

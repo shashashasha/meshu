@@ -33,7 +33,7 @@
         {% endif %} -->
         {% for object in meshus reversed %}
             <li class="{% if view == 'user' %}mini-meshu{% else %}object{% endif %}">
-                <div class="image"></div>
+                <!-- <div class="image"></div> -->
                 <a href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
@@ -41,9 +41,9 @@
                     <img src="{{ object.thumbnail.url }}" />
                 {% else %}
                     <p class="hidden">{{ object.location_data }}</p>
-                    <!-- {% autoescape off %}
-                        {{ object.svg }}
-                    {% endautoescape %} -->
+                    <p class="hidden renderer">{{ object.renderer }}</p>
+                    <p class="hidden metadata">{{ object.metadata }}</p>
+                    <p class="hidden svg">{% autoescape off %}{{ object.svg }}{% endautoescape %}</p>
                 {% endif %}
                 {% if view == 'shop' %}
                     <div class="text-block">
@@ -52,7 +52,6 @@
                     </div>
                 {% else %}
                     <p class="title">{{ object.title|safe }}</p>
-                    <!-- <a class="clickthrough" href="{{ object.get_absolute_url }}">click to view</a> -->
                 {% endif %}
                 </a>
             </li>
@@ -63,15 +62,25 @@
 {% block script %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/gallery.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/minimeshu.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/map.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/min/mesh.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/minimeshu.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript">
 
         $(".mini-meshu").each(function(i){
-            var meshu = sb.minimeshu($(this).find("a")[0]);
-            var locations = meshu.locationData($(this).find(".hidden").html());
+            var frame = $(this).find("a")[0],
+                data = $(this).find(".hidden").html(),
+                renderer = $(this).find(".renderer").html(),
+                metadata = $(this).find(".metadata").html(),
+                svg = $(this).find(".svg").html();
+            
+            var meshu = sb.minimeshu(frame, renderer);
+            meshu.initializeFromData(data, metadata, svg);
+            if (renderer == "radial")
+                $(this).find(".delaunay").attr("transform","scale(.5)");
         });
 
         /*

@@ -29,17 +29,15 @@
 
 	var mapper = sb.map("#map", $("#map").width() + 'px', $("#map").height() + 'px');
 
-	// mapper.map.add(org.polymaps.interact());
-
 	var meshuDatas = locations.split('\n');
 	var meshus = [];
 
 	var mlats = [];
 	var mlons = [];
 	$.each(meshuDatas, function(i, d){
-		var meshur = sb.meshu("#map", mapper);
+		var meshur = sb.meshu("#map", 'facet', mapper);
 		meshus.push(meshur);
-		meshur.locationData(d);
+		meshur.initializeFromData(d);
 		mlats = mlats.concat(meshur.mesh().lats());
 		mlons = mlons.concat(meshur.mesh().lons());
 	});

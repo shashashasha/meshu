@@ -2,9 +2,15 @@
 
 {% block title %}Meshu - {{ meshu.title|safe }}{% endblock %}
 
+{% block body_class %}{% endblock body_class %}
+
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
+    <div id="tooltip-container">
+        {% block tooltips %}
+        {% endblock %}
+    </div>
     <div id="place-hover">
         <span></span>
         <b class="notch"></b>
@@ -21,15 +27,17 @@
     {% block edit %}
         <div id="edit">
             <div id="search">
-                <h2>Search</h2>
+                <h2>{% block page_title %}{% endblock %}</h2>
                 <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
                     onfocus="value=''"/>
                 <div id="search-button" class="button">search</div>
             </div>
             <div id="cases"></div>
-            <div id="places">
-            <h2 id="place-title"></h2>
-            </div>
+            {% block places %}
+                <div id="places">
+                <h2 id="place-title"></h2>
+                </div>
+            {% endblock %}
 
             {% block finish %}
             {% endblock %}
@@ -46,6 +54,7 @@
             <div class="make-wrapper">
                 <h2>Choose your piece:</h2>
                 <div id="product-preview">
+                    {% block products %}
                     <div class="wrapper" id="wrapper-earrings">
                         <div class="next active">
                             <svg id="preview-earrings" width="170" height="160"></svg>
@@ -74,14 +83,15 @@
                         <p>Pair of Cufflinks</p>
                         <p class="note" id="range-cufflinks">$150</p>
                     </div>
+                    {% endblock %}
                 </div>
 
                 <div class="social-media">
                     <a class="share-pinterest" target="_blank" href="">
                         <img border="0" src="{{ STATIC_URL }}/images/social/pinitbutton.png" title="Pin It">
                     </a>
-                    <div class="share-facebook"><i></i>Share Meshu</div>
-                    <a class="share-twitter" target="_blank"><i></i>Tweet Meshu</a>
+                    <div class="share-facebook"><i></i>Share this</div>
+                    <a class="share-twitter" target="_blank"><i></i>Tweet this</a>
                 </div>
             </div>
         </div>
@@ -125,7 +135,7 @@
                 <div class="options left">
                     <h2>Material</h2>
                     <ul id="material-list" class="option-list">
-                        <li id="wood" class="material-option">Wood, Lasercut</li>
+                        <li id="bamboo" class="material-option">Bamboo, Lasercut</li>
                         <li id="acrylic" class="material-option">Acrylic, Lasercut</li>
                         <li id="nylon" class="material-option">Nylon, 3D-Printed</li>
                         <li id="stainless" class="material-option">Stainless Steel</li>
@@ -154,7 +164,7 @@
         <div class="make-wrapper">
             <h2>Please log in to continue</h2>
 
-            <fb:login-button size="large" onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
+            <fb:login-button size="large" style="overflow:hidden;" onlogin="userFacebookLoggedIn()" scope="email,user_photos,friends_photos,user_status,friends_status,user_checkins,friends_checkins">Login with Facebook</fb:login-button>
 
             <hr>
             <p class="or"><span>or</span></p>
@@ -222,8 +232,11 @@
                         <input type="hidden" id="svg-file" name="svg"/>
                         <input type="hidden" id="svg-theta" name="theta"/>
                         <input type="hidden" id="meshu-title" name="title"/>
+                        <input type="hidden" id="meshu-renderer" name="renderer"/>
+                        <input type="hidden" id="meshu-metadata" name="metadata"/>
                         <input type="hidden" id="meshu-data" name="location_data"/>
                         <input type="hidden" id="postcard-note" name="postcard_note"/>
+                        <input type="hidden" id="coupon" name="coupon"/>
                     </div>
                     <div class="form-row ship-row">
                         <label>Name</label>
@@ -503,8 +516,8 @@
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
                     </div>
-                    <p class="note domestic">Please allow 3-4 weeks for acrylic and wood orders,<br />and 5-6 weeks for nylon or silver.</p>
-                    <p class="note international">Please allow 4-5 weeks for acrylic and wood orders,<br />and 6-7 weeks for nylon or silver.</p>
+                    <p class="note domestic">Please allow 3-4 weeks for acrylic and bamboo orders,<br />and 5-6 weeks for nylon or silver.</p>
+                    <p class="note international">Please allow 4-5 weeks for acrylic and bamboo orders,<br />and 6-7 weeks for nylon or silver.</p>
                     <h2>Payment</h2>
                         <div class="form-row">
                             <label>Card Number</label>
@@ -569,21 +582,24 @@
 {% block script %}
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery.jsonp.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
-    
-    <script type="text/javascript" src="{{ STATIC_URL }}js/catalog{{ meshu.promo }}.js"></script>
-    <!-- // <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script> -->
-    
-    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/rgbcolor.js"></script> 
     <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script> 
-
+    
+    {% if debug == false %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
+    {% else %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
+    
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
@@ -592,7 +608,13 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/facebook.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ui.orderer.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ui.socialsharer.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/viewhandler.js"></script>
+    
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
+    {% endif %}
 
 {% endblock %}
 
@@ -605,6 +627,7 @@
     });
 
     var pageType = "{{ view }}";
+    var debug = ["{{ DEBUG }}", "{{ debug }}", "{{ settings.debug }}", "{{ request.debug }}"];
     
     {% if meshu %}
     var loadedMeshu = {
@@ -614,6 +637,8 @@
         view_url: '{{ meshu.get_absolute_url }}',
         title: "{{ meshu.title|safe }}",
         product: '{{ meshu.product }}',
+        renderer: '{{ meshu.renderer }}',
+        metadata: '{{ meshu.metadata }}',
         location_data: "{{ meshu.location_data|safe }}",
         svg: '{{ meshu.svg|safe }}',
         promo: '{{ meshu.promo }}'

@@ -72,6 +72,13 @@ class Meshu(models.Model):
 	# thumbnail in case we need gallery views	
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/default_thumbnail.png")
 
+	# whether or not its facet or radial
+	renderer = models.CharField(max_length=140, default='', blank=True)
+
+	# store visual style, zoom level, etc. 
+	# format is "product:radial&zoom:10"
+	metadata = models.CharField(max_length=1000, default='', blank=True)
+
 	# the equivalent of overriding the .toString() function
 	def __unicode__(self):
 		return str(self.id) + ' - ' + self.title
@@ -116,7 +123,7 @@ class Order(models.Model):
 	contact = models.CharField(max_length=200, default='')
 
 	# order information
-	material = models.CharField(max_length=140) # acrylic, silver, wood
+	material = models.CharField(max_length=140) # acrylic, silver, bamboo
 	color = models.CharField(max_length=140, blank=True) # black, white, grey
 	product = models.CharField(max_length=140) # necklace, pendant, etc
 	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
@@ -128,12 +135,18 @@ class Order(models.Model):
 	shipping_city = models.CharField(max_length=100, default='') 
 	shipping_zip = models.CharField(max_length=20, default='') # account for postcodes too hopefully
 	shipping_region = models.CharField(max_length=100, default='', blank=True) # regions, county
-	shipping_state = models.CharField(max_length=2, default='')
+	shipping_state = models.CharField(max_length=2, default='', blank=True)
 	shipping_country = models.CharField(max_length=100, default='', blank=True)
 
 	# postcard status
 	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)
-	postcard_note = models.CharField(max_length=1300, default='', blank=True)
+	postcard_note = models.TextField(blank=True)
+
+	# special instructions
+	special_instructions = models.CharField(max_length=200, default='', blank=True)
+
+	# track the coupon codes used
+	coupon = models.CharField(max_length=100, default='', blank=True)
 
 	# tracking number and shipping date
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
@@ -144,6 +157,16 @@ class Order(models.Model):
 			return self.material + ' ' + self.product
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
+
+	def get_processing_time(self):
+		if self.material == 'silver':
+			return '4-5 weeks for silver'
+		elif self.material == 'nylon':
+			return '4-5 weeks for nylon'
+		elif self.material == 'acrylic':
+			return '3-4 weeks for acrylic'
+		elif self.material == 'bamboo':
+			return '2-3 weeks for bamboo'
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"

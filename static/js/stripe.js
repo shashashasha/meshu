@@ -2,7 +2,7 @@ Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 
 var orderer = function() {
     var self = {},
-        //amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
+        // amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
         discountAmount = 0,
         discountPercent = 1,
@@ -10,7 +10,7 @@ var orderer = function() {
         material = null,
         shipping = 5,
         domesticShipping = 5,
-        internationalShipping = 20,
+        internationalShipping = 17,
         catalog = null;
 
     function stripeResponseHandler(status, response) {
@@ -69,7 +69,6 @@ var orderer = function() {
             code: value
         }, function(data) {
             if (data.success) {
-
                 var amt = parseFloat(data.amount);
                 if (amt < 1 && amt > 0) {
                     discountPercent = amt;
@@ -78,8 +77,9 @@ var orderer = function() {
                 }
             }
 
-            if (callback)
+            if (callback) {
                 callback(data);
+            }
         }, 'json');
     };
 

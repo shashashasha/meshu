@@ -8,9 +8,7 @@
     <ul class="gallery">
         {% for order in orders reversed %}
             <li class="status-list">
-                <div class="{{ order.status }} status-block">
-                    {{ order.status }}
-                </div>
+                <div id="order-status-{{ order.id }}" class="{{ order.status }} status-block">{{ order.status }}</div>
                 <div id="order-id-{{ order.id }}" class="postcard-toggle postcard-{{ order.postcard_ordered }} status-block">
                 </div>
                 <div class="status-meshu">
@@ -19,39 +17,24 @@
                     {% endautoescape %}
                 </div>
                 <div class="status-information">
-                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.meshu.title }} by {{ order.shipping_name }}, {{ order.contact }}</a></b>
+                    <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.get_display_name }} for {{ order.shipping_name }}, {{ order.contact }}</a></b>
                     <br />
                     <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span>
                     <br />
-                    <span class="product">{{ order.get_display_name }}</span>
-                    <form action="/orders/{{ order.id }}/update/">
-                        <select name="status">
-                            <option value="OR">Ordered</option>
-                            <option value="PR">Processed</option>
-                            <option value="SE">Sent to Fabricator</option>
-                            <option value="RE">Received from Fabricator</option>
-                            <option value="PA">Packaged</option>
-                            <option value="SH">Shipped</option>
-                        </select>
-                        <label for="tracking">tracking number</label>
-                        <input type="text" value="" name="tracking">
-                        <input type="submit" value="Notify!">
-                    </form>
+                    <span class="instructions">{{ order.special_instructions }}</span>
+                    <br />
+                    <select name="status" id="new-order-status-{{ order.id}}">
+                        <option value="OR">Ordered</option>
+                        <option value="PR">Processed</option>
+                        <option value="SE">Sent to Fabricator</option>
+                        <option value="RE">Received from Fabricator</option>
+                        <option value="PA">Packaged</option>
+                        <option value="SH">Shipped</option>
+                    </select>
+                    <input type="submit" value="Notify!" id="order-updater-{{ order.id}}" class="order-status-updater">
+                    <label for="tracking">tracking number</label>
+                    <input type="text" value="" name="tracking" id="order-tracking-{{ order.id}}">
                 </div>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <br />
-    <h2>{{ orders_shipped|length }} orders have been shipped! Yay!</h2>
-    <br /><br />
-    <ul class="gallery">
-        {% for order in orders_shipped reversed %}
-            <li>
-                <b><a href="{{ order.meshu.get_absolute_url }}" target="_new">{{ order.meshu.title }} by {{ order.contact }}</a></b>
-                <span class="date">Ordered on {{ order.date_created }}</span>
-                <span class="date">Shipped on {{ order.ship_date }}</span>
-                <br /><br />
             </li>
         {% endfor %}
     </ul>
@@ -67,13 +50,36 @@
         d3.selectAll("#master-svg").attr("class","meshu-svg")
         d3.selectAll(".delaunay").each(function(){
             var node = d3.select(this);
-            var t = node.attr("transform").split('rotate(').pop() || "";
-            
-            if (t.length) {
-                t = 'rotate(' + t;
-            }
+            var transform = node.attr("transform");
+            if (transform) {
+                var t = node.attr("transform").split('rotate(').pop() || "";
+                
+                if (t.length) {
+                    t = 'rotate(' + t;
+                }
 
-            node.attr("transform","scale(.15) translate(-80, -80)" + t); // + t);
+                node.attr("transform","scale(.15) translate(-80, -80)" + t); // + t);   
+            }
+        });
+
+        $(".order-status-updater").click(function(e) {
+            var id = e.target.id.split('-').pop();
+
+            var current = $("#order-status-" + id).html();
+            var updated = $("#new-order-status-" + id).val();
+            var tracking = $("#order-tracking-" + id).val();
+
+            $.get('/orders/' + id + '/update/', {
+                status: updated,
+                tracking: tracking 
+            }, function(data) {
+                if (data.success == 'true' || data.success == true) {
+                    var id = data.order_id;
+                    $("#order-status-" + id).removeClass(current)
+                        .addClass(data.order_status)
+                        .html(data.order_status);
+                }
+            }, 'json');
         });
 
         $(".postcard-toggle").click(function(e) {

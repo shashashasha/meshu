@@ -2,18 +2,22 @@
 
 {% block title %}Meshu - Make Your Own{% endblock %}
 
-{% block helpedit %}
-<div id="edit-help">
-    <h2>Three ways to make your meshu:</h2>
-    <img src="{{ STATIC_URL }}images/diagrams/make_helper_search.gif" nopin="nopin">
-    <img src="{{ STATIC_URL }}images/diagrams/make_helper_map.gif" class="right" nopin="nopin">
-    <img src="{{ STATIC_URL }}images/diagrams/make_helper_checkins.gif" class="right" nopin="nopin">
-    <p class="caption">Search for cities, addresses, or neighborhoods.</p>
-    <p class="caption right">Click on the map to add points.</p>
-    <p class="caption right">Use your checkins from Facebook or Foursquare.</p>
-    <p class="title">Some ideas to get you started:</p> 
-    <p class="ideas">Cities I’ve Been To, Places I’ve Lived, Countries I Want to Visit, Restaurants I Love, etc...</p>
-    <div class="button pink" id="close-help">OK, I'm ready!</div>
+{% block page_type %}edit{% endblock page_type %}
+
+{% block page_title %}Facet{% endblock %}
+
+{% block tooltips %}
+<div class="tooltip top" style="top: 100px; left: 20px;">
+    <span>Start by searching for an address or city</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="top: 280px; right: 175px;">
+    <span>Or add points by clicking on the map</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="bottom: 95px; left: 20px;">
+    <span>You can also use your checkins!</span>
+    <b class="notch"></b>
 </div>
 {% endblock %}
 
@@ -23,4 +27,35 @@
 {% block finish %}
     <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
     <div id="finish-button" class="nav next start-order">Continue</div>
+{% endblock %}
+
+{% block products %}
+    <div class="wrapper" id="wrapper-earrings">
+        <div class="next active">
+            <svg id="preview-earrings" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Earrings</p>
+        <p class="note" id="range-earrings">$68-145</p>
+    </div>
+    <div class="wrapper" id="wrapper-pendant">
+        <div class="next active">
+            <svg id="preview-pendant" width="170" height="160"></svg>
+        </div>
+        <p>Pendant Necklace</p>
+        <p class="note" id="range-pendant">$68-125</p>
+    </div>
+    <div class="wrapper" id="wrapper-necklace">
+        <div class="next active">
+            <svg id="preview-necklace" width="170" height="160"></svg>
+        </div>
+        <p>Large Necklace</p>
+        <p class="note" id="range-necklace">$75-140</p>
+    </div>
+    <div class="wrapper" id="wrapper-cufflinks">
+        <div class="next active">
+            <svg id="preview-cufflinks" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Cufflinks</p>
+        <p class="note" id="range-cufflinks">$145</p>
+    </div>
 {% endblock %}
