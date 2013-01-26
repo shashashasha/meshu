@@ -58,18 +58,29 @@ def view_orders(request):
 			'orders': orders
 	}, context_instance=RequestContext(request))
 
-def view_orders_shipped(request):
+def view_orders_status(view_status):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
 	# get all orders that have been shipped
-	orders = Order.objects.filter(status='SH')
+	orders = Order.objects.filter(status=view_status)
 
 	return render_to_response('meshu/processing/shipped.html', {
 			'orders': orders
 	}, context_instance=RequestContext(request))
 
 
+def view_orders_shipped(request):
+	return view_orders_status('SH')
+
+
+def view_orders_received(request):
+	return view_orders_status('RE')
+
+def view_orders_sent(request):
+	return view_orders_status('SE')
+	
+	
 def processing_order_update_status(request, order_id):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return json_dump({})
