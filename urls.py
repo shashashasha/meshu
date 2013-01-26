@@ -156,7 +156,12 @@ urlpatterns += patterns('meshu.pipeline',
 
 
 	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
+	
+	# convenience views for different states
 	url(r'^orders/shipped', 'view_orders_shipped'),
+	url(r'^orders/received', 'view_orders_received'),
+	url(r'^orders/sent', 'view_orders_sent'),
+	
 	url(r'^orders/addresses', 'view_addresses'),
 	url(r'^orders/notes', 'view_notes'),
 	url(r'^orders/all', 'view_all'),
