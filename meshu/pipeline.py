@@ -66,7 +66,8 @@ def view_orders_status(request, view_status):
 	orders = Order.objects.filter(status=view_status)
 
 	return render_to_response('meshu/processing/shipped.html', {
-			'orders': orders
+		'status': view_status,	
+		'orders': orders
 	}, context_instance=RequestContext(request))
 
 
