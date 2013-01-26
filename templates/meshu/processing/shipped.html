@@ -3,7 +3,7 @@
 {% block title %}Current Orders{% endblock %}
 
 {% block content %}
-    <h2 class="page-header">{{ orders|length }} orders shipped! Yay!</h2>
+    <h2 class="page-header">{{ orders|length }} orders with the status: {{ status }}</h2>
     <div class="inner-content">
     <ul class="gallery">
         {% for order in orders reversed %}
