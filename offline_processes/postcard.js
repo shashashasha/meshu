@@ -31,7 +31,7 @@ var base = "http://meshu.io",
 	backURL  = base + "/orders/processing/postcard/back/{id}/",
 
 	// saving images
-	directory = "/Users/binx/Dropbox/Meshu/raw_postcards/";
+	directory = "/Users/sha/Dropbox/Meshu/raw_postcards/";
 
 // order id
 id = phantom.args[0];

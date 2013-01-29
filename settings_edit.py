@@ -25,7 +25,7 @@ DATABASES = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'meshu'
-EMAIL_HOST_PASSWORD = 'm3shm3b4by'
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'hi@meshu.io'
 SERVER_EMAIL = 'server@meshu.io'
 

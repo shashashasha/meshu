@@ -1,5 +1,6 @@
 # pull down the meshu git project into /whateverfolder
 # install virtualenv
+# http://alleged.org.uk/pdc/2012/08/16.html
 
 sudo pip install -U virtualenv
 sudo pip install virtualenvwrapper
@@ -22,6 +23,10 @@ pip install yolk
 pip install Django
 
 # install mysql
+brew install mysql
+
+# https://dev.mysql.com/doc/refman/5.5/en/macosx-installation-pkg.html
+# https://dev.mysql.com/doc/refman/5.5/en/macosx-installation-prefpane.html
 # add this to .bash_profile
 alias mysql=/usr/local/mysql/bin/mysql
 alias mysqladmin=/usr/local/mysql/bin/mysqladmin
@@ -31,16 +36,17 @@ export PATH=$PATH:/usr/local/bin/mysql
 pip install MySQL-python
 
 # install mysql
-# http://dev.mysql.com/downloads/mysql/5.1.html
+# http://dev.mysql.com/downloads/mysql/
 # start mysql server
 # create user meshu
 # http://dev.mysql.com/doc/refman/4.1/en/adding-users.html
 mysql --user=root mysql
 
+# instead of password use the password
 GRANT ALL PRIVILEGES ON *.* TO 'meshu'@'localhost'
-    ->     IDENTIFIED BY 'm3shm3b4by' WITH GRANT OPTION;
+    ->     IDENTIFIED BY 'password' WITH GRANT OPTION;
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'meshu'@'%'
-    ->     IDENTIFIED BY 'm3shm3b4by' WITH GRANT OPTION;
+    ->     IDENTIFIED BY 'password' WITH GRANT OPTION;
 mysql> GRANT RELOAD,PROCESS ON *.* TO 'admin'@'localhost';
 mysql> GRANT USAGE ON *.* TO 'dummy'@'localhost';
 
@@ -50,21 +56,37 @@ mysql --user=root mysql
 SHOW DATABASES;
 CREATE DATABASE meshu;
 	
-# add this to settings.py
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-)
+# back in the meshu directory:
+cp settings_edit.py settings.py
+cp settings_local_edit.py settings_local.py
+
+# install requirements
+pip install -r requirements.txt
+
+# edit the password for db on settings.py
+
+# fill out all the paths for settings_local.py
+
+# then do this:
+python manage.py syncdb
+python manage.py schemamigration meshu --initial
+python manage.py migrate meshu
 
 
-pip install django-social-auth
+# then run!!!!!
+python manage.py runserver
 
-# saves our current pip installs to requirements.txt
-pip freeze > requirements.txt
+
+# if 127.0.0.1:8000/admin doesn't work:
+# http://stackoverflow.com/questions/6957360/admin-login-stopped-functioning-django
+python manage.py shell
+from django.contrib.sites.models import Site
+Site.objects.all()
+# if it's empty
+Site.objects.create(pk=1, domain='127.0.0.1:8000', name='localhost')
+
+# end, notes for other stuff below
+
 
 brew install cairo
 port install cairo
