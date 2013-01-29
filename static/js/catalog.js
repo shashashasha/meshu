@@ -33,8 +33,8 @@ sb.catalog = function(renderer, promo) {
 				   "pendant":
 				   		{"bamboo":{"price":75,"colors":["Amber"]},
 				   		"acrylic":{"price":85,"colors":["Black","White"]},
-						"nylon":{"price":95,"colors":["Black","White"]}
-						// "silver":{"price":160,"colors":["Sterling Silver"]}
+						"nylon":{"price":95,"colors":["Black","White"]},
+						"silver":{"price":160,"colors":["Sterling Silver"]}
 					}
 					};
 

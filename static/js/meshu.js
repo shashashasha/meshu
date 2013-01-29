@@ -68,9 +68,9 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
-        var url = $('body').hasClass('ie') || window.location.protocol == 'https:' 
-            ? "/proxy/geocoder/?location=" + query 
-            : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
+        var url = "/proxy/geocoder/?location=" + query;
+            //$('body').hasClass('ie') || window.location.protocol == 'https:' 
+            // : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
         
         searchbox.val("");
 
@@ -82,7 +82,8 @@ sb.meshu = function(frame, renderer, existingMap) {
                 console.log(error2);
             },
             success: function(data){
-                var results = data.ResultSet.Results || [data.ResultSet.Result];
+                // var results = data.ResultSet.Results || [data.ResultSet.Result];
+                var results = data.bossresponse.placefinder.results;
                 cases.empty().hide();
 
                 if (typeof results == "undefined") {
@@ -98,7 +99,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
                     switch (mesh.name) {
                         case 'facet':
-                            mesh.add(first.latitude, first.longitude, input);
+                            mesh.add(first.offsetlat, first.offsetlon, input);
                             self.updateBounds();
 
                             // set the zoom for first point
@@ -108,8 +109,8 @@ sb.meshu = function(frame, renderer, existingMap) {
                             break;
                         case 'radial':
                             // set the zoom based on radius
-                            setZoomRadius(first.radius);
-                            mesh.add(first.latitude, first.longitude, input);
+                            setZoomRadius(first.radius/10);
+                            mesh.add(first.offsetlat, first.offsetlon, input);
                             break;
 
                     }
