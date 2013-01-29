@@ -13,16 +13,41 @@ from datetime import datetime
 # proxy yahoo api
 import urllib2, urllib
 
+# from https://github.com/simplegeo/python-oauth2
+import oauth2 as oauth
+import time
+
 
 def processing_geocoder(request):
-	base = 'http://where.yahooapis.com/geocode?flags=J&location='
-	key = '&appid=dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--'
+	# Set the API endpoint 
+	url = "http://yboss.yahooapis.com/geo/placefinder"
 	location = request.GET.get('location', '')
 
-	url = urllib.quote(location)
+	# Set up instances of our Token and Consumer. The Consumer.key and 
+	# Consumer.secret are given to you by the API provider. 
+	consumer = oauth.Consumer(key=settings.OAUTH_CONSUMER_KEY, secret=settings.OAUTH_CONSUMER_SECRET)
+
+	# Set the base oauth_* parameters along with any other parameters required
+	# for the API call.
+	params = {
+	    'oauth_version': "1.0",
+	    'oauth_nonce': oauth.generate_nonce(),
+	    'oauth_timestamp': int(time.time()),
+	    'flags': 'J',
+	    'location': urllib.quote(location),
+	    'oauth_consumer_key': consumer.key
+	}
+
+	# Create our request. Change method, etc. accordingly.
+	req = oauth.Request(method="GET", url=url, parameters=params)
+
+	signature_method = oauth.SignatureMethod_HMAC_SHA1()
+
+	# no token because reasons
+	req.sign_request(signature_method, consumer, None)
 
 	try:
-		response = urllib2.urlopen(base + url + key)
+		response = urllib2.urlopen(req.to_url())
 		json = response.read()
 		return HttpResponse(json, mimetype='application/json')
 	except urllib2.URLError:

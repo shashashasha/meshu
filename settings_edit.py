@@ -29,6 +29,9 @@ EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'hi@meshu.io'
 SERVER_EMAIL = 'server@meshu.io'
 
+OAUTH_CONSUMER_KEY = 'fillmeout'
+OAUTH_CONSUMER_SECRET = 'fillmeout'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
