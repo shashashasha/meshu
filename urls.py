@@ -14,6 +14,9 @@ urlpatterns = patterns('',
 	# robots.txt
 	(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /view/4e6f6e65*\nDisallow: /edit/4e6f6e65*", mimetype="text/plain")),
 
+	# yahoo oauth
+	(r'^qkJHhD86JB_vHk_U3ACp32TDIqXyHzV3Hlkcba0VaQ--\.html$', lambda r: HttpResponse("Hi Yahoo!", mimetype="text/plain")),
+
 	# Uncomment the admin/doc line below to enable admin documentation:
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
