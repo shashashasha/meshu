@@ -18,7 +18,13 @@
                     <br />
                     <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span> | <span>Shipped {{ order.ship_date }}</span> | <span>{{ order.coupon }}</span>
                     <br />
-                    <span class="instructions">{{ order.postcard_note }}</span>
+                    <span class="instructions">
+                        {% if status == 'RE' %}
+                        {{ order.special_instructions }}
+                        {% else %}
+                        {{ order.postcard_note }}
+                        {% endif %}
+                    </span>
                     <br />
                     
                     <br />
