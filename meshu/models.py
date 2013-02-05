@@ -115,6 +115,7 @@ class Order(models.Model):
 		(u'RE', u'Received from Fabricator'), # 
 		(u'PA', u'Packaged'), # 
 		(u'SH', u'Shipped'),
+		(u'CA', u'Canceled'),
 	)
 	date_created = models.DateTimeField('date created', auto_now_add=True)	
 	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='OR')
