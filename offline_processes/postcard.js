@@ -31,7 +31,7 @@ var base = "http://meshu.io",
 	backURL  = base + "/orders/processing/postcard/back/{id}/",
 
 	// saving images
-	directory = "/Users/sha/Dropbox/Meshu/raw_postcards/";
+	directory = "/Users/binx/Dropbox/Meshu/raw_postcards/";
 
 // order id
 id = phantom.args[0];
@@ -94,7 +94,7 @@ front.open(frontURL.replace('{id}', id), function (status) {
 		});
 	} else if (phantom.args[1] == 'zoomin') {
 		front.evaluate(function() {	
-			meshu.map().map.zoomBy(1);
+			meshu.map().map.zoomBy(.75);
 			meshu.mesh().refresh();
 		});
 	}
