@@ -51,8 +51,8 @@ def view_orders(request):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
-	# get all orders that haven't been shipped
-	orders = Order.objects.exclude(status='SH')
+	# get all orders that haven't been shipped or canceled
+	orders = Order.objects.exclude(status='SH').exclude(status='CA')
 
 	return render_to_response('meshu/processing/orders.html', {
 			'orders': orders
@@ -62,7 +62,7 @@ def view_orders_status(request, view_status):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))
 
-	# get all orders that have been shipped
+	# get all orders that match view_status
 	orders = Order.objects.filter(status=view_status)
 
 	return render_to_response('meshu/processing/shipped.html', {
@@ -80,6 +80,9 @@ def view_orders_received(request):
 
 def view_orders_sent(request):
 	return view_orders_status(request, 'SE')
+
+def view_orders_canceled(request):
+	return view_orders_status(request, 'CA')
 	
 	
 def processing_order_update_status(request, order_id):

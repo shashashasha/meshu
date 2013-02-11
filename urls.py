@@ -164,6 +164,7 @@ urlpatterns += patterns('meshu.pipeline',
 	url(r'^orders/shipped', 'view_orders_shipped'),
 	url(r'^orders/received', 'view_orders_received'),
 	url(r'^orders/sent', 'view_orders_sent'),
+	url(r'^orders/canceled', 'view_orders_canceled'),
 	
 	url(r'^orders/addresses', 'view_addresses'),
 	url(r'^orders/notes', 'view_notes'),
