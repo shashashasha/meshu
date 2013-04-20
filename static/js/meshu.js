@@ -99,6 +99,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
                     switch (mesh.name) {
                         case 'facet':
+                        case 'print':
                             mesh.add(first.offsetlat, first.offsetlon, input);
                             self.updateBounds();
 

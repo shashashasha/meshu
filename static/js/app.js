@@ -9,6 +9,9 @@ $(function() {
 		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
 							$("body").hasClass("radial") ? 'radial' : null;
 
+		if ($("body").hasClass("print"))
+			currentRenderer = "print";
+
 	var catalog = sb.catalog(currentRenderer, promotion);
 
 	// create a stripe payment object

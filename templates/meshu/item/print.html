@@ -1,0 +1,64 @@
+{% extends "meshu/item/base_item.html" %}
+
+{% block title %}Meshu - Make Your Own{% endblock %}
+
+{% block page_type %}edit{% endblock page_type %}
+
+{% block body_class %}print{% endblock body_class %}
+
+{% block page_title %}Facet{% endblock %}
+
+{% block tooltips %}
+<div class="tooltip top" style="top: 100px; left: 20px;">
+    <span>Start by searching for an address or city</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="top: 280px; right: 175px;">
+    <span>Or add points by clicking on the map</span>
+    <b class="notch"></b>
+</div>
+<div class="tooltip" style="bottom: 95px; left: 20px;">
+    <span>You can also use your checkins!</span>
+    <b class="notch"></b>
+</div>
+{% endblock %}
+
+{% block goback %}
+    <div class="nav back">back</div>
+{% endblock %}
+{% block finish %}
+    <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
+    <div id="finish-button" class="nav next start-order">Continue</div>
+{% endblock %}
+
+{% block products %}
+    <div class="wrapper" id="wrapper-earrings">
+        <div class="next active">
+            <svg id="preview-earrings" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Earrings</p>
+        <p class="note" id="range-earrings">$68-145</p>
+    </div>
+    <div class="wrapper" id="wrapper-pendant">
+        <div class="next active">
+            <svg id="preview-pendant" width="170" height="160"></svg>
+        </div>
+        <p>Pendant Necklace</p>
+        <p class="note" id="range-pendant">$68-125</p>
+    </div>
+    <div class="wrapper" id="wrapper-necklace">
+        <div class="next active">
+            <svg id="preview-necklace" width="170" height="160"></svg>
+        </div>
+        <p>Large Necklace</p>
+        <p class="note" id="range-necklace">$75-140</p>
+    </div>
+    <div class="wrapper" id="wrapper-cufflinks">
+        <div style="border:5px solid white">
+            <svg id="preview-cufflinks" width="170" height="160"></svg>
+        </div>
+        <p>Pair of Cufflinks</p>
+        <!-- <p class="note" id="range-cufflinks">$145</p> -->
+        <p class="note" style="width:160px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p>
+    </div>
+{% endblock %}

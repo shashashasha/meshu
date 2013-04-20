@@ -105,6 +105,9 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/radial', direct_to_template, {
 		'template': 'meshu/item/radial.html'
 	}),
+	url(r'^make/print', direct_to_template, {
+		'template': 'meshu/item/print.html'
+	}),
 
 	# root way to begin making a meshu
 	url(r'^make/', direct_to_template, {

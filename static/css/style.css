@@ -842,6 +842,9 @@ body.ie .frame div {
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
 }
+.print .map .layer {
+  opacity: .1;
+}
 .render {
   height: 100%;
   width: 100%;
@@ -1665,11 +1668,20 @@ path {
 .roadtrip .straight {
   stroke-opacity: .5;
 }
+.print path {
+  stroke-width: 1;
+}
+.print path.air {
+  stroke-dasharray: 3 3;
+}
 circle {
   fill: #ff3fb4;
   fill-opacity: 0;
 }
 .roadtrip circle {
+  fill-opacity: 1;
+}
+.print circle {
   fill-opacity: 1;
 }
 .circleFrame {

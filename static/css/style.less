@@ -875,6 +875,9 @@ body.ie .frame div {
     opacity: 0;
     .transition(opacity);
 }
+.print .map .layer {
+    opacity: .1;
+}
 
 .render {
     height: 100%;
@@ -1641,12 +1644,21 @@ path {
 .roadtrip .straight {
     stroke-opacity: .5;
 }
+.print path {
+    stroke-width: 1;
+}
+.print path.air {
+    stroke-dasharray: 3 3;
+}
 
 circle {
     fill: @pink;
     fill-opacity: 0;
 }
 .roadtrip circle {
+    fill-opacity: 1;
+}
+.print circle {
     fill-opacity: 1;
 }
 .circleFrame {
