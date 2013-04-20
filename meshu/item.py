@@ -1,5 +1,7 @@
 from meshu.views import *
 
+import urllib2, urllib
+
 #
 # Views for Items
 #
