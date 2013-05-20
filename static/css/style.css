@@ -450,6 +450,8 @@ body.win #login-form ul {
   border-bottom: 1px dashed #666;
   box-sizing: border-box;
   position: relative;
+  padding: 20px;
+  min-height: 560px;
 }
 .inner-content {
   padding: 0 20px;
@@ -863,9 +865,21 @@ body.ie .frame div {
     left: 221px;
     top: 257px;
 }*/
+.half,
+.two-third,
+.one-third {
+  float: left;
+  position: relative;
+}
 .half {
   width: 50%;
-  float: left;
+}
+.two-third {
+  width: 626px;
+  margin-right: 20px;
+}
+.one-third {
+  width: 313px;
 }
 .color-img {
   position: absolute;
@@ -893,9 +907,9 @@ body.ie .frame div {
     float: right;
 }*/
 #rotate {
-  width: 200px;
-  height: 190px;
-  margin-top: 15px;
+  width: 313px;
+  height: 297px;
+  background: #eee;
 }
 .radial #rotate-help {
   display: none;
@@ -928,16 +942,10 @@ body.ie .frame div {
 body.firefox.win #rotate-help .border-notch {
   left: -12px;
 }
-#product,
-#materials,
-#account,
-#checkout,
-#review,
-#view,
-#display {
-  padding: 20px;
-  min-height: 560px;
-}
+/*#product, #materials, #account, #checkout, #review, #view, #display {
+    padding: 20px;
+    min-height: 560px;
+}*/
 /*#product {
     right: 400px;
     .transition(right);
@@ -1259,8 +1267,9 @@ body.ie8 .city-input {
   clear: both;
 }
 #postcard-note-form {
-  width: 352px;
+  width: 100%;
   margin-top: 5px;
+  height: 70px;
 }
 .firefox #postcard-note {
   height: 60px;
@@ -1362,7 +1371,7 @@ body.ie8 .city-input {
 .ready .make-wrapper {
   margin-top: 0;
 }
-.make-wrapper h2 {
+.section h2 {
   margin: 20px 0 5px 0;
 }
 /*.ready .make-wrapper h2 {
@@ -1391,13 +1400,20 @@ body.ie8 .city-input {
 #object-list li.selected span {
   display: inline;
 }
+#material-list {
+  margin: 0 -10px;
+}
 #material-list li {
   cursor: pointer;
   font-size: 22px;
-  margin: 2px -4px;
   border: 2px solid white;
-  padding: 4px;
+  padding: 6px;
   color: #808080;
+  width: 33.3%;
+  float: left;
+  height: 170px;
+  margin: 0 0 10px 0;
+  box-sizing: border-box;
 }
 #material-list li:hover {
   border: 2px solid #808080;
@@ -1409,6 +1425,12 @@ body.ie8 .city-input {
 }
 #material-list li .price {
   float: right;
+}
+#material-list .img {
+  width: 100%;
+  height: 120px;
+  background-color: #eee;
+  margin-bottom: 7px;
 }
 #review h2 {
   margin: 15px 0 5px;

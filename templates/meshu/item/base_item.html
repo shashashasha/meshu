@@ -60,6 +60,7 @@
                             <svg id="preview-earrings" width="170" height="160"></svg>
                         </div>
                         <p>Pair of Earrings</p>
+                        <p class="note">maximum side-length: 2.5in (6cm)</p>
                         <p class="note" id="range-earrings">$75-150</p>
                     </div>
                     <div class="wrapper" id="wrapper-pendant">
@@ -67,6 +68,7 @@
                             <svg id="preview-pendant" width="170" height="160"></svg>
                         </div>
                         <p>Pendant Necklace</p>
+                        <p class="note">maximum side-length: 1.5in (3.5 cm)</p>
                         <p class="note" id="range-pendant">$75-130</p>
                     </div>
                     <div class="wrapper" id="wrapper-necklace">
@@ -74,6 +76,7 @@
                             <svg id="preview-necklace" width="170" height="160"></svg>
                         </div>
                         <p>Large Necklace</p>
+                        <p class="note">maximum side-length: 3.0in (7.5cm)</p>
                         <p class="note" id="range-necklace">$80-150</p>
                     </div>
                     <div class="wrapper" id="wrapper-cufflinks">
@@ -106,59 +109,86 @@
             <div class="make-wrapper">
 
                 {% block materials %}
-                    <div id="make-earrings" class="make-option">
+                    <!-- <div id="make-earrings" class="make-option">
                         <h2>Pair of Earrings</h2>
-                        <p>Maximum sidelength: 2.5" (6cm)</p>
                     </div>
                     <div id="make-pendant" class="make-option">
                         <h2>Pendant Necklace</h2>
-                        <p>Maximum sidelength: 1.5"(3.5cm)</p>
                     </div>
                     <div id="make-necklace" class="make-option">
                         <h2>Large Necklace</h2>
-                        <p>Maximum sidelength: 3" (7.5cm)</p>
-                    </div>
+                    </div> -->
                     <!-- <div id="make-cufflinks" class="make-option">
                         <h2>Pair of Cufflinks</h2>
                         <p>Maximum sidelength: 1" (3cm)</p>
                     </div> -->
                     <!-- <p class="note">For custom orders, please <a href="/about/" target="_blank">contact us</a>.</p> -->
-                    <div class="half">
-                        <svg id="rotate"></svg>
-                        <div id="rotate-help">
-                            <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
-                            <b class="border-notch notch"></b>
-                            <b class="notch"></b>
-                        </div>
-                    </div>
                 {% endblock %}
 
-                <div class="half">
-                    <!-- <h2>Material</h2> -->
-                    <ul id="material-list">
-                        <li id="bamboo" class="material-option">Bamboo<span class="price">$80</span></li>
-                        <li id="acrylic" class="material-option">Black Acrylic<span class="price">$85</span></li>
-                        <li id="acrylic" class="material-option">White Acrylic<span class="price">$85</span></li>
-                        <li id="nylon" class="material-option">Black Nylon<span class="price">$90</span></li>
-                        <li id="nylon" class="material-option">White Nylon<span class="price">$90</span></li>
-                        <!-- <li id="stainless" class="material-option">Stainless Steel</li>
-                        <li id="silver" class="material-option">Silver, 3D-Printed</li> -->
-                    </ul>
-                        <!-- <h2>Color</h2>
-                        <ul id="color-list" class="option-list">
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                        </ul> -->
-                    <div id="total">
-                        <span id="total-cost">$50.00</span>
-                        <h2>Subtotal</h2>
-                        <div id="checkout-button" class="nav next active">Checkout</div>
-                    </div>
-                </div>
+                <h2>Material</h2>
+                <ul id="material-list">
+                    <li id="bamboo" class="material-option">
+                        <div class="img"></div>
+                        Bamboo<span class="price">$80</span>
+                    </li>
+                    <li id="acrylic" class="material-option">
+                        <div class="img"></div>
+                        Black Acrylic<span class="price">$85</span>
+                    </li>
+                    <li id="acrylic" class="material-option">
+                        <div class="img"></div>
+                        White Acrylic<span class="price">$85</span>
+                    </li>
+                    <li id="nylon" class="material-option">
+                        <div class="img"></div>
+                        Black Nylon<span class="price">$90</span>
+                    </li>
+                    <li id="nylon" class="material-option">
+                        <div class="img"></div>
+                        White Nylon<span class="price">$90</span>
+                    </li>
+                    <!-- <li id="stainless" class="material-option">Stainless Steel</li> -->
+                    <li id="silver" class="material-option">
+                        <div class="img"></div>
+                        For silver, plz email
+                    </li>
+                </ul>
+                    <!-- <h2>Color</h2>
+                    <ul id="color-list" class="option-list">
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                    </ul> -->
+                <!-- <div id="total">
+                    <span id="total-cost">$50.00</span>
+                    <h2>Subtotal</h2>
+                    <div id="checkout-button" class="nav next active">Checkout</div>
+                </div> -->
             </div>
         </div>
     {% endblock %}
+
+    <div id="add-ons" class="section" style="height:300px">
+        <h2>Finishing Touches:</h2>
+        <div class="two-third">
+            <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%">
+            <div class="postcard-form">
+                <h2 class="review-header">Postcard Note:</h2>
+                <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
+                <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
+            </div>
+        </div>
+        <div class="one-third">
+            <svg id="rotate"></svg>
+            <!-- <div id="rotate-help">
+                <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+                <b class="border-notch notch"></b>
+                <b class="notch"></b>
+            </div> -->
+            <h2 class="review-header">Meshu Rotation:</h2>
+            <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+        </div>
+    </div>
 
     <!-- <div id="account" class="account section">
         <div class="back button">back</div>
@@ -556,12 +586,6 @@
                 <div class="review-order-block">
                     <h2 class="review-header">Payment:</h2>
                     <p id="review-payment"></p>
-                </div>
-
-                <div class="postcard-form">
-                    <h2 class="review-header">Postcard Note:</h2>
-                    <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
-                    <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
                 </div>
 
                 <div class="coupon">
