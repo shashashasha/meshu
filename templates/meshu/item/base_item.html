@@ -25,7 +25,7 @@
     {% endblock %}
 
     {% block edit %}
-        <div id="edit">
+        <div id="edit" class="section">
             <div id="search">
                 <h2>{% block page_title %}{% endblock %}</h2>
                 <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
@@ -48,7 +48,7 @@
     {% endblock %}
 
     {% block object %}
-        <div id="product">
+        <div id="product" class="section">
             <div class="nav back">edit meshu</div>
             <div id="save-and-view" class="button nav">save meshu and exit</div>
             <div class="make-wrapper">
@@ -99,7 +99,7 @@
     {% endblock %}
 
     {% block make %}
-        <div id="materials">
+        <div id="materials" class="section">
             {% block goback %}
             {% endblock %}
 
@@ -112,55 +112,55 @@
                     </div>
                     <div id="make-pendant" class="make-option">
                         <h2>Pendant Necklace</h2>
-                        <p>Maximum sidelength: 1.25"(3.5cm)</p>
+                        <p>Maximum sidelength: 1.5"(3.5cm)</p>
                     </div>
                     <div id="make-necklace" class="make-option">
                         <h2>Large Necklace</h2>
                         <p>Maximum sidelength: 3" (7.5cm)</p>
                     </div>
-                    <div id="make-cufflinks" class="make-option">
+                    <!-- <div id="make-cufflinks" class="make-option">
                         <h2>Pair of Cufflinks</h2>
                         <p>Maximum sidelength: 1" (3cm)</p>
-                    </div>
-                    <p class="note">For custom orders, please <a href="/about/" target="_blank">contact us</a>.</p>
-                    
-                    <svg id="rotate">
-                    </svg>
-                    <div id="rotate-help">
-                        <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
-                        <b class="border-notch notch"></b>
-                        <b class="notch"></b>
+                    </div> -->
+                    <!-- <p class="note">For custom orders, please <a href="/about/" target="_blank">contact us</a>.</p> -->
+                    <div class="half">
+                        <svg id="rotate"></svg>
+                        <div id="rotate-help">
+                            <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+                            <b class="border-notch notch"></b>
+                            <b class="notch"></b>
+                        </div>
                     </div>
                 {% endblock %}
 
-                <div class="options left">
-                    <h2>Material</h2>
-                    <ul id="material-list" class="option-list">
-                        <li id="bamboo" class="material-option">Bamboo, Lasercut</li>
-                        <li id="acrylic" class="material-option">Acrylic, Lasercut</li>
-                        <li id="nylon" class="material-option">Nylon, 3D-Printed</li>
-                        <li id="stainless" class="material-option">Stainless Steel</li>
-                        <li id="silver" class="material-option">Silver, 3D-Printed</li>
+                <div class="half">
+                    <!-- <h2>Material</h2> -->
+                    <ul id="material-list">
+                        <li id="bamboo" class="material-option">Bamboo<span class="price">$80</span></li>
+                        <li id="acrylic" class="material-option">Black Acrylic<span class="price">$85</span></li>
+                        <li id="acrylic" class="material-option">White Acrylic<span class="price">$85</span></li>
+                        <li id="nylon" class="material-option">Black Nylon<span class="price">$90</span></li>
+                        <li id="nylon" class="material-option">White Nylon<span class="price">$90</span></li>
+                        <!-- <li id="stainless" class="material-option">Stainless Steel</li>
+                        <li id="silver" class="material-option">Silver, 3D-Printed</li> -->
                     </ul>
-                </div>
-                <div class="options right">
-                    <h2>Color</h2>
-                    <ul id="color-list" class="option-list">
-                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                    </ul>
-                </div>
-                <div id="total">
-                    <span id="total-cost">$50.00</span>
-                    <h2>Subtotal</h2>
-                    <div id="checkout-button" class="nav next active">Checkout</div>
+                        <!-- <h2>Color</h2>
+                        <ul id="color-list" class="option-list">
+                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        </ul> -->
+                    <div id="total">
+                        <span id="total-cost">$50.00</span>
+                        <h2>Subtotal</h2>
+                        <div id="checkout-button" class="nav next active">Checkout</div>
+                    </div>
                 </div>
             </div>
         </div>
     {% endblock %}
 
-    <div id="account" class="account">
+    <!-- <div id="account" class="account section">
         <div class="back button">back</div>
         <div class="make-wrapper">
             <h2>Please log in to continue</h2>
@@ -211,10 +211,10 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
     {% block checkout %}
-        <div id="checkout" class="domestic">
+        <div id="checkout" class="domestic section">
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
                 <h2>Shipping</h2>
@@ -239,6 +239,7 @@
                         <input type="hidden" id="postcard-note" name="postcard_note"/>
                         <input type="hidden" id="coupon" name="coupon"/>
                     </div>
+                <div class="half">
                     <div class="form-row ship-row">
                         <label>Name</label>
                         <input type="text" id="ship-name" class="required right" name="shipping_name" value="" />
@@ -519,6 +520,8 @@
                     </div>
                     <p class="note domestic">Please allow 3-4 weeks for acrylic and bamboo orders,<br />and 5-6 weeks for nylon or silver.</p>
                     <p class="note international">Please allow 4-5 weeks for acrylic and bamboo orders,<br />and 6-7 weeks for nylon or silver.</p>
+                </div>
+                <div class="half">
                     <h2>Payment</h2>
                         <div class="form-row">
                             <label>Card Number</label>
@@ -536,10 +539,11 @@
                         </div>
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
                     <input class="nav active" type="submit" id="review-button" value="Review Your Order">
+                </div>
                 </form>
             </div>
         </div>
-        <div id="review">
+        <div id="review" class="section">
             <div class="nav back">edit information</div>
             <div class="make-wrapper">
                 <h2>Your Order</h2>

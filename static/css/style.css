@@ -445,6 +445,12 @@ body.win #login-form ul {
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
 }
+#content .section {
+  width: 100%;
+  border-bottom: 1px dashed #666;
+  box-sizing: border-box;
+  position: relative;
+}
 .inner-content {
   padding: 0 20px;
 }
@@ -485,30 +491,16 @@ body.win #login-form ul {
 }
 #edit {
   padding: 20px;
-  width: 360px;
-  min-height: 560px;
-  position: absolute;
-  top: 0;
+  height: 600px;
 }
-.edit #edit {
-  left: 0;
-  transition: left 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: left 0.6s;
-  -o-transition: left 0.6s;
+/*.edit #edit {
+    left: 0;
+    .transition(left);
 }
-.make #edit,
-.checkout #edit,
-.view #edit,
-.readymade #edit {
-  left: -400px;
-  transition: left 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: left 0.6s;
-  -o-transition: left 0.6s;
-}
+.make #edit, .checkout #edit, .view #edit, .readymade #edit {
+    left: -400px;
+    .transition(left);
+}*/
 #search h2,
 #places h2 {
   margin: 0 0 5px;
@@ -749,13 +741,11 @@ body.firefox .place .place-text {
   height: 600px;
   position: absolute;
   z-index: 1;
-  right: 400px;
+  right: 0px;
   border-right: 1px solid #e6e6e6;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
+  margin: -1px;
+  /*.transition(right);*/
 
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
 }
 body.ie .frame div {
   overflow: hidden;
@@ -764,15 +754,11 @@ body.ie .frame div {
   width: 1000px;
   right: 0;
 }
-.edit .frame {
-  right: 0;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-  border-left: 1px solid #e6e6e6;
-}
+/*.edit .frame {
+    right: 0;
+    .transition(right);
+    border-left: 1px solid @borderGrey;
+}*/
 #attribution {
   position: absolute;
   bottom: 0;
@@ -866,16 +852,20 @@ body.ie .frame div {
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
 }
-.options {
-  position: absolute;
-  width: 139px;
+/*.options{
+    position: absolute;
+    width: 139px;
 }
-.options.left {
-  top: 255px;
+.options.left{
+    top: 255px;
 }
-.options.right {
-  left: 221px;
-  top: 257px;
+.options.right{
+    left: 221px;
+    top: 257px;
+}*/
+.half {
+  width: 50%;
+  float: left;
 }
 .color-img {
   position: absolute;
@@ -889,20 +879,19 @@ body.ie .frame div {
 .color-img img {
   border: 1px solid #e6e6e6;
 }
-.ready .options.left,
-.ready .options.right {
-  position: relative;
-  top: auto;
-  left: auto;
-  margin: 20px 0 40px;
-  display: inline-block;
+/*.ready .options.left, .ready .options.right {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 20px 0 40px;
+    display: inline-block;
 }
 .ready .options.left {
-  float: left;
+    float: left;
 }
 .ready .options.right {
-  float: right;
-}
+    float: right;
+}*/
 #rotate {
   width: 200px;
   height: 190px;
@@ -947,60 +936,64 @@ body.firefox.win #rotate-help .border-notch {
 #view,
 #display {
   padding: 20px;
-  width: 360px;
   min-height: 560px;
-  position: absolute;
-  top: 0;
 }
-#product {
-  right: 400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+/*#product {
+    right: 400px;
+    .transition(right);
 }
-.edit #product,
-.view #product {
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+.edit #product, .view #product {
+    right: -400px;
+    .transition(right);
 }
 .product #product {
-  right: 0;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-}
+    right: 0;
+    .transition(right);
+}*/
 #product-preview {
-  margin-top: 5px;
+  margin-top: 25px;
 }
 .wrapper .next {
   border: 5px solid white;
   cursor: pointer;
+  width: 300px;
+  margin: 0 auto;
 }
 .wrapper .next:hover {
   border-color: #ff3fb4;
 }
 #product-preview .wrapper {
   margin-bottom: 10px;
+  width: 313px;
+  height: 380px;
 }
 #product-preview .wrapper:nth-child(odd) {
   margin-right: 10px;
-  margin-left: -5px;
   float: left;
 }
 #product-preview .wrapper:nth-child(even) {
-  margin-right: -5px;
   float: right;
 }
 #product-preview p {
   margin-left: 5px;
+  font-size: 22px;
+}
+#product-preview p.note {
+  font-size: 18px;
+  line-height: 20px;
+}
+#product-preview p.cufflinks {
+  text-align: center;
+  margin-top: 40px;
+  border: 1px solid #8f8f8f;
+  width: 270px;
+  margin: 0 auto;
+  padding: 1px;
+  cursor: pointer;
+  font-size: 12px;
+}
+#product-preview p.cufflinks:hover {
+  border-color: #000;
 }
 #save-and-view {
   position: absolute;
@@ -1083,35 +1076,18 @@ body.firefox.win #rotate-help .border-notch {
   top: 5px;
   left: 7px;
 }
-.edit #materials,
-.view #materials,
-.product #materials {
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+/*.edit #materials, .view #materials, .product #materials {
+    right: -400px;
+    .transition(right);
 }
-.make #materials,
-.readymade #materials {
-  right: 0px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+.make #materials, .readymade #materials{
+    right: 0px;
+    .transition(right);
 }
-.account #materials,
-.checkout #materials,
-.review #materials {
-  right: 400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-}
+.account #materials, .checkout #materials, .review #materials {
+    right: 400px;
+    .transition(right);
+}*/
 .readymade #readymade-desc {
   color: #808080;
 }
@@ -1121,39 +1097,22 @@ body.firefox.win #rotate-help .border-notch {
 .readymade #readymade-type {
   color: #ff3fb4;
 }
-#account {
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+/*#account {
+    right: -400px;
+    .transition(right);
 }
 .account #account {
-  right: 0px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+    right: 0px;
+    .transition(right);
 }
-.checkout #account,
-.review #account {
-  right: 400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+.checkout #account, .review #account {
+    right: 400px;
+    .transition(right);
 }
 .make #account {
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-}
+    right: -400px;
+    .transition(right);
+}*/
 #account input {
   float: right;
   width: 260px;
@@ -1173,21 +1132,14 @@ body.firefox.win #rotate-help .border-notch {
 #checkout {
   height: 560px;
   overflow-y: auto;
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
+  /*    right: -400px;
+    .transition(right);*/
 
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
 }
-.checkout #checkout {
-  right: 0;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-}
+/*.checkout #checkout {
+    right: 0;
+    .transition(right);
+}*/
 #shipping-destination {
   height: 28px;
   margin-bottom: 5px;
@@ -1274,30 +1226,18 @@ body.ie8 .city-input {
 #checkout input.error {
   border-color: #ff3fb4;
 }
-#review {
-  right: -400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+/*#review {
+    right: -400px;
+    .transition(right);
 }
 .review #checkout {
-  right: 400px;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
+    right: 400px;
+    .transition(right);
 }
 .review #review {
-  right: 0;
-  transition: right 0.6s;
-  /*-moz-transition: @property @time;*/
-
-  -webkit-transition: right 0.6s;
-  -o-transition: right 0.6s;
-}
+    right: 0;
+    .transition(right);
+}*/
 .review-header {
   font-size: 18px;
 }
@@ -1416,7 +1356,7 @@ body.ie8 .city-input {
   overflow-y: auto;
 }
 .make-wrapper {
-  margin-top: 40px;
+  margin-top: 50px;
   position: relative;
 }
 .ready .make-wrapper {
@@ -1425,26 +1365,23 @@ body.ie8 .city-input {
 .make-wrapper h2 {
   margin: 20px 0 5px 0;
 }
-.ready .make-wrapper h2 {
-  margin-top: 0;
+/*.ready .make-wrapper h2 {
+    margin-top: 0;
 }
 .make-wrapper li {
-  color: #808080;
-}
-.make-wrapper li:hover {
-  color: #ff3fb4;
-}
-.make-wrapper li.selected {
-  color: #ff3fb4;
-}
+    color: @grey;
+
+    .hoverColor(black);
+
+    &.selected {
+        color: @pink;
+    }
+}*/
 .make-option {
   display: none;
 }
 .make-option p {
   color: #808080;
-}
-.option-list li {
-  cursor: pointer;
 }
 #object-list span {
   float: right;
@@ -1454,17 +1391,24 @@ body.ie8 .city-input {
 #object-list li.selected span {
   display: inline;
 }
+#material-list li {
+  cursor: pointer;
+  font-size: 22px;
+  margin: 2px -4px;
+  border: 2px solid white;
+  padding: 4px;
+  color: #808080;
+}
+#material-list li:hover {
+  border: 2px solid #808080;
+}
+#material-list li.selected,
+#material-list li.selected:hover {
+  border: 2px solid #ff3fb4;
+  color: #ff3fb4;
+}
 #material-list li .price {
   float: right;
-  color: black;
-  display: none;
-}
-#material-list li:hover .price {
-  display: inline;
-}
-#material-list li.selected .price {
-  display: inline;
-  color: #808080;
 }
 #review h2 {
   margin: 15px 0 5px;
@@ -1499,10 +1443,8 @@ body.ie8 .city-input {
   display: block;
   width: 100%;
   border-top: 1px solid black;
-  margin-top: 40px;
+  margin-top: 20px;
   padding-top: 10px;
-  position: absolute;
-  top: 370px;
 }
 #total h2 {
   margin-top: 0;
@@ -1583,6 +1525,8 @@ body.ie8 .city-input {
   right: 20px;
 }
 #finish-button {
+  right: auto;
+  left: 280px;
   font-size: 20px;
   opacity: 0;
   transition: opacity 0.6s;
@@ -1626,6 +1570,9 @@ body.ie8 .city-input {
   position: relative;
   float: right;
   font-size: 20px;
+}
+#checkout-button {
+  margin-top: 40px;
 }
 #review-button {
   margin-top: 20px;

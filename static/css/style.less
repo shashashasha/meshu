@@ -520,6 +520,12 @@ body.win #login-form ul {
     opacity: 1;
     .transition(opacity);
 }
+#content .section {
+    width: 100%;
+    border-bottom: 1px dashed #666;
+    box-sizing: border-box;
+    position: relative;
+}
 
 .inner-content {
     padding: 0 20px;
@@ -561,19 +567,16 @@ body.win #login-form ul {
 
 #edit {
     padding: 20px;
-    width: 360px;
-    min-height: 560px;
-    position: absolute;
-    top: 0;
+    height: 600px;
 }
-.edit #edit {
+/*.edit #edit {
     left: 0;
     .transition(left);
 }
 .make #edit, .checkout #edit, .view #edit, .readymade #edit {
     left: -400px;
     .transition(left);
-}
+}*/
 
 #search h2, #places h2 {
     margin: 0 0 5px;
@@ -688,7 +691,7 @@ body.win .notch {
     display: none;
     white-space: nowrap;
 }
-// heh.
+
 .top .notch {
     border-top: 0;
     border-bottom: 6px solid @pink;
@@ -813,9 +816,10 @@ body.firefox .place .place-text {
     height: 600px;
     position: absolute;
     z-index: 1;
-    right: 400px;
+    right: 0px;
     border-right: 1px solid @borderGrey;
-    .transition(right);
+    margin: -1px;
+    /*.transition(right);*/
 }
 body.ie .frame div {
     overflow: hidden;
@@ -825,11 +829,11 @@ body.ie .frame div {
     right: 0;
 }
 
-.edit .frame {
+/*.edit .frame {
     right: 0;
     .transition(right);
     border-left: 1px solid @borderGrey;
-}
+}*/
 
 #attribution {
     position: absolute;
@@ -891,7 +895,7 @@ body.ie .frame div {
     .transition(opacity);
 }
 
-.options{
+/*.options{
     position: absolute;
     width: 139px;
 }
@@ -901,6 +905,10 @@ body.ie .frame div {
 .options.right{
     left: 221px;
     top: 257px;
+}*/
+.half {
+    width: 50%;
+    float: left;
 }
 .color-img {
     position: absolute;
@@ -914,7 +922,7 @@ body.ie .frame div {
 .color-img img {
     border: 1px solid @borderGrey;
 }
-.ready .options.left, .ready .options.right {
+/*.ready .options.left, .ready .options.right {
     position: relative;
     top: auto;
     left: auto;
@@ -926,7 +934,7 @@ body.ie .frame div {
 }
 .ready .options.right {
     float: right;
-}
+}*/
 #rotate {
     width: 200px;
     height: 190px;
@@ -967,13 +975,10 @@ body.firefox.win #rotate-help .border-notch {
 
 #product, #materials, #account, #checkout, #review, #view, #display {
     padding: 20px;
-    width: 360px;
     min-height: 560px;
-    position: absolute;
-    top: 0;
 }
 
-#product {
+/*#product {
     right: 400px;
     .transition(right);
 }
@@ -984,32 +989,52 @@ body.firefox.win #rotate-help .border-notch {
 .product #product {
     right: 0;
     .transition(right);
-}
+}*/
 #product-preview {
-    margin-top: 5px;
+    margin-top: 25px;
 }
 .wrapper .next {
     border: 5px solid white;
     cursor: pointer;
+    width: 300px;
+    margin: 0 auto;
     &:hover {    
         border-color: @pink;
     }
 }
 #product-preview .wrapper {
     margin-bottom: 10px;
+    width: 313px;
+    height: 380px;
 
     &:nth-child(odd) {
         margin-right: 10px;
-        margin-left: -5px;
         float: left;
     }
     &:nth-child(even) {
-        margin-right: -5px;
         float: right;
     }
 }
 #product-preview p {
     margin-left: 5px;
+    font-size: 22px;
+}
+#product-preview p.note {
+    font-size: 18px;
+    line-height: 20px;
+}
+#product-preview p.cufflinks {
+    text-align: center;
+    margin-top: 40px;
+    border: 1px solid #8f8f8f;
+    width: 270px;
+    margin: 0 auto;
+    padding: 1px;
+    cursor: pointer;
+    font-size: 12px;
+}
+#product-preview p.cufflinks:hover {
+    border-color: #000;
 }
 
 #save-and-view {
@@ -1091,7 +1116,7 @@ body.firefox.win #rotate-help .border-notch {
     left: 7px;
 }
 
-.edit #materials, .view #materials, .product #materials {
+/*.edit #materials, .view #materials, .product #materials {
     right: -400px;
     .transition(right);
 }
@@ -1102,7 +1127,7 @@ body.firefox.win #rotate-help .border-notch {
 .account #materials, .checkout #materials, .review #materials {
     right: 400px;
     .transition(right);
-}
+}*/
 .readymade #readymade-desc {
     color: @grey;
 }
@@ -1113,7 +1138,7 @@ body.firefox.win #rotate-help .border-notch {
     color: @pink;
 }
 
-#account {
+/*#account {
     right: -400px;
     .transition(right);
 }
@@ -1128,7 +1153,7 @@ body.firefox.win #rotate-help .border-notch {
 .make #account {
     right: -400px;
     .transition(right);
-}
+}*/
 
 #account input {
     float: right;
@@ -1150,13 +1175,13 @@ body.firefox.win #rotate-help .border-notch {
 #checkout {
     height: 560px;
     overflow-y: auto;
-    right: -400px;
-    .transition(right);
+/*    right: -400px;
+    .transition(right);*/
 }
-.checkout #checkout {
+/*.checkout #checkout {
     right: 0;
     .transition(right);
-}
+}*/
 
 #shipping-destination {
     height: 28px;
@@ -1175,6 +1200,7 @@ p.note {
 #checkout p.note {
     margin: 10px 0 0 0;
 }
+
 
 .form-row {
     min-height: 30px;
@@ -1257,7 +1283,7 @@ body.ie8 .city-input {
     border-color: @pink;
 }
 
-#review {
+/*#review {
     right: -400px;
     .transition(right);
 }
@@ -1268,7 +1294,7 @@ body.ie8 .city-input {
 .review #review {
     right: 0;
     .transition(right);
-}
+}*/
 .review-header {
     font-size: 18px;
 }
@@ -1386,7 +1412,7 @@ body.ie8 .city-input {
 }
 
 .make-wrapper {
-    margin-top: 40px;
+    margin-top: 50px;
     position: relative;
 }
 .ready .make-wrapper {
@@ -1395,7 +1421,7 @@ body.ie8 .city-input {
 .make-wrapper h2 {
     margin: 20px 0 5px 0;
 }
-.ready .make-wrapper h2 {
+/*.ready .make-wrapper h2 {
     margin-top: 0;
 }
 .make-wrapper li {
@@ -1406,17 +1432,13 @@ body.ie8 .city-input {
     &.selected {
         color: @pink;
     }
-}
+}*/
 
 .make-option {
     display: none;
 }
 .make-option p {
     color: @grey;
-}
-
-.option-list li {
-    cursor: pointer;
 }
 
 #object-list span {
@@ -1428,19 +1450,24 @@ body.ie8 .city-input {
 }
 
 #material-list {
+    li {
+        cursor: pointer;
+        font-size: 22px;
+        margin: 2px -4px;
+        border: 2px solid white;
+        padding: 4px;
+        color: @grey;
+    }
+    li:hover {
+        border: 2px solid @grey;
+    }
+    li.selected,
+    li.selected:hover {
+        border: 2px solid @pink;
+        color: @pink;
+    }
     li .price {
         float: right;
-        color: black;
-        display: none;
-    }
-
-    li:hover .price {
-        display: inline;
-    }
-
-    li.selected .price {
-        display: inline;
-        color: @grey;
     }
 } 
 
@@ -1484,10 +1511,8 @@ body.ie8 .city-input {
     display: block;
     width: 100%;
     border-top: 1px solid black;
-    margin-top: 40px;
+    margin-top: 20px;
     padding-top: 10px;
-    position: absolute;
-    top: 370px;
 
     h2 {
         margin-top: 0;
@@ -1569,6 +1594,8 @@ body.ie8 .city-input {
     right: 20px;
 }
 #finish-button {
+    right: auto;
+    left: 280px;
     font-size: 20px;
     opacity: 0;
     .transition(opacity);
@@ -1603,6 +1630,9 @@ body.ie8 .city-input {
     position: relative;
     float: right;
     font-size: 20px;
+}
+#checkout-button {
+    margin-top: 40px;
 }
 #review-button {
     margin-top: 20px;

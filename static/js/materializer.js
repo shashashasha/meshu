@@ -49,20 +49,20 @@ sb.materializer = function() {
 		product = p;
 		var materials = catalog.getMaterials(p);
 
-		self.materials.hide();
+		// self.materials.hide();
 
-		// reset the material
-		material = null;
+		// // reset the material
+		// material = null;
 
-		// loop through the material options
-		for (var i = 0; i < materials.length; i++) {
-			var current = materials[i];
-			if (!material) {
-				self.material(current);
-			}
+		// // loop through the material options
+		// for (var i = 0; i < materials.length; i++) {
+		// 	var current = materials[i];
+		// 	if (!material) {
+		// 		self.material(current);
+		// 	}
 
-			$("#" + current).show();
-		}
+		// 	$("#" + current).show();
+		// }
 
 		var type = display[product];
 		var capitalized = type.charAt(0).toUpperCase() + type.slice(1);

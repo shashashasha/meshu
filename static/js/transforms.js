@@ -1,9 +1,13 @@
 sb.transforms = {
 	"earrings": {
-		"product": { 
-			scale: .09, 
-			transform: {x: 830, y: 710}
-		},
+		// "product": { 
+		// 	scale: .09, 
+		// 	transform: {x: 830, y: 710}
+		// },
+		"product": {
+			scale: .15,
+			transform: {x: 900, y: 750}	
+		}, 
 		"preview": {
 			scale: .125,
 			transform: {x: 650, y: 540}	
@@ -14,9 +18,13 @@ sb.transforms = {
 		}
 	},
 	"pendant": {
-		"product": { 
-			scale: .045, 
-			transform: {x: 1570, y: 2200}
+		// "product": { 
+		// 	scale: .045, 
+		// 	transform: {x: 1570, y: 2200}
+		// },
+		"product": {
+			scale: .1, 
+			transform: {x: 1200, y: 1700}	
 		},
 		"preview": {
 			scale: .075, 
@@ -28,9 +36,13 @@ sb.transforms = {
 		}
 	},
 	"necklace": {
-		"product": { 
-			scale: .09, 
-			transform: {x: 650, y: 980}
+		// "product": { 
+		// 	scale: .09, 
+		// 	transform: {x: 650, y: 980}
+		// },
+		"product": {
+			scale: .175, 
+			transform: {x: 550, y: 850}	
 		},
 		"preview": {
 			scale: .125, 
