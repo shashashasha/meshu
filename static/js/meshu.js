@@ -11,6 +11,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 		mesh = sb.mesh[renderer](frame, map, width, height),
         cases = $("#cases");
 
+
     // need to make these controls optional....
     $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
 

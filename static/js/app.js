@@ -12,6 +12,7 @@ $(function() {
 		if ($("body").hasClass("print"))
 			currentRenderer = "print";
 
+
 	var catalog = sb.catalog(currentRenderer, promotion);
 
 	// create a stripe payment object
