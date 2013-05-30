@@ -167,7 +167,7 @@ class Order(models.Model):
 		elif self.material == 'acrylic':
 			return '3-4 weeks for acrylic'
 		elif self.material == 'bamboo':
-			return '2-3 weeks for bamboo'
+			return '3-4 weeks for bamboo'
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"
