@@ -35,8 +35,8 @@ import sha
 #
 
 # hashed codes
-codes = []
-amounts = []
+codes = ['a681d6d2007ec55cbb1943e4d08002412ea6c4ee']
+amounts = [.5]
 
 # util function
 def json_dump(json):
