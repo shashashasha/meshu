@@ -52,7 +52,7 @@
             <div class="nav back">edit meshu</div>
             <div id="save-and-view" class="button nav">save meshu and exit</div>
             <div class="make-wrapper">
-                <h2>Choose your piece:</h2>
+                <h2>Choose Your Piece</h2>
                 <div id="product-preview">
                     {% block products %}
                     <div class="wrapper" id="wrapper-earrings">
@@ -169,9 +169,9 @@
     {% endblock %}
 
     <div id="add-ons" class="section" style="height:300px">
-        <h2>Finishing Touches:</h2>
+        <h2>Finishing Touches</h2>
         <div class="two-third">
-            <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%">
+            <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%; height: 297px;">
             <div class="postcard-form">
                 <h2 class="review-header">Postcard Note:</h2>
                 <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
@@ -555,25 +555,26 @@
                     <h2>Payment</h2>
                         <div class="form-row">
                             <label>Card Number</label>
-                            <input type="text" style="width:141px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="" name="card_number"/>
+                            <input type="text" style="width:141px; margin-left: 15px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="" name="card_number"/>
                             <span class="right">
                                 <label>CVC</label>
-                                <input type="text" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="" name="card_cvc"/>
+                                <input type="text" style="margin-left: 15px" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="" name="card_cvc"/>
                             </span>
                         </div>
                         <div class="form-row">
                             <label>Expiration (MM/YYYY)</label>
-                            <input type="text" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="" name="card_month"/>
+                            <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="" name="card_month"/>
                             <span> / </span>
                             <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="" name="card_year" style="margin-left: 3px;"/>
                         </div>
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
-                    <input class="nav active" type="submit" id="review-button" value="Review Your Order">
-                    <h2>Email Address</h2>
+                    <h2 style="margin-top: 40px;">Email Address</h2>
                     <div class="form-row">
-                        <label>Contact Email:</label>
-                        <input type="text" style="width:141px;">
+                        <label>Contact Email</label>
+                        <input type="text" style="width:200px; margin-left: 15px;">
                     </div>
+                    <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
+                    <input class="nav active" type="submit" id="review-button" value="Review Your Order">
                 </div>
                 </form>
             </div>
@@ -603,7 +604,7 @@
                 </div>
                 <div id="review-total">
                     <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
-                    <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$4.00</span></h2>
+                    <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
                     <h2 id="total-price">Total: <span></span></h2>
                 </div>
                 <div id="submit-button" class="button" value="Submit Payment" tabindex="-1">Submit Payment</div>

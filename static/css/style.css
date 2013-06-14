@@ -1152,6 +1152,7 @@ body.firefox.win #rotate-help .border-notch {
   height: 28px;
   margin-bottom: 5px;
   border-bottom: 1px solid #e6e6e6;
+  margin-right: 60px;
 }
 p.note {
   color: #8f8f8f;
@@ -1165,6 +1166,7 @@ p.note {
 }
 .form-row {
   min-height: 30px;
+  width: 400px;
 }
 .form-row label {
   line-height: 30px;
@@ -1174,7 +1176,7 @@ p.note {
 }
 .ship-row .short-input {
   width: 130px;
-  margin-left: 60px;
+  margin-left: 100px;
 }
 .international .short-input {
   float: right;
@@ -1247,7 +1249,7 @@ body.ie8 .city-input {
     .transition(right);
 }*/
 .review-header {
-  font-size: 18px;
+  font-size: 22px;
 }
 #review p {
   color: #808080;
@@ -1597,7 +1599,7 @@ body.ie8 .city-input {
   margin-top: 40px;
 }
 #review-button {
-  margin-top: 20px;
+  margin-top: 60px;
   border: none;
 }
 #submit-button {
