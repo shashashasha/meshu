@@ -428,13 +428,40 @@ body.win #login-form ul {
 #footer a {
   color: #ff3fb4;
 }
+#crazy {
+  position: absolute;
+  left: -100px;
+  top: 275px;
+}
+#crazy .line {
+  border-left: 1px dashed #bbb;
+  position: absolute;
+  left: 37px;
+  z-index: -1;
+  height: 100%;
+}
+#crazy li {
+  font-size: 50px;
+  background-color: #bbb;
+  color: white;
+  border-radius: 100px;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  line-height: 75px;
+  margin: 0 0 475px;
+}
+#crazy li:last-child {
+  margin-bottom: 0;
+}
 #content {
   width: 1000px;
   margin: 0 auto 15px auto;
   border: 1px solid #e6e6e6;
   min-height: 600px;
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
+
   -webkit-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
@@ -1012,7 +1039,6 @@ body.firefox.win #rotate-help .border-notch {
 .social-media {
   clear: both;
   padding-top: 31px;
-  display: none;
 }
 .share-facebook,
 .share-twitter,

@@ -509,13 +509,40 @@ body.win #login-form ul {
     color: @pink;
 }
 
+#crazy {
+    position: absolute;
+    left: -100px;
+    top: 275px;
+}
+#crazy .line {
+    border-left: 1px dashed #bbb;
+    position: absolute;
+    left: 37px;
+    z-index: -1;
+    height: 100%;
+}
+#crazy li {
+    font-size: 50px;
+    background-color: #bbb;
+    color: white;
+    border-radius: 100px;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+    line-height: 75px;
+    margin: 0 0 475px;
+}
+#crazy li:last-child {
+    margin-bottom: 0;
+}
+
 #content {
     width: @pageWidth;
     margin: 0 auto 15px auto;
     border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
     .shadow();
     opacity: 1;
     .transition(opacity);
@@ -1059,7 +1086,6 @@ body.firefox.win #rotate-help .border-notch {
 .social-media {
     clear: both;
     padding-top: 31px;    
-    display: none;
 }
 .share-facebook, .share-twitter, .view .share-pinterest {
     position: relative;
