@@ -480,6 +480,9 @@ body.win #login-form ul {
   padding: 20px;
   min-height: 560px;
 }
+#content .section:last-child {
+  border-bottom: none;
+}
 .inner-content {
   padding: 0 20px;
 }
