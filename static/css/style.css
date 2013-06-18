@@ -1246,10 +1246,10 @@ body.ie8 .city-input {
 #checkout span.right {
   float: right;
 }
-#checkout.international .domestic {
+#shipping-form.international .domestic {
   display: none;
 }
-#checkout.domestic .international {
+#shipping-form.domestic .international {
   display: none;
 }
 #account label.error,
