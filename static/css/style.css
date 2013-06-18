@@ -428,13 +428,40 @@ body.win #login-form ul {
 #footer a {
   color: #ff3fb4;
 }
+#crazy {
+  position: absolute;
+  left: -100px;
+  top: 275px;
+}
+#crazy .line {
+  border-left: 1px dashed #bbb;
+  position: absolute;
+  left: 37px;
+  z-index: -1;
+  height: 100%;
+}
+#crazy li {
+  font-size: 50px;
+  background-color: #bbb;
+  color: white;
+  border-radius: 100px;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  line-height: 75px;
+  margin: 0 0 475px;
+}
+#crazy li:last-child {
+  margin-bottom: 0;
+}
 #content {
   width: 1000px;
   margin: 0 auto 15px auto;
   border: 1px solid #e6e6e6;
   min-height: 600px;
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
+
   -webkit-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
@@ -450,6 +477,11 @@ body.win #login-form ul {
   border-bottom: 1px dashed #666;
   box-sizing: border-box;
   position: relative;
+  padding: 20px;
+  min-height: 560px;
+}
+#content .section:last-child {
+  border-bottom: none;
 }
 .inner-content {
   padding: 0 20px;
@@ -688,6 +720,9 @@ body.firefox #place-title #input {
   padding: 1px 0;
   width: 308px;
 }
+.print .place {
+  width: auto;
+}
 .place input {
   color: gray;
   padding: 1px;
@@ -735,6 +770,16 @@ body.firefox .place .place-text {
 .title.active .place-delete,
 .title.active .place-edit {
   display: inline;
+}
+.place .mode span {
+  padding: 1px 5px 3px 5px;
+  background-color: #808080;
+  cursor: pointer;
+  color: white;
+  margin-right: 2px;
+}
+.place .mode span:hover {
+  background-color: #ff3fb4;
 }
 .frame {
   width: 600px;
@@ -863,9 +908,21 @@ body.ie .frame div {
     left: 221px;
     top: 257px;
 }*/
+.half,
+.two-third,
+.one-third {
+  float: left;
+  position: relative;
+}
 .half {
   width: 50%;
-  float: left;
+}
+.two-third {
+  width: 626px;
+  margin-right: 20px;
+}
+.one-third {
+  width: 313px;
 }
 .color-img {
   position: absolute;
@@ -893,9 +950,8 @@ body.ie .frame div {
     float: right;
 }*/
 #rotate {
-  width: 200px;
-  height: 190px;
-  margin-top: 15px;
+  width: 313px;
+  height: 297px;
 }
 .radial #rotate-help {
   display: none;
@@ -928,16 +984,10 @@ body.ie .frame div {
 body.firefox.win #rotate-help .border-notch {
   left: -12px;
 }
-#product,
-#materials,
-#account,
-#checkout,
-#review,
-#view,
-#display {
-  padding: 20px;
-  min-height: 560px;
-}
+/*#product, #materials, #account, #checkout, #review, #view, #display {
+    padding: 20px;
+    min-height: 560px;
+}*/
 /*#product {
     right: 400px;
     .transition(right);
@@ -954,12 +1004,15 @@ body.firefox.win #rotate-help .border-notch {
   margin-top: 25px;
 }
 .wrapper .next {
-  border: 5px solid white;
+  border: 2px solid white;
   cursor: pointer;
   width: 300px;
   margin: 0 auto;
 }
 .wrapper .next:hover {
+  border-color: #808080;
+}
+.wrapper.selected .next {
   border-color: #ff3fb4;
 }
 #product-preview .wrapper {
@@ -1004,7 +1057,6 @@ body.firefox.win #rotate-help .border-notch {
 .social-media {
   clear: both;
   padding-top: 31px;
-  display: none;
 }
 .share-facebook,
 .share-twitter,
@@ -1144,6 +1196,7 @@ body.firefox.win #rotate-help .border-notch {
   height: 28px;
   margin-bottom: 5px;
   border-bottom: 1px solid #e6e6e6;
+  margin-right: 60px;
 }
 p.note {
   color: #8f8f8f;
@@ -1157,6 +1210,7 @@ p.note {
 }
 .form-row {
   min-height: 30px;
+  width: 400px;
 }
 .form-row label {
   line-height: 30px;
@@ -1166,7 +1220,7 @@ p.note {
 }
 .ship-row .short-input {
   width: 130px;
-  margin-left: 60px;
+  margin-left: 100px;
 }
 .international .short-input {
   float: right;
@@ -1207,10 +1261,10 @@ body.ie8 .city-input {
 #checkout span.right {
   float: right;
 }
-#checkout.international .domestic {
+#shipping-form.international .domestic {
   display: none;
 }
-#checkout.domestic .international {
+#shipping-form.domestic .international {
   display: none;
 }
 #account label.error,
@@ -1239,7 +1293,7 @@ body.ie8 .city-input {
     .transition(right);
 }*/
 .review-header {
-  font-size: 18px;
+  font-size: 22px;
 }
 #review p {
   color: #808080;
@@ -1259,8 +1313,9 @@ body.ie8 .city-input {
   clear: both;
 }
 #postcard-note-form {
-  width: 352px;
+  width: 100%;
   margin-top: 5px;
+  height: 70px;
 }
 .firefox #postcard-note {
   height: 60px;
@@ -1362,8 +1417,8 @@ body.ie8 .city-input {
 .ready .make-wrapper {
   margin-top: 0;
 }
-.make-wrapper h2 {
-  margin: 20px 0 5px 0;
+.section h2 {
+  margin: 10px 0 5px 0;
 }
 /*.ready .make-wrapper h2 {
     margin-top: 0;
@@ -1391,13 +1446,20 @@ body.ie8 .city-input {
 #object-list li.selected span {
   display: inline;
 }
+#material-list {
+  margin: 0 -10px;
+}
 #material-list li {
   cursor: pointer;
   font-size: 22px;
-  margin: 2px -4px;
   border: 2px solid white;
-  padding: 4px;
+  padding: 6px;
   color: #808080;
+  width: 33.3%;
+  float: left;
+  height: 170px;
+  margin: 0 0 10px 0;
+  box-sizing: border-box;
 }
 #material-list li:hover {
   border: 2px solid #808080;
@@ -1409,6 +1471,12 @@ body.ie8 .city-input {
 }
 #material-list li .price {
   float: right;
+}
+#material-list .img {
+  width: 100%;
+  height: 120px;
+  background-color: #eee;
+  margin-bottom: 7px;
 }
 #review h2 {
   margin: 15px 0 5px;
@@ -1575,7 +1643,7 @@ body.ie8 .city-input {
   margin-top: 40px;
 }
 #review-button {
-  margin-top: 20px;
+  margin-top: 60px;
   border: none;
 }
 #submit-button {

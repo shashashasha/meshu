@@ -54,7 +54,7 @@ sb.mesh.print = function (frame, map, width, height) {
     var placeList = d3.select("#places");
     var placeTitle = placeList.select("#place-title").attr("class", "inactive");
         placeTitle.append("span").attr("class", "title-text");
-        placeTitle.append("span").attr("class", "title-edit").html("land");
+        placeTitle.append("span").attr("class", "title-edit").html("edit");
 
     var list = placeList.append("ul");
 
@@ -130,14 +130,14 @@ sb.mesh.print = function (frame, map, width, height) {
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
-                    lat: d.points[1],
-                    lon: d.points[0]
+                    lat: d[1],
+                    lon: d[0]
                 }).x;
             })
             .attr("cy", function(d) {
                 return map.l2p({
-                    lat: d.points[1],
-                    lon: d.points[0]
+                    lat: d[1],
+                    lon: d[0]
                 }).y;
             });
         var linePairs = [];
@@ -145,8 +145,8 @@ sb.mesh.print = function (frame, map, width, height) {
             if (i == points.length-1) return;
             linePairs.push(
             {
-                "points" : [points[i].points, points[i+1].points],
-                "air" : points[i+1].air
+                "points" : [points[i], points[i+1]],
+                "mode" : "air"
             });
         })
         // the delaunay mesh paths
@@ -169,13 +169,54 @@ sb.mesh.print = function (frame, map, width, height) {
                 } 
                 // return "M" + draw.join("L") + "Z"; 
                 // console.log(map.l2p(d[0]),d[])
-                if (d.air)
+                if (d.mode == "air")
                     return "M" + draw[0] + " A 1 1 0 0 0 " + draw[1];
                 else
                     return "M" + draw[0] + " L" + draw[1];
             }).attr("class",function(d){
-                if (d.air) return "air";
-            })
+                return d.mode;
+            });
+        /*
+
+        Code for the roadtrip meshu stuff, in case we want to bring that in
+
+        function showRoutes() {
+            g.selectAll("path").each(function(d){
+                var line = d3.select(this);
+                var pairKey = d.from[0]+"-"+d.to[1];
+                if (pairKey in routes) {
+                    line.attr("d",makeRoute(routes[pairKey])).classed("straight",false);
+                } else  {
+                    $.ajax({
+                        url: "http://open.mapquestapi.com/directions/v1/route?generalize=10&outFormat=json&shapeFormat=raw&generalize=200&from="+
+                        d.from[1]+","+d.from[0]+"&to="+d.to[1]+","+d.to[0],
+                        // cache: false,
+                        dataType: 'jsonp',
+                        success: function(data) {
+                            var wayPoints = data.route.shape.shapePoints;
+                            routes[pairKey] = wayPoints;
+
+                            line.attr("d",makeRoute(wayPoints)).classed("straight",false);
+                        }
+                    });
+                }
+            });
+        }
+
+        function makeRoute(p) {
+            var draw = [];
+            var l = p.length;
+            for (var i = 0; i < l; i+=2){
+                var loc = {
+                    lat: p[i],
+                    lon: p[i+1]
+                };
+                var pt = map.l2p(loc);
+                draw.push([pt.x, pt.y]);
+            }
+            return "M" + draw.join("L");
+        }
+        */
 
         // we move the newest point closer and closer to its destination
         // if (new_pt && skipAnimation == true) {
@@ -239,25 +280,26 @@ sb.mesh.print = function (frame, map, width, height) {
         var names = list.selectAll("li.place")
             .data(points);
         
-        var place = names.enter().append("li").attr("class", "place");
-        var title = place.append("span").attr("class", "title");
-            title.append("span").attr("class", "place-text")
+        var place = names.enter().append("li").attr("class", "place").attr("id", function(d, i) { return "p-" + i; });
+            var mode = place.append("span").attr("class", "mode");
+                mode.append("span").attr("class", "air").html("&#x2708;");
+                mode.append("span").attr("class", "rail").html("&#x1f698;");
+                mode.append("span").attr("class", "road").html("&#x1f686;");
+            place.append("span").attr("class", "place-text")
                 .html(function(d, i) {
                     decoder.innerHTML = places[i];
                     return decoder.firstChild.nodeValue;
                 });
-            title.append("span").attr("class", "place-edit").html("land");
             place.append("span").attr("class", "place-delete").html("x");
 
         names.exit().remove();
 
-        names.attr("id", function(d, i) { return "p-" + i; })
-            .select(".title").each(function(d) { d.edit = false; })
-            .attr("class","title")
+        names.each(function(d) { d.edit = false; })
             .select(".place-text")
-            .html(function(d, i) {
+            .html(function(d) {
                 // decode the text
                 // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
+                var i = $(this).parent().attr("id").split("-")[1];
                 decoder.innerHTML = places[i];
                 return decoder.firstChild.nodeValue;
             });
@@ -357,7 +399,7 @@ sb.mesh.print = function (frame, map, width, height) {
         //     self.editText($(this).parent(),i,"place");
         //     d.edit = !d.edit;
         // });
-        $( "#places ul" ).sortable();
+        $( "#places ul" ).sortable({ axis:"y", cursor:"move"});
         $( "#places ul" ).disableSelection();
         $(".place-text").mouseup(function(){
             var dataNew = [];
@@ -422,7 +464,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 // make the new point start from the last location
                 var last = points[points.length-1];
                 // points.push([last[0], last[1]]);
-                points.push({"points":[new_pt[0], new_pt[1]],"air":true});
+                points.push([new_pt[0], new_pt[1]]);
                 self.updatePixelBounds();
                 update();
 
@@ -430,7 +472,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 // updateInterval = setInterval(updateMesh, 40);
             }
         } else {
-            points.push({"points":[lon, lat],"air":true});
+            points.push([lon, lat]);
             update();
         }
         

@@ -21,6 +21,18 @@
     </div>
     {% endblock %}
 
+    <div id="crazy">
+        <div class="line"></div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+    </div>
+
     {% block helpedit %}
     {% endblock %}
 
@@ -52,7 +64,7 @@
             <div class="nav back">edit meshu</div>
             <div id="save-and-view" class="button nav">save meshu and exit</div>
             <div class="make-wrapper">
-                <h2>Choose your piece:</h2>
+                <h2>Choose Your Piece</h2>
                 <div id="product-preview">
                     {% block products %}
                     <div class="wrapper" id="wrapper-earrings">
@@ -60,6 +72,7 @@
                             <svg id="preview-earrings" width="170" height="160"></svg>
                         </div>
                         <p>Pair of Earrings</p>
+                        <p class="note">maximum side-length: 2.5in (6cm)</p>
                         <p class="note" id="range-earrings">$75-150</p>
                     </div>
                     <div class="wrapper" id="wrapper-pendant">
@@ -67,6 +80,7 @@
                             <svg id="preview-pendant" width="170" height="160"></svg>
                         </div>
                         <p>Pendant Necklace</p>
+                        <p class="note">maximum side-length: 1.5in (3.5 cm)</p>
                         <p class="note" id="range-pendant">$75-130</p>
                     </div>
                     <div class="wrapper" id="wrapper-necklace">
@@ -74,6 +88,7 @@
                             <svg id="preview-necklace" width="170" height="160"></svg>
                         </div>
                         <p>Large Necklace</p>
+                        <p class="note">maximum side-length: 3.0in (7.5cm)</p>
                         <p class="note" id="range-necklace">$80-150</p>
                     </div>
                     <div class="wrapper" id="wrapper-cufflinks">
@@ -87,13 +102,13 @@
                     {% endblock %}
                 </div>
 
-                <div class="social-media">
+                <!-- <div class="social-media">
                     <a class="share-pinterest" target="_blank" href="">
                         <img border="0" src="{{ STATIC_URL }}/images/social/pinitbutton.png" title="Pin It">
                     </a>
                     <div class="share-facebook"><i></i>Share this</div>
                     <a class="share-twitter" target="_blank"><i></i>Tweet this</a>
-                </div>
+                </div> -->
             </div>
         </div>
     {% endblock %}
@@ -106,59 +121,86 @@
             <div class="make-wrapper">
 
                 {% block materials %}
-                    <div id="make-earrings" class="make-option">
+                    <!-- <div id="make-earrings" class="make-option">
                         <h2>Pair of Earrings</h2>
-                        <p>Maximum sidelength: 2.5" (6cm)</p>
                     </div>
                     <div id="make-pendant" class="make-option">
                         <h2>Pendant Necklace</h2>
-                        <p>Maximum sidelength: 1.5"(3.5cm)</p>
                     </div>
                     <div id="make-necklace" class="make-option">
                         <h2>Large Necklace</h2>
-                        <p>Maximum sidelength: 3" (7.5cm)</p>
-                    </div>
+                    </div> -->
                     <!-- <div id="make-cufflinks" class="make-option">
                         <h2>Pair of Cufflinks</h2>
                         <p>Maximum sidelength: 1" (3cm)</p>
                     </div> -->
                     <!-- <p class="note">For custom orders, please <a href="/about/" target="_blank">contact us</a>.</p> -->
-                    <div class="half">
-                        <svg id="rotate"></svg>
-                        <div id="rotate-help">
-                            <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
-                            <b class="border-notch notch"></b>
-                            <b class="notch"></b>
-                        </div>
-                    </div>
                 {% endblock %}
 
-                <div class="half">
-                    <!-- <h2>Material</h2> -->
-                    <ul id="material-list">
-                        <li id="bamboo" class="material-option">Bamboo<span class="price">$80</span></li>
-                        <li id="acrylic" class="material-option">Black Acrylic<span class="price">$85</span></li>
-                        <li id="acrylic" class="material-option">White Acrylic<span class="price">$85</span></li>
-                        <li id="nylon" class="material-option">Black Nylon<span class="price">$90</span></li>
-                        <li id="nylon" class="material-option">White Nylon<span class="price">$90</span></li>
-                        <!-- <li id="stainless" class="material-option">Stainless Steel</li>
-                        <li id="silver" class="material-option">Silver, 3D-Printed</li> -->
-                    </ul>
-                        <!-- <h2>Color</h2>
-                        <ul id="color-list" class="option-list">
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                            <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
-                        </ul> -->
-                    <div id="total">
-                        <span id="total-cost">$50.00</span>
-                        <h2>Subtotal</h2>
-                        <div id="checkout-button" class="nav next active">Checkout</div>
-                    </div>
-                </div>
+                <h2>Material</h2>
+                <ul id="material-list">
+                    <li id="amber-bamboo" class="material-option">
+                        <div class="img"></div>
+                        Bamboo<span class="price">$80</span>
+                    </li>
+                    <li id="black-acrylic" class="material-option">
+                        <div class="img"></div>
+                        Black Acrylic<span class="price">$85</span>
+                    </li>
+                    <li id="white-acrylic" class="material-option">
+                        <div class="img"></div>
+                        White Acrylic<span class="price">$85</span>
+                    </li>
+                    <li id="black-nylon" class="material-option">
+                        <div class="img"></div>
+                        Black Nylon<span class="price">$90</span>
+                    </li>
+                    <li id="white-nylon" class="material-option">
+                        <div class="img"></div>
+                        White Nylon<span class="price">$90</span>
+                    </li>
+                    <!-- <li id="stainless" class="material-option">Stainless Steel</li> -->
+                    <li id="silver" class="material-option">
+                        <div class="img"></div>
+                        For silver, plz email
+                    </li>
+                </ul>
+                    <!-- <h2>Color</h2>
+                    <ul id="color-list" class="option-list">
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                        <li><span class="color-title"></span><span class="color-img"><img src=""></span></li>
+                    </ul> -->
+                <!-- <div id="total">
+                    <span id="total-cost">$50.00</span>
+                    <h2>Subtotal</h2>
+                    <div id="checkout-button" class="nav next active">Checkout</div>
+                </div> -->
             </div>
         </div>
     {% endblock %}
+
+    <div id="add-ons" class="section" style="height:300px">
+        <h2>Finishing Touches</h2>
+        <div class="two-third">
+            <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%; height: 297px;">
+            <div class="postcard-form">
+                <h2 class="review-header">Postcard Note:</h2>
+                <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
+                <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
+            </div>
+        </div>
+        <div class="one-third">
+            <svg id="rotate"></svg>
+            <!-- <div id="rotate-help">
+                <p class="note">If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+                <b class="border-notch notch"></b>
+                <b class="notch"></b>
+            </div> -->
+            <h2 class="review-header">Meshu Rotation:</h2>
+            <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+        </div>
+    </div>
 
     <!-- <div id="account" class="account section">
         <div class="back button">back</div>
@@ -214,10 +256,12 @@
     </div> -->
 
     {% block checkout %}
-        <div id="checkout" class="domestic section">
+        <div id="checkout" class="section">
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
-                <h2>Shipping</h2>
+                <div class="half">
+                <h2>Shipping Address</h2>
+                <div id="shipping-form" class="domestic">
                 <ul id="shipping-destination" class="tab-switch">
                     <li id="tab-domestic" class="active">USA</li>
                     <li id="tab-international">International</li>
@@ -239,7 +283,6 @@
                         <input type="hidden" id="postcard-note" name="postcard_note"/>
                         <input type="hidden" id="coupon" name="coupon"/>
                     </div>
-                <div class="half">
                     <div class="form-row ship-row">
                         <label>Name</label>
                         <input type="text" id="ship-name" class="required right" name="shipping_name" value="" />
@@ -518,26 +561,37 @@
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
                     </div>
+                    <h2 class="review-header">Cost of Shipping: 
+                        <span class="domestic">$5</span>
+                        <span class="international">$38</span>
+                    </h2>
                     <p class="note domestic">Please allow 3-4 weeks for acrylic and bamboo orders,<br />and 5-6 weeks for nylon or silver.</p>
                     <p class="note international">Please allow 4-5 weeks for acrylic and bamboo orders,<br />and 6-7 weeks for nylon or silver.</p>
+                    </div>
                 </div>
                 <div class="half">
                     <h2>Payment</h2>
                         <div class="form-row">
                             <label>Card Number</label>
-                            <input type="text" style="width:141px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="" name="card_number"/>
+                            <input type="text" style="width:141px; margin-left: 15px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="" name="card_number"/>
                             <span class="right">
                                 <label>CVC</label>
-                                <input type="text" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="" name="card_cvc"/>
+                                <input type="text" style="margin-left: 15px" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="" name="card_cvc"/>
                             </span>
                         </div>
                         <div class="form-row">
                             <label>Expiration (MM/YYYY)</label>
-                            <input type="text" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="" name="card_month"/>
+                            <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="" name="card_month"/>
                             <span> / </span>
                             <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="" name="card_year" style="margin-left: 3px;"/>
                         </div>
                     <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
+                    <h2 style="margin-top: 40px;">Email Address</h2>
+                    <div class="form-row">
+                        <label>Contact Email</label>
+                        <input type="text" style="width:200px; margin-left: 15px;">
+                    </div>
+                    <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
                     <input class="nav active" type="submit" id="review-button" value="Review Your Order">
                 </div>
                 </form>
@@ -558,12 +612,6 @@
                     <p id="review-payment"></p>
                 </div>
 
-                <div class="postcard-form">
-                    <h2 class="review-header">Postcard Note:</h2>
-                    <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
-                    <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
-                </div>
-
                 <div class="coupon">
                     <h2 class="review-header">Coupon:</h2>
                     <form action="/order/apply_coupon" method="GET" id="coupon-code">
@@ -574,7 +622,7 @@
                 </div>
                 <div id="review-total">
                     <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
-                    <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$4.00</span></h2>
+                    <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
                     <h2 id="total-price">Total: <span></span></h2>
                 </div>
                 <div id="submit-button" class="button" value="Submit Payment" tabindex="-1">Submit Payment</div>

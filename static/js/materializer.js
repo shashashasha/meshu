@@ -3,44 +3,48 @@ var sb = sb || {};
 sb.materializer = function() {
 	var self = d3.dispatch("update"),
 		catalog,
-		display,
-		productNames,
+		// display,
+		// productNames,
 		product,
 		material,
 		color;
 
 	// moved from app.js
-	display = {"earrings":"pair of earrings",
-						"pendant":"small pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "pair of cufflinks"};
+	// display = {"earrings":"pair of earrings",
+	// 					"pendant":"small pendant necklace",
+	// 					"necklace":"large necklace",
+	// 					"cufflinks": "pair of cufflinks"};
 
-	productNames = {"earrings":"earrings",
-						"pendant":"pendant necklace",
-						"necklace":"large necklace",
-						"cufflinks": "cufflinks"};
+	// productNames = {"earrings":"earrings",
+	// 					"pendant":"pendant necklace",
+	// 					"necklace":"large necklace",
+	// 					"cufflinks": "cufflinks"};
 
 	self.initialize = function(o) {
 		catalog = o;
 
 		// list elements
-		self.materials = $("#material-list li");
-		self.colors = $("#color-list li");
+		self.materials = $("#material-list");
+		// self.colors = $("#color-list li");
 
-		self.materials.click(function(e) {
-			self.material(e.target.id);
-		});
+		self.materials.find("li").click(function(e) {
+			var props = e.currentTarget.id.split("-");
+			self.material(props[1]);
+			self.color(props[0]);
 
-		self.colors.click(function(e) {
-			var c = e.currentTarget.id.split("-")[1]
-			self.color(c);
-		});
-
-		$(".option-list li").live("click",function(){
 			var li = $(this);
 			li.parent().find("li").removeClass("selected");
 			li.addClass("selected");
 		});
+
+		// self.colors.click(function(e) {
+		// 	var c = e.currentTarget.id.split("-")[1]
+		// 	self.color(c);
+		// });
+
+		// $("#material-list li").live("click",function(){
+			
+		// });
 	};
 
 	self.product = function(p) {
@@ -48,6 +52,10 @@ sb.materializer = function() {
 
 		product = p;
 		var materials = catalog.getMaterials(p);
+
+		$.each(materials,function(i,v){
+			self.materials.find("#"+v[0]+" .price").text("$"+v[1])
+		});
 
 		// self.materials.hide();
 
@@ -64,9 +72,9 @@ sb.materializer = function() {
 		// 	$("#" + current).show();
 		// }
 
-		var type = display[product];
-		var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
-		$("#readymade-type").text(capitalized);
+		// var type = display[product];
+		// var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+		// $("#readymade-type").text(capitalized);
 
 		return self;
 	};
@@ -81,34 +89,34 @@ sb.materializer = function() {
 
 		material = m;
 
-		self.materials.removeClass("selected");
-		$("#" + material).addClass("selected");
+		// self.materials.removeClass("selected");
+		// $("#" + material).addClass("selected");
 
-		var colors = catalog.getColors(product, material);
-		if (colors) {
-			self.colors.find(".color-title").empty();
-			self.colors.find("img").attr("src","");
+		// var colors = catalog.getColors(product, material);
+		// if (colors) {
+		// 	self.colors.find(".color-title").empty();
+		// 	self.colors.find("img").attr("src","");
 		
-			$(".options.right").fadeIn();
-			$.each(colors, function(i, c) {
-				var li = self.colors.eq(i);
-				var imgURL = static_url + "images/materials/" + material + "_" + c.replace(" ","_").toLowerCase() + ".png";
+		// 	$(".options.right").fadeIn();
+		// 	$.each(colors, function(i, c) {
+		// 		var li = self.colors.eq(i);
+		// 		var imgURL = static_url + "images/materials/" + material + "_" + c.replace(" ","_").toLowerCase() + ".png";
 
-				li.find(".color-title").text(c);
-				li.find(".color-img img").attr("src", imgURL);
-				li.attr("id", "color-" + c.replace(" ","-").toLowerCase());
-			});
+		// 		li.find(".color-title").text(c);
+		// 		li.find(".color-img img").attr("src", imgURL);
+		// 		li.attr("id", "color-" + c.replace(" ","-").toLowerCase());
+		// 	});
 
-			// select the first color
-			self.color(colors[0]);
-		} else {
-			$(".options.right").fadeOut();
-			self.color('');
-		}
+		// 	// select the first color
+		// 	self.color(colors[0]);
+		// } else {
+		// 	$(".options.right").fadeOut();
+		// 	self.color('');
+		// }
 
 		// update the pricing
 		orderer.updateProduct(product, material);
-		$("#total-cost").text(orderer.getPriceString());
+		// $("#total-cost").text(orderer.getPriceString());
 
 		return self;
 	};
@@ -122,8 +130,8 @@ sb.materializer = function() {
 
 		color = c;
 
-		self.colors.removeClass("selected");
-		$("#color-" + color.replace(" ","-").toLowerCase()).addClass("selected");
+		// self.colors.removeClass("selected");
+		// $("#color-" + color.replace(" ","-").toLowerCase()).addClass("selected");
 		self.update();
 
 		return self;

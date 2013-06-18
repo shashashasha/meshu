@@ -17,8 +17,10 @@ $(function() {
 				.attr('id', 'previewImage')
 				.attr('x', 0)
 				.attr('y', 0)
-				.attr('width', 200)
-				.attr('height', 190)
+				// .attr('width', 200)
+				// .attr('height', 190)
+				.attr("width",313)
+				.attr("height",297)
 				.attr('xlink:href', self.getImage(product));
 
 			var div = main.append("svg:g")
@@ -75,7 +77,8 @@ $(function() {
 		};
 
 		self.getTransform = function(product) {
-			return sb.transforms.getTransform(product, "preview") + " rotate(" + rotation + ",300,300)";
+			// using the product preivew one for now, can fix later
+			return sb.transforms.getTransform(product, "product") + " rotate(" + rotation + ",300,300)";
 		};
 
 		self.getImage = function(product) {

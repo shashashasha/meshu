@@ -30,7 +30,7 @@ sb.ui.orderer = function(meshu) {
 
         var form = $("#shipping-destination");
 
-        $("#checkout").attr("class", mode); 
+        $("#shipping-form").attr("class", mode); 
         form.find("li").removeClass("active");
         $(this).addClass("active");
 

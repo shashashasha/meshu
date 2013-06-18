@@ -148,9 +148,12 @@ $(function() {
 		This handles when people select a product to order
 		and go to the materials / color selection page
 	*/
-	$("#product-preview svg").live("click", function() {
+	$("#product-preview .wrapper").live("click", function() {
 
-		var product = $(this).attr("id").split("-")[1];
+		var wrapper = $(this);
+		wrapper.parent().find(".wrapper").removeClass("selected");
+		wrapper.addClass("selected");
+		var product = wrapper.attr("id").split("-")[1];
 		
 		$(".make-option").hide();
 
@@ -216,6 +219,7 @@ $(function() {
 				break;
 
 			case 'review':
+				console.log("update")
 				orderForm.updated();
 				break;
 		}

@@ -137,7 +137,10 @@ sb.catalog = function(renderer, promo) {
 		var materials = [];
 
 		for (var i in options[type]) {
-			materials.push(i);
+			$.each(options[type][i].colors, function(j,v){
+				materials.push([v.toLowerCase()+"-"+i, options[type][i].price])
+			});
+			// materials.push(i);
 		}
 		return materials;
 	};
