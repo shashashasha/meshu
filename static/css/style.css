@@ -991,12 +991,15 @@ body.firefox.win #rotate-help .border-notch {
   margin-top: 25px;
 }
 .wrapper .next {
-  border: 5px solid white;
+  border: 2px solid white;
   cursor: pointer;
   width: 300px;
   margin: 0 auto;
 }
 .wrapper .next:hover {
+  border-color: #808080;
+}
+.wrapper.selected .next {
   border-color: #ff3fb4;
 }
 #product-preview .wrapper {

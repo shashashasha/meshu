@@ -1035,13 +1035,16 @@ body.firefox.win #rotate-help .border-notch {
     margin-top: 25px;
 }
 .wrapper .next {
-    border: 5px solid white;
+    border: 2px solid white;
     cursor: pointer;
     width: 300px;
     margin: 0 auto;
     &:hover {    
-        border-color: @pink;
+        border-color: @grey;
     }
+}
+.wrapper.selected .next {
+    border-color: @pink;
 }
 #product-preview .wrapper {
     margin-bottom: 10px;
