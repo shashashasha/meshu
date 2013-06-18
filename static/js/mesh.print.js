@@ -130,14 +130,14 @@ sb.mesh.print = function (frame, map, width, height) {
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
-                    lat: d.points[1],
-                    lon: d.points[0]
+                    lat: d[1],
+                    lon: d[0]
                 }).x;
             })
             .attr("cy", function(d) {
                 return map.l2p({
-                    lat: d.points[1],
-                    lon: d.points[0]
+                    lat: d[1],
+                    lon: d[0]
                 }).y;
             });
         var linePairs = [];
@@ -145,8 +145,8 @@ sb.mesh.print = function (frame, map, width, height) {
             if (i == points.length-1) return;
             linePairs.push(
             {
-                "points" : [points[i].points, points[i+1].points],
-                "air" : points[i+1].air
+                "points" : [points[i], points[i+1]],
+                "air" : "true"
             });
         })
         // the delaunay mesh paths
@@ -422,7 +422,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 // make the new point start from the last location
                 var last = points[points.length-1];
                 // points.push([last[0], last[1]]);
-                points.push({"points":[new_pt[0], new_pt[1]],"air":true});
+                points.push([new_pt[0], new_pt[1]]);
                 self.updatePixelBounds();
                 update();
 
@@ -430,7 +430,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 // updateInterval = setInterval(updateMesh, 40);
             }
         } else {
-            points.push({"points":[lon, lat],"air":true});
+            points.push([lon, lat]);
             update();
         }
         
