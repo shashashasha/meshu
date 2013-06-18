@@ -720,6 +720,9 @@ body.firefox #place-title #input {
   padding: 1px 0;
   width: 308px;
 }
+.print .place {
+  width: auto;
+}
 .place input {
   color: gray;
   padding: 1px;
@@ -767,6 +770,16 @@ body.firefox .place .place-text {
 .title.active .place-delete,
 .title.active .place-edit {
   display: inline;
+}
+.place .mode span {
+  padding: 1px 5px 3px 5px;
+  background-color: #808080;
+  cursor: pointer;
+  color: white;
+  margin-right: 2px;
+}
+.place .mode span:hover {
+  background-color: #ff3fb4;
 }
 .frame {
   width: 600px;
