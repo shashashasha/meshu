@@ -3,9 +3,22 @@ var sb = sb || {};
 sb.materializer = function() {
 	var self = d3.dispatch("update"),
 		catalog,
+		display,
+		productNames,
 		product,
 		material,
 		color;
+
+	// used for product previews
+	display = {"earrings":"pair of earrings",
+    	"pendant":"small pendant necklace",
+		"necklace":"large necklace",
+		"cufflinks": "pair of cufflinks"};
+
+	productNames = {"earrings":"earrings",
+		"pendant":"pendant necklace",
+		"necklace":"large necklace",
+		"cufflinks": "cufflinks"};
 
 	self.initialize = function(o) {
 		catalog = o;

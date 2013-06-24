@@ -219,7 +219,6 @@ $(function() {
 				break;
 
 			case 'review':
-				console.log("update")
 				orderForm.updated();
 				break;
 		}

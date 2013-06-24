@@ -48,11 +48,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         .data([[-122.445,37.755]])
         .attr("cx",300).attr("cy",300).attr("r",200);
 
-    // var hidden = main.append("svg:g")
-    //              .attr("class", "hidden");
-
-    // hidden.append("svg:path");
-
     var uiShield = d3.select(frame)
         .append("div")
         .attr("id","ui-shield")
@@ -102,7 +97,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         }
     */
     self.on("styled", function(style) {
-
         if (style.zoom && style.zoom != map.map.zoom()) {
             map.map.zoom(style.zoom);
         }

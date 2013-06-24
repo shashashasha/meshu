@@ -592,7 +592,9 @@
                         <input type="text" style="width:200px; margin-left: 15px;">
                     </div>
                     <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
-                    <input class="nav active" type="submit" id="review-button" value="Review Your Order">
+                    <!-- the review order button should validate the form, but it probably shouldn't be the form submit button -->
+                    <div class="nav next active" id="review-button">Review Your Order</div>
+                    <input type="submit" id="payment-submit" value="Review Your Order">
                 </div>
                 </form>
             </div>

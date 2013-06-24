@@ -87,7 +87,8 @@ sb.ui.orderer = function(meshu) {
 
 		If it's valid, we populate the review
 	*/
-	$("#payment-form").validate({
+	var checkoutForm = $("#payment-form").validate({
+		debug: true,
 		rules: {
 		    card_number: {
 		    	creditcard: true
@@ -141,6 +142,15 @@ sb.ui.orderer = function(meshu) {
 		if (!user.loggedIn) {
         	forceUserLogin();
         }
+
+        console.log(checkoutForm);
+        var result = checkoutForm.valid();
+        console.log(result);
+        if (result) {
+        	console.log('validated');
+	        self.updated();
+	        self.validated();
+        }
 	});
 
     $("#submit-button").click(function(e) { 
@@ -156,7 +166,9 @@ sb.ui.orderer = function(meshu) {
 		if (!user.loggedIn) {
 			forceUserLogin(onFormValidated);
 			return;
-		}
+		}	
+
+		console.log('via submit handler');
 
 		self.updated();
 		self.validated();
@@ -187,10 +199,13 @@ sb.ui.orderer = function(meshu) {
 		// let our stripe object know what object we're purchasing
 		// it'll know the price, given the options beforehand
 		// we also can't change options once it's set, so no one can mess with it
-		orderer.updateProduct(sb.materializer.product(), sb.materializer.material(), orderer.getShipping());
+		var product = sb.materializer.product(),
+			material = sb.materializer.material();
 
-		$("#object-type").val(sb.materializer.productName());
-		$("#object-material").val(sb.materializer.material());
+		orderer.updateProduct(product, material, orderer.getShipping());
+
+		$("#object-type").val(product);
+		$("#object-material").val(material);
 		$("#object-color").val(sb.materializer.color().toLowerCase());
 		$("#object-amount").val(orderer.getTotalCents());
 
