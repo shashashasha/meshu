@@ -82,22 +82,6 @@ def mail_order_confirmation(email, meshu, order):
 		'meshu': meshu,
 		'order': order
 	})
-
-	if (meshu.promo == 'marathon'):
-		mail_template('meshu/email/order_confirmation.html', {
-			'subject' : 'Order Confirmation: ' + meshu.title,
-			'from' : 'orders@meshu.io',
-			'to': 'area@royalparksfoundation.org',
-			'meshu': meshu,
-			'order': order
-		})
-		mail_template('meshu/email/order_confirmation.html', {
-			'subject' : 'Order Confirmation: ' + meshu.title,
-			'from' : 'orders@meshu.io',
-			'to': 'sbarney@royalparksfoundation.org',
-			'meshu': meshu,
-			'order': order
-		})
 	return
 
 def mail_order_status_change(email, meshu, order):
@@ -232,17 +216,17 @@ def make_order(request, profile, meshu):
 	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
 
 	# get the credit card details submitted by the form
-	token = request.POST['stripeToken']
+	# token = request.POST['stripeToken']
 	email = profile.user.email
 	desc = str(email) + ", meshu id " + str(meshu.id)
 
 	# create the charge on Stripe's servers - this will charge the user's card
-	charge = stripe.Charge.create(
-	    amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
-	    currency="usd",
-	    card=token,
-	    description=desc
-	)
+	# charge = stripe.Charge.create(
+	#     amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
+	#     currency="usd",
+	#     card=token,
+	#     description=desc
+	# )
 
 	# create a new order
 	# every order is new

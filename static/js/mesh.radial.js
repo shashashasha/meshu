@@ -48,11 +48,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         .data([[-122.445,37.755]])
         .attr("cx",300).attr("cy",300).attr("r",200);
 
-    // var hidden = main.append("svg:g")
-    //              .attr("class", "hidden");
-
-    // hidden.append("svg:path");
-
     var uiShield = d3.select(frame)
         .append("div")
         .attr("id","ui-shield")
@@ -66,17 +61,6 @@ sb.mesh.radial = function (frame, map, width, height) {
 
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", self.removeInput);
-
-    $("#radial-knockout").click(function(){
-        self.style({
-            drawStyle: "knockout"
-        });
-    });
-    $("#radial-frame").click(function(){
-        self.style({
-            drawStyle: "outline"
-        });
-    });
 
     var points = [],
         routes = [],
@@ -108,30 +92,11 @@ sb.mesh.radial = function (frame, map, width, height) {
         This is how we're listening to style changes
         here we're listening for something like 
         {
-            'drawStyle': 'knockout',
+            // 'drawStyle': 'knockout', // no more knockout style, but keeping zoom
             'zoom': 12
         }
     */
     self.on("styled", function(style) {
-        if (style.drawStyle) {
-            switch (style.drawStyle) {
-                case "knockout":
-                    $("body").addClass("knockout");
-                    $(this).addClass("active");
-                    $("#radial-frame").removeClass("active");
-                    updateRoutes();
-                    break;
-
-                case "outline":
-                default:
-                    $("body").removeClass("knockout");
-                    $(this).addClass("active");
-                    $("#radial-knockout").removeClass("active");
-                    updateRoutes();
-                    break;
-            }
-        }
-
         if (style.zoom && style.zoom != map.map.zoom()) {
             map.map.zoom(style.zoom);
         }

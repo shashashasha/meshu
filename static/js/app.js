@@ -15,7 +15,7 @@ $(function() {
 	var catalog = sb.catalog(currentRenderer, promotion);
 
 	// create a stripe payment object
-	orderer.catalog(catalog);
+	cashier.catalog(catalog);
 	sb.materializer.initialize(catalog);
 
 	// create a meshu object for a single meshu container
@@ -219,7 +219,6 @@ $(function() {
 				break;
 
 			case 'review':
-				console.log("update")
 				orderForm.updated();
 				break;
 		}

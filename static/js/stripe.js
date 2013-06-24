@@ -1,6 +1,6 @@
 Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 
-var orderer = function() {
+var cashier = function() {
     var self = {},
         // amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
@@ -14,26 +14,26 @@ var orderer = function() {
         catalog = null;
 
     function stripeResponseHandler(status, response) {
-        if (response.error) {
-            // re-enable the submit button
-            $('#submit-button').removeAttr("disabled").removeClass("inactive");
-            // show the errors on the form
-            $(".payment-errors").html(response.error.message);
-        } else {
+        // if (response.error) {
+        //     // re-enable the submit button
+        //     $('#submit-button').removeAttr("disabled").removeClass("inactive");
+        //     // show the errors on the form
+        //     $(".payment-errors").html(response.error.message);
+        // } else {
             var form$ = $("#payment-form");
             // token contains id, last4, and card type
             var token = response['id'];
             // insert the token into the form so it gets submitted to the server
             form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
+
             // and submit
-            
             var action = form$.attr("action");
             if (action.search('None') > 0) {
                 form$.attr("action", "/order/");
             }
 
             form$.get(0).submit();
-        }
+        // }
     }
 
     self.submit = function() {
