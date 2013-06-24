@@ -34,7 +34,7 @@ sb.ui.orderer = function(meshu) {
         form.find("li").removeClass("active");
         $(this).addClass("active");
 
-        orderer.shippingMode(mode);
+        cashier.shippingMode(mode);
 	});
 	
 
@@ -45,13 +45,13 @@ sb.ui.orderer = function(meshu) {
 	
 	$("#coupon-code").submit(function() {
 		var value = $("#coupon-code-value").val();
-		orderer.applyCoupon(value, function(data) {
+		cashier.applyCoupon(value, function(data) {
 			if (data.success) {
 				var couponPrice = parseFloat(data.amount);
 
 				// detect whether the coupon is for an amount or a percentage
 				if (couponPrice < 1 && couponPrice > 0) {
-					var amountOff = Math.round(orderer.getPrice() * (1 - couponPrice));
+					var amountOff = Math.round(cashier.getPrice() * (1 - couponPrice));
 					var percentOff = Math.round((1 - couponPrice) * 100);
 					$("<h2>").attr("id","subtotal-coupon")
 						.addClass("review-header")
@@ -146,6 +146,7 @@ sb.ui.orderer = function(meshu) {
         console.log(checkoutForm);
         var result = checkoutForm.valid();
         console.log(result);
+
         if (result) {
         	console.log('validated');
 	        self.updated();
@@ -159,7 +160,8 @@ sb.ui.orderer = function(meshu) {
         	return false;
         }
 
-        orderer.submit(); 
+        // cash money
+        cashier.submit(); 
     });
 
 	function onFormValidated() {
@@ -202,12 +204,12 @@ sb.ui.orderer = function(meshu) {
 		var product = sb.materializer.product(),
 			material = sb.materializer.material();
 
-		orderer.updateProduct(product, material, orderer.getShipping());
+		cashier.updateProduct(product, material, cashier.getShipping());
 
 		$("#object-type").val(product);
 		$("#object-material").val(material);
 		$("#object-color").val(sb.materializer.color().toLowerCase());
-		$("#object-amount").val(orderer.getTotalCents());
+		$("#object-amount").val(cashier.getTotalCents());
 
 		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
 
@@ -231,11 +233,11 @@ sb.ui.orderer = function(meshu) {
 		var productType = sb.materializer.color().toLowerCase() + " " + sb.materializer.material();
 		$("#review-description").text(product + ", made out of " + productType);
 
-		$("#subtotal-price span").text(orderer.getPriceString());
+		$("#subtotal-price span").text(cashier.getPriceString());
 
-		$("#shipping-price span").text("$" + orderer.getShipping() + ".00");
+		$("#shipping-price span").text("$" + cashier.getShipping() + ".00");
 
-		$("#total-price span").text(orderer.getTotalString());
+		$("#total-price span").text(cashier.getTotalString());
 
 		$("#review-shipping").empty();
 		$(".ship-row input").each(function(){

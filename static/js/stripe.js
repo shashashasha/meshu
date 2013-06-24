@@ -1,6 +1,6 @@
 Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 
-var orderer = function() {
+var cashier = function() {
     var self = {},
         // amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
         currentAmount = 0, 
