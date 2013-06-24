@@ -259,6 +259,7 @@
         <div id="checkout" class="section">
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
+                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
                 <div class="half">
                 <h2>Shipping Address</h2>
                 <div id="shipping-form" class="domestic">
@@ -266,7 +267,6 @@
                     <li id="tab-domestic" class="active">USA</li>
                     <li id="tab-international">International</li>
                 </ul>
-                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
                     {# put a csrf token in every form in django, for security #}
                     {% csrf_token %}
                     <div id="hidden-form-values" style="display:none;">
@@ -593,8 +593,8 @@
                     </div>
                     <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
                     <!-- the review order button should validate the form, but it probably shouldn't be the form submit button -->
-                    <div class="nav next active" id="review-button">Review Your Order</div>
-                    <input type="submit" id="payment-submit" value="Review Your Order">
+                    <!-- <div class="nav next active" id="review-button">Review Your Order</div> -->
+                    <input class="nav active" type="submit" id="review-button" value="Review Your Order">
                 </div>
                 </form>
             </div>

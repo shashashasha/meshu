@@ -88,7 +88,6 @@ sb.ui.orderer = function(meshu) {
 		If it's valid, we populate the review
 	*/
 	var checkoutForm = $("#payment-form").validate({
-		debug: true,
 		rules: {
 		    card_number: {
 		    	creditcard: true
@@ -141,16 +140,7 @@ sb.ui.orderer = function(meshu) {
 	$("#review-button").click(function() {
 		if (!user.loggedIn) {
         	forceUserLogin();
-        }
-
-        console.log(checkoutForm);
-        var result = checkoutForm.valid();
-        console.log(result);
-
-        if (result) {
-        	console.log('validated');
-	        self.updated();
-	        self.validated();
+        	return false;
         }
 	});
 
@@ -169,8 +159,6 @@ sb.ui.orderer = function(meshu) {
 			forceUserLogin(onFormValidated);
 			return;
 		}	
-
-		console.log('via submit handler');
 
 		self.updated();
 		self.validated();

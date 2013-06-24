@@ -60,7 +60,7 @@ sb.materializer = function() {
 
 		material = m;
 
-		orderer.updateProduct(product, material);
+		cashier.updateProduct(product, material);
 
 		return self;
 	};
