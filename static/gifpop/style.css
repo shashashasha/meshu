@@ -1,0 +1,116 @@
+.center {
+	padding-top: 0px !important;
+}
+.row-fluid>[class*="span"] {
+	margin: 0 !important;
+}
+.container-fluid {
+	padding: 0 !important;
+}
+#pickerComputer {
+	background-color: #eee;
+	padding: 10px;
+    height: 400px;
+}
+#localDragDrop, #fileUploadForm {
+	width: 400px;
+	height: 400px;
+	background: #808080;
+	border: none;
+	border-radius: 0;
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 0;
+}
+#localDragDrop {
+    background-image: url(img/starburst.png);
+    background-position: center;
+}
+#localDragHelp {
+	background-image: url(img/drag-and-drop.png);
+    height: 108px;
+    width: 246px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 142px;
+}
+.control-label {
+	display: none;
+}
+
+#fileUploadForm {
+    height: 195px;
+}
+#fileInputContainer {
+	z-index: 1;
+	overflow: visible;
+	width: 303px;
+    margin: 43px 0 0 48px;
+}
+#fileUploadInput{
+    line-height: 108px;
+    height: 108px;
+    cursor: pointer;
+}
+#fileUploadDummy {
+    background-image: url(img/choose-gif.png);
+    height: 108px;
+    width: 303px;
+    text-indent: 150%;
+    white-space: nowrap;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+#fileUploadDummy:hover {
+    background-position: 0 0;
+}
+
+#fileFromURL {
+    background: #808080;
+    width: 400px;
+    height: 195px;
+    position: absolute;
+    top: 215px;
+    left: 420px;
+    font-family: Futura;
+    text-align: center;
+    color: white;
+}
+
+#fileFromURL h2 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-style: italic;
+    margin: 30px 0 5px;
+}
+#fileFromURL #urlInput,
+#fileFromURL #urlSubmit {
+    float: left;
+}
+#fileFromURL #urlInput {
+    height: 49px;
+    border-radius: 0;
+    border: none;
+    -webkit-transform: skew(-7deg);
+    margin: 4px 1px 10px 25px;
+    width: 225px;
+}
+#fileFromURL #urlSubmit {
+    background-image: url(img/submit.png);
+    width: 124px;
+    height: 56px;
+    cursor: pointer;
+}
+#fileFromURL #urlSubmit:hover {
+    background-image: url(img/submit-over.png);
+}
+#fileFromURL #urlSubmit:active {
+    background-image: url(img/submit-down.png);
+}
+#fileFromURL p {
+    font-size: 14px;
+    clear: both;
+}
