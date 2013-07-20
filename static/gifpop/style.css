@@ -9,16 +9,157 @@
 .container-fluid {
 	padding: 0 !important;
 }
-#pickerComputer {
-	background-color: #eee;
-	padding: 10px;
-    height: 400px;
-    width: 810px;
+
+body {
+    width: 875px;
+    background-color: #eee;
+    font-family: Futura;
 }
+
+#content {
+    padding: 10px;
+    height: 400px;
+    width: 100%;
+    position: relative;
+}
+#branding {
+    display: none !important;
+}
+
+/* Sidebar */
+
+#bread {
+    display: none;
+}
+#servicePane {
+    top: 10px;
+}
+#preview {
+}
+#services {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    width: 160px;
+    background-color: transparent;
+    padding: 0 10px;
+}
+.nav-list > li > a {
+    text-transform: uppercase;
+    font-size: 19px;
+    font-style: italic;
+}
+#services li {
+    margin-bottom: 5px;
+}
+#services > li > a:hover {
+    border-left: none;
+    background-color: #ddd;
+    padding-left: 15px;
+}
+#services > .active > a,
+#services > .active > a:hover {
+    border-left: none;
+    background-color: #808080;
+    padding-left: 15px;
+}
+#mainpane {
+    background: #808080;
+    width: 665px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+[class^="sbicon-"] {
+    vertical-align: inherit;
+    padding-bottom: 1px;
+}
+.nav-list [class^="sbicon-"] {
+    padding-right: 7px;
+}
+
+/* Prompt Pane */
+
+.auth_service_title {
+    text-transform: uppercase;
+    font-style: italic;
+    color: white;
+}
+
+/* Thumbnail Gallery */
+
+.filelist {
+    margin-top: 0;
+}
+.row-fluid > .span8 {
+    width: 100%;
+}
+.thumbnails {
+    margin-left: 0;
+}
+.thumbnails > li {
+    height: 136px;
+    width: 136px;
+    margin: 0 0 10px 10px;
+}
+.thumbnails h5 {
+    display: none;
+}
+.filelist.thumbnails a.selectable:hover {
+    border-color: #ff9900;
+}
+.thumbnail {
+    border-radius: 0;
+    padding: 0;
+    border-width: 3px;
+    height: 130px;
+    width: 130px;
+}
+#picker {
+    width: 450px;
+    padding-top: 10px;
+}
+.filelist>li:nth-child(odd)>a {
+    background-color: transparent;
+}
+#action-group .btn-upload {
+    background-image: url(img/submit.png);
+    width: 124px;
+    height: 56px;
+    padding: 0;
+    text-indent: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+#action-group .btn-upload:hover {
+    background-position: 0 0;
+}
+
+#load-next {
+    display: block;
+    cursor: pointer;
+    color: #ff9900;
+    font-size: 19px;
+    text-transform: uppercase;
+    font-style: italic;
+    background-color: #eee;
+    line-height: 35px;
+    padding: 0;
+    width: 100%;
+    margin: 10px;
+    border-radius: 0;
+}
+#load-next:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* Drag and Drop Pane */
+
 #localDragDrop, #fileUploadForm {
 	width: 400px;
 	height: 400px;
-	background: #808080;
 	border: none;
 	border-radius: 0;
 	float: left;
@@ -79,6 +220,10 @@
     margin-right: 10px;
     margin-bottom: 0;
 }
+
+
+/* Uploads Pane */
+
 .uploadProgress.well {
     width: 800px;
     height: 360px;
@@ -114,5 +259,5 @@ table.fileinfo .filename {
     margin-left: 20px;
     text-transform: uppercase;
     padding: 2px 9px 3px;
+    border-radius: 0;
 }
-
