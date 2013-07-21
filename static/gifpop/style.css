@@ -87,10 +87,10 @@ body {
 }
 
 /* URL Picker */
-#pickerURL {
+#pickerUrl {
     padding-top: 150px;
 }
-#pickerURL h2 {
+#pickerUrl h2 {
     text-transform: uppercase;
     color: white;
     text-align: center;
@@ -106,7 +106,7 @@ body {
     margin-left: 90px;
 }
 #urlInput {
-    width: 350px;
+    width: 350px !important;
     border-radius: 0;
     box-shadow: none;
     -webkit-transform: skew(-7deg);
