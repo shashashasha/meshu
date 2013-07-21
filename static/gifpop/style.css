@@ -19,7 +19,9 @@
 .btn-primary:hover {
     background-color: #ff9900;
 }
-
+html {
+    overflow: hidden;
+}
 body {
     width: 875px;
     background-color: #eee;
@@ -290,7 +292,7 @@ h3.filename, #mainpane #subMessage {
 }
 #localDragDrop {
     width: 100%;
-    height: 360px;
+    height: 370px;
     background-image: url(img/starburst-wide.png);
     background-position: center;
     box-shadow: none;
@@ -324,8 +326,8 @@ h3.filename, #mainpane #subMessage {
     margin: 26px 0 0 90px;
 }
 #fileUploadInput{
-    line-height: 108px;
-    height: 108px;
+    line-height: 48px;
+    height: 48px;
     cursor: pointer;
 }
 #fileUploadDummy {
