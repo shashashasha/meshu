@@ -355,11 +355,14 @@ h3.filename, #mainpane #subMessage {
 /* Uploads Pane */
 
 .uploadProgress.well {
-    width: 800px;
-    height: 360px;
+    width: 813px;
+    height: 428px;
     z-index: 2;
     position: absolute;
     border-radius: 0;
+    left: -190px;
+    top: 0px;
+    background-color: #fff;
 }
 .well {
     padding: 20px;
