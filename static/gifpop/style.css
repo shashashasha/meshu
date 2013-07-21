@@ -291,7 +291,7 @@ h3.filename, #mainpane #subMessage {
 #localDragDrop {
     width: 100%;
     height: 360px;
-    background-image: url(img/starburst.png);
+    background-image: url(img/starburst-wide.png);
     background-position: center;
     box-shadow: none;
     background-color: transparent;
@@ -320,8 +320,8 @@ h3.filename, #mainpane #subMessage {
 #fileInputContainer {
 	z-index: 1;
 	overflow: visible;
-	width: 303px;
-    margin: 0px 0 0 48px;
+	width: 495px;
+    margin: 26px 0 0 90px;
 }
 #fileUploadInput{
     line-height: 108px;
@@ -329,9 +329,9 @@ h3.filename, #mainpane #subMessage {
     cursor: pointer;
 }
 #fileUploadDummy {
-    background-image: url(img/choose-gif.png);
-    height: 108px;
-    width: 303px;
+    background-image: url(img/gif-upload.png);
+    height: 48px;
+    width: 485px;
     text-indent: 150%;
     white-space: nowrap;
     overflow: hidden;
