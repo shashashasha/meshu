@@ -86,7 +86,7 @@ body {
     border-left: none;
     background: #808080;
     padding-left: 13px;
-    color: #eee;
+    color: #fff;
 }
 #services .auth-label {
     right: 2px;
@@ -108,6 +108,10 @@ body {
 [class^="sbicon-"] {
     vertical-align: inherit;
     padding-bottom: 1px;
+}
+#services > .active a > [class^="sbicon-"],
+#services > .active a > [class*="sbicon-"]  {
+    background-image: url(img/local-icons-inverted.png);
 }
 .nav-list [class^="sbicon-"] {
     padding-right: 7px;
