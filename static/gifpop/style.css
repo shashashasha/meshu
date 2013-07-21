@@ -128,7 +128,7 @@ body {
     width: 350px !important;
     border-radius: 0;
     box-shadow: none;
-    -webkit-transform: skew(-7deg);
+    -webkit-transform: skew(-14deg);
     height: 40px;
 }
 #preview.url .thumbnail {
@@ -217,7 +217,7 @@ body {
 #helpMessage {
     display: none;
 }
-h3.filename, #subMessage {
+h3.filename, #mainpane #subMessage {
     text-transform: uppercase;
     font-style: italic;
     color: white;
@@ -269,6 +269,7 @@ h3.filename, #subMessage {
     background-color: transparent;
     border: none;
     box-shadow: none;
+    margin: 0;
 }
 #action-group .btn-upload:hover {
     background-position: 0 0;
