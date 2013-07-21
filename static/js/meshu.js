@@ -93,6 +93,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
                 // just use the first result
                 var first = results[0].locations[0];
+                console.log(first);
 
                 // if it's the radial, zoom out a bit
                 if (mesh.name == 'radial') {
@@ -150,7 +151,7 @@ sb.meshu = function(frame, renderer, existingMap) {
     };
 
     function setZoomGranularity(grain, min) {
-        var zoom = Math.max(min, getZoomGranularity(grain));
+        var zoom = Math.max(min || 4, getZoomGranularity(grain));
 
         // to prevent tiles flashing
         if (zoom != map.map.zoom()) {
