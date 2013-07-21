@@ -57,6 +57,7 @@ body {
     text-transform: uppercase;
     font-size: 19px;
     font-style: italic;
+    padding: 8px 15px 8px 13px;
 }
 #services li {
     margin-bottom: 5px;
@@ -79,7 +80,7 @@ body {
 #services > li:hover > a {
     border-left: none;
     background-color: #ddd;
-    padding-left: 15px;
+    padding-left: 13px;
 }
 #services > .active > a,
 #services > .active > a:hover {
