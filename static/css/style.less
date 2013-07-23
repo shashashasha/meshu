@@ -21,8 +21,8 @@
 
 .shadow (@distance: 300px, @color: rgba(0,0,0, 0.1)) {
   -webkit-box-shadow: 0px 0px @distance @color;
-     -moz-box-shadow: 0px 0px @distance @color; 
-          box-shadow: 0px 0px @distance @color; 
+     -moz-box-shadow: 0px 0px @distance @color;
+          box-shadow: 0px 0px @distance @color;
 }
 
 .borderBox () {
@@ -42,7 +42,7 @@
         background-color: @color;
     }
 }
-    
+
 
 /* main page styles */
 body {
@@ -163,8 +163,8 @@ h1#meshu {
         min-height: 30px;
     }
     .reenter {
-        bottom: -10px; 
-        float: left; 
+        bottom: -10px;
+        float: left;
         line-height: 15px;
     }
     .fb_iframe_widget {
@@ -190,21 +190,21 @@ h1#meshu {
     }
     .tab-switch {
         padding-left: 95px;
-    } 
+    }
     p {
         margin: 15px 17px 15px 0;
         color: @grey;
         font-size: 12px;
-    }  
+    }
 }
 
 #login-form {
-    display: none; 
-    position: absolute; 
-    z-index: 3; 
+    display: none;
+    position: absolute;
+    z-index: 3;
     top: 150px;
-    right: 310px; 
-    width: 380px; 
+    right: 310px;
+    width: 380px;
     min-height: 205px;
     padding-top: 15px;
     background: white;
@@ -270,7 +270,7 @@ body.win #login-form ul {
     height: 27px;
 }
 
-#login-form.signin .account, 
+#login-form.signin .account,
 #login-form.account .signin,
 #account.signin .account,
 #account.account .signin {
@@ -416,7 +416,7 @@ body.win #login-form ul {
         padding: 5px 11px;
     }
 
-    .minor { 
+    .minor {
         background-color: @lightGrey;
     }
 }
@@ -788,7 +788,7 @@ body.firefox #place-title #input {
     display: inline-block;
 }
 body.ie .place .place-text,
-body.win .place .place-text, 
+body.win .place .place-text,
 body.firefox .place .place-text {
     width: 232px;
 }
@@ -918,7 +918,7 @@ body.ie .frame div {
 .color-img img {
     border: 1px solid @borderGrey;
 }
-.ready .options.left, .ready .options.right {
+/*.ready .options.left, .ready .options.right {
     position: relative;
     top: auto;
     left: auto;
@@ -930,7 +930,7 @@ body.ie .frame div {
 }
 .ready .options.right {
     float: right;
-}
+}*/
 #rotate {
     width: 200px;
     height: 190px;
@@ -962,7 +962,7 @@ body.ie .frame div {
     height: 0;
 }
 #rotate-help .border-notch {
-    border-right-color: @borderGrey; 
+    border-right-color: @borderGrey;
     left: -13px;
 }
 body.firefox.win #rotate-help .border-notch {
@@ -995,7 +995,7 @@ body.firefox.win #rotate-help .border-notch {
 .wrapper .next {
     border: 5px solid white;
     cursor: pointer;
-    &:hover {    
+    &:hover {
         border-color: @pink;
     }
 }
@@ -1025,7 +1025,7 @@ body.firefox.win #rotate-help .border-notch {
 
 .social-media {
     clear: both;
-    padding-top: 31px;    
+    padding-top: 31px;
     display: none;
 }
 .share-facebook, .share-twitter, .view .share-pinterest {
@@ -1215,7 +1215,7 @@ p.note {
 }
 
 .city-input {
-    width: 204px; 
+    width: 204px;
     /*margin: 0 31px 0 10px;*/
 }
 
@@ -1342,7 +1342,7 @@ body.ie8 .city-input {
 }
 #view p, #view span, #view ul{
     background-color: rgba(255,255,255,.9);
-    padding: 3px 10px;  
+    padding: 3px 10px;
 }
 .ie8 #view p, .ie8 #view span, .ie8 #view ul {
     background-color: white;
@@ -1393,15 +1393,15 @@ body.ie8 .city-input {
     margin-top: 40px;
     position: relative;
 }
-.ready .make-wrapper {
+/*.ready .make-wrapper {
     margin-top: 0;
-}
+}*/
 .make-wrapper h2 {
     margin: 20px 0 5px 0;
 }
-.ready .make-wrapper h2 {
+/*.ready .make-wrapper h2 {
     margin-top: 0;
-}
+}*/
 .make-wrapper li {
     color: @grey;
 
@@ -1446,7 +1446,7 @@ body.ie8 .city-input {
         display: inline;
         color: @grey;
     }
-} 
+}
 
 #review {
     h2 {
@@ -1497,11 +1497,11 @@ body.ie8 .city-input {
         margin-top: 0;
     }
 }
-.ready #total {
+/*.ready #total {
     top: auto;
     clear: both;
     position: relative;
-}
+}*/
 #total-cost {
     float: right;
     font-size: 28px;
@@ -1519,7 +1519,7 @@ body.ie8 .city-input {
     user-select: none;
     .transition(background-color, .5s);
 
-    &.next { 
+    &.next {
         cursor: default;
     }
 
@@ -1626,7 +1626,7 @@ body.ie8 .city-input {
     pointer-events: none;
 }
 
-/* 
+/*
     Map Object Styling
 */
 
@@ -1819,7 +1819,7 @@ circle {
     height: 306px;
     margin: 0 10px 10px 0;
     border: 5px solid white;
-    
+
     position: relative;
 
     &:hover {
@@ -1854,7 +1854,7 @@ circle {
     margin-left: 15px;
 }
 
-#shop li.object, 
+#shop li.object,
 #gallery li.object {
     float: left;
     width: 306px;
@@ -1978,7 +1978,7 @@ circle {
         width: 100%;
         max-height: 280px;
     }
-    
+
     svg {
         pointer-events: none;
     }
@@ -1991,7 +1991,7 @@ circle {
         background-color: @borderGrey;
         border: 5px solid @borderGrey;
     }
-    
+
     .description, .title {
         position: absolute;
         left: 10px;
@@ -2018,11 +2018,11 @@ circle {
         border: 1px solid @blue;
 
         .image {
-            border: 5px solid @blue; 
+            border: 5px solid @blue;
         }
 
         .blank {
-            border: 5px solid @pink; 
+            border: 5px solid @pink;
         }
 
         .description, .title {
@@ -2150,7 +2150,7 @@ body.ie #maps .mini-meshu div {
     width: 650px;
     margin-left: 10px;
     height: 100px;
-    
+
     .link a {
         text-decoration: underline;
     }
@@ -2212,14 +2212,14 @@ body.ie #maps .mini-meshu div {
     color: @grey;
 
     #content {
-        /*width: 1100px; 
+        /*width: 1100px;
         height: 733px;*/
         width: 1680px;
         height: 1275px;
     }
 
     .frame {
-        /*width: 1100px; 
+        /*width: 1100px;
         height: 733px;*/
         width: 1680px;
         height: 1275px;

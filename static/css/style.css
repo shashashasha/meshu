@@ -893,20 +893,19 @@ body.ie .frame div {
 .color-img img {
   border: 1px solid #e6e6e6;
 }
-.ready .options.left,
-.ready .options.right {
-  position: relative;
-  top: auto;
-  left: auto;
-  margin: 20px 0 40px;
-  display: inline-block;
+/*.ready .options.left, .ready .options.right {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 20px 0 40px;
+    display: inline-block;
 }
 .ready .options.left {
-  float: left;
+    float: left;
 }
 .ready .options.right {
-  float: right;
-}
+    float: right;
+}*/
 #rotate {
   width: 200px;
   height: 190px;
@@ -1423,15 +1422,15 @@ body.ie8 .city-input {
   margin-top: 40px;
   position: relative;
 }
-.ready .make-wrapper {
-  margin-top: 0;
-}
+/*.ready .make-wrapper {
+    margin-top: 0;
+}*/
 .make-wrapper h2 {
   margin: 20px 0 5px 0;
 }
-.ready .make-wrapper h2 {
-  margin-top: 0;
-}
+/*.ready .make-wrapper h2 {
+    margin-top: 0;
+}*/
 .make-wrapper li {
   color: #808080;
 }
@@ -1511,11 +1510,11 @@ body.ie8 .city-input {
 #total h2 {
   margin-top: 0;
 }
-.ready #total {
-  top: auto;
-  clear: both;
-  position: relative;
-}
+/*.ready #total {
+    top: auto;
+    clear: both;
+    position: relative;
+}*/
 #total-cost {
   float: right;
   font-size: 28px;
@@ -1647,7 +1646,7 @@ body.ie8 .city-input {
   cursor: auto;
   pointer-events: none;
 }
-/* 
+/*
     Map Object Styling
 */
 /*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
@@ -2215,14 +2214,14 @@ body.ie #maps .mini-meshu div {
 
 }
 .postcard #content {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;
   height: 1275px;
 }
 .postcard .frame {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;

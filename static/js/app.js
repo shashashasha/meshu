@@ -55,10 +55,10 @@ $(function() {
 
 		switch (pageType) {
 			case 'view':
-				if (svgEnabled) 
+				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
-			
+
 			case 'product':
 				var product = $("#product");
 				product.find(".nav").remove();
@@ -66,7 +66,7 @@ $(function() {
 				break;
 
 			default:
-				$("#materials").addClass("ready");
+				// $("#materials").addClass("ready");
 
 				var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
 				sb.materializer.product(product);
@@ -89,7 +89,7 @@ $(function() {
 		if (pageType != 'postcard') {
 			generateProductThumbnails();
 		}
-		
+
 
 		$("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");
@@ -105,7 +105,7 @@ $(function() {
 				div.innerHTML = cols[2];
 				var decoded = div.firstChild.nodeValue;
 
-				$("<li>").html(decoded).appendTo($("#display-places"));	
+				$("<li>").html(decoded).appendTo($("#display-places"));
 			}
 		});
 
@@ -145,21 +145,21 @@ $(function() {
 		});
 	}
 
-	/* 
+	/*
 		This handles when people select a product to order
 		and go to the materials / color selection page
 	*/
 	$("#product-preview svg").live("click", function() {
 
 		var product = $(this).attr("id").split("-")[1];
-		
+
 		$(".make-option").hide();
 
 		$("#make-" + product).show();
 
 		sb.rotator.update(product);
 
-		/* 
+		/*
 			i suck.
 		*/
 		sb.materializer.product(product);
@@ -174,7 +174,7 @@ $(function() {
 		if (meshu.mesh().name == "facet") {
 			sb.product.initialize(".delaunay", catalog);
 
-			// rasterize the meshu, add it as an image on to the page 
+			// rasterize the meshu, add it as an image on to the page
 			// this means we can then pin it / fb it
 			sb.rasterizer.rasterize(meshu);
 		}
