@@ -38,7 +38,9 @@ urlpatterns = patterns('',
 urlpatterns += patterns('meshu.views',
 
 	# meshu begin
-	url(r'^$', 'index'),
+	url(r'^$', direct_to_template, {
+		'template': 'meshu/index.html'
+	}),
 
 	# cart operations
 	url(r'^cart/add/(?P<item_id>\d+)', 'order_add_to_cart'),
@@ -51,8 +53,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
 	# order a new meshu, not saved yet
 	url(r'^order/', 'order_new'),
-
-	url(r'^invite/', 'invite'),
 
 	# gallery of meshus
 	url(r'^gallery/', direct_to_template, {

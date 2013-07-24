@@ -45,23 +45,6 @@ amounts = []
 def json_dump(json):
 	return HttpResponse(simplejson.dumps(json), mimetype='application/javascript')
 
-# meshu.views.index
-def index(request):
-	# no more invite code to enter
-	return render_to_response('meshu/index.html', {}, context_instance=RequestContext(request))
-
-def invite(request):
-	code = request.POST.get('code', '')
-
-	hashed = sha.new(code).hexdigest()
-
-	# if you found this, you're trying too hard
-	if hashed == invite_code:
-		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
-	else:
-		return notify(request, 'invite_failed')
-
-
 def mail_viewer(request, template):
 	profile = current_profile(request)
 
