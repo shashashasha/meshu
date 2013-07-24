@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'meshu',
     'south',
     'facebook',
+    'cart', #shopping cart
 )
 
 # A sample logging configuration. The only tangible logging
@@ -150,9 +151,9 @@ LOGGING = {
 # authentication
 AUTH_PROFILE_MODULE = 'meshu.UserProfile'
 # make django able to accept email/pass as login, vs username/pass
-AUTHENTICATION_BACKENDS = ( 
+AUTHENTICATION_BACKENDS = (
     'facebook.backend.FacebookBackend',
-    'meshu.backend.EmailBackend', 
+    'meshu.backend.EmailBackend',
 )
 
 # for view short urls

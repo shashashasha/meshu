@@ -39,8 +39,15 @@ urlpatterns += patterns('meshu.views',
 
 	# meshu begin
 	url(r'^$', 'index'),
-	# order an existing meshu
+
+	# cart operations
+	url(r'^cart/add/(?P<item_id>\d+)', 'order_add_to_cart'),
+	url(r'^cart/remove/(?P<item_id>\d+)', 'order_remove_from_cart'),
+	url(r'^cart/checkout', 'order_checkout'),
+
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
+
+	# order an existing meshu
 	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
 	# order a new meshu, not saved yet
 	url(r'^order/', 'order_new'),
@@ -77,12 +84,12 @@ urlpatterns += patterns('meshu.views',
 urlpatterns += patterns('meshu.item',
 	url(r'^make/template/(?P<item_encoded>\d+)/to_png', 'processing_dataurl_to_image'),
 	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
-	
+
 	# begin ordering an existing user meshu
 	url(r'^make/(?P<item_encoded>\d+)/to_png', 'item_topng'),
 	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
 
-	
+
 	url(r'^make/to_png', 'processing_dataurl_to_image'),
 	url(r'^make/data/to_png', 'processing_dataurl_to_image'),
 
@@ -93,7 +100,7 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/facebook', direct_to_template, {
 		'template': 'meshu/gallery/facebook_auth.html'
 	}),
-	
+
 	url(r'^make/geojson', 'item_from_geojson'),
 	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
@@ -113,7 +120,7 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/', direct_to_template, {
 		'template': 'meshu/make_landing.html'
 	}),
-	
+
 	# save/new always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
 	url(r'^edit/(?P<item_encoded>\d+)/update', 'item_update'),
@@ -131,7 +138,7 @@ urlpatterns += patterns('meshu.item',
 )
 
 # meshu/accounts.py
-urlpatterns += patterns('meshu.accounts', 
+urlpatterns += patterns('meshu.accounts',
 	url(r'^user/login/', 'user_login'),
 	# fb
     url(r'^user/facebook/inline_login/', 'user_facebook_login'),
@@ -152,7 +159,7 @@ urlpatterns += patterns('meshu.accounts',
 )
 
 # meshu/processing.py
-urlpatterns += patterns('meshu.pipeline', 
+urlpatterns += patterns('meshu.pipeline',
 	url(r'^orders/processing/postcard/front/(?P<order_id>\d+)', 'processing_postcard_front'),
 	url(r'^orders/processing/postcard/back/(?P<order_id>\d+)', 'processing_postcard_back'),
 
@@ -162,13 +169,13 @@ urlpatterns += patterns('meshu.pipeline',
 
 
 	url(r'^orders/postcard/(?P<item_id>\d+)', 'item_postcard'),
-	
+
 	# convenience views for different states
 	url(r'^orders/shipped', 'view_orders_shipped'),
 	url(r'^orders/received', 'view_orders_received'),
 	url(r'^orders/sent', 'view_orders_sent'),
 	url(r'^orders/canceled', 'view_orders_canceled'),
-	
+
 	url(r'^orders/addresses', 'view_addresses'),
 	url(r'^orders/notes', 'view_notes'),
 	url(r'^orders/all', 'view_all'),
@@ -184,7 +191,7 @@ urlpatterns += patterns('meshu.proxy',
 )
 
 # facebook specific
-urlpatterns += patterns('facebook.views', 
+urlpatterns += patterns('facebook.views',
     url(r'^facebook/login$', 'login'),
     url(r'^facebook/authentication_callback', 'authentication_callback'),
 )

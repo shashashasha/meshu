@@ -1,10 +1,10 @@
 First Name|MI|Last Name|Company|Address 1|Address 2|Address 3|City|State/Province|Zip/Postal Code|Country|Urbanization|Phone Number|Fax Number|E Mail|Reference Number|Nickname
 <br />
 {% for order in orders reversed %}
-{{ order.shipping_name }}||||
-{{ order.shipping_address }}|{{ order.shipping_address_2 }}|
-{{ order.shipping_city }}|
-{{ order.shipping_state }}{{ order.shipping_region }}|
-{{ order.shipping_zip }}|{{ order.shipping_country }}||8055598923||{{ order.contact }}|{{ order.id }}|order_{{ order.id }}
+{{ order.shipping.shipping_name }}||||
+{{ order.shipping.shipping_address }}|{{ order.shipping.shipping_address_2 }}|
+{{ order.shipping.shipping_city }}|
+{{ order.shipping.shipping_state }}{{ order.shipping.shipping_region }}|
+{{ order.shipping.shipping_zip }}|{{ order.shipping.shipping_country }}||8055598923||{{ order.shipping.contact }}|{{ order.id }}|order_{{ order.id }}
 <br />
 {% endfor %}
