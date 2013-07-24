@@ -72,7 +72,7 @@ var saver = function() {
         var saveButton = "#save-button";
         $(saveButton).click(function() {
           if (!loadedMeshu) return;
-          
+
           $(saveButton).html('saving');
 
           var saveurl = loadedMeshu.edit_url + 'save';
@@ -127,7 +127,7 @@ var saver = function() {
         // protect the saving so we don't save readymades
         if (self.meshu.isReadymade && callback) {
             callback();
-        } else if (self.meshu.username && self.meshu.username == 'guest') { 
+        } else if (self.meshu.username && self.meshu.username == 'guest') {
             assignGuestMeshu();
 
             if (callback) {
@@ -138,7 +138,7 @@ var saver = function() {
 
             if (callback) {
               self.postCreateCallback = callback;
-            } 
+            }
         }
 
         return self;
@@ -152,7 +152,7 @@ var saver = function() {
         self.meshu.title = data.title;
         self.meshu.promo = data.promo;
 
-        if (data.image_url) 
+        if (data.image_url)
           self.meshu.image_url = data.image_url;
     };
 

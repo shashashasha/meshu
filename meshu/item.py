@@ -8,7 +8,7 @@ import urllib2, urllib
 
 def item_begin_order(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
-	
+
 	# check user id
 	# for the marathon, we can just let anyone order anything
 
@@ -52,7 +52,7 @@ def item_delete(request, item_id):
 # generalized handler for all our item pages
 def item_handler(request, item_id, template, view):
 	item = get_object_or_404(Meshu, pk=item_id)
-	
+
 	return render_to_response('meshu/item/' + template, {
 			'meshu': item,
 			'view': view
@@ -115,7 +115,7 @@ def item_from_data(request):
 	meshu.description = request.POST.get('description', '')
 
 	# meshu data
-	meshu.location_data = request.POST['location_data']	
+	meshu.location_data = request.POST['location_data']
 	meshu.svg = request.POST['svg']
 
 	# wtf dawg
@@ -187,7 +187,7 @@ def item_save(request, item_encoded):
 		return meshu_xhr_response(meshu)
 
 	return item_handler(request, item_id, 'display.html', 'view')
-	
+
 
 
 from django.core.files.images import ImageFile

@@ -50,7 +50,7 @@ post_save.connect(create_user_profile, sender=User)
 
 class Meshu(models.Model):
 	user_profile = models.ForeignKey(UserProfile, default=1, null=True)
-	date_created = models.DateTimeField('date created', auto_now_add=True)	
+	date_created = models.DateTimeField('date created', auto_now_add=True)
 	title = models.CharField(max_length=140, default='My Meshu', blank=True)
 	description = models.CharField(max_length=400, blank=True)
 
@@ -68,14 +68,14 @@ class Meshu(models.Model):
 
 	# if it's a readymade, we need to define what product it is
 	product = models.CharField(max_length=140, default='', blank=True)
-	
-	# thumbnail in case we need gallery views	
+
+	# thumbnail in case we need gallery views
 	thumbnail = models.ImageField(upload_to="images/meshus/thumbnails/", default="images/default_thumbnail.png")
 
 	# whether or not its facet or radial
 	renderer = models.CharField(max_length=140, default='', blank=True)
 
-	# store visual style, zoom level, etc. 
+	# store visual style, zoom level, etc.
 	# format is "product:radial&zoom:10"
 	metadata = models.CharField(max_length=1000, default='', blank=True)
 
@@ -103,25 +103,47 @@ class MeshuImage(models.Model):
 	meshu = models.ForeignKey(Meshu, default=1)
 	image = models.ImageField(upload_to="images/meshus/")
 
+
+class ShippingInfo(models.Model):
+
+	# order status email address
+	contact = models.CharField(max_length=200, default='')
+
+	# shipping information
+	shipping_name = models.CharField(max_length=200, default='')
+	shipping_address = models.CharField(max_length=200, default='')
+	shipping_address_2 = models.CharField(max_length=140, default='', blank=True)
+	shipping_city = models.CharField(max_length=100, default='')
+	shipping_zip = models.CharField(max_length=20, default='') # account for postcodes too hopefully
+	shipping_region = models.CharField(max_length=100, default='', blank=True) # regions, county
+	shipping_state = models.CharField(max_length=2, default='', blank=True)
+	shipping_country = models.CharField(max_length=100, default='', blank=True)
+
+	def get_full_address(self):
+		strings = [self.shipping_address, self.shipping_address_2, self.shipping_city, self.shipping_zip, self.shipping_country]
+		return ' '.join(strings)
+
+	def __unicode__(self):
+		strings = [self.shipping_address, self.shipping_city, self.shipping_country]
+		return ', '.join(strings)
+
+
 class Order(models.Model):
 	user_profile = models.ForeignKey(UserProfile, default=1)
 	meshu = models.ForeignKey(Meshu, default=1)
 
 	# order details
 	ORDER_STATUSES = (
-		(u'OR', u'Ordered'), # 
-		(u'PR', u'Processed'), # 
+		(u'OR', u'Ordered'), #
+		(u'PR', u'Processed'), #
 		(u'SE', u'Sent to Fabricator'), #
-		(u'RE', u'Received from Fabricator'), # 
-		(u'PA', u'Packaged'), # 
+		(u'RE', u'Received from Fabricator'), #
+		(u'PA', u'Packaged'), #
 		(u'SH', u'Shipped'),
 		(u'CA', u'Canceled'),
 	)
-	date_created = models.DateTimeField('date created', auto_now_add=True)	
+	date_created = models.DateTimeField('date created', auto_now_add=True)
 	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='OR')
-
-	# order status email address
-	contact = models.CharField(max_length=200, default='')
 
 	# order information
 	material = models.CharField(max_length=140) # acrylic, silver, bamboo
@@ -129,15 +151,7 @@ class Order(models.Model):
 	product = models.CharField(max_length=140) # necklace, pendant, etc
 	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
 
-	# shipping information
-	shipping_name = models.CharField(max_length=200, default='')
-	shipping_address = models.CharField(max_length=200, default='')
-	shipping_address_2 = models.CharField(max_length=140, default='', blank=True)
-	shipping_city = models.CharField(max_length=100, default='') 
-	shipping_zip = models.CharField(max_length=20, default='') # account for postcodes too hopefully
-	shipping_region = models.CharField(max_length=100, default='', blank=True) # regions, county
-	shipping_state = models.CharField(max_length=2, default='', blank=True)
-	shipping_country = models.CharField(max_length=100, default='', blank=True)
+	shipping = models.ForeignKey(ShippingInfo, null=True)
 
 	# postcard status
 	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)

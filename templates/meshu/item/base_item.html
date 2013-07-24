@@ -40,7 +40,7 @@
         <div id="edit" class="section">
             <div id="search">
                 <h2>{% block page_title %}{% endblock %}</h2>
-                <input type="text" id="searchbox" size="35" value="add a city, place, or address" 
+                <input type="text" id="searchbox" size="35" value="add a city, place, or address"
                     onfocus="value=''"/>
                 <div id="search-button" class="button">search</div>
             </div>
@@ -259,7 +259,7 @@
         <div id="checkout" class="section">
             <div class="nav back">back to materials</div>
             <div class="make-wrapper">
-                <form action="/order/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
+                <form action="/cart/add/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
                 <div class="half">
                 <h2>Shipping Address</h2>
                 <div id="shipping-form" class="domestic">
@@ -561,7 +561,7 @@
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
                     </div>
-                    <h2 class="review-header">Cost of Shipping: 
+                    <h2 class="review-header">Cost of Shipping:
                         <span class="domestic">$5</span>
                         <span class="international">$38</span>
                     </h2>
@@ -627,7 +627,7 @@
                     <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
                     <h2 id="total-price">Total: <span></span></h2>
                 </div>
-                <div id="submit-button" class="button" value="Submit Payment" tabindex="-1">Submit Payment</div>
+                <div id="submit-button" class="button" value="Submit Payment" tabindex="-1">Add to Cart</div>
             </div>
         </div>
     {% endblock %}
@@ -642,8 +642,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/rgbcolor.js"></script> 
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script> 
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/rgbcolor.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script>
     {% if debug == false %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
     {% else %}
@@ -655,7 +655,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
-    
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/rasterizer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/transforms.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
@@ -668,7 +668,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.orderer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.socialsharer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/viewhandler.js"></script>
-    
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
     {% endif %}
 
@@ -684,7 +684,7 @@
 
     var pageType = "{{ view }}";
     var debug = ["{{ DEBUG }}", "{{ debug }}", "{{ settings.debug }}", "{{ request.debug }}"];
-    
+
     {% if meshu %}
     var loadedMeshu = {
         id: '{{ meshu.id }}',
@@ -699,8 +699,8 @@
         svg: '{{ meshu.svg|safe }}',
         promo: '{{ meshu.promo }}'
     };
-    {% else %} 
+    {% else %}
     var loadedMeshu = null;
     {% endif %}
-    </script>  
+    </script>
 {% endblock %}

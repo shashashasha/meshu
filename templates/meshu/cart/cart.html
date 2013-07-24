@@ -1,0 +1,10 @@
+{% extends "meshu/base.html" %}
+
+{% block content %}
+<h2 class="page-header">We are Sha and Rachel and we like you.</h2>
+
+{% for item in items %}
+	{{ item.quantity }} - {{ item.unit_price }} - {{ item.id }}
+{% endfor %}
+
+{% endblock %}

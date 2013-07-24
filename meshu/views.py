@@ -17,15 +17,18 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 # our models
-from meshu.models import Meshu, MeshuImage, Order, UserProfile
+from meshu.models import *
 
 import string, random
 
-# this is how i get dates. 
+# this is how i get dates.
 from datetime import datetime
 
 # got to get paid.
 import stripe
+
+# not sure why i can't do cart.models import Cart
+from cart import Cart
 
 # YAY!
 import sha
@@ -42,21 +45,14 @@ amounts = []
 def json_dump(json):
 	return HttpResponse(simplejson.dumps(json), mimetype='application/javascript')
 
-# meshu.views.index
-def index(request):
-	# no more invite code to enter
-	return render_to_response('meshu/index.html', {}, context_instance=RequestContext(request))
-
-def invite(request):
-	code = request.POST.get('code', '')
-
-	hashed = sha.new(code).hexdigest()
-
-	# if you found this, you're trying too hard
-	if hashed == invite_code:
-		return render_to_response('meshu/invited.html', {}, context_instance=RequestContext(request))
+# grab the current user profile, if a user is logged in,
+# otherwise grabs guest profile, for saving interim meshus
+def current_profile(request):
+	if request.user.is_authenticated():
+		return request.user.get_profile()
 	else:
-		return notify(request, 'invite_failed')
+		return UserProfile.objects.get(user__username='guest')
+
 
 
 def mail_viewer(request, template):
@@ -124,7 +120,7 @@ def mail_forgotten_password(email, password):
 	})
 	return
 
-# mails ordered svg to an ifttt routine 
+# mails ordered svg to an ifttt routine
 # that puts it in our dropbox queue for sending to the manufacturer
 def mail_ordered_svg(order):
 	# has to be my email because ifttt is expecting that
@@ -138,7 +134,7 @@ def mail_template(template, arguments):
 
 	html_content = render_to_string(template, arguments)
 	text_content = strip_tags(html_content)
-	
+
 	# create the email, and attach the HTML version as well.
 	subject = arguments['subject']
 	from_email = arguments['from']
@@ -157,6 +153,42 @@ def notify(request, view):
 #
 # Ordering!
 #
+
+def order_add_to_cart(request):
+	profile = current_profile(request)
+	meshu = meshu_get_or_create(request, profile)
+
+	order = order_create(request, profile, meshu)
+
+	current_cart = Cart(request)
+	current_cart.add(order, order.amount, 1)
+
+	return json_dump({ 'success' : 'true', 'order': order.id, 'amount': order.amount })
+
+def order_add_and_checkout(request, item_id):
+	order_add_to_cart(request, item_id)
+	return order_checkout(request)
+
+def order_remove_from_cart(request, item_id):
+	current_cart = Cart(request)
+	order = get_object_or_404(Order, pk=item_id)
+	current_cart.remove(order)
+	return json_dump({ 'success' : 'true' })
+
+def order_checkout(request):
+	current_cart = Cart(request)
+	items = current_cart.cart.item_set.all()
+
+	return render_to_response('meshu/cart/cart.html', {
+			'items' : items
+	}, context_instance=RequestContext(request))
+
+def order_empty(request):
+	current_cart = Cart(request)
+	current_cart.clear()
+	return render_to_response('meshu/cart/cart.html', {
+			'items' : items
+	}, context_instance=RequestContext(request))
 
 # verify_coupon has to be an xhr request, we don't want to refresh the page
 def order_verify_coupon(request):
@@ -186,7 +218,7 @@ def order_meshu(request, item_id):
 	profile = current_profile(request)
 
 	item_id = request.POST.get('meshu_id', item_id)
-	
+
 	# get existing meshu
 	meshu = get_object_or_404(Meshu, pk=item_id)
 
@@ -232,6 +264,27 @@ def make_order(request, profile, meshu):
 	# every order is new
 	order = order_create(request, profile, meshu)
 
+	# store the shipping address information
+	shipping = ShippingInfo()
+	shipping.shipping_name = request.POST['shipping_name']
+	shipping.shipping_address = request.POST['shipping_address']
+	shipping.shipping_address_2 = request.POST['shipping_address_2']
+	shipping.shipping_city = request.POST['shipping_city']
+	shipping.shipping_zip = request.POST['shipping_zip']
+	shipping.shipping_region = request.POST['shipping_region']
+	shipping.shipping_state = request.POST['shipping_state']
+	shipping.shipping_country = request.POST['shipping_country']
+
+	if request.user.is_authenticated() == False:
+		shipping.contact = request.POST.get('shipping_contact', '')
+	else:
+		shipping.contact = profile.user.email
+
+	shipping.save()
+
+	order.shipping = shipping
+	order.save()
+
 	# mail the current user if they're logged in
 	if request.user.is_authenticated():
 		mail_order_confirmation(email, meshu, order)
@@ -244,19 +297,6 @@ def make_order(request, profile, meshu):
 			'order': order,
 			'meshu': meshu
 	}, context_instance=RequestContext(request))
-
-#
-# helper functions, ie functions that don't render views
-#
-
-# grab the current user profile, if a user is logged in, 
-# otherwise grabs guest profile, for saving interim meshus
-def current_profile(request):
-	if request.user.is_authenticated():
-		return request.user.get_profile()
-	else:
-		return UserProfile.objects.get(user__username='guest')
-
 
 #
 # creating or updating model functions, saves them to databases
@@ -312,16 +352,6 @@ def meshu_delete(request, item_id):
 def order_create(request, profile, meshu):
 	order = Order()
 
-	# store the shipping address information
-	order.shipping_name = request.POST['shipping_name']
-	order.shipping_address = request.POST['shipping_address']
-	order.shipping_address_2 = request.POST['shipping_address_2']
-	order.shipping_city = request.POST['shipping_city']
-	order.shipping_zip = request.POST['shipping_zip']
-	order.shipping_region = request.POST['shipping_region']
-	order.shipping_state = request.POST['shipping_state']
-	order.shipping_country = request.POST['shipping_country']
-
 	# set the meshu materials
 	order.material = request.POST['material']
 	order.color = request.POST['color']
@@ -336,11 +366,6 @@ def order_create(request, profile, meshu):
 	# set the status to ORDERED
 	order.status = 'OR'
 
-	if request.user.is_authenticated() == False:
-		order.contact = request.POST.get('shipping_contact', '')
-	else:
-		order.contact = profile.user.email
-	
 	# postcard note
 	order.postcard_note = request.POST.get('postcard_note', '')
 
@@ -350,7 +375,7 @@ def order_create(request, profile, meshu):
 
 	order.save()
 	return order
-	
+
 
 # don't judge me, i think this is funny
 def random_password(length):
