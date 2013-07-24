@@ -43,9 +43,10 @@ urlpatterns += patterns('meshu.views',
 	}),
 
 	# cart operations
-	url(r'^cart/add/(?P<item_id>\d+)', 'order_add_to_cart'),
+	url(r'^cart/add/', 'order_add_to_cart'),
 	url(r'^cart/remove/(?P<item_id>\d+)', 'order_remove_from_cart'),
 	url(r'^cart/checkout', 'order_checkout'),
+	url(r'^cart/empty', 'order_empty'),
 
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
 

@@ -4,12 +4,12 @@ var sb = sb || {};
 sb.ui = sb.ui || {};
 
 /*
-	
-	Pulling apart some JQuery listeners 
-	from app.js into here. 
 
-	The idea is that stuff in here either 
-	listens to events related to the purchasing 
+	Pulling apart some JQuery listeners
+	from app.js into here.
+
+	The idea is that stuff in here either
+	listens to events related to the purchasing
 	form or modifies the purchasing form.
 
 */
@@ -25,24 +25,24 @@ sb.ui.orderer = function(meshu) {
 	});
 
 	// switching from international to domestic, or vice versa
-	$("#shipping-destination li").click(function() {		
+	$("#shipping-destination li").click(function() {
         var mode = $(this).attr("id").split("-").pop();
 
         var form = $("#shipping-destination");
 
-        $("#shipping-form").attr("class", mode); 
+        $("#shipping-form").attr("class", mode);
         form.find("li").removeClass("active");
         $(this).addClass("active");
 
         cashier.shippingMode(mode);
 	});
-	
+
 
 	$("#postcard-note-form").keyup(function(e) {
 		var note = e.target.value;
 		$("#postcard-note").val(note);
 	});
-	
+
 	$("#coupon-code").submit(function() {
 		var value = $("#coupon-code-value").val();
 		cashier.applyCoupon(value, function(data) {
@@ -82,7 +82,7 @@ sb.ui.orderer = function(meshu) {
 
 
 	/*
-		We're using JQuery validate to check all the forms 
+		We're using JQuery validate to check all the forms
 		of our shipping and credit card input
 
 		If it's valid, we populate the review
@@ -131,10 +131,10 @@ sb.ui.orderer = function(meshu) {
 		if (!user.loggedIn) {
 			forceUserLogin();
 			user.afterLogIn = createAndView;
-		} 
+		}
 		else {
 			createAndView();
-		}	
+		}
 	});
 
 	$("#review-button").click(function() {
@@ -142,23 +142,26 @@ sb.ui.orderer = function(meshu) {
         	forceUserLogin();
         	return false;
         }
+
+        // save this for now
+        saver.createOrUpdateMeshu();
 	});
 
-    $("#submit-button").click(function(e) { 
+    $("#submit-button").click(function(e) {
         if (!user.loggedIn) {
         	forceUserLogin();
         	return false;
         }
 
         // cash money
-        cashier.submit(); 
+        cashier.submit();
     });
 
 	function onFormValidated() {
 		if (!user.loggedIn) {
 			forceUserLogin(onFormValidated);
 			return;
-		}	
+		}
 
 		self.updated();
 		self.validated();
@@ -172,9 +175,9 @@ sb.ui.orderer = function(meshu) {
 		user.afterLogIn = function() {
 			if (callback) {
 				saver.createOrUpdateMeshu(function() {
-					// wait a bit... 
+					// wait a bit...
 					setTimeout(callback, 200);
-				});	
+				});
 			}
 		};
 	}
@@ -211,7 +214,7 @@ sb.ui.orderer = function(meshu) {
 
 		$("#postcard-note").val($("#postcard-note-form").val());
 	}
-	
+
 	/*
 		Updating the review order divs
 	*/
@@ -260,7 +263,7 @@ sb.ui.orderer = function(meshu) {
 
 			div.text($(this).val()).appendTo("#review-shipping");
 		});
-		
+
 		var digits = $("#card-number").val();
 		$("#review-payment").text("XXXX-XXXX-XXXX-"+digits.substring(12,16));
 	}
