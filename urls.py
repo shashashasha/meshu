@@ -52,9 +52,12 @@ urlpatterns += patterns('meshu.views',
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
 
 	# order an existing meshu
-	url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
+	# url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
 	# order a new meshu, not saved yet
-	url(r'^order/', 'order_new'),
+	# url(r'^order/', 'order_new'),
+
+	# new order function, buys everythng in the cart
+	url(r'^order/', 'submit_orders'),
 
 	# gallery of meshus
 	url(r'^gallery/', direct_to_template, {
