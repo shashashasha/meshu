@@ -404,7 +404,7 @@ body.win #login-form ul {
 }
 .option {
   width: 305px;
-  background-color: #808080;
+  background-color: #1fcaff;
   color: white;
   font-size: 36px;
   padding: 10px 0;
@@ -552,6 +552,9 @@ body.win #login-form ul {
 .button.pink {
   background-color: #ff3fb4;
 }
+.button.grey {
+  background-color: #808080;
+}
 .button:hover {
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -564,11 +567,11 @@ body.win #login-form ul {
 }
 #edit .connect-wrapper {
   position: absolute;
-  bottom: 27px;
+  bottom: 20px;
   font-size: 18px;
 }
 #edit .connect-wrapper .title {
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 }
 #edit .foursquare-auth,
 #edit .facebook-auth {
@@ -576,6 +579,7 @@ body.win #login-form ul {
   padding: 8px 9px 9px 34px;
   position: relative;
   font-size: 14px;
+  display: inline-block;
 }
 .foursquare-auth img {
   height: 20px;
@@ -588,7 +592,7 @@ body.win #login-form ul {
   background-position: 8% 50%;
   background-repeat: no-repeat;
   background-size: 20px 20px;
-  padding: 8px 5px 9px 34px;
+  padding: 8px 8px 9px 34px;
 }
 #cases {
   margin: 3px 0;
@@ -1658,7 +1662,7 @@ body.ie8 .city-input {
   cursor: auto;
   pointer-events: none;
 }
-/* 
+/*
     Map Object Styling
 */
 /*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
@@ -1974,6 +1978,67 @@ circle.highlight,
   pointer: cursor;
 }
 /*
+    cart page
+*/
+.theta {
+  display: none;
+}
+.cart-wrapper {
+  padding: 20px;
+}
+#cart {
+  width: 100%;
+  padding: 20px;
+  font-size: 22px;
+  border-collapse: collapse;
+}
+#cart tr {
+  border-bottom: 1px solid #808080;
+  margin-bottom: 10px;
+}
+#cart .meshu-svg {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #eee;
+}
+#cart .headings {
+  color: #808080;
+  font-size: 16px;
+}
+#cart .headings td {
+  padding-bottom: 10px;
+}
+#cart .cart-row td {
+  padding-top: 7px;
+}
+.total-wrapper {
+  width: 100%;
+}
+.total-inside {
+  width: 33%;
+  float: right;
+  border-bottom: 1px solid #808080;
+  margin-right: 20px;
+  color: #808080;
+  padding: 10px 0 30px 10px;
+}
+.total-wrapper span {
+  width: 160px;
+  float: right;
+  color: black;
+}
+.action-buttons {
+  clear: both;
+  margin: 170px 20px 20px 0;
+  height: 50px;
+}
+.action-buttons .button {
+  float: right;
+  font-size: 30px;
+  padding: 5px 11px;
+  margin-left: 10px;
+}
+/*
     gallery display
 */
 #usermade li.object {
@@ -2218,14 +2283,14 @@ body.ie #maps .mini-meshu div {
 
 }
 .postcard #content {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;
   height: 1275px;
 }
 .postcard .frame {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;

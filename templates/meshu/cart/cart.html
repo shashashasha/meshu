@@ -1,10 +1,40 @@
 {% extends "meshu/base.html" %}
 
 {% block content %}
-<h2 class="page-header">We are Sha and Rachel and we like you.</h2>
+<h2 class="page-header">Shopping Cart</h2>
 
-{% for item in items %}
-	{{ item.quantity }} - {{ item.unit_price }} - {{ item.id }}
-{% endfor %}
+<div class="cart-wrapper">
+	<table id="cart">
+		<tr class="headings">
+			<td>Meshu</td>
+			<td>Product</td>
+			<td>Subtotal</td>
+		</tr>
+	{% for item in items %}
+		<tr class="cart-row">
+			<td class="theta">{{item.product.meshu.theta|safe}}</td>
+			<td>{{ item.product.meshu.svg|safe }}</td>
+			<td>{{ item.product }}</td>
+			<td>${{ item.unit_price }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+</div>
+<div class="total-wrapper">
+	<div class="total-inside">
+		<h2>Total:<span>$80.00</span></h2>
+	</div>
+</div>
+<div class="action-buttons">
+	<a class="button large grey" href="/make">Make Another Meshu</a>
+	<div class="button large pink">Proceed to Checkout</div>
 
+{% endblock %}
+
+{% block resources %}
+    <script type="text/javascript">
+    	var theta = $(".theta").text();
+    	console.log(theta)
+    	$(".delaunay").attr("transform","scale(.17) rotate("+theta+", 300, 300)");
+    </script>
 {% endblock %}

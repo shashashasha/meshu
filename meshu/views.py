@@ -118,7 +118,7 @@ def cart_empty(request):
 		current_cart.remove(item.product)
 
 	return render_to_response('meshu/cart/cart.html', {
-			'items' : items
+			'items' : []
 	}, context_instance=RequestContext(request))
 
 # verify_coupon has to be an xhr request, we don't want to refresh the page
