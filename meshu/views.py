@@ -160,8 +160,9 @@ def submit_orders(request):
 	# token = request.POST['stripeToken']
 
 	# create the charge on Stripe's servers - this will charge the user's card
+	# amount = int(float(request.POST.get('amount', 0.0)))
 	# charge = stripe.Charge.create(
-	#     amount = int(float(request.POST.get('amount', 0.0))), # amount in cents, again
+	#     amount = amount, # amount in cents, again
 	#     currency = "usd",
 	#     card = token,
 	#     description = stripe_desc
@@ -196,6 +197,9 @@ def submit_multiple(request, shipping, items):
 		order.save()
 		orders.append(order)
 
+		# if there is more than one of this necklace/pendant/whatever,
+		# spoof new orders of it. using this method here:
+		# https://docs.djangoproject.com/en/1.4/topics/db/queries/#copying-model-instances
 		if item.quantity > 1:
 			for x in range(0, item.quantity-1):
 				order.pk = None
@@ -205,8 +209,7 @@ def submit_multiple(request, shipping, items):
 		# send a mail to ifttt that creates an svg in our dropbox for processing
 		mail_ordered_svg(order)
 
-
-	mail_multiple_order_confirmation(shipping.contact, order)
+	mail_multiple_order_confirmation(shipping.contact, orders)
 	return render_to_response('meshu/notification/ordered_multiple.html', {
 		'orders': orders
 	}, context_instance=RequestContext(request))
@@ -219,10 +222,11 @@ def submit_single(request, shipping, items):
 
 	order.save()
 
+	mail_order_confirmation(shipping.contact, order.meshu, order)
+
 	# send a mail to ifttt that creates an svg in our dropbox for processing
 	mail_ordered_svg(order)
 
-	mail_order_confirmation(shipping.contact, order.meshu, order)
 	return render_to_response('meshu/notification/ordered.html', {
 		'order': order,
 		'meshu': order.meshu
@@ -265,7 +269,7 @@ def meshu_update(request, meshu):
 
 	meshu.location_data = request.POST.get('location_data', meshu.location_data)
 	meshu.svg = request.POST.get('svg', meshu.svg)
-	meshu.theta = request.POST.get('theta', meshu.theta)
+	meshu.theta = int(float(request.POST.get('theta', meshu.theta)))
 
 	meshu.renderer = request.POST.get('renderer', meshu.renderer)
 	meshu.metadata = request.POST.get('metadata', meshu.metadata)
@@ -286,12 +290,6 @@ def meshu_get_or_create(request, profile):
 
 	# use our existing update function, less repetitive
 	meshu = meshu_update(request, meshu)
-
-	# wtf dawg
-	theta = request.POST.get('theta', 0.0)
-	if theta:
-		meshu.theta = int(float(theta))
-
 	meshu.save()
 	return meshu
 
