@@ -79,7 +79,10 @@ def cart_add(request):
 	current_cart = Cart(request)
 	current_cart.add(order, order.amount, 1)
 
-	return json_dump({ 'success' : 'true', 'order': order.id, 'amount': order.amount })
+	items = current_cart.cart.item_set.all()
+	return render_to_response('meshu/cart/cart.html', {
+			'items' : items
+	}, context_instance=RequestContext(request))
 
 def cart_add_and_checkout(request, item_id):
 	order_add_to_cart(request, item_id)
@@ -141,9 +144,16 @@ def order_verify_coupon(request):
 
 # to replace the old meshu_new and order_meshu functions
 def submit_orders(request):
+	# gets logged in user profile, or anonymous profile
+	profile = current_profile(request)
+	current_cart = Cart(request)
 	items = current_cart.cart.item_set.all()
 
-	email = profile.user.email
+
+	if request.user.is_authenticated() == False:
+		email = request.POST.get('shipping_contact', '')
+	else:
+		email = profile.user.email
 	desc = str(email) + ", " + len(items)
 
 	# set your secret key: remember to change this to your live secret key in production
@@ -163,6 +173,7 @@ def submit_orders(request):
 
 	# store the shipping address information
 	shipping = ShippingInfo()
+	shipping.contact = email
 	shipping.shipping_name = request.POST['shipping_name']
 	shipping.shipping_address = request.POST['shipping_address']
 	shipping.shipping_address_2 = request.POST['shipping_address_2']
@@ -171,11 +182,6 @@ def submit_orders(request):
 	shipping.shipping_region = request.POST['shipping_region']
 	shipping.shipping_state = request.POST['shipping_state']
 	shipping.shipping_country = request.POST['shipping_country']
-
-	if request.user.is_authenticated() == False:
-		shipping.contact = request.POST.get('shipping_contact', '')
-	else:
-		shipping.contact = profile.user.email
 
 	shipping.save()
 
@@ -196,14 +202,12 @@ def submit_orders(request):
 	if (len(orders) == 1)
 		mail_order_confirmation(shipping.contact, orders[0].meshu, order)
 		return render_to_response('meshu/notification/ordered.html', {
-				'view' : 'paid',
 				'order': order,
 				'meshu': meshu
 		}, context_instance=RequestContext(request))
 	elif (len(orders) > 1)
 		mail_multiple_order_confirmation(shipping.contact, order)
 		return render_to_response('meshu/notification/ordered_multiple.html', {
-				'view' : 'paid',
 				'orders': orders
 		}, context_instance=RequestContext(request))
 
