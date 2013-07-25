@@ -8,8 +8,8 @@ $(function() {
 
 		self.initialize = function(meshTarget, catalog) {
 			products = catalog.getProducts();
-
-			/* 
+			console.log("initialize")
+			/*
 				pretty hacky, but seeing which products are used and hiding the rest
 			*/
 			var seenProducts = {};
@@ -25,7 +25,7 @@ $(function() {
 				} else {
 					self.previewFromElement(product.type, meshTarget);
 				}
-				
+
 				seenProducts[product.type] = true;
 
 				var range = self.describeProductRange(product);
@@ -41,17 +41,18 @@ $(function() {
 		};
 
 		self.resetPreviewImage = function(product) {
-			var svg = d3.select("#preview-" + product),
-				transform = sb.transforms.getTransform(product, "product");
+			var svg = d3.select("#preview-" + product);
+			// 	transform = sb.transforms.getTransform(product, "product");
 
-			svg.selectAll("*").remove();
-			
-			svg.append("svg:image")
-				.attr('x', 0)
-				.attr('y', 0)
-				.attr('width', '100%')
-				.attr('height', '100%')
-				.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
+			// svg.selectAll("*").remove();
+			svg.select(".product-delaunay").remove();
+
+			// svg.append("svg:image")
+			// 	.attr('x', 0)
+			// 	.attr('y', 0)
+			// 	.attr('width', '100%')
+			// 	.attr('height', '100%')
+			// 	.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
 		};
 
 		self.previewFromSelector = function(product, meshSelector) {
@@ -69,31 +70,31 @@ $(function() {
 			var svg = d3.select("#preview-" + product),
 				transform = sb.transforms.getTransform(product, "product");
 
-			svg.append("svg:image")
-				.attr('x', 0)
-				.attr('y', 0)
-				.attr('width', '600px')
-				.attr('height', '600px')
-				.attr("transform", transform)
-				.attr('xlink:href', element.toDataURL());
+			// svg.append("svg:image")
+			// 	.attr('x', 0)
+			// 	.attr('y', 0)
+			// 	.attr('width', '600px')
+			// 	.attr('height', '600px')
+			// 	.attr("transform", transform)
+			// 	.attr('xlink:href', element.toDataURL());
 		};
 
 		self.range = function(prices) {
-			return prices.length == 1 
-					? "$" + prices[0] 
+			return prices.length == 1
+					? "$" + prices[0]
 					: "$" + prices[0] + "-" + prices[prices.length - 1];
 		};
 
 		self.describeProductRange = function(product) {
 			if (product.discount != undefined) {
 				var range = "<del>" + self.range(product.originals) + "</del>";
-				
+
 				range += " " + self.range(product.prices);
 
-				range += product.discount < 1 
+				range += product.discount < 1
 					? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
 					: " ($" + product.discount + " off!)";
-					
+
 				return range;
 			} else {
 				return self.range(product.prices);

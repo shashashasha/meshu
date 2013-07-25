@@ -17,8 +17,6 @@ $(function() {
 				.attr('id', 'previewImage')
 				.attr('x', 0)
 				.attr('y', 0)
-				// .attr('width', 200)
-				// .attr('height', 190)
 				.attr("width",313)
 				.attr("height",297)
 				.attr('xlink:href', self.getImage(product));
@@ -27,13 +25,15 @@ $(function() {
 						.attr("id","transform")
 						.attr("transform", self.getTransform(product));
 
-			var miniDelaunay = $(delaunayFrame).clone().attr("id","mini-delaunay");
-			var bounding = $(hiddenFrame).clone().attr("id","rotate-ui");
+			var bounding = $(hiddenFrame).clone().attr("class","rotate-ui");
+
+			var miniDelaunay = $(delaunayFrame).clone()
+				.attr("class","mini-delaunay");
 
 			$(div[0]).append(miniDelaunay).append(bounding);
 
 			if (product == "pendant") {
-				main.select("#rotate-ui").attr("class","hidden pendant")
+				main.select(".rotate-ui").attr("class","hidden pendant")
 					.selectAll("circle").attr("r","55");
 			}
 
@@ -92,7 +92,7 @@ $(function() {
 
 			return self;
 		};
-				
+
 		function clockize(x1, y1, x2, y2) {
 			if (x2 > x1) {
 				if (y1 > 0 && y2 > 0) return true;

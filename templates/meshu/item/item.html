@@ -22,28 +22,34 @@
 {% endblock %}
 
 {% block finish %}
-    <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
-    <div id="finish-button" class="nav next start-order">Continue</div>
+    <!-- <div class="connect-wrapper"><div class="title">Connect with:</div><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
+    <div id="finish-button" class="nav next start-order">Continue</div> -->
 {% endblock %}
 
 {% block products %}
     <div class="wrapper" id="wrapper-pendant">
-        <div class="next active">
-            <svg id="preview-pendant" width="300" height="282"></svg>
+        <div class="">
+            <svg id="preview-pendant" width="300" height="282">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="313" height="297" x="0" y="0">
+            </svg>
         </div>
         <p>Pendant Necklace</p>
         <p class="note" id="range-pendant">$68-125</p>
     </div>
     <div class="wrapper" id="wrapper-necklace">
-        <div class="next active">
-            <svg id="preview-necklace" width="300" height="282"></svg>
+        <div class="">
+            <svg id="preview-necklace" width="300" height="282">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="313" height="297" x="0" y="0">
+            </svg>
         </div>
         <p>Large Necklace</p>
         <p class="note" id="range-necklace">$75-140</p>
     </div>
     <div class="wrapper" id="wrapper-earrings">
-        <div class="next active">
-            <svg id="preview-earrings" width="300" height="282"></svg>
+        <div class="">
+            <svg id="preview-earrings" width="300" height="282">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="313" height="297" x="0" y="0">
+            </svg>
         </div>
         <p>Pair of Earrings</p>
         <p class="note" id="range-earrings">$68-145</p>

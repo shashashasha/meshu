@@ -1054,7 +1054,7 @@ body.firefox.win #rotate-help .border-notch {
 #product-preview {
     margin-top: 25px;
 }
-.wrapper .next {
+.wrapper svg {
     border: 2px solid white;
     cursor: pointer;
     width: 300px;
@@ -1063,7 +1063,7 @@ body.firefox.win #rotate-help .border-notch {
         border-color: @grey;
     }
 }
-.wrapper.selected .next {
+.wrapper.selected svg {
     border-color: @pink;
 }
 #product-preview .wrapper {
@@ -1184,6 +1184,20 @@ body.firefox.win #rotate-help .border-notch {
 #add-ons {
     height: 560px;
 }
+#review {
+    color: @grey;
+}
+#review .review-field {
+    text-transform: capitalize;
+    color: black;
+    margin-right: 30px;
+}
+#review .review-field.inactive {
+    font-style: italic;
+    text-transform: lowercase;
+    color: @pink;
+}
+
 /*.edit #materials, .view #materials, .product #materials {
     right: -400px;
     .transition(right);
@@ -1722,7 +1736,7 @@ body.ie8 .city-input {
     border: none;
 }
 
-#submit-button {
+#submit-button, #add-to-cart {
     border: none;
     font-size: 22px;
     padding: 5px 10px;
@@ -1731,7 +1745,7 @@ body.ie8 .city-input {
     right: 20px;
     margin: 0;
 }
-#submit-button.inactive {
+#submit-button.inactive, #add-to-cart.inactive {
     background-color: @grey;
     cursor: auto;
     pointer-events: none;
@@ -1789,7 +1803,7 @@ circle {
     fill-opacity: 0;
     cursor: default;
 }
-.hidden, #rotate-ui, #hidden {
+.hidden, .rotate-ui, #hidden {
     display: none;
 }
 .account .delaunay.earrings path, .checkout .delaunay.earrings path, .review .delaunay.earrings path,
@@ -1803,15 +1817,15 @@ circle {
     .transition(stroke-width);
 }
 
-#mini-delaunay path, #product-preview path {
+.mini-delaunay path, #product-preview path {
     stroke-width: 35;
 }
 
-#rotate:hover #rotate-ui {
+#rotate:hover .rotate-ui {
     display: block;
 }
 
-#rotate-ui {
+.rotate-ui {
     circle {
         fill-opacity: 1;
         cursor: pointer;
@@ -1825,7 +1839,7 @@ circle {
     }
 }
 
-#rotate-ui.pendant {
+.rotate-ui.pendant {
     path {
         stroke-width: 20;
     }

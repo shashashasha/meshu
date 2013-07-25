@@ -54,10 +54,10 @@ $(function() {
 
 		switch (pageType) {
 			case 'view':
-				if (svgEnabled) 
+				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
-			
+
 			case 'product':
 				var product = $("#product");
 				product.find(".nav").remove();
@@ -88,7 +88,7 @@ $(function() {
 		if (pageType != 'postcard') {
 			generateProductThumbnails();
 		}
-		
+
 
 		$("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");
@@ -104,7 +104,7 @@ $(function() {
 				div.innerHTML = cols[2];
 				var decoded = div.firstChild.nodeValue;
 
-				$("<li>").html(decoded).appendTo($("#display-places"));	
+				$("<li>").html(decoded).appendTo($("#display-places"));
 			}
 		});
 
@@ -144,7 +144,7 @@ $(function() {
 		});
 	}
 
-	/* 
+	/*
 		This handles when people select a product to order
 		and go to the materials / color selection page
 	*/
@@ -154,20 +154,20 @@ $(function() {
 		wrapper.parent().find(".wrapper").removeClass("selected");
 		wrapper.addClass("selected");
 		var product = wrapper.attr("id").split("-")[1];
-		
+
 		$(".make-option").hide();
 
 		$("#make-" + product).show();
 
 		sb.rotator.update(product);
 
-		/* 
+		/*
 			i suck.
 		*/
 		sb.materializer.product(product);
 
 		// sync the rotation between the product picker and the product rotator
-		sb.rotator.on("rotated", sb.product.rotation);
+		// sb.rotator.on("rotated", sb.product.rotation);
 	});
 
 	function generateProductThumbnails() {
@@ -176,7 +176,7 @@ $(function() {
 		if (meshu.mesh().name == "facet") {
 			sb.product.initialize(".delaunay", catalog);
 
-			// rasterize the meshu, add it as an image on to the page 
+			// rasterize the meshu, add it as an image on to the page
 			// this means we can then pin it / fb it
 			sb.rasterizer.rasterize(meshu);
 		}
@@ -204,13 +204,13 @@ $(function() {
 				meshu.mesh().interactive(false);
 
 				// animate meshu
-				var product = sb.materializer.product();
-				var t = sb.transforms[product]["render"];
+				// var product = sb.materializer.product();
+				// var t = sb.transforms[product]["render"];
 
-				meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
+				// meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
 
 				// add the product class to the mesh
-				d3.select(".delaunay").attr("class","delaunay "+product);
+				// d3.select(".delaunay").attr("class","delaunay "+product);
 
 				// update the render background to be the product preview
 				var productPreview = static_url + 'images/render/' + product + '_preview.jpg',

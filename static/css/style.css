@@ -1009,16 +1009,16 @@ body.firefox.win #rotate-help .border-notch {
 #product-preview {
   margin-top: 25px;
 }
-.wrapper .next {
+.wrapper svg {
   border: 2px solid white;
   cursor: pointer;
   width: 300px;
   margin: 0 auto;
 }
-.wrapper .next:hover {
+.wrapper svg:hover {
   border-color: #808080;
 }
-.wrapper.selected .next {
+.wrapper.selected svg {
   border-color: #ff3fb4;
 }
 #product-preview .wrapper {
@@ -1139,6 +1139,19 @@ body.firefox.win #rotate-help .border-notch {
 }
 #add-ons {
   height: 560px;
+}
+#review {
+  color: #808080;
+}
+#review .review-field {
+  text-transform: capitalize;
+  color: black;
+  margin-right: 30px;
+}
+#review .review-field.inactive {
+  font-style: italic;
+  text-transform: lowercase;
+  color: #ff3fb4;
 }
 /*.edit #materials, .view #materials, .product #materials {
     right: -400px;
@@ -1658,7 +1671,8 @@ body.ie8 .city-input {
   margin-top: 60px;
   border: none;
 }
-#submit-button {
+#submit-button,
+#add-to-cart {
   border: none;
   font-size: 22px;
   padding: 5px 10px;
@@ -1667,7 +1681,8 @@ body.ie8 .city-input {
   right: 20px;
   margin: 0;
 }
-#submit-button.inactive {
+#submit-button.inactive,
+#add-to-cart.inactive {
   background-color: #808080;
   cursor: auto;
   pointer-events: none;
@@ -1729,7 +1744,7 @@ circle.highlight,
   cursor: default;
 }
 .hidden,
-#rotate-ui,
+.rotate-ui,
 #hidden {
   display: none;
 }
@@ -1759,24 +1774,24 @@ circle.highlight,
   -webkit-transition: stroke-width 0.6s;
   -o-transition: stroke-width 0.6s;
 }
-#mini-delaunay path,
+.mini-delaunay path,
 #product-preview path {
   stroke-width: 35;
 }
-#rotate:hover #rotate-ui {
+#rotate:hover .rotate-ui {
   display: block;
 }
-#rotate-ui circle {
+.rotate-ui circle {
   fill-opacity: 1;
   cursor: pointer;
   stroke-width: 50;
   stroke: transparent;
 }
-#rotate-ui path {
+.rotate-ui path {
   stroke: #999;
   stroke-dasharray: 20, 15;
 }
-#rotate-ui.pendant path {
+.rotate-ui.pendant path {
   stroke-width: 20;
 }
 /* radial */

@@ -21,7 +21,7 @@ sb.ui.orderer = function(meshu) {
 		updateForm();
 
 		// update the 'review order' screen
-		updateReviewText();
+		// updateReviewText();
 	});
 
 	// switching from international to domestic, or vice versa
@@ -155,6 +155,10 @@ sb.ui.orderer = function(meshu) {
 
         // cash money
         cashier.submit();
+    });
+
+    $("#add-to-cart").click(function(){
+    	cashier.submit();
     });
 
 	function onFormValidated() {

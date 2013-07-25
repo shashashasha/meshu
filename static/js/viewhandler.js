@@ -4,13 +4,45 @@ sb.viewhandler = function() {
 	var self = d3.dispatch("updated", "next", "prev");
 
 	// here's the list of views we have in this flow
-	var views = ["edit","product","make","account","checkout","review"];
+	var views = ["edit","product","make","add-ons","checkout","review"];
 	var content = $("#content");
+
+	$("#product").waypoint(function(direction) {
+		if (direction == "down") onNext();
+		else onPrev();
+	}, { offset: 500 });
+
+	$("#materials").waypoint(function(direction) {
+		if (direction == "down") {
+			if (sb.materializer.product())
+				sb.rotator.update(sb.materializer.product());
+		}
+	}, { offset: 550 });
+	$("#review").waypoint(function(direction) {
+		if (direction == "down") {
+			populateReviewText();
+			if (sb.materializer.product() && sb.materializer.material()) {
+				var orderForm = sb.ui.orderer(meshu);
+				orderForm.updated();
+			}
+		}
+	}, { offset: 700 });
+
+	function populateReviewText() {
+		if (sb.materializer.product())
+			$(".review-product").removeClass("inactive").text(sb.materializer.product());
+		if (sb.materializer.color() && sb.materializer.material())
+			$(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+sb.materializer.material());
+		if (sb.materializer.product() && sb.materializer.color() && sb.materializer.material()) {
+			$(".review-price").text(cashier.getPriceString());
+			$("#add-to-cart").removeClass("inactive");
+		}
+	}
 
 	self.updateViews = function(pageType) {
 		switch (pageType) {
 			case 'edit':
-				views = ["edit","product","make","account","checkout","review"];
+				views = ["edit","product","make","add-ons","checkout","review"];
 				break;
 
 			case 'view':
@@ -18,11 +50,11 @@ sb.viewhandler = function() {
 				break;
 
 			case 'product':
-				views = ["product","make","account","checkout","review"];
+				views = ["product","make","add-ons","checkout","review"];
 				break;
 
 			default:
-				views = ["readymade","account","checkout","review"];
+				views = ["readymade","add-ons","checkout","review"];
 				break;
 		}
 	};
@@ -41,7 +73,7 @@ sb.viewhandler = function() {
 
 	//navigation
 	function onNext() {
-		if (!$(this).hasClass("active")) return;
+		// if (!$(this).hasClass("active")) return;
 
 		var button = $(this);
 		var view = self.view();
@@ -60,7 +92,7 @@ sb.viewhandler = function() {
 			checkAccountView();
 
 			/*
-				if we're on a readymade or make page, 
+				if we're on a readymade or make page,
 				we need to click the next button after we log in
 			*/
 			user.afterLogIn = function() {
@@ -69,7 +101,7 @@ sb.viewhandler = function() {
 				});
 			};
 		}
-		
+
 		if (view == 'account' && !user.loggedIn) {
 			/*
 				i don't understand why this callback is not... getting called back anymore
@@ -88,7 +120,7 @@ sb.viewhandler = function() {
 		user.updateLogoutActions(view);
 		advanceView();
 	};
-	
+
 	function onPrev() {
 		var view = self.view();
 
@@ -97,7 +129,7 @@ sb.viewhandler = function() {
 		}
 
 		/*
-			if we logged ourselves out during the flow, 
+			if we logged ourselves out during the flow,
 			make sure that the next time we hit the login screen
 			we click 'a' next button. this is dumb.
 		*/
@@ -111,7 +143,7 @@ sb.viewhandler = function() {
 
 	    var index = views.indexOf(view);
 	    var prev = views[index-1];
-	    
+
 		content.attr("class", prev);
 		self.prev();
 	};
@@ -128,7 +160,7 @@ sb.viewhandler = function() {
 				views.splice(i, 1);
 			}
 			$("#account").css("visibility","hidden");
-			
+
 		} else {
 			if (i == -1) {
 				views.splice(-2, 0, "account");
@@ -138,7 +170,7 @@ sb.viewhandler = function() {
 	            var mode = $(this).attr("id").split("-")[1];
 	            var form = $("#account");
 
-	            form.attr("class",mode); 
+	            form.attr("class",mode);
 	            form.find("li").removeClass("active");
 
 	            $(this).addClass("active");
@@ -152,7 +184,7 @@ sb.viewhandler = function() {
 		var index = views.indexOf(v);
 		if (index != -1) {
 			content.attr("class", views[index]);
-			view = v;	
+			view = v;
 		}
 	};
 
