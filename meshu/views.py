@@ -79,10 +79,7 @@ def cart_add(request):
 	current_cart = Cart(request)
 	current_cart.add(order, order.amount, 1)
 
-	items = current_cart.cart.item_set.all()
-	return render_to_response('meshu/cart/cart.html', {
-			'items' : items
-	}, context_instance=RequestContext(request))
+	return HttpResponseRedirect("/cart/view")
 
 def cart_update(request, item_id, quantity):
 	order = Order.objects.get(id=item_id)
@@ -101,11 +98,19 @@ def cart_remove(request, item_id):
 	current_cart.remove(order)
 	return json_dump({ 'success' : 'true' })
 
-def cart_checkout(request):
+def cart_view(request):
 	current_cart = Cart(request)
 	items = current_cart.cart.item_set.all()
 
 	return render_to_response('meshu/cart/cart.html', {
+			'items' : items
+	}, context_instance=RequestContext(request))
+
+def cart_checkout(request):
+	current_cart = Cart(request)
+	items = current_cart.cart.item_set.all()
+
+	return render_to_response('meshu/cart/checkout.html', {
 			'items' : items
 	}, context_instance=RequestContext(request))
 
@@ -156,6 +161,8 @@ def submit_orders(request):
 	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
 	stripe_desc = str(email) + ", " + len(items) + " meshus"
 
+	print('charging ' + str(current_cart.summary()))
+	print(str(current_cart.count()) + ' items')
 	# get the credit card details submitted by the form
 	# token = request.POST['stripeToken']
 
