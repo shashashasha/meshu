@@ -1662,7 +1662,7 @@ body.ie8 .city-input {
   cursor: auto;
   pointer-events: none;
 }
-/* 
+/*
     Map Object Styling
 */
 /*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
@@ -1978,6 +1978,67 @@ circle.highlight,
   pointer: cursor;
 }
 /*
+    cart page
+*/
+.theta {
+  display: none;
+}
+.cart-wrapper {
+  padding: 20px;
+}
+#cart {
+  width: 100%;
+  padding: 20px;
+  font-size: 22px;
+  border-collapse: collapse;
+}
+#cart tr {
+  border-bottom: 1px solid #808080;
+  margin-bottom: 10px;
+}
+#cart .meshu-svg {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #eee;
+}
+#cart .headings {
+  color: #808080;
+  font-size: 16px;
+}
+#cart .headings td {
+  padding-bottom: 10px;
+}
+#cart .cart-row td {
+  padding-top: 7px;
+}
+.total-wrapper {
+  width: 100%;
+}
+.total-inside {
+  width: 33%;
+  float: right;
+  border-bottom: 1px solid #808080;
+  margin-right: 20px;
+  color: #808080;
+  padding: 10px 0 30px 10px;
+}
+.total-wrapper span {
+  width: 160px;
+  float: right;
+  color: black;
+}
+.action-buttons {
+  clear: both;
+  margin: 170px 20px 20px 0;
+  height: 50px;
+}
+.action-buttons .button {
+  float: right;
+  font-size: 30px;
+  padding: 5px 11px;
+  margin-left: 10px;
+}
+/*
     gallery display
 */
 #usermade li.object {
@@ -2222,14 +2283,14 @@ body.ie #maps .mini-meshu div {
 
 }
 .postcard #content {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;
   height: 1275px;
 }
 .postcard .frame {
-  /*width: 1100px; 
+  /*width: 1100px;
         height: 733px;*/
 
   width: 1680px;
