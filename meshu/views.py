@@ -139,6 +139,75 @@ def order_verify_coupon(request):
 
 	return json_dump(response_dict)
 
+# to replace the old meshu_new and order_meshu functions
+def submit_orders(request):
+	items = current_cart.cart.item_set.all()
+
+	email = profile.user.email
+	desc = str(email) + ", " + len(items)
+
+	# set your secret key: remember to change this to your live secret key in production
+	# see your keys here https://manage.stripe.com/account
+	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
+
+	# get the credit card details submitted by the form
+	# token = request.POST['stripeToken']
+
+	# create the charge on Stripe's servers - this will charge the user's card
+	# charge = stripe.Charge.create(
+	#     amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
+	#     currency="usd",
+	#     card=token,
+	#     description=desc
+	# )
+
+	# store the shipping address information
+	shipping = ShippingInfo()
+	shipping.shipping_name = request.POST['shipping_name']
+	shipping.shipping_address = request.POST['shipping_address']
+	shipping.shipping_address_2 = request.POST['shipping_address_2']
+	shipping.shipping_city = request.POST['shipping_city']
+	shipping.shipping_zip = request.POST['shipping_zip']
+	shipping.shipping_region = request.POST['shipping_region']
+	shipping.shipping_state = request.POST['shipping_state']
+	shipping.shipping_country = request.POST['shipping_country']
+
+	if request.user.is_authenticated() == False:
+		shipping.contact = request.POST.get('shipping_contact', '')
+	else:
+		shipping.contact = profile.user.email
+
+	shipping.save()
+
+	orders = []
+	for item in items:
+		order = item.product
+		order.shipping = shipping
+		order.status = 'OR'
+
+		# save this order
+		order.save()
+		orders.append(order)
+
+		# send a mail to ifttt that creates an svg in our dropbox for processing
+		mail_ordered_svg(order)
+
+	# mail the current user if they're logged in
+	if (len(orders) == 1)
+		mail_order_confirmation(shipping.contact, orders[0].meshu, order)
+		return render_to_response('meshu/notification/ordered.html', {
+				'view' : 'paid',
+				'order': order,
+				'meshu': meshu
+		}, context_instance=RequestContext(request))
+	elif (len(orders) > 1)
+		mail_multiple_order_confirmation(shipping.contact, order)
+		return render_to_response('meshu/notification/ordered_multiple.html', {
+				'view' : 'paid',
+				'orders': orders
+		}, context_instance=RequestContext(request))
+
+
 def order_meshu(request, item_id):
 	# check if we have location data, otherwise we 404
 	# to protect against malicious requests

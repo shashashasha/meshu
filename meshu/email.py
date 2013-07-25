@@ -33,8 +33,8 @@ def mail_viewer(request, template):
 			'order' : order
  	}, context_instance=RequestContext(request))
 
-def mail_multiple_order_confirmation(email, meshu, orders):
-	mail_template('meshu/email/multiple_order_confirmation.html', {
+def mail_multiple_order_confirmation(email, orders):
+	mail_template('meshu/email/order_multiple_confirmation.html', {
 		'subject' : 'Meshu: Order Confirmation',
 		'from' : 'orders@meshu.io',
 		'to': email,

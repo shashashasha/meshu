@@ -134,6 +134,7 @@ class Order(models.Model):
 
 	# order details
 	ORDER_STATUSES = (
+		(u'AD', u'Added'),
 		(u'OR', u'Ordered'), #
 		(u'PR', u'Processed'), #
 		(u'SE', u'Sent to Fabricator'), #
@@ -188,6 +189,8 @@ class Order(models.Model):
 		return str(self.id) + '_' + str(self.meshu.id) + '_' + self.color + '_' + self.material + '_' + self.product
 
 	def get_status_message(self):
+		if self.status == 'AD':
+			return 'Added'
 		if self.status == 'OR':
 			return 'Ordered'
 		elif self.status == 'PR':
