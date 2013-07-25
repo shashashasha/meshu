@@ -145,26 +145,26 @@ def submit_orders(request):
 	current_cart = Cart(request)
 	items = current_cart.cart.item_set.all()
 
-
+	# grab email for reference in stripe
 	if request.user.is_authenticated() == False:
 		email = request.POST.get('shipping_contact', '')
 	else:
 		email = profile.user.email
-	desc = str(email) + ", " + len(items)
 
 	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
+	stripe_desc = str(email) + ", " + len(items)
 
 	# get the credit card details submitted by the form
 	# token = request.POST['stripeToken']
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	# charge = stripe.Charge.create(
-	#     amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
-	#     currency="usd",
-	#     card=token,
-	#     description=desc
+	#     amount = int(float(request.POST.get('amount', 0.0))), # amount in cents, again
+	#     currency = "usd",
+	#     card = token,
+	#     description = stripe_desc
 	# )
 
 	# store the shipping address information
@@ -195,16 +195,16 @@ def submit_orders(request):
 		mail_ordered_svg(order)
 
 	# mail the current user if they're logged in
-	if (len(orders) == 1)
+	if len(orders) == 1:
 		mail_order_confirmation(shipping.contact, orders[0].meshu, order)
 		return render_to_response('meshu/notification/ordered.html', {
-				'order': order,
-				'meshu': meshu
+			'order': order,
+			'meshu': meshu
 		}, context_instance=RequestContext(request))
-	elif (len(orders) > 1)
+	elif len(orders) > 1:
 		mail_multiple_order_confirmation(shipping.contact, order)
 		return render_to_response('meshu/notification/ordered_multiple.html', {
-				'orders': orders
+			'orders': orders
 		}, context_instance=RequestContext(request))
 
 
