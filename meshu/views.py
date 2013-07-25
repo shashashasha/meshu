@@ -154,7 +154,7 @@ def submit_orders(request):
 	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
-	stripe_desc = str(email) + ", " + len(items)
+	stripe_desc = str(email) + ", " + len(items) + " meshus"
 
 	# get the credit card details submitted by the form
 	# token = request.POST['stripeToken']
@@ -181,126 +181,83 @@ def submit_orders(request):
 
 	shipping.save()
 
+	if len(items) > 1 or items[0].quantity > 1:
+		return submit_multiple(request, shipping, items)
+	elif len(items) == 1 and items[0].quantity == 1:
+		return submit_single(request, shipping, items)
+
+def submit_multiple(request, shipping, items):
 	orders = []
 	for item in items:
 		order = item.product
 		order.shipping = shipping
 		order.status = 'OR'
 
-		# save this order
 		order.save()
 		orders.append(order)
+
+		if item.quantity > 1:
+			for x in range(0, item.quantity-1):
+				order.pk = None
+				order.save()
+				orders.append(order)
 
 		# send a mail to ifttt that creates an svg in our dropbox for processing
 		mail_ordered_svg(order)
 
-	# mail the current user if they're logged in
-	if len(orders) == 1:
-		mail_order_confirmation(shipping.contact, orders[0].meshu, order)
-		return render_to_response('meshu/notification/ordered.html', {
-			'order': order,
-			'meshu': meshu
-		}, context_instance=RequestContext(request))
-	elif len(orders) > 1:
-		mail_multiple_order_confirmation(shipping.contact, order)
-		return render_to_response('meshu/notification/ordered_multiple.html', {
-			'orders': orders
-		}, context_instance=RequestContext(request))
 
+	mail_multiple_order_confirmation(shipping.contact, order)
+	return render_to_response('meshu/notification/ordered_multiple.html', {
+		'orders': orders
+	}, context_instance=RequestContext(request))
 
-def order_meshu(request, item_id):
-	# check if we have location data, otherwise we 404
-	# to protect against malicious requests
-	loc_check = request.POST.get('location_data', 'blank')
-	if loc_check == 'blank' or loc_check == '':
-		raise Http404
-
-	# gets logged in user profile, or anonymous profile
-	profile = current_profile(request)
-
-	item_id = request.POST.get('meshu_id', item_id)
-
-	# get existing meshu
-	meshu = get_object_or_404(Meshu, pk=item_id)
-
-	return make_order(request, profile, meshu)
-
-# ordering a new meshu
-def order_new(request):
-	# check if we have location data, otherwise we 404
-	# to protect against malicious requests
-	loc_check = request.POST.get('location_data', 'blank')
-	if loc_check == 'blank' or loc_check == '':
-		raise Http404
-
-	# gets logged in user profile, or anonymous profile
-	profile = current_profile(request)
-
-	# create a new meshu
-	# add logic later if it's not new, ie readymade
-	meshu = meshu_get_or_create(request, profile)
-
-	return make_order(request, profile, meshu)
-
-
-def make_order(request, profile, meshu):
-	# set your secret key: remember to change this to your live secret key in production
-	# see your keys here https://manage.stripe.com/account
-	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
-
-	# get the credit card details submitted by the form
-	# token = request.POST['stripeToken']
-	email = profile.user.email
-	desc = str(email) + ", meshu id " + str(meshu.id)
-
-	# create the charge on Stripe's servers - this will charge the user's card
-	# charge = stripe.Charge.create(
-	#     amount=int(float(request.POST.get('amount', 0.0))), # amount in cents, again
-	#     currency="usd",
-	#     card=token,
-	#     description=desc
-	# )
-
-	# create a new order
-	# every order is new
-	order = order_create(request, profile, meshu)
-
-	# store the shipping address information
-	shipping = ShippingInfo()
-	shipping.shipping_name = request.POST['shipping_name']
-	shipping.shipping_address = request.POST['shipping_address']
-	shipping.shipping_address_2 = request.POST['shipping_address_2']
-	shipping.shipping_city = request.POST['shipping_city']
-	shipping.shipping_zip = request.POST['shipping_zip']
-	shipping.shipping_region = request.POST['shipping_region']
-	shipping.shipping_state = request.POST['shipping_state']
-	shipping.shipping_country = request.POST['shipping_country']
-
-	if request.user.is_authenticated() == False:
-		shipping.contact = request.POST.get('shipping_contact', '')
-	else:
-		shipping.contact = profile.user.email
-
-	shipping.save()
-
+def submit_single(request, shipping, items):
+	item = items[0]
+	order = item.product
 	order.shipping = shipping
-	order.save()
+	order.status = 'OR'
 
-	# mail the current user if they're logged in
-	if request.user.is_authenticated():
-		mail_order_confirmation(email, meshu, order)
+	order.save()
 
 	# send a mail to ifttt that creates an svg in our dropbox for processing
 	mail_ordered_svg(order)
 
+	mail_order_confirmation(shipping.contact, order.meshu, order)
 	return render_to_response('meshu/notification/ordered.html', {
-			'view' : 'paid',
-			'order': order,
-			'meshu': meshu
+		'order': order,
+		'meshu': order.meshu
 	}, context_instance=RequestContext(request))
 
+# create an Order object given a Meshu and UserProfile
+def order_create(request, profile, meshu):
+	order = Order()
+
+	# set the meshu materials, *required*
+	order.material = request.POST['material']
+	order.color = request.POST['color']
+	order.product = request.POST['product']
+
+	order.coupon = request.POST.get('coupon', '')
+
+	# stripe uses cents
+	amount = float(request.POST.get('amount', '0.0')) / 100.0
+	order.amount = str(amount)
+
+	# set the status to ORDERED
+	order.status = 'OR'
+
+	# postcard note
+	order.postcard_note = request.POST.get('postcard_note', '')
+
+	# foreign keys
+	order.user_profile = profile
+	order.meshu = meshu
+
+	order.save()
+	return order
+
 #
-# creating or updating model functions, saves them to databases
+# creating or updating meshu functions, saves them to databases
 #
 def meshu_update(request, meshu):
 	meshu.title = request.POST.get('title', meshu.title)
@@ -344,38 +301,6 @@ def meshu_xhr_response(meshu):
 		'meshu_id': meshu.id,
 		'meshu_url': meshu.get_absolute_url()
 	})
-
-def meshu_delete(request, item_id):
-	meshu = Meshu.objects.get(id=item_id)
-	meshu.delete()
-	return meshu
-
-def order_create(request, profile, meshu):
-	order = Order()
-
-	# set the meshu materials, *required*
-	order.material = request.POST['material']
-	order.color = request.POST['color']
-	order.product = request.POST['product']
-
-	order.coupon = request.POST.get('coupon', '')
-
-	# stripe uses cents
-	amount = float(request.POST.get('amount', '0.0')) / 100.0
-	order.amount = str(amount)
-
-	# set the status to ORDERED
-	order.status = 'OR'
-
-	# postcard note
-	order.postcard_note = request.POST.get('postcard_note', '')
-
-	# foreign keys
-	order.user_profile = profile
-	order.meshu = meshu
-
-	order.save()
-	return order
 
 
 # don't judge me, i think this is funny
