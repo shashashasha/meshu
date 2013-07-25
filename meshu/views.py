@@ -84,10 +84,6 @@ def cart_add(request):
 			'items' : items
 	}, context_instance=RequestContext(request))
 
-def cart_add_and_checkout(request, item_id):
-	order_add_to_cart(request, item_id)
-	return order_checkout(request)
-
 def cart_update(request, item_id, quantity):
 	order = Order.objects.get(id=item_id)
 	current_cart = Cart(request)
