@@ -8,28 +8,28 @@
 			#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
 			body{width:100% !important;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
 			body{-webkit-text-size-adjust:none;} /* Prevent Webkit platforms from changing default text sizes. */
-			
+
 			/* Reset Styles */
 			body{margin:0; padding:0;}
 			img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
 			table td{border-collapse:collapse;}
 			#backgroundTable{height:100% !important; margin:0; padding:0; width:100% !important;}
-			
+
 			/* Template Styles */
-			
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */
-			
+
 			body, #backgroundTable{
 				/*@editable*/ background-color:#F0F0F0;
 			}
-			
+
 			#templateContainer{
 			  -webkit-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
-			     -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1); 
-			          box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1); 
+			     -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
+			          box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
 				/*@editable*/ border: 1px solid #DDDDDD;
 			}
-			
+
 			h1, .h1{
 				/*@editable*/ color:#202020;
 				display:block;
@@ -85,13 +85,13 @@
 				margin-left:0;
 				/*@editable*/ text-align:left;
 			}
-			
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
-			
+
 			#templatePreheader{
 				/*@editable*/ background-color:#F0F0F0;
 			}
-			
+
 			.preheaderContent div{
 				/*@editable*/ color:#505050;
 				/*@editable*/ font-family:Helvetica, Arial;
@@ -99,22 +99,22 @@
 				/*@editable*/ line-height:100%;
 				/*@editable*/ text-align:left;
 			}
-			
+
 			.preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
 				/*@editable*/ color:#336699;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
-			
 
-			
+
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */
-			
+
 			#templateHeader{
 				/*@editable*/ background-color:#FFFFFF;
 				/*@editable*/ border-bottom:0;
 			}
-			
+
 			.headerContent{
 				/*@editable*/ color:#202020;
 				/*@editable*/ font-family:Helvetica, Arial;
@@ -125,18 +125,18 @@
 				/*@editable*/ text-align:center;
 				/*@editable*/ vertical-align:middle;
 			}
-			
+
 			.headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
 				/*@editable*/ color:#336699;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
-			
+
 			#headerImage{
 				height:auto;
 				max-width:600px;
 			}
-			
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\/\/\ */
 
 			#templateContainer, .bodyContent{
@@ -150,25 +150,25 @@
 				/*@editable*/ line-height:150%;
 				/*@editable*/ text-align:left;
 			}
-			
+
 			.bodyContent div a:link, .bodyContent div a:visited, /* Yahoo! Mail Override */ .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{
 				/*@editable*/ color:#336699;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
-			
+
 			.bodyContent img{
 				display:inline;
 				height:auto;
 			}
-			
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */
-			
+
 			#templateFooter{
 				/*@editable*/ background-color:#FFFFFF;
 				/*@editable*/ border-top:0;
 			}
-			
+
 			.footerContent div{
 				/*@editable*/ color:#707070;
 				/*@editable*/ font-family:Helvetica, Arial;
@@ -176,26 +176,26 @@
 				/*@editable*/ line-height:125%;
 				/*@editable*/ text-align:left;
 			}
-			
+
 			.footerContent div a:link, .footerContent div a:visited, /* Yahoo! Mail Override */ .footerContent div a .yshortcuts /* Yahoo! Mail Override */{
 				/*@editable*/ color:#336699;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
-			
+
 			.footerContent img{
 				display:inline;
 			}
-			
+
 			#social{
 				/*background-color:#F0F0F0;*/
 				/*@editable*/ border:0;
 			}
-			
+
 			#social div{
 				/*@editable*/ text-align:center;
 			}
-			
+
 			#utility{
 				/*@editable*/ background-color:#FFFFFF;
 				/*@editable*/ border:0;
@@ -221,7 +221,7 @@
                         <table border="0" cellpadding="10" cellspacing="0" width="600" id="templatePreheader">
                             <tr>
                                 <td valign="top" class="preheaderContent">
-                                
+
                                 	<!-- // Begin Module: Standard Preheader \ -->
                                     <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                     	<tr>
@@ -296,7 +296,7 @@
                                                             	<hr>
                                                             	<br />
                                                             	{% block social_links %}
-                                                            	<center>follow us on <a href="http://twitter.com/himeshu">twitter</a> | like us on <a href="http://facebook.com/meshuio">facebook</a>
+                                                            	<center>don't miss out! follow us on <a href="http://twitter.com/himeshu">twitter</a> or like us on <a href="http://facebook.com/meshuio">facebook</a>
 	                                                            </center>
                                                                 {% endblock %}
                                                             </div>
