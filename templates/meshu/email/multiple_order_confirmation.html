@@ -1,0 +1,27 @@
+{% extends "meshu/email/base_email.html" %}
+{% load shorturl %}
+
+{% block email_title %}
+Thank you for ordering!
+{% endblock %}
+
+{% block content %}
+<br />
+<div>
+    <h3 class="h4">Total: ${{ amount|floatformat:2 }}</h3>
+    Thanks! We've received your orders. What happens now is we'll review your meshus, process them, and send them off to the fabricator. Once they send your meshus back to us, we finish it, package it, and send it on your way!. We'll also email you updates as your meshus are made.
+    <br /><br />
+
+    <b>{{ order.get_display_name }}</b>
+    Also, please review your meshus here:
+	{% for order in orders %}
+    <br />{{ order.get_display_name }} - <a href="https://meshu.io{% shorturl meshu %}"><b>https://meshu.io{% shorturl order.meshu %}</b></a>
+    {% endfor %}
+    <br />
+	If you see any missing or misaligned points feel free to edit your meshu and let us know so that we get everything right!
+    <br /><br />
+    Best,
+    <br />
+    Rachel + Sha
+</div>
+{% endblock %}

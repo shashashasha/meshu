@@ -20,9 +20,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/shahwang/Dropbox/shashi/2012/artifactory/templates/',	
+    '/Users/shahwang/Dropbox/shashi/2012/artifactory/templates/',
     # os.path.join(SITE_ROOT, 'templates/'),
 )
 
 FACEBOOK_APP_ID              = ''
 FACEBOOK_API_SECRET          = ''
+FACEBOOK_SCOPE = ''
+LOGIN_REDIRECT_URL = '/make/facebook'

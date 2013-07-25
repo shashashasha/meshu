@@ -18,6 +18,7 @@ from django.utils.html import strip_tags
 
 # our models
 from meshu.models import *
+from meshu.email import *
 
 import string, random
 
@@ -54,97 +55,6 @@ def current_profile(request):
 		return UserProfile.objects.get(user__username='guest')
 
 
-
-def mail_viewer(request, template):
-	profile = current_profile(request)
-
-	orders = Order.objects.filter(user_profile=profile)
-
-	order = orders[0]
-	meshu = order.meshu
-
-	return render_to_response('meshu/email/' + template + '.html', {
-			'profile' : profile,
-			'meshu' : meshu,
-			'order' : order
- 	}, context_instance=RequestContext(request))
-
-
-def mail_order_confirmation(email, meshu, order):
-	mail_template('meshu/email/order_confirmation.html', {
-		'subject' : 'Order Confirmation: ' + meshu.title,
-		'from' : 'orders@meshu.io',
-		'to': email,
-		'meshu': meshu,
-		'order': order
-	})
-	return
-
-def mail_order_status_change(email, meshu, order):
-
-	print(order.status)
-
-	if order.status == 'SH':
-		subject = 'Meshu: Your order has been shipped!'
-		template = 'order_shipped'
-
-	elif order.status == 'RE':
-		subject = 'Meshu: We\'ve received your order from the fabricator!'
-		template = 'order_received_from_fabricator'
-
-	elif order.status == 'SE':
-		subject = 'Meshu: Your order has been sent to the fabricator!'
-		template = 'order_sent_to_fabricator'
-
-	print(subject)
-
-	if order.status == 'SH' or order.status == 'SE' or order.status == 'RE':
-		mail_template('meshu/email/' + template + '.html', {
-			'subject' : subject,
-			'from' : 'orders@meshu.io',
-			'to': email,
-			'meshu': meshu,
-			'order': order
-		})
-
-	return
-
-def mail_forgotten_password(email, password):
-	# subject, from_email, to = 'Your password has been reset', 'accounts@meshu.io', email
-
-	mail_template('meshu/email/reset_password.html', {
-		'subject' : 'Your password has been reset',
-		'from' : 'accounts@meshu.io',
-		'to': email,
-		'password': password
-	})
-	return
-
-# mails ordered svg to an ifttt routine
-# that puts it in our dropbox queue for sending to the manufacturer
-def mail_ordered_svg(order):
-	# has to be my email because ifttt is expecting that
-	from_email = 'shashashasha@gmail.com'
-	to_email = 'trigger@ifttt.com'
-	msg = EmailMultiAlternatives(order.get_svg_filename(), order.meshu.svg, from_email, [to_email])
-	msg.send()
-	return
-
-def mail_template(template, arguments):
-
-	html_content = render_to_string(template, arguments)
-	text_content = strip_tags(html_content)
-
-	# create the email, and attach the HTML version as well.
-	subject = arguments['subject']
-	from_email = arguments['from']
-	to_email = arguments['to']
-
-	msg = EmailMultiAlternatives(arguments['subject'], text_content, from_email, [to_email])
-	msg.attach_alternative(html_content, "text/html")
-	msg.send()
-	return
-
 def notify(request, view):
 	return render_to_response('meshu/notification/base_notification.html', {
 		'view' : view
@@ -154,7 +64,13 @@ def notify(request, view):
 # Ordering!
 #
 
-def order_add_to_cart(request):
+def cart_add(request):
+	# check if we have location data, otherwise we 404
+	# to protect against malicious requests
+	loc_check = request.POST.get('location_data', 'blank')
+	if loc_check == 'blank' or loc_check == '':
+		raise Http404
+
 	profile = current_profile(request)
 	meshu = meshu_get_or_create(request, profile)
 
@@ -165,17 +81,28 @@ def order_add_to_cart(request):
 
 	return json_dump({ 'success' : 'true', 'order': order.id, 'amount': order.amount })
 
-def order_add_and_checkout(request, item_id):
+def cart_add_and_checkout(request, item_id):
 	order_add_to_cart(request, item_id)
 	return order_checkout(request)
 
-def order_remove_from_cart(request, item_id):
+def cart_update(request, item_id, quantity):
+	order = Order.objects.get(id=item_id)
+	current_cart = Cart(request)
+	current_cart.update(order, int(quantity))
+	return json_dump({
+		'success' : 'true',
+		'order': order.id,
+		'amount': order.amount,
+		'quantity': quantity
+	})
+
+def cart_remove(request, item_id):
 	current_cart = Cart(request)
 	order = get_object_or_404(Order, pk=item_id)
 	current_cart.remove(order)
 	return json_dump({ 'success' : 'true' })
 
-def order_checkout(request):
+def cart_checkout(request):
 	current_cart = Cart(request)
 	items = current_cart.cart.item_set.all()
 
@@ -183,9 +110,14 @@ def order_checkout(request):
 			'items' : items
 	}, context_instance=RequestContext(request))
 
-def order_empty(request):
+def cart_empty(request):
 	current_cart = Cart(request)
-	current_cart.clear()
+
+	items = current_cart.cart.item_set.all()
+
+	for item in items:
+		current_cart.remove(item.product)
+
 	return render_to_response('meshu/cart/cart.html', {
 			'items' : []
 	}, context_instance=RequestContext(request))
@@ -352,7 +284,7 @@ def meshu_delete(request, item_id):
 def order_create(request, profile, meshu):
 	order = Order()
 
-	# set the meshu materials
+	# set the meshu materials, *required*
 	order.material = request.POST['material']
 	order.color = request.POST['color']
 	order.product = request.POST['product']
