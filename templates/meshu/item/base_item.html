@@ -82,31 +82,8 @@
         <div id="materials" class="section">
             <h2>Material</h2>
             <ul id="material-list">
-                <li id="amber-bamboo" class="material-option">
-                    <div class="img"></div>
-                    Bamboo<span class="price">$80</span>
-                </li>
-                <li id="black-acrylic" class="material-option">
-                    <div class="img"></div>
-                    Black Acrylic<span class="price">$85</span>
-                </li>
-                <li id="white-acrylic" class="material-option">
-                    <div class="img"></div>
-                    White Acrylic<span class="price">$85</span>
-                </li>
-                <li id="black-nylon" class="material-option">
-                    <div class="img"></div>
-                    Black Nylon<span class="price">$90</span>
-                </li>
-                <li id="white-nylon" class="material-option">
-                    <div class="img"></div>
-                    White Nylon<span class="price">$90</span>
-                </li>
-                <!-- <li id="stainless" class="material-option">Stainless Steel</li> -->
-                <li id="silver" class="material-option">
-                    <div class="img"></div>
-                    For silver, plz email
-                </li>
+                {% block materials %}
+                {% endblock %}
             </ul>
         </div>
     {% endblock %}
