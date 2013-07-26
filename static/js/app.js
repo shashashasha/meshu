@@ -50,7 +50,7 @@ $(function() {
 		user.updateLogoutActions(pageType);
 
 		// viewhandler handles next / prev buttons, shuffling account view
-		sb.viewhandler.updateViews(pageType);
+		// sb.viewhandler.updateViews(pageType);
 
 		switch (pageType) {
 			case 'view':

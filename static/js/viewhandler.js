@@ -39,36 +39,36 @@ sb.viewhandler = function() {
 		}
 	}
 
-	self.updateViews = function(pageType) {
-		switch (pageType) {
-			case 'edit':
-				views = ["edit","product","make","add-ons","checkout","review"];
-				break;
+	// self.updateViews = function(pageType) {
+	// 	switch (pageType) {
+	// 		case 'edit':
+	// 			views = ["edit","product","make","add-ons","checkout","review"];
+	// 			break;
 
-			case 'view':
-				views = ["view"];
-				break;
+	// 		case 'view':
+	// 			views = ["view"];
+	// 			break;
 
-			case 'product':
-				views = ["product","make","add-ons","checkout","review"];
-				break;
+	// 		case 'product':
+	// 			views = ["product","make","add-ons","checkout","review"];
+	// 			break;
 
-			default:
-				views = ["readymade","add-ons","checkout","review"];
-				break;
-		}
-	};
+	// 		default:
+	// 			views = ["readymade","add-ons","checkout","review"];
+	// 			break;
+	// 	}
+	// };
 
 	self.updateAccountView = function() {
-		if (user.loggedIn) {
-			//take out account view
-			checkAccountView();
-		}
+		// if (user.loggedIn) {
+		// 	//take out account view
+		// 	checkAccountView();
+		// }
 	};
 
 	self.initialize = function() {
-		$(".next").live("click", onNext);
-		$(".back").click(onPrev);
+		// $(".next").live("click", onNext);
+		// $(".back").click(onPrev);
 	};
 
 	//navigation
@@ -76,6 +76,7 @@ sb.viewhandler = function() {
 		// if (!$(this).hasClass("active")) return;
 
 		var button = $(this);
+		console.log(this, self)
 		var view = self.view();
 		var index = views.indexOf(view);
 		var advanceView = function() {
@@ -95,6 +96,7 @@ sb.viewhandler = function() {
 				if we're on a readymade or make page,
 				we need to click the next button after we log in
 			*/
+
 			user.afterLogIn = function() {
 				saver.createOrUpdateMeshu(function() {
 					button.click();
@@ -117,29 +119,29 @@ sb.viewhandler = function() {
 		}
 
 		self.next();
-		user.updateLogoutActions(view);
+		// user.updateLogoutActions(view);
 		advanceView();
 	};
 
 	function onPrev() {
 		var view = self.view();
 
-		if (view == 'checkout') {
-			checkAccountView();
-		}
+		// if (view == 'checkout') {
+		// 	checkAccountView();
+		// }
 
 		/*
 			if we logged ourselves out during the flow,
 			make sure that the next time we hit the login screen
 			we click 'a' next button. this is dumb.
 		*/
-		if (!user.loggedIn) {
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					$($(".next")[0]).click();
-				});
-			};
-		}
+		// if (!user.loggedIn) {
+		// 	user.afterLogIn = function() {
+		// 		saver.createOrUpdateMeshu(function() {
+		// 			$($(".next")[0]).click();
+		// 		});
+		// 	};
+		// }
 
 	    var index = views.indexOf(view);
 	    var prev = views[index-1];
@@ -153,30 +155,30 @@ sb.viewhandler = function() {
 		this makes it so if someone logs in or out during the order
 		we can adapt to it, vs checking on load
 	*/
-	function checkAccountView() {
-		var i = views.indexOf("account");
-		if (user.loggedIn) {
-			if (i >= 0) {
-				views.splice(i, 1);
-			}
-			$("#account").css("visibility","hidden");
+	// function checkAccountView() {
+	// 	var i = views.indexOf("account");
+	// 	if (user.loggedIn) {
+	// 		if (i >= 0) {
+	// 			views.splice(i, 1);
+	// 		}
+	// 		$("#account").css("visibility","hidden");
 
-		} else {
-			if (i == -1) {
-				views.splice(-2, 0, "account");
-			}
-			$("#account").css("visibility","visible");
-				$("#account li").click(function(){
-	            var mode = $(this).attr("id").split("-")[1];
-	            var form = $("#account");
+	// 	} else {
+	// 		if (i == -1) {
+	// 			views.splice(-2, 0, "account");
+	// 		}
+	// 		$("#account").css("visibility","visible");
+	// 			$("#account li").click(function(){
+	//             var mode = $(this).attr("id").split("-")[1];
+	//             var form = $("#account");
 
-	            form.attr("class",mode);
-	            form.find("li").removeClass("active");
+	//             form.attr("class",mode);
+	//             form.find("li").removeClass("active");
 
-	            $(this).addClass("active");
-	        });
-		}
-	};
+	//             $(this).addClass("active");
+	//         });
+	// 	}
+	// };
 
 	self.view = function(v) {
 		if (!arguments.length) return content.attr("class");

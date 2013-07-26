@@ -62,7 +62,7 @@ sb.catalog = function(renderer, promo) {
 	};
 
 	self.get = function(type, material, key) {
-		if (!options[type] || !options[type][material])	
+		if (!options[type] || !options[type][material])
 			return 'N/A';
 
 		return options[type][material][key];

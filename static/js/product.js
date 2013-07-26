@@ -8,7 +8,6 @@ $(function() {
 
 		self.initialize = function(meshTarget, catalog) {
 			products = catalog.getProducts();
-			console.log("initialize")
 			/*
 				pretty hacky, but seeing which products are used and hiding the rest
 			*/
@@ -42,17 +41,7 @@ $(function() {
 
 		self.resetPreviewImage = function(product) {
 			var svg = d3.select("#preview-" + product);
-			// 	transform = sb.transforms.getTransform(product, "product");
-
-			// svg.selectAll("*").remove();
 			svg.select(".product-delaunay").remove();
-
-			// svg.append("svg:image")
-			// 	.attr('x', 0)
-			// 	.attr('y', 0)
-			// 	.attr('width', '100%')
-			// 	.attr('height', '100%')
-			// 	.attr('xlink:href', static_url + 'images/preview/preview_' + product + '.png');
 		};
 
 		self.previewFromSelector = function(product, meshSelector) {
@@ -70,13 +59,13 @@ $(function() {
 			var svg = d3.select("#preview-" + product),
 				transform = sb.transforms.getTransform(product, "product");
 
-			// svg.append("svg:image")
-			// 	.attr('x', 0)
-			// 	.attr('y', 0)
-			// 	.attr('width', '600px')
-			// 	.attr('height', '600px')
-			// 	.attr("transform", transform)
-			// 	.attr('xlink:href', element.toDataURL());
+			svg.append("svg:image")
+				.attr('x', 0)
+				.attr('y', 0)
+				.attr('width', '600px')
+				.attr('height', '600px')
+				.attr("transform", transform)
+				.attr('xlink:href', element.toDataURL());
 		};
 
 		self.range = function(prices) {

@@ -31,26 +31,26 @@
     </div>
 {% endblock %}
 
-{% block goback %}
+<!-- {% block goback %}
     <div class="nav back">back</div>
 {% endblock %}
 {% block finish %}
     <div id="finish-button" class="nav next start-order">Continue</div>
-{% endblock %}
+{% endblock %} -->
 
 {% block products %}
     <div class="wrapper" id="wrapper-pendant">
-        <div class="next active">
-            <svg id="preview-pendant" width="170" height="160"></svg>
-        </div>
+        <svg id="preview-pendant" width="300" height="282">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="313" height="297" x="0" y="0">
+        </svg>
         <p>Pendant Necklace</p>
-        <p class="note" id="range-pendant">$75-140</p>
+        <p class="note">18" chain with a pendant diameter of 1.75"</p>
     </div>
     <div class="wrapper" id="wrapper-earrings">
-        <div class="next active">
-            <svg id="preview-earrings" width="170" height="160"></svg>
-        </div>
+        <svg id="preview-earrings" width="300" height="282">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="313" height="297" x="0" y="0">
+        </svg>
         <p>Pair of Earrings</p>
-        <p class="note" id="range-earrings">$75-90</p>
+        <p class="note">earrings with a diameter of 1.5"</p>
     </div>
 {% endblock %}

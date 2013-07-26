@@ -21,15 +21,17 @@
     </div>
     {% endblock %}
 
-    <div id="crazy">
-        <div class="line"></div>
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-        </ul>
-    </div>
+    {% block numbers %}
+        <div id="crazy">
+            <div class="line"></div>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </div>
+    {% endblock %}
 
     {% block helpedit %}
     {% endblock %}
@@ -63,38 +65,6 @@
             <h2>Choose Your Piece</h2>
             <div id="product-preview">
                 {% block products %}
-                <!-- <div class="wrapper" id="wrapper-earrings">
-                    <div class="">
-                        <svg id="preview-earrings" width="170" height="160"></svg>
-                    </div>
-                    <p>Pair of Earrings</p>
-                    <p class="note">maximum side-length: 2.5in (6cm)</p>
-                    <p class="note" id="range-earrings">$75-150</p>
-                </div>
-                <div class="wrapper" id="wrapper-pendant">
-                    <div class="">
-                        <svg id="preview-pendant" width="170" height="160"></svg>
-                    </div>
-                    <p>Pendant Necklace</p>
-                    <p class="note">maximum side-length: 1.5in (3.5 cm)</p>
-                    <p class="note" id="range-pendant">$75-130</p>
-                </div>
-                <div class="wrapper" id="wrapper-necklace">
-                    <div class="">
-                        <svg id="preview-necklace" width="170" height="160"></svg>
-                    </div>
-                    <p>Large Necklace</p>
-                    <p class="note">maximum side-length: 3.0in (7.5cm)</p>
-                    <p class="note" id="range-necklace">$80-150</p>
-                </div>
-                <div class="wrapper" id="wrapper-cufflinks">
-                    <div class="">
-                        <svg id="preview-cufflinks" width="170" height="160"></svg>
-                    </div>
-                    <p>Pair of Cufflinks</p>
-                    <!-- <p class="note" id="range-cufflinks">$150</p> -->
-                    <p class="note" style="width:160px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p>
-                </div> -->
                 {% endblock %}
             </div>
 
@@ -141,49 +111,53 @@
         </div>
     {% endblock %}
 
-    <div id="add-ons" class="section">
-        <h2>Finishing Touches</h2>
-        <div class="two-third">
-            <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%; height: 297px;">
-            <div class="postcard-form">
-                <h2 class="add-on-header">Postcard Note:</h2>
-                <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
-                <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
+    {% block addons %}
+        <div id="add-ons" class="section">
+            <h2>Finishing Touches</h2>
+            <div class="two-third">
+                <img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" style="width: 100%; height: 297px;">
+                <div class="postcard-form">
+                    <h2 class="add-on-header">Postcard Note:</h2>
+                    <p>Each meshu comes with its own map postcard. Add a custom message below (optional).</p>
+                    <textarea rows="4" cols="45" id="postcard-note-form"></textarea>
+                </div>
+            </div>
+            <div class="one-third">
+                <svg id="rotate"></svg>
+                <h2 class="add-on-header">Meshu Rotation:</h2>
+                <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
             </div>
         </div>
-        <div class="one-third">
-            <svg id="rotate"></svg>
-            <h2 class="add-on-header">Meshu Rotation:</h2>
-            <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
-        </div>
-    </div>
+    {% endblock %}
 
-    <div id="review" class="section last">
-        <form action="/cart/add/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
-            {# put a csrf token in every form in django, for security #}
-            {% csrf_token %}
-            <div id="hidden-form-values" style="display:none;">
-                <input type="hidden" id="object-material" name="material"/>
-                <input type="hidden" id="object-type" name="product"/>
-                <input type="hidden" id="object-color" name="color"/>
-                <input type="hidden" id="object-amount" name="amount"/>
-                <input type="hidden" id="svg-file" name="svg"/>
-                <input type="hidden" id="svg-theta" name="theta"/>
-                <input type="hidden" id="meshu-title" name="title"/>
-                <input type="hidden" id="meshu-renderer" name="renderer"/>
-                <input type="hidden" id="meshu-metadata" name="metadata"/>
-                <input type="hidden" id="meshu-data" name="location_data"/>
-                <input type="hidden" id="postcard-note" name="postcard_note"/>
-                <input type="hidden" id="coupon" name="coupon"/>
-            </div>
-        </form>
-        <h2>
-            Product: <span class="review-product review-field inactive">not chosen</span>
-            Material: <span class="review-material review-field inactive">not chosen</span>
-            Price: <span class="review-price review-field"></span>
-        </h2>
-        <div id="add-to-cart" class="button pink inactive" value="Submit Payment" tabindex="-1">Add to Cart</div>
-    </div>
+    {% block checkout %}
+        <div id="review" class="section last">
+            <form action="/cart/add/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
+                {# put a csrf token in every form in django, for security #}
+                {% csrf_token %}
+                <div id="hidden-form-values" style="display:none;">
+                    <input type="hidden" id="object-material" name="material"/>
+                    <input type="hidden" id="object-type" name="product"/>
+                    <input type="hidden" id="object-color" name="color"/>
+                    <input type="hidden" id="object-amount" name="amount"/>
+                    <input type="hidden" id="svg-file" name="svg"/>
+                    <input type="hidden" id="svg-theta" name="theta"/>
+                    <input type="hidden" id="meshu-title" name="title"/>
+                    <input type="hidden" id="meshu-renderer" name="renderer"/>
+                    <input type="hidden" id="meshu-metadata" name="metadata"/>
+                    <input type="hidden" id="meshu-data" name="location_data"/>
+                    <input type="hidden" id="postcard-note" name="postcard_note"/>
+                    <input type="hidden" id="coupon" name="coupon"/>
+                </div>
+            </form>
+            <h2>
+                Product: <span class="review-product review-field inactive">not chosen</span>
+                Material: <span class="review-material review-field inactive">not chosen</span>
+                Price: <span class="review-price review-field"></span>
+            </h2>
+            <div id="add-to-cart" class="button pink inactive" value="Submit Payment" tabindex="-1">Add to Cart</div>
+        </div>
+    {% endblock %}
 
     <!-- <div id="account" class="account section">
         <div class="back button">back</div>
