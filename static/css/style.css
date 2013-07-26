@@ -1984,6 +1984,14 @@ circle.highlight,
   padding-top: 7px;
   text-transform: capitalize;
 }
+#cart .button {
+  background-color: #808080;
+  font-size: 14px;
+  width: 100px;
+  display: inline-block;
+  line-height: 20px;
+  float: right;
+}
 .total-wrapper {
   width: 100%;
 }

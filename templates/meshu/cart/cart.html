@@ -9,6 +9,7 @@
 			<td>Meshu</td>
 			<td>Product</td>
 			<td>Subtotal</td>
+			<td></td>
 		</tr>
 	{% for item in items %}
 		<tr class="cart-row">
@@ -16,6 +17,7 @@
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
 			<td>${{ item.unit_price }}</td>
+			<td><span class="button">Order Another of this Design</span></td>
 		</tr>
 	{% endfor %}
 	</table>
