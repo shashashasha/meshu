@@ -144,7 +144,7 @@ class Order(models.Model):
 		(u'CA', u'Canceled'),
 	)
 	date_created = models.DateTimeField('date created', auto_now_add=True)
-	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='OR')
+	status = models.CharField(max_length=2, choices=ORDER_STATUSES, default='AD')
 
 	# order information
 	material = models.CharField(max_length=140) # acrylic, silver, bamboo
@@ -152,7 +152,7 @@ class Order(models.Model):
 	product = models.CharField(max_length=140) # necklace, pendant, etc
 	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
 
-	shipping = models.ForeignKey(ShippingInfo, null=True)
+	shipping = models.ForeignKey(ShippingInfo, null=True, blank=True)
 
 	# postcard status
 	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)

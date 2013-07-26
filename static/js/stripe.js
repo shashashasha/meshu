@@ -3,7 +3,7 @@ Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 var cashier = function() {
     var self = {},
         // amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
-        currentAmount = 0, 
+        currentAmount = 0,
         discountAmount = 0,
         discountPercent = 1,
         type = null,
@@ -25,12 +25,6 @@ var cashier = function() {
             var token = response['id'];
             // insert the token into the form so it gets submitted to the server
             form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
-
-            // and submit
-            var action = form$.attr("action");
-            if (action.search('None') > 0) {
-                form$.attr("action", "/order/");
-            }
 
             form$.get(0).submit();
         // }
@@ -55,7 +49,7 @@ var cashier = function() {
         }, currentAmount, stripeResponseHandler);
 
         // submit form callback
-        return false; 
+        return false;
     };
 
     // update the shipping value
@@ -73,7 +67,7 @@ var cashier = function() {
                 if (amt < 1 && amt > 0) {
                     discountPercent = amt;
                 } else if (amt > 0) {
-                    discountAmount = parseInt(data.amount);    
+                    discountAmount = parseInt(data.amount);
                 }
             }
 
@@ -102,7 +96,7 @@ var cashier = function() {
 
         // keep currentAmount in cents
         currentAmount = self.getTotal() * 100;
-        
+
         return self;
     };
 
@@ -112,7 +106,7 @@ var cashier = function() {
 
     self.getPriceString = function() {
         if (!catalog) return null;
-        
+
         return '$' + self.getPrice() + '.00';
     };
 

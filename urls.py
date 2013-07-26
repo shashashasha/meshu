@@ -44,8 +44,8 @@ urlpatterns += patterns('meshu.views',
 
 	# cart operations
 	url(r'^cart/add/', 'cart_add'),
-	url(r'^cart/update/(?P<item_id>\d+)/(?P<quantity>\d+)', 'cart_update'),
-	url(r'^cart/remove/(?P<item_id>\d+)', 'cart_remove'),
+	url(r'^cart/update/(?P<order_id>\d+)/(?P<quantity>\d+)', 'cart_update'),
+	url(r'^cart/remove/(?P<order_id>\d+)', 'cart_remove'),
 	url(r'^cart/view', 'cart_view'),
 	url(r'^cart/checkout', 'cart_checkout'),
 	url(r'^cart/empty', 'cart_empty'),

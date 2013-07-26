@@ -81,22 +81,24 @@ def cart_add(request):
 
 	return HttpResponseRedirect("/cart/view")
 
-def cart_update(request, item_id, quantity):
-	order = Order.objects.get(id=item_id)
+def cart_update(request, order_id, quantity):
+	order = Order.objects.get(id=order_id)
 	current_cart = Cart(request)
 	current_cart.update(order, int(quantity))
-	return json_dump({
-		'success' : 'true',
-		'order': order.id,
-		'amount': order.amount,
-		'quantity': quantity
-	})
+	return HttpResponseRedirect("/cart/view")
+	# return json_dump({
+	# 	'success' : 'true',
+	# 	'order': order.id,
+	# 	'amount': order.amount,
+	# 	'quantity': quantity
+	# })
 
-def cart_remove(request, item_id):
+def cart_remove(request, order_id):
 	current_cart = Cart(request)
-	order = get_object_or_404(Order, pk=item_id)
+	order = get_object_or_404(Order, pk=order_id)
 	current_cart.remove(order)
-	return json_dump({ 'success' : 'true' })
+	# return json_dump({ 'success' : 'true' })
+	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
 	current_cart = Cart(request)
@@ -150,6 +152,11 @@ def submit_orders(request):
 	current_cart = Cart(request)
 	items = current_cart.cart.item_set.all()
 
+	# total amount
+	total_amount = 0
+	for item in items:
+		total_amount += item.total_price
+
 	# grab email for reference in stripe
 	if request.user.is_authenticated() == False:
 		email = request.POST.get('shipping_contact', '')
@@ -159,17 +166,19 @@ def submit_orders(request):
 	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
-	stripe_desc = str(email) + ", " + len(items) + " meshus"
+	stripe_desc = str(email) + ", " + str(len(items)) + " meshus"
 
-	print('charging ' + str(current_cart.summary()))
-	print(str(current_cart.count()) + ' items')
+	print('charging ' + str(total_amount))
+	print(str(len(items)) + ' items')
+	print(stripe_desc)
 	# get the credit card details submitted by the form
 	# token = request.POST['stripeToken']
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	# amount = int(float(request.POST.get('amount', 0.0)))
+	# total_amount + shipping
 	# charge = stripe.Charge.create(
-	#     amount = amount, # amount in cents, again
+	#     amount = total_amount, # amount in cents, again
 	#     currency = "usd",
 	#     card = token,
 	#     description = stripe_desc
@@ -218,7 +227,8 @@ def submit_multiple(request, shipping, items):
 
 	mail_multiple_order_confirmation(shipping.contact, orders)
 	return render_to_response('meshu/notification/ordered_multiple.html', {
-		'orders': orders
+		'orders': orders,
+		'view': 'paid'
 	}, context_instance=RequestContext(request))
 
 def submit_single(request, shipping, items):
@@ -235,6 +245,7 @@ def submit_single(request, shipping, items):
 	mail_ordered_svg(order)
 
 	return render_to_response('meshu/notification/ordered.html', {
+		'view': 'paid',
 		'order': order,
 		'meshu': order.meshu
 	}, context_instance=RequestContext(request))
@@ -254,8 +265,8 @@ def order_create(request, profile, meshu):
 	amount = float(request.POST.get('amount', '0.0')) / 100.0
 	order.amount = str(amount)
 
-	# set the status to ORDERED
-	order.status = 'OR'
+	# AD = 'Added to Cart'
+	order.status = 'AD'
 
 	# postcard note
 	order.postcard_note = request.POST.get('postcard_note', '')

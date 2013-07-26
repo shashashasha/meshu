@@ -9,7 +9,7 @@
     You can show other people your new meshus (if you want!) by sending them these links:
     <br />
 	{% for order in orders %}
-    <br />{{ order.get_display_name }} - <a href="https://meshu.io{% shorturl meshu %}"><b>https://meshu.io{% shorturl order.meshu %}</b></a>
+    <br /><span style="text-transform:capitalize;">{{ order.get_display_name }}</span> - <a href="https://meshu.io{% shorturl meshu %}"><b>https://meshu.io{% shorturl order.meshu %}</b></a>
     {% endfor %}
 </div>
 <h2 class="content-header">Say hi!</h2>

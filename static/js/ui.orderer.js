@@ -153,6 +153,8 @@ sb.ui.orderer = function(meshu) {
         	return false;
         }
 
+        console.log('submitting');
+
         // cash money
         cashier.submit();
     });
