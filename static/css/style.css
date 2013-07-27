@@ -1467,7 +1467,7 @@ body.ie8 .city-input {
   width: 33.3%;
   float: left;
   height: 170px;
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
   box-sizing: border-box;
 }
 #material-list li:hover {
@@ -1485,7 +1485,7 @@ body.ie8 .city-input {
   width: 100%;
   height: 120px;
   background-color: #eee;
-  margin-bottom: 7px;
+  margin-bottom: 2px;
 }
 #review h2 {
   margin: 15px 0 5px;
@@ -1555,6 +1555,11 @@ body.ie8 .city-input {
   left: auto;
   right: 130px;
 }
+.exit-buttons {
+  width: 380px;
+  position: absolute;
+  bottom: 0;
+}
 #finish-button,
 #save-button,
 #update-button,
@@ -1592,7 +1597,7 @@ body.ie8 .city-input {
 }
 #cancel-button {
   right: auto;
-  left: 20px;
+  left: 0px;
 }
 #forceLogin {
   background-color: #808080;
@@ -1985,12 +1990,26 @@ circle.highlight,
   text-transform: capitalize;
 }
 #cart .button {
-  background-color: #808080;
+  padding: 3px 5px;
   font-size: 14px;
   width: 100px;
   display: inline-block;
   line-height: 20px;
   float: right;
+  background-color: #808080;
+}
+#cart .cart-remove {
+  background-color: #ff3fb4;
+  color: white;
+  display: inline-block;
+  padding: 2px 8px;
+  visibility: hidden;
+  float: right;
+  font-size: 18px;
+  line-height: 21px;
+}
+#cart .cart-row:hover .cart-remove {
+  visibility: visible;
 }
 .total-wrapper {
   width: 100%;
@@ -1998,15 +2017,13 @@ circle.highlight,
 .total-inside {
   width: 33%;
   float: right;
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid #e6e6e6;
   margin-right: 20px;
-  color: #808080;
   padding: 10px 0 30px 10px;
 }
 .total-wrapper span {
   width: 160px;
   float: right;
-  color: black;
 }
 .action-buttons {
   clear: both;
