@@ -449,7 +449,6 @@ body.win #login-form ul {
   height: 75px;
   text-align: center;
   line-height: 75px;
-  margin: 0 0 475px;
 }
 #crazy li:last-child {
   margin-bottom: 0;
@@ -1004,7 +1003,7 @@ body.firefox.win #rotate-help .border-notch {
     .transition(right);
 }*/
 #product {
-  height: 520px;
+  height: 500px;
 }
 #product-preview {
   margin-top: 25px;
@@ -1012,7 +1011,7 @@ body.firefox.win #rotate-help .border-notch {
 .wrapper svg {
   border: 2px solid white;
   cursor: pointer;
-  width: 300px;
+  width: 225px;
   margin: 0 auto;
 }
 .wrapper svg:hover {
@@ -1022,16 +1021,17 @@ body.firefox.win #rotate-help .border-notch {
   border-color: #ff3fb4;
 }
 #product-preview .wrapper {
-  margin-bottom: 10px;
-  width: 313px;
+  margin: 0 20px 10px 0;
+  float: left;
+  width: 225px;
   height: 380px;
 }
-#product-preview .wrapper:nth-child(odd) {
-  margin-right: 10px;
-  float: left;
+.radial #product-preview .wrapper,
+.radial .wrapper svg {
+  width: 300px;
 }
-#product-preview .wrapper:nth-child(even) {
-  float: right;
+#product-preview .wrapper.last {
+  margin-right: 0;
 }
 #product-preview p {
   margin-left: 5px;
@@ -1138,7 +1138,7 @@ body.firefox.win #rotate-help .border-notch {
   height: 460px;
 }
 #add-ons {
-  height: 560px;
+  height: 540px;
 }
 .add-on-header {
   font-size: 22px;
@@ -1469,6 +1469,11 @@ body.ie8 .city-input {
   height: 170px;
   margin: 0 0 15px 0;
   box-sizing: border-box;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
 }
 #material-list li:hover {
   border: 2px solid #808080;
@@ -1477,6 +1482,15 @@ body.ie8 .city-input {
 #material-list li.selected:hover {
   border: 2px solid #ff3fb4;
   color: #ff3fb4;
+}
+#material-list li.inactive {
+  opacity: .3;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  pointer-events: none;
 }
 #material-list li .price {
   float: right;

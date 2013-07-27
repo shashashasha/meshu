@@ -530,7 +530,6 @@ body.win #login-form ul {
     height: 75px;
     text-align: center;
     line-height: 75px;
-    margin: 0 0 475px;
 }
 #crazy li:last-child {
     margin-bottom: 0;
@@ -1049,7 +1048,7 @@ body.firefox.win #rotate-help .border-notch {
     .transition(right);
 }*/
 #product {
-    height: 520px;
+    height: 500px;
 }
 #product-preview {
     margin-top: 25px;
@@ -1057,7 +1056,7 @@ body.firefox.win #rotate-help .border-notch {
 .wrapper svg {
     border: 2px solid white;
     cursor: pointer;
-    width: 300px;
+    width: 225px;
     margin: 0 auto;
     &:hover {
         border-color: @grey;
@@ -1067,17 +1066,17 @@ body.firefox.win #rotate-help .border-notch {
     border-color: @pink;
 }
 #product-preview .wrapper {
-    margin-bottom: 10px;
-    width: 313px;
+    margin: 0 20px 10px 0;
+    float: left;
+    width: 225px;
     height: 380px;
-
-    &:nth-child(odd) {
-        margin-right: 10px;
-        float: left;
-    }
-    &:nth-child(even) {
-        float: right;
-    }
+}
+.radial #product-preview .wrapper,
+.radial .wrapper svg {
+    width: 300px;
+}
+#product-preview .wrapper.last {
+    margin-right: 0;
 }
 #product-preview p {
     margin-left: 5px;
@@ -1182,7 +1181,7 @@ body.firefox.win #rotate-help .border-notch {
     height: 460px;
 }
 #add-ons {
-    height: 560px;
+    height: 540px;
 }
 .add-on-header {
     font-size: 22px;
@@ -1531,6 +1530,7 @@ body.ie8 .city-input {
         height: 170px;
         margin: 0 0 15px 0;
         box-sizing: border-box;
+        .transition(opacity);
     }
     li:hover {
         border: 2px solid @grey;
@@ -1539,6 +1539,11 @@ body.ie8 .city-input {
     li.selected:hover {
         border: 2px solid @pink;
         color: @pink;
+    }
+    li.inactive {
+        opacity: .3;
+        .transition(opacity);
+        pointer-events: none;
     }
     li .price {
         float: right;

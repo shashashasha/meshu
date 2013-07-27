@@ -5,38 +5,43 @@ sb.catalog = function(renderer, promo) {
 		renderer = renderer || 'facet';
 
 	materialOptions.facet = {"earrings":
-						{"bamboo":{"price":70,"colors":["Amber"]},
-						"acrylic":{"price":75,"colors":["Black","White"]},
-						"nylon":{"price":85,"colors":["Black","White"]}
-						// "silver":{"price":145,"colors":["Sterling Silver"]}
+						{"bamboo":{"price":70,"colors":["amber"]},
+						"acrylic":{"price":75,"colors":["black","white"]},
+						"nylon":{"price":85,"colors":["black","white"]},
+						"silver":{"price":145,"colors":["sterling"]}
 					},
 				   "pendant":
-				   		{"bamboo":{"price":75,"colors":["Amber"]},
-				   		"acrylic":{"price":80,"colors":["Black","White"]},
-						"nylon":{"price":85,"colors":["Black","White"]}
-						// "silver":{"price":125,"colors":["Sterling Silver"]}
+				   		{"bamboo":{"price":75,"colors":["amber"]},
+				   		"acrylic":{"price":80,"colors":["black","white"]},
+						"nylon":{"price":85,"colors":["black","white"]},
+						"silver":{"price":125,"colors":["sterling"]}
 					},
 				   "necklace":
-				   		{"bamboo":{"price":80,"colors":["Amber"]},
-				   		"acrylic":{"price": 85,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]}
-						// "silver":{"price":145,"colors":["Sterling Silver"]}
+				   		{"bamboo":{"price":80,"colors":["amber"]},
+				   		"acrylic":{"price": 85,"colors":["black","white"]},
+						"nylon":{"price":90,"colors":["black","white"]},
+						"silver":{"price":145,"colors":["sterling"]}
 					},
 					"cufflinks":
-						// {"silver":{"price":145}}
-						{}
+						{"silver":{"price":165},"colors":["sterling"]}
+						// {}
 					};
 
 	materialOptions.radial = {"earrings":
-						{"bamboo":{"price":75,"colors":["Amber"]},
-						"acrylic":{"price":80,"colors":["Black","White"]},
-						"nylon":{"price":90,"colors":["Black","White"]}},
+						{"bamboo":{"price":75,"colors":["amber"]},
+						"acrylic":{"price":80,"colors":["black","white"]},
+						"nylon":{"price":90,"colors":["black","white"]}
+						},
 				   "pendant":
-				   		{"bamboo":{"price":80,"colors":["Amber"]},
-				   		"acrylic":{"price":85,"colors":["Black","White"]},
-						"nylon":{"price":95,"colors":["Black","White"]},
-						"silver":{"price":160,"colors":["Sterling Silver"]}
-					}
+				   		{"bamboo":{"price":80,"colors":["amber"]},
+				   		"acrylic":{"price":85,"colors":["black","white"]},
+						"nylon":{"price":95,"colors":["black","white"]},
+						"silver":{"price":160,"colors":["sterling"]}
+						},
+					"coasters":
+				   		{"bamboo":{"price":40,"colors":["amber"]},
+				   		"acrylic":{"price":45,"colors":["black","white"]}
+						}
 					};
 
 	// set the product type options with either facet or radial
@@ -134,13 +139,12 @@ sb.catalog = function(renderer, promo) {
 	}
 
 	self.getMaterials = function(type) {
-		var materials = [];
+		var materials = {};
 
 		for (var i in options[type]) {
 			$.each(options[type][i].colors, function(j,v){
-				materials.push([v.toLowerCase()+"-"+i, options[type][i].price])
+				materials[v+"-"+i] = options[type][i].price;
 			});
-			// materials.push(i);
 		}
 		return materials;
 	};
