@@ -373,5 +373,12 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
+
+    	var cartTotal = 0;
+    	$(".price").each(function(){
+    		var p = $(this).text().split("$")[1];
+    		cartTotal += parseInt(p);
+    	});
+    	$(".total-inside").find("span").text("$"+cartTotal+".00")
     </script>
 {% endblock %}

@@ -56,6 +56,8 @@ var cashier = function() {
     self.shippingMode = function(value) {
         var amount = value == 'international' ? internationalShipping : domesticShipping;
         self.updateProduct(type, material, amount);
+
+        $("#shipping-price span").text(getPriceString(amount));
     };
 
     self.applyCoupon = function(value, callback) {

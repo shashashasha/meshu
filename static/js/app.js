@@ -39,7 +39,7 @@ $(function() {
 	sb.ui.socialsharer(meshu);
 
 	// initialize the viewhandler
-	sb.viewhandler.initialize();
+	// sb.viewhandler.initialize();
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -52,24 +52,26 @@ $(function() {
 		// viewhandler handles next / prev buttons, shuffling account view
 		// sb.viewhandler.updateViews(pageType);
 
+		console.log(pageType)
+
 		switch (pageType) {
 			case 'view':
 				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
 
-			case 'product':
-				var product = $("#product");
-				product.find(".nav").remove();
-				product.find(".make-wrapper").removeClass("make-wrapper");
-				break;
+			// case 'product':
+			// 	var product = $("#product");
+			// 	product.find(".nav").remove();
+			// 	product.find(".make-wrapper").removeClass("make-wrapper");
+			// 	break;
 
-			default:
-				$("#materials").addClass("ready");
+			// default:
+				// $("#materials").addClass("ready");
 
-				var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
-				sb.materializer.product(product);
-				break;
+				// var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
+				// sb.materializer.product(product);
+				// break;
 		}
 
 		// if svg is enabled
@@ -155,9 +157,9 @@ $(function() {
 		wrapper.addClass("selected");
 		var product = wrapper.attr("id").split("-")[1];
 
-		$(".make-option").hide();
+		// $(".make-option").hide();
 
-		$("#make-" + product).show();
+		// $("#make-" + product).show();
 
 		sb.rotator.update(product);
 
@@ -218,9 +220,9 @@ $(function() {
 				$(".render").css("background-image", url);
 				break;
 
-			case 'review':
-				orderForm.updated();
-				break;
+			// case 'review':
+			// 	orderForm.updated();
+			// 	break;
 		}
 	}
 

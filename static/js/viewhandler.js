@@ -66,17 +66,16 @@ sb.viewhandler = function() {
 		// }
 	};
 
-	self.initialize = function() {
-		// $(".next").live("click", onNext);
-		// $(".back").click(onPrev);
-	};
+	// self.initialize = function() {
+	// 	$(".next").live("click", onNext);
+	// 	$(".back").click(onPrev);
+	// };
 
 	//navigation
 	function onNext() {
 		// if (!$(this).hasClass("active")) return;
 
 		var button = $(this);
-		console.log(this, self)
 		var view = self.view();
 		var index = views.indexOf(view);
 		var advanceView = function() {
@@ -89,34 +88,34 @@ sb.viewhandler = function() {
 			saver.createOrUpdateMeshu();
 		}
 
-		if (view == 'make' || view == 'readymade') {
-			checkAccountView();
+		// if (view == 'make' || view == 'readymade') {
+		// 	checkAccountView();
 
 			/*
 				if we're on a readymade or make page,
 				we need to click the next button after we log in
 			*/
 
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					button.click();
-				});
-			};
-		}
+		// 	user.afterLogIn = function() {
+		// 		saver.createOrUpdateMeshu(function() {
+		// 			button.click();
+		// 		});
+		// 	};
+		// }
 
-		if (view == 'account' && !user.loggedIn) {
+		// if (view == 'account' && !user.loggedIn) {
 			/*
 				i don't understand why this callback is not... getting called back anymore
 				but it may have something to do with user.js and the facebook login flow
 			*/
-			user.afterLogIn = function() {
-				saver.createOrUpdateMeshu(function() {
-					button.click();
-				});
-			};
+		// 	user.afterLogIn = function() {
+		// 		saver.createOrUpdateMeshu(function() {
+		// 			button.click();
+		// 		});
+		// 	};
 
-			return;
-		}
+		// 	return;
+		// }
 
 		self.next();
 		// user.updateLogoutActions(view);

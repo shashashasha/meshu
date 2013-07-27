@@ -10,14 +10,17 @@
 			<td>Product</td>
 			<td>Subtotal</td>
 			<td></td>
+			<td></td>
 		</tr>
 	{% for item in items %}
 		<tr class="cart-row">
 			<td class="theta">{{item.product.meshu.theta|safe}}</td>
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
-			<td>${{ item.unit_price }}</td>
-			<td><span class="button">Order Another of this Design</span></td>
+			<td class="price">${{ item.unit_price }}</td>
+			<td><a class="button" href="/edit/{{ item.product.meshu.id }}/">Order Another of this Design</a></td>
+			<!-- cart/update/{{ item.product.id }}/number -->
+			<td><a href="/cart/remove/{{ item.product.id }}" class="cart-remove">x</a></td>
 		</tr>
 	{% endfor %}
 	</table>
@@ -37,7 +40,12 @@
 {% block resources %}
     <script type="text/javascript">
     	var theta = $(".theta").text();
-    	console.log(theta);
     	$(".delaunay").attr("transform","scale(.17) rotate("+theta+", 300, 300)");
+    	var cartTotal = 0;
+    	$(".price").each(function(){
+    		var p = $(this).text().split("$")[1];
+    		cartTotal += parseInt(p);
+    	});
+    	$(".total-inside").find("span").text("$"+cartTotal+".00")
     </script>
 {% endblock %}
