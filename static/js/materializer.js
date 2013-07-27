@@ -43,8 +43,12 @@ sb.materializer = function() {
 		product = p;
 		var materials = catalog.getMaterials(p);
 
-		$.each(materials,function(i,v){
-			self.materials.find("#"+v[0]+" .price").text("$"+v[1])
+		$.each(self.materials.find("li"),function(i,v){
+			var item = $(this).attr("id");
+			if (materials[item])
+				$(v).removeClass("inactive").find(".price").text("$"+materials[item]);
+			else
+				$(v).addClass("inactive").find(".price").text("");
 		});
 
 		return self;
