@@ -18,7 +18,7 @@
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
 			<td class="price">${{ item.unit_price }}</td>
-			<td><a class="button" href="/edit/{{ item.product.meshu.id }}/">Order Another of this Design</a></td>
+			<td><a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a></td>
 			<!-- cart/update/{{ item.product.id }}/number -->
 			<td><a href="/cart/remove/{{ item.product.id }}" class="cart-remove">x</a></td>
 		</tr>
