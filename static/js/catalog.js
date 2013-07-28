@@ -14,13 +14,13 @@ sb.catalog = function(renderer, promo) {
 				   		{"bamboo":{"price":75,"colors":["amber"]},
 				   		"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["black","white"]},
-						"silver":{"price":125,"colors":["sterling"]}
+						"silver":{"price":145,"colors":["sterling"]}
 						},
 				   "necklace":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price": 85,"colors":["black","white"]},
 						"nylon":{"price":90,"colors":["black","white"]},
-						"silver":{"price":145,"colors":["sterling"]}
+						"silver":{"price":165,"colors":["sterling"]}
 						},
 					"cufflinks":
 						{"silver":{"price":165,"colors":["sterling"]}
