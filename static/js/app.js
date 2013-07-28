@@ -90,7 +90,7 @@ $(function() {
 		}
 
 
-		$("#finish-button").addClass("active");
+		// $("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");
 
 		// creates the location list

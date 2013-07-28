@@ -52,14 +52,14 @@ sb.meshu = function(frame, renderer, existingMap) {
         }
     });
 
-    self.checkAdded = function() { 
-        // pay attention to the number of points
-        var points = mesh.points();
-        var minPoints = 3;
-        if ($("body").hasClass("radial")) minPoints = 1;
-        if (points.length >= minPoints) $("#finish-button").addClass("active");
-        else $("#finish-button").removeClass("active");
-    }
+    // self.checkAdded = function() {
+    //     pay attention to the number of points
+    //     var points = mesh.points();
+    //     var minPoints = 3;
+    //     if ($("body").hasClass("radial")) minPoints = 1;
+    //     if (points.length >= minPoints) $("#finish-button").addClass("active");
+    //     else $("#finish-button").removeClass("active");
+    // }
 
     // on click of search button
     function searchPlaces(input) {
@@ -69,9 +69,9 @@ sb.meshu = function(frame, renderer, existingMap) {
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
         var url = "/proxy/geocoder/?location=" + query;
-            //$('body').hasClass('ie') || window.location.protocol == 'https:' 
+            //$('body').hasClass('ie') || window.location.protocol == 'https:'
             // : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
-        
+
         searchbox.val("");
 
         $.ajax({
@@ -127,19 +127,19 @@ sb.meshu = function(frame, renderer, existingMap) {
         // region
         if (rad > 100000) {
             return 4;
-        } 
+        }
         // bigger city
         else if (rad > 10000) {
             return 12;
-        } 
+        }
         // small town
         else if (rad > 1000) {
             return 13;
-        } 
+        }
         // address
         else if (rad > 400) {
             return 14;
-        } 
+        }
 
         // default
         return 12;
@@ -150,7 +150,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         // don't change it unless it's different
         if (zoom != map.map.zoom()) {
-            map.map.zoom(zoom);   
+            map.map.zoom(zoom);
         }
     };
 
@@ -165,7 +165,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                         mesh.add(loc.latitude, loc.longitude, loc.name);
                         self.updateBounds();
                     };
-                }(locations[i]), i * 400);   
+                }(locations[i]), i * 400);
             }
         }
 
@@ -208,7 +208,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         mesh.prerender(svg);
 
         var locations = parseLocationData(data);
-        mesh.locations(locations);   
+        mesh.locations(locations);
 
         // 'drawStyle:knockout|zoom:12' for example
         if (style) {
@@ -269,7 +269,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         }
     };
 
-    mesh.on("added", self.checkAdded);
+    // mesh.on("added", self.checkAdded);
 
     map.on("boundsUpdated", function() {
         if (mesh.updatePixelBounds)

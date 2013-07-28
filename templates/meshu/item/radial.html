@@ -31,13 +31,6 @@
     </div>
 {% endblock %}
 
-<!-- {% block goback %}
-    <div class="nav back">back</div>
-{% endblock %}
-{% block finish %}
-    <div id="finish-button" class="nav next start-order">Continue</div>
-{% endblock %} -->
-
 {% block products %}
     <div class="wrapper" id="wrapper-pendant">
         <svg id="preview-pendant" width="300" height="282">
@@ -89,4 +82,7 @@
         <img src="{{ STATIC_URL }}images/materials/radial-silver.jpg" class="img">
         Silver<span class="price"></span>
     </li>
+{% endblock %}
+
+{% block final-touch %}
 {% endblock %}

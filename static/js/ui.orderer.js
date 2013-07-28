@@ -160,6 +160,7 @@ sb.ui.orderer = function(meshu) {
     });
 
     $("#add-to-cart").click(function(){
+    	self.updated();
     	cashier.submit();
     });
 

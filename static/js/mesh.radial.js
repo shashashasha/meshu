@@ -83,14 +83,14 @@ sb.mesh.radial = function (frame, map, width, height) {
         self.add(loc.lat, loc.lon, undefined, false);
     });
 
-    self.on("removed", function() {
-        if (points.length == 0)
-             $("#finish-button").removeClass("active");
-    });
+    // self.on("removed", function() {
+    //     if (points.length == 0)
+    //          $("#finish-button").removeClass("active");
+    // });
 
     /*
         This is how we're listening to style changes
-        here we're listening for something like 
+        here we're listening for something like
         {
             // 'drawStyle': 'knockout', // no more knockout style, but keeping zoom
             'zoom': 12
@@ -151,7 +151,7 @@ sb.mesh.radial = function (frame, map, width, height) {
                 .style("stroke-width", 0)
                 .transition()
                 .duration(500)
-                .style("stroke-width", strokeWidth);   
+                .style("stroke-width", strokeWidth);
         }
 
         lines.exit().remove();
@@ -232,7 +232,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // jquery automatically adds a callback param
         // use https proxy for apis that don't support
-        var mapquest = $('body').hasClass('ie') || window.location.protocol == 'https:' 
+        var mapquest = $('body').hasClass('ie') || window.location.protocol == 'https:'
             ? "https://meshu.io/proxy/router/?from="
             : "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
 
@@ -291,8 +291,8 @@ sb.mesh.radial = function (frame, map, width, height) {
                 }
                 else {
                     return meshuTitle;
-                } 
-                    
+                }
+
             });
 
         placeTitle.select(".title-text").on("click",function(d){
@@ -359,14 +359,14 @@ sb.mesh.radial = function (frame, map, width, height) {
         else {
             meshuTitle = placename[0].toUpperCase() + placename.substr(1, placename.length-1);
         }
-            
+
 
         $("#places").removeClass("inactive");
 
-        /* 
-            just recentering so we don't clear out all the tiles 
+        /*
+            just recentering so we don't clear out all the tiles
             (meshu.js handles zooming if it's a searched result)
-            but we also have to run boundsUpdated() so that 
+            but we also have to run boundsUpdated() so that
             the title / pixelbounds / etc are updated
         */
         var r = map.getMapRadius();
@@ -375,17 +375,17 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
-        
+
         return self;
     };
 
-    self.remove = function(index) {   
+    self.remove = function(index) {
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
         // places.splice(index, 1);
-        
-        if (points.length == 0) $("#finish-button").removeClass("active");
+
+        // if (points.length == 0) $("#finish-button").removeClass("active");
     };
 
     self.lats = function() {
@@ -409,9 +409,9 @@ sb.mesh.radial = function (frame, map, width, height) {
         return self;
     };
 
-    /* 
+    /*
         this bit of code is called by rasterizer.js because
-        we need explicit styling for the canvg code to 
+        we need explicit styling for the canvg code to
         rasterize it correctly - yikes!
     */
     self.bakeStyles = function() {
@@ -458,7 +458,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         $('#' + selfId + 'prerendered').html(svg);
         var pathGroup = $('#' + selfId + 'prerendered').find(".delaunay");
         // $('#' + selfId + 'prerendered').remove();
-        
+
         $('#' + selfId).find(".delaunay").replaceWith(pathGroup);
 
 
@@ -481,7 +481,7 @@ sb.mesh.radial = function (frame, map, width, height) {
                     return;
 
                 if (r.abort) {
-                    r.abort();    
+                    r.abort();
                 }
             });
 
@@ -511,7 +511,7 @@ sb.mesh.radial = function (frame, map, width, height) {
             self.refreshed();
         }
     };
-    
+
     self.updateTitle = function(t) {
         meshuTitle = t;
     };
