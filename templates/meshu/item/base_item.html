@@ -110,7 +110,7 @@
 
     {% block checkout %}
         <div id="review" class="section last">
-            <form action="/cart/add/" method="POST" id="payment-form" name="order-form">
+            <form action="/cart/add/" method="POST" id="order-form" name="order-form">
                 {# put a csrf token in every form in django, for security #}
                 {% csrf_token %}
                 <div id="hidden-form-values" style="display:none;">
@@ -207,7 +207,6 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
     {% else %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>

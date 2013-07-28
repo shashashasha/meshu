@@ -12,10 +12,10 @@ $(function() {
 		if ($("body").hasClass("print"))
 			currentRenderer = "print";
 
+	// the list of all available meshu products for purchase
 	var catalog = sb.catalog(currentRenderer, promotion);
 
-	// create a stripe payment object
-	cashier.catalog(catalog);
+	// this listens to material and product selection changes, updates prices
 	sb.materializer.initialize(catalog);
 
 	// create a meshu object for a single meshu container
@@ -27,12 +27,7 @@ $(function() {
 
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
-	var orderForm = sb.ui.orderer(meshu);
-	orderForm.on("validated", function() {
-		sb.viewhandler.view('review');
-		makeNextView('review');
-		return false;
-	});
+	sb.ui.orderer.initialize(meshu, catalog);
 
 	// initialize the social sharing ui
 	// facebook, twitter, pinterest buttons
@@ -217,10 +212,6 @@ $(function() {
 					url = "url(" + productPreview + ")";
 				$(".render").css("background-image", url);
 				break;
-
-			// case 'review':
-			// 	orderForm.updated();
-			// 	break;
 		}
 	}
 

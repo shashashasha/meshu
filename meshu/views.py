@@ -69,6 +69,8 @@ def cart_add(request):
 	# to protect against malicious requests
 	loc_check = request.POST.get('location_data', 'blank')
 	if loc_check == 'blank' or loc_check == '':
+		print loc_check
+		print request.POST
 		raise Http404
 
 	profile = current_profile(request)
@@ -96,30 +98,22 @@ def cart_remove(request, order_id):
 	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
-	current_cart = Cart(request)
 
 	return render_to_response('meshu/cart/cart.html', {
-			'cart' : current_cart
+			'cart' : Cart(request)
 	}, context_instance=RequestContext(request))
 
 def cart_checkout(request):
-	current_cart = Cart(request)
 
 	return render_to_response('meshu/cart/checkout.html', {
-			'cart' : current_cart
+			'cart' : Cart(request)
 	}, context_instance=RequestContext(request))
 
 def cart_empty(request):
 	current_cart = Cart(request)
+	current_cart.clear()
 
-	items = current_cart.cart.item_set.all()
-
-	for item in items:
-		current_cart.remove(item.product)
-
-	return render_to_response('meshu/cart/cart.html', {
-			'items' : []
-	}, context_instance=RequestContext(request))
+	return HttpResponseRedirect("/cart/view")
 
 # verify_coupon has to be an xhr request, we don't want to refresh the page
 def order_verify_coupon(request):

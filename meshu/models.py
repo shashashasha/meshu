@@ -158,13 +158,13 @@ class Order(models.Model):
 	postcard_ordered = models.CharField(max_length=10, default='false', blank=True)
 	postcard_note = models.TextField(blank=True)
 
-	# special instructions
+	# notes on shipping, paypal orders, etc
 	special_instructions = models.CharField(max_length=200, default='', blank=True)
 
 	# track the coupon codes used
 	coupon = models.CharField(max_length=100, default='', blank=True)
 
-	# tracking number and shipping date
+	# to hook back to usps
 	ship_date = models.DateTimeField('date shipped', null=True, blank=True)
 	tracking = models.CharField(max_length=140, default='', blank=True)
 

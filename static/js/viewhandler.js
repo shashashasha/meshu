@@ -20,19 +20,9 @@ sb.viewhandler = function() {
 	}, { offset: 550 });
 	$("#review").waypoint(function(direction) {
 		if (direction == "down")
-			populateReviewText();
+			// populate review forms, update prices
+			sb.ui.orderer.updated();
 	}, { offset: 700 });
-
-	function populateReviewText() {
-		if (sb.materializer.product())
-			$(".review-product").removeClass("inactive").text(sb.materializer.product());
-		if (sb.materializer.color() && sb.materializer.material())
-			$(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+sb.materializer.material());
-		if (sb.materializer.product() && sb.materializer.color() && sb.materializer.material()) {
-			$(".review-price").text(cashier.getPriceString());
-			$("#add-to-cart").removeClass("inactive");
-		}
-	}
 
 	// self.updateViews = function(pageType) {
 	// 	switch (pageType) {

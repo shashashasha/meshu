@@ -9,8 +9,6 @@
 
 */
 $(function() {
-	var self = d3.dispatch("validated", "updated");
-
 	// switching from international to domestic, or vice versa
 	$("#shipping-destination li").click(function() {
         var mode = $(this).attr("id").split("-").pop();
@@ -95,20 +93,22 @@ $(function() {
 				minlength: "Please enter the year as a four-digit number.",
 			},
 		},
+		invalidHandler: function() {
+			console.log(arguments);
+		},
 		submitHandler: onFormValidated
 	});
 
-    $("#submit-button").click(function(e) {
-        console.log('submitting');
+    // $("#submit-button").click(function(e) {
+    //     console.log('submitting');
 
-        $("#payment-form")[0].submit();
-    });
+    //     return false;
+    // });
 
-	function onFormValidated() {
-		console.log('submit validated');
+	function onFormValidated(form) {
+		console.log('submit validated', form);
 
-		self.updated();
-		self.validated();
+		$("#submit-button").removeClass("inactive");
 		return false;
 	}
 
