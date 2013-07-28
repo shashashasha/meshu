@@ -41,6 +41,7 @@
         </svg>
         <p>Pair of Earrings</p>
         <p class="note">earrings 1.75" tall</p>
+        <p class="note">nickel-free posts available</p>
     </div>
     <div class="wrapper" id="wrapper-necklace">
         <svg id="preview-necklace" width="100%" height="282">
@@ -56,7 +57,7 @@
         </svg>
         <p>Pair of Cufflinks</p>
         <p class="note">cufflink max side length: 1.5"</p>
-        <p class="note">we recommend using 4-10 points for cufflink designs</p>
+        <p class="note important">we recommend using 4-10 points for cufflink designs</p>
     </div>
     <!-- <p class="cufflinks note" style="width:260px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p> -->
 {% endblock %}
@@ -90,6 +91,8 @@
 
 {% block final-touch %}
     <svg id="rotate"></svg>
+    <div id="rotate-cw" class="rotate-arrow">&#8635;</div>
+    <div id="rotate-ccw" class="rotate-arrow">&#8634;</div>
     <h2 class="add-on-header">Meshu Rotation:</h2>
     <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
 {% endblock %}

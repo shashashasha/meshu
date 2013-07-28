@@ -31,7 +31,7 @@
 		{% block navigation %}
 		<ul id="nav">
 			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
-			
+
 		    <li class="nav-list"><a href="/make/">make</a></li>
 			<li class="nav-list"><a href="/gallery/">gallery</a></li>
 			<li class="nav-list"><a href="/about/">about</a></li>
@@ -175,7 +175,7 @@ window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https
 					chrome: nav.match(/Chrome/i) ? true : false,
 					opera: nav.match(/Opera/i) ? true : false
 				};
-			if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){ 
+			if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
 				var ieversion= Math.floor(new Number(RegExp.$1));
 				var ieClass = "ie"+ieversion;
 			}
@@ -188,7 +188,7 @@ window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https
 		};
 		$("body").detect();
     </script>
-	
+
 	{% block script %}
 	{% endblock %}
 	{% block resources %}
