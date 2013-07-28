@@ -53,3 +53,8 @@
         <p class="note" id="range-necklace">$75-140</p>
     </div>
 {% endblock %}
+
+{% block script-specific %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
+{% endblock %}

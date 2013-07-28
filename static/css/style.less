@@ -2095,15 +2095,29 @@ circle {
     float: right;
     border-bottom: 1px solid @borderGrey;
     margin-right: 20px;
-    padding: 10px 0 30px 10px;
+    padding: 0 0 20px 20px;
+    box-sizing: border-box;
 }
 .total-wrapper span {
-    width: 160px;
+    width: 140px;
     float: right;
+    text-align: right;
+    margin-right: 60px;
+}
+.total-wrapper h2 {
+    font-size: 24px;
+    line-height: 36px;
+}
+.total-wrapper .discount span {
+    color: @pink;
+}
+.total-wrapper .total {
+    margin-top: 10px;
+    font-size: 32px;
 }
 .action-buttons {
     clear: both;
-    margin: 170px 20px 20px 0;
+    margin: 200px 20px 20px 0;
     height: 50px;
 }
 .action-buttons .button {
