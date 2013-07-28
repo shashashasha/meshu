@@ -3,7 +3,7 @@
 {% block content %}
 <h2 class="page-header">Shopping Cart</h2>
 
-{% if items|length > 0 %}
+{% if cart.items|length > 0 %}
 	<div class="cart-wrapper">
 		<table id="cart">
 			<tr class="headings">
@@ -13,7 +13,7 @@
 				<td></td>
 				<td></td>
 			</tr>
-		{% for item in items %}
+		{% for item in cart.items %}
 			<tr class="cart-row">
 				<td class="theta">{{item.product.meshu.theta|safe}}</td>
 				<td>{{ item.product.meshu.svg|safe }}</td>
@@ -28,7 +28,9 @@
 	</div>
 	<div class="total-wrapper">
 		<div class="total-inside">
-			<h2>Total:<span>$80.00</span></h2>
+			<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
+			<h2>Discount:<span>${{ cart.discount|floatformat:2 }}</span></h2>
+			<h2>Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
 		</div>
 	</div>
 	<div class="action-buttons">
@@ -46,11 +48,5 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.17) rotate("+theta+", 300, 300)");
-    	var cartTotal = 0;
-    	$(".price").each(function(){
-    		var p = $(this).text().split("$")[1];
-    		cartTotal += parseInt(p);
-    	});
-    	$(".total-inside").find("span").text("$"+cartTotal+".00")
     </script>
 {% endblock %}

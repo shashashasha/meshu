@@ -1,5 +1,6 @@
 import datetime
 import models
+import math
 
 CART_ID = 'CART-ID'
 
@@ -68,20 +69,38 @@ class Cart:
             )
         except models.Item.DoesNotExist:
             raise ItemDoesNotExist
-            
+
+    def items(self):
+        return self.cart.item_set.all()
+
     def count(self):
         result = 0
-        for item in self.cart.item_set.all():
+        for item in self.items():
             result += 1 * item.quantity
         return result
-        
-    def summary(self):
+
+    def total(self):
         result = 0
-        for item in self.cart.item_set.all():
+        for item in self.items():
             result += item.total_price
-        return result
+        return float(result)
+
+    # automatically discounts based on how many things in the cart
+    def discount_percent(self):
+        num = self.count()
+
+        percent = min(30.0, (num / 2.0) * 10.0)
+        return (percent / 100.0)
+
+    # 'You saved X'!
+    def discount(self):
+        return float(math.ceil(self.total() * self.discount_percent()))
+
+    # 'New total is X!'
+    def discount_applied(self):
+        return self.total() - self.discount()
 
     def clear(self):
-        for item in self.cart.item_set.all():
+        for item in self.items():
             item.delete()
 

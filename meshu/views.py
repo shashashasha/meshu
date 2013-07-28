@@ -85,35 +85,28 @@ def cart_update(request, order_id, quantity):
 	order = Order.objects.get(id=order_id)
 	current_cart = Cart(request)
 	current_cart.update(order, int(quantity))
+
 	return HttpResponseRedirect("/cart/view")
-	# return json_dump({
-	# 	'success' : 'true',
-	# 	'order': order.id,
-	# 	'amount': order.amount,
-	# 	'quantity': quantity
-	# })
 
 def cart_remove(request, order_id):
 	current_cart = Cart(request)
 	order = get_object_or_404(Order, pk=order_id)
 	current_cart.remove(order)
-	# return json_dump({ 'success' : 'true' })
+
 	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
 	current_cart = Cart(request)
-	items = current_cart.cart.item_set.all()
 
 	return render_to_response('meshu/cart/cart.html', {
-			'items' : items
+			'cart' : current_cart
 	}, context_instance=RequestContext(request))
 
 def cart_checkout(request):
 	current_cart = Cart(request)
-	items = current_cart.cart.item_set.all()
 
 	return render_to_response('meshu/cart/checkout.html', {
-			'items' : items
+			'cart' : current_cart
 	}, context_instance=RequestContext(request))
 
 def cart_empty(request):

@@ -110,7 +110,7 @@
 
     {% block checkout %}
         <div id="review" class="section last">
-            <form action="/cart/add/{{ meshu.id }}" method="POST" id="payment-form" name="order-form">
+            <form action="/cart/add/" method="POST" id="payment-form" name="order-form">
                 {# put a csrf token in every form in django, for security #}
                 {% csrf_token %}
                 <div id="hidden-form-values" style="display:none;">

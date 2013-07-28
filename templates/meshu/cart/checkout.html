@@ -8,9 +8,9 @@
 			<td>Product</td>
 			<td>Subtotal</td>
 		</tr>
-	{% for item in items %}
+	{% for item in cart.items %}
 		<tr class="cart-row">
-			<td class="theta">{{item.product.meshu.theta|safe}}</td>
+			<td class="theta">{{ item.product.meshu.theta|safe }}</td>
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
 			<td>${{ item.unit_price }}</td>
@@ -349,7 +349,7 @@
 	        <div id="review-total">
 	            <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
 	            <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
-	            <h2 id="total-price">Total: <span></span></h2>
+	            <h2 id="total-price">Total: <span>${{ cart.total }}</span></h2>
 	        </div>
 	    </div>
 	    <input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1"/>
@@ -373,12 +373,5 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
-
-    	var cartTotal = 0;
-    	$(".price").each(function(){
-    		var p = $(this).text().split("$")[1];
-    		cartTotal += parseInt(p);
-    	});
-    	$(".total-inside").find("span").text("$"+cartTotal+".00")
     </script>
 {% endblock %}
