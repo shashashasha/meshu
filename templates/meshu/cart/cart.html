@@ -27,7 +27,9 @@
 </div>
 <div class="total-wrapper">
 	<div class="total-inside">
-		<h2>Total:<span>${{ cart.total }}</span></h2>
+		<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
+		<h2>Discount:<span>${{ cart.discount|floatformat:2 }}</span></h2>
+		<h2>Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
 	</div>
 </div>
 <div class="action-buttons">

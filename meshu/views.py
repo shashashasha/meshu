@@ -78,7 +78,6 @@ def cart_add(request):
 
 	current_cart = Cart(request)
 	current_cart.add(order, order.amount, 1)
-	print 'total ' + str(current_cart.get_total())
 
 	return HttpResponseRedirect("/cart/view")
 
@@ -86,19 +85,14 @@ def cart_update(request, order_id, quantity):
 	order = Order.objects.get(id=order_id)
 	current_cart = Cart(request)
 	current_cart.update(order, int(quantity))
+
 	return HttpResponseRedirect("/cart/view")
-	# return json_dump({
-	# 	'success' : 'true',
-	# 	'order': order.id,
-	# 	'amount': order.amount,
-	# 	'quantity': quantity
-	# })
 
 def cart_remove(request, order_id):
 	current_cart = Cart(request)
 	order = get_object_or_404(Order, pk=order_id)
 	current_cart.remove(order)
-	# return json_dump({ 'success' : 'true' })
+
 	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
