@@ -68,18 +68,21 @@ class Cart:
             )
         except models.Item.DoesNotExist:
             raise ItemDoesNotExist
-            
+
     def count(self):
         result = 0
         for item in self.cart.item_set.all():
             result += 1 * item.quantity
         return result
-        
-    def summary(self):
+
+    def total(self):
         result = 0
         for item in self.cart.item_set.all():
             result += item.total_price
         return result
+
+    def items(self):
+        return self.cart.item_set.all()
 
     def clear(self):
         for item in self.cart.item_set.all():

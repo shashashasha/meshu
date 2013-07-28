@@ -78,6 +78,7 @@ def cart_add(request):
 
 	current_cart = Cart(request)
 	current_cart.add(order, order.amount, 1)
+	print 'total ' + str(current_cart.get_total())
 
 	return HttpResponseRedirect("/cart/view")
 
@@ -102,18 +103,16 @@ def cart_remove(request, order_id):
 
 def cart_view(request):
 	current_cart = Cart(request)
-	items = current_cart.cart.item_set.all()
 
 	return render_to_response('meshu/cart/cart.html', {
-			'items' : items
+			'cart' : current_cart
 	}, context_instance=RequestContext(request))
 
 def cart_checkout(request):
 	current_cart = Cart(request)
-	items = current_cart.cart.item_set.all()
 
 	return render_to_response('meshu/cart/checkout.html', {
-			'items' : items
+			'cart' : current_cart
 	}, context_instance=RequestContext(request))
 
 def cart_empty(request):
