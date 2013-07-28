@@ -62,7 +62,7 @@ $(function() {
 				startX = endX, startY = endY;
 
 				// dispatch rotation event
-				self.rotated(rotation);
+				// self.rotated(rotation);
 
 				div.attr("transform", self.getTransform(product));
 			}
@@ -74,6 +74,16 @@ $(function() {
 		          d3.event.stopPropagation();
 		        }
 			}
+			function rotateBig(deg) {
+				rotation = (rotation + deg) % 360;
+				div.attr("transform", self.getTransform(product));
+			}
+			$("#rotate-cw").click(function(){
+				rotateBig(22.5);
+			});
+			$("#rotate-ccw").click(function(){
+				rotateBig(-22.5);
+			});
 		};
 
 		self.getTransform = function(product) {

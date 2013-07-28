@@ -11,13 +11,13 @@ $(function() {
 			/*
 				pretty hacky, but seeing which products are used and hiding the rest
 			*/
-			var seenProducts = {};
+			// var seenProducts = {};
 
 			// initialize all products
 			for (var i = 0; i < products.length; i++) {
 				var product = products[i];
 
-				self.resetPreviewImage(product.type);
+				// self.resetPreviewImage(product.type);
 
 				if (typeof meshTarget == "string") {
 					self.previewFromSelector(product.type, meshTarget);
@@ -25,24 +25,24 @@ $(function() {
 					self.previewFromElement(product.type, meshTarget);
 				}
 
-				seenProducts[product.type] = true;
+				// seenProducts[product.type] = true;
 
-				var range = self.describeProductRange(product);
-				$("#range-" + product.type).html(range);
+				// var range = self.describeProductRange(product);
+				// $("#range-" + product.type).html(range);
 			}
 
-			$("#product-preview .wrapper").each(function(i, e) {
-				var id = e.id.split('-').pop();
-				if (!seenProducts[id]) {
-					$(e).hide();
-				}
-			});
+			// $("#product-preview .wrapper").each(function(i, e) {
+			// 	var id = e.id.split('-').pop();
+			// 	if (!seenProducts[id]) {
+			// 		$(e).hide();
+			// 	}
+			// });
 		};
 
-		self.resetPreviewImage = function(product) {
-			var svg = d3.select("#preview-" + product);
-			svg.select(".product-delaunay").remove();
-		};
+		// self.resetPreviewImage = function(product) {
+		// 	var svg = d3.select("#preview-" + product);
+		// 	svg.select(".product-delaunay").remove();
+		// };
 
 		self.previewFromSelector = function(product, meshSelector) {
 			var svg = d3.select("#preview-" + product),
@@ -68,53 +68,53 @@ $(function() {
 				.attr('xlink:href', element.toDataURL());
 		};
 
-		self.range = function(prices) {
-			return prices.length == 1
-					? "$" + prices[0]
-					: "$" + prices[0] + "-" + prices[prices.length - 1];
-		};
+		// self.range = function(prices) {
+		// 	return prices.length == 1
+		// 			? "$" + prices[0]
+		// 			: "$" + prices[0] + "-" + prices[prices.length - 1];
+		// };
 
-		self.describeProductRange = function(product) {
-			if (product.discount != undefined) {
-				var range = "<del>" + self.range(product.originals) + "</del>";
+		// self.describeProductRange = function(product) {
+		// 	if (product.discount != undefined) {
+		// 		var range = "<del>" + self.range(product.originals) + "</del>";
 
-				range += " " + self.range(product.prices);
+		// 		range += " " + self.range(product.prices);
 
-				range += product.discount < 1
-					? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
-					: " ($" + product.discount + " off!)";
+		// 		range += product.discount < 1
+		// 			? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
+		// 			: " ($" + product.discount + " off!)";
 
-				return range;
-			} else {
-				return self.range(product.prices);
-			}
-		};
+		// 		return range;
+		// 	} else {
+		// 		return self.range(product.prices);
+		// 	}
+		// };
 
-		self.attachMeshu = function(mesh, frame, transform) {
-		};
+		// self.attachMeshu = function(mesh, frame, transform) {
+		// };
 
-		self.thumbnail = function(mesh, frame, transform) {
-			var miniDelaunay = $(mesh).clone()
-				.attr("class","product-delaunay")
-				.attr("transform", transform);
+		// self.thumbnail = function(mesh, frame, transform) {
+		// 	var miniDelaunay = $(mesh).clone()
+		// 		.attr("class","product-delaunay")
+		// 		.attr("transform", transform);
 
-			d3.select(frame[0])
-				.append('svg:rect')
-					.attr('x', 0)
-					.attr('y', 0)
-					.attr('width', '100%')
-					.attr('height', '100%');
+		// 	d3.select(frame[0])
+		// 		.append('svg:rect')
+		// 			.attr('x', 0)
+		// 			.attr('y', 0)
+		// 			.attr('width', '100%')
+		// 			.attr('height', '100%');
 
-			frame.append(miniDelaunay);
-		};
+		// 	frame.append(miniDelaunay);
+		// };
 
-		self.rotation = function(r) {
-			d3.selectAll(".product-delaunay")
-				.attr("transform", function(d, i) {
-					var transform = sb.transforms.getTransform(products[i].type, "product");
-					return transform + " rotate(" + r + ", 300, 300)";
-				});
-		};
+		// self.rotation = function(r) {
+		// 	d3.selectAll(".product-delaunay")
+		// 		.attr("transform", function(d, i) {
+		// 			var transform = sb.transforms.getTransform(products[i].type, "product");
+		// 			return transform + " rotate(" + r + ", 300, 300)";
+		// 		});
+		// };
 
 		return self;
 	}();

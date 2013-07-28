@@ -1000,6 +1000,24 @@ body.ie .frame div {
 .radial #rotate-help {
     display: none;
 }
+.rotate-arrow {
+    position: absolute;
+    font-size: 40px;
+    top: 240px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#rotate-cw {
+    right: 270px;
+}
+#rotate-ccw {
+    right: 10px;
+}
 #rotate-help {
     position: absolute;
     left: 220px;
@@ -1064,6 +1082,9 @@ body.firefox.win #rotate-help .border-notch {
 }
 .wrapper.selected svg {
     border-color: @pink;
+}
+.wrapper.selected .important {
+    color: @pink;
 }
 #product-preview .wrapper {
     margin: 0 20px 10px 0;
@@ -1876,15 +1897,14 @@ circle {
 
 /* mini meshu */
 #maps {
-    padding: 0 0 60px 15px;
-    float: left;
+    padding: 0 0 0 15px;
 }
 
 .mini-meshu {
-    float: left;
+    display: inline-block;
     width: 306px;
     height: 306px;
-    margin: 0 10px 10px 0;
+    margin: 0 8px 10px 0;
     border: 5px solid white;
 
     position: relative;

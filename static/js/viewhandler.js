@@ -78,10 +78,10 @@ sb.viewhandler = function() {
 		};
 
 		// if you're logged in, let's just save it as you go
-		if (view == 'edit' && user.loggedIn) {
-			// save this meshu
-			saver.createOrUpdateMeshu();
-		}
+		// if (view == 'edit' && user.loggedIn) {
+		// 	// save this meshu
+		// 	saver.createOrUpdateMeshu();
+		// }
 
 		// if (view == 'make' || view == 'readymade') {
 		// 	checkAccountView();

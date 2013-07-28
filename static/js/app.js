@@ -196,7 +196,7 @@ $(function() {
 				meshu.updateBounds();
 				meshu.mesh().interactive(true);
 
-				generateProductThumbnails();
+				// generateProductThumbnails();
 				break;
 
 			case 'make':

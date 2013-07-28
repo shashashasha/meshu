@@ -3,39 +3,44 @@
 {% block content %}
 <h2 class="page-header">Shopping Cart</h2>
 
-<div class="cart-wrapper">
-	<table id="cart">
-		<tr class="headings">
-			<td>Meshu</td>
-			<td>Product</td>
-			<td>Subtotal</td>
-			<td></td>
-			<td></td>
-		</tr>
-	{% for item in cart.items %}
-		<tr class="cart-row">
-			<td class="theta">{{item.product.meshu.theta|safe}}</td>
-			<td>{{ item.product.meshu.svg|safe }}</td>
-			<td>{{ item.product }}</td>
-			<td class="price">${{ item.unit_price }}</td>
-			<td><a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a></td>
-			<!-- cart/update/{{ item.product.id }}/number -->
-			<td><a href="/cart/remove/{{ item.product.id }}" class="cart-remove">x</a></td>
-		</tr>
-	{% endfor %}
-	</table>
-</div>
-<div class="total-wrapper">
-	<div class="total-inside">
-		<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
-		<h2>Discount:<span>${{ cart.discount|floatformat:2 }}</span></h2>
-		<h2>Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
+{% if cart.items|length > 0 %}
+	<div class="cart-wrapper">
+		<table id="cart">
+			<tr class="headings">
+				<td>Meshu</td>
+				<td>Product</td>
+				<td>Subtotal</td>
+				<td></td>
+				<td></td>
+			</tr>
+		{% for item in cart.items %}
+			<tr class="cart-row">
+				<td class="theta">{{item.product.meshu.theta|safe}}</td>
+				<td>{{ item.product.meshu.svg|safe }}</td>
+				<td>{{ item.product }}</td>
+				<td class="price">${{ item.unit_price }}</td>
+				<td><a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a></td>
+				<!-- cart/update/{{ item.product.id }}/number -->
+				<td><a href="/cart/remove/{{ item.product.id }}" class="cart-remove">x</a></td>
+			</tr>
+		{% endfor %}
+		</table>
 	</div>
-</div>
-<div class="action-buttons">
-	<a class="button large pink" href="/cart/checkout">Proceed to Checkout</a>
-	<a class="button large grey" href="/make">Make Another Meshu</a>
-</div>
+	<div class="total-wrapper">
+		<div class="total-inside">
+			<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
+			<h2>Discount:<span>${{ cart.discount|floatformat:2 }}</span></h2>
+			<h2>Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
+		</div>
+	</div>
+	<div class="action-buttons">
+		<a class="button large pink" href="/cart/checkout">Proceed to Checkout</a>
+		<a class="button large grey" href="/make">Make Another Meshu</a>
+	</div>
+{% else %}
+	<h2 class="page-header" style="margin-top: 60px;">Oh no! It looks like you don't have anything in your cart yet.</h2>
+	<h2 class="page-header">Let's get you started on <a href="/make/" style="color:#FF3FB4;">making a meshu<a/>.</h2>
+{% endif %}
 
 {% endblock %}
 
