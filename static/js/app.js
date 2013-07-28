@@ -52,8 +52,6 @@ $(function() {
 		// viewhandler handles next / prev buttons, shuffling account view
 		// sb.viewhandler.updateViews(pageType);
 
-		console.log(pageType)
-
 		switch (pageType) {
 			case 'view':
 				if (svgEnabled)
