@@ -7,6 +7,7 @@ $(function() {
 		var products = [];
 
 		self.initialize = function(meshTarget, catalog) {
+			console.log(meshTarget,catalog);
 			products = catalog.getProducts();
 			/*
 				pretty hacky, but seeing which products are used and hiding the rest
@@ -17,7 +18,7 @@ $(function() {
 			for (var i = 0; i < products.length; i++) {
 				var product = products[i];
 
-				// self.resetPreviewImage(product.type);
+				self.resetPreviewImage(product.type);
 
 				if (typeof meshTarget == "string") {
 					self.previewFromSelector(product.type, meshTarget);
@@ -39,10 +40,10 @@ $(function() {
 			// });
 		};
 
-		// self.resetPreviewImage = function(product) {
-		// 	var svg = d3.select("#preview-" + product);
-		// 	svg.select(".product-delaunay").remove();
-		// };
+		self.resetPreviewImage = function(product) {
+			var svg = d3.select("#preview-" + product);
+			svg.select(".product-delaunay").remove();
+		};
 
 		self.previewFromSelector = function(product, meshSelector) {
 			var svg = d3.select("#preview-" + product),
@@ -93,28 +94,28 @@ $(function() {
 		// self.attachMeshu = function(mesh, frame, transform) {
 		// };
 
-		// self.thumbnail = function(mesh, frame, transform) {
-		// 	var miniDelaunay = $(mesh).clone()
-		// 		.attr("class","product-delaunay")
-		// 		.attr("transform", transform);
+		self.thumbnail = function(mesh, frame, transform) {
+			var miniDelaunay = $(mesh).clone()
+				.attr("class","product-delaunay")
+				.attr("transform", transform);
 
-		// 	d3.select(frame[0])
-		// 		.append('svg:rect')
-		// 			.attr('x', 0)
-		// 			.attr('y', 0)
-		// 			.attr('width', '100%')
-		// 			.attr('height', '100%');
+			d3.select(frame[0])
+				.append('svg:rect')
+					.attr('x', 0)
+					.attr('y', 0)
+					.attr('width', '100%')
+					.attr('height', '100%');
 
-		// 	frame.append(miniDelaunay);
-		// };
+			frame.append(miniDelaunay);
+		};
 
-		// self.rotation = function(r) {
-		// 	d3.selectAll(".product-delaunay")
-		// 		.attr("transform", function(d, i) {
-		// 			var transform = sb.transforms.getTransform(products[i].type, "product");
-		// 			return transform + " rotate(" + r + ", 300, 300)";
-		// 		});
-		// };
+		self.rotation = function(r) {
+			d3.selectAll(".product-delaunay")
+				.attr("transform", function(d, i) {
+					var transform = sb.transforms.getTransform(products[i].type, "product");
+					return transform + " rotate(" + r + ", 300, 300)";
+				});
+		};
 
 		return self;
 	}();
