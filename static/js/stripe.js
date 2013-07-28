@@ -3,15 +3,13 @@ Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 var cashier = function() {
     var self = {},
         // grab from the page right away
+        // this is probably dumb
         currentAmount = totalPrice * 100,
         discountAmount = 0,
         discountPercent = 1,
-        type = null,
-        material = null,
-        shipping = 5,
+        shipping = 5, // default domestic
         domesticShipping = 5,
-        internationalShipping = 38,
-        catalog = null;
+        internationalShipping = 38;
 
     function stripeResponseHandler(status, response) {
         if (response.error) {
@@ -61,12 +59,15 @@ var cashier = function() {
         return false;
     };
 
+    self.update = function() {
+        $("#shipping-price span").text('$' + shipping + '.00');
+        $("#total-price span").text('$' + self.getTotal() + '.00');
+    };
+
     // update the shipping value
     self.shippingMode = function(value) {
-        var amount = value == 'international' ? internationalShipping : domesticShipping;
-        self.updateProduct(type, material, amount);
-
-        $("#shipping-price span").text(getPriceString(amount));
+        shipping = value == 'international' ? internationalShipping : domesticShipping;
+        self.update();
     };
 
     self.applyCoupon = function(value, callback) {
@@ -77,8 +78,13 @@ var cashier = function() {
                 var amt = parseFloat(data.amount);
                 if (amt < 1 && amt > 0) {
                     discountPercent = amt;
+
+                    var amountOff = Math.round(self.getPrice() * (1 - discountPercent));
+                    var percentOff = Math.round((1 - discountPercent) * 100);
+                    data.message = percentOff + '% off! -$' + amountOff + '.00';
                 } else if (amt > 0) {
                     discountAmount = parseInt(data.amount);
+                    data.message = '-$' + discountAmount + '.00';
                 }
             }
 
@@ -88,64 +94,13 @@ var cashier = function() {
         }, 'json');
     };
 
-    // let's ... not allow anyone to change these catalog options
-    self.catalog = function(o) {
-        if (catalog) return;
-
-        catalog = o;
-        return self;
-    };
-
-    self.updateProduct = function(t, m, s) {
-        // ignore if we haven't heard about this product before
-        if (!catalog.check(t, m))   return;
-
-        // update values
-        shipping = s || 5;
-        type = t;
-        material = m;
-
-        // keep currentAmount in cents
-        currentAmount = self.getTotal() * 100;
-
-        return self;
-    };
-
+    // dollars
     self.getPrice = function() {
-        return catalog.getPrice(type, material);
-    };
-
-    self.getPriceString = function() {
-        if (!catalog) return null;
-
-        return '$' + self.getPrice() + '.00';
-    };
-
-    self.getShipping = function() {
-        return shipping;
+        return currentAmount / 100;
     };
 
     self.getTotal = function() {
-        if (!catalog) return null;
-
         return Math.floor(discountPercent * (self.getPrice() - discountAmount)) + shipping;
-    };
-
-    self.getTotalCents = function() {
-        if (!catalog) return null;
-
-        return self.getTotal() * 100;
-    };
-
-    self.getTotalString = function() {
-        if (!catalog) return null;
-
-        return '$' + self.getTotal() + '.00';
-    };
-
-    self.getColors = function(type, material) {
-        if (!catalog) return null;
-        return catalog.getColors(type, material);
     };
 
     return self;

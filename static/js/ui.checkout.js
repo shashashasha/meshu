@@ -11,7 +11,7 @@
 $(function() {
 	// switching from international to domestic, or vice versa
 	$("#shipping-destination li").click(function() {
-        var mode = $(this).attr("id").split("-").pop();
+        var mode = this.id.split("-").pop();
 
         var form = $("#shipping-destination");
 
@@ -19,41 +19,33 @@ $(function() {
         form.find("li").removeClass("active");
         $(this).addClass("active");
 
+        console.log('switching mode', mode);
         cashier.shippingMode(mode);
 	});
+
+	// set default shipping mode
+	cashier.update();
 
 	$("#coupon-code").submit(function() {
 		var value = $("#coupon-code-value").val();
 		cashier.applyCoupon(value, function(data) {
-			if (data.success) {
-				var couponPrice = parseFloat(data.amount);
-
-				// detect whether the coupon is for an amount or a percentage
-				if (couponPrice < 1 && couponPrice > 0) {
-					var amountOff = Math.round(cashier.getPrice() * (1 - couponPrice));
-					var percentOff = Math.round((1 - couponPrice) * 100);
-					$("<h2>").attr("id","subtotal-coupon")
-						.addClass("review-header")
-						.html("Coupon:<span>" + percentOff + "% off! -$" + amountOff + ".00</span>")
-						.insertAfter("#subtotal-price");
-				} else if (couponPrice > 1) {
-					$("<h2>").attr("id","subtotal-coupon")
-						.addClass("review-header")
-						.html("Coupon:<span>-$" + couponPrice + ".00</span>")
-						.insertAfter("#subtotal-price");
-				}
-
-				// turn the input form into text
-				$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
-				$(".coupon-form").hide();
-
-				// store it in our hidden form
-				$("#coupon").val(value);
-			} else {
+			if (!data.success) {
 				$("#coupon-message").fadeIn('fast').html('Invalid code.');
+				return;
 			}
 
-			self.updated();
+			$("<h2>").attr("id","subtotal-coupon")
+				.addClass("review-header")
+				.html("Coupon:<span>" + data.message + "</span>")
+				.insertAfter("#subtotal-price");
+
+			// turn the input form into text
+			$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
+			$(".coupon-form").hide();
+
+			// store it in our hidden form
+			$("#coupon").val(value);
+			cashier.update();
 		});
 
 		return false;
@@ -97,19 +89,14 @@ $(function() {
 				minlength: "Please enter the year as a four-digit number.",
 			},
 		},
-		submitHandler: onFormValidated
+		submitHandler: function(form) {
+			// don't actually submit the form
+			// stripe.js needs to get the token,
+			// then the form can be submitted
+			cashier.submit();
+			return false;
+		}
 	});
-
-    // $("#submit-button").click(function(e) {
-    //     console.log('submitting');
-
-    //     return false;
-    // });
-
-	function onFormValidated(form) {
-		cashier.submit();
-		return false;
-	}
 
 	return self;
 });

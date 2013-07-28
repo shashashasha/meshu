@@ -351,9 +351,9 @@
         </form>
     </div>
     <div id="review-total">
-        <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
-        <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
-        <h2 id="total-price">Total: <span>${{ cart.total }}</span></h2>
+        <h2 id="subtotal-price" class="review-header">Subtotal: <span>${{ cart.total|floatformat:2 }}</span></h2>
+        <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$5.00</span></h2>
+        <h2 id="total-price">Total: <span></span></h2>
     </div>
 </div>
 
@@ -375,6 +375,5 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
-
     </script>
 {% endblock %}
