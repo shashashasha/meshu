@@ -68,9 +68,9 @@ h1#meshu {
 }
 #nav {
   position: absolute;
-  bottom: 3px;
+  bottom: 4px;
   right: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 #nav #profile a {
   color: #1fcaff;
@@ -80,7 +80,7 @@ h1#meshu {
 }
 #nav li {
   display: inline-block;
-  margin-left: 25px;
+  margin-right: 20px;
   cursor: pointer;
 }
 #nav li:hover,
@@ -89,6 +89,15 @@ h1#meshu {
 }
 #nav li.inactive {
   display: none;
+}
+#nav li.last {
+  margin-right: 0;
+}
+#nav .num {
+  color: #1fcaff;
+}
+#nav #nav-cart:hover .num {
+  color: #ff3fb4;
 }
 #login-form label.error.login-error,
 #account label.error.login-error {
