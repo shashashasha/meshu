@@ -2,6 +2,16 @@
 
 {% block content %}
 <h2 class="page-header">Shopping Cart</h2>
+<div class="discount" style="color: #FF3FB4;
+position: absolute;
+top: 20px;
+right: 20px;
+font-size: 16px;
+text-align: right;">
+	<p>Order multiple of the same design and save!</p>
+	<p>10% off 2 of the same design</p>
+	<p>15% off 3+ of the same design</p>
+</div>
 
 {% if cart.items|length > 0 %}
 	<div class="cart-wrapper">
@@ -29,8 +39,8 @@
 	<div class="total-wrapper">
 		<div class="total-inside">
 			<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
-			<h2>Discount:<span>${{ cart.discount|floatformat:2 }}</span></h2>
-			<h2>Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
+			<h2 class="discount">Discount:<span>- ${{ cart.discount|floatformat:2 }}</span></h2>
+			<h2 class="total">Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
 		</div>
 	</div>
 	<div class="action-buttons">
