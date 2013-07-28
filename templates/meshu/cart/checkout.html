@@ -330,8 +330,9 @@
 	                <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="12" name="card_month"/>
 	                <span> / </span>
 	                <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="2014" name="card_year" style="margin-left: 3px;"/>
+	                <label class="payment-errors note error" style="display: none;"></label>
 	            </div>
-	        <p class="note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
+	        <p class="note payment-note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
 	        <h2 style="margin-top: 40px;">Email Address</h2>
 	        <div class="form-row">
 	            <label>Contact Email</label>
@@ -365,6 +366,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
+    <script type="text/javascript">var totalPrice = {{ cart.total }};</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.checkout.js"></script>
 {% endblock %}
@@ -373,5 +375,6 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
+
     </script>
 {% endblock %}
