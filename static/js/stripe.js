@@ -2,8 +2,8 @@ Stripe.setPublishableKey('pk_GtEuTncR1hDqm7tP3oz9RRM9XOLub');
 
 var cashier = function() {
     var self = {},
-        // amount you want to charge, in cents. 1000 = $10.00, 2000 = $20.00 ...
-        currentAmount = 0,
+        // grab from the page right away
+        currentAmount = totalPrice * 100,
         discountAmount = 0,
         discountPercent = 1,
         type = null,
@@ -14,12 +14,21 @@ var cashier = function() {
         catalog = null;
 
     function stripeResponseHandler(status, response) {
-        // if (response.error) {
-        //     // re-enable the submit button
-        //     $('#submit-button').removeAttr("disabled").removeClass("inactive");
-        //     // show the errors on the form
-        //     $(".payment-errors").html(response.error.message);
-        // } else {
+        if (response.error) {
+            // re-enable the submit button
+            $('#submit-button').removeAttr("disabled").removeClass("inactive");
+
+            $(".payment-note").css({
+                color: '#FF3FB4'
+            }).html('There was an error processing your card. Maybe there was a typo?');
+
+            // click anywhere to revert this
+            $(window).click(function() {
+                $(".payment-note").css({
+                    color: '#8F8F8F'
+                }).html('All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a>');
+            });
+        } else {
             var form$ = $("#payment-form");
             // token contains id, last4, and card type
             var token = response['id'];
@@ -27,7 +36,7 @@ var cashier = function() {
             form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
 
             form$.get(0).submit();
-        // }
+        }
     }
 
     self.submit = function() {

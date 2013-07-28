@@ -97,9 +97,6 @@ $(function() {
 				minlength: "Please enter the year as a four-digit number.",
 			},
 		},
-		invalidHandler: function() {
-			console.log(arguments);
-		},
 		submitHandler: onFormValidated
 	});
 
@@ -110,9 +107,7 @@ $(function() {
     // });
 
 	function onFormValidated(form) {
-		console.log('submit validated', form);
-
-		$("#submit-button").removeClass("inactive");
+		cashier.submit();
 		return false;
 	}
 
