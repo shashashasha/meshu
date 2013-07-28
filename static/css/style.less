@@ -116,9 +116,9 @@ h1#meshu {
 
 #nav {
     position: absolute;
-    bottom: 3px;
+    bottom: 4px;
     right: 0;
-    font-size: 18px;
+    font-size: 16px;
 
     #profile a {
         color: @blue;
@@ -130,7 +130,7 @@ h1#meshu {
 
     li {
         display: inline-block;
-        margin-left: 25px;
+        margin-right: 20px;
         cursor: pointer;
 
         &:hover, &:hover a {
@@ -140,7 +140,17 @@ h1#meshu {
         &.inactive {
             display: none;
         }
+        &.last {
+            margin-right: 0;
+        }
     }
+    .num {
+        color: @blue;
+    }
+    #nav-cart:hover .num {
+        color: @pink;
+    }
+
 }
 
 #login-form label.error.login-error,

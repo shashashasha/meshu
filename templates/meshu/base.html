@@ -30,15 +30,15 @@
 	<div id="top">
 		{% block navigation %}
 		<ul id="nav">
-			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
-
 		    <li class="nav-list"><a href="/make/">make</a></li>
 			<li class="nav-list"><a href="/gallery/">gallery</a></li>
 			<li class="nav-list"><a href="/about/">about</a></li>
-			<li class="nav-list"><a href="http://blog.meshu.io/">blog</a></li>
+			<li class="nav-list" style="margin-right: 20px; padding-right: 20px; border-right: 1px solid #000;"><a href="http://blog.meshu.io/">blog</a></li>
+			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
+			<li class="nav-list" id="nav-cart"><a href="/cart/view">cart<span> (<span class="num">1</span>)</span></a></li>
 
-			<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list">login</li>
-			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list">logout</li>
+			<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list last">login</li>
+			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list last">logout</li>
 		</ul>
 
 		<div id="login-form" class="signin">
