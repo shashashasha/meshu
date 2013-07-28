@@ -92,7 +92,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             so our bounds for this shape may not be correct anymore
         */
         self.dirty = true;
-    
+
         update();
     });
 
@@ -118,7 +118,7 @@ sb.mesh.facet = function (frame, map, width, height) {
     });
 
     self.on("removed", function() {
-        if (points.length < 3) $("#finish-button").removeClass("active");
+        // if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     });
 
@@ -156,9 +156,9 @@ sb.mesh.facet = function (frame, map, width, height) {
                     };
                     var pt = map.l2p(loc);
                     draw.push([pt.x, pt.y]);
-                } 
+                }
 
-                return "M" + draw.join("L") + "Z"; 
+                return "M" + draw.join("L") + "Z";
             });
 
         // we move the newest point closer and closer to its destination
@@ -170,13 +170,13 @@ sb.mesh.facet = function (frame, map, width, height) {
             var last = points[points.length-1] || [];
             if (Math.abs(last[0] - new_pt[0]) > .0002) {
                 last[0] += (new_pt[0] - last[0]) / 3;
-            }    
+            }
             if (Math.abs(last[1] - new_pt[1]) > .0002) {
                 last[1] += (new_pt[1] - last[1]) / 3;
-            }    
+            }
 
             points[points.length - 1] = last;
-            
+
             var dlon = Math.abs(last[0] - new_pt[0]);
             var dlat = Math.abs(last[1] - new_pt[1]);
             if (dlat < .0002 && dlon < .0002) {
@@ -195,7 +195,7 @@ sb.mesh.facet = function (frame, map, width, height) {
                             map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
                             map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
         }
-        else { 
+        else {
             pixel_bounds = [];
         }
     };
@@ -216,13 +216,13 @@ sb.mesh.facet = function (frame, map, width, height) {
                 // stop prop to prevent map dragging
                 d3.event.stopPropagation();
             });
-        
+
         circles.exit().remove();
 
         // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
-        
+
         var place = names.enter().append("li").attr("class", "place");
         var title = place.append("span").attr("class", "title");
             title.append("span").attr("class", "place-text")
@@ -259,7 +259,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             }).attr("cy", function(d, i) {
                 return d.y;
             });
-            
+
         rotate_pts.exit().remove();
         rotate_pts.attr("cx", function(d, i) {
                 return d.x;
@@ -273,7 +273,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             $.each(pixel_bounds, function(i, p) {
                 draw.push([p.x,p.y]);
             });
-            return "M" + draw.join("L") + "Z"; 
+            return "M" + draw.join("L") + "Z";
         }).attr("class","hiddenFrame")
 
         self.updateCircleBehavior();
@@ -292,14 +292,14 @@ sb.mesh.facet = function (frame, map, width, height) {
                 list.select("#p-" + i).attr("class", "place highlight");
             else {
                 placeHover.addClass("active").find("span").text(places[i]);
-                
+
                 var p = map.l2p({ lat: d[1], lon: d[0] });
                 var w = placeHover.width();
                 var top = (p.y - 32) + "px";
                 var left = (p.x - (w/2) - 3) + "px";
                 var bleft = w/2 - 3 + "px";
 
-                
+
                 placeHover.css({"top": top, "left": left})
                     .find("b").css("left", bleft);
             }
@@ -378,15 +378,15 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
-            
-            new_pt = [lon, lat];   
+
+            new_pt = [lon, lat];
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
 
                 self.updatePixelBounds();
                 update();
                 updateMesh(skipAnimation);
-            } else { 
+            } else {
                 // make the new point start from the last location
                 var last = points[points.length-1];
                 points.push([last[0], last[1]]);
@@ -400,7 +400,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
-        
+
 
         /*
             we've added a point but haven't updated the bounds
@@ -410,13 +410,13 @@ sb.mesh.facet = function (frame, map, width, height) {
         return self;
     };
 
-    self.remove = function(index) {   
+    self.remove = function(index) {
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
-        
-        if (points.length < 3) $("#finish-button").removeClass("active");
+
+        // if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     };
 
@@ -441,9 +441,9 @@ sb.mesh.facet = function (frame, map, width, height) {
         return self;
     };
 
-    /* 
+    /*
         this bit of code is called by rasterizer.js because
-        we need explicit styling for the canvg code to 
+        we need explicit styling for the canvg code to
         rasterize it correctly - yikes!
     */
     self.bakeStyles = function() {
@@ -480,7 +480,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         self.refreshed();
     };
-    
+
     self.updateTitle = function(t) {
         meshuTitle = t;
     };

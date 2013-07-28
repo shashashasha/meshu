@@ -19,13 +19,8 @@ sb.viewhandler = function() {
 		}
 	}, { offset: 550 });
 	$("#review").waypoint(function(direction) {
-		if (direction == "down") {
+		if (direction == "down")
 			populateReviewText();
-			if (sb.materializer.product() && sb.materializer.material()) {
-				var orderForm = sb.ui.orderer(meshu);
-				orderForm.updated();
-			}
-		}
 	}, { offset: 700 });
 
 	function populateReviewText() {
