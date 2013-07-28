@@ -2110,15 +2110,22 @@ circle.highlight,
   font-size: 22px;
 }
 .coupon {
-  margin-top: 40px;
+  width: 50%;
+  position: absolute;
+  top: 320px;
+  right: 0;
 }
 .coupon h2 {
   float: left;
   margin-right: 15px;
 }
 .coupon #coupon-code {
-  float: right;
-  margin-top: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#payment-form,
+.half {
+  height: 100%;
 }
 #coupon-message {
   display: none;
@@ -2127,10 +2134,16 @@ circle.highlight,
   line-height: 30px;
 }
 #review-total {
-  margin-top: 60px;
-  padding-top: 5px;
+  width: 50%;
+  position: absolute;
+  top: 390px;
+  padding-right: 20px;
+  right: 0px;
+  box-sizing: border-box;
+}
+#review-total #subtotal-price {
+  padding-top: 15px;
   border-top: 1px solid black;
-  width: 100%;
 }
 #review-total h2 {
   margin: 4px 0;

@@ -67,6 +67,7 @@ $(function() {
 		If it's valid, we populate the review
 	*/
 	var checkoutForm = $("#payment-form").validate({
+		debug: true,
 		rules: {
 		    card_number: {
 		    	creditcard: true
@@ -81,7 +82,10 @@ $(function() {
 		    },
 		    card_year: {
 		    	digits: true,
-		    	minlength: 4,
+		    	minlength: 4
+		    },
+		    email_address: {
+		    	email: true
 		    }
 		},
 		messages: {

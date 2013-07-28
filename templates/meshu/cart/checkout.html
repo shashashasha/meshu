@@ -335,25 +335,25 @@
 	        <h2 style="margin-top: 40px;">Email Address</h2>
 	        <div class="form-row">
 	            <label>Contact Email</label>
-	            <input type="text" style="width:200px; margin-left: 15px;">
+	            <input type="text" class="required" name="email_address" style="width:200px; margin-left: 15px;">
 	        </div>
 	        <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
-	        <div class="coupon">
-            	<h2>Coupon:</h2>
-	            <form action="/order/apply_coupon" method="GET" id="coupon-code">
-	                <span id="coupon-message">Invalid coupon.</span>
-	                <input class="coupon-form" id="coupon-code-value" type="text" name="code" />
-	                <input class="coupon-form" type="submit" value="Apply" />
-	            </form>
-	        </div>
-	        <div id="review-total">
-	            <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
-	            <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
-	            <h2 id="total-price">Total: <span>${{ cart.total }}</span></h2>
-	        </div>
+	    	<input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1"/>
 	    </div>
-	    <input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1"/>
 	</form>
+	<div class="coupon">
+    	<h2>Coupon:</h2>
+        <form action="/order/apply_coupon" method="GET" id="coupon-code">
+            <span id="coupon-message">Invalid coupon.</span>
+            <input class="coupon-form" id="coupon-code-value" type="text" name="code" />
+            <input class="coupon-form" type="submit" value="Apply" />
+        </form>
+    </div>
+    <div id="review-total">
+        <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
+        <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
+        <h2 id="total-price">Total: <span>${{ cart.total }}</span></h2>
+    </div>
 </div>
 
 {% endblock %}
