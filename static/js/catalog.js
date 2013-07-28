@@ -7,24 +7,24 @@ sb.catalog = function(renderer, promo) {
 	materialOptions.facet = {"earrings":
 						{"bamboo":{"price":70,"colors":["amber"]},
 						"acrylic":{"price":75,"colors":["black","white"]},
-						"nylon":{"price":85,"colors":["black","white"]},
-						"silver":{"price":145,"colors":["sterling"]}
-					},
+						"nylon":{"price":85,"colors":["black","white"]}
+						// "silver":{"price":145,"colors":["sterling"]}
+						},
 				   "pendant":
 				   		{"bamboo":{"price":75,"colors":["amber"]},
 				   		"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["black","white"]},
 						"silver":{"price":125,"colors":["sterling"]}
-					},
+						},
 				   "necklace":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price": 85,"colors":["black","white"]},
 						"nylon":{"price":90,"colors":["black","white"]},
 						"silver":{"price":145,"colors":["sterling"]}
-					},
+						},
 					"cufflinks":
-						{"silver":{"price":165},"colors":["sterling"]}
-						// {}
+						{"silver":{"price":165,"colors":["sterling"]}
+						}
 					};
 
 	materialOptions.radial = {"earrings":
