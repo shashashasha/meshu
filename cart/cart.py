@@ -89,12 +89,15 @@ class Cart:
     def discount_percent(self):
         num = self.count()
 
-        percent = min(30.0, (num / 2.0) * 10.0)
-        return (percent / 100.0)
+        if num > 1:
+            percent = min(30.0, (num / 2.0) * 10.0)
+            return (percent)
+        else:
+            return 0.0
 
     # 'You saved X'!
     def discount(self):
-        return float(math.ceil(self.total() * self.discount_percent()))
+        return float(math.ceil(self.total() * (self.discount_percent() / 100.0)))
 
     # 'New total is X!'
     def discount_applied(self):

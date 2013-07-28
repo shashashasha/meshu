@@ -23,7 +23,8 @@ def item_edit(request, item_encoded):
 	item = get_object_or_404(Meshu, pk=item_id)
 
 	# check user id
-	if request.user.id != item.user_profile.user.id:
+	username = item.user_profile.user.username
+	if username != 'guest' and request.user.username != username:
 		return notify(request, 'authorization_required')
 
 	if item.renderer == "radial":

@@ -39,8 +39,8 @@ import sha
 #
 
 # hashed codes
-codes = ['c65f99f8c5376adadddc46d5cbcf5762f9e55eb7']
-amounts = [.95]
+codes = ['c65f99f8c5376adadddc46d5cbcf5762f9e55eb7', '92de3afc458e3876e2c7a63bb273c4b213ce5090']
+amounts = [.95, 5]
 
 # util function
 def json_dump(json):
@@ -137,35 +137,40 @@ def submit_orders(request):
 	# gets logged in user profile, or anonymous profile
 	profile = current_profile(request)
 	current_cart = Cart(request)
-	items = current_cart.cart.item_set.all()
 
-	# total amount
-	total_amount = 0
-	for item in items:
-		total_amount += item.total_price
+	# the cart has its own discount logic
+	# plus we need to account for any user submitted coupons
+	total_amount = current_cart.discount_applied() * 100
+	coupon_amount = float(request.POST.get('coupon_amount', 0.0))
+	shipping_amount = float(request.POST.get('shipping_amount', 0.0))
+
+	# actual amount to charge with stripe
+	final_amount = total_amount - coupon_amount + shipping_amount
+
+	print(str(current_cart.count()) + ' items')
+	print('total ' + str(total_amount))
+	print('coupon amount ' + str(coupon_amount))
+	print('shipping amount ' + str(shipping_amount))
+	print('final amount ' + str(final_amount))
 
 	# grab email for reference in stripe
-	if request.user.is_authenticated() == False:
-		email = request.POST.get('shipping_contact', '')
+	if profile.user.username == 'guest':
+		email = request.POST.get('email_address', '')
 	else:
 		email = profile.user.email
 
-	# set your secret key: remember to change this to your live secret key in production
 	# see your keys here https://manage.stripe.com/account
-	stripe.api_key = "oE92kq5OZuv3cwdBoGqkeLqB45PjKOym" # key the binx gave
-	stripe_desc = str(email) + ", " + str(len(items)) + " meshus"
+	stripe.api_key = settings.STRIPE_SECRET_KEY # key the binx gave
+	stripe_desc = str(email) + ", " + str(current_cart.count()) + " meshus"
 
-	print('charging ' + str(total_amount))
-	print(str(len(items)) + ' items')
 	print(stripe_desc)
+
 	# get the credit card details submitted by the form
-	# token = request.POST['stripeToken']
+	# token = request.POST['stripe_token']
 
 	# create the charge on Stripe's servers - this will charge the user's card
-	# amount = int(float(request.POST.get('amount', 0.0)))
-	# total_amount + shipping
 	# charge = stripe.Charge.create(
-	#     amount = total_amount, # amount in cents, again
+	#     amount = final_amount, # amount in cents, again
 	#     currency = "usd",
 	#     card = token,
 	#     description = stripe_desc
@@ -185,9 +190,11 @@ def submit_orders(request):
 
 	shipping.save()
 
-	if len(items) > 1 or items[0].quantity > 1:
+	items = current_cart.cart.item_set.all()
+
+	if current_cart.count() > 1:
 		return submit_multiple(request, shipping, items)
-	elif len(items) == 1 and items[0].quantity == 1:
+	elif current_cart.count() == 1:
 		return submit_single(request, shipping, items)
 
 def submit_multiple(request, shipping, items):

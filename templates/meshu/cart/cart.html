@@ -38,8 +38,10 @@ text-align: right;">
 	</div>
 	<div class="total-wrapper">
 		<div class="total-inside">
+			{% if cart.discount > 1 %}
 			<h2>Subtotal:<span>${{ cart.total|floatformat:2 }}</span></h2>
 			<h2 class="discount">Discount:<span>- ${{ cart.discount|floatformat:2 }}</span></h2>
+			{% endif %}
 			<h2 class="total">Total:<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
 		</div>
 	</div>
