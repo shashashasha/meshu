@@ -13,7 +13,7 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		$(canvas).addClass("hidden");
+		// $(canvas).addClass("hidden");
 
 		canvases.push(canvas);
 		return canvas;
@@ -40,7 +40,7 @@ sb.rasterizer = function() {
 			roundedZoom = Math.round(zoom);
 
 		if (zoom != roundedZoom) {
-			map.zoom(roundedZoom);	
+			map.zoom(roundedZoom);
 			meshu.mesh().refresh();
 		}
 	};
@@ -71,15 +71,15 @@ sb.rasterizer = function() {
 			sending all the meshu information. Since we're saving on 'continue'
 			we want to save a meshu in our db regardless, to associate with the MeshuImage
 
-			this starts off as assigned to the 'guest' user_profile, 
+			this starts off as assigned to the 'guest' user_profile,
 			which once we log in we assign to the logged in user_profile
 		*/
 		var xhr = meshu.xhr();
 		xhr.csrfmiddlewaretoken = $("#csrf input").val();
 		xhr.dataurl = canvas.toDataURL();
 
-		/* 
-			attach the meshu id if we have one, 
+		/*
+			attach the meshu id if we have one,
 			this is if we're starting off with a meshu
 		*/
 		if (meshu.id) {
@@ -93,6 +93,8 @@ sb.rasterizer = function() {
 			var img = document.createElement('img');
 			img.src = data.image_url;
 			$(img).addClass("hidden");
+
+			$(".strip div").css("background-image","url("+img.src+")");
 
 			frame.appendChild(img);
 			self.generated = true;
@@ -115,7 +117,7 @@ sb.rasterizer = function() {
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content
-		var canvas = makeCanvas(), 
+		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = serialize(meshu.map().map.container());
@@ -141,7 +143,7 @@ sb.rasterizer = function() {
 		meshu.mesh().bakeStyles();
 
 		// draw the mesh object
-		var canvas = makeCanvas(), 
+		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = meshu.outputSVG();
