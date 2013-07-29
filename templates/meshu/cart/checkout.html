@@ -319,17 +319,17 @@
 	        <h2>Payment</h2>
 	            <div class="form-row">
 	                <label>Card Number</label>
-	                <input type="text" style="width:141px; margin-left: 15px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="4242424242424242" name="card_number"/>
+	                <input type="text" style="width:141px; margin-left: 15px;" maxlength="16" autocomplete="off" id="card-number" class="card-info required" value="{% if debug %}4242424242424242{% endif %}" name="card_number"/>
 	                <span class="right">
 	                    <label>CVC</label>
-	                    <input type="text" style="margin-left: 15px" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="424" name="card_cvc"/>
+	                    <input type="text" style="margin-left: 15px" size="3" maxlength="4" autocomplete="off" id="card-cvc" class="card-info required" value="{% if debug %}424{% endif %}" name="card_cvc"/>
 	                </span>
 	            </div>
 	            <div class="form-row">
 	                <label>Expiration (MM/YYYY)</label>
-	                <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="12" name="card_month"/>
+	                <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="{% if debug %}12{% endif %}" name="card_month"/>
 	                <span> / </span>
-	                <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="2014" name="card_year" style="margin-left: 3px;"/>
+	                <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="{% if debug %}2014{% endif %}" name="card_year" style="margin-left: 3px;"/>
 	                <label class="payment-errors note error" style="display: none;"></label>
 	            </div>
 	        <p class="note payment-note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
@@ -351,9 +351,16 @@
         </form>
     </div>
     <div id="review-total">
-        <h2 id="subtotal-price" class="review-header">Subtotal: <span></span></h2>
-        <h2 id="shipping-price" class="review-header">Shipping Cost: <span></span></h2>
-        <h2 id="total-price">Total: <span>${{ cart.total }}</span></h2>
+    	{% if cart.discount_percent > 0 %}
+        <h2 id="subtotal-price" class="review-header">Subtotal:
+        	<span> ${{ cart.discount_applied|floatformat:2 }}</span> <span style="padding-left: 10px; padding-right: 10px; text-decoration: line-through;"> ${{ cart.total|floatformat:2 }} </span></h2>
+        	<!-- <span>({{ cart.discount_percent|floatformat:0 }}% off!) ${{ cart.discount_applied|floatformat:2 }}</span></h2> -->
+        {% else %}
+	        <h2 id="subtotal-price" class="review-header">Subtotal:
+        	<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
+        {% endif %}
+        <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$5.00</span></h2>
+        <h2 id="total-price">Total: <span></span></h2>
     </div>
 </div>
 
@@ -366,7 +373,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
-    <script type="text/javascript">var totalPrice = {{ cart.total }};</script>
+    <script type="text/javascript">var totalPrice = {{ cart.discount_applied }};</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/stripe.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.checkout.js"></script>
 {% endblock %}
@@ -375,6 +382,5 @@
     <script type="text/javascript">
     	var theta = $(".theta").text();
     	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
-
     </script>
 {% endblock %}
