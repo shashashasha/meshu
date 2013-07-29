@@ -65,6 +65,7 @@ $(function() {
 				.attr('y', 0)
 				.attr('width', '600px')
 				.attr('height', '600px')
+				.attr("class","product-delaunay")
 				.attr("transform", transform)
 				.attr('xlink:href', element.toDataURL());
 		};

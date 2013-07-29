@@ -40,7 +40,7 @@ sb.catalog = function(renderer, promo) {
 						},
 					"coasters":
 				   		{"bamboo":{"price":40,"colors":["amber"]},
-				   		"acrylic":{"price":45,"colors":["black","white"]}
+				   		"acrylic":{"price":45,"colors":["black"]}
 						}
 					};
 
