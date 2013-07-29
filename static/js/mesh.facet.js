@@ -29,7 +29,7 @@ sb.mesh.facet = function (frame, map, width, height) {
     var g = main.append("svg:g")
             .attr("class", "delaunay")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
-            .attr("fill","none")
+            .attr("fill","none") // needed for rasterizer.js
             .attr("stroke-width","5")
             .attr("stroke","black")
             .attr("stroke-linejoin","round");

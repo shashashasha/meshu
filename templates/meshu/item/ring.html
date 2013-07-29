@@ -4,123 +4,31 @@
 
 <style type="text/css" media="screen">
 
-#ring-preview-frame {width: 33px;
+#ring-preview-frame {
   -moz-transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;  /* translate must be last */
-  -moz-transform: rotateX(35deg) rotateY(45deg) rotateZ(15deg) translate3d(0px,0px,0px);
-  -webkit-transform: rotateX(35deg) rotateY(45deg) rotateZ(15deg) translate3d(0px,0px,0px);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform: rotateX(10deg) rotateY(0deg) rotateZ(30deg) translate3d(0px,0px,0px);
+  -webkit-transform: rotateX(10deg) rotateY(0deg) rotateZ(30deg) translate3d(0px,0px,0px);
+  position: absolute;
+  top: -250px;
+  left: 220px;
 }
 
-.strip {-moz-transform-style: preserve-3d;
+.strip {
+  -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   -moz-animation: spin 25s infinite linear;
-  -webkit-animation: spin 25s infinite linear}
+  -webkit-animation: spin 25s infinite linear
+}
 
 .strip div {
   position: absolute;
   background: -webkit-canvas(ring-preview);
-  /*border: solid rgb(128,128,128);
-  border-width: thin 0;*/
+  /*border: 1px solid black;*/
   height: 200px;
-  width: 34px;
+  width: 26px;
   opacity: 1;
 }
-
-.strip .a {background-position: 0 0;
-     -moz-transform: rotateY(0deg) translateZ(124px);
-  -webkit-transform: rotateY(0deg) translateZ(124px)}
-
-.strip .b {background-position: 759px 0;
-     -moz-transform: rotateY(15deg) translateZ(124px);
-  -webkit-transform: rotateY(15deg) translateZ(124px)}
-
-.strip .c {background-position: 726px 0;
-     -moz-transform: rotateY(30deg) translateZ(124px);
-  -webkit-transform: rotateY(30deg) translateZ(124px)}
-
-.strip .d {background-position: 693px 0;
-     -moz-transform: rotateY(45deg) translateZ(124px);
-  -webkit-transform: rotateY(45deg) translateZ(124px)}
-
-.strip .e {background-position: 660px 0;
-     -moz-transform: rotateY(60deg) translateZ(124px);
-  -webkit-transform: rotateY(60deg) translateZ(124px)}
-
-.strip .f {background-position: 627px 0;
-     -moz-transform: rotateY(75deg) translateZ(124px);
-  -webkit-transform: rotateY(75deg) translateZ(124px)}
-
-.strip .g {background-position: 594px 0;
-     -moz-transform: rotateY(90deg) translateZ(124px);
-  -webkit-transform: rotateY(90deg) translateZ(124px)}
-
-.strip .h {background-position: 561px 0;
-     -moz-transform: rotateY(105deg) translateZ(124px);
-  -webkit-transform: rotateY(105deg) translateZ(124px)}
-
-.strip .i {background-position: 528px 0;
-     -moz-transform: rotateY(120deg) translateZ(124px);
-  -webkit-transform: rotateY(120deg) translateZ(124px)}
-
-.strip .j {background-position: 495px 0;
-     -moz-transform: rotateY(135deg) translateZ(124px);
-  -webkit-transform: rotateY(135deg) translateZ(124px)}
-
-.strip .k {background-position: 462px 0;
-     -moz-transform: rotateY(150deg) translateZ(124px);
-  -webkit-transform: rotateY(150deg) translateZ(124px)}
-
-.strip .l {background-position: 429px 0;
-     -moz-transform: rotateY(165deg) translateZ(124px);
-  -webkit-transform: rotateY(165deg) translateZ(124px)}
-
-.strip .m {background-position: 396px 0;
-     -moz-transform: rotateY(180deg) translateZ(124px);
-  -webkit-transform: rotateY(180deg) translateZ(124px)}
-
-.strip .n {background-position: 363px 0;
-     -moz-transform: rotateY(195deg) translateZ(124px);
-  -webkit-transform: rotateY(195deg) translateZ(124px)}
-
-.strip .o {background-position: 330px 0;
-     -moz-transform: rotateY(210deg) translateZ(124px);
-  -webkit-transform: rotateY(210deg) translateZ(124px)}
-
-.strip .p {background-position: 297px 0;
-     -moz-transform: rotateY(225deg) translateZ(124px);
-  -webkit-transform: rotateY(225deg) translateZ(124px)}
-
-.strip .q {background-position: 264px 0;
-     -moz-transform: rotateY(240deg) translateZ(124px);
-  -webkit-transform: rotateY(240deg) translateZ(124px)}
-
-.strip .r {background-position: 231px 0;
-     -moz-transform: rotateY(255deg) translateZ(124px);
-  -webkit-transform: rotateY(255deg) translateZ(124px)}
-
-.strip .s {background-position: 198px 0;
-     -moz-transform: rotateY(270deg) translateZ(124px);
-  -webkit-transform: rotateY(270deg) translateZ(124px)}
-
-.strip .t {background-position: 165px 0;
-     -moz-transform: rotateY(285deg) translateZ(124px);
-  -webkit-transform: rotateY(285deg) translateZ(124px)}
-
-.strip .u {background-position: 132px 0;
-     -moz-transform: rotateY(300deg) translateZ(124px);
-  -webkit-transform: rotateY(300deg) translateZ(124px)}
-
-.strip .v {background-position: 99px 0;
-     -moz-transform: rotateY(315deg) translateZ(124px);
-  -webkit-transform: rotateY(315deg) translateZ(124px)}
-
-.strip .w {background-position: 66px 0;
-     -moz-transform: rotateY(330deg) translateZ(124px);
-  -webkit-transform: rotateY(330deg) translateZ(124px)}
-
-.strip .x {background-position: 33px 0;
-     -moz-transform: rotateY(345deg) translateZ(124px);
-  -webkit-transform: rotateY(345deg) translateZ(124px)}
 
 @-moz-keyframes spin {
   from { -moz-transform: rotateY(0)}
@@ -169,25 +77,28 @@
 
     <script type="text/javascript">
 
-	var data = [];
-	for (var i = 0; i < 24; i++) {
-	  var rotate = 'rotateY(' + (i * 15) + 'deg) translateZ(124px)';
+	var data = [],
+    bgWidth = 600,
+    stripNum = 24,
+    stripWidth = (bgWidth / stripNum);
+
+	for (var i = 0; i < stripNum; i++) {
+	  var rotate = 'rotateY(' + (i * 360 / stripNum) + 'deg) translateZ(97px)';
 	  data.push({
 	    'class': String.fromCharCode(97 + i), // 'a' through 'x'
-	    'background-position': (33 * i) + 'px 0',
+	    'background-position': (bgWidth - (stripWidth * i)) + 'px 0',
 	    '-moz-transform': rotate,
 	    '-webkit-transform': rotate
 	  });
 	}
 
-    var previewRing = function() {
-    	sb.rasterizer.ringPreview(meshu, function(canvas) {
-    		var ctx = canvas.getContext('2d');
-
-			var background = document.getCSSCanvasContext('2d', 'ring-preview', 792, 200);
-			background.drawImage(canvas, 0, 0, 792, 200);
-    	});
-    };
+  $.each(data, function(i, v){
+    $("." + v["class"]).css({
+      "background-position": v["background-position"],
+      "-moz-transform": v["-moz-transform"],
+      "-webkit-transform": v["-webkit-transform"]
+    })
+  });
 
     </script>
 {% endblock %}

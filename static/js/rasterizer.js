@@ -5,18 +5,19 @@ sb.rasterizer = function() {
 		generated = false,
 		canvases = [];
 
-	var makeCanvas = function(show) {
+	var makeCanvas = function(name, manualTracking) {
 		var canvas = document.createElement('canvas');
 		canvas.width = 400;
 		canvas.height = 400;
 		canvas.style.position = 'absolute';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
+		canvas.className = name;
 
-		if (!show)
-			$(canvas).addClass("hidden");
+		$(canvas).addClass("hidden");
 
-		canvases.push(canvas);
+		if (!manualTracking)
+			canvases.push(canvas);
 		return canvas;
 	};
 
@@ -88,7 +89,7 @@ sb.rasterizer = function() {
 		}
 
 		// TODO just commenting out for now, for rings
-		// self.clearCanvases();
+		self.clearCanvases();
 
 		// send it to the server to be saved as a png
 		$.post('to_png', xhr, function(data) {
@@ -109,6 +110,7 @@ sb.rasterizer = function() {
 	self.clearCanvases = function() {
 		while (canvases.length) {
 			var c = canvases.pop()
+			// c.getContext('2d').clearRect(0, 0, c.width, c.height);
 			$(c).remove();
 		}
 	};
@@ -164,23 +166,58 @@ sb.rasterizer = function() {
 	};
 
 	self.ringPreview = function(meshu, callback) {
-		var extent = [{
-			lat: d3.min(meshu.mesh().lats()),
-			lon: d3.min(meshu.mesh().lons())
-		},
-		{
-			lat: d3.max(meshu.mesh().lats()),
-			lon: d3.max(meshu.mesh().lons())
-		}];
-
-		meshu.map().map.extent(extent);
-		// for the mesh.js
-		meshu.map().boundsUpdated();
-
 		meshu.mesh().bakeStyles();
 
-		// draw the mesh object
-		var canvas = makeCanvas('show'),
+		var map = meshu.map(),
+			points = meshu.mesh().points(),
+			max = 0,
+			pair = [];
+
+		// find the furthest points
+		for (var i = 0; i < points.length; i++) {
+			var pi = map.l2p({ lat: points[i][1], lon: points[i][0] });
+
+			for (var j = i + 1; j < points.length; j++) {
+				var pj = map.l2p({ lat: points[j][1], lon: points[j][0] });
+				var dx = pi.x - pj.x;
+				var dy = pi.y - pj.y;
+
+				var dist = Math.sqrt((dx * dx) + (dy * dy));
+				if (dist > max) {
+					max = dist;
+					pair = [pj, pi];
+				}
+			}
+		}
+
+		var p1 = pair[0],
+			p2 = pair[1],
+			dpy = p2.y - p1.y,
+			dpx = p2.x - p1.x;
+
+		/*
+			omg too tired to do this right.
+		*/
+		var angle = Math.atan2(dpy, dpx) * (180 / Math.PI),
+			normalizedAngle = -angle + 180,
+			normalizedDist = Math.sqrt((dpx * dpx) + (dpy * dpy)),
+			newScale = (600 / normalizedDist),
+			newCenter = 600 * newScale / 2,
+			centerDif = (600 - (600 * newScale))/2,
+			scale = "scale(" + (600 / normalizedDist) + ") ",
+			translate = "translate(" + centerDif + "," + centerDif + ") ",
+			rotate = "rotate(" + [normalizedAngle, newCenter, newCenter].join(',') + ") ";
+
+		// pump up da volume
+		// d3.select(".delaunay").attr("stroke-width", 30)
+		// 	.attr("transform", translate + scale + rotate);
+
+		// simple rotation
+		d3.select(".delaunay").attr("stroke-width", 30)
+			.attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
+
+		// create our own canvas and don't autoremove it
+		var canvas = makeCanvas('ring-canvas', true),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = meshu.outputSVG();
@@ -192,6 +229,17 @@ sb.rasterizer = function() {
 			renderCallback: function() {
 				// combine the canvases
 				meshu.mesh().unBakeStyles();
+
+				d3.select(".delaunay").attr("stroke-width", 5);
+					// to reset the meshu
+					// .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
+				d3.selectAll(".ring-canvas").remove();
+
+				var background = document.getCSSCanvasContext('2d', 'ring-preview', 600, 200);
+				background.clearRect(0, 0, 600, 200);
+				background.fillStyle = 'rgba(255, 255, 255, .75)';
+				background.fillRect(0, 0, 600, 200);
+				background.drawImage(canvas, 0, 0, 600, 200);
 
 				if (callback) {
 					callback(canvas);
