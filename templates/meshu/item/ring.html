@@ -18,12 +18,13 @@
 
 .strip div {
   position: absolute;
-  /*background: #000 url(http://baloziproductions.com/thailand-sunrise.jpg);  /* background image is 792px 320px */*/
-  border: solid rgb(145,87,0);
-  border-width: thin 0;
-  height: 320px;
+  background: -webkit-canvas(ring-preview);
+  /*border: solid rgb(128,128,128);
+  border-width: thin 0;*/
+  height: 200px;
   width: 34px;
-  opacity: 1;}
+  opacity: 1;
+}
 
 .strip .a {background-position: 0 0;
      -moz-transform: rotateY(0deg) translateZ(124px);
@@ -180,19 +181,11 @@
 	}
 
     var previewRing = function() {
-    	sb.rasterizer.thumbnail(meshu, function(canvas) {
+    	sb.rasterizer.ringPreview(meshu, function(canvas) {
     		var ctx = canvas.getContext('2d');
 
-    		// var strips = d3.selectAll(".strip div");
-
-    		// strips.data(data)
-    		// 	.enter()
-    		// 		.append()
-    		for (var j = 0; j < data.length; j++) {
-    			var d = data[j];
-    			var canvas = document.createElement('canvas');
-    			$('.' + d.class)
-    		}
+			var background = document.getCSSCanvasContext('2d', 'ring-preview', 792, 200);
+			background.drawImage(canvas, 0, 0, 792, 200);
     	});
     };
 

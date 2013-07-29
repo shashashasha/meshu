@@ -5,7 +5,7 @@ sb.rasterizer = function() {
 		generated = false,
 		canvases = [];
 
-	var makeCanvas = function() {
+	var makeCanvas = function(show) {
 		var canvas = document.createElement('canvas');
 		canvas.width = 400;
 		canvas.height = 400;
@@ -13,7 +13,8 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		$(canvas).addClass("hidden");
+		if (!show)
+			$(canvas).addClass("hidden");
 
 		canvases.push(canvas);
 		return canvas;
@@ -40,7 +41,7 @@ sb.rasterizer = function() {
 			roundedZoom = Math.round(zoom);
 
 		if (zoom != roundedZoom) {
-			map.zoom(roundedZoom);	
+			map.zoom(roundedZoom);
 			meshu.mesh().refresh();
 		}
 	};
@@ -71,22 +72,23 @@ sb.rasterizer = function() {
 			sending all the meshu information. Since we're saving on 'continue'
 			we want to save a meshu in our db regardless, to associate with the MeshuImage
 
-			this starts off as assigned to the 'guest' user_profile, 
+			this starts off as assigned to the 'guest' user_profile,
 			which once we log in we assign to the logged in user_profile
 		*/
 		var xhr = meshu.xhr();
 		xhr.csrfmiddlewaretoken = $("#csrf input").val();
 		xhr.dataurl = canvas.toDataURL();
 
-		/* 
-			attach the meshu id if we have one, 
+		/*
+			attach the meshu id if we have one,
 			this is if we're starting off with a meshu
 		*/
 		if (meshu.id) {
 			xhr.id = meshu.id;
 		}
 
-		self.clearCanvases();
+		// TODO just commenting out for now, for rings
+		// self.clearCanvases();
 
 		// send it to the server to be saved as a png
 		$.post('to_png', xhr, function(data) {
@@ -115,7 +117,7 @@ sb.rasterizer = function() {
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content
-		var canvas = makeCanvas(), 
+		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = serialize(meshu.map().map.container());
@@ -141,7 +143,7 @@ sb.rasterizer = function() {
 		meshu.mesh().bakeStyles();
 
 		// draw the mesh object
-		var canvas = makeCanvas(), 
+		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = meshu.outputSVG();
@@ -160,6 +162,43 @@ sb.rasterizer = function() {
 			}
 		});
 	};
+
+	self.ringPreview = function(meshu, callback) {
+		var extent = [{
+			lat: d3.min(meshu.mesh().lats()),
+			lon: d3.min(meshu.mesh().lons())
+		},
+		{
+			lat: d3.max(meshu.mesh().lats()),
+			lon: d3.max(meshu.mesh().lons())
+		}];
+
+		meshu.map().map.extent(extent);
+		// for the mesh.js
+		meshu.map().boundsUpdated();
+
+		meshu.mesh().bakeStyles();
+
+		// draw the mesh object
+		var canvas = makeCanvas('show'),
+			frame = meshu.getFrame(),
+			ctx = canvas.getContext('2d'),
+			str = meshu.outputSVG();
+
+		// we need the canvas on the DOM to draw it
+		frame.appendChild(canvas);
+
+		canvg(canvas, str, {
+			renderCallback: function() {
+				// combine the canvases
+				meshu.mesh().unBakeStyles();
+
+				if (callback) {
+					callback(canvas);
+				}
+			}
+		});
+	}
 
 	return self;
 }();

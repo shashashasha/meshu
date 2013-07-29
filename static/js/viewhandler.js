@@ -8,7 +8,12 @@ sb.viewhandler = function() {
 	var content = $("#content");
 
 	$("#product").waypoint(function(direction) {
-		if (direction == "down") onNext();
+		if (direction == "down") {
+			onNext();
+
+			// right now viewhandler doesn't know about meshu, so this shouldn't be here?
+			sb.rasterizer.ringPreview(meshu);
+		}
 		else onPrev();
 	}, { offset: 500 });
 
