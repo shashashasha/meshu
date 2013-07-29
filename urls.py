@@ -115,6 +115,9 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/facet', direct_to_template, {
 		'template': 'meshu/item/item.html'
 	}),
+	url(r'^make/ring', direct_to_template, {
+		'template': 'meshu/item/ring.html'
+	}),
 	url(r'^make/radial', direct_to_template, {
 		'template': 'meshu/item/radial.html'
 	}),

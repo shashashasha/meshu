@@ -1,0 +1,200 @@
+{% extends "meshu/item/item.html" %}
+
+{% block styles %}
+
+<style type="text/css" media="screen">
+
+#ring-preview-frame {width: 33px;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;  /* translate must be last */
+  -moz-transform: rotateX(35deg) rotateY(45deg) rotateZ(15deg) translate3d(0px,0px,0px);
+  -webkit-transform: rotateX(35deg) rotateY(45deg) rotateZ(15deg) translate3d(0px,0px,0px);
+}
+
+.strip {-moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  -moz-animation: spin 25s infinite linear;
+  -webkit-animation: spin 25s infinite linear}
+
+.strip div {
+  position: absolute;
+  /*background: #000 url(http://baloziproductions.com/thailand-sunrise.jpg);  /* background image is 792px 320px */*/
+  border: solid rgb(145,87,0);
+  border-width: thin 0;
+  height: 320px;
+  width: 34px;
+  opacity: 1;}
+
+.strip .a {background-position: 0 0;
+     -moz-transform: rotateY(0deg) translateZ(124px);
+  -webkit-transform: rotateY(0deg) translateZ(124px)}
+
+.strip .b {background-position: 759px 0;
+     -moz-transform: rotateY(15deg) translateZ(124px);
+  -webkit-transform: rotateY(15deg) translateZ(124px)}
+
+.strip .c {background-position: 726px 0;
+     -moz-transform: rotateY(30deg) translateZ(124px);
+  -webkit-transform: rotateY(30deg) translateZ(124px)}
+
+.strip .d {background-position: 693px 0;
+     -moz-transform: rotateY(45deg) translateZ(124px);
+  -webkit-transform: rotateY(45deg) translateZ(124px)}
+
+.strip .e {background-position: 660px 0;
+     -moz-transform: rotateY(60deg) translateZ(124px);
+  -webkit-transform: rotateY(60deg) translateZ(124px)}
+
+.strip .f {background-position: 627px 0;
+     -moz-transform: rotateY(75deg) translateZ(124px);
+  -webkit-transform: rotateY(75deg) translateZ(124px)}
+
+.strip .g {background-position: 594px 0;
+     -moz-transform: rotateY(90deg) translateZ(124px);
+  -webkit-transform: rotateY(90deg) translateZ(124px)}
+
+.strip .h {background-position: 561px 0;
+     -moz-transform: rotateY(105deg) translateZ(124px);
+  -webkit-transform: rotateY(105deg) translateZ(124px)}
+
+.strip .i {background-position: 528px 0;
+     -moz-transform: rotateY(120deg) translateZ(124px);
+  -webkit-transform: rotateY(120deg) translateZ(124px)}
+
+.strip .j {background-position: 495px 0;
+     -moz-transform: rotateY(135deg) translateZ(124px);
+  -webkit-transform: rotateY(135deg) translateZ(124px)}
+
+.strip .k {background-position: 462px 0;
+     -moz-transform: rotateY(150deg) translateZ(124px);
+  -webkit-transform: rotateY(150deg) translateZ(124px)}
+
+.strip .l {background-position: 429px 0;
+     -moz-transform: rotateY(165deg) translateZ(124px);
+  -webkit-transform: rotateY(165deg) translateZ(124px)}
+
+.strip .m {background-position: 396px 0;
+     -moz-transform: rotateY(180deg) translateZ(124px);
+  -webkit-transform: rotateY(180deg) translateZ(124px)}
+
+.strip .n {background-position: 363px 0;
+     -moz-transform: rotateY(195deg) translateZ(124px);
+  -webkit-transform: rotateY(195deg) translateZ(124px)}
+
+.strip .o {background-position: 330px 0;
+     -moz-transform: rotateY(210deg) translateZ(124px);
+  -webkit-transform: rotateY(210deg) translateZ(124px)}
+
+.strip .p {background-position: 297px 0;
+     -moz-transform: rotateY(225deg) translateZ(124px);
+  -webkit-transform: rotateY(225deg) translateZ(124px)}
+
+.strip .q {background-position: 264px 0;
+     -moz-transform: rotateY(240deg) translateZ(124px);
+  -webkit-transform: rotateY(240deg) translateZ(124px)}
+
+.strip .r {background-position: 231px 0;
+     -moz-transform: rotateY(255deg) translateZ(124px);
+  -webkit-transform: rotateY(255deg) translateZ(124px)}
+
+.strip .s {background-position: 198px 0;
+     -moz-transform: rotateY(270deg) translateZ(124px);
+  -webkit-transform: rotateY(270deg) translateZ(124px)}
+
+.strip .t {background-position: 165px 0;
+     -moz-transform: rotateY(285deg) translateZ(124px);
+  -webkit-transform: rotateY(285deg) translateZ(124px)}
+
+.strip .u {background-position: 132px 0;
+     -moz-transform: rotateY(300deg) translateZ(124px);
+  -webkit-transform: rotateY(300deg) translateZ(124px)}
+
+.strip .v {background-position: 99px 0;
+     -moz-transform: rotateY(315deg) translateZ(124px);
+  -webkit-transform: rotateY(315deg) translateZ(124px)}
+
+.strip .w {background-position: 66px 0;
+     -moz-transform: rotateY(330deg) translateZ(124px);
+  -webkit-transform: rotateY(330deg) translateZ(124px)}
+
+.strip .x {background-position: 33px 0;
+     -moz-transform: rotateY(345deg) translateZ(124px);
+  -webkit-transform: rotateY(345deg) translateZ(124px)}
+
+@-moz-keyframes spin {
+  from { -moz-transform: rotateY(0)}
+  to   { -moz-transform: rotateY(-360deg)}}
+
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotateY(0)}
+  to   { -webkit-transform: rotateY(-360deg)}}
+
+</style>
+{% endblock %}
+
+{% block finish %}
+<div id="ring-preview-frame">
+	<div id="ring-preview-strip-container" class="strip">
+		<div class="a"></div>
+		<div class="b"></div>
+		<div class="c"></div>
+		<div class="d"></div>
+		<div class="e"></div>
+		<div class="f"></div>
+		<div class="g"></div>
+		<div class="h"></div>
+		<div class="i"></div>
+		<div class="j"></div>
+		<div class="k"></div>
+		<div class="l"></div>
+		<div class="m"></div>
+		<div class="n"></div>
+		<div class="o"></div>
+		<div class="p"></div>
+		<div class="q"></div>
+		<div class="r"></div>
+		<div class="s"></div>
+		<div class="t"></div>
+		<div class="u"></div>
+		<div class="v"></div>
+		<div class="w"></div>
+		<div class="x"></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block resources %}
+{{ block.super }}
+
+    <script type="text/javascript">
+
+	var data = [];
+	for (var i = 0; i < 24; i++) {
+	  var rotate = 'rotateY(' + (i * 15) + 'deg) translateZ(124px)';
+	  data.push({
+	    'class': String.fromCharCode(97 + i), // 'a' through 'x'
+	    'background-position': (33 * i) + 'px 0',
+	    '-moz-transform': rotate,
+	    '-webkit-transform': rotate
+	  });
+	}
+
+    var previewRing = function() {
+    	sb.rasterizer.thumbnail(meshu, function(canvas) {
+    		var ctx = canvas.getContext('2d');
+
+    		// var strips = d3.selectAll(".strip div");
+
+    		// strips.data(data)
+    		// 	.enter()
+    		// 		.append()
+    		for (var j = 0; j < data.length; j++) {
+    			var d = data[j];
+    			var canvas = document.createElement('canvas');
+    			$('.' + d.class)
+    		}
+    	});
+    };
+
+    </script>
+{% endblock %}
