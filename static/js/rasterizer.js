@@ -223,20 +223,21 @@ sb.rasterizer = function() {
 		pair is the axis the meshu is rotated for
 		pt is what we're comparing on
 	*/
-	var distanceFromCenterLine = function(pt, pair) {
+	var distanceFromLine = function(pt, pair) {
 		console.log('finding distance for', pt);
 		var angle = lineAngle(pair[0], pair[1]),
 			angleBetweenComparingPt = lineAngle(pair[0], pt),
+			under = angle - angleBetweenComparingPt > 0,
 			dist = distance(pair[0], pt),
 
-		   // convert degrees to radians
-		   radians = Math.abs(angle - angleBetweenComparingPt) * Math.PI / 180,
+			// convert degrees to radians
+			radians = Math.abs(angle - angleBetweenComparingPt) * Math.PI / 180,
 
-		   // solve for side a
-		   sidea = Math.sin(radians) * dist;
+			// solve for 'height' away from central angle
+			height = Math.sin(radians) * dist;
 
-		console.log(angle, angleBetweenComparingPt, dist, sidea);
-		return sidea;
+		console.log(angle - angleBetweenComparingPt, dist, height);
+		return under ? -height : height;
 	};
 
 	self.ringPreview = function(meshu, callback) {
@@ -261,14 +262,18 @@ sb.rasterizer = function() {
 		d3.select(".delaunay").attr("stroke-width", 30)
 			.attr("transform", rotate);
 
-		var heightMax = 0;
+		var heightMax = 0, heightMin = 0;
 		pixelPoints.forEach(function(pt) {
-			var dist = distanceFromCenterLine(pt, pair);
+			var dist = distanceFromLine(pt, pair);
 			if (heightMax < dist) {
 				heightMax = dist;
 			}
+			if (heightMin > dist) {
+				heightMin = dist;
+			}
 		});
-		console.log(heightMax);
+		console.log(heightMax, heightMin);
+		console.log('total height', heightMax + Math.abs(heightMin));
 
 		// create our own canvas and don't autoremove it
 		var canvas = makeCanvas('ring-canvas', true),
