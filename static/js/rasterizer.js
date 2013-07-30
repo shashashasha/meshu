@@ -165,12 +165,8 @@ sb.rasterizer = function() {
 		});
 	};
 
-	self.ringPreview = function(meshu, callback) {
-		meshu.mesh().bakeStyles();
-
-		var map = meshu.map(),
-			points = meshu.mesh().points(),
-			max = 0,
+	var furthestPoints = function(map, points) {
+		var max = 0,
 			pair = [];
 
 		if (points.length < 2) return;
@@ -192,38 +188,105 @@ sb.rasterizer = function() {
 			}
 		}
 
-		var p1 = pair[0],
-			p2 = pair[1],
-			dpy = p2.y - p1.y,
+		return pair;
+	};
+
+	var lineAngle = function(p1, p2) {
+		var dpy = p2.y - p1.y,
 			dpx = p2.x - p1.x;
 
-		/*
-			omg too tired to do this right.
-		*/
-		var angle = Math.atan2(dpy, dpx) * (180 / Math.PI),
+		return Math.atan2(dpy, dpx) * (180 / Math.PI);
+	};
+
+	var distance = function(p1, p2) {
+		var dpy = p2.y - p1.y,
+			dpx = p2.x - p1.x;
+
+		return Math.sqrt((dpx * dpx) + (dpy * dpy));
+	};
+
+	/*
+		this ownerSVGElement, getTransformToElement, seem useful
+	*/
+	var globalize = function(pt, element) {
+		var transform = element.getTransformToElement(element.ownerSVGElement);
+		return pt.matrixTransform(transform);
+	};
+
+	var globalizeAll = function(map, pts) {
+		var globalized = [];
+		pts.forEach(function(pt) {
+			globalized.push(map.l2p({lat: pt[1], lon: pt[0]}));
+
+		});
+		return globalized;
+	};
+
+	/*
+		pair is the axis the meshu is rotated for
+		pt is what we're comparing on
+	*/
+	var distanceFromLine = function(pt, pair) {
+		console.log('finding distance for', pt);
+		var angle = lineAngle(pair[0], pair[1]),
+			angleBetweenComparingPt = lineAngle(pair[0], pt),
+			under = angle - angleBetweenComparingPt > 0,
+			dist = distance(pair[0], pt),
+
+			// convert degrees to radians
+			radians = Math.abs(angle - angleBetweenComparingPt) * Math.PI / 180,
+
+			// solve for 'height' away from central angle
+			height = Math.sin(radians) * dist;
+
+		console.log(angle - angleBetweenComparingPt, dist, height);
+		return under ? -height : height;
+	};
+
+	self.ringPreview = function(meshu, callback) {
+		meshu.mesh().bakeStyles();
+
+		var map = meshu.map(),
+			points = meshu.mesh().points(),
+			pixelPoints = globalizeAll(map, points),
+			pair = furthestPoints(map, points),
+			angle = lineAngle(pair[0], pair[1]),
 			normalizedAngle = -angle + 180,
-			normalizedDist = Math.sqrt((dpx * dpx) + (dpy * dpy)),
+			normalizedDist = distance(pair[0], pair[1]),
+
 			newScale = (600 / normalizedDist),
 			newCenter = 300 * newScale,
 			centerDif = (300 - (300 * newScale)),
 			scale = "scale(" + (600 / normalizedDist) + ") ",
 			translate = "translate(" + centerDif + "," + centerDif + ") ",
-			rotate = "rotate(" + [normalizedAngle, newCenter, newCenter].join(',') + ") ";
+			rotate = "rotate(" + [normalizedAngle, 300, 300].join(',') + ") ";
 
 		// pump up da volume
-		// d3.select(".delaunay").attr("stroke-width", 30)
-		// 	.attr("transform", translate + scale + rotate);
-
-		// simple rotation
 		d3.select(".delaunay").attr("stroke-width", 30)
-			// .attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
-			.attr("transform", translate + rotate + scale);
+			.attr("transform", rotate);
+
+		var heightMax = 0, heightMin = 0;
+		pixelPoints.forEach(function(pt) {
+			var dist = distanceFromLine(pt, pair);
+			if (heightMax < dist) {
+				heightMax = dist;
+			}
+			if (heightMin > dist) {
+				heightMin = dist;
+			}
+		});
+		console.log(heightMax, heightMin);
+		console.log('total height', heightMax + Math.abs(heightMin));
 
 		// create our own canvas and don't autoremove it
 		var canvas = makeCanvas('ring-canvas', true),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
 			str = meshu.outputSVG();
+
+		// simple rotation
+		// d3.select(".delaunay").attr("stroke-width", 30)
+		// 	.attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
 
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);
