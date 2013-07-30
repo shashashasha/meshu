@@ -173,6 +173,8 @@ sb.rasterizer = function() {
 			max = 0,
 			pair = [];
 
+		if (points.length < 2) return;
+
 		// find the furthest points
 		for (var i = 0; i < points.length; i++) {
 			var pi = map.l2p({ lat: points[i][1], lon: points[i][0] });
@@ -202,8 +204,8 @@ sb.rasterizer = function() {
 			normalizedAngle = -angle + 180,
 			normalizedDist = Math.sqrt((dpx * dpx) + (dpy * dpy)),
 			newScale = (600 / normalizedDist),
-			newCenter = 600 * newScale / 2,
-			centerDif = (600 - (600 * newScale))/2,
+			newCenter = 300 * newScale,
+			centerDif = (300 - (300 * newScale)),
 			scale = "scale(" + (600 / normalizedDist) + ") ",
 			translate = "translate(" + centerDif + "," + centerDif + ") ",
 			rotate = "rotate(" + [normalizedAngle, newCenter, newCenter].join(',') + ") ";
@@ -214,7 +216,8 @@ sb.rasterizer = function() {
 
 		// simple rotation
 		d3.select(".delaunay").attr("stroke-width", 30)
-			.attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
+			// .attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
+			.attr("transform", translate + rotate + scale);
 
 		// create our own canvas and don't autoremove it
 		var canvas = makeCanvas('ring-canvas', true),
