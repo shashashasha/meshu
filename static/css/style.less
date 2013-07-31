@@ -547,7 +547,7 @@ body.win #login-form ul {
 
 #content {
     width: @pageWidth;
-    margin: 0 auto 15px auto;
+    margin: 0 auto 50px auto;
     border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
@@ -1084,8 +1084,7 @@ body.firefox.win #rotate-help .border-notch {
     top: 13px;
     left: 162px;
 }
-#wrapper-ring:hover .strip,
-#wrapper-ring.selected .strip {
+#wrapper-ring:hover .strip {
     -webkit-animation-play-state:running;
     -moz-animation-play-state:running;
     -o-animation-play-state:running;
@@ -1127,36 +1126,34 @@ body.firefox.win #rotate-help .border-notch {
     height: 490px;
 }
 #product-preview {
-    margin: 25px 0 0 5px;
+    margin: 25px 0 0 0;
 }
-.wrapper svg,
-.wrapper .ring-frame {
-    position: relative;
-    border: 2px solid white;
-    cursor: pointer;
+.wrapper {
+    margin: 0 9px 5px 0;
+    float: left;
     width: 300px;
-    height: 225px;
-    margin: 0 auto;
+    height: 295px;
+    border: 2px solid white;
+    padding: 5px;
+    cursor: pointer;
 }
-.wrapper:hover svg,
-.wrapper:hover .ring-frame {
+#product-preview .wrapper.last {
+    margin-right: 0;
+}
+.wrapper:hover {
     border-color: @grey;
 }
-.wrapper.selected svg,
-.wrapper.selected .ring-frame {
+.wrapper.selected {
     border-color: @pink;
 }
 .wrapper.selected .important {
     color: @pink;
 }
-#product-preview .wrapper {
-    margin: 0 25px 10px 0;
-    float: left;
+.wrapper svg,
+.wrapper .ring-frame {
     width: 300px;
-    height: 300px;
-}
-#product-preview .wrapper.last {
-    margin-right: 0;
+    height: 225px;
+    margin: 0 auto;
 }
 #product-preview p {
     margin-left: 5px;
