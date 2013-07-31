@@ -20,7 +20,10 @@ sb.viewhandler = function() {
 	$("#materials").waypoint(function(direction) {
 		if (direction == "down") {
 			if (sb.materializer.product())
-				sb.rotator.update(sb.materializer.product());
+				if (sb.materializer.product() == "ring")
+					console.log("hooray!")
+				else
+					sb.rotator.update(sb.materializer.product());
 		}
 	}, { offset: 550 });
 	$("#review").waypoint(function(direction) {

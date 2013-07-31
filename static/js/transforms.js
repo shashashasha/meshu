@@ -80,6 +80,20 @@ sb.transforms = {
 			scale: .4,
 			transform: {x: 450, y: 750}
 		}
+	},
+	"ring": {
+		"product": {
+			scale: .3,
+			transform: {x: 200, y: 200}
+		},
+		"preview": {
+			scale: .125,
+			transform: {x: 510, y: 760}
+		},
+		"render": {
+			scale: .4,
+			transform: {x: 450, y: 750}
+		}
 	}
 };
 

@@ -29,7 +29,7 @@
 {% block products %}
     <div class="wrapper" id="wrapper-pendant">
         <svg id="preview-pendant" width="100%" height="282">
-            <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="313" height="297" x="-44" y="0">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="-35">
         </svg>
         <p>Pendant Necklace</p>
         <p class="note">pendant max side length: 1.5"</p>
@@ -37,27 +37,64 @@
     </div>
     <div class="wrapper" id="wrapper-earrings">
         <svg id="preview-earrings" width="100%" height="282">
-            <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="313" height="297" x="-44" y="0">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="-5">
         </svg>
         <p>Pair of Earrings</p>
         <p class="note">earrings 1.75" tall</p>
         <p class="note">nickel-free posts available</p>
     </div>
-    <div class="wrapper" id="wrapper-necklace">
+    <div class="wrapper last" id="wrapper-necklace">
         <svg id="preview-necklace" width="100%" height="282">
-            <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="313" height="297" x="-44" y="0">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="300" height="300" x="0" y="-40">
         </svg>
         <p>Large Necklace</p>
         <p class="note">pendant max side length: 3"</p>
         <p class="note">chain length: 18"</p>
     </div>
-    <div class="wrapper last" id="wrapper-cufflinks">
+    <div class="wrapper" id="wrapper-cufflinks">
         <svg id="preview-cufflinks" width="100%" height="282">
-            <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="313" height="297" x="-44" y="0">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="300" height="300" x="0" y="0">
         </svg>
         <p>Pair of Cufflinks</p>
         <p class="note">cufflink max side length: 1.5"</p>
-        <p class="note important">we recommend using 4-10 points for cufflink designs</p>
+        <p class="note important">we recommend using 4-10 points for cufflinks</p>
+    </div>
+    <div class="wrapper last" id="wrapper-ring">
+        <div class="ring-frame">
+            <div id="ring-preview-frame">
+                <div id="ring-preview-strip-container" class="strip">
+                    <div class="a"></div>
+                    <div class="b"></div>
+                    <div class="c"></div>
+                    <div class="d"></div>
+                    <div class="e"></div>
+                    <div class="f"></div>
+                    <div class="g"></div>
+                    <div class="h"></div>
+                    <div class="i"></div>
+                    <div class="j"></div>
+                    <div class="k"></div>
+                    <div class="l"></div>
+                    <div class="m"></div>
+                    <div class="n"></div>
+                    <div class="o"></div>
+                    <div class="p"></div>
+                    <div class="q"></div>
+                    <div class="r"></div>
+                    <div class="s"></div>
+                    <div class="t"></div>
+                    <div class="u"></div>
+                    <div class="v"></div>
+                    <div class="w"></div>
+                    <div class="x"></div>
+                </div>
+            </div>
+        </div>
+        <!-- <svg id="preview-ring" width="100%" height="282">
+            <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="300" height="300" x="0" y="0">
+        </svg> -->
+        <p>Badass Ring</p>
+        <p class="note">aww yiss</p>
     </div>
     <!-- <p class="cufflinks note" style="width:260px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p> -->
 {% endblock %}
@@ -99,4 +136,35 @@
 
 {% block script-specific %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+{% endblock %}
+
+{% block resources %}
+{{ block.super }}
+
+    <script type="text/javascript">
+
+    var data = [],
+    bgWidth = 600,
+    stripNum = 24,
+    stripWidth = (bgWidth / stripNum);
+
+    for (var i = 0; i < stripNum; i++) {
+      var rotate = 'rotateY(' + (i * 360 / stripNum) + 'deg) translateZ(97px)';
+      data.push({
+        'class': String.fromCharCode(97 + i), // 'a' through 'x'
+        'background-position': (bgWidth - (stripWidth * i)) + 'px 0',
+        '-moz-transform': rotate,
+        '-webkit-transform': rotate
+      });
+    }
+
+  $.each(data, function(i, v){
+    $("." + v["class"]).css({
+      "background-position": v["background-position"],
+      "-moz-transform": v["-moz-transform"],
+      "-webkit-transform": v["-webkit-transform"]
+    })
+  });
+
+    </script>
 {% endblock %}
