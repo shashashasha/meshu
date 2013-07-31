@@ -126,6 +126,77 @@ sb.mesh.facet = function (frame, map, width, height) {
         self.updateCircleBehavior(bool);
     });
 
+    var globalize = function(pt, element) {
+        var transform = element.getTransformToElement(element.ownerSVGElement);
+        return pt.matrixTransform(transform);
+    };
+
+    self.projectPoints = function(transform) {
+        d3.select("#delaunay-ui").attr("transform", transform);
+
+        /*
+            new strategy:
+            draw a projected delaunay triangulation for the ring preview.
+            get the global points from the circles after they've been rotated,
+            then use that to find the rotated "bbox", then use that to scale
+            into our destination ring-preview-delaunay-container
+        */
+        var projectedPts = [],
+            xvalues = [],
+            yvalues = [];
+        var circle = d3.selectAll("#delaunay-ui circle").each(function(e, k) {
+            var pt = this.ownerSVGElement.createSVGPoint(),
+                mapPt = map.l2p({lat: lats[k], lon: lons[k]});
+            pt.x = mapPt.x;
+            pt.y = mapPt.y;
+
+            var g = globalize(pt, this);
+            xvalues.push(g.x);
+            yvalues.push(g.y);
+            projectedPts.push([g.x, g.y]);
+        });
+
+        // revert circles
+        d3.select("#delaunay-ui").attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
+
+        return {
+            pts: projectedPts,
+            xvalues: xvalues,
+            yvalues: yvalues
+        };
+    }
+
+    self.transformedDelaunay = function(projected, projWidth, projHeight, buffer) {
+        var bbox = {
+            top: d3.min(projected.yvalues),
+            left: d3.min(projected.xvalues),
+            right: d3.max(projected.xvalues),
+            bottom: d3.max(projected.yvalues)
+        },  bboxWidth  = bbox.right - bbox.left,
+            bboxHeight = bbox.bottom - bbox.top,
+            scaleWidth = projWidth / bboxWidth,
+            scaleHeight = projHeight / bboxHeight;
+
+        var lines = g.selectAll("path")
+            .data(d3.geom.delaunay(projected.pts));
+
+        lines.enter().append("svg:path");
+        lines.exit().remove();
+        lines.exit().remove();
+        lines.attr("stroke-width", 25)
+            .attr("d", function(d) {
+            var l = d.length;
+            var draw = [];
+            for (var i = 0; i < l; i++){
+                var px = (d[i][0] - bbox.left) * scaleWidth,
+                    py = ((d[i][1] - bbox.top) * scaleHeight) + buffer;
+                draw.push([px, py]);
+            }
+
+            return "M" + draw.join(" L") + "Z";
+        });
+    };
+
     function updateMesh(skipAnimation) {
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {

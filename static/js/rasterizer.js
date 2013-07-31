@@ -202,78 +202,33 @@ sb.rasterizer = function() {
 		return Math.sqrt((dpx * dpx) + (dpy * dpy));
 	};
 
-	/*
-		this ownerSVGElement, getTransformToElement, seem useful
-	*/
-	var globalize = function(pt, element) {
-		var transform = element.getTransformToElement(element.ownerSVGElement);
-		return pt.matrixTransform(transform);
-	};
-
-	var globalizeAll = function(map, pts) {
-		var globalized = [];
-		pts.forEach(function(pt) {
-			globalized.push(map.l2p({lat: pt[1], lon: pt[0]}));
-
-		});
-		return globalized;
-	};
-
-	/*
-		pair is the axis the meshu is rotated for
-		pt is what we're comparing on
-	*/
-	var distanceFromLine = function(pt, pair) {
-		console.log('finding distance for', pt);
-		var angle = lineAngle(pair[0], pair[1]),
-			angleBetweenComparingPt = lineAngle(pair[0], pt),
-			under = angle - angleBetweenComparingPt > 0,
-			dist = distance(pair[0], pt),
-
-			// convert degrees to radians
-			radians = Math.abs(angle - angleBetweenComparingPt) * Math.PI / 180,
-
-			// solve for 'height' away from central angle
-			height = Math.sin(radians) * dist;
-
-		console.log(angle - angleBetweenComparingPt, dist, height);
-		return under ? -height : height;
-	};
-
 	self.ringPreview = function(meshu, callback) {
 		meshu.mesh().bakeStyles();
 
+		if (meshu.mesh().points().length < 3) {
+			return;
+		}
+
 		var map = meshu.map(),
 			points = meshu.mesh().points(),
-			pixelPoints = globalizeAll(map, points),
 			pair = furthestPoints(map, points),
 			angle = lineAngle(pair[0], pair[1]),
 			normalizedAngle = -angle + 180,
-			normalizedDist = distance(pair[0], pair[1]),
-
-			newScale = (600 / normalizedDist),
-			newCenter = 600 * newScale / 2,
-			centerDif = (600 - (600 * newScale))/2,
-			scale = "scale(" + (600 / normalizedDist) + ") ",
-			translate = "translate(" + centerDif + "," + centerDif + ") ",
 			rotate = "rotate(" + [normalizedAngle, 300, 300].join(',') + ") ";
 
-		// pump up da volume
-		d3.select(".delaunay").attr("stroke-width", 30)
-			.attr("transform", rotate);
+		/*
+			new strategy:
+			draw a projected delaunay triangulation for the ring preview.
+			get the global points from the circles after they've been rotated,
+			then use that to find the rotated "bbox", then use that to scale
+			into our destination ring-preview-delaunay-container
+		*/
+		var projected = meshu.mesh().projectPoints(rotate),
+			projWidth = 600,
+			projHeight = 150,
+			buffer = 20;
 
-		var heightMax = 0, heightMin = 0;
-		pixelPoints.forEach(function(pt) {
-			var dist = distanceFromLine(pt, pair);
-			if (heightMax < dist) {
-				heightMax = dist;
-			}
-			if (heightMin > dist) {
-				heightMin = dist;
-			}
-		});
-		console.log(heightMax, heightMin);
-		console.log('total height', heightMax + Math.abs(heightMin));
+		meshu.mesh().transformedDelaunay(projected, projWidth, projHeight - buffer, buffer/2);
 
 		// create our own canvas and don't autoremove it
 		var canvas = makeCanvas('ring-canvas', true),
@@ -281,28 +236,25 @@ sb.rasterizer = function() {
 			ctx = canvas.getContext('2d'),
 			str = meshu.outputSVG();
 
-		// simple rotation
-		// d3.select(".delaunay").attr("stroke-width", 30)
-		// 	.attr("transform", "rotate(" + normalizedAngle + ", 300, 300)");
-
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);
 
 		canvg(canvas, str, {
 			renderCallback: function() {
-				// combine the canvases
+				// reset mesh
 				meshu.mesh().unBakeStyles();
+				meshu.mesh().refresh();
 
-				d3.select(".delaunay").attr("stroke-width", 5);
-					// to reset the meshu
-					// .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
+				// clear transform and canvas
+				d3.select("#delaunay-ui").attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
 				d3.selectAll(".ring-canvas").remove();
 
-				var background = document.getCSSCanvasContext('2d', 'ring-preview', 600, 200);
-				background.clearRect(0, 0, 600, 200);
+				// drawing extra so the white part covers the "back side" of the ring
+				var background = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + 100);
+				background.clearRect(0, 0, projWidth, projHeight + 100);
 				background.fillStyle = 'rgba(255, 255, 255, .75)';
-				background.fillRect(0, 0, 600, 200);
-				background.drawImage(canvas, 0, 0, 600, 200);
+				background.fillRect(0, 0, projWidth, projHeight + 100);
+				background.drawImage(canvas, 0, 0, projWidth, projHeight, 0, 50, projWidth, projHeight);
 
 				if (callback) {
 					callback(canvas);
