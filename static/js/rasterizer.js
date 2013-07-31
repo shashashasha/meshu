@@ -168,6 +168,9 @@ sb.rasterizer = function() {
 	var furthestPoints = function(map, points) {
 		var max = 0,
 			pair = [];
+
+		if (points.length < 2) return;
+
 		// find the furthest points
 		for (var i = 0; i < points.length; i++) {
 			var pi = map.l2p({ lat: points[i][1], lon: points[i][0] });

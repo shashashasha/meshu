@@ -24,6 +24,10 @@ sb.catalog = function(renderer, promo) {
 						},
 					"cufflinks":
 						{"silver":{"price":165,"colors":["sterling"]}
+						},
+					"ring":
+						{"nylon":{"price":30,"colors":["white"]},
+						"silver":{"price":120,"colors":["sterling"]}
 						}
 					};
 

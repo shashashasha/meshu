@@ -154,7 +154,10 @@ $(function() {
 
 		// $("#make-" + product).show();
 
-		sb.rotator.update(product);
+		if (product == "ring")
+			console.log("ring!")
+		else
+			sb.rotator.update(product);
 
 		/*
 			i suck.
