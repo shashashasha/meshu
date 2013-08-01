@@ -1,8 +1,8 @@
 .row-fluid>[class*="span"] {
-	margin: 0 !important;
+    margin: 0 !important;
 }
 .container-fluid {
-	padding: 0 !important;
+    padding: 0 !important;
 }
 .btn-primary {
     background-color: #ff9900;
@@ -235,6 +235,17 @@ body {
     width: 225px;
     right: 10px;
 }
+#preview .table {
+    display: none;
+}
+#preview .thumbnail {
+    height: 100px;
+    width: 100px;
+    margin: 10px auto;
+}
+#preview .ellipsize {
+    white-space: inherit;
+}
 #helpMessage {
     display: none;
 }
@@ -303,11 +314,11 @@ h3.filename, #mainpane #subMessage {
 }
 
 #localDragDrop, #fileUploadForm {
-	border: none;
-	border-radius: 0;
-	float: left;
-	margin: 0 10px 0 0;
-	padding: 0;
+    border: none;
+    border-radius: 0;
+    float: left;
+    margin: 0 10px 0 0;
+    padding: 0;
 }
 #localDragDrop {
     width: 100%;
@@ -318,7 +329,7 @@ h3.filename, #mainpane #subMessage {
     background-color: transparent;
 }
 #localDragHelp {
-	background-image: url(img/drag-and-drop.png);
+    background-image: url(img/drag-and-drop.png);
     height: 108px;
     width: 246px;
     text-indent: 100%;
@@ -327,7 +338,7 @@ h3.filename, #mainpane #subMessage {
     margin: 142px 0 0 209px;
 }
 .control-label {
-	display: none;
+    display: none;
 }
 .center {
     padding-top: 0px !important;
@@ -339,9 +350,9 @@ h3.filename, #mainpane #subMessage {
     height: 110px;
 }
 #fileInputContainer {
-	z-index: 1;
-	overflow: visible;
-	width: 495px;
+    z-index: 1;
+    overflow: visible;
+    width: 495px;
     margin: 30px 0 0 90px;
 }
 #fileUploadInput{
@@ -396,6 +407,7 @@ h3.filename, #mainpane #subMessage {
 }
 .small-thumbnail {
     max-height: 100px;
+    height: auto;
     max-width: 100px;
     border-radius: 0;
     box-shadow: none;
