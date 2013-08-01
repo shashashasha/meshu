@@ -181,9 +181,9 @@ sb.rasterizer = function() {
 		*/
 		var rotate = meshu.mesh().getLongestRotation(),
 			projected = meshu.mesh().projectPoints(rotate),
-			projWidth = 600,
-			projHeight = 150,
-			buffer = 20;
+			projWidth = 500,
+			projHeight = 110,
+			buffer = 10;
 
 		meshu.mesh().transformedDelaunay(projected, projWidth, projHeight - buffer, buffer/2);
 
@@ -207,11 +207,13 @@ sb.rasterizer = function() {
 				d3.selectAll(".ring-canvas").remove();
 
 				// drawing extra so the white part covers the "back side" of the ring
-				var background = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + 100);
-				background.clearRect(0, 0, projWidth, projHeight + 100);
-				background.fillStyle = 'rgba(255, 255, 255, .75)';
-				background.fillRect(0, 0, projWidth, projHeight + 100);
-				background.drawImage(canvas, 0, 0, projWidth, projHeight, 0, 50, projWidth, projHeight);
+				var bottomBorder = 40,
+					topBorder = 0;
+				var background = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
+				background.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
+				// background.fillStyle = 'rgba(255, 255, 255, .75)';
+				// background.fillRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
+				background.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);
 
 				if (callback) {
 					callback(canvas);

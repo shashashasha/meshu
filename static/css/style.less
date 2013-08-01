@@ -1076,19 +1076,31 @@ body.firefox.win #rotate-help .border-notch {
     .transition(right);
 }*/
 #ring-preview-frame {
+    width: 7px;
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(30deg) translate3d(0px, 0px, 0px);
-  -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(30deg) translate3d(0px, 0px, 0px);
+    -moz-transform: rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px);
+    -webkit-transform: rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px);
     position: absolute;
-    top: 13px;
-    left: 162px;
+    top: 60px;
+    left: 200px;
 }
 #wrapper-ring:hover .strip {
     -webkit-animation-play-state:running;
     -moz-animation-play-state:running;
     -o-animation-play-state:running;
     animation-play-state:running;
+}
+
+#ring-preview-plane {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+    width: 200px;
+    height: 200px;
+    background: white;
+    opacity: .75;
+    position: absolute;
+    left: -85px;
 }
 
 .strip {
@@ -1105,9 +1117,8 @@ body.firefox.win #rotate-help .border-notch {
 .strip div {
   position: absolute;
   background: -webkit-canvas(ring-preview);
-  /*border: 1px solid black;*/
-  height: 250px;
-  width: 26px;
+  height: 150px;
+  width: 7px;
   opacity: 1;
 }
 

@@ -71,7 +71,7 @@
         <div class="ring-frame">
             <div id="ring-preview-frame">
                 <div id="ring-preview-strip-container" class="strip">
-                    <div class="a"></div>
+<!--                     <div class="a"></div>
                     <div class="b"></div>
                     <div class="c"></div>
                     <div class="d"></div>
@@ -94,8 +94,9 @@
                     <div class="u"></div>
                     <div class="v"></div>
                     <div class="w"></div>
-                    <div class="x"></div>
+                    <div class="x"></div> -->
                 </div>
+                <div id="ring-preview-plane"></div>
             </div>
         </div>
         <p>Badass Ring</p>
@@ -149,27 +150,40 @@
     <script type="text/javascript">
 
     var data = [],
-    bgWidth = 600,
-    stripNum = 24,
+    bgWidth = 500,
+    stripNum = 75,
     stripWidth = (bgWidth / stripNum);
 
     for (var i = 0; i < stripNum; i++) {
-      var rotate = 'rotateY(' + (i * 360 / stripNum) + 'deg) translateZ(97px)';
+      var rotate = 'rotateY(' + (i * 360 / stripNum) + 'deg) translateZ(79px)';
       data.push({
-        'class': String.fromCharCode(97 + i), // 'a' through 'x'
+        // 'class': String.fromCharCode(97 + i), // 'a' through 'x'
+        'class': 'strip-rotation strip-' + i,
         'background-position': (bgWidth - (stripWidth * i)) + 'px 0',
         '-moz-transform': rotate,
         '-webkit-transform': rotate
       });
     }
 
-  $.each(data, function(i, v){
-    $("." + v["class"]).css({
-      "background-position": v["background-position"],
-      "-moz-transform": v["-moz-transform"],
-      "-webkit-transform": v["-webkit-transform"]
-    })
-  });
+    var strips = d3.select("#ring-preview-strip-container")
+        .selectAll("div")
+        .data(data);
+
+    strips.enter()
+        .append("div")
+            .attr("class", function(d) { return d.class; })
+            .style("background-position", function(d) { return d["background-position"]; })
+            .style("-moz-transform", function(d) { return d["-moz-transform"]; })
+            .style("-webkit-transform", function(d) { return d["-webkit-transform"]; })
+            .style("-webkit-transform-style", "preserve-3d");
+
+  // $.each(data, function(i, v){
+  //   $("." + v["class"]).css({
+  //     "background-position": v["background-position"],
+  //     "-moz-transform": v["-moz-transform"],
+  //     "-webkit-transform": v["-webkit-transform"]
+  //   })
+  // });
 
     </script>
 {% endblock %}

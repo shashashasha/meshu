@@ -239,7 +239,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         lines.enter().append("svg:path");
         lines.exit().remove();
         lines.exit().remove();
-        lines.attr("stroke-width", 25)
+        lines.attr("stroke-width", 20)
             .attr("d", function(d) {
             var l = d.length;
             var draw = [];
