@@ -114,7 +114,9 @@
 {% block final-touch %}
     <div id="final-ring">
         <!-- mesh.style(ringsize) -->
-        better choose yer ring size
+        <div id="ring-number">7</div>
+        <input id="ring-range" type="range" value="7" min="4" max="14" step=".5" onChange="showNum(this.value)"/>
+        <h2 class="add-on-header">Ring Size:</h2>
     </div>
     <div id="final-rotate">
         <svg id="rotate"></svg>
@@ -162,6 +164,9 @@
             .style("-webkit-transform", function(d) { return d["-webkit-transform"]; })
             .style("-webkit-transform-style", "preserve-3d");
 
+    function showNum(num) {
+        $("#ring-number").text(num);
+    }
 
     </script>
 {% endblock %}
