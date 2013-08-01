@@ -7,7 +7,6 @@ $(function() {
 		var products = [];
 
 		self.initialize = function(meshTarget, catalog) {
-			console.log(meshTarget,catalog);
 			products = catalog.getProducts();
 			/*
 				pretty hacky, but seeing which products are used and hiding the rest

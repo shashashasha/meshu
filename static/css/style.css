@@ -1079,19 +1079,16 @@ body.firefox.win #rotate-help .border-notch {
   }
 }
 #product {
-  height: 710px;
+  height: 860px;
 }
 .radial #product {
   height: 490px;
-}
-#product-preview {
-  margin: 25px 0 0 0;
 }
 .wrapper {
   margin: 0 9px 5px 0;
   float: left;
   width: 300px;
-  height: 295px;
+  height: 365px;
   border: 2px solid white;
   padding: 5px;
   cursor: pointer;
@@ -1112,12 +1109,16 @@ body.firefox.win #rotate-help .border-notch {
 .wrapper svg,
 .wrapper .ring-frame {
   width: 300px;
-  height: 225px;
+  height: 300px;
   margin: 0 auto;
 }
 #product-preview p {
   margin-left: 5px;
   font-size: 22px;
+}
+#product-preview .price {
+  float: right;
+  color: #808080;
 }
 #product-preview p.note {
   font-size: 14px;
@@ -1138,6 +1139,39 @@ body.firefox.win #rotate-help .border-notch {
 }
 #product-preview p.cufflinks:hover {
   border-color: #000;
+}
+.tri {
+  border-width: 40px;
+  border-color: #808080 transparent transparent #808080;
+  border-style: solid;
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 5px;
+  height: 0;
+  width: 0;
+}
+.wrapper:hover .tri,
+.wrapper.selected .tri {
+  border-color: #ff3fb4 transparent transparent #ff3fb4;
+}
+.triangle {
+  font-size: 20px;
+  color: white;
+  position: absolute;
+  top: 23px;
+  left: 12px;
+  z-index: 2;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-transform: rotate(315deg);
+  -moz-transform-origin: 50% 50%;
+  -webkit-transform: rotate(315deg);
+  -webkit-transform-origin: 50% 50%;
+  -o-transform: rotate(315deg);
+  -o-transform-origin: 50% 50%;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
 }
 #save-and-view {
   position: absolute;
@@ -1227,6 +1261,10 @@ body.firefox.win #rotate-help .border-notch {
 }
 .add-on-header {
   font-size: 22px;
+}
+#final-rotate,
+#final-ring {
+  display: none;
 }
 #review {
   color: #808080;

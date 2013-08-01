@@ -1,62 +1,369 @@
-.center {
-	padding-top: 0px !important;
-}
 .row-fluid>[class*="span"] {
-	margin: 0 !important;
+    margin: 0 !important;
 }
 .container-fluid {
-	padding: 0 !important;
+    padding: 0 !important;
 }
-#pickerComputer {
-	background-color: #eee;
-	padding: 10px;
+.btn-primary {
+    background-color: #ff9900;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-transform: skew(-7deg);
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 5px 15px;
+    margin: 7px 0;
+}
+.btn-primary:hover {
+    background-color: #ff9900;
+}
+html {
+}
+body {
+    width: 875px;
+    background-color: #eee;
+    font-family: Futura;
+}
+
+#content {
+    padding: 10px;
     height: 400px;
+    width: 100%;
+    position: relative;
 }
+#branding {
+    display: none !important;
+}
+
+/* Sidebar */
+
+#bread {
+    display: none;
+}
+#servicePane {
+    top: 10px;
+}
+#services {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    width: 173px;
+    background-color: transparent;
+    padding: 0 10px;
+}
+.nav-list > li > a {
+    text-transform: uppercase;
+    font-size: 19px;
+    font-style: italic;
+    padding: 8px 15px 8px 13px;
+}
+#services li {
+    margin-bottom: 5px;
+}
+#services .active,
+#services .active:hover {
+    background-image: url(img/edge.png);
+    background-repeat: no-repeat;
+    background-position: 100% -34px;
+}
+#services a {
+    width: 162px;
+    padding-right: 0;
+}
+#services > li:hover {
+    background-image: url(img/edge.png);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+}
+#services > li:hover > a {
+    border-left: none;
+    background-color: #ddd;
+    padding-left: 13px;
+}
+#services > .active > a,
+#services > .active > a:hover {
+    border-left: none;
+    background: #808080;
+    padding-left: 13px;
+    color: #fff;
+}
+#services .auth-label {
+    right: 2px;
+    line-height: 10px;
+}
+#mainpane {
+    background: #808080;
+    width: 665px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-height: 470px;
+}
+#mainpane p {
+    font-family: Futura;
+    font-size: 14px;
+    color: white;
+}
+[class^="sbicon-"] {
+    vertical-align: inherit;
+    padding-bottom: 1px;
+}
+#services > .active a > [class^="sbicon-"],
+#services > .active a > [class*="sbicon-"]  {
+    background-image: url(img/local-icons-inverted.png);
+}
+.nav-list [class^="sbicon-"] {
+    padding-right: 7px;
+}
+
+/* Prompt Pane */
+
+.auth_service_title {
+    text-transform: uppercase;
+    font-style: italic;
+    color: white;
+}
+
+/* URL Picker */
+#pickerUrl {
+    padding-top: 150px;
+}
+#pickerUrl h2 {
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    line-height: 36px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.help-block {
+    display: none;
+}
+#urlForm .controls {
+    margin-left: 90px;
+}
+#urlInput {
+    width: 350px !important;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-transform: skew(-14deg);
+    height: 40px;
+}
+#preview.url .thumbnail {
+    float: left;
+    margin-left: 170px;
+    height: 100%;
+}
+#preview.url .filename {
+    text-align: left;
+    margin-left: 25px;
+    float: left;
+}
+#preview.url .span8 {
+    display: none;
+}
+#preview.url #action-group {
+    position: absolute;
+    top: 202px;
+    left: 452px;
+    overflow: hidden;
+}
+
+/* Thumbnail Gallery */
+
+.filelist {
+    margin-top: 0;
+}
+.row-fluid > .span8 {
+    width: 100%;
+}
+.thumbnails {
+    margin-left: 0;
+}
+.thumbnails > li {
+    height: 136px;
+    width: 136px;
+    margin: 0 0 10px 10px;
+}
+.thumbnails h5 {
+    display: none;
+}
+.filelist.thumbnails a.selectable:hover {
+    border-color: #ff9900;
+}
+.thumbnail {
+    border-radius: 0;
+    padding: 0;
+    border-width: 3px;
+    height: 130px;
+    width: 130px;
+}
+#picker {
+    width: 450px;
+    padding-top: 10px;
+}
+.filelist>li:nth-child(odd)>a {
+    background-color: transparent;
+}
+
+#load-next {
+    display: block;
+    cursor: pointer;
+    color: #ff9900;
+    font-size: 19px;
+    text-transform: uppercase;
+    font-style: italic;
+    background-color: #eee;
+    line-height: 35px;
+    padding: 0;
+    width: 100%;
+    margin: 10px;
+    border-radius: 0;
+}
+#load-next:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* Selection Pane */
+
+#preview {
+    top: 10px;
+    width: 225px;
+    right: 10px;
+}
+#preview .table {
+    display: none;
+}
+#preview .thumbnail {
+    height: 100px;
+    width: 100px;
+    margin: 10px auto;
+}
+#preview .ellipsize {
+    white-space: inherit;
+}
+#helpMessage {
+    display: none;
+}
+h3.filename, #mainpane #subMessage {
+    text-transform: uppercase;
+    font-style: italic;
+    color: white;
+    text-shadow: none;
+    font-size: 23px;
+    line-height: 30px;
+    margin-top: 25px;
+    text-align: center;
+}
+.multi-filename {
+    display: none;
+}
+.multi-file-preview {
+    width: 85px;
+    margin: 15px auto 0;
+}
+.multi-file-preview li {
+    padding: 0;
+    margin-bottom: 10px;
+}
+.alert-info {
+    background-color: #ff9900;
+    border: none;
+    color: #3a87ad;
+    border-radius: 0;
+    width: 85px;
+    max-height: 85px;
+    padding: 0;
+}
+.tiny-thumbnail {
+    width: 75px;
+    max-height: 75px;
+    padding: 5px;
+}
+.tiny-thumbnail > img {
+    max-height: 75px;
+    max-width: 75px;
+}
+#action-group {
+    bottom: 10px;
+    margin-left: 48px;
+}
+#action-group .btn-upload {
+    background-image: url(img/submit.png);
+    width: 124px;
+    height: 56px;
+    padding: 0;
+    text-indent: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+}
+#action-group .btn-upload:hover {
+    background-position: 0 0;
+}
+
+/* Drag and Drop Pane */
+
+#pickerComputer {
+    padding-top: 0;
+}
+
 #localDragDrop, #fileUploadForm {
-	width: 400px;
-	height: 400px;
-	background: #808080;
-	border: none;
-	border-radius: 0;
-	float: left;
-	margin: 0 10px 0 0;
-	padding: 0;
+    border: none;
+    border-radius: 0;
+    float: left;
+    margin: 0 10px 0 0;
+    padding: 0;
 }
 #localDragDrop {
-    background-image: url(img/starburst.png);
+    width: 100%;
+    height: 360px;
+    background-image: url(img/starburst-wide.png);
     background-position: center;
+    box-shadow: none;
+    background-color: transparent;
 }
 #localDragHelp {
-	background-image: url(img/drag-and-drop.png);
+    background-image: url(img/drag-and-drop.png);
     height: 108px;
     width: 246px;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin-top: 142px;
+    margin: 142px 0 0 209px;
 }
 .control-label {
-	display: none;
+    display: none;
 }
-
+.center {
+    padding-top: 0px !important;
+    margin-right: 0;
+}
 #fileUploadForm {
-    height: 195px;
+    width: 100%;
+    border-top: 10px solid #eee;
+    height: 110px;
 }
 #fileInputContainer {
-	z-index: 1;
-	overflow: visible;
-	width: 303px;
-    margin: 43px 0 0 48px;
+    z-index: 1;
+    overflow: visible;
+    width: 495px;
+    margin: 30px 0 0 90px;
 }
 #fileUploadInput{
-    line-height: 108px;
-    height: 108px;
+    line-height: 48px;
+    height: 48px;
     cursor: pointer;
 }
 #fileUploadDummy {
-    background-image: url(img/choose-gif.png);
-    height: 108px;
-    width: 303px;
+    background-image: url(img/gif-upload.png);
+    height: 48px;
+    width: 485px;
     text-indent: 150%;
     white-space: nowrap;
     overflow: hidden;
@@ -68,49 +375,55 @@
     background-position: 0 0;
 }
 
-#fileFromURL {
-    background: #808080;
-    width: 400px;
-    height: 195px;
-    position: absolute;
-    top: 215px;
-    left: 420px;
-    font-family: Futura;
-    text-align: center;
-    color: white;
+#localDragDrop.acceptFileDrop {
+    border: none;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 10px;
+    margin-bottom: 0;
 }
 
-#fileFromURL h2 {
-    text-transform: uppercase;
-    font-size: 22px;
-    font-style: italic;
-    margin: 30px 0 5px;
-}
-#fileFromURL #urlInput,
-#fileFromURL #urlSubmit {
-    float: left;
-}
-#fileFromURL #urlInput {
-    height: 49px;
+
+/* Uploads Pane */
+
+.uploadProgress.well {
+    width: 813px;
+    height: 438px;
+    z-index: 2;
+    position: absolute;
     border-radius: 0;
-    border: none;
-    -webkit-transform: skew(-7deg);
-    margin: 4px 1px 10px 25px;
-    width: 225px;
+    left: -190px;
+    top: 0px;
+    background-color: #fff;
 }
-#fileFromURL #urlSubmit {
-    background-image: url(img/submit.png);
-    width: 124px;
-    height: 56px;
-    cursor: pointer;
+.well {
+    padding: 20px;
 }
-#fileFromURL #urlSubmit:hover {
-    background-image: url(img/submit-over.png);
+.progress {
+    border-radius: 0;
 }
-#fileFromURL #urlSubmit:active {
-    background-image: url(img/submit-down.png);
+.progress-striped .bar {
+    background-color: #ff9900;
 }
-#fileFromURL p {
-    font-size: 14px;
-    clear: both;
+.small-thumbnail {
+    max-height: 100px;
+    height: auto;
+    max-width: 100px;
+    border-radius: 0;
+    box-shadow: none;
+}
+.small-thumbnail > img {
+    max-height: 100px;
+}
+table.fileinfo .filename {
+    max-width: 250px;
+}
+.badge-inverse, .badge-inverse:hover, .badge.badge-inverse:hover {
+    background-color: #808080;
+}
+.badge {
+    margin-left: 20px;
+    text-transform: uppercase;
+    padding: 2px 9px 3px;
+    border-radius: 0;
 }

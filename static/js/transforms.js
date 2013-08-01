@@ -1,12 +1,8 @@
 sb.transforms = {
 	"earrings": {
-		// "product": {
-		// 	scale: .09,
-		// 	transform: {x: 830, y: 710}
-		// },
 		"product": {
-			scale: .15,
-			transform: {x: 900, y: 750}
+			scale: .175,
+			transform: {x: 143, y: 112}
 		},
 		"preview": {
 			scale: .125,
@@ -18,13 +14,9 @@ sb.transforms = {
 		}
 	},
 	"pendant": {
-		// "product": {
-		// 	scale: .045,
-		// 	transform: {x: 1570, y: 2200}
-		// },
 		"product": {
-			scale: .1,
-			transform: {x: 1200, y: 1700}
+			scale: .125,
+			transform: {x: 119, y: 167}
 		},
 		"preview": {
 			scale: .075,
@@ -41,8 +33,8 @@ sb.transforms = {
 		// 	transform: {x: 650, y: 980}
 		// },
 		"product": {
-			scale: .175,
-			transform: {x: 550, y: 850}
+			scale: .2,
+			transform: {x: 90, y: 150}
 		},
 		"preview": {
 			scale: .125,
@@ -55,8 +47,8 @@ sb.transforms = {
 	},
 	"cufflinks": {
 		"product": {
-			scale: .075,
-			transform: {x: 870, y: 1170}
+			scale: .15,
+			transform: {x: 115, y: 155}
 		},
 		"preview": {
 			scale: .125,
@@ -99,5 +91,5 @@ sb.transforms = {
 
 sb.transforms.getTransform = function(product, type) {
 	var t = sb.transforms[product][type];
-	return "scale(" + t.scale + ") translate(" + t.transform.x + "," + t.transform.y + ") ";
+	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
 };

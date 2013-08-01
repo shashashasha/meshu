@@ -15,7 +15,7 @@ sb.viewhandler = function() {
 			sb.rasterizer.ringPreview(meshu);
 		}
 		else onPrev();
-	}, { offset: 500 });
+	}, { offset: 550 });
 
 	$("#materials").waypoint(function(direction) {
 		if (direction == "down") {
