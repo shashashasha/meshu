@@ -1032,8 +1032,8 @@ body.firefox.win #rotate-help .border-notch {
 #ring-preview-frame {
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 0px, 0px);
-  -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 0px, 0px);
+  -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(30deg) translate3d(0px, 0px, 0px);
+  -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(30deg) translate3d(0px, 0px, 0px);
   position: absolute;
   top: 13px;
   left: 162px;
@@ -1059,7 +1059,7 @@ body.firefox.win #rotate-help .border-notch {
   background: -webkit-canvas(ring-preview);
   /*border: 1px solid black;*/
 
-  height: 200px;
+  height: 250px;
   width: 26px;
   opacity: 1;
 }
@@ -1096,6 +1096,7 @@ body.firefox.win #rotate-help .border-notch {
   border: 2px solid white;
   padding: 5px;
   cursor: pointer;
+  position: relative;
 }
 #product-preview .wrapper.last {
   margin-right: 0;

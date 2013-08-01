@@ -165,59 +165,12 @@ sb.rasterizer = function() {
 		});
 	};
 
-	var furthestPoints = function(map, points) {
-		var max = 0,
-			pair = [];
-
-		if (points.length < 2) return;
-
-		// find the furthest points
-		for (var i = 0; i < points.length; i++) {
-			var pi = map.l2p({ lat: points[i][1], lon: points[i][0] });
-
-			for (var j = i + 1; j < points.length; j++) {
-				var pj = map.l2p({ lat: points[j][1], lon: points[j][0] });
-				var dx = pi.x - pj.x;
-				var dy = pi.y - pj.y;
-
-				var dist = Math.sqrt((dx * dx) + (dy * dy));
-				if (dist > max) {
-					max = dist;
-					pair = [pj, pi];
-				}
-			}
-		}
-
-		return pair;
-	};
-
-	var lineAngle = function(p1, p2) {
-		var dpy = p2.y - p1.y,
-			dpx = p2.x - p1.x;
-
-		return Math.atan2(dpy, dpx) * (180 / Math.PI);
-	};
-
-	var distance = function(p1, p2) {
-		var dpy = p2.y - p1.y,
-			dpx = p2.x - p1.x;
-
-		return Math.sqrt((dpx * dpx) + (dpy * dpy));
-	};
-
 	self.ringPreview = function(meshu, callback) {
 		meshu.mesh().bakeStyles();
 
 		if (meshu.mesh().points().length < 3) {
 			return;
 		}
-
-		var map = meshu.map(),
-			points = meshu.mesh().points(),
-			pair = furthestPoints(map, points),
-			angle = lineAngle(pair[0], pair[1]),
-			normalizedAngle = -angle + 180,
-			rotate = "rotate(" + [normalizedAngle, 300, 300].join(',') + ") ";
 
 		/*
 			new strategy:
@@ -226,7 +179,8 @@ sb.rasterizer = function() {
 			then use that to find the rotated "bbox", then use that to scale
 			into our destination ring-preview-delaunay-container
 		*/
-		var projected = meshu.mesh().projectPoints(rotate),
+		var rotate = meshu.mesh().getLongestRotation(),
+			projected = meshu.mesh().projectPoints(rotate),
 			projWidth = 600,
 			projHeight = 150,
 			buffer = 20;
