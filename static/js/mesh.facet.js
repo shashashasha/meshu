@@ -126,9 +126,64 @@ sb.mesh.facet = function (frame, map, width, height) {
         self.updateCircleBehavior(bool);
     });
 
+    /*
+        get the points furthest away from each other in a mesh
+    */
+    var furthestPoints = function() {
+        var max = 0,
+            pair = [];
+
+        if (points.length < 2) return;
+
+        // find the furthest points
+        for (var i = 0; i < points.length; i++) {
+            var pi = map.l2p({ lat: points[i][1], lon: points[i][0] });
+
+            for (var j = i + 1; j < points.length; j++) {
+                var pj = map.l2p({ lat: points[j][1], lon: points[j][0] });
+                var dx = pi.x - pj.x;
+                var dy = pi.y - pj.y;
+
+                var dist = Math.sqrt((dx * dx) + (dy * dy));
+                if (dist > max) {
+                    max = dist;
+                    pair = [pj, pi];
+                }
+            }
+        }
+
+        return pair;
+    };
+
+    /*
+        angle between two points in degrees
+    */
+    var lineAngle = function(p1, p2) {
+        var dpy = p2.y - p1.y,
+            dpx = p2.x - p1.x;
+
+        return Math.atan2(dpy, dpx) * (180 / Math.PI);
+    };
+
+    var distance = function(p1, p2) {
+        var dpy = p2.y - p1.y,
+            dpx = p2.x - p1.x;
+
+        return Math.sqrt((dpx * dpx) + (dpy * dpy));
+    };
+
     var globalize = function(pt, element) {
         var transform = element.getTransformToElement(element.ownerSVGElement);
         return pt.matrixTransform(transform);
+    };
+
+    self.getLongestRotation = function() {
+        var pair = furthestPoints(map, points),
+            angle = lineAngle(pair[0], pair[1]),
+            normalizedAngle = -angle + 180,
+            rotate = "rotate(" + [normalizedAngle, 300, 300].join(',') + ") ";
+
+        return rotate;
     };
 
     self.projectPoints = function(transform) {
@@ -147,6 +202,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         var circle = d3.selectAll("#delaunay-ui circle").each(function(e, k) {
             var pt = this.ownerSVGElement.createSVGPoint(),
                 mapPt = map.l2p({lat: lats[k], lon: lons[k]});
+
             pt.x = mapPt.x;
             pt.y = mapPt.y;
 
@@ -183,7 +239,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         lines.enter().append("svg:path");
         lines.exit().remove();
         lines.exit().remove();
-        lines.attr("stroke-width", 25)
+        lines.attr("stroke-width", 20)
             .attr("d", function(d) {
             var l = d.length;
             var draw = [];
