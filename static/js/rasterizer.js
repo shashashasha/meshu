@@ -204,6 +204,7 @@ sb.rasterizer = function() {
 
 				// clear transform and canvas
 				d3.select("#delaunay-ui").attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
+				d3.select("#ring-img").style("display","none");
 				d3.selectAll(".ring-canvas").remove();
 
 				// drawing extra so the white part covers the "back side" of the ring

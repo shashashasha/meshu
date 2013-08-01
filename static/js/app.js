@@ -154,10 +154,14 @@ $(function() {
 
 		// $("#make-" + product).show();
 
-		if (product == "ring")
-			console.log("ring!")
-		else
+		if (product == "ring") {
+			$("#final-rotate").hide();
+			$("#final-ring").show();
+		} else {
+			$("#final-rotate").show();
+			$("#final-ring").hide();
 			sb.rotator.update(product);
+		}
 
 		/*
 			i suck.

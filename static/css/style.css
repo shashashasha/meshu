@@ -1262,6 +1262,10 @@ body.firefox.win #rotate-help .border-notch {
 .add-on-header {
   font-size: 22px;
 }
+#final-rotate,
+#final-ring {
+  display: none;
+}
 #review {
   color: #808080;
 }
