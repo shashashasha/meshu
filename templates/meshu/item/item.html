@@ -30,7 +30,7 @@
     <div class="wrapper" id="wrapper-pendant">
         <!-- <div class="frame"> -->
             <svg id="preview-pendant" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="-35">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Pendant Necklace</p>
             <p class="note">pendant max side length: 1.5"</p>
@@ -40,9 +40,9 @@
     <div class="wrapper" id="wrapper-earrings">
         <!-- <div class="frame"> -->
             <svg id="preview-earrings" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="-5">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="0">
             </svg>
-            <p>Pair of Earrings</p>
+            <p>Earrings</p>
             <p class="note">earrings 1.75" tall</p>
             <p class="note">nickel-free posts available</p>
         <!-- </div> -->
@@ -50,7 +50,7 @@
     <div class="wrapper last" id="wrapper-necklace">
         <!-- <div class="frame"> -->
             <svg id="preview-necklace" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="300" height="300" x="0" y="-40">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Large Necklace</p>
             <p class="note">pendant max side length: 3"</p>
@@ -62,13 +62,15 @@
             <svg id="preview-cufflinks" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="300" height="300" x="0" y="0">
             </svg>
-            <p>Pair of Cufflinks</p>
+            <p>Cufflinks</p>
             <p class="note">cufflink max side length: 1.5"</p>
             <p class="note important">we recommend using 4-10 points for cufflinks</p>
         <!-- </div> -->
     </div>
     <div class="wrapper last" id="wrapper-ring">
         <div class="ring-frame">
+            <div class="tri"></div>
+            <div class="triangle">new</div>
             <div id="ring-preview-frame">
                 <div id="ring-preview-strip-container" class="strip">
                     <div class="a"></div>
@@ -98,8 +100,9 @@
                 </div>
             </div>
         </div>
-        <p>Badass Ring</p>
-        <p class="note">aww yiss</p>
+        <p>Ring</p>
+        <p class="note">available in sizes 4-14</p>
+        <p class="note important">we recommend using 4-10 points for rings</p>
     </div>
     <!-- <p class="cufflinks note" style="width:260px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p> -->
 {% endblock %}
@@ -132,11 +135,16 @@
 {% endblock %}
 
 {% block final-touch %}
-    <svg id="rotate"></svg>
-    <div id="rotate-cw" class="rotate-arrow">&#8635;</div>
-    <div id="rotate-ccw" class="rotate-arrow">&#8634;</div>
-    <h2 class="add-on-header">Meshu Rotation:</h2>
-    <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+    <div id="final-ring">
+        <!-- mesh.style(ringsize) -->
+    </div>
+    <div id="final-rotate">
+        <svg id="rotate"></svg>
+        <div id="rotate-cw" class="rotate-arrow">&#8635;</div>
+        <div id="rotate-ccw" class="rotate-arrow">&#8634;</div>
+        <h2 class="add-on-header">Meshu Rotation:</h2>
+        <p>If you'd like to adjust the orientation of your meshu, rotate it by clicking on one of the pink corners in this preview box.</p>
+    </div>
 {% endblock %}
 
 {% block script-specific %}
