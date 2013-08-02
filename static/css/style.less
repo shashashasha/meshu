@@ -633,7 +633,6 @@ body.win #login-form ul {
     width: 320px;
     box-sizing: border-box;
 }
-
 #search .note {
     margin: 5px 0 10px;
 }
@@ -1106,7 +1105,7 @@ body.firefox.win #rotate-help .border-notch {
     right: 0;
     .transition(right);
 }*/
-#ring-preview-frame {
+.ring-preview-frame {
     width: 21px;
     -moz-transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
@@ -1115,6 +1114,10 @@ body.firefox.win #rotate-help .border-notch {
     position: absolute;
     top: 75px;
     left: 195px;
+}
+#final-ring .frame {
+    position: relative;
+    height: 300px;
 }
 #wrapper-ring:hover .strip {
     -webkit-animation-play-state:running;
@@ -1338,26 +1341,29 @@ body.firefox.win #rotate-help .border-notch {
     display: none;
 }
 #ring-number {
-    width: 300px;
-    height: 300px;
-    background-color: @lightGrey;
-    font-size: 150px;
-    line-height: 300px;
-    color: white;
-    text-align: center;
+
 }
 #ring-range {
     -webkit-appearance:none;
     -moz-apperance:none;
-    width:300px;
-    height:4px;
+    width: 300px;
+    height: 0px;
+    background-color: #808080;
+    border: none;
+    margin-top: 15px;
 }
-#ring-range input::-webkit-slider-thumb {
-    -webkit-appearance:none;
-    -moz-apperance:none;
-    width:20px;
-    height:20px;
-    border-radius:10px;
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    top: 0;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: @pink;
+    border: 1px solid white;
 }
 
 #review {

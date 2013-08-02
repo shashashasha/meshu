@@ -86,6 +86,25 @@ $(function() {
 			});
 		};
 
+		self.updateRing = function() {
+			var main = $("#final-ring .frame");
+
+			var ringPreview = $(".ring-preview-frame").clone();
+
+			$(main).append(ringPreview);
+
+			var scale = d3.scale.linear().domain([4,14]).range([.8,1.2]);
+			$("#ring-range").change(function(e){
+				$("#ring-number").text(e.currentTarget.value);
+				var s = scale(e.currentTarget.value);
+    			ringPreview.css({
+    				"-moz-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
+    				"-webkit-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
+    			});
+			})
+
+		};
+
 		self.getTransform = function(product) {
 			// using the product preivew one for now, can fix later
 			return sb.transforms.getTransform(product, "product") + " rotate(" + rotation + ",300,300)";

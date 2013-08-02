@@ -160,6 +160,7 @@ $(function() {
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
+				sb.rotator.updateRing();
    				break;
    			default:
    				$("#final-rotate").show();
