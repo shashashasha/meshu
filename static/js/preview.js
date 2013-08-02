@@ -102,7 +102,9 @@ $(function() {
     				"-webkit-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
     			});
 			})
-
+			meshu.mesh().style({
+				"ringSize": 7
+			});
 		};
 
 		self.getTransform = function(product) {

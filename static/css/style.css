@@ -2265,6 +2265,9 @@ circle.highlight,
   height: 40px;
   border: none;
 }
+.review #cart .meshu-svg path {
+  stroke: #808080;
+}
 .review #cart {
   color: #808080;
   font-size: 18px;

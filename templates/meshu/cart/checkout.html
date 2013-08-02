@@ -353,14 +353,14 @@
     <div id="review-total">
     	{% if cart.discount_percent > 0 %}
         <h2 id="subtotal-price" class="review-header">Subtotal:
-        	<span> ${{ cart.discount_applied|floatformat:2 }}</span> <span style="padding-left: 10px; padding-right: 10px; text-decoration: line-through;"> ${{ cart.total|floatformat:2 }} </span></h2>
+        	<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span> <span style="padding-left: 10px; padding-right: 10px; text-decoration: line-through;"> <span class="dollar">$</span>{{ cart.total|floatformat:2 }} </span></h2>
         	<!-- <span>({{ cart.discount_percent|floatformat:0 }}% off!) ${{ cart.discount_applied|floatformat:2 }}</span></h2> -->
         {% else %}
 	        <h2 id="subtotal-price" class="review-header">Subtotal:
-        	<span>${{ cart.discount_applied|floatformat:2 }}</span></h2>
+        	<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span></h2>
         {% endif %}
-        <h2 id="shipping-price" class="review-header">Shipping Cost: <span>$5.00</span></h2>
-        <h2 id="total-price">Total: <span></span></h2>
+        <h2 id="shipping-price" class="review-header">Shipping Cost:<span><span class="dollar">$</span><span class="num">5.00</span></span></span></h2>
+        <h2 id="total-price">Total: <span><span class="dollar">$</span><span class="num"></span></span></h2>
     </div>
 </div>
 
