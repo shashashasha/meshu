@@ -161,6 +161,9 @@ class Order(models.Model):
 	# notes on shipping, paypal orders, etc
 	special_instructions = models.CharField(max_length=200, default='', blank=True)
 
+	# ring sizes, rotations, etc
+	metadata = models.CharField(max_length=200, default='', blank=True)
+
 	# track the coupon codes used
 	coupon = models.CharField(max_length=100, default='', blank=True)
 

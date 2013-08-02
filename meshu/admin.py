@@ -50,7 +50,7 @@ class OrderAdmin(admin.ModelAdmin):
 			'fields': ('user_profile', 'meshu', 'product', 'material', 'color', 'postcard_note',)
 		}),
 		('Order Details', {
-			'fields': ('status', 'amount', 'coupon', 'special_instructions',)
+			'fields': ('status', 'amount', 'metadata', 'special_instructions', 'coupon',)
 		}),
 		('Shipping', {
 			'fields': ('shipping',)
