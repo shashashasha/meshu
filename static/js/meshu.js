@@ -283,6 +283,10 @@ sb.meshu = function(frame, renderer, existingMap) {
         return frame;
     };
 
+    self.getRenderer = function() {
+        return renderer;
+    };
+
     self.updateTitle = function(t) {
         mesh.updateTitle(t);
     };
