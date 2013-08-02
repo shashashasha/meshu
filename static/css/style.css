@@ -529,8 +529,15 @@ body.win #login-form ul {
   display: none;
 }
 #edit {
-  padding: 20px;
   height: 600px;
+}
+#edit.section {
+  padding: 0;
+}
+#edit-ui {
+  position: absolute;
+  z-index: 2;
+  height: 100%;
 }
 /*.edit #edit {
     left: 0;
@@ -540,6 +547,19 @@ body.win #login-form ul {
     left: -400px;
     .transition(left);
 }*/
+#search {
+  padding: 10px;
+}
+#search,
+#places {
+  margin: 10px;
+  background-color: white;
+  width: 320px;
+  box-sizing: border-box;
+}
+#search .note {
+  margin: 5px 0 10px;
+}
 #search h2,
 #places h2 {
   margin: 0 0 5px;
@@ -573,8 +593,11 @@ body.win #login-form ul {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 #edit .connect-wrapper {
+  background-color: white;
   position: absolute;
-  bottom: 20px;
+  left: 10px;
+  bottom: 10px;
+  padding: 10px 0 10px 10px;
   font-size: 18px;
 }
 #edit .connect-wrapper .title {
@@ -664,9 +687,7 @@ body.win .notch {
   top: -6px;
 }
 #places {
-  position: absolute;
-  top: 130px;
-  width: 360px;
+  margin-top: 10px;
   opacity: 1;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -686,6 +707,12 @@ body.win .notch {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+#place-title {
+  display: none;
+}
+.radial #place-title {
+  display: block;
 }
 #place-title input {
   width: 282px;
@@ -722,8 +749,15 @@ body.firefox #place-title #input {
   cursor: auto;
 }
 #places ul {
-  height: 339px;
+  max-height: 320px;
+  padding: 0 10px;
   overflow-y: auto;
+}
+#places ul li:first-child {
+  margin-top: 10px;
+}
+#places ul li:last-child {
+  margin-bottom: 10px;
 }
 .place {
   color: #808080;
@@ -793,13 +827,10 @@ body.firefox .place .place-text {
   background-color: #ff3fb4;
 }
 .frame {
-  width: 600px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  z-index: 1;
   right: 0px;
-  border-right: 1px solid #e6e6e6;
-  margin: -1px;
   /*.transition(right);*/
 
 }
@@ -1029,7 +1060,7 @@ body.firefox.win #rotate-help .border-notch {
     right: 0;
     .transition(right);
 }*/
-#ring-preview-frame {
+.ring-preview-frame {
   width: 21px;
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
@@ -1038,6 +1069,10 @@ body.firefox.win #rotate-help .border-notch {
   position: absolute;
   top: 95px;
   left: 190px;
+}
+#final-ring .frame {
+  position: relative;
+  height: 300px;
 }
 #wrapper-ring:hover .strip {
   -webkit-animation-play-state: running;
@@ -1265,6 +1300,28 @@ body.firefox.win #rotate-help .border-notch {
 #final-rotate,
 #final-ring {
   display: none;
+}
+#ring-range {
+  -webkit-appearance: none;
+  -moz-apperance: none;
+  width: 300px;
+  height: 0px;
+  background-color: #808080;
+  border: none;
+  margin-top: 15px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  top: 0;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #ff3fb4;
+  border: 1px solid white;
 }
 #review {
   color: #808080;
@@ -1825,6 +1882,8 @@ circle {
 circle.highlight,
 .edit .inactive circle:first-child {
   fill-opacity: 1;
+  stroke: white;
+  stroke-width: 2;
   cursor: pointer;
 }
 .radial #delaunay-ui circle,
@@ -2060,6 +2119,8 @@ circle.highlight,
   opacity: 1;
   z-index: 2;
   position: absolute;
+  right: 10px;
+  top: 10px;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
 
@@ -2093,6 +2154,12 @@ circle.highlight,
 /*
     cart page
 */
+.dollar {
+  font-size: 80%;
+  margin-right: 2px !important;
+  float: none !important;
+  color: #808080;
+}
 .theta {
   display: none;
 }
@@ -2132,7 +2199,9 @@ circle.highlight,
   display: inline-block;
   line-height: 20px;
   float: right;
-  background-color: #808080;
+  background-color: white;
+  border: 1px solid #8f8f8f;
+  color: #808080;
 }
 #cart .cart-remove {
   background-color: #ff3fb4;
@@ -2173,7 +2242,6 @@ circle.highlight,
 }
 .total-wrapper .total {
   margin-top: 10px;
-  font-size: 32px;
 }
 .action-buttons {
   clear: both;

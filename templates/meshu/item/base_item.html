@@ -15,11 +15,6 @@
         <span></span>
         <b class="notch"></b>
     </div>
-    {% block map %}
-    <div id="meshu-container" class="frame inactive">
-        <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
-    </div>
-    {% endblock %}
 
     {% block numbers %}
         <div id="crazy">
@@ -38,22 +33,27 @@
 
     {% block edit %}
         <div id="edit" class="section">
-            <div id="search">
-                <h2>{% block page_title %}{% endblock %}</h2>
-                <input type="text" id="searchbox" size="35" value="add a city, place, or address"
-                    onfocus="value=''"/>
-                <div id="search-button" class="button">search</div>
+            <div id="meshu-container" class="frame inactive">
+                <div id="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</div>
             </div>
-            <div id="cases"></div>
-            {% block places %}
-                <div id="places">
-                <h2 id="place-title"></h2>
+            <div id="edit-ui">
+                <div id="search">
+                    <h2>{% block page_title %}{% endblock %}</h2>
+                    <p class="note">Add places by searching, or clicking on the map</p>
+                    <input type="text" id="searchbox" size="35" value="add a city, place, or address"
+                        onfocus="value=''"/>
+                    <div id="search-button" class="button">search</div>
                 </div>
-            {% endblock %}
-
-            <div class="exit-buttons">
-                {% block finish %}
+                {% block places %}
+                    <div id="places">
+                        <h2 id="place-title"></h2>
+                    </div>
                 {% endblock %}
+
+                <div class="exit-buttons">
+                    {% block finish %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
     {% endblock %}

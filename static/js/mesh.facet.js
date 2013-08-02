@@ -21,12 +21,12 @@ sb.mesh.facet = function (frame, map, width, height) {
         .style("height", height)
         .style("position", "absolute")
         .style("z-index", "1")
-        .append("svg:svg")
+        .append("svg")
         .attr("class", "meshu-svg")
         .attr("width", "100%")
         .attr("height", "100%");
 
-    var g = main.append("svg:g")
+    var g = main.append("g")
             .attr("class", "delaunay")
             .attr("transform", "translate(0,0) scale(1) rotate(0,300,300)")
             .attr("fill","none") // needed for rasterizer.js
@@ -34,21 +34,21 @@ sb.mesh.facet = function (frame, map, width, height) {
             .attr("stroke","black")
             .attr("stroke-linejoin","round");
 
-    var hidden = main.append("svg:g")
+    var hidden = main.append("g")
                  .attr("class", "hidden");
 
-    hidden.append("svg:path");
+    hidden.append("path");
 
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:2;")
         .style("width", width)
         .style("height", height);
 
-    var svg = uiFrame.append("svg:svg")
+    var svg = uiFrame.append("svg")
         .attr("width", "100%")
         .attr("height", "100%");
 
-    var ui = svg.append("svg:g")
+    var ui = svg.append("g")
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
@@ -236,7 +236,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         var lines = g.selectAll("path")
             .data(d3.geom.delaunay(projected.pts));
 
-        lines.enter().append("svg:path");
+        lines.enter().append("path");
         lines.exit().remove();
         lines.exit().remove();
         lines.attr("stroke-width", 20)
@@ -271,7 +271,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         var lines = g.selectAll("path")
             .data(d3.geom.delaunay(points));
 
-        lines.enter().append("svg:path");
+        lines.enter().append("path");
         lines.exit().remove();
         lines.attr("d", function(d) {
                 var l = d.length;
@@ -334,9 +334,9 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         // new circles
         circles.enter()
-            .append("svg:circle")
+            .append("circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 7)
+            .attr("r", 10)
             .on("mousedown", function(d) {
                 self.dragging = d;
 
@@ -378,7 +378,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
         rotate_pts.enter()
-            .append("svg:circle")
+            .append("circle")
             .attr("class","rotation")
             .attr("r","40")
             .attr("cx", function(d, i) {

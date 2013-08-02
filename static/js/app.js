@@ -154,14 +154,20 @@ $(function() {
 
 		// $("#make-" + product).show();
 
-		if (product == "ring") {
-			$("#final-rotate").hide();
-			$("#final-ring").show();
-		} else {
-			$("#final-rotate").show();
-			$("#final-ring").hide();
-			sb.rotator.update(product);
-		}
+   		switch (product) {
+   			case 'cufflinks':
+   				break;
+   			case 'ring':
+   				$("#final-rotate").hide();
+				$("#final-ring").show();
+				sb.rotator.updateRing();
+   				break;
+   			default:
+   				$("#final-rotate").show();
+				$("#final-ring").hide();
+				sb.rotator.update(product);
+   				break;
+   		}
 
 		/*
 			i suck.
