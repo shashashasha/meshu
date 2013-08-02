@@ -2154,6 +2154,12 @@ circle.highlight,
 /*
     cart page
 */
+.dollar {
+  font-size: 80%;
+  margin-right: 2px !important;
+  float: none !important;
+  color: #808080;
+}
 .theta {
   display: none;
 }
@@ -2193,7 +2199,9 @@ circle.highlight,
   display: inline-block;
   line-height: 20px;
   float: right;
-  background-color: #808080;
+  background-color: white;
+  border: 1px solid #8f8f8f;
+  color: #808080;
 }
 #cart .cart-remove {
   background-color: #ff3fb4;
@@ -2234,7 +2242,6 @@ circle.highlight,
 }
 .total-wrapper .total {
   margin-top: 10px;
-  font-size: 32px;
 }
 .action-buttons {
   clear: both;
