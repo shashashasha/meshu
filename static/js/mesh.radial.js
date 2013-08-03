@@ -59,9 +59,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         placeTitle.append("span").attr("class", "title-text");
         placeTitle.append("span").attr("class", "title-edit").html("edit");
 
-    if (!$("body").hasClass("firefox"))
-        $(".place-text input").live("blur", self.removeInput);
-
     var points = [],
         routes = [],
         paths = [],
@@ -308,6 +305,24 @@ sb.mesh.radial = function (frame, map, width, height) {
             d.edit = !d.edit;
         });
     }
+
+    self.editText = function(node,i,type) {
+        var button = node.find("." + type + "-edit").text("save");
+        var field = node.find("." + type + "-text");
+        var value = field.text();
+
+        node.addClass("active");
+        field.html('<input value="' + value + '">').find("input").focus();
+    };
+    self.saveText = function(node, i, type) {
+        var button = node.find("." + type + "-edit").text("edit");
+        var text = node.find("input").val();
+
+        node.removeClass("active");
+        node.find("." + type + "-text").text(text);
+
+        return text;
+    };
 
     // take a single point and turn it a ring of points
     function addRadialPoints() {
