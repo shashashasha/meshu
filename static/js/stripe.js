@@ -64,8 +64,8 @@ var cashier = function() {
     };
 
     self.update = function() {
-        $("#shipping-price span").text('$' + shipping + '.00');
-        $("#total-price span").text('$' + self.getTotal() + '.00');
+        $("#shipping-price .num").text(shipping + '.00');
+        $("#total-price .num").text(self.getTotal() + '.00');
     };
 
     // update the shipping value

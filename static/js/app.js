@@ -29,15 +29,12 @@ $(function() {
 	// it listens to when the form ui is validated, then moves to the review view
 	sb.ui.orderer.initialize(meshu, catalog);
 
-	// initialize the social sharing ui
-	// facebook, twitter, pinterest buttons
-	sb.ui.socialsharer(meshu);
-
 	// initialize the viewhandler
 	// sb.viewhandler.initialize();
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
+
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);
 
@@ -49,6 +46,10 @@ $(function() {
 
 		switch (pageType) {
 			case 'view':
+				// initialize the social sharing ui
+				// facebook, twitter, pinterest buttons
+				sb.ui.socialsharer(meshu);
+				
 				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
@@ -150,17 +151,13 @@ $(function() {
 		wrapper.addClass("selected");
 		var product = wrapper.attr("id").split("-")[1];
 
-		// $(".make-option").hide();
-
-		// $("#make-" + product).show();
-
    		switch (product) {
    			case 'cufflinks':
    				break;
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
-				sb.rotator.updateRing();
+				sb.rotator.updateRing();	
    				break;
    			default:
    				$("#final-rotate").show();
