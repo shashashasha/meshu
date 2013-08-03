@@ -16,6 +16,8 @@ sb.rasterizer = function() {
 
 		$(canvas).addClass("hidden");
 
+		// this is for ringPreview
+		// because we don't want to destroy the canvas right away
 		if (!manualTracking)
 			canvases.push(canvas);
 		return canvas;
@@ -110,7 +112,6 @@ sb.rasterizer = function() {
 	self.clearCanvases = function() {
 		while (canvases.length) {
 			var c = canvases.pop()
-			// c.getContext('2d').clearRect(0, 0, c.width, c.height);
 			$(c).remove();
 		}
 	};

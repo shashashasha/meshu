@@ -556,9 +556,13 @@ body.win #login-form ul {
   background-color: white;
   width: 320px;
   box-sizing: border-box;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 }
 #search .note {
   margin: 5px 0 10px;
+  font-size: 13px;
 }
 #search h2,
 #places h2 {
@@ -566,6 +570,10 @@ body.win #login-form ul {
 }
 #search input {
   border: 1px solid #1fcaff;
+  font-size: 16px;
+}
+#search input:hover {
+  border: 1px solid #ff3fb4;
 }
 .button {
   cursor: pointer;
@@ -583,9 +591,13 @@ body.win #login-form ul {
   background-color: #808080;
 }
 .button:hover {
+  background-color: #ff3fb4;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+#search-button {
+  font-size: 18px;
 }
 #search-button:hover {
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -595,10 +607,16 @@ body.win #login-form ul {
 #edit .connect-wrapper {
   background-color: white;
   position: absolute;
-  left: 10px;
-  bottom: 10px;
+  left: 0px;
+  bottom: 0px;
   padding: 10px 0 10px 10px;
-  font-size: 18px;
+  margin: 10px;
+  font-size: 14px;
+  width: 320px;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 }
 #edit .connect-wrapper .title {
   margin-bottom: 5px;
@@ -2119,8 +2137,8 @@ circle.highlight,
   opacity: 1;
   z-index: 2;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 5px;
+  top: 5px;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
 
@@ -2137,6 +2155,9 @@ circle.highlight,
   cursor: pointer;
   background: #808080;
   position: relative;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 }
 .edit .mapui #zoomin:hover,
 .edit .mapui #zoomout:hover {

@@ -101,12 +101,11 @@ $(function() {
     				"-moz-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
     				"-webkit-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
     			});
-			})
-
+			});
 		};
 
 		self.getTransform = function(product) {
-			// using the product preivew one for now, can fix later
+			// using the product preview one for now, can fix later
 			return sb.transforms.getTransform(product, "product") + " rotate(" + rotation + ",300,300)";
 		};
 
