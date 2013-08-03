@@ -602,6 +602,36 @@ sb.mesh.facet = function (frame, map, width, height) {
         return self;
     };
 
+    self.editText = function(node,i,type) {
+        var button = node.find("." + type + "-edit").text("save");
+        var field = node.find("." + type + "-text");
+        var value = ((type == "title") ? field.text() : places[i]);
+
+        node.addClass("active");
+        field.html('<input value="' + value + '">').find("input").focus();
+    };
+    self.saveText = function(node, i, type) {
+        var button = node.find("." + type + "-edit").text("edit");
+        var text = node.find("input").val();
+
+        node.removeClass("active");
+        node.find("." + type + "-text").text(text);
+
+        if (type == "place") {
+            places[i] = text;
+        }
+        else return text;
+    };
+    self.removeInput = function(event){
+        var titles = d3.select("#places").selectAll("li.place .title");
+        titles.each(function(d, i) {
+            if (!d.edit) return;
+            d.edit = false;
+            self.saveText($(this), i, "place");
+        });
+        return false;
+    };
+
     self.refresh = function() {
         update();
 
