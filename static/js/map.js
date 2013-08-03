@@ -75,13 +75,22 @@ sb.map = function(frame, width, height) {
 		return self;
 	};
 
-	self.updateBounds = function(lats, lons, offset) {
+	self.centerOn = function(loc, offsetX) {
+		var center = self.l2p(loc);
+		center.x -= offsetX || 0;
+
+		loc = self.p2l(center);
+		self.map.center(loc);
+	};
+
+	self.updateBounds = function(lats, lons, zoomOffset, offsetX) {
+		console.log('updatebounds', lats, lons, zoomOffset, offsetX);
 		if (lats.length == 0 || lons.length == 0) return;
 		if (lats.length == 1 && lons.length == 1) {
-			self.map.center({
+			self.centerOn({
 				lat: lats[0],
 				lon: lons[0]
-			});
+			}, offsetX);
 
 			self.boundsUpdated();
 			return;
@@ -96,17 +105,32 @@ sb.map = function(frame, width, height) {
 			lat: d3.max(lats),
 			lon: d3.max(lons)
 		}];
-
 		self.map.extent(extent);
+
+
+		// if there is an offset, adjust the center
+		// if it's too wide, zoom out
+		if (offsetX) {
+			var totalWidth = $(frame).width() - offsetX;
+			console.log('totalwidth', totalWidth);
+			var extentWidth = self.l2p(extent[1]).x - self.l2p(extent[0]).x;
+			if (extentWidth > totalWidth) {
+				console.log('too wide, zooming out');
+				self.map.zoom(self.map.zoom()-1);
+			}
+			self.centerOn(self.map.center(), offsetX);
+		}
+
 
 		// keep it to whole number zoom levels
 		// before we were subtracting half a zoom, which gives more room
 		// but messes up the rasterizer.js
-		offset = offset || 0;
+		offset = zoomOffset || 0;
 		var zoom = Math.floor(self.map.zoom()) + offset;
 		if (zoom != self.map.zoom())
 			self.map.zoom(zoom);
 
+		// refresh the mesh (meshu.js is listening to this, calls mesh.refresh())
 		self.boundsUpdated();
 	};
 
