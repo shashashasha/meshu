@@ -4,20 +4,21 @@ var sb = sb || {};
 sb.ui = sb.ui || {};
 
 /*
-	
-	Pulling apart some JQuery listeners 
-	from app.js into here. 
+
+	Pulling apart some JQuery listeners
+	from app.js into here.
 
 	This stuff handles the social sharing buttons,
-	both rasterizing the meshu when needed 
+	both rasterizing the meshu when needed
 	and creating the button destinations when
 	the meshu has been successfully rasterized
 
 */
 sb.ui.socialsharer = function(meshu) {
+	console.log('initializing social sharer', meshu);
 	$(".share-facebook").click(function() {
 		if (!sb.rasterizer.generated) {
-			sb.rasterizer.rasterize(meshu, postOnFacebook);	
+			sb.rasterizer.rasterize(meshu, postOnFacebook);
 		} else {
 			postOnFacebook();
 		}
@@ -29,17 +30,17 @@ sb.ui.socialsharer = function(meshu) {
 		if (!sb.rasterizer.generated) {
 			sb.rasterizer.rasterize(meshu, function(data) {
 				button.click();
-			});	
+			});
 			return false;
-		} 
+		}
 	});
 
 	sb.rasterizer.on("rasterized", function(data) {
 		saver.updateMeshuData(data);
 
-		/* 
+		/*
 			prep all social buttons
-		*/	
+		*/
 		prepShareButtons();
 
 		$(".social-media").fadeIn();
@@ -52,7 +53,7 @@ sb.ui.socialsharer = function(meshu) {
 		var base = 'http://' + window.location.host;
 		var image_url = base + meshu.image_url;
 		var url = encodeURIComponent(base + meshu.view_url);
-		
+
 		// twessage
 		var msg = "Check out this meshu I just made of the places I've been";
 
@@ -77,4 +78,4 @@ sb.ui.socialsharer = function(meshu) {
         });
 	};
 
-};	
+};

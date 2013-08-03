@@ -93,6 +93,7 @@ sb.rasterizer = function() {
 		// TODO just commenting out for now, for rings
 		self.clearCanvases();
 
+		console.log('rasterizer:', 'posting meshu to_png', xhr);
 		// send it to the server to be saved as a png
 		$.post('to_png', xhr, function(data) {
 			var img = document.createElement('img');
@@ -117,6 +118,7 @@ sb.rasterizer = function() {
 	};
 
 	self.rasterize = function(meshu, callback) {
+		console.log('rasterizer:', meshu, callback);
 		snapZoom(meshu);
 
 		// get the map canvas, the frame, and serialize the map content
