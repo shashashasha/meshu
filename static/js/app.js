@@ -29,10 +29,6 @@ $(function() {
 	// it listens to when the form ui is validated, then moves to the review view
 	sb.ui.orderer.initialize(meshu, catalog);
 
-	// initialize the social sharing ui
-	// facebook, twitter, pinterest buttons
-	sb.ui.socialsharer(meshu);
-
 	// initialize the viewhandler
 	// sb.viewhandler.initialize();
 
@@ -50,6 +46,10 @@ $(function() {
 
 		switch (pageType) {
 			case 'view':
+				// initialize the social sharing ui
+				// facebook, twitter, pinterest buttons
+				sb.ui.socialsharer(meshu);
+				
 				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
@@ -183,7 +183,7 @@ $(function() {
 
 			// rasterize the meshu, add it as an image on to the page
 			// this means we can then pin it / fb it
-			// sb.rasterizer.rasterize(meshu);
+			sb.rasterizer.rasterize(meshu);
 		}
 		else if (meshu.mesh().name == "radial") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
