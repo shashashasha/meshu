@@ -201,7 +201,7 @@ $(function() {
 		var view = sb.viewhandler.view();
 		switch (view) {
 			case 'edit':
-				meshu.updateBounds();
+				// meshu.updateBounds();
 				meshu.mesh().interactive(true);
 
 				generateProductThumbnails();

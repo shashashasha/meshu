@@ -12,7 +12,8 @@ sb.viewhandler = function() {
 			onNext();
 
 			// right now viewhandler doesn't know about meshu, so this shouldn't be here?
-			sb.rasterizer.ringPreview(meshu);
+			if (meshu.getRenderer() == 'facet')
+				sb.rasterizer.ringPreview(meshu);
 		}
 		else onPrev();
 	}, { offset: 550 });
