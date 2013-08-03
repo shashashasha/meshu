@@ -266,7 +266,7 @@ def order_create(request, profile, meshu):
 	order.postcard_note = request.POST.get('postcard_note', '')
 
 	# ring sizes, special notes
-	order.metadata = request.POST.get('metadata', '')
+	order.metadata = request.POST.get('order_metadata', '')
 
 	# foreign keys
 	order.user_profile = profile

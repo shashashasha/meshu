@@ -114,6 +114,9 @@ sb.ui.orderer = function() {
 		$("#meshu-metadata").val(meshu.mesh().outputStyle());
 
 		$("#postcard-note").val($("#postcard-note-form").val());
+
+		// set the ring size to send to backend
+		$("#order-metadata").val();
 	}
 
 	function populateReviewText() {
