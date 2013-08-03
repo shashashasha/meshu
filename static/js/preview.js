@@ -2,7 +2,7 @@ var sb = sb || {};
 
 $(function() {
 	sb.rotator = function(rotateFrame, delaunayFrame, hiddenFrame) {
-		var self = d3.dispatch("rotated");
+		var self = d3.dispatch("rotated", "ringSizeUpdated");
 
 		var rotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ";
@@ -92,13 +92,13 @@ $(function() {
 			var ringPreview = $(".ring-preview-frame").clone();
 
 			$(main).append(ringPreview);
-			sb.ui.orderer.metadata({"ringSize":7});
+			self.ringSizeUpdated(7);
 
 			var scale = d3.scale.linear().domain([4,14]).range([.8,1.2]);
 			$("#ring-range").change(function(e){
 				var size = e.currentTarget.value;
 				$("#ring-number").text(size);
-				sb.ui.orderer.metadata({"ringSize":size});
+				self.ringSizeUpdated(size);
 				var s = scale(size);
     			ringPreview.css({
     				"-moz-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",

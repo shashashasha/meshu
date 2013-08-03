@@ -143,6 +143,11 @@ sb.ui.orderer = function() {
         }
     };
 
+    self.clearMetadata = function(value) {
+    	if (style[value])
+	    	delete style[value];
+    };
+
     self.outputMetadata = function() {
         var styles = [];
         for (var i in style) {

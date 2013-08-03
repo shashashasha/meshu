@@ -155,16 +155,23 @@ $(function() {
 
    		switch (product) {
    			case 'cufflinks':
+	   			sb.ui.orderer.clearMetadata("ringSize");
    				break;
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
+
+				sb.rotator.on("ringSizeUpdated", function(size) {
+					sb.ui.orderer.metadata({"ringSize":size});
+				});
+
 				sb.rotator.updateRing();
    				break;
    			default:
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 				sb.rotator.update(product);
+				sb.ui.orderer.clearMetadata("ringSize");
    				break;
    		}
 
@@ -172,9 +179,6 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
-
-		// sync the rotation between the product picker and the product rotator
-		// sb.rotator.on("rotated", sb.product.rotation);
 	});
 
 	// initialize product picker
