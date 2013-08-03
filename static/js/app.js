@@ -44,12 +44,14 @@ $(function() {
 		// viewhandler handles next / prev buttons, shuffling account view
 		// sb.viewhandler.updateViews(pageType);
 
+		console.log('pageType:', pageType);
+
 		switch (pageType) {
 			case 'view':
 				// initialize the social sharing ui
 				// facebook, twitter, pinterest buttons
 				sb.ui.socialsharer(meshu);
-				
+
 				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
@@ -157,7 +159,7 @@ $(function() {
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
-				sb.rotator.updateRing();	
+				sb.rotator.updateRing();
    				break;
    			default:
    				$("#final-rotate").show();
@@ -175,20 +177,15 @@ $(function() {
 		// sb.rotator.on("rotated", sb.product.rotation);
 	});
 
+	// initialize product picker
+	// todo - fix
 	function generateProductThumbnails() {
-		// initialize product picker
-		// todo - fix
 		if (meshu.mesh().name == "facet") {
 			sb.product.initialize(".delaunay", catalog);
-
-			// rasterize the meshu, add it as an image on to the page
-			// this means we can then pin it / fb it
-			sb.rasterizer.rasterize(meshu);
 		}
 		else if (meshu.mesh().name == "radial") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
 				sb.product.initialize(canvas, catalog);
-				sb.rasterizer.rasterize(meshu);
 			});
 		}
 	}
