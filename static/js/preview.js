@@ -92,21 +92,20 @@ $(function() {
 			var ringPreview = $(".ring-preview-frame").clone();
 
 			$(main).append(ringPreview);
+			sb.ui.orderer.metadata({"ringSize":7});
 
 			var scale = d3.scale.linear().domain([4,14]).range([.8,1.2]);
 			$("#ring-range").change(function(e){
-				$("#ring-number").text(e.currentTarget.value);
-				var s = scale(e.currentTarget.value);
+				var size = e.currentTarget.value;
+				$("#ring-number").text(size);
+				sb.ui.orderer.metadata({"ringSize":size});
+				var s = scale(size);
     			ringPreview.css({
     				"-moz-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
     				"-webkit-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
     			});
 			});
 
-			// this gets saved to Order.metadata
-			meshu.mesh().style({
-				"ringSize": 7
-			});
 		};
 
 		self.getTransform = function(product) {

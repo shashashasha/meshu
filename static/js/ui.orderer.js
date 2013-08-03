@@ -16,7 +16,8 @@ sb.ui = sb.ui || {};
 sb.ui.orderer = function() {
 	var self = d3.dispatch("updated"),
 		meshu = null,
-		catalog = null;
+		catalog = null,
+		style = {};
 
 	self.on("updated", function() {
 		// update hidden form
@@ -116,7 +117,7 @@ sb.ui.orderer = function() {
 		$("#postcard-note").val($("#postcard-note-form").val());
 
 		// set the ring size to send to backend
-		$("#order-metadata").val();
+		$("#order-metadata").val(self.outputMetadata());
 	}
 
 	function populateReviewText() {
@@ -133,6 +134,23 @@ sb.ui.orderer = function() {
 			$("#add-to-cart").removeClass("inactive");
 		}
 	}
+
+	self.metadata = function(s) {
+        if (!arguments.length) return style;
+
+        for (var i in s) {
+            style[i] = s[i];
+        }
+    };
+
+    self.outputMetadata = function() {
+        var styles = [];
+        for (var i in style) {
+            styles.push(i + ":" + style[i]);
+        }
+
+        return styles.join('|');
+    };
 
 	return self;
 }();
