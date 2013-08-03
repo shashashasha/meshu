@@ -38,6 +38,7 @@ $(function() {
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
+
 		saver.initialize(meshu);
 		saver.updateMeshuData(loadedMeshu);
 
@@ -150,17 +151,13 @@ $(function() {
 		wrapper.addClass("selected");
 		var product = wrapper.attr("id").split("-")[1];
 
-		// $(".make-option").hide();
-
-		// $("#make-" + product).show();
-
    		switch (product) {
    			case 'cufflinks':
    				break;
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
-				sb.rotator.updateRing();
+				sb.rotator.updateRing();	
    				break;
    			default:
    				$("#final-rotate").show();
@@ -186,7 +183,7 @@ $(function() {
 
 			// rasterize the meshu, add it as an image on to the page
 			// this means we can then pin it / fb it
-			sb.rasterizer.rasterize(meshu);
+			// sb.rasterizer.rasterize(meshu);
 		}
 		else if (meshu.mesh().name == "radial") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
