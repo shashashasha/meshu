@@ -135,14 +135,14 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         if ($("body").hasClass("firefox")) {
             lines.enter()
-                .append("svg:path")
+                .append("path")
                 .attr("fill", "none")
                 .attr("stroke-linecap", "round")
                 .style("stroke-width", strokeWidth);
         }
         else {
             lines.enter()
-                .append("svg:path")
+                .append("path")
                 .attr("fill", "none")
                 .attr("stroke-linecap", "round")
                 .style("stroke-width", 0)
@@ -283,13 +283,10 @@ sb.mesh.radial = function (frame, map, width, height) {
     function updateListBehavior() {
         placeTitle.attr("class","").select(".title-text")
             .text(function(d){
-                if (d && d.title) {
+                if (d && d.title)
                     return d.title;
-                }
-                else {
+                else
                     return meshuTitle;
-                }
-
             });
 
         placeTitle.select(".title-text").on("click",function(d){

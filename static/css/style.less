@@ -609,10 +609,9 @@ body.win #login-form ul {
     meshu make content
 */
 
-#edit {
-    height: 600px;
-}
 #edit.section {
+    height: 600px;
+    width: 320px;
     padding: 0;
 }
 #edit-ui {
@@ -626,7 +625,7 @@ body.win #login-form ul {
 #search, #places {
     margin: 10px;
     background-color: white;
-    width: 320px;
+    width: 100%;
     box-sizing: border-box;
     .shadow(20px, rgba(0, 0, 0, .25));
 }
@@ -1727,8 +1726,10 @@ circle {
     stroke-width: 2;
     cursor: pointer;
 }
-.radial #delaunay-ui circle, .radial circle:hover {
+.radial circle, .radial circle:hover {
     fill-opacity: 0;
+    stroke: black;
+    stroke-width: 8;
     cursor: default;
 }
 .hidden, .rotate-ui, #hidden {

@@ -134,9 +134,90 @@ sb.mesh.base = function (frame, map, width, height) {
         map_dragging = null;
     }
 
+    // self.updatePixelBounds = function() {
+    //     if (lats.length && lons.length) {
+    //         pixel_bounds = [map.l2p({ lat: d3.min(lats), lon: d3.min(lons) }),
+    //                         map.l2p({ lat: d3.max(lats), lon: d3.min(lons) }),
+    //                         map.l2p({ lat: d3.max(lats), lon: d3.max(lons) }),
+    //                         map.l2p({ lat: d3.min(lats), lon: d3.max(lons) })];
+    //     }
+    //     else { 
+    //         pixel_bounds = [];
+    //     }
+    // };
+
+    // self.add = function(latitude, longitude, placename, skipAnimation) {
+    //     var lat = parseFloat(latitude);
+    //     var lon = parseFloat(longitude);
+
+    //     lats.push(lat);
+    //     lons.push(lon);
+    //     if (placename == undefined)
+    //         places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
+    //     else
+    //         places.push(placename);
+
+    //     points.push([lon, lat]);
+    //     update();
+        
+    //     self.added();
+    //     return self;
+    // };
+
+    // self.remove = function(index) {   
+    //     points.splice(index, 1);
+    //     lats.splice(index, 1);
+    //     lons.splice(index, 1);
+    //     places.splice(index, 1);
+        
+    //     self.removed();
+    // };
+
     self.interactive = function(bool) {
         self.interactiveToggled(bool);
     };
+
+    // self.lats = function() {
+    // 	return lats;
+    // };
+
+    // self.lons = function() {
+    // 	return lons;
+    // };
+
+    // self.places = function() {
+    //     return places;
+    // };
+
+    // self.points = function(pts) {
+    // 	if (!arguments.length) {
+    // 		return points;
+    // 	}
+
+    // 	points = pts;
+    // 	return self;
+    // };
+
+    // self.locations = function(locs) {
+    //     new_pt = null;
+
+    //     points = [];
+    //     lats = [];
+    //     lons = [];
+    //     places = [];
+    //     $.each(locs, function(i, loc) {
+    //        points.push([loc.longitude, loc.latitude]);
+    //        lats.push(loc.latitude);
+    //        lons.push(loc.longitude);
+    //        places.push(loc.name);
+    //     });
+
+    //     // don't redraw just yet, we'll call this outside in meshu.js
+    //     // update();
+    //     self.locationsSet();
+
+    //     return self;
+    // };
 
     self.refresh = function() {
         update();
