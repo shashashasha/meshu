@@ -29,7 +29,7 @@
 	<div class="total-wrapper">
 		<div class="total-inside">
 			{% if cart.discount > 1 %}
-			<h2>Subtotal:<span></span><span class="dollar">$</span>{{ cart.total|floatformat:2 }}</span></h2>
+			<h2>Subtotal:<span><span class="dollar">$</span>{{ cart.total|floatformat:2 }}</span></span></h2>
 			<h2 class="discount">Discount:<span>- <span class="dollar">$</span>{{ cart.discount|floatformat:2 }}</span></h2>
 			{% endif %}
 			<h2 class="total">Total:<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span></h2>
@@ -48,7 +48,9 @@
 
 {% block resources %}
     <script type="text/javascript">
-    	var theta = $(".theta").text();
-    	$(".delaunay").attr("transform","scale(.17) rotate("+theta+", 300, 300)");
+    	$(".cart-row").each(function(){
+    		var theta = $(this).find(".theta").text();	
+    		$(this).find(".delaunay").attr("transform","translate(-67,0) scale(.17) rotate("+theta+", 300, 300)");
+    	})
     </script>
 {% endblock %}

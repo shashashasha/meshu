@@ -1970,8 +1970,9 @@ circle.highlight,
 .total-wrapper .discount span {
   color: #ff3fb4;
 }
+.total-wrapper .discount,
 .total-wrapper .total {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .action-buttons {
   clear: both;
