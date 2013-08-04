@@ -103,18 +103,10 @@ sb.mesh.facet = function (frame, map, width, height) {
 
     // point being clicked
     self.on("clickedPoint", function(pt) {
+        // not updating the map when removing points anymore
         var index = points.indexOf(pt);
         self.remove(index);
-
-        map.updateBounds(lats, lons);
-        self.updatePixelBounds();
-
-        /*
-            the map was updated
-            so our bounds aren't dirty
-        */
-        self.dirty = false;
-        update();
+        self.refresh();
     });
 
     self.on("removed", function() {
@@ -257,8 +249,8 @@ sb.mesh.facet = function (frame, map, width, height) {
         var circles = ui.selectAll("circle");
         circles.attr("cx", function(d) {
                 return map.l2p({
-                    lat: d[1],
-                    lon: d[0]
+                    lat: parseFloat(d[1]),
+                    lon: parseFloat(d[0])
                 }).x;
             })
             .attr("cy", function(d) {
@@ -325,6 +317,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         else {
             pixel_bounds = [];
         }
+        console.log('updating pixel bounds', lats, lons, pixel_bounds);
     };
 
     function update(){
@@ -443,10 +436,9 @@ sb.mesh.facet = function (frame, map, width, height) {
     function updateListBehavior() {
         var names = list.selectAll("li.place");
         names.select(".place-delete").on("click",function(d,i){
+            // not updating the map when removing points anymore
             self.remove(i);
-            self.updatePixelBounds();
-            map.updateBounds(lats, lons);
-            update();
+            self.refresh();
         });
 
         names.on("mouseover",function(d,i){
@@ -542,6 +534,8 @@ sb.mesh.facet = function (frame, map, width, height) {
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
+
+        self.dirty = true;
 
         // if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");

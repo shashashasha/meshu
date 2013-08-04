@@ -2,7 +2,9 @@ var sb = sb || {};
 
 sb.mesh.radial = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
-        selfId = 'm' + parseInt(Math.random() * 10000000000, 10);
+        selfId = 'm' + parseInt(Math.random() * 10000000000, 10),
+        offsetX = 200,
+        offsetY = 0;
 
     // the name of the product line
     self.name = 'radial';
@@ -336,8 +338,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         for (var i = 0; i < 24; i++) {
             var theta = i*(Math.PI/12);
             var l = map.p2l({
-                x: 300+Math.sin(theta)*200,
-                y: 300+Math.cos(theta)*200
+                x: offsetX + 300 + (Math.sin(theta)*200),
+                y: offsetY + 300 + (Math.cos(theta)*200)
             });
             tempLon = l.lon;
             tempLat = l.lat;
@@ -381,12 +383,17 @@ sb.mesh.radial = function (frame, map, width, height) {
             but we also have to run boundsUpdated() so that
             the title / pixelbounds / etc are updated
         */
-        var r = map.getMapRadius();
-        map.map.center({ lat: lat, lon: lon });
-        map.boundsUpdated();
+
+        // center the map first, so that our radial calculations match up
+        var loc = { lat: lat, lon: lon };
+        map.map.center(loc);
 
         // here's where we want to recalculate stuff, because the points have changed
         self.recalculate();
+
+        // then center it again with our offset, and then let the mesh know
+        map.centerOn(loc, offsetX, offsetY);
+        map.boundsUpdated();
 
         return self;
     };

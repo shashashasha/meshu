@@ -4,13 +4,12 @@ $(function() {
 	// initialize the catalog with the current promotion if any
 	// sorry about this, future us. signed, past sha.
 	var promotion = loadedMeshu ? loadedMeshu.promo : null,
-		isReadymade = loadedMeshu && loadedMeshu.product != '',
-		zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0,
 		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
 							$("body").hasClass("radial") ? 'radial' : null;
 
-		if ($("body").hasClass("print"))
-			currentRenderer = "print";
+	if ($("body").hasClass("print"))
+		currentRenderer = "print";
+
 
 	// the list of all available meshu products for purchase
 	var catalog = sb.catalog(currentRenderer, promotion);
@@ -21,9 +20,13 @@ $(function() {
 	// create a meshu object for a single meshu container
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
+	// width of the .edit-panel's
+	if ($("#content").hasClass("edit"))
+		meshu.offsetX = 300;
+
 	// hotfix for postcard pages
-	meshu.zoomOffset = zoomOffset;
-	meshu.isReadymade = isReadymade;
+	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
+	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
@@ -31,6 +34,8 @@ $(function() {
 
 	// initialize the viewhandler
 	// sb.viewhandler.initialize();
+
+	console.log('pageType:', pageType);
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -43,8 +48,6 @@ $(function() {
 
 		// viewhandler handles next / prev buttons, shuffling account view
 		// sb.viewhandler.updateViews(pageType);
-
-		console.log('pageType:', pageType);
 
 		switch (pageType) {
 			case 'view':
@@ -155,16 +158,23 @@ $(function() {
 
    		switch (product) {
    			case 'cufflinks':
+	   			sb.ui.orderer.clearMetadata("ringSize");
    				break;
    			case 'ring':
    				$("#final-rotate").hide();
 				$("#final-ring").show();
+
+				sb.rotator.on("ringSizeUpdated", function(size) {
+					sb.ui.orderer.metadata({"ringSize":size});
+				});
+
 				sb.rotator.updateRing();
    				break;
    			default:
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 				sb.rotator.update(product);
+				sb.ui.orderer.clearMetadata("ringSize");
    				break;
    		}
 
@@ -172,9 +182,6 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
-
-		// sync the rotation between the product picker and the product rotator
-		// sb.rotator.on("rotated", sb.product.rotation);
 	});
 
 	// initialize product picker

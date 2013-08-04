@@ -11,6 +11,8 @@ sb.meshu = function(frame, renderer, existingMap) {
 		mesh = sb.mesh[renderer](frame, map, width, height),
         cases = $("#cases");
 
+    self.offsetX = 0;
+
     // need to make these controls optional....
     $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
 
@@ -253,8 +255,9 @@ sb.meshu = function(frame, renderer, existingMap) {
     };
 
     self.refreshWithBounds = function(lats, lons) {
+        console.log('refresh with bounds');
         // using a zoomOffset parameter set outside in app.js
-        map.updateBounds(lats, lons, self.zoomOffset);
+        map.updateBounds(lats, lons, self.zoomOffset, self.offsetX);
     };
 
     /*
@@ -269,11 +272,11 @@ sb.meshu = function(frame, renderer, existingMap) {
         }
     };
 
-    // mesh.on("added", self.checkAdded);
-
     map.on("boundsUpdated", function() {
+        // only facet has this
         if (mesh.updatePixelBounds)
             mesh.updatePixelBounds();
+
         mesh.refresh();
     });
 

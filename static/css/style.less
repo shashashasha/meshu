@@ -613,21 +613,23 @@ body.win #login-form ul {
     height: 600px;
     width: 320px;
     padding: 0;
+    width: 0;
 }
-#edit-ui {
+.edit-panel {
     position: absolute;
     z-index: 2;
-    height: 100%;
+    margin: 10px;
+    background-color: white;
+    width: 335px;
+    box-sizing: border-box;
+    .shadow(20px, rgba(0, 0, 0, .25));
 }
+
 #search {
     padding: 10px;
 }
-#search, #places {
-    margin: 10px;
-    background-color: white;
-    width: 100%;
-    box-sizing: border-box;
-    .shadow(20px, rgba(0, 0, 0, .25));
+#edit-footer {
+    top: 520px;
 }
 #search .note {
     margin: 5px 0 10px;
@@ -669,7 +671,8 @@ body.win #login-form ul {
 }
 
 #search-button {
-    font-size: 18px;
+    font-size: 19px;
+    padding: 3px 8px 4px 8px;
 
     &:hover {
         .shadow(10px, rgba(0, 0, 0, .1));
@@ -677,23 +680,15 @@ body.win #login-form ul {
 }
 
 #edit .connect-wrapper {
-    background-color: white;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
     padding: 10px 0 10px 10px;
-    margin: 10px;
-    font-size: 14px;
-    width: 320px;
-    box-sizing: border-box;
-    .shadow(20px, rgba(0, 0, 0, .25));
+    font-size: 13px;
 }
 #edit .connect-wrapper .title {
     margin-bottom: 5px;
 }
 
 #edit .foursquare-auth, #edit .facebook-auth {
-    margin: 0 7px 0 0;
+    margin: 0 1px;
     padding: 8px 9px 9px 34px;
     position: relative;
     font-size: 14px;
@@ -763,6 +758,7 @@ body.win .notch {
 }
 
 #places {
+    top: 130px;
     margin-top: 10px;
     opacity: 1;
     .transition(opacity);
@@ -835,7 +831,7 @@ body.firefox #place-title #input {
     color: @grey;
     margin: 2px 0;
     padding: 1px 0;
-    width: 308px;
+    width: 315px;
 }
 .print .place {
     width: auto;
@@ -845,11 +841,11 @@ body.firefox #place-title #input {
     padding: 1px;
     border: 1px solid gray;
     margin: -2px 0;
-    width: 237px;
+    width: 239px;
     font-size: 13px;
 }
 .place .title {
-    width: 284px;
+    width: 291px;
     display: inline-block;
     cursor: text;
 }
@@ -858,7 +854,7 @@ body.firefox #place-title #input {
 }
 
 .place .place-text {
-    width: 241px;
+    width: 248px;
     padding: 2px;
     display: inline-block;
 }
@@ -1617,11 +1613,6 @@ body.ie8 .city-input {
     left: auto;
     right: 130px;
 }
-.exit-buttons {
-    width: 380px;
-    position: absolute;
-    bottom: 0;
-}
 
 #finish-button, #save-button, #update-button, #cancel-button, #save-progress-button {
     position: absolute;
@@ -1946,7 +1937,6 @@ circle {
         margin: 5px;
         width: 23px;
         height: 23px;
-        opacity: .75;
         display: block;
         cursor: pointer;
         background: @grey;
@@ -1954,7 +1944,7 @@ circle {
         .shadow(20px, rgba(0, 0, 0, .25));
 
         &:hover {
-            opacity: 1;
+            background-color: @pink;
         }
     }
     #zoomin {
