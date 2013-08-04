@@ -552,7 +552,8 @@ body.win #login-form ul {
   padding: 10px;
 }
 #edit-footer {
-  top: 520px;
+  height: 47px;
+  top: 525px;
 }
 #search .note {
   margin: 5px 0 10px;
@@ -1534,8 +1535,8 @@ body.ie8 .city-input {
 #cancel-button,
 #save-progress-button {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 10px;
 }
 #finish-button {
   right: auto;
@@ -1557,7 +1558,7 @@ body.ie8 .city-input {
   -o-transition: opacity 0.6s;
 }
 #save-button {
-  right: 125px;
+  right: 115px;
 }
 /* save button on the /make page, which lets you save without going to purchase */
 #save-progress-button {
@@ -1565,7 +1566,7 @@ body.ie8 .city-input {
 }
 #cancel-button {
   right: auto;
-  left: 0px;
+  left: 10px;
 }
 #forceLogin {
   background-color: #808080;
