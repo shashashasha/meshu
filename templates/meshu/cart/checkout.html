@@ -380,7 +380,9 @@
 
 {% block resources %}
     <script type="text/javascript">
-    	var theta = $(".theta").text();
-    	$(".delaunay").attr("transform","scale(.07) rotate("+theta+", 300, 300)");
+    	$(".cart-row").each(function(){
+    		var theta = $(this).find(".theta").text();	
+    		$(this).find(".delaunay").attr("transform","translate(-29,0) scale(.07) rotate("+theta+", 300, 300)");
+    	});
     </script>
 {% endblock %}

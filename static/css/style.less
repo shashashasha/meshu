@@ -761,7 +761,6 @@ body.win .notch {
 #places {
     top: 130px;
     margin-top: 10px;
-    padding: 10px;
     opacity: 1;
     .transition(opacity);
 }
@@ -1720,7 +1719,7 @@ circle {
     stroke-width: 2;
     cursor: pointer;
 }
-.edit .inactive circle:first-child, .radial circle:hover {
+.radial .edit .inactive circle:first-child, .radial circle:hover {
     fill-opacity: 0;
     stroke: black;
     stroke-width: 15;
@@ -1760,9 +1759,14 @@ circle {
 
 /* radial */
 
+#radial-heading {
+    padding: 10px 10px 0 10px;
+}
+
 .radial #place-title {
     color: @grey;
     height: 40px;
+    padding: 0 10px 5px;
 }
 .radial #place-title:hover {
     color: black;
@@ -2079,7 +2083,8 @@ circle {
     height: 40px;
     border: none;
 }
-.review #cart .meshu-svg path {
+.review #cart .meshu-svg path,
+.review #cart .meshu-svg circle {
     stroke: #808080;
 }
 .review #cart {
