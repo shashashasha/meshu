@@ -64,9 +64,12 @@ sb.transforms = {
 sb.transforms.getTransform = function(product, type) {
 	var t = sb.transforms[product][type],
 		r = 0;
-	if (meshu.mesh().getRotationAngle())
+		
+	// auto-rotation for facet
+	if (typeof meshu.mesh().getRotationAngle == "function") {
 		r = meshu.mesh().getRotationAngle()+90;
-	if (product == "necklace" || product == "cufflinks")
-		r = meshu.mesh().getRotationAngle() + 180;
+		if (product == "necklace" || product == "cufflinks")
+			r = meshu.mesh().getRotationAngle() + 180;
+	}
 	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ") rotate("+r+",650,300)";
 };

@@ -101,8 +101,8 @@ $(function() {
 				self.ringSizeUpdated(size);
 				var s = scale(size);
     			ringPreview.css({
-    				"-moz-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
-    				"-webkit-transform" : "rotateX(20deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
+    				"-moz-transform" : "rotateX(15deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
+    				"-webkit-transform" : "rotateX(15deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")"
     			});
 			});
 

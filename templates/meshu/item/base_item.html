@@ -17,18 +17,6 @@
     </div>
 
     {% block numbers %}
-        <div id="crazy">
-            <div class="line"></div>
-            <ul>
-                <li style="margin-bottom:655px;">1</li>
-                <li style="margin-bottom:590px;">2</li>
-                <li style="margin-bottom:410px;">3</li>
-                <li>4</li>
-            </ul>
-        </div>
-    {% endblock %}
-
-    {% block helpedit %}
     {% endblock %}
 
     <div id="meshu-container" class="frame inactive">
@@ -50,10 +38,8 @@
                 </div>
             {% endblock %}
 
-            <div id="edit-footer" class="edit-panel">
-                {% block finish %}
-                {% endblock %}
-            </div>
+            {% block finish %}
+            {% endblock %}
         </div>
     {% endblock %}
 

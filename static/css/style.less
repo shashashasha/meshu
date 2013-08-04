@@ -761,6 +761,7 @@ body.win .notch {
 #places {
     top: 130px;
     margin-top: 10px;
+    padding: 10px;
     opacity: 1;
     .transition(opacity);
 }
@@ -769,7 +770,7 @@ body.win .notch {
 }
 #place-title .title-text {
     display: inline-block;
-    width: 290px;
+    width: 249px;
     position: relative;
     height: 34px;
     cursor: text;
@@ -782,9 +783,10 @@ body.win .notch {
 }
 .radial #place-title {
     display: block;
+    margin-bottom: 0;
 }
 #place-title input {
-    width: 282px;
+    width: 235px;
     position: absolute;
     top: 0;
     font-size: 21px;
@@ -1061,12 +1063,12 @@ body.firefox.win #rotate-help .border-notch {
 }
 
 @-moz-keyframes spin {
-  from { -moz-transform: rotateY(0)}
-  to   { -moz-transform: rotateY(-360deg)}}
+  from { -moz-transform: rotateY(180)}
+  to   { -moz-transform: rotateY(-180deg)}}
 
 @-webkit-keyframes spin {
-  from { -webkit-transform: rotateY(0)}
-  to   { -webkit-transform: rotateY(-360deg)}}
+  from { -webkit-transform: rotateY(180)}
+  to   { -webkit-transform: rotateY(-180deg)}}
 
 #product {
     height: 860px;
@@ -1718,10 +1720,10 @@ circle {
     stroke-width: 2;
     cursor: pointer;
 }
-.radial circle, .radial circle:hover {
+.edit .inactive circle:first-child, .radial circle:hover {
     fill-opacity: 0;
     stroke: black;
-    stroke-width: 8;
+    stroke-width: 15;
     cursor: default;
 }
 .hidden, .rotate-ui, #hidden {
