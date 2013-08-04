@@ -169,13 +169,15 @@ sb.mesh.facet = function (frame, map, width, height) {
         return pt.matrixTransform(transform);
     };
 
-    self.getLongestRotation = function() {
+    self.getRotationAngle = function() {
         var pair = furthestPoints(map, points),
             angle = lineAngle(pair[0], pair[1]),
-            normalizedAngle = -angle + 180,
-            rotate = "rotate(" + [normalizedAngle, 300, 300].join(',') + ") ";
+            normalizedAngle = -angle + 180;
+        return normalizedAngle;
+    };
 
-        return rotate;
+    self.getLongestRotation = function() {
+        return "rotate(" + [self.getRotationAngle(), 300, 300].join(',') + ") ";
     };
 
     self.projectPoints = function(transform) {

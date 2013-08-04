@@ -2,7 +2,7 @@ sb.transforms = {
 	"earrings": {
 		"product": {
 			scale: .175,
-			transform: {x: 70, y: 112}
+			transform: {x: 65, y: 112}
 		},
 		"render": {
 			scale: .45,
@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 65, y: 170}
+			transform: {x: 60, y: 170}
 		},
 		"render": {
 			scale: .25,
@@ -22,7 +22,7 @@ sb.transforms = {
 	"necklace": {
 		"product": {
 			scale: .2,
-			transform: {x: 15, y: 150}
+			transform: {x: 20, y: 140}
 		},
 		"render": {
 			scale: .4,
@@ -62,6 +62,11 @@ sb.transforms = {
 };
 
 sb.transforms.getTransform = function(product, type) {
-	var t = sb.transforms[product][type];
-	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
+	var t = sb.transforms[product][type],
+		r = 0;
+	if (meshu.mesh().getRotationAngle())
+		r = meshu.mesh().getRotationAngle()+90;
+	if (product == "necklace" || product == "cufflinks")
+		r = meshu.mesh().getRotationAngle() + 180;
+	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ") rotate("+r+",650,300)";
 };
