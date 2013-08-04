@@ -170,6 +170,7 @@ sb.mesh.facet = function (frame, map, width, height) {
     };
 
     self.getRotationAngle = function() {
+        if (points.length < 2) return;
         var pair = furthestPoints(map, points),
             angle = lineAngle(pair[0], pair[1]),
             normalizedAngle = -angle + 180;
