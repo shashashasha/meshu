@@ -61,7 +61,7 @@ sb.transforms = {
 	}
 };
 
-sb.transforms.getTransform = function(product, type) {
+sb.transforms.getTransform = function(product, type, rotation) {
 	var t = sb.transforms[product][type],
 		r = 0;
 		
@@ -71,5 +71,8 @@ sb.transforms.getTransform = function(product, type) {
 		if (product == "necklace" || product == "cufflinks")
 			r = meshu.mesh().getRotationAngle() + 180;
 	}
+	if (rotation)
+		r = (rotation + r)%360;
+	
 	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ") rotate("+r+",650,300)";
 };

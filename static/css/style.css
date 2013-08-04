@@ -1665,22 +1665,29 @@ circle.highlight,
 #product-preview path {
   stroke-width: 35;
 }
-#rotate:hover .rotate-ui {
-  display: block;
+/*#rotate:hover .rotate-ui {
+    display: block;
 }
-.rotate-ui circle {
-  fill-opacity: 1;
-  cursor: pointer;
-  stroke-width: 50;
-  stroke: transparent;
+
+.rotate-ui {
+    circle {
+        fill-opacity: 1;
+        cursor: pointer;
+        stroke-width: 50;
+        stroke: transparent;
+    }
+
+    path {
+        stroke: #999;
+        stroke-dasharray: 20, 15;
+    }
 }
-.rotate-ui path {
-  stroke: #999;
-  stroke-dasharray: 20, 15;
-}
-.rotate-ui.pendant path {
-  stroke-width: 20;
-}
+
+.rotate-ui.pendant {
+    path {
+        stroke-width: 20;
+    }
+}*/
 /* radial */
 #radial-heading {
   padding: 10px 10px 0 10px;

@@ -13,7 +13,7 @@
 			<td class="theta">{{ item.product.meshu.theta|safe }}</td>
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
-			<td>${{ item.unit_price }}</td>
+			<td><span class="dollar">$</span>{{ item.unit_price }}</td>
 		</tr>
 	{% endfor %}
 	</table>
