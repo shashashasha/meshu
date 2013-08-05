@@ -1269,6 +1269,7 @@ p.note {
 .form-row {
   min-height: 30px;
   width: 400px;
+  clear: both;
 }
 .form-row label {
   line-height: 30px;
@@ -1590,6 +1591,10 @@ body.ie8 .city-input {
   bottom: 20px;
   right: 20px;
   margin: 0;
+}
+#submit-button {
+  bottom: 0;
+  right: 0;
 }
 #submit-button.inactive,
 #add-to-cart.inactive {
@@ -2025,10 +2030,15 @@ circle.highlight,
   margin-top: 20px;
   font-size: 22px;
 }
+#createAccount {
+  float: right;
+  margin-top: 45px;
+  background-color: #808080;
+}
 .coupon {
   width: 50%;
   position: absolute;
-  top: 320px;
+  top: 340px;
   right: 0;
 }
 .coupon h2 {
@@ -2052,7 +2062,7 @@ circle.highlight,
 #review-total {
   width: 50%;
   position: absolute;
-  top: 390px;
+  top: 410px;
   padding-right: 20px;
   right: 0px;
   box-sizing: border-box;
