@@ -266,7 +266,7 @@ sb.mesh.print = function (frame, map, width, height) {
         circles.enter()
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 3)
+            .attr("r", 4)
             .on("mousedown", function(d) {
                 self.dragging = d;
 

@@ -902,6 +902,7 @@ body.firefox .place .place-text {
     height: 600px;
     position: absolute;
     right: 0px;
+    border-bottom: 1px dashed @grey;
 }
 body.ie .frame div {
     overflow: hidden;
@@ -941,7 +942,7 @@ body.ie .frame div {
     .transition(opacity);
 }
 .print .map .layer {
-    opacity: .1;
+    opacity: 1;
 }
 
 .render {
@@ -1073,7 +1074,8 @@ body.firefox.win #rotate-help .border-notch {
 #product {
     height: 860px;
 }
-.radial #product {
+.radial #product,
+.print #product {
     height: 490px;
 }
 .wrapper {
@@ -1246,6 +1248,9 @@ body.firefox.win #rotate-help .border-notch {
 }
 #materials {
     height: 460px;
+}
+.print #materials {
+    display: none;
 }
 #add-ons {
     height: 540px;
@@ -1696,6 +1701,10 @@ path {
 }
 .roadtrip .straight {
     stroke-opacity: .5;
+}
+.print .map path {
+    stroke: white;
+    fill: #ddd;
 }
 .print path {
     stroke-width: 1;

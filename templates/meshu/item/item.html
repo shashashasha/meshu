@@ -35,49 +35,40 @@
 
 {% block finish %}
     <div class="connect-wrapper edit-panel"><span class="title">Or, connect with </span><div class="facebook-auth button">Facebook </div><div class="foursquare-auth button">Foursquare <img src="https://playfoursquare.s3.amazonaws.com/press/logo/icon-36x36.png"></div></div>
-    <!-- <div id="finish-button" class="nav next start-order">Continue</div> -->
 {% endblock %}
 
 {% block products %}
     <div class="wrapper" id="wrapper-pendant">
-        <!-- <div class="frame"> -->
             <svg id="preview-pendant" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Pendant Necklace</p>
             <p class="note">pendant max side length: 1.5"</p>
             <p class="note">chain length: 18"</p>
-        <!-- </div> -->
     </div>
     <div class="wrapper" id="wrapper-earrings">
-        <!-- <div class="frame"> -->
             <svg id="preview-earrings" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Earrings</p>
             <p class="note">earrings 1.75" tall</p>
             <p class="note">nickel-free posts available</p>
-        <!-- </div> -->
     </div>
     <div class="wrapper last" id="wrapper-necklace">
-        <!-- <div class="frame"> -->
             <svg id="preview-necklace" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Large Necklace</p>
             <p class="note">pendant max side length: 3"</p>
             <p class="note">chain length: 18"</p>
-        <!-- </div> -->
     </div>
     <div class="wrapper" id="wrapper-cufflinks">
-        <!-- <div class="frame"> -->
             <svg id="preview-cufflinks" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="300" height="300" x="0" y="0">
             </svg>
             <p>Cufflinks</p>
             <p class="note">cufflink max side length: 1.5"</p>
             <p class="note important">we recommend using 4-10 points for cufflinks</p>
-        <!-- </div> -->
     </div>
     <div class="wrapper last" id="wrapper-ring">
         <div class="ring-frame">
@@ -93,7 +84,6 @@
         <p class="note">available in sizes 4-14</p>
         <p class="note important">we recommend using 4-10 points for rings</p>
     </div>
-    <!-- <p class="cufflinks note" style="width:260px;">Contact us at <a href="mailto:hi@meshu.io" style="color:#000">hi@meshu.io</a> for cufflink requests.</p> -->
 {% endblock %}
 
 {% block materials %}
@@ -109,10 +99,10 @@
         <img src="{{ STATIC_URL }}images/materials/facet-white-acrylic.jpg" class="img">
         White Acrylic<span class="price"></span>
     </li>
-    <li id="black-nylon" class="material-option">
+    <!-- <li id="black-nylon" class="material-option">
         <img src="{{ STATIC_URL }}images/materials/facet-black-nylon.jpg" class="img">
         Black Nylon<span class="price"></span>
-    </li>
+    </li> -->
     <li id="white-nylon" class="material-option">
         <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img">
         White Nylon<span class="price"></span>
@@ -121,11 +111,14 @@
         <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img">
         Sterling Silver<span class="price"></span>
     </li>
+    <li id="gold-plated-brass" class="material-option">
+        <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img">
+        Gold-Plated Brass<span class="price"></span>
+    </li>
 {% endblock %}
 
 {% block final-touch %}
     <div id="final-ring">
-        <!-- mesh.style(ringsize) -->
         <div class="frame"></div>
         <h2 class="add-on-header">Ring Size: <span id="ring-number">7</span></h2>
         <p>Drag the slider below to adjust the ring size:</p>
