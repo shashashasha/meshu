@@ -45,11 +45,11 @@ sb.catalog = function(renderer, promo) {
 						"nylon":{"price":95,"colors":["black","white"]},
 						"silver":{"price":160,"colors":["sterling"]},
 						"brass":{"price":160,"colors":["gold-plated"]}
-						},
-					"coasters":
-				   		{"bamboo":{"price":40,"colors":["amber"]},
-				   		"acrylic":{"price":45,"colors":["black"]}
 						}
+					// "coasters":
+				 //   		{"bamboo":{"price":40,"colors":["amber"]},
+				 //   		"acrylic":{"price":45,"colors":["black"]}
+					// 	}
 					};
 
 	materialOptions.print = {

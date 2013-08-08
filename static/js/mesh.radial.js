@@ -484,7 +484,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         var fw = $(frame).width(),
             fh = $(frame).height(),
             r = 600 * multiplier,
-            translate = "translate("+(fw-r)/2+","+(fh-r)/2+") ",
+            // translate = "translate("+(fw-r)/2+","+(fh-r)/2+") ",
+            translate = "translate(0,0) ",
             scale = " scale(" + multiplier + "," + multiplier + ")";
 
         $('#' + selfId + " .delaunay").attr("transform", translate + scale);

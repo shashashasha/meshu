@@ -124,7 +124,7 @@ sb.map = function(frame, width, height) {
 			console.log('totalwidth', totalWidth);
 			var extentWidth = self.l2p(extent[1]).x - self.l2p(extent[0]).x;
 			if (extentWidth > totalWidth) {
-				console.log('too wide, zooming out');
+				console.log('too wide, zooming out', extentWidth);
 				self.map.zoom(self.map.zoom()-.5);
 			}
 			self.centerOn(self.map.center(), offsetX);

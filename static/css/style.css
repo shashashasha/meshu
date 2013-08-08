@@ -585,6 +585,9 @@ body.win #login-form ul {
 .button.grey {
   background-color: #808080;
 }
+.action-buttons .button.grey:hover {
+  background-color: #808080;
+}
 .button:hover {
   background-color: #ff3fb4;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
