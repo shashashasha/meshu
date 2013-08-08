@@ -2,6 +2,12 @@
 
 {% block content %}
 <h2 class="page-header">Shopping Cart</h2>
+<div class="discount-blurb">
+	Meshu Volume Discounts!
+	<p><span class="pink">10% off</span> 2 meshus</p>
+	<p><span class="pink">15% off</span> 3 meshus</p>
+	<p><span class="pink">20% off</span> 4 or more</p>
+</div>
 
 {% if cart.items|length > 0 %}
 	<div class="cart-wrapper">
@@ -30,7 +36,7 @@
 		<div class="total-inside">
 			{% if cart.discount > 1 %}
 			<h2>Subtotal:<span><span class="dollar">$</span>{{ cart.total|floatformat:2 }}</span></span></h2>
-			<h2 class="discount">Discount:<span>- <span class="dollar">$</span>{{ cart.discount|floatformat:2 }}</span></h2>
+			<h2 class="discount">Your Savings:<span>- <span class="dollar">$</span>{{ cart.discount|floatformat:2 }}</span></h2>
 			{% endif %}
 			<h2 class="total">Total:<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span></h2>
 		</div>

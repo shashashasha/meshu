@@ -90,7 +90,7 @@ class Cart:
         num = self.count()
 
         if num > 1:
-            percent = min(30.0, (num / 2.0) * 10.0)
+            percent = min(20.0, (num / 2.0) * 10.0)
             return (percent)
         else:
             return 0.0

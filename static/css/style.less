@@ -1993,8 +1993,22 @@ circle {
 .theta {
     display: none;
 }
+.discount-blurb {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    color: @grey;
+    font-size: 16px;
+}
+.discount-blurb .pink {
+    color: @pink;
+}
+.discount-blurb p {
+    font-size: 14px;
+}
 .cart-wrapper {
-    padding: 20px;
+    padding: 40px 20px;
 }
 #cart {
     width: 100%;
@@ -2051,7 +2065,7 @@ circle {
     width: 100%;
 }
 .total-inside {
-    width: 33%;
+    width: 40%;
     float: right;
     border-bottom: 1px solid @borderGrey;
     margin-right: 20px;
@@ -2068,7 +2082,8 @@ circle {
     font-size: 24px;
     line-height: 36px;
 }
-.total-wrapper .discount span {
+.total-wrapper .discount,
+.total-wrapper .discount .dollar {
     color: @pink;
 }
 .total-wrapper .discount,
