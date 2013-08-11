@@ -21,8 +21,8 @@ $(function() {
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// width of the .edit-panel's
-	if ($("#content").hasClass("edit"))
-		meshu.offsetX = 300;
+	// if ($("#content").hasClass("edit"))
+	// 	meshu.offsetX = 300;
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;

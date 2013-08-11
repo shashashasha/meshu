@@ -532,28 +532,19 @@ body.win #login-form ul {
     meshu make content
 */
 #edit.section {
-  height: 600px;
-  width: 320px;
+  height: 601px;
   padding: 0;
-  width: 0;
 }
 .edit-panel {
-  position: absolute;
-  z-index: 2;
-  margin: 10px;
-  background-color: white;
-  width: 335px;
-  box-sizing: border-box;
-  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  width: 320px;
 }
 #search {
-  padding: 10px;
+  padding: 20px;
 }
 #edit-footer {
   height: 47px;
-  top: 525px;
+  top: 553px;
+  position: absolute;
 }
 #search .note {
   margin: 5px 0 10px;
@@ -604,12 +595,16 @@ body.win #login-form ul {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 #edit .connect-wrapper {
-  padding: 10px 0 10px 10px;
+  padding-left: 20px;
   font-size: 13px;
-  top: 525px;
+  position: absolute;
+  top: 570px;
 }
 #edit .connect-wrapper .title {
   margin-bottom: 5px;
+  width: 90px;
+  display: inline-block;
+  float: left;
 }
 #edit .foursquare-auth,
 #edit .facebook-auth {
@@ -821,11 +816,14 @@ body.firefox .place .place-text {
   background-color: #ff3fb4;
 }
 .frame {
-  width: 100%;
+  width: 600px;
   height: 600px;
   position: absolute;
   right: 0px;
-  border-bottom: 1px dashed #808080;
+  top: 0;
+}
+.frame > div {
+  top: 0;
 }
 body.ie .frame div {
   overflow: hidden;
@@ -837,6 +835,7 @@ body.ie .frame div {
 }
 #attribution {
   position: absolute;
+  top: auto;
   bottom: 0;
   z-index: 1;
   font-size: 11px;
@@ -1818,6 +1817,9 @@ circle.highlight,
   width: 100%;
   height: 100%;
   display: block;
+}
+.mini-meshu div {
+  top: 0;
 }
 #gallery {
   margin-left: 15px;

@@ -3,7 +3,7 @@ var sb = sb || {};
 sb.mesh.radial = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
         selfId = 'm' + parseInt(Math.random() * 10000000000, 10),
-        offsetX = 200,
+        offsetX = 0,
         offsetY = 0;
 
     // the name of the product line
@@ -484,8 +484,8 @@ sb.mesh.radial = function (frame, map, width, height) {
         var fw = $(frame).width(),
             fh = $(frame).height(),
             r = 600 * multiplier,
-            // translate = "translate("+(fw-r)/2+","+(fh-r)/2+") ",
-            translate = "translate(0,0) ",
+            translate = "translate("+(fw-r)/2+","+(fh-r)/2+") ",
+            // translate = "translate(0,0) ",
             scale = " scale(" + multiplier + "," + multiplier + ")";
 
         $('#' + selfId + " .delaunay").attr("transform", translate + scale);

@@ -11,9 +11,9 @@ sb.map = function(frame, width, height) {
 	var baseURL = "http://tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
-    container.style.position = "absolute";
-    container.style.width = width;
-    container.style.height = height;
+    // container.style.position = "absolute";
+    // container.style.width = width;
+    // container.style.height = height;
 
     d3.select(frame).append("div").attr("class","render");
 
