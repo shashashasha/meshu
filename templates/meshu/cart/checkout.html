@@ -340,7 +340,7 @@
 	            <input type="text" class="required" name="email_address" style="width:200px; margin-left: 15px;">
 	        </div>
 	        <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
-	        <input type="checkbox" checked="true" style="margin-top:10px"> Yes! Sign me up for the occassional newsletter email!
+	        <input type="checkbox" checked="true" name="email_checkbox" style="margin-top:10px"> Yes! Sign me up for the occassional newsletter email!
 	    	<input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1"/>
 	    </div>
 	</form>
@@ -384,7 +384,7 @@
     <script type="text/javascript">
     	$(".cart-row").each(function(){
     		var theta = $(this).find(".theta").text();	
-    		$(this).find(".delaunay").attr("transform","translate(-29,0) scale(.07) rotate("+theta+", 300, 300)");
+    		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.07) rotate("+theta+", 300, 300)");
     	});
     	$("#createAccount").click(function(){
     		user.showModal();

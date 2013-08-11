@@ -20,6 +20,9 @@ from django.utils.html import strip_tags
 from meshu.models import *
 from meshu.email import *
 
+#for subscribing to mailchimp
+from mailsnake import MailSnake
+
 import string, random
 
 # this is how i get dates.
@@ -158,6 +161,17 @@ def submit_orders(request):
 		email = request.POST.get('email_address', '')
 	else:
 		email = profile.user.email
+
+	# subscribing people to mailchimp
+	if request.POST.get('email_checkbox',''):
+		ms = MailSnake(settings.MAILCHIMP_KEY)
+		lists = ms.lists()
+		ms.listSubscribe(
+		    id = lists['data'][0]['id'],
+		    email_address = request.POST.get('email_address', ''),
+		    update_existing = True,
+		    double_optin = False,
+		)
 
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = settings.STRIPE_SECRET_KEY # key the binx gave
