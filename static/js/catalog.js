@@ -45,11 +45,11 @@ sb.catalog = function(renderer, promo) {
 						"nylon":{"price":95,"colors":["black","white"]},
 						"silver":{"price":160,"colors":["sterling"]},
 						"brass":{"price":160,"colors":["gold-plated"]}
+						},
+					"coasters":
+				   		{"bamboo":{"price":60,"colors":["amber"]},
+				   		"acrylic":{"price":65,"colors":["black"]}
 						}
-					// "coasters":
-				 //   		{"bamboo":{"price":40,"colors":["amber"]},
-				 //   		"acrylic":{"price":45,"colors":["black"]}
-					// 	}
 					};
 
 	materialOptions.print = {
@@ -58,6 +58,14 @@ sb.catalog = function(renderer, promo) {
 							"oh yes":{"price":20,"colors":[]}
 						}
 					};
+
+	makeTimes = {
+		"bamboo":"3-4 Weeks",
+		"acrylic":"3-4 Weeks",
+		"nylon":"3-4 Weeks",
+		"silver":"5-6 Weeks",
+		"brass":"5-6 Weeks"
+	};
 
 	// set the product type options with either facet or radial
 	var options = materialOptions[renderer];
@@ -94,6 +102,11 @@ sb.catalog = function(renderer, promo) {
 
 	self.getColors = function(type, material) {
 		return self.get(type, material, 'colors');
+	};
+
+	self.getMakeTime = function(material) {
+		console.log(material, makeTimes, makeTimes[material])
+		return makeTimes[material];
 	};
 
 	/*

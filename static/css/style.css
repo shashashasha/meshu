@@ -822,7 +822,7 @@ body.firefox .place .place-text {
   right: 0px;
   top: 0;
 }
-.frame > div {
+#meshu-container > div {
   top: 0;
 }
 body.ie .frame div {
@@ -833,7 +833,7 @@ body.ie .frame div {
   right: 0;
   z-index: 0;
 }
-#attribution {
+#meshu-container #attribution {
   position: absolute;
   top: auto;
   bottom: 0;
@@ -850,7 +850,7 @@ body.ie .frame div {
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
 }
-#attribution a {
+#meshu-container #attribution a {
   color: #808080;
 }
 .ie8 #attribution {
@@ -1238,6 +1238,17 @@ input[type="range"]::-webkit-slider-thumb {
   text-transform: lowercase;
   color: #ff3fb4;
 }
+#review .review-svg {
+  float: left;
+  border: 1px solid #e6e6e6;
+}
+#review .review-svg path {
+  stroke: #808080;
+  stroke-width: 20;
+}
+#review h2 {
+  margin: 0 0 3px 170px;
+}
 #account input {
   float: right;
   width: 260px;
@@ -1476,12 +1487,6 @@ body.ie8 .city-input {
   height: 120px;
   background-color: #eee;
   margin-bottom: 2px;
-}
-#review h2 {
-  margin: 15px 0 5px;
-}
-#review p {
-  margin: .25em 0;
 }
 .nav {
   background-color: #808080;
@@ -1954,6 +1959,9 @@ circle.highlight,
   width: 100px;
   height: 100px;
   border: 1px solid #e6e6e6;
+}
+#cart path {
+  stroke-width: 15;
 }
 #cart .headings {
   color: #808080;

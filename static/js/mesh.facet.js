@@ -405,15 +405,13 @@ sb.mesh.facet = function (frame, map, width, height) {
     };
 
     self.updateCircleBehavior = function(off) {
-        var editMode = content.hasClass("edit");
+        var viewMode = content.hasClass("view");
         var placeHover = $("#place-hover");
         var circles = ui.selectAll("circle");
 
         circles.on("mouseover", function(d, i) {
             if (off) return;
-            else if (editMode)
-                list.select("#p-" + i).attr("class", "place highlight");
-            else {
+            else if (viewMode) {
                 placeHover.addClass("active").find("span").text(places[i]);
 
                 var p = map.l2p({ lat: d[1], lon: d[0] });
@@ -426,13 +424,15 @@ sb.mesh.facet = function (frame, map, width, height) {
                 placeHover.css({"top": top, "left": left})
                     .find("b").css("left", bleft);
             }
+            else
+                list.select("#p-" + i).attr("class", "place highlight");
         });
         circles.on("mouseout", function(d, i) {
             if (off) return;
-            else if (editMode)
-                list.select("#p-"+i).attr("class","place");
-            else
+            else if (viewMode)
                 placeHover.removeClass("active");
+            else
+                list.select("#p-"+i).attr("class","place");
         });
     }
 
