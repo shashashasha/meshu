@@ -52,9 +52,10 @@ sb.mesh.facet = function (frame, map, width, height) {
         .attr("id", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-title").attr("class", "inactive");
-        placeTitle.append("span").attr("class", "title-text");
-        placeTitle.append("span").attr("class", "title-edit").html("edit");
+    // var placeTitle = placeList.select("#place-title")
+        // .attr("class", "inactive");
+        // placeTitle.append("span").attr("class", "title-text");
+        // placeTitle.append("span").attr("class", "title-edit").html("edit");
 
     var list = placeList.append("ul");
 
@@ -369,8 +370,8 @@ sb.mesh.facet = function (frame, map, width, height) {
                 return decoder.firstChild.nodeValue;
             });
 
-        placeTitle.data(points)
-            .each(function(d){ d.edit = false; });
+        // placeTitle.data(points)
+        //     .each(function(d){ d.edit = false; });
 
         var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
         rotate_pts.enter()
@@ -462,24 +463,24 @@ sb.mesh.facet = function (frame, map, width, height) {
             d.edit = !d.edit;
         });
 
-        placeTitle.attr("class","").select(".title-text")
-            .text(function(d){
-                if (d && d.title) return d.title;
-                else return "My Meshu";
-            });
+        // placeTitle.attr("class","").select(".title-text")
+        //     .text(function(d){
+        //         if (d && d.title) return d.title;
+        //         else return "My Meshu";
+        //     });
 
-        placeTitle.select(".title-text").on("click",function(d){
-            if (d.edit) return;
-            self.editText($(this).parent(),0,"title");
-            d.edit = !d.edit;
-        });
+        // placeTitle.select(".title-text").on("click",function(d){
+        //     if (d.edit) return;
+        //     self.editText($(this).parent(),0,"title");
+        //     d.edit = !d.edit;
+        // });
 
-        placeTitle.select(".title-edit").on("click",function(d){
-            var node = $(this).parent();
-            if (!d.edit) self.editText(node,0,"title");
-            else d.title = meshuTitle = self.saveText(node,0,"title");
-            d.edit = !d.edit;
-        });
+        // placeTitle.select(".title-edit").on("click",function(d){
+        //     var node = $(this).parent();
+        //     if (!d.edit) self.editText(node,0,"title");
+        //     else d.title = meshuTitle = self.saveText(node,0,"title");
+        //     d.edit = !d.edit;
+        // });
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {

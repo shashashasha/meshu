@@ -760,10 +760,10 @@ body.win .notch {
 }
 
 #places {
-    top: 130px;
-    margin-top: 10px;
     opacity: 1;
     .transition(opacity);
+    width: 360px;
+    padding: 0 20px;
 }
 #places.inactive {
     display: none;
@@ -777,9 +777,6 @@ body.win .notch {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-#place-title {
-    display: none;
 }
 .radial #place-title {
     display: block;
@@ -821,14 +818,7 @@ body.firefox #place-title #input {
 
 #places ul {
     max-height: 320px;
-    padding: 0 10px;
     overflow-y: auto;
-}
-#places ul li:first-child {
-    margin-top: 10px;
-}
-#places ul li:last-child {
-    margin-bottom: 10px;
 }
 .place {
     color: @grey;
@@ -1780,14 +1770,9 @@ circle {
 
 /* radial */
 
-#radial-heading {
-    padding: 10px 10px 0 10px;
-}
-
 .radial #place-title {
     color: @grey;
     height: 40px;
-    padding: 0 10px 5px;
 }
 .radial #place-title:hover {
     color: black;
