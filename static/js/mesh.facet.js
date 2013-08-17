@@ -111,7 +111,7 @@ sb.mesh.facet = function (frame, map, width, height) {
     });
 
     self.on("removed", function() {
-        // if (points.length < 3) $("#finish-button").removeClass("active");
+        if (points.length < 3) $("#scroll-down").fadeIn();
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     });
 
@@ -524,6 +524,8 @@ sb.mesh.facet = function (frame, map, width, height) {
             update();
         }
 
+        console.log(points.length)
+        if (points.length >= 3) $("#scroll-down").fadeIn();
 
         /*
             we've added a point but haven't updated the bounds
@@ -541,7 +543,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         self.dirty = true;
 
-        // if (points.length < 3) $("#finish-button").removeClass("active");
+        if (points.length < 3) $("#scroll-down").fadeOut();
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     };
 

@@ -680,7 +680,7 @@ body.win #login-form ul {
     padding-left: 20px;
     font-size: 13px;
     position: absolute;
-    top: 570px;
+    bottom: 15px;
 }
 #edit .connect-wrapper .title {
     margin-bottom: 5px;
@@ -690,11 +690,14 @@ body.win #login-form ul {
 }
 
 #edit .foursquare-auth, #edit .facebook-auth {
-    margin: 0 1px;
+    margin: 0 6px 0 1px;
     padding: 8px 9px 9px 34px;
     position: relative;
     font-size: 14px;
     display: inline-block;
+}
+#edit .foursquare-auth:hover, #edit .facebook-auth:hover {
+    background-color: @blue;
 }
 .foursquare-auth img {
     height: 20px;
@@ -708,6 +711,25 @@ body.win #login-form ul {
     background-repeat: no-repeat;
     background-size: 20px 20px;
     padding: 8px 8px 9px 34px;
+}
+
+.scrolled #meshu-container #scroll-down {
+    opacity: 0 !important;
+    .transition(opacity);
+}
+#meshu-container #scroll-down {
+    position: absolute;
+    bottom: 0px;
+    height: 30px;
+    background-color: #ff0099;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    top: auto;
+    z-index: 2;
+    line-height: 30px;
+    display: none;
 }
 
 #place-hover {

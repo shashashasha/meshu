@@ -7,6 +7,10 @@ sb.viewhandler = function() {
 	var views = ["edit","product","make","add-ons","checkout","review"];
 	var content = $("#content");
 
+	$("#content").waypoint(function(){
+		$("body").addClass("scrolled");
+	}, { offset: 10 });
+
 	$("#product").waypoint(function(direction) {
 		if (direction == "down") {
 			onNext();
