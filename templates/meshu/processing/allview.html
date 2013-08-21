@@ -1,5 +1,7 @@
 {% extends "meshu/base.html" %}
 
+{% block page_type %}allview{% endblock page_type %}
+
 {% block title %}All Meshus{% endblock %}
 
 {% block content %}
@@ -19,7 +21,8 @@
 <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
 <script type="text/javascript">
 	var locations = ""
@@ -38,15 +41,16 @@
 		var meshur = sb.meshu("#map", 'facet', mapper);
 		meshus.push(meshur);
 		meshur.initializeFromData(d);
-		mlats = mlats.concat(meshur.mesh().lats());
-		mlons = mlons.concat(meshur.mesh().lons());
+		// mlats = mlats.concat(meshur.mesh().lats());
+		// mlons = mlons.concat(meshur.mesh().lons());
 	});
 
 	mapper.map.zoom(2).center({lat: 0, lon: 0});
 
 	setTimeout(function() {
 		$.each(meshus, function(i, m) {
-			m.refreshWithBounds(mlats, mlons);
+			m.mesh().updatePixelBounds();
+			m.mesh().refresh();
 		});
 	}, 2000);
 </script>

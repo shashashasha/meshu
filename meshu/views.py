@@ -21,7 +21,7 @@ from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
 import string, random
 
-# this is how i get dates. 
+# this is how i get dates.
 from datetime import datetime
 
 # got to get paid.
@@ -140,7 +140,7 @@ def mail_forgotten_password(email, password):
 	})
 	return
 
-# mails ordered svg to an ifttt routine 
+# mails ordered svg to an ifttt routine
 # that puts it in our dropbox queue for sending to the manufacturer
 def mail_ordered_svg(order):
 	# has to be my email because ifttt is expecting that
@@ -154,7 +154,7 @@ def mail_template(template, arguments):
 
 	html_content = render_to_string(template, arguments)
 	text_content = strip_tags(html_content)
-	
+
 	# create the email, and attach the HTML version as well.
 	subject = arguments['subject']
 	from_email = arguments['from']
@@ -202,7 +202,7 @@ def order_meshu(request, item_id):
 	profile = current_profile(request)
 
 	item_id = request.POST.get('meshu_id', item_id)
-	
+
 	# get existing meshu
 	meshu = get_object_or_404(Meshu, pk=item_id)
 
@@ -253,7 +253,7 @@ def make_order(request, profile, meshu):
 		mail_order_confirmation(email, meshu, order)
 
 	# send a mail to ifttt that creates an svg in our dropbox for processing
-	mail_ordered_svg(order)
+	# mail_ordered_svg(order)
 
 	return render_to_response('meshu/notification/ordered.html', {
 			'view' : 'paid',
@@ -265,7 +265,7 @@ def make_order(request, profile, meshu):
 # helper functions, ie functions that don't render views
 #
 
-# grab the current user profile, if a user is logged in, 
+# grab the current user profile, if a user is logged in,
 # otherwise grabs guest profile, for saving interim meshus
 def current_profile(request):
 	if request.user.is_authenticated():
@@ -356,7 +356,7 @@ def order_create(request, profile, meshu):
 		order.contact = request.POST.get('shipping_contact', '')
 	else:
 		order.contact = profile.user.email
-	
+
 	# postcard note
 	order.postcard_note = request.POST.get('postcard_note', '')
 
@@ -366,7 +366,7 @@ def order_create(request, profile, meshu):
 
 	order.save()
 	return order
-	
+
 
 # don't judge me, i think this is funny
 def random_password(length):

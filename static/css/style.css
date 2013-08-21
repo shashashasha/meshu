@@ -1677,6 +1677,10 @@ path {
 .print path.air {
   stroke-dasharray: 3 3;
 }
+.allview path {
+  stroke-width: 1;
+  stroke-opacity: .15;
+}
 circle {
   fill: #ff3fb4;
   fill-opacity: 0;
