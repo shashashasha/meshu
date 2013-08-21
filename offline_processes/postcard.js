@@ -1,6 +1,6 @@
 /*
 
-	code to generate postcards 
+	code to generate postcards
 
 	using phantomjs's cliprect and render:
 	http://stackoverflow.com/questions/11959139/crop-screenshot-to-element-in-phantomjs
@@ -23,7 +23,7 @@ var front = require('webpage').create(),
 if (phantom.args.length < 1) {
     console.log('Usage: postcard.js order-id');
     phantom.exit();
-} 
+}
 
 // urls to view postcards
 var base = "http://meshu.io",
@@ -31,7 +31,7 @@ var base = "http://meshu.io",
 	backURL  = base + "/orders/processing/postcard/back/{id}/",
 
 	// saving images
-	directory = "/Users/binx/Dropbox/Meshu/raw_postcards/";
+	directory = "/Users/sha/Dropbox/Meshu/raw_postcards/";
 
 // order id
 id = phantom.args[0];
@@ -51,13 +51,13 @@ console.log(id, 'rendering back');
 
 /*
 	load the back of the postcard, logo + link + note
-	
+
 	phantom dispatches the open event multiple times if there are iframes on the page
 	i think this might be from olark, facebook or something?
 */
 back.open(backURL.replace("{id}", id), function(status) {
 	back.render(directory + id + '-back.png');
-	console.log(id, 'rendered back');	
+	console.log(id, 'rendered back');
 });
 
 
@@ -81,7 +81,7 @@ front.open(frontURL.replace('{id}', id), function (status) {
 	});
 
 	/*
-		if it's a radial, we need to zoom in 
+		if it's a radial, we need to zoom in
 		and double the size of the radial svg
 
 		otherwise have a handle for zooming in
@@ -93,7 +93,7 @@ front.open(frontURL.replace('{id}', id), function (status) {
 			meshu.mesh().prerender(loadedMeshu.svg, 2);
 		});
 	} else if (phantom.args[1] == 'zoomin') {
-		front.evaluate(function() {	
+		front.evaluate(function() {
 			meshu.map().map.zoomBy(.75);
 			meshu.mesh().refresh();
 		});

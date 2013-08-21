@@ -13,9 +13,6 @@ from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
 import string, random
 
-# this is how i get dates.
-from datetime import datetime
-
 
 from meshu.views import *
 from meshu.item import *
@@ -167,3 +164,15 @@ def view_all(request):
 	return render_to_response('meshu/processing/allview.html', {
 		'meshus': meshus
 	}, context_instance=RequestContext(request))
+
+
+# from django.core.paginator import Paginator
+
+# def api_get_meshus(request):
+# 	# define number to get and page to get them
+# 	meshus = Meshu.objects.all()
+# 	amount = request.GET['max']
+# 	page = int(float(request.GET['page']))
+# 	pager = Paginator(meshus, page)
+
+# 	return json_dump({})

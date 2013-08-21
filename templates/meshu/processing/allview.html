@@ -2,6 +2,8 @@
 
 {% block title %}All Meshus{% endblock %}
 
+{% block page_type %}allview{% endblock page_type %}
+
 {% block content %}
 <div id="map" style="width:1000px;height:600px">
 </div>
@@ -19,7 +21,8 @@
 <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.base.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/meshu.js"></script>
 <script type="text/javascript">
 	var locations = ""
@@ -46,7 +49,9 @@
 
 	setTimeout(function() {
 		$.each(meshus, function(i, m) {
-			m.refreshWithBounds(mlats, mlons);
+			// m.refreshWithBounds(mlats, mlons);
+			m.mesh().updatePixelBounds();
+			m.mesh().refresh();
 		});
 	}, 2000);
 </script>

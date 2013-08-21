@@ -113,10 +113,8 @@ sb.map = function(frame, width, height) {
 		// if it's too wide, zoom out
 		if (offsetX) {
 			var totalWidth = $(frame).width() - offsetX;
-			console.log('totalwidth', totalWidth);
 			var extentWidth = self.l2p(extent[1]).x - self.l2p(extent[0]).x;
 			if (extentWidth > totalWidth) {
-				console.log('too wide, zooming out');
 				self.map.zoom(self.map.zoom()-.5);
 			}
 			self.centerOn(self.map.center(), offsetX);
