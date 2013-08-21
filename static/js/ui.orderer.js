@@ -123,16 +123,22 @@ sb.ui.orderer = function() {
 	function populateReviewText() {
 		var product = sb.materializer.product(),
 			material = sb.materializer.material(),
+			color = sb.materializer.color(),
 			priceCents = catalog.getPrice(product, material);
 
 		if (product)
 			$(".review-product").removeClass("inactive").text(product);
-		if (sb.materializer.color() && material)
+		if (color && material) 
 			$(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
-		if (product && sb.materializer.color() && material) {
-			$(".review-price").text('$' + priceCents + '.00');
+		if (product && color && material) {
+			$(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
+			$(".review-make-time").text(catalog.getMakeTime(material));
 			$("#add-to-cart").removeClass("inactive");
 		}
+		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
+				.attr("class","review-delaunay").attr("transform","scale(.25)");
+
+		$(".review-svg").empty().append(miniDelaunay);
 	}
 
 	self.metadata = function(s) {

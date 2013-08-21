@@ -11,9 +11,9 @@ sb.map = function(frame, width, height) {
 	var baseURL = "http://tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
-    container.style.position = "absolute";
-    container.style.width = width;
-    container.style.height = height;
+    // container.style.position = "absolute";
+    // container.style.width = width;
+    // container.style.height = height;
 
     d3.select(frame).append("div").attr("class","render");
 
@@ -45,7 +45,15 @@ sb.map = function(frame, width, height) {
 		y: $(frame).height()
 	});
 
-	self.map.add(image);
+	var print = $("body").hasClass("print");
+	if (print) {
+		self.map.add(po.geoJson()
+	    	.url("/static/lib/world.json")
+	    );
+	    self.map.zoom(2).center({ lat: 35, lon: 5 });
+	}
+	else
+		self.map.add(image);
 
 	// fill the background with white
 	d3.select(svgObject)

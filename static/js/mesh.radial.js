@@ -3,7 +3,7 @@ var sb = sb || {};
 sb.mesh.radial = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
         selfId = 'm' + parseInt(Math.random() * 10000000000, 10),
-        offsetX = 200,
+        offsetX = 0,
         offsetY = 0;
 
     // the name of the product line
@@ -82,10 +82,9 @@ sb.mesh.radial = function (frame, map, width, height) {
         self.add(loc.lat, loc.lon, undefined, false);
     });
 
-    // self.on("removed", function() {
-    //     if (points.length == 0)
-    //          $("#finish-button").removeClass("active");
-    // });
+    self.on("removed", function() {
+        if (points.length == 0) $("#scroll-down").fadeOut();
+    });
 
     /*
         This is how we're listening to style changes
@@ -376,6 +375,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
 
         $("#places").removeClass("inactive");
+        $("#scroll-down").fadeIn();
 
         /*
             just recentering so we don't clear out all the tiles
@@ -404,7 +404,7 @@ sb.mesh.radial = function (frame, map, width, height) {
         lons.splice(index, 1);
         // places.splice(index, 1);
 
-        // if (points.length == 0) $("#finish-button").removeClass("active");
+        if (points.length == 0) $("#scroll-down").fadeOut();
     };
 
     self.lats = function() {

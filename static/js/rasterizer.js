@@ -12,7 +12,6 @@ sb.rasterizer = function() {
 		canvas.style.position = 'absolute';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
-		canvas.className = name;
 
 		$(canvas).addClass("hidden");
 

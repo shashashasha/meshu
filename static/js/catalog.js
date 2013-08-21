@@ -7,46 +7,65 @@ sb.catalog = function(renderer, promo) {
 	materialOptions.facet = {"earrings":
 						{"bamboo":{"price":70,"colors":["amber"]},
 						"acrylic":{"price":75,"colors":["black","white"]},
-						"nylon":{"price":85,"colors":["black","white"]}
-						// "silver":{"price":145,"colors":["sterling"]}
+						"nylon":{"price":85,"colors":["white"]}
 						},
 				   "pendant":
 				   		{"bamboo":{"price":75,"colors":["amber"]},
 				   		"acrylic":{"price":80,"colors":["black","white"]},
-						"nylon":{"price":85,"colors":["black","white"]},
-						"silver":{"price":145,"colors":["sterling"]}
+						"nylon":{"price":85,"colors":["white"]},
+						"silver":{"price":145,"colors":["sterling"]},
+						"brass":{"price":145,"colors":["gold-plated"]}
 						},
 				   "necklace":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price": 85,"colors":["black","white"]},
-						"nylon":{"price":90,"colors":["black","white"]},
-						"silver":{"price":165,"colors":["sterling"]}
+						// "nylon":{"price":90,"colors":["black","white"]},
+						"silver":{"price":165,"colors":["sterling"]},
+						"brass":{"price":165,"colors":["gold-plated"]}
 						},
 					"cufflinks":
-						{"silver":{"price":165,"colors":["sterling"]}
+						{"silver":{"price":165,"colors":["sterling"]},
+						"brass":{"price":165,"colors":["gold-plated"]}
 						},
 					"ring":
 						{"nylon":{"price":30,"colors":["white"]},
-						"silver":{"price":120,"colors":["sterling"]}
+						"silver":{"price":120,"colors":["sterling"]},
+						"brass":{"price":120,"colors":["gold-plated"]}
 						}
 					};
 
 	materialOptions.radial = {"earrings":
 						{"bamboo":{"price":75,"colors":["amber"]},
 						"acrylic":{"price":80,"colors":["black","white"]},
-						"nylon":{"price":90,"colors":["black","white"]}
+						"nylon":{"price":90,"colors":["white"]}
 						},
 				   "pendant":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price":85,"colors":["black","white"]},
 						"nylon":{"price":95,"colors":["black","white"]},
-						"silver":{"price":160,"colors":["sterling"]}
+						"silver":{"price":160,"colors":["sterling"]},
+						"brass":{"price":160,"colors":["gold-plated"]}
 						},
 					"coasters":
-				   		{"bamboo":{"price":40,"colors":["amber"]},
-				   		"acrylic":{"price":45,"colors":["black"]}
+				   		{"bamboo":{"price":60,"colors":["amber"]},
+				   		"acrylic":{"price":65,"colors":["black"]}
 						}
 					};
+
+	materialOptions.print = {
+						"poster":
+						{
+							"oh yes":{"price":20,"colors":[]}
+						}
+					};
+
+	makeTimes = {
+		"bamboo":"3-4 Weeks",
+		"acrylic":"3-4 Weeks",
+		"nylon":"3-4 Weeks",
+		"silver":"5-6 Weeks",
+		"brass":"5-6 Weeks"
+	};
 
 	// set the product type options with either facet or radial
 	var options = materialOptions[renderer];
@@ -83,6 +102,11 @@ sb.catalog = function(renderer, promo) {
 
 	self.getColors = function(type, material) {
 		return self.get(type, material, 'colors');
+	};
+
+	self.getMakeTime = function(material) {
+		console.log(material, makeTimes, makeTimes[material])
+		return makeTimes[material];
 	};
 
 	/*

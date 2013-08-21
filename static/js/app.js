@@ -21,8 +21,8 @@ $(function() {
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
 	// width of the .edit-panel's
-	if ($("#content").hasClass("edit"))
-		meshu.offsetX = 300;
+	// if ($("#content").hasClass("edit"))
+	// 	meshu.offsetX = 300;
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
@@ -212,19 +212,10 @@ $(function() {
 			case 'readymade':
 				meshu.mesh().interactive(false);
 
-				// animate meshu
-				// var product = sb.materializer.product();
-				// var t = sb.transforms[product]["render"];
-
-				// meshu.animateTransform(sb.rotator ? sb.rotator.rotation() : 0, t.scale, t.transform.x, t.transform.y);
-
-				// add the product class to the mesh
-				// d3.select(".delaunay").attr("class","delaunay "+product);
-
-				// update the render background to be the product preview
-				var productPreview = static_url + 'images/render/' + product + '_preview.jpg',
-					url = "url(" + productPreview + ")";
-				$(".render").css("background-image", url);
+			// 	// update the render background to be the product preview
+			// 	var productPreview = static_url + 'images/render/' + product + '_preview.jpg',
+			// 		url = "url(" + productPreview + ")";
+			// 	$(".render").css("background-image", url);
 				break;
 		}
 	}
@@ -237,11 +228,11 @@ $(function() {
 				meshu.mesh().interactive(true);
 				break;
 
-			case 'make':
-			case 'readymade':
-				meshu.mesh().interactive(true);
-				meshu.animateTransform(0, 1, 0, 0);
-				break;
+			// case 'make':
+			// case 'readymade':
+			// 	meshu.mesh().interactive(true);
+			// 	meshu.animateTransform(0, 1, 0, 0);
+			// 	break;
 		}
 	}
 

@@ -610,27 +610,20 @@ body.win #login-form ul {
 */
 
 #edit.section {
-    height: 600px;
-    width: 320px;
+    height: 601px;
     padding: 0;
-    width: 0;
 }
 .edit-panel {
-    position: absolute;
-    z-index: 2;
-    margin: 10px;
-    background-color: white;
-    width: 335px;
-    box-sizing: border-box;
-    .shadow(20px, rgba(0, 0, 0, .25));
+    width: 320px;
 }
 
 #search {
-    padding: 10px;
+    padding: 20px;
 }
 #edit-footer {
     height: 47px;
-    top: 525px;
+    top: 553px;
+    position: absolute;
 }
 #search .note {
     margin: 5px 0 10px;
@@ -665,6 +658,9 @@ body.win #login-form ul {
 .button.grey {
     background-color: @grey;
 }
+.action-buttons .button.grey:hover {
+    background-color: @grey;
+}
 
 .button:hover {
     background-color: @pink;
@@ -681,20 +677,27 @@ body.win #login-form ul {
 }
 
 #edit .connect-wrapper {
-    padding: 10px 0 10px 10px;
+    padding-left: 20px;
     font-size: 13px;
-    top: 525px;
+    position: absolute;
+    bottom: 15px;
 }
 #edit .connect-wrapper .title {
     margin-bottom: 5px;
+    width: 90px;
+    display: inline-block;
+    float: left;
 }
 
 #edit .foursquare-auth, #edit .facebook-auth {
-    margin: 0 1px;
+    margin: 0 6px 0 1px;
     padding: 8px 9px 9px 34px;
     position: relative;
     font-size: 14px;
     display: inline-block;
+}
+#edit .foursquare-auth:hover, #edit .facebook-auth:hover {
+    background-color: @blue;
 }
 .foursquare-auth img {
     height: 20px;
@@ -708,6 +711,25 @@ body.win #login-form ul {
     background-repeat: no-repeat;
     background-size: 20px 20px;
     padding: 8px 8px 9px 34px;
+}
+
+.scrolled #meshu-container #scroll-down {
+    opacity: 0 !important;
+    .transition(opacity);
+}
+#meshu-container #scroll-down {
+    position: absolute;
+    bottom: 0px;
+    height: 30px;
+    background-color: @pink;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    top: auto;
+    z-index: 2;
+    line-height: 30px;
+    display: none;
 }
 
 #place-hover {
@@ -760,10 +782,10 @@ body.win .notch {
 }
 
 #places {
-    top: 130px;
-    margin-top: 10px;
     opacity: 1;
     .transition(opacity);
+    width: 360px;
+    padding: 0 20px;
 }
 #places.inactive {
     display: none;
@@ -777,9 +799,6 @@ body.win .notch {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-#place-title {
-    display: none;
 }
 .radial #place-title {
     display: block;
@@ -821,14 +840,7 @@ body.firefox #place-title #input {
 
 #places ul {
     max-height: 320px;
-    padding: 0 10px;
     overflow-y: auto;
-}
-#places ul li:first-child {
-    margin-top: 10px;
-}
-#places ul li:last-child {
-    margin-bottom: 10px;
 }
 .place {
     color: @grey;
@@ -898,10 +910,14 @@ body.firefox .place .place-text {
 }
 
 .frame {
-    width: 100%;
+    width: 600px;
     height: 600px;
     position: absolute;
     right: 0px;
+    top: 0;
+}
+#meshu-container > div {
+    top: 0;
 }
 body.ie .frame div {
     overflow: hidden;
@@ -912,8 +928,9 @@ body.ie .frame div {
     z-index: 0;
 }
 
-#attribution {
+#meshu-container #attribution {
     position: absolute;
+    top: auto;
     bottom: 0;
     z-index: 1;
     font-size: 11px;
@@ -941,7 +958,7 @@ body.ie .frame div {
     .transition(opacity);
 }
 .print .map .layer {
-    opacity: .1;
+    opacity: 1;
 }
 
 .render {
@@ -1063,17 +1080,18 @@ body.firefox.win #rotate-help .border-notch {
 }
 
 @-moz-keyframes spin {
-  from { -moz-transform: rotateY(180)}
-  to   { -moz-transform: rotateY(-180deg)}}
+  from { -moz-transform: rotateY(0)}
+  to   { -moz-transform: rotateY(360deg)}}
 
 @-webkit-keyframes spin {
-  from { -webkit-transform: rotateY(180)}
-  to   { -webkit-transform: rotateY(-180deg)}}
+  from { -webkit-transform: rotateY(0)}
+  to   { -webkit-transform: rotateY(360deg)}}
 
 #product {
     height: 860px;
 }
-.radial #product {
+.radial #product,
+.print #product {
     height: 490px;
 }
 .wrapper {
@@ -1247,6 +1265,9 @@ body.firefox.win #rotate-help .border-notch {
 #materials {
     height: 460px;
 }
+.print #materials {
+    display: none;
+}
 #add-ons {
     height: 540px;
 }
@@ -1293,6 +1314,17 @@ input[type="range"]::-webkit-slider-thumb {
     text-transform: lowercase;
     color: @pink;
 }
+#review .review-svg {
+    float: left;
+    border: 1px solid @borderGrey;
+}
+#review .review-svg path {
+    stroke: @grey;
+    stroke-width: 20;
+}
+#review h2 {
+    margin: 0 0 3px 170px;
+}
 
 #account input {
     float: right;
@@ -1338,6 +1370,7 @@ p.note {
 .form-row {
     min-height: 30px;
     width: 400px;
+    clear: both;
 }
 
 .form-row label {
@@ -1549,15 +1582,6 @@ body.ie8 .city-input {
     }
 }
 
-#review {
-    h2 {
-        margin: 15px 0 5px;
-    }
-    p {
-        margin: .25em 0;
-    }
-}
-
 .nav {
     background-color: @grey;
     color: white;
@@ -1664,6 +1688,10 @@ body.ie8 .city-input {
     right: 20px;
     margin: 0;
 }
+#submit-button {
+    bottom: 0;
+    right: 0;
+}
 #submit-button.inactive, #add-to-cart.inactive {
     background-color: @grey;
     cursor: auto;
@@ -1691,6 +1719,10 @@ path {
 }
 .roadtrip .straight {
     stroke-opacity: .5;
+}
+.print .map path {
+    stroke: white;
+    fill: #ddd;
 }
 .print path {
     stroke-width: 1;
@@ -1764,14 +1796,9 @@ circle {
 
 /* radial */
 
-#radial-heading {
-    padding: 10px 10px 0 10px;
-}
-
 .radial #place-title {
     color: @grey;
     height: 40px;
-    padding: 0 10px 5px;
 }
 .radial #place-title:hover {
     color: black;
@@ -1886,6 +1913,9 @@ circle {
         height: 100%;
         display: block;
     }
+    div {
+        top: 0;
+    }
 }
 
 #gallery {
@@ -1983,8 +2013,22 @@ circle {
 .theta {
     display: none;
 }
+.discount-blurb {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    color: @grey;
+    font-size: 16px;
+}
+.discount-blurb .pink {
+    color: @pink;
+}
+.discount-blurb p {
+    font-size: 14px;
+}
 .cart-wrapper {
-    padding: 20px;
+    padding: 40px 20px;
 }
 #cart {
     width: 100%;
@@ -2000,6 +2044,9 @@ circle {
     width: 100px;
     height: 100px;
     border: 1px solid @borderGrey;
+}
+#cart path {
+    stroke-width: 15;
 }
 #cart .headings {
     color: @grey;
@@ -2041,7 +2088,7 @@ circle {
     width: 100%;
 }
 .total-inside {
-    width: 33%;
+    width: 40%;
     float: right;
     border-bottom: 1px solid @borderGrey;
     margin-right: 20px;
@@ -2058,7 +2105,8 @@ circle {
     font-size: 24px;
     line-height: 36px;
 }
-.total-wrapper .discount span {
+.total-wrapper .discount,
+.total-wrapper .discount .dollar {
     color: @pink;
 }
 .total-wrapper .discount,
@@ -2106,10 +2154,15 @@ circle {
     margin-top: 20px;
     font-size: 22px;
 }
+#createAccount {
+    float: right;
+    margin-top: 45px;
+    background-color: #808080;
+}
 .coupon {
     width: 50%;
     position: absolute;
-    top: 320px;
+    top: 340px;
     right: 0;
 }
 .coupon h2 {
@@ -2132,7 +2185,7 @@ circle {
 #review-total {
     width: 50%;
     position: absolute;
-    top: 390px;
+    top: 410px;
     padding-right: 20px;
     right: 0px;
     box-sizing: border-box;
