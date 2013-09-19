@@ -34,3 +34,5 @@ ps -u meshu -o rss,etime,pid,command
 
 # import contacts for usps
 # https://gab.usps.com/addrBook/Secure/YourContactsAction_input.action
+
+# also, i edited mailsnake.py to have basestring removed in favor of str, unicode

@@ -11,9 +11,6 @@ from django.utils import simplejson
 # our models
 from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
-import string, random
-
-
 from meshu.views import *
 from meshu.item import *
 
