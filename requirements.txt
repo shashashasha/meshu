@@ -4,14 +4,15 @@ PIL==1.1.7
 South==0.7.3
 certifi==0.0.8
 chardet==1.0.1
-django-cart==1.0.1
 django-shortcuts==1.0
 django-shorturls==1.0.1
 django-social-auth==0.7.2
 httplib2==0.7.4
+mailsnake==1.6.2
 oauth2==1.5.211
 python-openid==2.2.5
 requests==0.10.1
+simplejson==3.3.0
 stripe==1.6.1
 versiontools==1.9.1
 wsgiref==0.1.2
