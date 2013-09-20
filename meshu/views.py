@@ -233,6 +233,9 @@ def submit_multiple(request, shipping, items):
 		# send a mail to ifttt that creates an svg in our dropbox for processing
 		mail_ordered_svg(order)
 
+	current_cart = Cart(request)
+	current_cart.clear()
+
 	mail_multiple_order_confirmation(shipping.contact, orders)
 	return render_to_response('meshu/notification/ordered_multiple.html', {
 		'orders': orders,
@@ -251,6 +254,9 @@ def submit_single(request, shipping, items):
 
 	# send a mail to ifttt that creates an svg in our dropbox for processing
 	mail_ordered_svg(order)
+
+	current_cart = Cart(request)
+	current_cart.clear()
 
 	return render_to_response('meshu/notification/ordered.html', {
 		'view': 'paid',

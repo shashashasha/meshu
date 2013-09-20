@@ -96,7 +96,7 @@ def mail_forgotten_password(email, password):
 # that puts it in our dropbox queue for sending to the manufacturer
 def mail_ordered_svg(order):
 	# has to be my email because ifttt is expecting that
-	from_email = 'shashashasha@gmail.com'
+	from_email = 'ifttt@meshu.io'
 	to_email = 'trigger@ifttt.com'
 	msg = EmailMultiAlternatives(order.get_svg_filename(), order.meshu.svg, from_email, [to_email])
 	msg.send()
