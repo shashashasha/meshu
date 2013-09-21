@@ -38,7 +38,7 @@
 			<li class="nav-list" style="margin-right: 20px; padding-right: 20px; border-right: 1px solid #000;"><a href="http://blog.meshu.io/">blog</a></li>
 			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
 			<li class="nav-list" id="nav-cart"><a href="/cart/view">cart
-			<!-- <span> (<span class="num">1</span>)</span> -->
+			{% if cart_count > 0 %}<span class="num">({{ cart_count }})</span>{% endif %}
 			</a></li>
 
 			<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list last">login</li>

@@ -1,6 +1,5 @@
 from django.conf import settings
-from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 # user stuff
 from django.contrib.auth.models import User
@@ -57,11 +56,16 @@ def current_profile(request):
 	else:
 		return UserProfile.objects.get(user__username='guest')
 
-
 def notify(request, view):
-	return render_to_response('meshu/notification/base_notification.html', {
-		'view' : view
-	}, context_instance=RequestContext(request))
+	return render(request, 'meshu/notification/base_notification.html', {
+		'view' : view,
+		'cart_count': Cart(request).count()
+	})
+
+def base_view(request, template):
+	return render(request, template, {
+		'cart_count': Cart(request).count()
+	})
 
 #
 # Ordering!
@@ -101,22 +105,31 @@ def cart_remove(request, order_id):
 	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
-
-	return render_to_response('meshu/cart/cart.html', {
-			'cart' : Cart(request)
-	}, context_instance=RequestContext(request))
+	current_cart = Cart(request)
+	return render(request, 'meshu/cart/cart.html', {
+		'cart' : current_cart,
+		'cart_count' : current_cart.count()
+	})
 
 def cart_checkout(request):
-
-	return render_to_response('meshu/cart/checkout.html', {
-			'cart' : Cart(request)
-	}, context_instance=RequestContext(request))
+	current_cart = Cart(request)
+	return render(request, 'meshu/cart/checkout.html', {
+		'cart' : current_cart,
+		'cart_count' : current_cart.count()
+	})
 
 def cart_empty(request):
 	current_cart = Cart(request)
 	current_cart.clear()
 
 	return HttpResponseRedirect("/cart/view")
+
+def cart_info(request):
+	current_cart = Cart(request)
+	return json_dump({
+		'current_cost': current_cart.total(),
+		'count': current_cart.count()
+	})
 
 # verify_coupon has to be an xhr request, we don't want to refresh the page
 def order_verify_coupon(request):
@@ -237,10 +250,10 @@ def submit_multiple(request, shipping, items):
 	current_cart.clear()
 
 	mail_multiple_order_confirmation(shipping.contact, orders)
-	return render_to_response('meshu/notification/ordered_multiple.html', {
+	return render(request, 'meshu/notification/ordered_multiple.html', {
 		'orders': orders,
 		'view': 'paid'
-	}, context_instance=RequestContext(request))
+	})
 
 def submit_single(request, shipping, items):
 	item = items[0]
@@ -258,11 +271,11 @@ def submit_single(request, shipping, items):
 	current_cart = Cart(request)
 	current_cart.clear()
 
-	return render_to_response('meshu/notification/ordered.html', {
+	return render(request, 'meshu/notification/ordered.html', {
 		'view': 'paid',
 		'order': order,
 		'meshu': order.meshu
-	}, context_instance=RequestContext(request))
+	})
 
 # create an Order object given a Meshu and UserProfile
 def order_create(request, profile, meshu):

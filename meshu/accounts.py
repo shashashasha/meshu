@@ -1,6 +1,5 @@
 from django.conf import settings
-from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 # user stuff
 from django.contrib.auth.models import User
@@ -55,18 +54,18 @@ def user_login_success(request, user):
 			'facebook_id': profile.facebook_id
 		})
 	else:
-		return render_to_response('meshu/gallery/gallery.html', {
+		return render(request, 'meshu/gallery/gallery.html', {
 				'view' : 'user',
 				'profile' : profile,
 				'meshus': meshus
-		}, context_instance=RequestContext(request))
+		})
 
 def user_login_error(request, user):
 	xhr = request.POST.has_key('xhr')
 
 	if xhr:
 		return json_dump({
-			'success' : False 
+			'success' : False
 		})
 	else:
 		return notify(request, 'login_error')
@@ -88,7 +87,7 @@ def user_logout(request, *args, **kwargs):
 
 	if xhr:
 		return json_dump({
-			'success' : False 
+			'success' : False
 		})
 
 	return notify(request, 'loggedout')
@@ -99,7 +98,7 @@ def user_create(request):
 	email = request.POST['email']
 	password = request.POST['password']
 
-	# check if we have someone with the same username	
+	# check if we have someone with the same username
 	try:
 		while True:
 			User.objects.get(username=username)
@@ -128,7 +127,7 @@ def user_create(request):
 	else:
 		return notify(request, 'signedup')
 
-# 
+#
 def user_facebook_login(request):
 	fb_profile = request.POST
 	access_token = fb_profile['access_token']
@@ -144,11 +143,11 @@ def user_profile(request):
 
 	meshus = Meshu.objects.filter(user_profile=profile)
 
-	return render_to_response('meshu/gallery/gallery.html', {
+	return render(request, 'meshu/gallery/gallery.html', {
 			'view' : 'user',
 			'profile' : profile,
 			'meshus': meshus
-	}, context_instance=RequestContext(request))
+	})
 
 def user_forgot_password(request):
 	profile = current_profile(request)
@@ -160,7 +159,7 @@ def user_forgot_password(request):
 		user = User.objects.get(email=email)
 	except User.DoesNotExist:
 		return json_dump({
-			'message' : 'User with that email does not exist' 
+			'message' : 'User with that email does not exist'
 		})
 
 	if user.username == 'shop':

@@ -43,44 +43,70 @@ urlpatterns += patterns('meshu.views',
 	}),
 
 	# cart operations
+
 	url(r'^cart/update/(?P<order_id>\d+)/(?P<quantity>\d+)', 'cart_update'),
 	url(r'^cart/remove/(?P<order_id>\d+)', 'cart_remove'),
 	url(r'^cart/checkout', 'cart_checkout'),
 	url(r'^cart/empty', 'cart_empty'),
 	url(r'^cart/view', 'cart_view'),
 	url(r'^cart/add/', 'cart_add'),
+	url(r'^cart/info.json', 'cart_info'),
 
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
-
-	# order an existing meshu
-	# url(r'^order/(?P<item_id>\d+)', 'order_meshu'),
-	# order a new meshu, not saved yet
-	# url(r'^order/', 'order_new'),
 
 	# new order function, buys everythng in the cart
 	url(r'^order/', 'submit_orders'),
 
 	# gallery of meshus
-	url(r'^gallery/', direct_to_template, {
+	url(r'^gallery/', 'base_view', {
 		'template': 'meshu/base_gallery.html'
 	}),
 
 	# about page
-	url(r'^about/', direct_to_template, {
+	url(r'^about/', 'base_view', {
 		'template': 'meshu/base_about.html'
 	}),
 
 	# radial road test
-	url(r'^radial/', direct_to_template, {
+	url(r'^radial/', 'base_view', {
 		'template': 'meshu/item/radial.html'
 	}),
 
 	# promo
-	url(r'^marathon/', direct_to_template, {
+	url(r'^marathon/', 'base_view', {
 		'template': 'meshu/promo/marathon.html'
 	}),
-	url(r'^royalparkshalf/', direct_to_template, {
+	url(r'^royalparkshalf/', 'base_view', {
 		'template': 'meshu/promo/marathon.html'
+	}),
+
+	##
+	##	base make pages
+	##
+	url(r'^make/foursquare', 'base_view', {
+		'template': 'meshu/gallery/foursquare_auth_completed.html'
+	}),
+
+	url(r'^make/facebook', 'base_view', {
+		'template': 'meshu/gallery/facebook_auth.html'
+	}),
+
+	url(r'^make/facet', 'base_view', {
+		'template': 'meshu/item/item.html'
+	}),
+	url(r'^make/ring', 'base_view', {
+		'template': 'meshu/item/ring.html'
+	}),
+	url(r'^make/radial', 'base_view', {
+		'template': 'meshu/item/radial.html'
+	}),
+	url(r'^make/print', 'base_view', {
+		'template': 'meshu/item/print.html'
+	}),
+
+	# root way to begin making a meshu
+	url(r'^make/', 'base_view', {
+		'template': 'meshu/make_landing.html'
 	}),
 
 	# internal to see email templates
@@ -99,36 +125,10 @@ urlpatterns += patterns('meshu.item',
 	url(r'^make/to_png', 'processing_dataurl_to_image'),
 	url(r'^make/data/to_png', 'processing_dataurl_to_image'),
 
-	url(r'^make/foursquare', direct_to_template, {
-		'template': 'meshu/gallery/foursquare_auth_completed.html'
-	}),
-
-	url(r'^make/facebook', direct_to_template, {
-		'template': 'meshu/gallery/facebook_auth.html'
-	}),
-
 	url(r'^make/geojson', 'item_from_geojson'),
 	url(r'^make/data', 'item_from_data'),
 	url(r'^make/create/', 'item_create'),
 	url(r'^make/assign/', 'item_assign'),
-
-	url(r'^make/facet', direct_to_template, {
-		'template': 'meshu/item/item.html'
-	}),
-	url(r'^make/ring', direct_to_template, {
-		'template': 'meshu/item/ring.html'
-	}),
-	url(r'^make/radial', direct_to_template, {
-		'template': 'meshu/item/radial.html'
-	}),
-	url(r'^make/print', direct_to_template, {
-		'template': 'meshu/item/print.html'
-	}),
-
-	# root way to begin making a meshu
-	url(r'^make/', direct_to_template, {
-		'template': 'meshu/make_landing.html'
-	}),
 
 	# save/new always creates a new meshu
 	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),

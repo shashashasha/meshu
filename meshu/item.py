@@ -54,14 +54,14 @@ def item_delete(request, item_id):
 def item_handler(request, item_id, template, view):
 	item = get_object_or_404(Meshu, pk=item_id)
 
-	return render_to_response('meshu/item/' + template, {
-			'meshu': item,
-			'view': view
-		}, context_instance = RequestContext(request))
+	return render(request, 'meshu/item/' + template, {
+		'meshu': item,
+		'view': view
+	})
 
 def item_from_geojson(request):
 	if request.POST.has_key('geojson') == False and request.GET.has_key('url') == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+		return render(request, '404.html')
 
 	meshu = Meshu()
 
@@ -76,11 +76,11 @@ def item_from_geojson(request):
 
 	meshu.save()
 
-	return render_to_response('meshu/item/geojson.html', {
+	return render(request, 'meshu/item/geojson.html', {
 		'meshu': meshu,
 		'geojson' : geojson,
 		'view': 'edit'
-	}, context_instance = RequestContext(request))
+	})
 
 def item_from_preset(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
@@ -100,15 +100,15 @@ def item_from_preset(request, item_encoded):
 	# wtf dawg
 	meshu.theta = item.theta
 
-	return render_to_response('meshu/item/item.html', {
+	return render(request, 'meshu/item/item.html', {
 		'meshu': meshu,
 		'view': 'edit'
-	}, context_instance = RequestContext(request))
+	})
 
 def item_from_data(request):
 
 	if request.POST.has_key('location_data') == False:
-		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+		return render(request, '404.html')
 
 	meshu = Meshu()
 
@@ -124,10 +124,10 @@ def item_from_data(request):
 	if theta:
 		meshu.theta = int(float(theta))
 
-	return render_to_response('meshu/item/item.html', {
+	return render(request, 'meshu/item/item.html', {
 		'meshu': meshu,
 		'view': 'edit'
-	}, context_instance = RequestContext(request))
+	})
 
 
 
