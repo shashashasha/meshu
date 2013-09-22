@@ -124,13 +124,6 @@ def cart_empty(request):
 
 	return HttpResponseRedirect("/cart/view")
 
-def cart_info(request):
-	current_cart = Cart(request)
-	return json_dump({
-		'current_cost': current_cart.total(),
-		'count': current_cart.count()
-	})
-
 # verify_coupon has to be an xhr request, we don't want to refresh the page
 def order_verify_coupon(request):
 	coupon = request.GET.get('code', '').upper()

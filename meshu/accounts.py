@@ -12,6 +12,9 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 # our models
 from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
+# not sure why i can't do cart.models import Cart
+from cart import Cart
+
 from meshu.views import *
 
 #
@@ -55,9 +58,10 @@ def user_login_success(request, user):
 		})
 	else:
 		return render(request, 'meshu/gallery/gallery.html', {
-				'view' : 'user',
-				'profile' : profile,
-				'meshus': meshus
+			'view' : 'user',
+			'profile' : profile,
+			'meshus': meshus,
+			'cart_count': Cart(request).count()
 		})
 
 def user_login_error(request, user):
@@ -144,9 +148,10 @@ def user_profile(request):
 	meshus = Meshu.objects.filter(user_profile=profile)
 
 	return render(request, 'meshu/gallery/gallery.html', {
-			'view' : 'user',
-			'profile' : profile,
-			'meshus': meshus
+		'view' : 'user',
+		'profile' : profile,
+		'meshus': meshus,
+		'cart_count': Cart(request).count()
 	})
 
 def user_forgot_password(request):
