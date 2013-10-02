@@ -197,12 +197,12 @@ def submit_orders(request):
 		email = profile.user.email
 
 	# subscribing people to mailchimp
-	if request.POST.get('email_checkbox',''):
+	if request.POST.get('email_checkbox','') and email != '':
 		ms = MailSnake(settings.MAILCHIMP_KEY)
 		lists = ms.lists()
 		ms.listSubscribe(
 		    id = lists['data'][0]['id'],
-		    email_address = request.POST.get('email_address', ''),
+		    email_address = email,
 		    update_existing = True,
 		    double_optin = False,
 		)

@@ -25,11 +25,9 @@ from meshu.decorators import persist_session_vars
 #
 @persist_session_vars(['CART-ID'])
 def login_user_flow(request, user):
-	print('login_user_flow before:', Cart(request).count(), request.session.get('CART-ID'))
 	if user is not None:
 		if user.is_active:
 			response = login(request, user)
-			print('login_user_flow after:', Cart(request).count(), request.session.get('CART-ID'))
 			return user_login_success(request, user)
 		else:
 			return user_login_error(request, user)
@@ -38,7 +36,6 @@ def login_user_flow(request, user):
 
 @persist_session_vars(['CART-ID'])
 def user_login(request, *args, **kwargs):
-	print('user_login before:', Cart(request).count(), request.session.get('CART-ID'))
 	email = request.POST['email']
 
 	try:
@@ -49,18 +46,15 @@ def user_login(request, *args, **kwargs):
 		pass
 
 	user = authenticate(username=email, password=request.POST['password'])
-	print('user_login after:', Cart(request).count(), request.session.get('CART-ID'))
 	return login_user_flow(request, user)
 
 @persist_session_vars(['CART-ID'])
 def user_login_success(request, user):
-	print('user_login_success before:', Cart(request).count(), request.session.get('CART-ID'))
 	xhr = request.POST.has_key('xhr')
 
 	profile = user.get_profile()
 	meshus = Meshu.objects.filter(user_profile=profile)
 
-	print('user_login_success after:', Cart(request).count(), request.session.get('CART-ID'))
 	if xhr:
 		return json_dump({
 			'success': True,

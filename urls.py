@@ -14,9 +14,6 @@ urlpatterns = patterns('',
 	# robots.txt
 	(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /view/4e6f6e65*\nDisallow: /edit/4e6f6e65*", mimetype="text/plain")),
 
-	# yahoo oauth
-	(r'^qkJHhD86JB_vHk_U3ACp32TDIqXyHzV3Hlkcba0VaQ--\.html$', lambda r: HttpResponse("Hi Yahoo!", mimetype="text/plain")),
-
 	# Uncomment the admin/doc line below to enable admin documentation:
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -33,6 +30,40 @@ urlpatterns = patterns('',
 	}),
 
 	url(r'^m/', include('shorturls.urls'))
+)
+
+# meshu item functions, manipulating things
+urlpatterns += patterns('meshu.item',
+	url(r'^make/template/(?P<item_encoded>\d+)/to_png', 'processing_dataurl_to_image'),
+	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
+
+	# begin ordering an existing user meshu
+	url(r'^make/(?P<item_encoded>\d+)/to_png', 'item_topng'),
+	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
+
+
+	url(r'^make/to_png', 'processing_dataurl_to_image'),
+	url(r'^make/data/to_png', 'processing_dataurl_to_image'),
+
+	url(r'^make/geojson', 'item_from_geojson'),
+	url(r'^make/data', 'item_from_data'),
+	url(r'^make/create/', 'item_create'),
+	url(r'^make/assign/', 'item_assign'),
+
+	# save/new always creates a new meshu
+	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
+	url(r'^edit/(?P<item_encoded>\d+)/update', 'item_update'),
+
+	# edit an existing user meshu
+	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
+
+	# display
+	url(r'^view/(?P<item_encoded>\w+)/to_png', 'item_topng'),
+	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
+
+	# users own meshus
+	url(r'^user/(?P<item_encoded>\d+)/save', 'item_save'),
+	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
 )
 
 urlpatterns += patterns('meshu.views',
@@ -110,39 +141,6 @@ urlpatterns += patterns('meshu.views',
 
 	# internal to see email templates
 	url(r'^email/(?P<template>\w+)', 'mail_viewer'),
-)
-
-urlpatterns += patterns('meshu.item',
-	url(r'^make/template/(?P<item_encoded>\d+)/to_png', 'processing_dataurl_to_image'),
-	url(r'^make/template/(?P<item_encoded>\d+)', 'item_from_preset'),
-
-	# begin ordering an existing user meshu
-	url(r'^make/(?P<item_encoded>\d+)/to_png', 'item_topng'),
-	url(r'^make/(?P<item_encoded>\d+)/', 'item_begin_order'),
-
-
-	url(r'^make/to_png', 'processing_dataurl_to_image'),
-	url(r'^make/data/to_png', 'processing_dataurl_to_image'),
-
-	url(r'^make/geojson', 'item_from_geojson'),
-	url(r'^make/data', 'item_from_data'),
-	url(r'^make/create/', 'item_create'),
-	url(r'^make/assign/', 'item_assign'),
-
-	# save/new always creates a new meshu
-	url(r'^edit/(?P<item_encoded>\d+)/save', 'item_save'),
-	url(r'^edit/(?P<item_encoded>\d+)/update', 'item_update'),
-
-	# edit an existing user meshu
-	url(r'^edit/(?P<item_encoded>\d+)', 'item_edit'),
-
-	# display
-	url(r'^view/(?P<item_encoded>\w+)/to_png', 'item_topng'),
-	url(r'^view/(?P<item_encoded>\w+)', 'item_display'),
-
-	# users own meshus
-	url(r'^user/(?P<item_encoded>\d+)/save', 'item_save'),
-	# url(r'^user/(?P<item_encoded>\d+)/delete', 'item_delete'),
 )
 
 # meshu/accounts.py
