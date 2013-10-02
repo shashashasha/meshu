@@ -50,7 +50,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^cart/empty', 'cart_empty'),
 	url(r'^cart/view', 'cart_view'),
 	url(r'^cart/add/', 'cart_add'),
-	url(r'^cart/info.json', 'cart_info'),
 
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
 

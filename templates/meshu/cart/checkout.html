@@ -333,13 +333,18 @@
 	                <label class="payment-errors note error" style="display: none;"></label>
 	            </div>
 	        <p class="note payment-note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>
-	        <h2 style="margin-top: 40px; float: left;">Email Address</h2>
+
+
+			<h2 style="margin-top: 40px; float: left;{% if user.is_anonymous %} display: none;{% endif %}">Mailing List</h2>
+			<h2 style="margin-top: 40px; float: left;{% if user.is_authenticated %} display: none;{% endif %}" class="nav-list last">Email Address</h2>
+			{% if user.is_anonymous %}
 	        <div id="createAccount" class="button">or, create an account?</div>
 	        <div class="form-row">
 	            <label>Contact Email</label>
 	            <input type="text" class="required" name="email_address" style="width:200px; margin-left: 15px;">
 	        </div>
 	        <p class="note">We will never share your email with anyone else, we hate spam as much as you do!</p>
+	        {% endif %}
 	        <input type="checkbox" checked="true" name="email_checkbox" style="margin-top:10px"> Yes! Sign me up for the occassional newsletter email!
 	    	<input type="submit" id="submit-button" class="button" value="Submit Payment" tabindex="-1"/>
 	    </div>
@@ -383,7 +388,7 @@
 {% block resources %}
     <script type="text/javascript">
     	$(".cart-row").each(function(){
-    		var theta = $(this).find(".theta").text();	
+    		var theta = $(this).find(".theta").text();
     		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.07) rotate("+theta+", 300, 300)");
     	});
     	$("#createAccount").click(function(){

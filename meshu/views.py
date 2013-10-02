@@ -112,6 +112,7 @@ def cart_view(request):
 	})
 
 def cart_checkout(request):
+	print('cart_checkout:', Cart(request).count(), request.session.get('CART-ID'))
 	current_cart = Cart(request)
 	return render(request, 'meshu/cart/checkout.html', {
 		'cart' : current_cart,
@@ -218,6 +219,8 @@ def submit_orders(request):
 		return submit_single(request, shipping, items)
 
 def submit_multiple(request, shipping, items):
+	print('submit_single:', shipping.contact)
+
 	orders = []
 	for item in items:
 		order = item.product
@@ -243,6 +246,7 @@ def submit_multiple(request, shipping, items):
 	current_cart.clear()
 
 	mail_multiple_order_confirmation(shipping.contact, orders)
+
 	return render(request, 'meshu/notification/ordered_multiple.html', {
 		'orders': orders,
 		'view': 'paid'
