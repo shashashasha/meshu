@@ -33,7 +33,7 @@ var user = function() {
             self.showModal('signin');
         });
 
-        $(".login-cancel").click(self.hideModal); 
+        $(".login-cancel").click(self.hideModal);
 
         // switching mode
         $("#login-form li").click(function(){
@@ -41,7 +41,7 @@ var user = function() {
 
             var form = $("#login-form");
 
-            form.attr("class",mode); 
+            form.attr("class",mode);
             form.find("li").removeClass("active");
 
             $(this).addClass("active");
@@ -59,8 +59,8 @@ var user = function() {
             }
         });
 
-        /* 
-            when logging in 
+        /*
+            when logging in
         */
         $(".facebook-signin").click(function() {
             window.location = '/facebook/login';
@@ -76,11 +76,11 @@ var user = function() {
                 signin_name: "Sorry, that's not a valid email format."
             },
             submitHandler: function(){
-                $.post('/user/login/', { 
-                    'xhr': 'true', 
+                $.post('/user/login/', {
+                    'xhr': 'true',
                     'csrfmiddlewaretoken': $("#csrf input").val(),
-                    'email': $("#signin_name").val(), 
-                    'password': $("#signin_password").val() 
+                    'email': $("#signin_name").val(),
+                    'password': $("#signin_password").val()
                 }, onLogIn, 'json');
             }
         });
@@ -96,11 +96,11 @@ var user = function() {
                 inline_signin_name: "Sorry, that's not a valid email format."
             },
             submitHandler: function(){
-                var post = { 
-                    'xhr': 'true', 
+                var post = {
+                    'xhr': 'true',
                     'csrfmiddlewaretoken': $("#csrf input").val(),
-                    'email': $("#inline_signin_name").val(), 
-                    'password': $("#inline_signin_password").val() 
+                    'email': $("#inline_signin_name").val(),
+                    'password': $("#inline_signin_password").val()
                 };
                 $.post('/user/login/', post, onLogIn, 'json');
             }
@@ -124,8 +124,8 @@ var user = function() {
                     'xhr': 'true',
 
                     'csrfmiddlewaretoken': $("#csrf input").val(),
-                    'email': $("#account_name").val(), 
-                    'password': $("#account_password").val() 
+                    'email': $("#account_name").val(),
+                    'password': $("#account_password").val()
                 }, onLogIn, 'json');
             }
         });
@@ -148,8 +148,8 @@ var user = function() {
                     'xhr': 'true',
 
                     'csrfmiddlewaretoken': $("#csrf input").val(),
-                    'email': $("#inline_account_name").val(), 
-                    'password': $("#inline_account_password").val() 
+                    'email': $("#inline_account_name").val(),
+                    'password': $("#inline_account_password").val()
                 }, onLogIn, 'json');
             }
         });
@@ -160,7 +160,7 @@ var user = function() {
                 FB.logout();
             }
             $.get('/user/logout/', { 'xhr': 'true' }, onLogOut, 'json');
-        }); 
+        });
     };
 
     /*
@@ -207,7 +207,7 @@ var user = function() {
 
     function onLogOut(data) {
         $("#login").show();
-        
+
         $("#profile").hide();
         $("#logout").hide().html('');
 
@@ -221,7 +221,7 @@ var user = function() {
     }
 
     function onLogIn(data) {
-        
+
         // if the login information was incorrect
         if (!data.success) {
             $(".login-error").fadeIn();
@@ -256,6 +256,10 @@ var user = function() {
         if (self.afterLogIn) {
             self.afterLogIn();
             self.afterLogIn = null;
+        }
+
+        if (self.loginRedirect) {
+            window.location.href = self.loginRedirect;
         }
     }
 

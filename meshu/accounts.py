@@ -17,9 +17,13 @@ from cart import Cart
 
 from meshu.views import *
 
+# preserve 'CART-ID' when logging in
+from meshu.decorators import persist_session_vars
+
 #
 # Views for Users
 #
+@persist_session_vars(['CART-ID'])
 def login_user_flow(request, user):
 	print('login_user_flow before:', Cart(request).count(), request.session.get('CART-ID'))
 	if user is not None:
@@ -32,6 +36,7 @@ def login_user_flow(request, user):
 	else:
 	    return user_login_error(request, user)
 
+@persist_session_vars(['CART-ID'])
 def user_login(request, *args, **kwargs):
 	print('user_login before:', Cart(request).count(), request.session.get('CART-ID'))
 	email = request.POST['email']
@@ -47,6 +52,7 @@ def user_login(request, *args, **kwargs):
 	print('user_login after:', Cart(request).count(), request.session.get('CART-ID'))
 	return login_user_flow(request, user)
 
+@persist_session_vars(['CART-ID'])
 def user_login_success(request, user):
 	print('user_login_success before:', Cart(request).count(), request.session.get('CART-ID'))
 	xhr = request.POST.has_key('xhr')
@@ -102,6 +108,7 @@ def user_logout(request, *args, **kwargs):
 
 	return notify(request, 'loggedout')
 
+@persist_session_vars(['CART-ID'])
 def user_create(request):
 	username = uuid.uuid4().hex[:30]
 

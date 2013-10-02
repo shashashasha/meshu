@@ -21,7 +21,7 @@
 			</tr>
 		{% for item in cart.items %}
 			<tr class="cart-row">
-				<td class="theta">{{item.product.meshu.theta|safe}}</td>	
+				<td class="theta">{{item.product.meshu.theta|safe}}</td>
 				<td><a href="{{ item.product.meshu.get_edit_url }}">{{ item.product.meshu.svg|safe }}</a></td>
 				<td>{{ item.product }}</td>
 				<td class="price"><span class="dollar">$</span>{{ item.unit_price }}</td>
@@ -55,8 +55,14 @@
 {% block resources %}
     <script type="text/javascript">
     	$(".cart-row").each(function(){
-    		var theta = $(this).find(".theta").text();	
+    		var theta = $(this).find(".theta").text();
     		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
     	});
+
+    	// refresh the page if we login or out
+    	$(function() {
+			user.loginRedirect = window.location.href;
+			user.logoutRedirect = window.location.href;
+		});
     </script>
 {% endblock %}

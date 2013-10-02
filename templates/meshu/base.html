@@ -28,7 +28,6 @@
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
-
 	<div id="top">
 		{% block navigation %}
 		<ul id="nav">
@@ -37,9 +36,8 @@
 			<li class="nav-list"><a href="/about/">about</a></li>
 			<li class="nav-list" style="margin-right: 20px; padding-right: 20px; border-right: 1px solid #000;"><a href="http://blog.meshu.io/">blog</a></li>
 			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">profile</a></li>
-			<li class="nav-list" id="nav-cart"><a href="/cart/view">cart
-			{% if cart_count > 0 %}<span class="num">({{ cart_count }})</span>{% endif %}
-			</a></li>
+			{% if cart_count > 0 %}<li class="nav-list" id="nav-cart"><a href="/cart/view">cart
+			<span class="num">({{ cart_count }})</span></a></li>{% endif %}
 
 			<li id="login" {% if user.is_authenticated %}style="display: none;"{% endif %} class="nav-list last">login</li>
 			<li id="logout" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list last">logout</li>
