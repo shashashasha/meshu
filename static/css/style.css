@@ -1070,6 +1070,9 @@ body.firefox.win #rotate-help .border-notch {
 .wrapper.selected .important {
   color: #ff3fb4;
 }
+.wrapper.selected .title {
+  color: #ff3fb4;
+}
 .wrapper svg,
 .wrapper .ring-frame {
   width: 300px;
@@ -1491,6 +1494,7 @@ body.ie8 .city-input {
 
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
+  position: relative;
 }
 #material-list li:hover {
   border: 2px solid #808080;
@@ -1513,10 +1517,43 @@ body.ie8 .city-input {
   float: right;
 }
 #material-list .img {
+  margin-bottom: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 6px;
+}
+.img-wrapper {
   width: 100%;
   height: 120px;
-  background-color: #eee;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
+}
+#material-list .img.ring,
+#material-list .img.cufflinks {
+  opacity: 0;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+}
+#material-list .ring .img.ring,
+#material-list .cufflinks .img.cufflinks {
+  opacity: 1;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+}
+#material-list .ring .img.default,
+#material-list .cufflinks .img.default {
+  opacity: 0;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
 }
 .nav {
   background-color: #808080;

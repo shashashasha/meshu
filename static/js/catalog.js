@@ -13,7 +13,7 @@ sb.catalog = function(renderer, promo) {
 				   		{"bamboo":{"price":75,"colors":["amber"]},
 				   		"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["white"]},
-						"brass":{"price":135,"colors":["polished"]},
+						// "brass":{"price":135,"colors":["polished"]},
 						"silver":{"price":145,"colors":["sterling"]}
 						},
 				   "necklace":
@@ -21,7 +21,7 @@ sb.catalog = function(renderer, promo) {
 				   		"acrylic":{"price": 85,"colors":["black","white"]},
 						// "nylon":{"price":90,"colors":["black","white"]},
 						"silver":{"price":165,"colors":["sterling"]},
-						"brass":{"price":165,"colors":["polished"]}
+						// "brass":{"price":165,"colors":["polished"]}
 						},
 					"cufflinks":
 						{"silver":{"price":165,"colors":["sterling"]},
@@ -30,7 +30,7 @@ sb.catalog = function(renderer, promo) {
 					"ring":
 						{"nylon":{"price":30,"colors":["white"]},
 						"silver":{"price":120,"colors":["sterling"]},
-						"brass":{"price":120,"colors":["polished"]}
+						// "brass":{"price":120,"colors":["polished"]}
 						}
 					};
 

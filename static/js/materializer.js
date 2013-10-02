@@ -45,10 +45,13 @@ sb.materializer = function() {
 
 		$.each(self.materials.find("li"),function(i,v){
 			var item = $(this).attr("id");
-			if (materials[item])
+			if (materials[item]) {
 				$(v).removeClass("inactive").find(".price").text("$"+materials[item]);
-			else
+				$(v).find(".img-wrapper").attr("class","img-wrapper "+p);
+			} else {
 				$(v).addClass("inactive").removeClass("selected").find(".price").text("");
+				$(v).find(".img-wrapper").attr("class","img-wrapper");
+			}
 		});
 
 		return self;
