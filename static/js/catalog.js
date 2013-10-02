@@ -60,11 +60,11 @@ sb.catalog = function(renderer, promo) {
 					};
 
 	makeTimes = {
-		"bamboo":"3-4 Weeks",
-		"acrylic":"3-4 Weeks",
+		"bamboo":"2-3 Weeks",
+		"acrylic":"2-3 Weeks",
 		"nylon":"3-4 Weeks",
-		"silver":"5-6 Weeks",
-		"brass":"5-6 Weeks"
+		"silver":"4-5 Weeks",
+		"brass":"4-5 Weeks"
 	};
 
 	// set the product type options with either facet or radial

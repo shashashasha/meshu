@@ -48,7 +48,7 @@ sb.materializer = function() {
 			if (materials[item])
 				$(v).removeClass("inactive").find(".price").text("$"+materials[item]);
 			else
-				$(v).addClass("inactive").find(".price").text("");
+				$(v).addClass("inactive").removeClass("selected").find(".price").text("");
 		});
 
 		return self;
@@ -62,7 +62,10 @@ sb.materializer = function() {
 	self.material = function(m) {
 		if (!arguments.length)	return material;
 
-		material = m;
+		if (m == "reset")
+			material = null;
+		else
+			material = m;
 
 		return self;
 	};

@@ -126,6 +126,8 @@ sb.ui.orderer = function() {
 			color = sb.materializer.color(),
 			priceCents = catalog.getPrice(product, material);
 
+			console.log(product, material, color, priceCents)
+
 		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
 				.attr("class","review-delaunay").attr("transform","scale(.25)");
 
@@ -133,12 +135,16 @@ sb.ui.orderer = function() {
 
 		if (product)
 			$(".review-product").removeClass("inactive").text(product);
+
 		if (color && material) 
 			$(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
+		else 
+			$(".review-material").addClass("inactive").text("not chosen");
+		
 		if (product && color && material) {
 			$(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
 			$(".review-make-time").text(catalog.getMakeTime(material));
-			if (miniDelaunay.children().length > 0)
+			if (miniDelaunay.children().length)
 				$("#add-to-cart").removeClass("inactive");
 		}
 	}

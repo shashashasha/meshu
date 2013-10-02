@@ -99,7 +99,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                     return;
                 }
 
-                else if (results.length > 0) {
+                else if (results.length) {
                     var first = results[0].locations[0];
 
                     switch (mesh.name) {
