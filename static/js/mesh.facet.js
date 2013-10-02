@@ -103,12 +103,12 @@ sb.mesh.facet = function (frame, map, width, height) {
     });
 
     // point being clicked
-    self.on("clickedPoint", function(pt) {
-        // not updating the map when removing points anymore
-        var index = points.indexOf(pt);
-        self.remove(index);
-        self.refresh();
-    });
+    // self.on("clickedPoint", function(pt) {
+    //     // not updating the map when removing points anymore
+    //     var index = points.indexOf(pt);
+    //     self.remove(index);
+    //     self.refresh();
+    // });
 
     self.on("removed", function() {
         if (points.length < 3) $("#scroll-down").fadeIn();
@@ -321,7 +321,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         else {
             pixel_bounds = [];
         }
-        console.log('updating pixel bounds', lats, lons, pixel_bounds);
+        // console.log('updating pixel bounds', lats, lons, pixel_bounds);
     };
 
     function update(){
@@ -453,12 +453,15 @@ sb.mesh.facet = function (frame, map, width, height) {
         });
         names.select(".place-edit").on("click",function(d,i){
             var node = $(this).parent();
-            if (!d.edit) self.editText(node,i,"place");
-            else self.saveText(node,i,"place");
+            if (!d.edit) {
+                self.editText(node,i,"place");
+                self.removeInput();
+            } else self.saveText(node,i,"place");
             d.edit = !d.edit;
         });
         names.select(".place-text").on("click",function(d,i){
             if (d.edit) return;
+            self.removeInput();
             self.editText($(this).parent(),i,"place");
             d.edit = !d.edit;
         });
@@ -524,7 +527,6 @@ sb.mesh.facet = function (frame, map, width, height) {
             update();
         }
 
-        console.log(points.length)
         if (points.length >= 3) $("#scroll-down").fadeIn();
 
         /*

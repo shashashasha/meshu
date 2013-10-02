@@ -156,7 +156,7 @@ $(function() {
 
 		var material = sb.materializer.material(),
 			color = sb.materializer.color();
-			
+
 		if (!(color+"-"+material in catalog.getMaterials(product))) {
 			sb.materializer.material("reset");
 		}
@@ -164,6 +164,8 @@ $(function() {
 
    		switch (product) {
    			case 'cufflinks':
+   				$("#final-rotate").hide();
+				$("#final-ring").hide();
 	   			sb.ui.orderer.clearMetadata("ringSize");
    				break;
    			case 'ring':
