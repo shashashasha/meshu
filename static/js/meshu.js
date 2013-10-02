@@ -9,7 +9,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         renderer = renderer || 'facet',
         // use the renderer given
 		mesh = sb.mesh[renderer](frame, map, width, height),
-        cases = $("#cases");
+        searchError = $("#search-error");
 
     self.offsetX = 0;
 
@@ -30,7 +30,7 @@ sb.meshu = function(frame, renderer, existingMap) {
     //     cases.fadeOut();
     // })
     searchbox.keypress(function(event) {
-        cases.fadeOut();
+        searchError.fadeOut();
         if ( event.which == 13 ) {
             var input = searchbox.val();
             searchPlaces(input);
@@ -87,11 +87,11 @@ sb.meshu = function(frame, renderer, existingMap) {
             success: function(data){
                 // var results = data.ResultSet.Results || [data.ResultSet.Result];
                 var results = data.results;
-                cases.empty().hide();
+                searchError.empty().hide();
 
                 if (typeof results == "undefined" || results[0].locations.length == 0) {
                     var msg = "Hrm, we weren't able to find your search. Try again?";
-                    cases.append($("<p>").text(msg)).fadeIn();
+                    searchError.append($("<p>").text(msg)).fadeIn();
                     searchbox.focus();
                     return;
                 }

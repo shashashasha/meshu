@@ -561,7 +561,7 @@ body.win #login-form ul {
 #search input:hover {
   border: 1px solid #ff3fb4;
 }
-#cases {
+#search-error {
   color: #ff3fb4;
   position: absolute;
 }
