@@ -21,16 +21,16 @@ sb.catalog = function(renderer, promo) {
 				   		"acrylic":{"price": 85,"colors":["black","white"]},
 						// "nylon":{"price":90,"colors":["black","white"]},
 						"silver":{"price":165,"colors":["sterling"]},
-						// "brass":{"price":165,"colors":["polished"]}
+						// "brass":{"price":155,"colors":["polished"]}
 						},
 					"cufflinks":
-						{"silver":{"price":165,"colors":["sterling"]},
-						"brass":{"price":165,"colors":["polished"]}
+						{"silver":{"price":155,"colors":["sterling"]},
+						"brass":{"price":145,"colors":["polished"]}
 						},
 					"ring":
 						{"nylon":{"price":30,"colors":["white"]},
 						"silver":{"price":120,"colors":["sterling"]},
-						// "brass":{"price":120,"colors":["polished"]}
+						// "brass":{"price":110,"colors":["polished"]}
 						}
 					};
 
@@ -43,8 +43,8 @@ sb.catalog = function(renderer, promo) {
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price":85,"colors":["black","white"]},
 						"nylon":{"price":95,"colors":["black","white"]},
-						"silver":{"price":160,"colors":["sterling"]},
-						"brass":{"price":160,"colors":["polished"]}
+						"silver":{"price":155,"colors":["sterling"]},
+						"brass":{"price":145,"colors":["polished"]}
 						},
 					"coasters":
 				   		{"bamboo":{"price":60,"colors":["amber"]},
