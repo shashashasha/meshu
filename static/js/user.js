@@ -208,6 +208,9 @@ var user = function() {
     function onLogOut(data) {
         $("#login").show();
 
+        // hide the cart on logout
+        $("#nav-cart").hide();
+
         $("#profile").hide();
         $("#logout").hide().html('');
 
