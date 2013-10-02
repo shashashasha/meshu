@@ -126,6 +126,11 @@ sb.ui.orderer = function() {
 			color = sb.materializer.color(),
 			priceCents = catalog.getPrice(product, material);
 
+		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
+				.attr("class","review-delaunay").attr("transform","scale(.25)");
+
+		$(".review-svg").empty().append(miniDelaunay);
+
 		if (product)
 			$(".review-product").removeClass("inactive").text(product);
 		if (color && material) 
@@ -133,12 +138,9 @@ sb.ui.orderer = function() {
 		if (product && color && material) {
 			$(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
 			$(".review-make-time").text(catalog.getMakeTime(material));
-			$("#add-to-cart").removeClass("inactive");
+			if (miniDelaunay.children().length > 0)
+				$("#add-to-cart").removeClass("inactive");
 		}
-		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
-				.attr("class","review-delaunay").attr("transform","scale(.25)");
-
-		$(".review-svg").empty().append(miniDelaunay);
 	}
 
 	self.metadata = function(s) {
