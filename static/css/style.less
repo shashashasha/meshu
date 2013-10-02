@@ -614,7 +614,7 @@ body.win #login-form ul {
     padding: 0;
 }
 .edit-panel {
-    width: 320px;
+    width: 350px;
 }
 
 #search {
@@ -641,11 +641,20 @@ body.win #login-form ul {
         border: 1px solid @pink;
     }
 }
+
 #search-error {
     color: @pink;
     position: absolute;
+    display: none;
 }
-
+#loading {
+    width: 25px;
+    height: 25px;
+    background-image: url(../images/ui/loading.gif);
+    float: right;
+    margin-top: 3px;
+    display: none;
+}
 .button {
     cursor: pointer;
     background-color: @blue;

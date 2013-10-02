@@ -9,7 +9,8 @@ sb.meshu = function(frame, renderer, existingMap) {
         renderer = renderer || 'facet',
         // use the renderer given
 		mesh = sb.mesh[renderer](frame, map, width, height),
-        searchError = $("#search-error");
+        searchError = $("#search-error"),
+        loadingGif = $("#loading");
 
     self.offsetX = 0;
 
@@ -81,17 +82,19 @@ sb.meshu = function(frame, renderer, existingMap) {
             url: url,
             cache: false,
             dataType: 'json',
+            beforeSend: function() {
+                loadingGif.show();
+            },
             error: function(error, error1, error2){
                 console.log(error2);
             },
             success: function(data){
-                // var results = data.ResultSet.Results || [data.ResultSet.Result];
                 var results = data.results;
-                searchError.empty().hide();
+                loadingGif.hide();
 
                 if (typeof results == "undefined" || results[0].locations.length == 0) {
-                    var msg = "Hrm, we weren't able to find your search. Try again?";
-                    searchError.append($("<p>").text(msg)).fadeIn();
+                    // var msg = "Hrm, we weren't able to find your search. Try again?";
+                    searchError.fadeIn();
                     searchbox.focus();
                     return;
                 }

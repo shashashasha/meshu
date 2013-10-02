@@ -536,7 +536,7 @@ body.win #login-form ul {
   padding: 0;
 }
 .edit-panel {
-  width: 320px;
+  width: 350px;
 }
 #search {
   padding: 20px;
@@ -564,6 +564,15 @@ body.win #login-form ul {
 #search-error {
   color: #ff3fb4;
   position: absolute;
+  display: none;
+}
+#loading {
+  width: 25px;
+  height: 25px;
+  background-image: url(../images/ui/loading.gif);
+  float: right;
+  margin-top: 3px;
+  display: none;
 }
 .button {
   cursor: pointer;
