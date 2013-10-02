@@ -105,31 +105,52 @@ def cart_remove(request, order_id):
 	return HttpResponseRedirect("/cart/view")
 
 def cart_view(request):
-	current_cart = Cart(request)
+	current_cart = cart_assign(request)
+
 	return render(request, 'meshu/cart/cart.html', {
 		'cart' : current_cart,
 		'cart_count' : current_cart.count()
 	})
 
 def cart_checkout(request):
-	current_cart = Cart(request)
+	current_cart = cart_assign(request)
+
 	return render(request, 'meshu/cart/checkout.html', {
 		'cart' : current_cart,
 		'cart_count' : current_cart.count()
 	})
+
+def cart_assign(request):
+	current_cart = Cart(request)
+
+	# only assign if the user is logged in
+	if request.user.is_authenticated() is False:
+		return current_cart
+
+	# grab all items, for double checking
+	items = current_cart.cart.item_set.all()
+
+	profile = current_profile(request)
+
+	for item in items:
+		order = item.product
+		order.user_profile = profile
+
+		# only assign meshu user_profile if created as guest
+		# allows for marathon type meshu's that the user doesn't 'own'
+		if order.meshu.user_profile.user.username == 'guest':
+			order.meshu.user_profile = profile
+			order.meshu.save()
+
+		order.save()
+
+	return current_cart
 
 def cart_empty(request):
 	current_cart = Cart(request)
 	current_cart.clear()
 
 	return HttpResponseRedirect("/cart/view")
-
-def cart_info(request):
-	current_cart = Cart(request)
-	return json_dump({
-		'current_cost': current_cart.total(),
-		'count': current_cart.count()
-	})
 
 # verify_coupon has to be an xhr request, we don't want to refresh the page
 def order_verify_coupon(request):
@@ -225,6 +246,8 @@ def submit_orders(request):
 		return submit_single(request, shipping, items)
 
 def submit_multiple(request, shipping, items):
+	print('submit_multiple:', shipping.contact)
+
 	orders = []
 	for item in items:
 		order = item.product
@@ -250,12 +273,15 @@ def submit_multiple(request, shipping, items):
 	current_cart.clear()
 
 	mail_multiple_order_confirmation(shipping.contact, orders)
+
 	return render(request, 'meshu/notification/ordered_multiple.html', {
 		'orders': orders,
 		'view': 'paid'
 	})
 
 def submit_single(request, shipping, items):
+	print('submit_single:', shipping.contact)
+
 	item = items[0]
 	order = item.product
 	order.shipping = shipping

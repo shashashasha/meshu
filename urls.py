@@ -38,7 +38,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('meshu.views',
 
 	# meshu begin
-	url(r'^$', direct_to_template, {
+	url(r'^$', 'base_view', {
 		'template': 'meshu/index.html'
 	}),
 
@@ -50,7 +50,6 @@ urlpatterns += patterns('meshu.views',
 	url(r'^cart/empty', 'cart_empty'),
 	url(r'^cart/view', 'cart_view'),
 	url(r'^cart/add/', 'cart_add'),
-	url(r'^cart/info.json', 'cart_info'),
 
 	url(r'^order/apply_coupon', 'order_verify_coupon'),
 
@@ -162,6 +161,7 @@ urlpatterns += patterns('meshu.accounts',
 	url(r'^user/reset', direct_to_template, {
 		'template': 'meshu/user/change.html'
 	}),
+
 	url(r'^user/password/reset', 'user_forgot_password'),
 	url(r'^user/password/change', 'user_change_password'),
 	url(r'^user/', 'user_profile'),

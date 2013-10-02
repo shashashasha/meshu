@@ -12,22 +12,33 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 # our models
 from meshu.models import Meshu, MeshuImage, Order, UserProfile
 
+# not sure why i can't do cart.models import Cart
+from cart import Cart
+
 from meshu.views import *
+
+# preserve 'CART-ID' when logging in
+from meshu.decorators import persist_session_vars
 
 #
 # Views for Users
 #
+@persist_session_vars(['CART-ID'])
 def login_user_flow(request, user):
+	print('login_user_flow before:', Cart(request).count(), request.session.get('CART-ID'))
 	if user is not None:
 		if user.is_active:
 			response = login(request, user)
+			print('login_user_flow after:', Cart(request).count(), request.session.get('CART-ID'))
 			return user_login_success(request, user)
 		else:
 			return user_login_error(request, user)
 	else:
 	    return user_login_error(request, user)
 
+@persist_session_vars(['CART-ID'])
 def user_login(request, *args, **kwargs):
+	print('user_login before:', Cart(request).count(), request.session.get('CART-ID'))
 	email = request.POST['email']
 
 	try:
@@ -38,14 +49,18 @@ def user_login(request, *args, **kwargs):
 		pass
 
 	user = authenticate(username=email, password=request.POST['password'])
+	print('user_login after:', Cart(request).count(), request.session.get('CART-ID'))
 	return login_user_flow(request, user)
 
+@persist_session_vars(['CART-ID'])
 def user_login_success(request, user):
+	print('user_login_success before:', Cart(request).count(), request.session.get('CART-ID'))
 	xhr = request.POST.has_key('xhr')
 
 	profile = user.get_profile()
 	meshus = Meshu.objects.filter(user_profile=profile)
 
+	print('user_login_success after:', Cart(request).count(), request.session.get('CART-ID'))
 	if xhr:
 		return json_dump({
 			'success': True,
@@ -55,9 +70,10 @@ def user_login_success(request, user):
 		})
 	else:
 		return render(request, 'meshu/gallery/gallery.html', {
-				'view' : 'user',
-				'profile' : profile,
-				'meshus': meshus
+			'view' : 'user',
+			'profile' : profile,
+			'meshus': meshus,
+			'cart_count': Cart(request).count()
 		})
 
 def user_login_error(request, user):
@@ -92,6 +108,7 @@ def user_logout(request, *args, **kwargs):
 
 	return notify(request, 'loggedout')
 
+@persist_session_vars(['CART-ID'])
 def user_create(request):
 	username = uuid.uuid4().hex[:30]
 
@@ -144,9 +161,10 @@ def user_profile(request):
 	meshus = Meshu.objects.filter(user_profile=profile)
 
 	return render(request, 'meshu/gallery/gallery.html', {
-			'view' : 'user',
-			'profile' : profile,
-			'meshus': meshus
+		'view' : 'user',
+		'profile' : profile,
+		'meshus': meshus,
+		'cart_count': Cart(request).count()
 	})
 
 def user_forgot_password(request):

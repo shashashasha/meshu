@@ -33,7 +33,6 @@
         {% endif %} -->
         {% for object in meshus reversed %}
             <li class="{% if view == 'user' %}mini-meshu{% else %}object{% endif %}">
-                <!-- <div class="image"></div> -->
                 <a href="
                     {% if view == 'shop' %}/shop/{{ object.id }}{% endif %}
                     {% if view == 'user' %}{{ object.get_absolute_url }}{% endif %}">
@@ -76,7 +75,7 @@
                 renderer = $(this).find(".renderer").html(),
                 metadata = $(this).find(".metadata").html(),
                 svg = $(this).find(".svg").html();
-            
+
             var meshu = sb.minimeshu(frame, renderer);
             meshu.initializeFromData(data, metadata, svg);
             if (renderer == "radial")
@@ -86,7 +85,7 @@
         /*
             Fixing last row of objects bottom border.
 
-            maybe this can actually be done in CSS, 
+            maybe this can actually be done in CSS,
             but I'm not quite sure how....
         */
         var galleryObjects = $(".object");
