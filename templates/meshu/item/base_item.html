@@ -51,7 +51,7 @@
 
     {% block object %}
         <div id="product" class="section">
-            <div id="save-and-view" class="button nav">save meshu and exit</div>
+            {% block saveExit %}<div id="save-and-view" class="button nav">save meshu and exit</div>{% endblock %}
             <h2>Choose Your Piece</h2>
             <div id="product-preview">
                 {% block products %}

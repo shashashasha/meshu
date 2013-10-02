@@ -727,7 +727,7 @@ body.win .notch {
 }
 #place-title .title-text {
   display: inline-block;
-  width: 249px;
+  width: 288px;
   position: relative;
   height: 34px;
   cursor: text;
@@ -740,7 +740,7 @@ body.win .notch {
   margin-bottom: 0;
 }
 #place-title input {
-  width: 235px;
+  width: 280px;
   position: absolute;
   top: 0;
   font-size: 21px;
