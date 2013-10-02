@@ -35,8 +35,6 @@ $(function() {
 	// initialize the viewhandler
 	// sb.viewhandler.initialize();
 
-	console.log('pageType:', pageType);
-
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
 
@@ -156,8 +154,18 @@ $(function() {
 		wrapper.addClass("selected");
 		var product = wrapper.attr("id").split("-")[1];
 
+		var material = sb.materializer.material(),
+			color = sb.materializer.color();
+
+		if (!(color+"-"+material in catalog.getMaterials(product))) {
+			sb.materializer.material("reset");
+		}
+
+
    		switch (product) {
    			case 'cufflinks':
+   				$("#final-rotate").hide();
+				$("#final-ring").hide();
 	   			sb.ui.orderer.clearMetadata("ringSize");
    				break;
    			case 'ring':

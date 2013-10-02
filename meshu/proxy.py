@@ -7,7 +7,7 @@ from django.utils import simplejson
 
 import string, random
 
-# this is how i get dates. 
+# this is how i get dates.
 from datetime import datetime
 
 # proxy yahoo api
@@ -19,35 +19,19 @@ import time
 
 
 def processing_geocoder(request):
-	# Set the API endpoint 
-	url = "http://yboss.yahooapis.com/geo/placefinder"
-	location = request.GET.get('location', '')
+	# Set the API endpoint
+	url = "http://open.mapquestapi.com/geocoding/v1/address"
+	location = urllib.quote(request.GET.get('location', ''))
 
-	# Set up instances of our Token and Consumer. The Consumer.key and 
-	# Consumer.secret are given to you by the API provider. 
-	consumer = oauth.Consumer(key=settings.OAUTH_CONSUMER_KEY, secret=settings.OAUTH_CONSUMER_SECRET)
+	# because the api key has annoying characters,
+	# we're just passing the url as a string directly
+	key = settings.MAPQUEST_API_KEY
 
-	# Set the base oauth_* parameters along with any other parameters required
-	# for the API call.
-	params = {
-	    'oauth_version': "1.0",
-	    'oauth_nonce': oauth.generate_nonce(),
-	    'oauth_timestamp': int(time.time()),
-	    'flags': 'J',
-	    'location': urllib.quote(location),
-	    'oauth_consumer_key': consumer.key
-	}
-
-	# Create our request. Change method, etc. accordingly.
-	req = oauth.Request(method="GET", url=url, parameters=params)
-
-	signature_method = oauth.SignatureMethod_HMAC_SHA1()
-
-	# no token because reasons
-	req.sign_request(signature_method, consumer, None)
+	# sigh
+	full_url = url + '?location=' + location + '&key=' + key;
 
 	try:
-		response = urllib2.urlopen(req.to_url())
+		response = urllib2.urlopen(full_url)
 		json = response.read()
 		return HttpResponse(json, mimetype='application/json')
 	except urllib2.URLError:
@@ -87,4 +71,3 @@ def processing_tiles(request, subdomain, zoom, x, y):
 		return HttpResponse(response.read(), mimetype="image/png")
 	except urllib2.URLError:
 		return HttpResponse('', mimetype='application/json')
-    

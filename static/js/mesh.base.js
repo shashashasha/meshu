@@ -34,8 +34,7 @@ sb.mesh.base = function (frame, map, width, height) {
         last_mouse = null,
         meshuTitle = null;
 
-    var content = $("#content"),
-        cases = $("#cases");
+    var content = $("#content");
 
     // d3.select(uiFrame.node())
     d3.select(".frame")

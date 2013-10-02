@@ -88,7 +88,7 @@ $(function() {
 		};
 
 		self.updateRing = function() {
-			var main = $("#final-ring .frame");
+			var main = $("#final-ring .frame").empty();
 
 			var ringPreview = $(".ring-preview-frame").clone();
 

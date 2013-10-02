@@ -26,7 +26,9 @@
                 <p class="note">Add places by searching, or clicking on the map.</p>
                 <input type="text" id="searchbox" size="29" value="add a city, place, or address"
                     onfocus="value=''"/>
+                <div id="loading"></div>
                 <div id="search-button" class="button">search</div>
+                <div id="search-error">Hrm, we weren't able to find your search. Try again?</div>
             </div>
             {% block places %}
                 <div id="places" class="edit-panel">
@@ -49,7 +51,7 @@
 
     {% block object %}
         <div id="product" class="section">
-            <div id="save-and-view" class="button nav">save meshu and exit</div>
+            {% block saveExit %}<div id="save-and-view" class="button nav">save meshu and exit</div>{% endblock %}
             <h2>Choose Your Piece</h2>
             <div id="product-preview">
                 {% block products %}

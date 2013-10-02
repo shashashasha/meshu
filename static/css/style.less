@@ -614,7 +614,7 @@ body.win #login-form ul {
     padding: 0;
 }
 .edit-panel {
-    width: 320px;
+    width: 350px;
 }
 
 #search {
@@ -642,6 +642,19 @@ body.win #login-form ul {
     }
 }
 
+#search-error {
+    color: @pink;
+    position: absolute;
+    display: none;
+}
+#loading {
+    width: 25px;
+    height: 25px;
+    background-image: url(../images/ui/loading.gif);
+    float: right;
+    margin-top: 3px;
+    display: none;
+}
 .button {
     cursor: pointer;
     background-color: @blue;
@@ -792,7 +805,7 @@ body.win .notch {
 }
 #place-title .title-text {
     display: inline-block;
-    width: 249px;
+    width: 288px;
     position: relative;
     height: 34px;
     cursor: text;
@@ -805,7 +818,7 @@ body.win .notch {
     margin-bottom: 0;
 }
 #place-title input {
-    width: 235px;
+    width: 280px;
     position: absolute;
     top: 0;
     font-size: 21px;
@@ -915,6 +928,7 @@ body.firefox .place .place-text {
     position: absolute;
     right: 0px;
     top: 0;
+    border-left: 1px solid @borderGrey;
 }
 #meshu-container > div {
     top: 0;
