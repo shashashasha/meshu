@@ -561,6 +561,10 @@ body.win #login-form ul {
 #search input:hover {
   border: 1px solid #ff3fb4;
 }
+#cases {
+  color: #ff3fb4;
+  position: absolute;
+}
 .button {
   cursor: pointer;
   background-color: #1fcaff;
@@ -837,6 +841,7 @@ body.firefox .place .place-text {
   position: absolute;
   right: 0px;
   top: 0;
+  border-left: 1px solid #e6e6e6;
 }
 #meshu-container > div {
   top: 0;

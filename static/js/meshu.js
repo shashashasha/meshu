@@ -26,10 +26,11 @@ sb.meshu = function(frame, renderer, existingMap) {
     });
 
     var searchbox = $("#searchbox");
-    searchbox.focus(function(){
+    // searchbox.focus(function(){
+    //     cases.fadeOut();
+    // })
+    searchbox.keypress(function(event) {
         cases.fadeOut();
-    })
-    .keypress(function(event) {
         if ( event.which == 13 ) {
             var input = searchbox.val();
             searchPlaces(input);
@@ -85,35 +86,38 @@ sb.meshu = function(frame, renderer, existingMap) {
             },
             success: function(data){
                 // var results = data.ResultSet.Results || [data.ResultSet.Result];
-                var results = data.bossresponse.placefinder.results;
+                var results = data.results;
                 cases.empty().hide();
 
-                if (typeof results == "undefined") {
-                    searchbox.blur();
-
+                if (typeof results == "undefined" || results[0].locations.length == 0) {
                     var msg = "Hrm, we weren't able to find your search. Try again?";
-
-                    // show the message
                     cases.append($("<p>").text(msg)).fadeIn();
+                    searchbox.focus();
+                    return;
                 }
+
                 else if (results.length > 0) {
-                    var first = results[0];
+                    var first = results[0].locations[0];
 
                     switch (mesh.name) {
                         case 'facet':
                         case 'print':
-                            mesh.add(first.offsetlat, first.offsetlon, input);
+                            // mesh.add(first.offsetlat, first.offsetlon, input);
+                            mesh.add(first.latLng.lat, first.latLng.lng, input);
                             self.updateBounds();
 
                             // set the zoom for first point
                             if (mesh.points().length == 1) {
-                                setZoomRadius(first.radius);
+                                // setZoomRadius(first.radius);
+                                setZoomGranularity(first.geocodeQuality);
                             }
                             break;
                         case 'radial':
                             // set the zoom based on radius
-                            setZoomRadius(first.radius/10);
-                            mesh.add(first.offsetlat, first.offsetlon, input);
+                            // setZoomRadius(first.radius/10);
+                            setZoomGranularity(first.geocodeQuality, 12);
+                            // mesh.add(first.offsetlat, first.offsetlon, input);
+                            mesh.add(first.latLng.lat, first.latLng.lng, input);
                             break;
 
                     }
@@ -125,32 +129,69 @@ sb.meshu = function(frame, renderer, existingMap) {
     /*
         Zoom level reference for various levels of granularity of the geocoder
     */
-    function getZoom(rad) {
-        // region
-        if (rad > 100000) {
-            return 4;
-        }
-        // bigger city
-        else if (rad > 10000) {
-            return 12;
-        }
-        // small town
-        else if (rad > 1000) {
-            return 13;
-        }
-        // address
-        else if (rad > 400) {
-            return 14;
-        }
+    // function getZoom(rad) {
+    //     // region
+    //     if (rad > 100000) {
+    //         return 4;
+    //     }
+    //     // bigger city
+    //     else if (rad > 10000) {
+    //         return 12;
+    //     }
+    //     // small town
+    //     else if (rad > 1000) {
+    //         return 13;
+    //     }
+    //     // address
+    //     else if (rad > 400) {
+    //         return 14;
+    //     }
 
-        // default
-        return 12;
+    //     // default
+    //     return 12;
+    // };
+
+    // function setZoomRadius(rad) {
+    //     var zoom = getZoom(rad);
+
+    //     // don't change it unless it's different
+    //     if (zoom != map.map.zoom()) {
+    //         map.map.zoom(zoom);
+    //     }
+    // };
+    function getZoomGranularity(granularity) {
+        switch (granularity) {
+            case 'POINT':
+            case 'ADDRESS':
+            case 'INTERSECTION':
+
+            case 'STREET':
+                return 14;
+
+            case 'ZIP':
+            case 'ZIP_EXTENDED':
+                return 13;
+
+            case 'CITY':
+                return 12;
+
+            case 'COUNTY':
+                return 10;
+
+            case 'STATE':
+                return 6;
+            case 'COUNTRY':
+                return 4;
+
+            default:
+                return 12;
+        }
     };
 
-    function setZoomRadius(rad) {
-        var zoom = getZoom(rad);
+    function setZoomGranularity(grain, min) {
+        var zoom = Math.max(min || 4, getZoomGranularity(grain));
 
-        // don't change it unless it's different
+        // to prevent tiles flashing
         if (zoom != map.map.zoom()) {
             map.map.zoom(zoom);
         }
