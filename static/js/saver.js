@@ -49,6 +49,8 @@ var saver = function() {
         if ($(meshuID).length)
             xhr.id = self.getMeshuID();
 
+        console.log(xhr, 'creating new meshu');
+
         // push this
         $.post('/make/create/', xhr, function(data) {
             // create new meshu_id element in the form
