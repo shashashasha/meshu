@@ -146,7 +146,12 @@ sb.mesh.facet = function (frame, map, width, height) {
                 var dist = Math.sqrt((dx * dx) + (dy * dy));
                 if (dist > max) {
                     max = dist;
-                    pair = [pj, pi];
+
+                    // rotate the least from the top point
+                    if (pj.y > pi.y)
+                        pair = [pj, pi];
+                    else
+                        pair = [pi, pj];
                 }
             }
         }

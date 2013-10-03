@@ -26,8 +26,6 @@ $(function() {
 
 				self.resetPreviewImage(product.type);
 
-				console.log(meshTarget);
-
 				if (typeof meshTarget == "string") {
 					self.previewFromSelector(product.type, meshTarget);
 				} else {
@@ -58,11 +56,11 @@ $(function() {
 		*/
 		self.previewFromSelector = function(product, meshSelector) {
 			var svg = d3.select("#preview-" + product),
-				transform = sb.transforms.getTransform(product, "product"),
 				rotation = meshu.mesh().getLongestRotation(),
-				rotatedTransform = transform + meshu.mesh().getLongestRotation(90),
 				projected = meshu.mesh().projectPoints(rotation),
-				proportion = projected.width / projected.height;
+				proportion = projected.width / projected.height,
+				transform = sb.transforms.getTransform(product, "product", projected),
+				rotatedTransform = transform + meshu.mesh().getLongestRotation(90);
 
 			if (product == 'cufflinks') {
 				meshu.mesh().transformedDelaunay(projected, 450, 400, 0);
@@ -79,17 +77,16 @@ $(function() {
 				var endWidth = 450,
 					endHeight = 450 / proportion;
 
-				if (proportion > 2) {
+				var derotation = 'rotate(-' + [meshu.mesh().getRotationAngle(), 300, 300].join(',') + ')';
+				if (proportion > 1.5) {
 					endHeight = endHeight * 2;
 				}
-
-				var derotation = [meshu.mesh().getRotationAngle()-90, 300, 300].join(',');
 
 				meshu.mesh().transformedDelaunay(projected, endWidth, endHeight, 0);
 
 				var miniDelaunay = $(meshSelector).clone()
 					.attr("class","product-delaunay")
-					.attr("transform", transform + 'rotate(-' + derotation + ')');
+					.attr("transform", transform + derotation);
 
 				$(svg[0]).append(miniDelaunay);
 

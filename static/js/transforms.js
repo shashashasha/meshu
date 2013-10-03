@@ -21,8 +21,8 @@ sb.transforms = {
 	},
 	"necklace": {
 		"product": {
-			scale: .18,
-			transform: {x: 80, y: 155}
+			scale: .2,
+			transform: {x: 80, y: 185}
 		},
 		"render": {
 			scale: .4,
