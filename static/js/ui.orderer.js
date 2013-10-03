@@ -124,28 +124,30 @@ sb.ui.orderer = function() {
 		var product = sb.materializer.product(),
 			material = sb.materializer.material(),
 			color = sb.materializer.color(),
-			priceCents = catalog.getPrice(product, material);
-
-			console.log(product, material, color, priceCents)
+			priceCents = catalog.getPrice(product, material),
+			renderer = meshu.mesh().name,
+			review = $("#review");
 
 		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
 				.attr("class","review-delaunay").attr("transform","scale(.25)");
 
-		$(".review-svg").empty().append(miniDelaunay);
+		review.find(".review-svg").empty().append(miniDelaunay);
 
 		if (product)
-			$(".review-product").removeClass("inactive").text(product);
+			review.find(".review-product").removeClass("inactive").text(product);
 
 		if (color && material) 
-			$(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
+			review.find(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
 		else 
-			$(".review-material").addClass("inactive").text("not chosen");
+			review.find(".review-material").addClass("inactive").text("not chosen");
 		
 		if (product && color && material) {
-			$(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
-			$(".review-make-time").text(catalog.getMakeTime(material));
-			if (miniDelaunay.children().length)
-				$("#add-to-cart").removeClass("inactive");
+			review.find(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
+			review.find(".review-make-time").text(catalog.getMakeTime(material));
+			
+			if (renderer == "facet" && miniDelaunay.children().length || 
+				renderer == "radial" && $(".meshu-svg .radial").children().length)
+				review.find("#add-to-cart").removeClass("inactive");
 		}
 	}
 

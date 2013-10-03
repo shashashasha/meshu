@@ -489,6 +489,7 @@ body.win #login-form ul {
 }
 #content .section.last {
   border-bottom: none;
+  height: 250px;
 }
 .inner-content {
   padding: 0 20px;
@@ -1001,6 +1002,7 @@ body.firefox.win #rotate-help .border-notch {
 #final-ring .frame {
   position: relative;
   height: 300px;
+  border: none;
 }
 #wrapper-ring:hover .strip {
   -webkit-animation-play-state: running;
@@ -1258,9 +1260,6 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: #ff3fb4;
   border: 1px solid white;
 }
-#review {
-  color: #808080;
-}
 #review .review-field {
   text-transform: capitalize;
   color: black;
@@ -1279,8 +1278,14 @@ input[type="range"]::-webkit-slider-thumb {
   stroke: #808080;
   stroke-width: 20;
 }
-#review h2 {
-  margin: 0 0 3px 170px;
+#review .review-svg image {
+  opacity: .4;
+}
+#review h3 {
+  margin: 0 0 15px 170px;
+  font-weight: 300;
+  font-size: 22px;
+  color: #808080;
 }
 #account input {
   float: right;
@@ -1605,7 +1610,6 @@ body.ie8 .city-input {
 }
 .view .item-actions .nav {
   float: right;
-  margin-left: 12px;
 }
 .view .back {
   left: auto;

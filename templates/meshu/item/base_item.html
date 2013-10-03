@@ -98,6 +98,7 @@
 
     {% block checkout %}
         <div id="review" class="section last">
+            <h2>All Set?</h2>
             <form action="/cart/add/" method="POST" id="order-form" name="order-form">
                 {# put a csrf token in every form in django, for security #}
                 {% csrf_token %}
@@ -118,10 +119,10 @@
                 </div>
             </form>
             <svg class="review-svg" width="150" height="150"></svg>
-            <h2>Product: <span class="review-product review-field inactive">not chosen</span></h2>
-            <h2>Material: <span class="review-material review-field inactive">not chosen</span></h2>
-            <h2>Price: <span class="review-price review-field"></span></h2>
-            <h2>Estimated Make Time: <span class="review-make-time review-field"></span></h2>
+            <h3>Product: <span class="review-product review-field inactive">not chosen</span></h3>
+            <h3>Material: <span class="review-material review-field inactive">not chosen</span></h3>
+            <h3>Price: <span class="review-price review-field"></span></h3>
+            <h3>Estimated Make Time: <span class="review-make-time review-field"></span></h3>
             <div id="add-to-cart" class="button pink inactive" value="Submit Payment" tabindex="-1">Add to Cart</div>
         </div>
     {% endblock %}
