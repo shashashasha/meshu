@@ -31,19 +31,7 @@ $(function() {
 				} else {
 					self.previewFromElement(product.type, meshTarget);
 				}
-
-				// seenProducts[product.type] = true;
-
-				// var range = self.describeProductRange(product);
-				// $("#range-" + product.type).html(range);
 			}
-
-			// $("#product-preview .wrapper").each(function(i, e) {
-			// 	var id = e.id.split('-').pop();
-			// 	if (!seenProducts[id]) {
-			// 		$(e).hide();
-			// 	}
-			// });
 		};
 
 		self.resetPreviewImage = function(product) {
@@ -56,41 +44,36 @@ $(function() {
 		*/
 		self.previewFromSelector = function(product, meshSelector) {
 			var svg = d3.select("#preview-" + product),
-				rotation = meshu.mesh().getLongestRotation(),
-				projected = meshu.mesh().projectPoints(rotation),
+				mesh = meshu.mesh(),
+				rotation = mesh.getLongestRotation(),
+				projected = mesh.projectPoints(rotation),
 				proportion = projected.width / projected.height,
-				transform = sb.transforms.getTransform(product, "product", projected),
-				rotatedTransform = transform + meshu.mesh().getLongestRotation(90),
-				derotation = 'rotate(-' + [meshu.mesh().getRotationAngle(), 140, 200].join(',') + ')';
+				transform = sb.transforms.getTransform(product, "product"),
+				rotatedTransform = transform + mesh.getLongestRotation(90),
+				derotation = 'rotate(-' + [mesh.getRotationAngle(), 140, 200].join(',') + ')';
 
 			// sf|honolulu|nyc|miami|detroit
-			if (product == 'cufflinks') {
-				meshu.mesh().transformedDelaunay(projected, 450, 400, 0);
-
-				var miniDelaunay = $(meshSelector).clone()
-					.attr("class","product-delaunay")
-					.attr("transform", transform);
-
-				$(svg[0]).append(miniDelaunay);
-
-				meshu.mesh().refresh();
-
-			} else if (product == 'necklace') {
+			if (product == 'cufflinks' || product == 'necklace') {
 				var endWidth = 450,
-					endHeight = 450 / proportion;
+					endHeight = 400,
+					finaltransform = product == 'necklace' ? derotation + transform : transform;
 
-				if (proportion > 2) {
-					endHeight = endHeight * 2;
+				if (product == 'necklace') {
+					endHeight = 450 / proportion;
+					if (proportion > 2) {
+						endHeight = endHeight * 2;
+					}
 				}
 
-				meshu.mesh().transformedDelaunay(projected, endWidth, endHeight, 0);
+				mesh.transformedDelaunay(projected, endWidth, endHeight);
 
 				var miniDelaunay = $(meshSelector).clone()
 					.attr("class","product-delaunay")
-					.attr("transform", derotation + transform);
+					.attr("transform", finaltransform);
 
 				$(svg[0]).append(miniDelaunay);
-				meshu.mesh().refresh();
+
+				mesh.refresh();
 
 			} else if (product == 'earrings' || product == 'pendant') {
 				var miniDelaunay = $(meshSelector).clone()

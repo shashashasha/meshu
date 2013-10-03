@@ -62,8 +62,31 @@ sb.transforms = {
 };
 
 sb.transforms.getTransform = function(product, type, rotation) {
-	var t = sb.transforms[product][type],
-		r = 0;
+	var t = sb.transforms[product][type];
 
-	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
+	var transform = "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
+
+	if (rotation != undefined)
+		transform = transform + 'rotate(' + rotation + ',300,300)';
+	return transform;
+};
+
+sb.transforms.getDefaultRotation = function(product) {
+	var mesh = meshu.mesh();
+
+	switch (product) {
+		case 'cufflinks':
+			return mesh.getRotationAngle();
+
+		case 'earrings':
+		case 'pendant':
+			var rotation = mesh.getLongestRotation(),
+				projected = mesh.projectPoints(rotation),
+				proportion = projected.width / projected.height;
+			return proportion > 1.5 ? mesh.getRotationAngle() + 90 : 0;
+
+		case 'necklace':
+		default:
+			return 0;
+	}
 };

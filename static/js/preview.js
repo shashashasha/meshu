@@ -9,6 +9,8 @@ $(function() {
 
 		self.update = function(product) {
 			$(rotateFrame).empty();
+			// set default
+			rotation = rotation || sb.transforms.getDefaultRotation(product);
 
 			var main = d3.select(rotateFrame);
 
@@ -23,7 +25,7 @@ $(function() {
 
 			var div = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform", self.getTransform(product));
+						.attr("transform", self.getTransform(product, 'product', rotation));
 
 			// var bounding = $(hiddenFrame).clone().attr("class","rotate-ui");
 
@@ -75,9 +77,33 @@ $(function() {
 		 //          d3.event.stopPropagation();
 		 //        }
 			// }
+
+
+		    // save the rotation for now
+		    var cr = 0, cs = 1, ctx = 0, cty = 0;
+		    var rotateInterval;
 			function rotateBig(deg) {
-				rotation = (rotation + deg) % 360;
-				div.attr("transform", self.getTransform(product));
+		        if (rotateInterval) {
+		            clearInterval(rotateInterval);
+		        }
+
+		        // old rotation
+		        cr = rotation;
+
+		        // new rotation
+				rotation = (rotation + deg);
+
+				// div.attr("transform", self.getTransform(product, "product", cr));
+
+		        var counter = 0;
+		        rotateInterval = setInterval(function(){
+		            if (++counter < 30) {
+		                cr += (rotation - cr) * .3;
+		                div.attr("transform", sb.transforms.getTransform(product, "product", cr));
+		            }
+		            else
+		                clearInterval(rotateInterval);
+		        }, 40);
 			}
 			$("#rotate-cw").click(function(){
 				rotateBig(22.5);
@@ -119,7 +145,7 @@ $(function() {
 		};
 
 		self.rotation = function(r) {
-			if (!arguments.length) return rotation;
+			if (!arguments.length) return rotation % 360;
 
 			rotation = r;
 

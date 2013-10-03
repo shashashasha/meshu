@@ -255,6 +255,8 @@ sb.mesh.facet = function (frame, map, width, height) {
     };
 
     self.transformedDelaunay = function(projected, projWidth, projHeight, buffer) {
+        buffer = buffer || 0;
+
         var bbox = projected,
             scaleWidth = projWidth / bbox.width,
             scaleHeight = projHeight / bbox.height;
