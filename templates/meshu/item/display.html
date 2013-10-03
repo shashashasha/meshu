@@ -12,7 +12,7 @@
 {% block view %}
     <div id="view" class="{{ meshu.renderer }}">
         <h2>
-            <span>{{ meshu.title }}</span>
+            <!-- <span>{{ meshu.title }}</span> -->
             {% if user.is_authenticated %}
             {% if user.id == meshu.user_profile.user.id %}
                 <div class="item-actions">
