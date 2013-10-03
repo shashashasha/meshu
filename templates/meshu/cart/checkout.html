@@ -307,7 +307,7 @@
 		                <option value="Zimbabwe">Zimbabwe</option>
 		            </select>
 		        </div>
-		        <p class="note">Please allow 3-4 weeks for acrylic and bamboo orders,<br />and 4-5 weeks for nylon, and 5-6 weeks for silver.</p>
+		        <p class="note">Please allow 3-4 weeks for acrylic and bamboo orders, 4-5 weeks for nylon,<br /> and 5-6 weeks for silver. <span class="international">We ship all international orders with tracking numbers to guarantee delivery. For cheaper options without tracking please <a href="mailto:hi@meshu.io">email us</a>.</span></p>
 	        </div>
 	    </div>
 	    <div class="half">
@@ -359,7 +359,6 @@
     	{% if cart.discount_percent > 0 %}
         <h2 id="subtotal-price" class="review-header">Subtotal:
         	<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span> <span style="padding-left: 10px; padding-right: 10px; text-decoration: line-through;"> <span class="dollar">$</span>{{ cart.total|floatformat:2 }} </span></h2>
-        	<!-- <span>({{ cart.discount_percent|floatformat:0 }}% off!) ${{ cart.discount_applied|floatformat:2 }}</span></h2> -->
         {% else %}
 	        <h2 id="subtotal-price" class="review-header">Subtotal:
         	<span><span class="dollar">$</span>{{ cart.discount_applied|floatformat:2 }}</span></h2>
