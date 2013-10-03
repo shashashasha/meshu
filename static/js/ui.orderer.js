@@ -133,8 +133,14 @@ sb.ui.orderer = function() {
 
 		review.find(".review-svg").empty().append(miniDelaunay);
 
-		if (product)
-			review.find(".review-product").removeClass("inactive").text(product);
+		if (product) {
+			if (product == "ring") {
+				var size = sb.ui.orderer.metadata().ringSize ? sb.ui.orderer.metadata().ringSize : "<span class='inactive'>not chosen</span>";
+				review.find(".review-product").removeClass("inactive").html(product+" — size "+size);
+			}
+			else
+				review.find(".review-product").removeClass("inactive").text(product);
+		}
 
 		if (color && material) 
 			review.find(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
@@ -146,8 +152,11 @@ sb.ui.orderer = function() {
 			review.find(".review-make-time").text(catalog.getMakeTime(material));
 			
 			if (renderer == "facet" && miniDelaunay.children().length || 
-				renderer == "radial" && $(".meshu-svg .radial").children().length)
+				renderer == "radial" && $(".meshu-svg .radial").children().length) {
+				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
+					return;
 				review.find("#add-to-cart").removeClass("inactive");
+			}
 		}
 	}
 

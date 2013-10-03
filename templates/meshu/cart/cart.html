@@ -15,6 +15,7 @@
 			<tr class="headings">
 				<td>Meshu</td>
 				<td>Product</td>
+				<td>Quantity</td>
 				<td>Subtotal</td>
 				<td></td>
 				<td></td>
@@ -24,6 +25,7 @@
 				<td class="theta">{{item.product.meshu.theta|safe}}</td>
 				<td><a href="{{ item.product.meshu.get_edit_url }}">{{ item.product.meshu.svg|safe }}</a></td>
 				<td>{{ item.product }}</td>
+				<td>1</td>
 				<td class="price"><span class="dollar">$</span>{{ item.unit_price }}</td>
 				<!-- cart/update/{{ item.product.id }}/number -->
 				<td><a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a></td>

@@ -563,8 +563,7 @@ body.win #login-form ul {
     padding: 20px;
 }
 #content .section.last {
-    border-bottom: none;
-    height: 250px;
+    border-bottom: none; 
 }
 
 .inner-content {
@@ -1330,13 +1329,14 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #review {
+    height: 250px;
 }
 #review .review-field {
     text-transform: capitalize;
     color: black;
     margin-right: 30px;
 }
-#review .review-field.inactive {
+#review h3 .inactive {
     font-style: italic;
     text-transform: lowercase;
     color: @pink;
@@ -2075,6 +2075,8 @@ circle {
     text-align: right;
     color: @grey;
     font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid @pink;
 }
 .discount-blurb .pink {
     color: @pink;
@@ -2083,7 +2085,7 @@ circle {
     font-size: 14px;
 }
 .cart-wrapper {
-    padding: 40px 20px;
+    padding: 60px 20px 40px;
 }
 #cart {
     width: 100%;
@@ -2126,19 +2128,15 @@ circle {
     color: @grey;
 }
 #cart .cart-remove {
-    background-color: @pink;
+    background-color: @grey;
     color: white;
     display: inline-block;
     padding: 2px 8px;
-    visibility: hidden;
     float: right;
     font-size: 18px;
     line-height: 21px;
 }
-#cart .cart-row:hover .cart-remove {
-    visibility: visible;
 
-}
 .total-wrapper {
     width: 100%;
 }
@@ -2217,12 +2215,13 @@ circle {
 .coupon {
     width: 50%;
     position: absolute;
-    top: 340px;
-    right: 0;
+    top: 410px;
+    left: 20px;
 }
-.coupon h2 {
+.coupon .review-header {
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
+    margin-top: 3px;
 }
 .coupon #coupon-code {
     float: left;
@@ -2236,6 +2235,12 @@ circle {
     color: @grey;
     margin-right: 3px;
     line-height: 30px
+}
+.coupon-form[type=submit] {
+    color: white;
+    border: none;
+    padding: 5px 7px;
+    background-color: @lightGrey;
 }
 #review-total {
     width: 50%;

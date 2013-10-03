@@ -9,7 +9,7 @@ var cashier = function() {
         discountPercent = 1,
         shipping = 5, // default domestic
         domesticShipping = 5,
-        internationalShipping = 38;
+        internationalShipping = 45;
 
     function stripeResponseHandler(status, response) {
         // if (response.error) {
