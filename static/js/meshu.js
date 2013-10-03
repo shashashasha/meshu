@@ -132,36 +132,6 @@ sb.meshu = function(frame, renderer, existingMap) {
     /*
         Zoom level reference for various levels of granularity of the geocoder
     */
-    // function getZoom(rad) {
-    //     // region
-    //     if (rad > 100000) {
-    //         return 4;
-    //     }
-    //     // bigger city
-    //     else if (rad > 10000) {
-    //         return 12;
-    //     }
-    //     // small town
-    //     else if (rad > 1000) {
-    //         return 13;
-    //     }
-    //     // address
-    //     else if (rad > 400) {
-    //         return 14;
-    //     }
-
-    //     // default
-    //     return 12;
-    // };
-
-    // function setZoomRadius(rad) {
-    //     var zoom = getZoom(rad);
-
-    //     // don't change it unless it's different
-    //     if (zoom != map.map.zoom()) {
-    //         map.map.zoom(zoom);
-    //     }
-    // };
     function getZoomGranularity(granularity) {
         switch (granularity) {
             case 'POINT':

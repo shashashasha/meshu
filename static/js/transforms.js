@@ -1,8 +1,8 @@
 sb.transforms = {
 	"earrings": {
 		"product": {
-			scale: .175,
-			transform: {x: 145, y: 112}
+			scale: .19,
+			transform: {x: 135, y: 105}
 		},
 		"render": {
 			scale: .45,
@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 118, y: 168}
+			transform: {x: 110, y: 170}
 		},
 		"render": {
 			scale: .25,
@@ -21,8 +21,8 @@ sb.transforms = {
 	},
 	"necklace": {
 		"product": {
-			scale: .2,
-			transform: {x: 90, y: 140}
+			scale: .18,
+			transform: {x: 80, y: 155}
 		},
 		"render": {
 			scale: .4,
@@ -31,8 +31,8 @@ sb.transforms = {
 	},
 	"cufflinks": {
 		"product": {
-			scale: .15,
-			transform: {x: 110, y: 155}
+			scale: .14,
+			transform: {x: 120, y: 170}
 		},
 		"render": {
 			scale: .4,
@@ -64,15 +64,6 @@ sb.transforms = {
 sb.transforms.getTransform = function(product, type, rotation) {
 	var t = sb.transforms[product][type],
 		r = 0;
-		
-	// auto-rotation for facet
-	if (typeof meshu.mesh().getRotationAngle == "function") {
-		r = meshu.mesh().getRotationAngle()+90;
-		if (product == "necklace" || product == "cufflinks")
-			r = meshu.mesh().getRotationAngle() + 180;
-	}
-	if (rotation)
-		r = (rotation + r)%360;
-	
-	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ") rotate("+r+",300,300)";
+
+	return "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
 };
