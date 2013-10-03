@@ -56,7 +56,8 @@ def item_handler(request, item_id, template, view):
 
 	return render(request, 'meshu/item/' + template, {
 		'meshu': item,
-		'view': view
+		'view': view,
+		'cart_count': Cart(request).count()
 	})
 
 def item_from_geojson(request):
