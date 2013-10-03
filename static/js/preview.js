@@ -5,12 +5,16 @@ $(function() {
 		var self = d3.dispatch("rotated", "ringSizeUpdated");
 
 		var rotation = 0,
-			defaultTransform = "scale(.125) translate(380, 670) ";
+			defaultTransform = "scale(.125) translate(380, 670) ",
+			rotationDiv,
+			currentProduct;
 
 		self.update = function(product) {
 			$(rotateFrame).empty();
+
 			// set default
-			rotation = rotation || sb.transforms.getDefaultRotation(product);
+			currentProduct = product;
+			rotation = rotation || sb.transforms.getDefaultRotation(currentProduct);
 
 			var main = d3.select(rotateFrame);
 
@@ -21,18 +25,18 @@ $(function() {
 				.attr('y', 0)
 				.attr("width",313)
 				.attr("height",297)
-				.attr('xlink:href', self.getImage(product));
+				.attr('xlink:href', self.getImage(currentProduct));
 
-			var div = main.append("svg:g")
+			rotationDiv = main.append("svg:g")
 						.attr("id","transform")
-						.attr("transform", self.getTransform(product, 'product', rotation));
+						.attr("transform", self.getTransform(currentProduct, 'product', rotation));
 
 			// var bounding = $(hiddenFrame).clone().attr("class","rotate-ui");
 
 			var miniDelaunay = $(delaunayFrame).clone()
 				.attr("class","mini-delaunay");
 
-			$(div[0]).append(miniDelaunay);
+			$(rotationDiv[0]).append(miniDelaunay);
 			// .append(bounding);
 
 			// if (product == "pendant") {
@@ -77,41 +81,36 @@ $(function() {
 		 //          d3.event.stopPropagation();
 		 //        }
 			// }
-
-
-		    // save the rotation for now
-		    var cr = 0, cs = 1, ctx = 0, cty = 0;
-		    var rotateInterval;
-			function rotateBig(deg) {
-		        if (rotateInterval) {
-		            clearInterval(rotateInterval);
-		        }
-
-		        // old rotation
-		        cr = rotation;
-
-		        // new rotation
-				rotation = (rotation + deg);
-
-				// div.attr("transform", self.getTransform(product, "product", cr));
-
-		        var counter = 0;
-		        rotateInterval = setInterval(function(){
-		            if (++counter < 30) {
-		                cr += (rotation - cr) * .3;
-		                div.attr("transform", sb.transforms.getTransform(product, "product", cr));
-		            }
-		            else
-		                clearInterval(rotateInterval);
-		        }, 40);
-			}
-			$("#rotate-cw").click(function(){
-				rotateBig(22.5);
-			});
-			$("#rotate-ccw").click(function(){
-				rotateBig(-22.5);
-			});
 		};
+
+	    // save the rotation for now
+	    var cr = 0, rotateInterval;
+		function rotateBig(deg) {
+	        if (rotateInterval) {
+	            clearInterval(rotateInterval);
+	        }
+
+	        // old rotation
+	        cr = rotation;
+			rotation = (rotation + deg);
+
+	        var counter = 0;
+	        rotateInterval = setInterval(function(){
+	            if (++counter < 30) {
+	                cr += (rotation - cr) * .15;
+	                var transform = sb.transforms.getTransform(currentProduct, "product", cr);
+	                rotationDiv.attr("transform", transform);
+	            }
+	            else
+	                clearInterval(rotateInterval);
+	        }, 40);
+		}
+		$("#rotate-cw").click(function(){
+			rotateBig(22.5);
+		});
+		$("#rotate-ccw").click(function(){
+			rotateBig(-22.5);
+		});
 
 		self.updateRing = function() {
 			var main = $("#final-ring .frame").empty();
