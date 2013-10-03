@@ -152,8 +152,11 @@ sb.ui.orderer = function() {
 			review.find(".review-make-time").text(catalog.getMakeTime(material));
 			
 			if (renderer == "facet" && miniDelaunay.children().length || 
-				renderer == "radial" && $(".meshu-svg .radial").children().length)
+				renderer == "radial" && $(".meshu-svg .radial").children().length) {
+				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
+					return;
 				review.find("#add-to-cart").removeClass("inactive");
+			}
 		}
 	}
 
