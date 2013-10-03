@@ -1049,6 +1049,24 @@ body.firefox.win #rotate-help .border-notch {
 .print #product {
   height: 490px;
 }
+.edit #product-preview,
+.edit #material-list {
+  opacity: .35;
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  pointer-events: none;
+}
+.product #product-preview,
+.product #material-list {
+  transition: opacity 0.6s;
+  /*-moz-transition: @property @time;*/
+
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+}
 .wrapper {
   margin: 0 9px 5px 0;
   float: left;

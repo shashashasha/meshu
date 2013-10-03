@@ -1109,6 +1109,16 @@ body.firefox.win #rotate-help .border-notch {
 .print #product {
     height: 490px;
 }
+.edit #product-preview,
+.edit #material-list {
+    opacity: .35;
+    .transition(opacity);
+    pointer-events: none;
+}
+.product #product-preview,
+.product #material-list {
+    .transition(opacity);
+}
 .wrapper {
     margin: 0 9px 5px 0;
     float: left;

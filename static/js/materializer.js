@@ -34,6 +34,8 @@ sb.materializer = function() {
 			var li = $(this);
 			li.parent().find("li").removeClass("selected");
 			li.addClass("selected");
+
+			sb.ui.orderer.updated();
 		});
 	};
 

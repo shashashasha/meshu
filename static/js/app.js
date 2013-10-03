@@ -190,6 +190,7 @@ $(function() {
 			i suck.
 		*/
 		sb.materializer.product(product);
+		sb.ui.orderer.updated();
 	});
 
 	// initialize product picker
