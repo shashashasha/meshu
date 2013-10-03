@@ -11,7 +11,7 @@ sb.viewhandler = function() {
 		$("body").addClass("scrolled");
 	}, { offset: 10 });
 
-	$("#product").waypoint(function(direction) {
+	$("#edit").waypoint(function(direction) {
 		if (direction == "down") {
 			onNext();
 
@@ -20,13 +20,15 @@ sb.viewhandler = function() {
 				sb.rasterizer.ringPreview(meshu);
 		}
 		else onPrev();
-	}, { offset: 550 });
+	}, { offset: function() {
+	    return -70;
+	  } });
 
-	$("#review").waypoint(function(direction) {
+	$("#add-ons").waypoint(function(direction) {
 		if (direction == "down")
 			// populate review forms, update prices
 			sb.ui.orderer.updated();
-	}, { offset: 700 });
+	}, { offset: "bottom-in-view" });
 
 	// self.updateViews = function(pageType) {
 	// 	switch (pageType) {
