@@ -74,6 +74,23 @@ var cashier = function() {
         self.update();
     };
 
+    self.shippingCountry = function(country) {
+        switch (country) {
+            case 'United States':
+                shipping = domesticShipping;
+                break;
+            case 'Canada':
+                shipping = 20;
+                break;
+            case 'Mexico':
+                shipping = 32;
+                break;
+            default:
+                shipping = internationalShipping;
+        }
+        self.update();
+    };
+
     self.applyCoupon = function(value, callback) {
         $.get('/order/apply_coupon', {
             code: value

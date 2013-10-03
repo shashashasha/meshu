@@ -23,6 +23,10 @@ $(function() {
         cashier.shippingMode(mode);
 	});
 
+	$("#countries").change(function() {
+		cashier.shippingCountry($("#countries").val());
+	});
+
 	// set default shipping mode
 	cashier.update();
 
