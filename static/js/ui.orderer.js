@@ -125,6 +125,7 @@ sb.ui.orderer = function() {
 			material = sb.materializer.material(),
 			color = sb.materializer.color(),
 			priceCents = catalog.getPrice(product, material),
+			renderer = meshu.mesh().name,
 			review = $("#review");
 
 		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
@@ -143,7 +144,9 @@ sb.ui.orderer = function() {
 		if (product && color && material) {
 			review.find(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
 			review.find(".review-make-time").text(catalog.getMakeTime(material));
-			if ($(".meshu-svg .delaunay").children().length)
+			
+			if (renderer == "facet" && miniDelaunay.children().length || 
+				renderer == "radial" && $(".meshu-svg .radial").children().length)
 				review.find("#add-to-cart").removeClass("inactive");
 		}
 	}
