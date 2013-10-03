@@ -1,8 +1,8 @@
 sb.transforms = {
 	"earrings": {
 		"product": {
-			scale: .19,
-			transform: {x: 135, y: 105}
+			scale: .17,
+			transform: {x: 135, y: 115}
 		},
 		"render": {
 			scale: .45,
@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 110, y: 170}
+			transform: {x: 110, y: 180}
 		},
 		"render": {
 			scale: .25,
@@ -21,8 +21,8 @@ sb.transforms = {
 	},
 	"necklace": {
 		"product": {
-			scale: .2,
-			transform: {x: 80, y: 185}
+			scale: .22,
+			transform: {x: 80, y: 145}
 		},
 		"render": {
 			scale: .4,

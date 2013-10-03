@@ -254,7 +254,7 @@ sb.mesh.facet = function (frame, map, width, height) {
         return cachedPoints;
     };
 
-    self.transformedDelaunay = function(projected, projWidth, projHeight, buffer, strokeWidth) {
+    self.transformedDelaunay = function(projected, projWidth, projHeight, buffer) {
         var bbox = projected,
             scaleWidth = projWidth / bbox.width,
             scaleHeight = projHeight / bbox.height;
@@ -264,7 +264,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         lines.enter().append("path");
         lines.exit().remove();
-        lines.attr("stroke-width", strokeWidth ? strokeWidth : 20)
+        lines.attr("stroke-width", 20)
             .attr("fill", "none")
             .attr("d", function(d) {
             var l = d.length;

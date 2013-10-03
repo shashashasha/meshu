@@ -34,13 +34,17 @@ sb.meshu = function(frame, renderer, existingMap) {
         searchError.fadeOut();
         if ( event.which == 13 ) {
             var input = searchbox.val();
-            searchPlaces(input);
+            doSearch(input);
         }
     });
 
 	// this is tied to a global submit button for now
     $("#search-button").click(function(){
         var input = searchbox.val();
+        doSearch(input);
+    });
+
+    function doSearch(input) {
         if (input.split('|').length > 2) {
             var inputs = input.split('|');
             for (var i = 0; i < inputs.length; i++) {
@@ -54,7 +58,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         else {
             searchPlaces(input);
         }
-    });
+    }
 
     // self.checkAdded = function() {
     //     pay attention to the number of points

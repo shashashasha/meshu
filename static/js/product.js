@@ -60,8 +60,10 @@ $(function() {
 				projected = meshu.mesh().projectPoints(rotation),
 				proportion = projected.width / projected.height,
 				transform = sb.transforms.getTransform(product, "product", projected),
-				rotatedTransform = transform + meshu.mesh().getLongestRotation(90);
+				rotatedTransform = transform + meshu.mesh().getLongestRotation(90),
+				derotation = 'rotate(-' + [meshu.mesh().getRotationAngle(), 140, 200].join(',') + ')';
 
+			// sf|honolulu|nyc|miami|detroit
 			if (product == 'cufflinks') {
 				meshu.mesh().transformedDelaunay(projected, 450, 400, 0);
 
@@ -77,8 +79,7 @@ $(function() {
 				var endWidth = 450,
 					endHeight = 450 / proportion;
 
-				var derotation = 'rotate(-' + [meshu.mesh().getRotationAngle(), 300, 300].join(',') + ')';
-				if (proportion > 1.5) {
+				if (proportion > 2) {
 					endHeight = endHeight * 2;
 				}
 
@@ -86,10 +87,9 @@ $(function() {
 
 				var miniDelaunay = $(meshSelector).clone()
 					.attr("class","product-delaunay")
-					.attr("transform", transform + derotation);
+					.attr("transform", derotation + transform);
 
 				$(svg[0]).append(miniDelaunay);
-
 				meshu.mesh().refresh();
 
 			} else if (product == 'earrings' || product == 'pendant') {
