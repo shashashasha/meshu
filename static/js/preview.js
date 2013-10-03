@@ -93,13 +93,14 @@ $(function() {
 			var ringPreview = $(".ring-preview-frame").clone();
 
 			$(main).append(ringPreview);
-			self.ringSizeUpdated(7);
+			// self.ringSizeUpdated(7);
 
 			var scale = d3.scale.linear().domain([4,14]).range([.8,1.2]);
 			$("#ring-range").change(function(e){
 				var size = e.currentTarget.value;
 				$("#ring-number").text(size);
 				self.ringSizeUpdated(size);
+				sb.ui.orderer.updated();
 				var s = scale(size);
     			ringPreview.css({
     				"-moz-transform" : "rotateX(15deg) rotateY(0deg) rotateZ(45deg) translate3d(0px,0px,0px) scale("+s+")",
