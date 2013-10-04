@@ -2,12 +2,19 @@
 	Slideshow for the index.html page
 */
 $(function() {
-	var index = 0;
-	var sum = $(".macro").length;
+	var macroIndex = 0;
+	var macroSum = $(".macro").length;
 	setInterval(function(){
-		$("#macro-" + index).fadeOut('slow');
-		$("#macro-" + (index + 1) % sum).fadeIn('slow');
-		index = (index + 1) % sum;
+		$("#macro-" + macroIndex).fadeOut('slow');
+		$("#macro-" + (macroIndex + 1) % macroSum).fadeIn('slow');
+		macroIndex = (macroIndex + 1) % macroSum;
 	}, 7000);
 
+	var bannerIndex = 0;
+	var bannerSum = $(".banner").length;
+	setInterval(function(){
+		$("#banner-" + bannerIndex).fadeOut('slow');
+		$("#banner-" + (bannerIndex + 1) % bannerSum).fadeIn('slow');
+		bannerIndex = (bannerIndex + 1) % bannerSum;
+	}, 7000);
 });

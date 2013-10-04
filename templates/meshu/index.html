@@ -4,61 +4,99 @@
 
 {% block content %}
 	<div id="photos">
-		<img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
-		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" />
+		<!-- <img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
+		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" /> -->
+		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_01.jpg" style="">
+		<img class="banner" id="banner-1" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_02.jpg" style="display:none;">
+		<img class="banner" id="banner-2" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_02.jpg" style="display: none;">
+		<img class="banner" id="banner-3" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_01.jpg" style="display:none;">
 		<div id="intro-text">
-			<span class="meshu-title">meshu</span><br/>
-			turns your places<br />into beautiful objects.
+			<span class="meshu-title">Make memories.</span><br/>
+			Whether it's for a friend, a loved one, or yourself, Meshu helps you make beautiful memories for the places that are important to you.
 		</div>
 		<div class="large-button">
-			<a href="/make/" class="button pink">Make Your Own</a>
+			<a href="/make/facet" class="button pink">Make Your Own</a>
 		</div>
 		<div class="large-button">
 			<a href="/gallery/" class="button">View Our Gallery</a>
 		</div>
-		<div class="minor-actions">
+		<!-- <div class="minor-actions">
 			or you can still use your<br /><div class="foursquare-auth button minor">Foursquare Checkins</div><br \>and<br \><a rel="nofollow" href="/facebook/login" class="button minor facebook-auth">Facebook Places</a>
-		</div>
+		</div> -->
 	</div>
 
-	<h2 class="big">each meshu tells a story:</h2>
-
-	<div id="banners">
-		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/samples/macro0.jpg" />
-		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/samples/macro1.jpg" style="display: none;"/>
-		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/samples/macro2.jpg" style="display: none;"/>
-		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/samples/macro3.jpg" style="display: none;"/>
-	</div>
-
-	<h2 class="big">here's how it works:</h2>
+	<h2 class="big">Here's how it works:</h2>
 
     <ul id="diagram">
         <li>
-            <img src="{{ STATIC_URL }}images/diagrams/diagrams_01.png">
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_01.png">
             <p>Enter in cities you've been to,</p>
             <p>or any places you like.</p>
         </li>
         <li>
-            <img src="{{ STATIC_URL }}images/diagrams/diagrams_02.png">
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_02.png">
             <p>We generate a meshu to order as</p>
-            <p>a necklace, earrings, or cufflinks.</p>
+            <p>a necklace, earrings, cufflinks, or a ring.</p>
         </li>
         <li>
-            <img src="{{ STATIC_URL }}images/diagrams/diagrams_03.png">
-            <p>We fabricate and ship you</p>
-            <p>your finished piece!</p>
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_03.png">
+            <p>We fabricate and ship your</p>
+            <p>finished piece to you!</p>
         </li>
     </ul>
 
-	<h2 class="big">each meshu comes with its own map postcard:</h2>
-	<img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" class="centered">
 
-	<h2 class="big">ready to get started?</h2>
-	<div id="get-started">
-		<a class="option" href="/gallery/">View Our Gallery</a>
-		<a class="option pink" href="/make/">Make Your Own!</a>
+    <a class="product-shot new" href="/make/facet" style="background-image:url({{ STATIC_URL }}images/index/rings.jpg);">
+    	<h3>Put a ring on it.</h3>
+    	<p>Introducing meshu rings. Each is unique, and start from $30!</p>
+    	<div class="button pink">Make a ring</div>
+    </a>
+    <ul class="product-grid small">
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m1.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m14.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/r6.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m5.jpg);"></a></li>
+    </ul>
+    <ul class="product-grid large">
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m11.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/r4.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m10.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m6.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m3.jpg);"></a></li>
+    	<li><a style="background-image:url({{ STATIC_URL }}images/gallery/m7.jpg);"></a></li>
+    </ul>
+    <a class="product-shot old" href="/make/radial" style="background-image:url({{ STATIC_URL }}images/index/radial.jpg); background-size:cover;">
+    	<h3>Hometown Pride</h3>
+    	<p>Created from the streets around your home. Now available as coasters!</p>
+    	<div class="button pink">Make a radial</div>
+    </a>
+
+
+	<h2 class="big">Each meshu tells a story:</h2>
+
+	<div id="banners">
+		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/index/note_banners/macro0.jpg" />
+		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/index/note_banners/macro1.jpg" style="display: none;"/>
+		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/index/note_banners/macro2.jpg" style="display: none;"/>
+		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
 	</div>
-	<h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button grey" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button grey">Foursquare</span> to use your past places.</h2>
+
+	<h2 class="big">Here's what people are saying about Meshu:</h2>
+
+	<!-- <h2 class="big">each meshu comes with its own map postcard:</h2>
+	<img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" class="centered"> -->
+
+	<div class="get-started">
+		<img src="{{ STATIC_URL }}images/index/footer.jpg" style="float: right;">
+		<div class="text">
+			<h2 class="big">Ready to get started?</h2>
+			<div class="options">
+				<a class="option" href="/gallery/">View Our Gallery</a>
+				<a class="option pink" href="/make/">Make Your Own!</a>
+			</div>
+			<h2 class="bottom">Or, connect with <a rel="nofollow" class="facebook-auth button grey" href="/facebook/login">Facebook</a> or <span class="foursquare-auth button grey">Foursquare</span> to use your past places.</h2>
+		</div>
+	</div>
 {% endblock %}
 
 {% block footer %}
