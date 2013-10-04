@@ -18,7 +18,6 @@
 				<td>Quantity</td>
 				<td>Price</td>
 				<td></td>
-				<td></td>
 			</tr>
 		{% for item in cart.items %}
 			<tr class="cart-row">
@@ -27,8 +26,10 @@
 				<td>{{ item.product }}</td>
 				<td><input class="quantity" value="{{ item.quantity }}" min="1" type="number" onchange="location.href='/cart/update/{{ item.product.id }}/'+this.value"></td>
 				<td class="price"><span class="dollar">$</span>{{ item.unit_price }}</td>
-				<td><a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a></td>
-				<td><a href="/cart/remove/{{ item.product.id }}" class="cart-remove">x</a></td>
+				<td>
+					<a href="/cart/remove/{{ item.product.id }}" class="cart-remove button">Remove From Cart</a>
+					<a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a>
+				</td>
 			</tr>
 		{% endfor %}
 		</table>
