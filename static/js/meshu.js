@@ -76,7 +76,11 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
-        var url = "/proxy/geocoder/?location=" + query;
+        // proxy geocoder, used for https
+        // var url = "/proxy/geocoder/?location=" + query;
+
+        // unproxied
+        var url = "http://open.mapquestapi.com/geocoding/v1/address/?location=" + query;
             //$('body').hasClass('ie') || window.location.protocol == 'https:'
             // : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
 

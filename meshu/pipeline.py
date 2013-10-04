@@ -156,7 +156,14 @@ def view_notes(request):
 	}, context_instance=RequestContext(request))
 
 def view_all(request):
-	meshus = Meshu.objects.all()
+	# meshus = Meshu.objects.all()
+
+	# just do all ordered meshus
+	orders = Order.objects.all()
+
+	meshus = []
+	for order in orders:
+		meshus.append(order.meshu)
 
 	return render_to_response('meshu/processing/allview.html', {
 		'meshus': meshus

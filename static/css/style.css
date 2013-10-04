@@ -9,6 +9,7 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
   font-weight: 300;
+  background-color: rgba(187, 187, 187, 0.2);
 }
 ul {
   margin: 0;
@@ -478,6 +479,7 @@ body.win #login-form ul {
 
   -webkit-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
+  background-color: white;
 }
 #content .section {
   width: 100%;
@@ -487,6 +489,7 @@ body.win #login-form ul {
   box-sizing: border-box;
   position: relative;
   padding: 20px;
+  background-color: white;
 }
 #content .section.last {
   border-bottom: none;

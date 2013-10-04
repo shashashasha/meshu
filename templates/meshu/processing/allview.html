@@ -5,6 +5,12 @@
 {% block page_type %}allview{% endblock page_type %}
 
 {% block content %}
+<style type="text/css">
+	/* sorry sha */
+	#map div {
+		position: absolute;
+	}
+</style>
 <div id="map" style="width:1000px;height:600px">
 </div>
 {% endblock %}
@@ -39,7 +45,9 @@
 	var mlons = [];
 	$.each(meshuDatas, function(i, d){
 		var meshur = sb.meshu("#map", 'facet', mapper);
+
 		meshus.push(meshur);
+		meshur.zoomOffset = 0;
 		meshur.initializeFromData(d);
 		mlats = mlats.concat(meshur.mesh().lats());
 		mlons = mlons.concat(meshur.mesh().lons());
