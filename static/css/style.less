@@ -558,7 +558,7 @@ body.win #login-form ul {
 #content .section {
     width: 100%;
     border-bottom: 1px dashed @grey;
-    box-sizing: border-box;
+    .borderBox();
     position: relative;
     padding: 20px;
 }
@@ -1062,6 +1062,9 @@ body.firefox.win #rotate-help .border-notch {
     top: 95px;
     left: 190px;
 }
+#ring-preview-canvas {
+    display: none;
+}
 #final-ring .frame {
     position: relative;
     height: 300px;
@@ -1310,7 +1313,7 @@ body.firefox.win #rotate-help .border-notch {
     -moz-apperance:none;
     width: 300px;
     height: 0px;
-    background-color: #808080;
+    background: #808080;
     border: none;
     margin-top: 15px;
 }
@@ -1319,7 +1322,7 @@ input[type="range"]::-webkit-slider-thumb {
     -moz-appearance: none;
     position: relative;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -1588,7 +1591,7 @@ body.ie8 .city-input {
         float: left;
         height: 170px;
         margin: 0 0 15px 0;
-        box-sizing: border-box;
+        .borderBox();
         .transition(opacity);
         position: relative;
     }
@@ -2127,6 +2130,12 @@ circle {
     border: 1px solid @lightGrey;
     color: @grey;
 }
+#cart .quantity {
+    width: 45px;
+    font-size: 22px;
+    border-color: @lightGrey;
+    color: black;
+}
 #cart .cart-remove {
     background-color: @grey;
     color: white;
@@ -2146,7 +2155,7 @@ circle {
     border-bottom: 1px solid @borderGrey;
     margin-right: 20px;
     padding: 0 0 20px 20px;
-    box-sizing: border-box;
+    .borderBox();
 }
 .total-wrapper span {
     width: 140px;
@@ -2248,7 +2257,7 @@ circle {
     top: 410px;
     padding-right: 20px;
     right: 0px;
-    box-sizing: border-box;
+    .borderBox();
 }
 #review-total #subtotal-price {
     padding-top: 15px;

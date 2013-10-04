@@ -482,6 +482,8 @@ body.win #login-form ul {
 #content .section {
   width: 100%;
   border-bottom: 1px dashed #808080;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
   padding: 20px;
@@ -997,6 +999,9 @@ body.firefox.win #rotate-help .border-notch {
   top: 95px;
   left: 190px;
 }
+#ring-preview-canvas {
+  display: none;
+}
 #final-ring .frame {
   position: relative;
   height: 300px;
@@ -1259,7 +1264,7 @@ body.firefox.win #rotate-help .border-notch {
   -moz-apperance: none;
   width: 300px;
   height: 0px;
-  background-color: #808080;
+  background: #808080;
   border: none;
   margin-top: 15px;
 }
@@ -1268,7 +1273,7 @@ input[type="range"]::-webkit-slider-thumb {
   -moz-appearance: none;
   position: relative;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -1512,6 +1517,8 @@ body.ie8 .city-input {
   float: left;
   height: 170px;
   margin: 0 0 15px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -2077,6 +2084,12 @@ circle.highlight,
   border: 1px solid #8f8f8f;
   color: #808080;
 }
+#cart .quantity {
+  width: 45px;
+  font-size: 22px;
+  border-color: #8f8f8f;
+  color: black;
+}
 #cart .cart-remove {
   background-color: #808080;
   color: white;
@@ -2095,6 +2108,8 @@ circle.highlight,
   border-bottom: 1px solid #e6e6e6;
   margin-right: 20px;
   padding: 0 0 20px 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 .total-wrapper span {
@@ -2197,6 +2212,8 @@ circle.highlight,
   top: 410px;
   padding-right: 20px;
   right: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 #review-total #subtotal-price {

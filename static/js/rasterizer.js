@@ -211,12 +211,22 @@ sb.rasterizer = function() {
 
 				// drawing extra so the white part covers the "back side" of the ring
 				var bottomBorder = 40,
-					topBorder = 0;
-				var background = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
-				background.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
-				background.fillStyle = 'rgba(255, 255, 255, .75)';
-				background.fillRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
-				background.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);
+					topBorder = 0,
+					bgContext;
+
+				if (typeof document.getCSSCanvasContext == 'function') {
+					bgContext = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
+				} else {
+					bgContext = d3.select("#ring-preview-canvas").node().getContext('2d');
+					$(".strip div").css("background-image", "-moz-element(#ring-preview-canvas)");
+				}
+
+				console.log(bgContext);
+				
+				bgContext.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
+				bgContext.fillStyle = 'rgba(255, 255, 255, .75)';
+				bgContext.fillRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
+				bgContext.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);	
 
 				if (callback) {
 					callback(canvas);

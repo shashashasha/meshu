@@ -69,6 +69,9 @@ class Cart:
             )
         except models.Item.DoesNotExist:
             raise ItemDoesNotExist
+        else:
+            item.quantity = quantity
+            item.save()
 
     def items(self):
         return self.cart.item_set.all()
