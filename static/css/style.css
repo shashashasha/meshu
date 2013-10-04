@@ -2055,6 +2055,10 @@ circle.highlight,
 .discount-blurb p {
   font-size: 14px;
 }
+.cart-message {
+  padding-left: 20px;
+  color: #1fcaff;
+}
 .cart-wrapper {
   padding: 50px 20px 40px;
 }
