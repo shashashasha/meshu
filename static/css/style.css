@@ -2231,6 +2231,11 @@ circle.highlight,
   padding-top: 15px;
   border-top: 1px solid black;
 }
+#review-total .pink {
+  float: none;
+  color: #ff3fb4;
+  text-transform: uppercase;
+}
 #review-total h2 {
   margin: 4px 0;
   width: 100%;

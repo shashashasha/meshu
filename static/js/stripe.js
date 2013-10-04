@@ -65,7 +65,7 @@ var cashier = function() {
 
     self.update = function() {
         if (shipping == 0) {
-            $("#shipping-price .dollar").html('free!&nbsp;')
+            $("#shipping-price .dollar").html('<span class="pink">free!&nbsp;</span>')
             $("#shipping-price .num").html('<span style="text-decoration: line-through;">$5.00</span>');
         } else {
             $("#shipping-price .dollar").text('$')
