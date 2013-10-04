@@ -563,7 +563,7 @@ body.win #login-form ul {
     padding: 20px;
 }
 #content .section.last {
-    border-bottom: none; 
+    border-bottom: none;
 }
 
 .inner-content {
@@ -1006,8 +1006,9 @@ body.ie .frame div {
 }
 .rotate-arrow {
     position: absolute;
-    font-size: 40px;
-    top: 240px;
+    height: 80px;
+    width: 50px;
+    top: 170px;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -1017,10 +1018,22 @@ body.ie .frame div {
     user-select: none;
 }
 #rotate-cw {
-    right: 270px;
+    right: 260px;
+    background-image: url(../images/ui/arrows.png);
+    background-position: 0 0;
+
+    &:hover {
+        background-position: 0 80px;
+    }
 }
 #rotate-ccw {
     right: 10px;
+    background-image: url(../images/ui/arrows.png);
+    background-position: -55px 0;
+
+    &:hover {
+        background-position: -55px 80px;
+    }
 }
 /*#rotate-help {
     position: absolute;
@@ -1825,7 +1838,7 @@ circle {
 }
 
 .mini-delaunay path, #product-preview path {
-    stroke-width: 35;
+    stroke-width: 30;
 }
 
 /*#rotate:hover .rotate-ui {

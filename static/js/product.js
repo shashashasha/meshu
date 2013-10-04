@@ -1,3 +1,10 @@
+/*
+
+	Product Previews for Meshus
+	- copying the delaunay bit over various thumbnails
+	- scaling and rotating accordingly
+
+*/
 var sb = sb || {};
 
 $(function() {
@@ -24,19 +31,7 @@ $(function() {
 				} else {
 					self.previewFromElement(product.type, meshTarget);
 				}
-
-				// seenProducts[product.type] = true;
-
-				// var range = self.describeProductRange(product);
-				// $("#range-" + product.type).html(range);
 			}
-
-			// $("#product-preview .wrapper").each(function(i, e) {
-			// 	var id = e.id.split('-').pop();
-			// 	if (!seenProducts[id]) {
-			// 		$(e).hide();
-			// 	}
-			// });
 		};
 
 		self.resetPreviewImage = function(product) {
@@ -44,17 +39,54 @@ $(function() {
 			svg.select(".product-delaunay").remove();
 		};
 
+		/*
+			do preview for facet
+		*/
 		self.previewFromSelector = function(product, meshSelector) {
 			var svg = d3.select("#preview-" + product),
-				transform = sb.transforms.getTransform(product, "product");
+				mesh = meshu.mesh(),
+				rotation = mesh.getLongestRotation(),
+				projected = mesh.projectPoints(rotation),
+				proportion = projected.width / projected.height,
+				transform = sb.transforms.getTransform(product, "product"),
+				rotatedTransform = transform + mesh.getLongestRotation(90),
+				derotation = 'rotate(-' + [mesh.getRotationAngle(), 140, 200].join(',') + ')';
 
-			var miniDelaunay = $(meshSelector).clone()
-				.attr("class","product-delaunay")
-				.attr("transform", transform);
+			// sf|honolulu|nyc|miami|detroit
+			if (product == 'cufflinks' || product == 'necklace') {
+				var endWidth = 450,
+					endHeight = 400,
+					finaltransform = product == 'necklace' ? derotation + transform : transform;
 
-			$(svg[0]).append(miniDelaunay);
+				if (product == 'necklace') {
+					endHeight = 450 / proportion;
+					if (proportion > 2) {
+						endHeight = endHeight * 2;
+					}
+				}
+
+				mesh.transformedDelaunay(projected, endWidth, endHeight);
+
+				var miniDelaunay = $(meshSelector).clone()
+					.attr("class","product-delaunay")
+					.attr("transform", finaltransform);
+
+				$(svg[0]).append(miniDelaunay);
+
+				mesh.refresh();
+
+			} else if (product == 'earrings' || product == 'pendant') {
+				var miniDelaunay = $(meshSelector).clone()
+					.attr("class","product-delaunay")
+					.attr("transform", proportion > 1.5 ? rotatedTransform : transform);
+
+				$(svg[0]).append(miniDelaunay);
+			}
 		};
 
+		/*
+			creates product preview from canvas element, turns to dataurl
+		*/
 		self.previewFromElement = function(product, element) {
 			var svg = d3.select("#preview-" + product),
 				transform = sb.transforms.getTransform(product, "product");
@@ -67,46 +99,6 @@ $(function() {
 				.attr("class","product-delaunay")
 				.attr("transform", transform)
 				.attr('xlink:href', element.toDataURL());
-		};
-
-		// self.range = function(prices) {
-		// 	return prices.length == 1
-		// 			? "$" + prices[0]
-		// 			: "$" + prices[0] + "-" + prices[prices.length - 1];
-		// };
-
-		// self.describeProductRange = function(product) {
-		// 	if (product.discount != undefined) {
-		// 		var range = "<del>" + self.range(product.originals) + "</del>";
-
-		// 		range += " " + self.range(product.prices);
-
-		// 		range += product.discount < 1
-		// 			? " (" + Math.floor((1 - product.discount) * 100) + "% off!)"
-		// 			: " ($" + product.discount + " off!)";
-
-		// 		return range;
-		// 	} else {
-		// 		return self.range(product.prices);
-		// 	}
-		// };
-
-		// self.attachMeshu = function(mesh, frame, transform) {
-		// };
-
-		self.thumbnail = function(mesh, frame, transform) {
-			var miniDelaunay = $(mesh).clone()
-				.attr("class","product-delaunay")
-				.attr("transform", transform);
-
-			d3.select(frame[0])
-				.append('svg:rect')
-					.attr('x', 0)
-					.attr('y', 0)
-					.attr('width', '100%')
-					.attr('height', '100%');
-
-			frame.append(miniDelaunay);
 		};
 
 		self.rotation = function(r) {

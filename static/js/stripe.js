@@ -7,8 +7,8 @@ var cashier = function() {
         currentAmount = totalPrice,
         discountAmount = 0,
         discountPercent = 1,
-        shipping = 5, // default domestic
-        domesticShipping = 5,
+        shipping = 0, // default domestic
+        domesticShipping = 0,
         internationalShipping = 45;
 
     function stripeResponseHandler(status, response) {
@@ -64,13 +64,36 @@ var cashier = function() {
     };
 
     self.update = function() {
-        $("#shipping-price .num").text(shipping + '.00');
+        if (shipping == 0) {
+            $("#shipping-price .dollar").html('free!&nbsp;')
+            $("#shipping-price .num").html('<span style="text-decoration: line-through;">$5.00</span>');
+        } else {
+            $("#shipping-price .dollar").text('$')
+            $("#shipping-price .num").text(shipping + '.00');
+        }
         $("#total-price .num").text(self.getTotal() + '.00');
     };
 
     // update the shipping value
     self.shippingMode = function(value) {
         shipping = value == 'international' ? internationalShipping : domesticShipping;
+        self.update();
+    };
+
+    self.shippingCountry = function(country) {
+        switch (country) {
+            case 'United States':
+                shipping = domesticShipping;
+                break;
+            case 'Canada':
+                shipping = 20;
+                break;
+            case 'Mexico':
+                shipping = 32;
+                break;
+            default:
+                shipping = internationalShipping;
+        }
         self.update();
     };
 

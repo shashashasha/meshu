@@ -10,7 +10,10 @@ sb.mesh.facet = function (frame, map, width, height) {
     // making this not global ._.
     var lats = [],
         lons = [],
-        places = [];
+        places = [],
+        bbox = null,
+        longestRotationAngle = null,
+        cachedPoints = {};
 
     var decoder = document.createElement('div');
 
@@ -93,6 +96,9 @@ sb.mesh.facet = function (frame, map, width, height) {
             so our bounds for this shape may not be correct anymore
         */
         self.dirty = true;
+        bbox = null;
+        longestRotationAngle = null;
+        cachedPoints = {};
 
         update();
     });
@@ -140,7 +146,12 @@ sb.mesh.facet = function (frame, map, width, height) {
                 var dist = Math.sqrt((dx * dx) + (dy * dy));
                 if (dist > max) {
                     max = dist;
-                    pair = [pj, pi];
+
+                    // rotate the least from the top point
+                    if (pj.y > pi.y)
+                        pair = [pj, pi];
+                    else
+                        pair = [pi, pj];
                 }
             }
         }
@@ -172,17 +183,30 @@ sb.mesh.facet = function (frame, map, width, height) {
 
     self.getRotationAngle = function() {
         if (points.length < 2) return;
+        if (longestRotationAngle) return longestRotationAngle;
+
         var pair = furthestPoints(map, points),
-            angle = lineAngle(pair[0], pair[1]),
-            normalizedAngle = -angle + 180;
-        return normalizedAngle;
+            angle = lineAngle(pair[0], pair[1]);
+
+        longestRotationAngle = -angle + 180;
+        return longestRotationAngle;
     };
 
-    self.getLongestRotation = function() {
-        return "rotate(" + [self.getRotationAngle(), 300, 300].join(',') + ") ";
+    // cache it so we don't iterate over all the points all the time
+    self.getLongestRotation = function(offset) {
+        angle = self.getRotationAngle();
+        offset = offset || 0;
+
+        return "rotate(" + [angle + offset, 300, 300].join(',') + ") ";
     };
 
     self.projectPoints = function(transform) {
+        if (cachedPoints.transform == transform) {
+            return cachedPoints;
+        }
+
+        console.log('projecting points');
+
         d3.select("#delaunay-ui").attr("transform", transform);
 
         /*
@@ -211,31 +235,39 @@ sb.mesh.facet = function (frame, map, width, height) {
         // revert circles
         d3.select("#delaunay-ui").attr("transform", "translate(0,0) scale(1) rotate(0,300,300)");
 
-        return {
+        var t_bbox = d3.min(yvalues),
+            l_bbox = d3.min(xvalues),
+            r_bbox = d3.max(xvalues),
+            b_bbox = d3.max(yvalues);
+
+        cachedPoints = {
             pts: projectedPts,
-            xvalues: xvalues,
-            yvalues: yvalues
+            transform: transform,
+            top: t_bbox,
+            left: l_bbox,
+            right: r_bbox,
+            bottom: b_bbox,
+            width: r_bbox - l_bbox,
+            height: b_bbox - t_bbox
         };
-    }
+
+        return cachedPoints;
+    };
 
     self.transformedDelaunay = function(projected, projWidth, projHeight, buffer) {
-        var bbox = {
-            top: d3.min(projected.yvalues),
-            left: d3.min(projected.xvalues),
-            right: d3.max(projected.xvalues),
-            bottom: d3.max(projected.yvalues)
-        },  bboxWidth  = bbox.right - bbox.left,
-            bboxHeight = bbox.bottom - bbox.top,
-            scaleWidth = projWidth / bboxWidth,
-            scaleHeight = projHeight / bboxHeight;
+        buffer = buffer || 0;
+
+        var bbox = projected,
+            scaleWidth = projWidth / bbox.width,
+            scaleHeight = projHeight / bbox.height;
 
         var lines = g.selectAll("path")
             .data(d3.geom.delaunay(projected.pts));
 
         lines.enter().append("path");
         lines.exit().remove();
-        lines.exit().remove();
         lines.attr("stroke-width", 20)
+            .attr("fill", "none")
             .attr("d", function(d) {
             var l = d.length;
             var draw = [];
@@ -497,6 +529,7 @@ sb.mesh.facet = function (frame, map, width, height) {
 
         lats.push(lat);
         lons.push(lon);
+
         if (placename == undefined)
             places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
         else
@@ -533,6 +566,10 @@ sb.mesh.facet = function (frame, map, width, height) {
             we've added a point but haven't updated the bounds
         */
         self.dirty = true;
+        bbox = null;
+        longestRotationAngle = null;
+        cachedPoints = {};
+
         self.added();
         return self;
     };
@@ -544,6 +581,9 @@ sb.mesh.facet = function (frame, map, width, height) {
         places.splice(index, 1);
 
         self.dirty = true;
+        bbox = null;
+        longestRotationAngle = null;
+        cachedPoints = {};
 
         if (points.length < 3) $("#scroll-down").fadeOut();
         if (points.length == 1) $("#meshu-container").addClass("inactive");
