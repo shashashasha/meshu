@@ -19,7 +19,7 @@
                 <div class="status-information">
                     <b><a href="{{ order.meshu.get_absolute_url }}" target="{{ order.meshu.id }}">{{ order.get_display_name }} for {{ order.shipping.shipping_name }}, {{ order.shipping.contact }}</a></b>
                     <br />
-                    <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/shippinginfo/{{ order.shipping.id }}/">order #{{ order.id}}</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span>
+                    <span class="link"><a href="/admin/meshu/meshu/{{ order.meshu.id }}/">meshu #{{ order.meshu.id }}</a> | <a href="/admin/meshu/order/{{ order.id }}/">order #{{ order.id}}</a> | <a href="/admin/meshu/shippinginfo/{{ order.shipping.id }}/">shipping details</a></span> | <span class="link"><a href="/orders/postcard/{{ order.meshu.id }}/">postcard link</a></span>
                     <br />
                     <span class="instructions">{{ order.special_instructions }}</span>
                     <br />

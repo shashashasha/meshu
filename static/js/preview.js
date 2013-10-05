@@ -5,6 +5,7 @@ $(function() {
 		var self = d3.dispatch("rotated", "ringSizeUpdated");
 
 		var rotation = 0,
+			baseRotation = 0,
 			defaultTransform = "scale(.125) translate(380, 670) ",
 			rotationDiv,
 			currentProduct;
@@ -14,7 +15,14 @@ $(function() {
 
 			// set default
 			currentProduct = product;
-			rotation = rotation || sb.transforms.getDefaultRotation(currentProduct);
+
+			// all preview meshus are rotated to be horizontal and long now
+			baseRotation = meshu.mesh().getRotationAngle();
+
+			// so our 'rotation' needs to take that into account
+			rotation = baseRotation + sb.transforms.getDefaultRotation(currentProduct);
+
+			console.log('default rotation', rotation, sb.transforms.getDefaultRotation(currentProduct));
 
 			var main = d3.select(rotateFrame);
 
@@ -27,14 +35,7 @@ $(function() {
 				.attr("height",297)
 				.attr('xlink:href', self.getImage(currentProduct));
 
-			rotationDiv = main.append("svg:g")
-						.attr("id","transform")
-						.attr("transform", self.getTransform(currentProduct, 'product', rotation));
-
-			var miniDelaunay = $(delaunayFrame).clone()
-				.attr("class","mini-delaunay");
-
-			$(rotationDiv[0]).append(miniDelaunay);
+			rotationDiv = sb.product.previewFromSelector(currentProduct, delaunayFrame, rotateFrame);
 		};
 
 	    // save the rotation for now
@@ -52,7 +53,7 @@ $(function() {
 	        rotateInterval = setInterval(function(){
 	            if (++counter < 30) {
 	                cr += (rotation - cr) * .15;
-	                var transform = sb.transforms.getTransform(currentProduct, "product", cr);
+	                var transform = sb.transforms.getTransform(currentProduct, "product", cr - baseRotation);
 	                rotationDiv.attr("transform", transform);
 	            }
 	            else
@@ -61,9 +62,11 @@ $(function() {
 		}
 		$("#rotate-cw").click(function(){
 			rotateBig(22.5);
+			self.rotated();
 		});
 		$("#rotate-ccw").click(function(){
 			rotateBig(-22.5);
+			self.rotated();
 		});
 
 		self.updateRing = function() {
@@ -72,6 +75,7 @@ $(function() {
 			var ringPreview = $(".ring-preview-frame").clone();
 
 			$(main).append(ringPreview);
+			// no default size for now
 			// self.ringSizeUpdated(7);
 
 			var scale = d3.scale.linear().domain([4,14]).range([.8,1.2]);
@@ -98,12 +102,12 @@ $(function() {
 			return static_url + 'images/preview/preview_' + product + '.png';
 		};
 
-		self.rotation = function(r) {
-			if (!arguments.length) return rotation % 360;
+		self.getRotation = function() {
+			return (rotation) % 360;
+		};
 
-			rotation = r;
-
-			return self;
+		self.getBaseRotation = function() {
+			return baseRotation;
 		};
 
 		return self;
