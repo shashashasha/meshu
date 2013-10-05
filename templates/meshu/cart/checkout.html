@@ -333,7 +333,7 @@
 			<h2 style="margin-top: 40px; {% if user.is_anonymous %} display: none;{% endif %}">Mailing List</h2>
 			<h2 style="margin-top: 40px; float: left;{% if user.is_authenticated %} display: none;{% endif %}" class="nav-list last">Email Address</h2>
 			{% if user.is_anonymous %}
-	        <div id="createAccount" class="button">or, create an account?</div>
+	        <!-- <div id="createAccount" class="button">or, create an account?</div> -->
 	        <div class="form-row">
 	            <label>Contact Email</label>
 	            <input type="text" class="required" name="email_address" style="width:200px; margin-left: 15px;">
