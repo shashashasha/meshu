@@ -596,11 +596,11 @@ body.win #login-form ul {
   padding: 0 20px;
 }
 #no-svg {
-  position: absolute;
+  position: fixed;
   top: 100px;
   left: 190px;
   width: 580px;
-  height: 180px;
+  height: 140px;
   z-index: 3;
   background: white;
   border: 1px solid #e6e6e6;
@@ -770,7 +770,7 @@ body.win #login-form ul {
 }
 #place-hover {
   position: absolute;
-  z-index: 1339;
+  z-index: 1;
   display: block;
   background: #ff3fb4;
   color: white;
@@ -798,7 +798,7 @@ body.win .notch {
 }
 .tooltip {
   position: absolute;
-  z-index: 1339;
+  z-index: 1;
   display: block;
   background: #ff3fb4;
   color: white;
@@ -1417,9 +1417,6 @@ input[type="range"]::-webkit-slider-thumb {
 }
 #review .review-svg path {
   stroke-width: 15;
-}
-#review .review-svg image {
-  opacity: .4;
 }
 #review h3 {
   margin: 0 0 15px 170px;
