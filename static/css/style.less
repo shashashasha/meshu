@@ -861,7 +861,6 @@ body.win #login-form ul {
 .notch {
     position: absolute;
     top: 24px;
-    left: 20px;
     margin: 0;
     border-top: 6px solid @pink;
     border-left: 6px solid transparent;
@@ -884,6 +883,13 @@ body.win .notch {
     padding: 3px 6px 4px 5px;
     display: none;
     white-space: nowrap;
+}
+
+.left .notch {
+    left: 20px;
+}
+.right .notch {
+    right: 20px;
 }
 
 .top .notch {
