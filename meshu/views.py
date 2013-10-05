@@ -178,6 +178,7 @@ def submit_orders(request):
 	# the cart has its own discount logic
 	# plus we need to account for any user submitted coupons
 	total_amount = current_cart.discount_applied() * 100
+	discount_amount = current_cart.discount() * 100.0
 	coupon_amount = float(request.POST.get('coupon_amount', 0.0))
 	shipping_amount = float(request.POST.get('shipping_amount', 0.0))
 
@@ -236,23 +237,32 @@ def submit_orders(request):
 	shipping.shipping_state = request.POST['shipping_state']
 	shipping.shipping_country = request.POST['shipping_country']
 
+	# save shipping separately now, not in Order
+	shipping.amount = shipping_amount
+
 	shipping.save()
 
 	items = current_cart.cart.item_set.all()
 
 	if current_cart.count() > 1:
-		return submit_multiple(request, shipping, items)
+		return submit_multiple(request, shipping, items, discount_amount, coupon_amount)
 	elif current_cart.count() == 1:
-		return submit_single(request, shipping, items)
+		return submit_single(request, shipping, items, coupon_amount)
 
-def submit_multiple(request, shipping, items):
+def submit_multiple(request, shipping, items, discount_cents, coupon_cents):
 	print('submit_multiple:', shipping.contact)
+
+	discount_per = float(((discount_cents + coupon_cents) / Cart(request).count())/100.0)
+	print('discount per:', discount_per)
 
 	orders = []
 	for item in items:
 		order = item.product
 		order.shipping = shipping
 		order.status = 'OR'
+
+		# reduce the order amount by coupon / volume discounts
+		order.amount = float(order.amount) - discount_per
 
 		order.save()
 		orders.append(order)
@@ -279,13 +289,14 @@ def submit_multiple(request, shipping, items):
 		'view': 'paid'
 	})
 
-def submit_single(request, shipping, items):
+def submit_single(request, shipping, items, coupon_amount):
 	print('submit_single:', shipping.contact)
 
 	item = items[0]
 	order = item.product
 	order.shipping = shipping
 	order.status = 'OR'
+	order.amount = float(order.amount) - (coupon_amount / 100.0);
 
 	order.save()
 

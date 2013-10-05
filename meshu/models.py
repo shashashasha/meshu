@@ -119,6 +119,8 @@ class ShippingInfo(models.Model):
 	shipping_state = models.CharField(max_length=2, default='', blank=True)
 	shipping_country = models.CharField(max_length=100, default='', blank=True)
 
+	amount = models.DecimalField(max_digits=6, decimal_places=2, default=0) # dollar amount
+
 	def get_full_address(self):
 		strings = [self.shipping_address, self.shipping_address_2, self.shipping_city, self.shipping_zip, self.shipping_country]
 		return ' '.join(strings)
