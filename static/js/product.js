@@ -23,7 +23,7 @@ $(function() {
 				self.resetPreviewImage(product.type);
 
 				if (typeof meshTarget == "string") {
-					self.previewFromSelector(product.type, meshTarget);
+					self.previewFromSelector(product.type, meshTarget, "#preview-" + product.type);
 				} else {
 					self.previewFromElement(product.type, meshTarget);
 				}
@@ -38,8 +38,8 @@ $(function() {
 		/*
 			do preview for facet
 		*/
-		self.previewFromSelector = function(product, meshSelector) {
-			var svg = d3.select("#preview-" + product)
+		self.previewFromSelector = function(product, meshSelector, destinationSelector) {
+			var group = d3.select(destinationSelector)
 				.append("g")
 	            .attr("class", "product-transformer"),
 				mesh = meshu.mesh(),
@@ -59,7 +59,7 @@ $(function() {
 				case 'necklace':
 					endWidth = 450;
 					endHeight = 450 / proportion;
-					if (proportion > 1.5) {
+					if (proportion > 2) {
 						endHeight = (450 / proportion) * 1.5;
 						endRotation = 0;
 					}
@@ -71,7 +71,7 @@ $(function() {
 					endWidth = 450;
 					endHeight = 450 / proportion;
 					if (proportion > 2) {
-						endHeight = (450 / proportion) * 1.5;
+						endHeight = (450 / proportion) * 2;
 						endRotation = 90;
 					}
 					break;
@@ -81,13 +81,15 @@ $(function() {
 			mesh.transformedDelaunay(projected, endWidth, endHeight);
 
 			// clones and recenters delaunay on its centerpoint
-			self.cloneSVG(svg[0], meshSelector, endWidth, endHeight);
+			self.cloneSVG(group[0], meshSelector, endWidth, endHeight);
 
 			// final transform
-			svg.attr("transform", transform + ' rotate(' + endRotation + ')');
+			group.attr("transform", transform + ' rotate(' + endRotation + ')');
 
 			// clear mesh geometry
 			mesh.refresh();
+
+			return group;
 		};
 
 		self.cloneSVG = function(parent, childSelector, w, h) {
@@ -104,13 +106,17 @@ $(function() {
 			var svg = d3.select("#preview-" + product),
 				transform = sb.transforms.getTransform(product, "product");
 
-			svg.append("svg:image")
+			var g = svg.append("g")
+				.attr("class", "product-transformer")
+				.attr("transform", transform);
+
+			g.append("svg:image")
 				.attr('x', 0)
 				.attr('y', 0)
 				.attr('width', '600px')
 				.attr('height', '600px')
 				.attr("class","product-delaunay")
-				.attr("transform", transform)
+				.attr("transform", "translate(-300, -300)")
 				.attr('xlink:href', element.toDataURL());
 		};
 

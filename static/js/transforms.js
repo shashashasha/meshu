@@ -2,7 +2,7 @@ sb.transforms = {
 	"earrings": {
 		"product": {
 			scale: .17,
-			transform: {x: 190, y: 170}
+			transform: {x: 192, y: 170}
 		},
 		"render": {
 			scale: .45,
@@ -84,12 +84,12 @@ sb.transforms.getDefaultRotation = function(product) {
 		case 'pendant':
 			var projected = mesh.projectPoints(mesh.getLongestRotation()),
 				proportion = projected.width / projected.height;
-			return proportion > 1.5 ? rotation + 90 : rotation;
+			return proportion > 2 ? rotation + 90 : rotation;
 
 		case 'necklace':
 			var projected = mesh.projectPoints(mesh.getLongestRotation()),
 				proportion = projected.width / projected.height;
-			return proportion > 1.5 ? 0 : rotation;
+			return proportion > 2 ? 0 : rotation;
 		default:
 			return rotation;
 	}

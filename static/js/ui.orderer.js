@@ -104,7 +104,7 @@ sb.ui.orderer = function() {
 		$("#object-color").val(color ? color.toLowerCase() : '');
 		$("#object-amount").val(priceCents);
 
-		$("#svg-theta").val(sb.rotator ? sb.rotator.rotation() : 0);
+		$("#svg-theta").val(sb.rotator ? sb.rotator.getRotation() : 0);
 
 		// outputting meshu data
 		$("#svg-file").val(meshu.outputSVG());
@@ -128,8 +128,8 @@ sb.ui.orderer = function() {
 			renderer = meshu.mesh().name,
 			review = $("#review");
 
-		var rotation = sb.rotator ? sb.rotator.rotation() : 0;
-		console.log(rotation);
+		// correct for base rotation
+		var rotation = sb.rotator ? sb.rotator.getRotation() - sb.rotator.getBaseRotation() : 0;
 		var transform = "translate(75, 75) scale(.25) rotate(" + rotation + ")";
 		var miniDelaunay = $("#product-preview .selected .product-transformer").clone()
 				.attr("class","review-delaunay").attr("transform", transform);

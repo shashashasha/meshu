@@ -1831,7 +1831,7 @@ body.ie8 .city-input {
 /*
     Map Object Styling
 */
-/*#meshu-container path, #mini-delaunay path, #rotate-ui path, .gallery .meshu-svg path {*/
+/*#meshu-container path, #rotate path, #rotate-ui path, .gallery .meshu-svg path {*/
 path {
   fill: none;
   stroke: black;
@@ -1901,7 +1901,7 @@ circle.highlight,
 #hidden {
   display: none;
 }
-.mini-delaunay path,
+#rotate path,
 #product-preview path {
   stroke-width: 30;
 }

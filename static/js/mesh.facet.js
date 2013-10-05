@@ -185,7 +185,10 @@ sb.mesh.facet = function (frame, map, width, height) {
         var pair = furthestPoints(map, points),
             angle = lineAngle(pair[0], pair[1]);
 
-        longestRotationAngle = -angle + 180;
+        if (Math.abs(angle) < 30)
+            longestRotationAngle = -angle;
+        else
+            longestRotationAngle = -angle + 180;
         return longestRotationAngle + offset;
     };
 
