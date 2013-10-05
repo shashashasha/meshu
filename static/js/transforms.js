@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 110, y: 180}
+			transform: {x: 110, y: 175}
 		},
 		"render": {
 			scale: .25,

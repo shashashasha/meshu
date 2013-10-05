@@ -369,7 +369,7 @@ body.win #login-form ul {
 }
 
 .big {
-    font-size: 46px;
+    font-size: 32px;
     text-align: center;
     margin-top: 45px;
 }
@@ -379,39 +379,35 @@ body.win #login-form ul {
 
 #photos {
     /* bit of pixel twiddling to line up with the banner photos */
-    margin-left: 20px;
-    margin-right: 19px;
     position: relative;
-    width: 961px;
-    height: 480px;
-    color: @grey;
+    width: 100%;
+    height: 400px;
+    background-color: #ddd;
+    padding: 20px;
+    .borderBox();
 
     img {
-        margin: 0;
-        padding: 0;
-        margin-top: 20px;
-        float: left;
-        width: 320px;
-        height: 480px;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     #intro-text {
-        margin: 20px 0 20px 20px;
-        text-align: left;
-        font-size: 34px;
+        font-size: 18px;
         width: 300px;
-        float: left;
+        margin-bottom: 160px;
+        position: relative;
 
         .meshu-title {
-            color: black;
+            color: @pink;
+            font-size: 28px;
         }
     }
 
     .large-button {
-        font-size: 30px;
+        font-size: 22px;
         margin-top: 20px;
-        margin-left: 20px;
-        float: left;
+        position: relative;
     }
 
     .minor-actions {
@@ -426,17 +422,85 @@ body.win #login-form ul {
     .button {
         padding: 5px 11px;
     }
+    .button:hover {
+        background-color: @blue;
+    }
+    .button.pink:hover {
+        background-color: @pink;
+    }
 
     .minor {
         background-color: @lightGrey;
     }
 }
 
+.product-shot {
+    height: 400px;
+    float: left;
+    background-color: #ccc;
+}
+.product-shot.new {
+    width: 600px;
+    padding-left: 310px;
+    .borderBox();
+}
+.product-shot.new p {
+    color: white;
+}
+.product-shot.old {
+    width: 400px;
+    margin-bottom: 40px;
+}
+.product-shot h3 {
+    color: @pink;
+    font-weight: normal;
+    font-size: 28px;
+    margin: 10px 15px 0 15px;
+}
+.product-shot p {
+    margin: 5px 15px 20px;
+    width: 287px;
+    font-size: 18px;
+}
+.product-shot.old p {
+    background: rgba(255,255,255,.5);
+}
+.product-shot .button {
+    margin: 15px;
+    font-size: 18px;
+}
+.product-shot:hover .button {
+    .shadow(10px, rgba(0, 0, 0, .25));
+}
+
+.product-grid {
+    height: 400px;
+    float: left;
+}
+.product-grid.small {
+    width: 400px;
+}
+.product-grid.large {
+    width: 600px;
+
+}
+.product-grid li {
+    width: 200px;
+    height: 200px;
+    float: left;
+}
+.product-grid a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+}
+
 #banners {
-    height: 375px;
-    width: 960px;
-    margin: 20px;
     position: relative;
+    clear: both;
+    height: 400px;
+    margin-top: 20px;
 }
 
 .macro {
@@ -471,7 +535,7 @@ body.win #login-form ul {
 }
 #diagram li p {
     text-align: center;
-    font-size: 20px;
+    font-size: 17px;
 }
 
 #main form {
@@ -482,24 +546,21 @@ body.win #login-form ul {
     border: none;
 }
 
-#get-started {
-    width: 800px;
+.options {
     margin: 0 auto;
-    text-align: center;
-    margin: 30px auto;
+    margin: 20px auto 30px;
 }
 .bottom {
-    text-align: center;
     margin-bottom: 50px;
+    font-size: 18px;
 }
 .option {
-    width: 305px;
     background-color: @blue;
     color: white;
-    font-size: 36px;
-    padding: 10px 0;
+    font-size: 22px;
+    padding: 7px 10px;
     display: inline-block;
-    margin: 0 10px;
+    margin-right: 20px;
 
     &:hover {
         .shadow(10px, rgba(0, 0, 0, .25));
@@ -507,6 +568,17 @@ body.win #login-form ul {
 }
 .option.pink {
     background-color: @pink;
+}
+
+.get-started {
+    height: 417px;
+}
+.get-started h2 {
+    text-align: left;
+}
+.get-started .text {
+    float: left;
+    margin: 85px 0 0 20px;
 }
 
 #footer {
@@ -2141,14 +2213,15 @@ circle {
 }
 #cart .button {
     padding: 3px 5px;
-    font-size: 14px;
-    width: 100px;
+    font-size: 12px;
+    width: 80px;
     display: inline-block;
-    line-height: 20px;
+    line-height: 16px;
     float: right;
-    background-color: white;
+    background-color: @grey;
     border: 1px solid @lightGrey;
-    color: @grey;
+    color: white;
+    margin-right: 10px;
 }
 #cart .quantity {
     width: 45px;
@@ -2164,6 +2237,7 @@ circle {
     float: right;
     font-size: 18px;
     line-height: 21px;
+    width: 55px;
 
     &:hover {
         background-color: @pink;
@@ -2287,6 +2361,11 @@ circle {
 #review-total #subtotal-price {
     padding-top: 15px;
     border-top: 1px solid black;
+}
+#review-total .pink {
+    float: none;
+    color: @pink;
+    text-transform: uppercase;
 }
 
 #review-total h2 {
