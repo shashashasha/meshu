@@ -13,6 +13,7 @@ from django.http import HttpResponse
 urlpatterns = patterns('',
 	# robots.txt
 	(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /view/4e6f6e65*\nDisallow: /edit/4e6f6e65*", mimetype="text/plain")),
+	(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/icons/favicon.ico'}),
 
 	# Uncomment the admin/doc line below to enable admin documentation:
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
