@@ -6,13 +6,15 @@
 		<tr class="headings">
 			<td>Meshu</td>
 			<td>Product</td>
-			<td>Subtotal</td>
+			<td>Quantity</td>
+			<td>Price</td>
 		</tr>
 	{% for item in cart.items %}
-		<tr class="cart-row">
+		<tr class="cart-row {{item.product}}">
 			<td class="theta">{{ item.product.meshu.theta|safe }}</td>
 			<td>{{ item.product.meshu.svg|safe }}</td>
 			<td>{{ item.product }}</td>
+			<td class="num">{{ item.quantity }}</td>
 			<td><span class="dollar">$</span>{{ item.unit_price }}</td>
 		</tr>
 	{% endfor %}
@@ -61,7 +63,6 @@
 		        <div class="form-row ship-row international country-dropdown">
 		            <label>Country</label>
 		            <select id="countries" name="shipping_country">
-		                <option value="United States">United States</option>
 		                <option value="Afghanistan">Afghanistan</option>
 		                <option value="Åland Islands">Åland Islands</option>
 		                <option value="Albania">Albania</option>
@@ -388,14 +389,6 @@
     	$(".cart-row").each(function(){
     		var theta = $(this).find(".theta").text();
     		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.07) rotate("+theta+", 300, 300)");
-    	});
-    	$("#createAccount").click(function(){
-    		user.showModal();
-
-			// after a user logs in, click the button
-			user.afterLogIn = function() {
-
-			}
     	});
     	// refresh the page if we login or out
     	$(function() {

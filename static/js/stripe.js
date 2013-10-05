@@ -9,7 +9,8 @@ var cashier = function() {
         discountPercent = 1,
         shipping = 0, // default domestic
         domesticShipping = 0,
-        internationalShipping = 45;
+        internationalShipping = 45,
+        multipleInternationalShipping = 80;
 
     function stripeResponseHandler(status, response) {
         // if (response.error) {
@@ -76,7 +77,14 @@ var cashier = function() {
 
     // update the shipping value
     self.shippingMode = function(value) {
-        shipping = value == 'international' ? internationalShipping : domesticShipping;
+        var numItems = 0, numRings = 0;
+        $(".cart-row .num").each(function(v,i){ numItems += parseInt($(this).text()); });
+        $(".ring .num").each(function(v,i){ numRings += parseInt($(this).text()); });
+        var numBoxes = numItems - numRings;
+
+        shipping = value == 'international' ? 
+                            (numBoxes > 2 ? multipleInternationalShipping : internationalShipping) 
+                            : domesticShipping;
         self.update();
     };
 
