@@ -4,15 +4,13 @@
 
 {% block content %}
 	<div id="photos">
-		<!-- <img src="{{ STATIC_URL }}images/photos/meshu01.jpg" />
-		<img src="{{ STATIC_URL }}images/photos/meshu02.jpg" /> -->
 		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_01.jpg" style="">
 		<img class="banner" id="banner-1" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_02.jpg" style="display:none;">
 		<img class="banner" id="banner-2" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_02.jpg" style="display: none;">
 		<img class="banner" id="banner-3" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_01.jpg" style="display:none;">
 		<div id="intro-text">
 			<span class="meshu-title">Make memories.</span><br/>
-			Whether it's for a friend, a loved one, or yourself, Meshu helps you make beautiful memories for the places that are important to you.
+			Whether it's for a friend, a loved one, or yourself, Meshu helps you make beautiful mementos from the places that are important to you.
 		</div>
 		<div class="large-button">
 			<a href="/make/facet" class="button pink">Make Your Own</a>
@@ -20,9 +18,6 @@
 		<div class="large-button">
 			<a href="/gallery/" class="button">View Our Gallery</a>
 		</div>
-		<!-- <div class="minor-actions">
-			or you can still use your<br /><div class="foursquare-auth button minor">Foursquare Checkins</div><br \>and<br \><a rel="nofollow" href="/facebook/login" class="button minor facebook-auth">Facebook Places</a>
-		</div> -->
 	</div>
 
 	<h2 class="big">Here's how it works:</h2>
@@ -35,7 +30,7 @@
         </li>
         <li>
             <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_02.png">
-            <p>We generate a meshu to order as</p>
+            <p>We generate a Meshu to order as</p>
             <p>a necklace, earrings, cufflinks, or a ring.</p>
         </li>
         <li>
@@ -48,7 +43,7 @@
 
     <a class="product-shot new" href="/make/facet" style="background-image:url({{ STATIC_URL }}images/index/rings.jpg);">
     	<h3>Put a ring on it.</h3>
-    	<p>Introducing meshu rings. Each is unique, and start from $30!</p>
+    	<p>Introducing Meshu rings. Each is unique, and start from $30!</p>
     	<div class="button pink">Make a ring</div>
     </a>
     <ul class="product-grid small">
@@ -72,7 +67,7 @@
     </a>
 
 
-	<h2 class="big">Each meshu tells a story:</h2>
+	<h2 class="big">Each Meshu tells a story:</h2>
 
 	<div id="banners">
 		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/index/note_banners/macro0.jpg" />
@@ -81,16 +76,30 @@
 		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
 	</div>
 
-	<h2 class="big">Here's what people are saying about Meshu:</h2>
+	<h2 class="big">Meshu in the press:</h2>
 
-	<ul>
-		<li>fuck yes meshu</li>
-		<li>so excite</li>
-		<li>i lov data</li>
-	</ul>
-
-	<!-- <h2 class="big">each meshu comes with its own map postcard:</h2>
-	<img src="{{ STATIC_URL }}images/diagrams/postcard_shoot_web.jpg" class="centered"> -->
+	<div class="press-container">
+		<div class="press-images">
+			<div style="width: 280px;" class="double">
+				<a href="http://www.trendhunter.com/trends/meshu-jewelry#!/photos/154827/1" target="_blank"><img src="{{ STATIC_URL }}images/press/1_trendhunter.jpg"/></a>
+				<a href="http://www.theverge.com/2012/5/31/3054768/meshu-foursquare-location-based-jewelry" target="_blank"><img src="{{ STATIC_URL }}images/press/2_verge.jpg"/></a>
+			</div>
+			<a href="http://www.travelandleisure.com/travel-blog/carry-on/2012/5/31/tech-thursday-custom-made-foursquare-jewelry" target="_blank"><img src="{{ STATIC_URL }}images/press/3_travelandleisure.jpg"/></a>
+			<div style="width: 204px;" class="double">
+				<a href="http://www.littlemissbeauty.fr/wordpress/2012/08/my-meshu-un-bijou-pour-un-voyage-suite-de-lhistoire/" target="_blank"><img src="{{ STATIC_URL }}images/press/4_grazia.jpg"/></a>
+				<a href="http://blogs.artinfo.com/objectlessons/2012/05/30/finally-3d-printed-jewelry-that-says-something-about-you-not-just-about-3d-printing/" target="_blank"><img src="{{ STATIC_URL }}images/press/5_artinfo.jpg"/></a>
+			</div>
+			<a href="http://thecreatorsproject.vice.com/blog/turn-your-foursquare-check-in-data-into-jewelry" target="_blank"><img src="{{ STATIC_URL }}images/press/6_creatorsproject.jpg"/></a>
+		</div>
+		<div class="press-images">
+			<a href="http://design-milk.com/a-day-in-the-life-of-meshu/" target="_blank"><img src="{{ STATIC_URL }}images/press/7_designmilk.jpg"/></a>
+			<a href="http://flowingdata.com/2012/05/30/meshu-makes-physical-objects-with-your-location/" target="_blank"><img src="{{ STATIC_URL }}images/press/8_flowingdata.jpg"/></a>
+			<a href="http://www.fastcodesign.com/1669932/meshu-maps-the-places-you-ve-been-and-turns-them-into-jewelry" target="_blank"><img src="{{ STATIC_URL }}images/press/9_fastcodesign.jpg"/></a>
+			<a href="http://www.psfk.com/2012/05/foursquare-check-in-jewelry.html" target="_blank"><img src="{{ STATIC_URL }}images/press/10_psfk.jpg"/></a>
+			<a href="http://www.thrillist.com/travel/nation/meshu" target="_blank"><img src="{{ STATIC_URL }}images/press/11_thrillist.jpg"/></a>
+			<a href="http://www.jaunted.com/story/2013/4/30/13959/5180/travel/Turning+a+Trip+Itinerary+Into+Jewelry+is+the+Best+Gift+Idea+Ever" target="_blank"><img src="{{ STATIC_URL }}images/press/12_jaunted.jpg"/></a>
+		</div>
+	</div>
 
 	<div class="get-started">
 		<img src="{{ STATIC_URL }}images/index/footer.jpg" style="float: right;">

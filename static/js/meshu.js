@@ -27,9 +27,6 @@ sb.meshu = function(frame, renderer, existingMap) {
     });
 
     var searchbox = $("#searchbox");
-    // searchbox.focus(function(){
-    //     cases.fadeOut();
-    // })
     searchbox.keypress(function(event) {
         searchError.fadeOut();
         if ( event.which == 13 ) {
@@ -59,15 +56,6 @@ sb.meshu = function(frame, renderer, existingMap) {
             searchPlaces(input);
         }
     }
-
-    // self.checkAdded = function() {
-    //     pay attention to the number of points
-    //     var points = mesh.points();
-    //     var minPoints = 3;
-    //     if ($("body").hasClass("radial")) minPoints = 1;
-    //     if (points.length >= minPoints) $("#finish-button").addClass("active");
-    //     else $("#finish-button").removeClass("active");
-    // }
 
     // on click of search button
     function searchPlaces(input) {
@@ -113,21 +101,17 @@ sb.meshu = function(frame, renderer, existingMap) {
                     switch (mesh.name) {
                         case 'facet':
                         case 'print':
-                            // mesh.add(first.offsetlat, first.offsetlon, input);
                             mesh.add(first.latLng.lat, first.latLng.lng, input);
                             self.updateBounds();
 
                             // set the zoom for first point
                             if (mesh.points().length == 1) {
-                                // setZoomRadius(first.radius);
                                 setZoomGranularity(first.geocodeQuality);
                             }
                             break;
                         case 'radial':
                             // set the zoom based on radius
-                            // setZoomRadius(first.radius/10);
                             setZoomGranularity(first.geocodeQuality, 12);
-                            // mesh.add(first.offsetlat, first.offsetlon, input);
                             mesh.add(first.latLng.lat, first.latLng.lng, input);
                             break;
 
@@ -277,7 +261,6 @@ sb.meshu = function(frame, renderer, existingMap) {
     };
 
     self.refreshWithBounds = function(lats, lons) {
-        console.log('refresh with bounds');
         // using a zoomOffset parameter set outside in app.js
         map.updateBounds(lats, lons, self.zoomOffset, self.offsetX);
     };
