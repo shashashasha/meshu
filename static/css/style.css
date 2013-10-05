@@ -21,6 +21,9 @@ h2 {
   font-size: 28px;
   margin: 0;
 }
+.ie h2 {
+  font-size: 26px;
+}
 h2.page-header {
   padding-left: 20px;
   margin: 20px 0;
@@ -1234,15 +1237,6 @@ body.firefox.win #rotate-help .border-notch {
   -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
   -moz-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
 }
-.ie9 .coaster-bg {
-  width: 156px;
-  height: 156px;
-  border-radius: 90px;
-  position: absolute;
-  top: 77px;
-  left: 77px;
-  background: #e5e5e5;
-}
 .ie9 #preview-coasters image {
   display: none;
 }
@@ -1294,6 +1288,19 @@ body.firefox.win #rotate-help .border-notch {
   -o-transform: rotate(315deg);
   -o-transform-origin: 50% 50%;
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+}
+.ie9-note {
+  display: none;
+  position: absolute;
+  top: 550px;
+  left: 670px;
+  width: 175px;
+}
+.ie9 .ie9-note {
+  display: none;
+}
+.ie9-note a {
+  color: #ff3fb4;
 }
 #save-and-view {
   position: absolute;
