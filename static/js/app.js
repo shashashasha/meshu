@@ -106,14 +106,17 @@ $(function() {
 
 		Hide them if we click anywhere on the screen
 	*/
+	var docClicked = false;
 	if (!user.loggedIn && !loadedMeshu && window.location.hash != '#skipintro') {
 		$(".tooltip").each(function(i, e) {
 			setTimeout(function() {
-				$(e).fadeIn();
+				if (!docClicked)
+					$(e).fadeIn();
 			}, i * 1000);
 		});
 
 		$(document).click(function() {
+			docClicked = true;
 			$(".tooltip").fadeOut();
 		});
 	}

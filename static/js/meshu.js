@@ -77,6 +77,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         $.ajax({
             url: url,
             cache: false,
+            crossDomain: false,
             dataType: 'json',
             beforeSend: function() {
                 loadingGif.show();

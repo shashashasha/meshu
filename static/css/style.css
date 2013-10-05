@@ -566,8 +566,7 @@ body.win #login-form ul {
   border: 1px solid #e6e6e6;
   min-height: 600px;
   position: relative;
-  /*overflow: hidden;*/
-
+  overflow: hidden;
   -webkit-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
@@ -1233,6 +1232,22 @@ body.firefox.win #rotate-help .border-notch {
 }
 #preview-coasters .product-transformer {
   -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
+  -moz-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
+}
+.ie9 .coaster-bg {
+  width: 156px;
+  height: 156px;
+  border-radius: 90px;
+  position: absolute;
+  top: 77px;
+  left: 77px;
+  background: #e5e5e5;
+}
+.ie9 #preview-coasters image {
+  display: none;
+}
+.ie9 #preview-coasters .product-transformer image {
+  display: block;
 }
 #product-preview p.cufflinks {
   text-align: center;
