@@ -10,8 +10,10 @@ var user = function() {
     self.showModal = function(mode) {
         mode = mode || 'account';
 
+        var pageWidth = $(window).width();
+
         $("#modal-bg").fadeIn();
-        $("#login-form").fadeIn();
+        $("#login-form").css("left",(pageWidth-380)/2+"px").fadeIn();
 
         $("#tab-" + mode).click();
 

@@ -100,7 +100,7 @@ h1#meshu {
 #nav #nav-cart:hover .num {
   color: #ff3fb4;
 }
-#login-form label.error.login-error,
+#login-form label.error.ferror,
 #account label.error.login-error {
   display: none;
 }
@@ -163,10 +163,9 @@ h1#meshu {
 }
 #login-form {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 3;
   top: 150px;
-  right: 310px;
   width: 380px;
   min-height: 205px;
   padding-top: 15px;
@@ -669,7 +668,7 @@ body.win #login-form ul {
   position: absolute;
   display: none;
 }
-#loading {
+.loading {
   width: 25px;
   height: 25px;
   background-image: url(../images/ui/loading.gif);
@@ -1447,6 +1446,11 @@ input[type="range"]::-webkit-slider-thumb {
 #checkout {
   height: 620px;
 }
+#checkout .loading {
+  position: absolute;
+  bottom: 5px;
+  right: 185px;
+}
 #shipping-destination {
   height: 28px;
   margin-bottom: 5px;
@@ -1548,7 +1552,7 @@ body.ie8 .city-input {
   clear: both;
 }
 #postcard-note-form {
-  width: 100%;
+  width: 620px;
   margin-top: 5px;
   height: 70px;
 }
@@ -1677,7 +1681,8 @@ body.ie8 .city-input {
   margin-bottom: 6px;
 }
 #material-list .img.ring,
-#material-list .img.cufflinks {
+#material-list .img.cufflinks,
+#material-list .img.coasters {
   opacity: 0;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -1686,7 +1691,8 @@ body.ie8 .city-input {
   -o-transition: opacity 0.6s;
 }
 #material-list .ring .img.ring,
-#material-list .cufflinks .img.cufflinks {
+#material-list .cufflinks .img.cufflinks,
+#material-list .coasters .img.coasters {
   opacity: 1;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/
@@ -1695,7 +1701,7 @@ body.ie8 .city-input {
   -o-transition: opacity 0.6s;
 }
 #material-list .ring .img.default,
-#material-list .cufflinks .img.default {
+#material-list .cufflinks .img.default #material-list .coasters .img.default {
   opacity: 0;
   transition: opacity 0.6s;
   /*-moz-transition: @property @time;*/

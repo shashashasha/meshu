@@ -47,8 +47,8 @@ sb.catalog = function(renderer, promo) {
 						"brass":{"price":145,"colors":["polished"]}
 						},
 					"coasters":
-				   		{"bamboo":{"price":60,"colors":["amber"]},
-				   		"acrylic":{"price":65,"colors":["black"]}
+				   		{"bamboo":{"price":45,"colors":["amber"]},
+				   		"acrylic":{"price":90,"colors":["black"]}
 						}
 					};
 

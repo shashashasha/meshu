@@ -160,6 +160,9 @@ sb.ui.orderer = function() {
 					return;
 				review.find("#add-to-cart").removeClass("inactive");
 			}
+		} else {
+			review.find(".review-price").text("");
+			review.find(".review-make-time").text("");
 		}
 	}
 

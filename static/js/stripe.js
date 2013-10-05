@@ -48,6 +48,8 @@ var cashier = function() {
             .addClass("inactive");
         $(".card-info").removeAttr("name");
 
+        $(".loading").show();
+
         // createToken returns immediately
         // the supplied callback submits the form if there are no errors
         Stripe.createToken({
