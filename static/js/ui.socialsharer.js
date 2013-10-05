@@ -15,7 +15,6 @@ sb.ui = sb.ui || {};
 
 */
 sb.ui.socialsharer = function(meshu) {
-	console.log('initializing social sharer', meshu);
 	$(".share-facebook").click(function() {
 		if (!sb.rasterizer.generated) {
 			sb.rasterizer.rasterize(meshu, postOnFacebook);
@@ -55,7 +54,16 @@ sb.ui.socialsharer = function(meshu) {
 		var url = encodeURIComponent(base + meshu.view_url);
 
 		// twessage
-		var msg = "Check out this meshu I just made of the places I've been";
+		var msg;
+		switch (meshu.getRenderer()) {
+			case 'radial':
+				msg = "Take a look at this radial I just made of a place I've been";
+				break;
+			case 'facet':
+			default:
+				msg = "Take a look at this meshu I just made of the places I've been";
+				break;
+		}
 
 		$(".share-pinterest").attr("href", pinterestBase + url + "&media=" + image_url);
 		$(".share-twitter").attr("href", twitterBase + msg + '&url=' + url);
