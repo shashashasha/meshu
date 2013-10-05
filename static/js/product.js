@@ -120,14 +120,6 @@ $(function() {
 				.attr('xlink:href', element.toDataURL());
 		};
 
-		self.rotation = function(r) {
-			d3.selectAll(".product-delaunay")
-				.attr("transform", function(d, i) {
-					var transform = sb.transforms.getTransform(products[i].type, "product");
-					return transform + " rotate(" + r + ", 300, 300)";
-				});
-		};
-
 		return self;
 	}();
 });
