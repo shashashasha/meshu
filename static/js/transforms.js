@@ -2,7 +2,7 @@ sb.transforms = {
 	"earrings": {
 		"product": {
 			scale: .17,
-			transform: {x: 135, y: 115}
+			transform: {x: 190, y: 170}
 		},
 		"render": {
 			scale: .45,
@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 110, y: 175}
+			transform: {x: 150, y: 215}
 		},
 		"render": {
 			scale: .25,
@@ -22,7 +22,7 @@ sb.transforms = {
 	"necklace": {
 		"product": {
 			scale: .22,
-			transform: {x: 80, y: 145}
+			transform: {x: 150, y: 210}
 		},
 		"render": {
 			scale: .4,
@@ -32,7 +32,7 @@ sb.transforms = {
 	"cufflinks": {
 		"product": {
 			scale: .14,
-			transform: {x: 120, y: 170}
+			transform: {x: 160, y: 210}
 		},
 		"render": {
 			scale: .4,
@@ -67,26 +67,30 @@ sb.transforms.getTransform = function(product, type, rotation) {
 	var transform = "translate(" + t.transform.x + "," + t.transform.y + ") scale(" + t.scale + ")";
 
 	if (rotation != undefined)
-		transform = transform + 'rotate(' + rotation + ',300,300)';
+		transform = transform + 'rotate(' + rotation + ')';
 	return transform;
 };
 
+
 sb.transforms.getDefaultRotation = function(product) {
-	var mesh = meshu.mesh();
+	var mesh = meshu.mesh(),
+		rotation = -mesh.getRotationAngle();
 
 	switch (product) {
 		case 'cufflinks':
-			return mesh.getRotationAngle();
+			return rotation;
 
 		case 'earrings':
 		case 'pendant':
-			var rotation = mesh.getLongestRotation(),
-				projected = mesh.projectPoints(rotation),
+			var projected = mesh.projectPoints(mesh.getLongestRotation()),
 				proportion = projected.width / projected.height;
-			return proportion > 1.5 ? mesh.getRotationAngle() + 90 : 0;
+			return proportion > 1.5 ? rotation + 90 : rotation;
 
 		case 'necklace':
+			var projected = mesh.projectPoints(mesh.getLongestRotation()),
+				proportion = projected.width / projected.height;
+			return proportion > 1.5 ? 0 : rotation;
 		default:
-			return 0;
+			return rotation;
 	}
 };

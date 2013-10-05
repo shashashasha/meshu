@@ -128,8 +128,11 @@ sb.ui.orderer = function() {
 			renderer = meshu.mesh().name,
 			review = $("#review");
 
-		var miniDelaunay = $("#product-preview .product-delaunay:first").clone()
-				.attr("class","review-delaunay").attr("transform","scale(.25)");
+		var rotation = sb.rotator ? sb.rotator.rotation() : 0;
+		console.log(rotation);
+		var transform = "translate(75, 75) scale(.25) rotate(" + rotation + ")";
+		var miniDelaunay = $("#product-preview .selected .product-transformer").clone()
+				.attr("class","review-delaunay").attr("transform", transform);
 
 		review.find(".review-svg").empty().append(miniDelaunay);
 
@@ -142,16 +145,16 @@ sb.ui.orderer = function() {
 				review.find(".review-product").removeClass("inactive").text(product);
 		}
 
-		if (color && material) 
+		if (color && material)
 			review.find(".review-material").removeClass("inactive").text(sb.materializer.color()+" "+material);
-		else 
+		else
 			review.find(".review-material").addClass("inactive").text("not chosen");
-		
+
 		if (product && color && material) {
 			review.find(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
 			review.find(".review-make-time").text(catalog.getMakeTime(material));
-			
-			if (renderer == "facet" && miniDelaunay.children().length || 
+
+			if (renderer == "facet" && miniDelaunay.children().length ||
 				renderer == "radial" && $(".meshu-svg .radial").children().length) {
 				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
 					return;

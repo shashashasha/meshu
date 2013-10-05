@@ -177,15 +177,16 @@ sb.mesh.facet = function (frame, map, width, height) {
         return pt.matrixTransform(transform);
     };
 
-    self.getRotationAngle = function() {
+    self.getRotationAngle = function(offset) {
+        offset = offset || 0;
         if (points.length < 2) return;
-        if (longestRotationAngle) return longestRotationAngle;
+        if (longestRotationAngle) return longestRotationAngle + offset;
 
         var pair = furthestPoints(map, points),
             angle = lineAngle(pair[0], pair[1]);
 
         longestRotationAngle = -angle + 180;
-        return longestRotationAngle;
+        return longestRotationAngle + offset;
     };
 
     // cache it so we don't iterate over all the points all the time

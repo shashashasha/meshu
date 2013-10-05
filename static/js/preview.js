@@ -15,6 +15,7 @@ $(function() {
 			// set default
 			currentProduct = product;
 			rotation = rotation || sb.transforms.getDefaultRotation(currentProduct);
+			console.log('default rotation', rotation);
 
 			var main = d3.select(rotateFrame);
 
