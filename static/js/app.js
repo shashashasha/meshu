@@ -157,7 +157,7 @@ $(function() {
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 
-				if (currentRenderer == 'facet') {
+				if (currentRenderer != 'radial') {
 					sb.rotator.update(product);
 					sb.rotator.on("rotated", function() {
 						sb.ui.orderer.updated();

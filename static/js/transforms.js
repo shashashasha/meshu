@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 150, y: 215}
+			transform: {x: 150, y: 205}
 		},
 		"render": {
 			scale: .25,
@@ -70,7 +70,6 @@ sb.transforms.getTransform = function(product, type, rotation) {
 		transform = transform + 'rotate(' + rotation + ')';
 	return transform;
 };
-
 
 sb.transforms.getDefaultRotation = function(product) {
 	var mesh = meshu.mesh(),
