@@ -154,7 +154,7 @@ h1#meshu {
 
 }
 
-#login-form label.error.login-error,
+#login-form label.error.ferror,
 #account label.error.login-error {
     display: none;
 }
@@ -211,10 +211,9 @@ h1#meshu {
 
 #login-form {
     display: none;
-    position: absolute;
+    position: fixed;
     z-index: 3;
     top: 150px;
-    right: 310px;
     width: 380px;
     min-height: 205px;
     padding-top: 15px;
@@ -747,7 +746,7 @@ body.win #login-form ul {
     position: absolute;
     display: none;
 }
-#loading {
+.loading {
     width: 25px;
     height: 25px;
     background-image: url(../images/ui/loading.gif);
@@ -1501,6 +1500,11 @@ input[type="range"]::-webkit-slider-thumb {
 #checkout {
     height: 620px;
 }
+#checkout .loading {
+    position: absolute;
+    bottom: 5px;
+    right: 185px;
+}
 
 #shipping-destination {
     height: 28px;
@@ -1623,7 +1627,7 @@ body.ie8 .city-input {
 }
 
 #postcard-note-form {
-    width: 100%;
+    width: 620px;
     margin-top: 5px;
     height: 70px;
 }
