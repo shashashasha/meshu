@@ -31,8 +31,8 @@ $(function() {
 				.attr('id', 'previewImage')
 				.attr('x', 0)
 				.attr('y', 0)
-				.attr("width",313)
-				.attr("height",297)
+				.attr("width", 313)
+				.attr("height", 297)
 				.attr('xlink:href', self.getImage(currentProduct));
 
 			rotationDiv = sb.product.previewFromSelector(currentProduct, delaunayFrame, rotateFrame);

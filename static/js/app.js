@@ -180,6 +180,11 @@ $(function() {
 	function generateProductThumbnails() {
 		if (meshu.mesh().name == "facet") {
 			sb.product.initialize(".delaunay", catalog);
+
+			// create ring preview, it's in rasterizer
+			if (!$("body").hasClass("ie9")) {
+				sb.rasterizer.ringPreview(meshu);
+			}
 		}
 		else if (meshu.mesh().name == "radial") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
