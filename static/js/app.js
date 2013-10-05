@@ -156,10 +156,14 @@ $(function() {
    			default:
    				$("#final-rotate").show();
 				$("#final-ring").hide();
-				sb.rotator.update(product);
-				sb.rotator.on("rotated", function() {
-					sb.ui.orderer.updated();
-				});
+
+				if (currentRenderer == 'facet') {
+					sb.rotator.update(product);
+					sb.rotator.on("rotated", function() {
+						sb.ui.orderer.updated();
+					});
+				}
+
 				sb.ui.orderer.clearMetadata("ringSize");
    				break;
    		}
