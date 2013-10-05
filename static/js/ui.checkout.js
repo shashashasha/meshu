@@ -19,7 +19,6 @@ $(function() {
         form.find("li").removeClass("active");
         $(this).addClass("active");
 
-        console.log('switching mode', mode);
         cashier.shippingMode(mode);
 	});
 

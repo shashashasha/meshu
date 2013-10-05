@@ -20,10 +20,6 @@ $(function() {
 	// create a meshu object for a single meshu container
 	meshu = sb.meshu($("#meshu-container")[0], currentRenderer);
 
-	// width of the .edit-panel's
-	// if ($("#content").hasClass("edit"))
-	// 	meshu.offsetX = 300;
-
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
 	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
@@ -31,9 +27,6 @@ $(function() {
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
 	sb.ui.orderer.initialize(meshu, catalog);
-
-	// initialize the viewhandler
-	// sb.viewhandler.initialize();
 
 	if (loadedMeshu) {
 		// create a saver object, in saver.js
@@ -44,8 +37,6 @@ $(function() {
 		// checking the page view type, setting our flows accordingly
 		user.updateLogoutActions(pageType);
 
-		// viewhandler handles next / prev buttons, shuffling account view
-		// sb.viewhandler.updateViews(pageType);
 
 		switch (pageType) {
 			case 'view':
@@ -56,19 +47,6 @@ $(function() {
 				if (svgEnabled)
 					meshu.map().buffer(0);
 				break;
-
-			// case 'product':
-			// 	var product = $("#product");
-			// 	product.find(".nav").remove();
-			// 	product.find(".make-wrapper").removeClass("make-wrapper");
-			// 	break;
-
-			// default:
-				// $("#materials").addClass("ready");
-
-				// var product = loadedMeshu.product.length ? loadedMeshu.product : 'necklace';
-				// sb.materializer.product(product);
-				// break;
 		}
 
 		// if svg is enabled
@@ -88,8 +66,6 @@ $(function() {
 			generateProductThumbnails();
 		}
 
-
-		// $("#finish-button").addClass("active");
 		$("#meshu-container").removeClass("inactive");
 
 		// creates the location list
@@ -122,7 +98,6 @@ $(function() {
 	}
 
 	// check if we need an account screen
-	sb.viewhandler.updateAccountView();
 	sb.viewhandler.on("next", makeNextView);
 	sb.viewhandler.on("prev", makePrevView);
 
@@ -236,12 +211,6 @@ $(function() {
 			case 'edit':
 				meshu.mesh().interactive(true);
 				break;
-
-			// case 'make':
-			// case 'readymade':
-			// 	meshu.mesh().interactive(true);
-			// 	meshu.animateTransform(0, 1, 0, 0);
-			// 	break;
 		}
 	}
 

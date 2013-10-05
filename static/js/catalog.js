@@ -5,20 +5,20 @@ sb.catalog = function(renderer, promo) {
 		renderer = renderer || 'facet';
 
 	materialOptions.facet = {"earrings":
-						{"bamboo":{"price":70,"colors":["amber"]},
-						"acrylic":{"price":75,"colors":["black","white"]},
+						{"bamboo":{"price":75,"colors":["amber"]},
+						"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["white"]}
 						},
 				   "pendant":
-				   		{"bamboo":{"price":75,"colors":["amber"]},
-				   		"acrylic":{"price":80,"colors":["black","white"]},
-						"nylon":{"price":85,"colors":["white"]},
+				   		{"bamboo":{"price":80,"colors":["amber"]},
+				   		"acrylic":{"price":85,"colors":["black","white"]},
+						"nylon":{"price":90,"colors":["white"]},
 						// "brass":{"price":135,"colors":["polished"]},
 						"silver":{"price":145,"colors":["sterling"]}
 						},
 				   "necklace":
-				   		{"bamboo":{"price":80,"colors":["amber"]},
-				   		"acrylic":{"price": 85,"colors":["black","white"]},
+				   		{"bamboo":{"price":85,"colors":["amber"]},
+				   		"acrylic":{"price": 90,"colors":["black","white"]},
 						// "nylon":{"price":90,"colors":["black","white"]},
 						"silver":{"price":165,"colors":["sterling"]},
 						// "brass":{"price":155,"colors":["polished"]}
@@ -35,9 +35,9 @@ sb.catalog = function(renderer, promo) {
 					};
 
 	materialOptions.radial = {"earrings":
-						{"bamboo":{"price":75,"colors":["amber"]},
-						"acrylic":{"price":80,"colors":["black","white"]},
-						"nylon":{"price":90,"colors":["white"]}
+						{"bamboo":{"price":80,"colors":["amber"]},
+						"acrylic":{"price":85,"colors":["black","white"]},
+						"nylon":{"price":95,"colors":["white"]}
 						},
 				   "pendant":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
@@ -105,7 +105,6 @@ sb.catalog = function(renderer, promo) {
 	};
 
 	self.getMakeTime = function(material) {
-		console.log(material, makeTimes, makeTimes[material])
 		return makeTimes[material];
 	};
 

@@ -11,9 +11,6 @@ sb.map = function(frame, width, height) {
 	var baseURL = "http://tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
 	var container = d3.select(frame).append("div")[0][0];
-    // container.style.position = "absolute";
-    // container.style.width = width;
-    // container.style.height = height;
 
     d3.select(frame).append("div").attr("class","render");
 
@@ -93,7 +90,6 @@ sb.map = function(frame, width, height) {
 	};
 
 	self.updateBounds = function(lats, lons, zoomOffset, offsetX) {
-		console.log('updatebounds', lats, lons, zoomOffset, offsetX);
 		if (lats.length == 0 || lons.length == 0) return;
 		if (lats.length == 1 && lons.length == 1) {
 			self.centerOn({

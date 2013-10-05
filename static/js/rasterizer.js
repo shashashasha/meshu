@@ -92,7 +92,7 @@ sb.rasterizer = function() {
 		// TODO just commenting out for now, for rings
 		self.clearCanvases();
 
-		console.log('rasterizer:', 'posting meshu to_png', xhr);
+		// console.log('rasterizer:', 'posting meshu to_png', xhr);
 		// send it to the server to be saved as a png
 		$.post('to_png', xhr, function(data) {
 			var img = document.createElement('img');
@@ -219,8 +219,6 @@ sb.rasterizer = function() {
 					bgContext = d3.select("#ring-preview-canvas").node().getContext('2d');
 					$(".strip div").css("background-image", "-moz-element(#ring-preview-canvas)");
 				}
-
-				console.log(bgContext);
 				
 				bgContext.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
 				bgContext.fillStyle = 'rgba(255, 255, 255, .75)';

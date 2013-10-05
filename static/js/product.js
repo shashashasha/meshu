@@ -15,10 +15,6 @@ $(function() {
 
 		self.initialize = function(meshTarget, catalog) {
 			products = catalog.getProducts();
-			/*
-				pretty hacky, but seeing which products are used and hiding the rest
-			*/
-			// var seenProducts = {};
 
 			// initialize all products
 			for (var i = 0; i < products.length; i++) {

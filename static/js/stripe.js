@@ -48,8 +48,6 @@ var cashier = function() {
             .addClass("inactive");
         $(".card-info").removeAttr("name");
 
-        console.log('preauth for', self.getFinalCents());
-
         // createToken returns immediately
         // the supplied callback submits the form if there are no errors
         Stripe.createToken({
