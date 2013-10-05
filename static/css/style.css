@@ -365,6 +365,7 @@ body.win #login-form ul {
   height: 400px;
   float: left;
   background-color: #ccc;
+  position: relative;
 }
 .product-shot.new {
   width: 600px;
@@ -380,16 +381,22 @@ body.win #login-form ul {
   width: 400px;
   margin-bottom: 40px;
 }
+.product-shot img {
+  position: absolute;
+  left: 0;
+}
 .product-shot h3 {
   color: #ff3fb4;
   font-weight: normal;
   font-size: 28px;
   margin: 10px 15px 0 15px;
+  position: relative;
 }
 .product-shot p {
   margin: 5px 15px 20px;
-  width: 287px;
-  font-size: 18px;
+  width: 277px;
+  font-size: 17px;
+  position: relative;
 }
 .product-shot.old p {
   background: rgba(255, 255, 255, 0.5);
@@ -397,11 +404,19 @@ body.win #login-form ul {
 .product-shot .button {
   margin: 15px;
   font-size: 18px;
+  position: relative;
 }
 .product-shot:hover .button {
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  background-color: #1fcaff;
+}
+.product-shot.new:hover img {
+  opacity: .9;
+}
+.product-shot.old:hover img {
+  opacity: .7;
 }
 .product-grid {
   height: 400px;
@@ -423,6 +438,16 @@ body.win #login-form ul {
   width: 100%;
   height: 100%;
   background-size: contain;
+}
+.product-grid a:hover img {
+  opacity: .7;
+}
+.product-grid a.dark:hover img {
+  opacity: .9;
+}
+.product-grid img {
+  width: 200px;
+  height: 200px;
 }
 #banners {
   position: relative;
@@ -495,7 +520,7 @@ body.win #login-form ul {
 }
 .options {
   margin: 0 auto;
-  margin: 20px auto 30px;
+  margin: 20px auto 25px;
 }
 .bottom {
   margin-bottom: 50px;
@@ -535,30 +560,6 @@ body.win #login-form ul {
 }
 #footer a {
   color: #ff3fb4;
-}
-#crazy {
-  position: absolute;
-  left: -100px;
-}
-#crazy .line {
-  border-left: 1px dashed #bbb;
-  position: absolute;
-  left: 37px;
-  z-index: -1;
-  height: 100%;
-}
-#crazy li {
-  font-size: 50px;
-  background-color: #bbb;
-  color: white;
-  border-radius: 100px;
-  width: 75px;
-  height: 75px;
-  text-align: center;
-  line-height: 75px;
-}
-#crazy li:last-child {
-  margin-bottom: 0;
 }
 #content {
   width: 1000px;
