@@ -54,7 +54,7 @@ sb.map = function(frame, width, height) {
 
 	// fill the background with white
 	d3.select(svgObject)
-		.attr("width", "600px")
+		.attr("width", width)
 		.attr("height", "600px")
 		.select("rect")
 		.attr("visibility","visible")

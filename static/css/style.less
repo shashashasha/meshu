@@ -1469,8 +1469,7 @@ input[type="range"]::-webkit-slider-thumb {
     border: 1px solid @borderGrey;
 }
 #review .review-svg path {
-    stroke: @grey;
-    stroke-width: 20;
+    stroke-width: 15;
 }
 #review .review-svg image {
     opacity: .4;
@@ -2251,9 +2250,12 @@ circle {
     line-height: 16px;
     float: right;
     background-color: @grey;
-    border: 1px solid @lightGrey;
     color: white;
-    margin-right: 10px;
+    margin-left: 10px;
+    &:hover {
+        background-color: @pink;
+        .shadow(10px, rgba(0, 0, 0, .25));
+    }
 }
 #cart .quantity {
     width: 45px;
@@ -2262,19 +2264,7 @@ circle {
     color: black;
 }
 #cart .cart-remove {
-    background-color: @grey;
-    color: white;
-    display: inline-block;
-    padding: 2px 8px;
-    float: right;
-    font-size: 18px;
-    line-height: 21px;
     width: 55px;
-
-    &:hover {
-        background-color: @pink;
-        .shadow(10px, rgba(0, 0, 0, .25));
-    }
 }
 
 .total-wrapper {
