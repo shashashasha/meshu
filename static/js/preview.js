@@ -16,13 +16,13 @@ $(function() {
 			// set default
 			currentProduct = product;
 
-			// all preview meshus are rotated to be horizontal and long now
-			baseRotation = meshu.mesh().getRotationAngle();
+			if (meshu.getRenderer() == 'facet') {
+				// all preview meshus are rotated to be horizontal and long now
+				baseRotation = meshu.mesh().getRotationAngle();
 
-			// so our 'rotation' needs to take that into account
-			rotation = baseRotation + sb.transforms.getDefaultRotation(currentProduct);
-
-			console.log('default rotation', rotation, sb.transforms.getDefaultRotation(currentProduct));
+				// so our 'rotation' needs to take that into account
+				rotation = baseRotation + sb.transforms.getDefaultRotation(currentProduct);
+			}
 
 			var main = d3.select(rotateFrame);
 
