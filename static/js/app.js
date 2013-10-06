@@ -160,7 +160,7 @@ $(function() {
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 
-				if (currentRenderer == 'facet') {
+				if (currentRenderer != 'radial') {
 					sb.rotator.update(product);
 					sb.rotator.on("rotated", function() {
 						sb.ui.orderer.updated();
@@ -183,6 +183,12 @@ $(function() {
 	function generateProductThumbnails() {
 		if (meshu.mesh().name == "facet") {
 			sb.product.initialize(".delaunay", catalog);
+
+			// create ring preview, it's in rasterizer
+			var isIE = $("body").hasClass("ie9") || $("body").hasClass("ie10");
+			if (!isIE) {
+				sb.rasterizer.ringPreview(meshu);
+			}
 		}
 		else if (meshu.mesh().name == "radial") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {

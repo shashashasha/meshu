@@ -50,9 +50,13 @@ sb.transforms = {
 		}
 	},
 	"ring": {
+		// "product": {
+		// 	scale: .3,
+		// 	transform: {x: 200, y: 200}
+		// },
 		"product": {
-			scale: .3,
-			transform: {x: 200, y: 200}
+			scale: .5,
+			transform: {x: 150, y: 150}
 		},
 		"render": {
 			scale: .4,
@@ -71,6 +75,46 @@ sb.transforms.getTransform = function(product, type, rotation) {
 	return transform;
 };
 
+sb.transforms.getOrientation = function(product) {
+	var orientation = {},
+		mesh = meshu.mesh(),
+		projected = mesh.projectPoints(mesh.getLongestRotation()),
+		proportion = projected.width / projected.height;
+
+	orientation.width = 450;
+	orientation.rotation = -mesh.getRotationAngle();
+
+	switch (product) {
+		// no rotation, squarify
+		case 'cufflinks':
+			orientation.height = 400;
+			break;
+		// rotate to horizontal if it's skinny, stretch if skinny
+		case 'necklace':
+			orientation.height = 450 / proportion;
+			if (proportion > 2) {
+				orientation.height = (450 / proportion) * 1.5;
+				orientation.rotation = 0;
+			}
+			break;
+		case 'ring':
+			orientation.height = 150;
+			orientation.rotation = 0;
+			break;
+		// rotate to vertical if it's skinny, stretch if skinny
+		case 'earrings':
+		case 'pendant':
+		default:
+			orientation.height = 450 / proportion;
+			if (proportion > 2) {
+				orientation.height = (450 / proportion) * 2;
+				orientation.rotation = 90;
+			}
+			break;
+	}
+
+	return orientation;
+};
 
 sb.transforms.getDefaultRotation = function(product) {
 	var mesh = meshu.mesh(),

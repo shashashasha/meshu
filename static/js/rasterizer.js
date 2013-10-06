@@ -213,17 +213,17 @@ sb.rasterizer = function() {
 					topBorder = 0,
 					bgContext;
 
-				if (typeof document.getCSSCanvasContext == 'function') {
-					bgContext = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
-				} else {
+				if (typeof document.getCSSCanvasContext != 'function') {
 					bgContext = d3.select("#ring-preview-canvas").node().getContext('2d');
 					$(".strip div").css("background-image", "-moz-element(#ring-preview-canvas)");
+				} else {
+					bgContext = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
 				}
-				
+
 				bgContext.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
 				bgContext.fillStyle = 'rgba(255, 255, 255, .75)';
 				bgContext.fillRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
-				bgContext.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);	
+				bgContext.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);
 
 				if (callback) {
 					callback(canvas);

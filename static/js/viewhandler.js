@@ -14,10 +14,6 @@ sb.viewhandler = function() {
 	$("#edit").waypoint(function(direction) {
 		if (direction == "down") {
 			onNext();
-
-			// right now viewhandler doesn't know about meshu, so this shouldn't be here?
-			if (meshu.getRenderer() == 'facet')
-				sb.rasterizer.ringPreview(meshu);
 		}
 		else onPrev();
 	}, { offset: function() {

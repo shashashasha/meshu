@@ -44,47 +44,17 @@ $(function() {
 	            .attr("class", "product-transformer"),
 				mesh = meshu.mesh(),
 				projected = mesh.projectPoints(mesh.getLongestRotation()),
-				proportion = projected.width / projected.height,
-				transform = sb.transforms.getTransform(product, "product"),
-				endRotation = -mesh.getRotationAngle(),
-				endWidth = 0, endHeight = 0;
-
-			switch (product) {
-				// no rotation, squarify
-				case 'cufflinks':
-					endWidth = 450;
-					endHeight = 400;
-					break;
-				// rotate to horizontal if it's skinny, stretch if skinny
-				case 'necklace':
-					endWidth = 450;
-					endHeight = 450 / proportion;
-					if (proportion > 2) {
-						endHeight = (450 / proportion) * 1.5;
-						endRotation = 0;
-					}
-					break;
-				// rotate to vertical if it's skinny, stretch if skinny
-				case 'earrings':
-				case 'pendant':
-				default:
-					endWidth = 450;
-					endHeight = 450 / proportion;
-					if (proportion > 2) {
-						endHeight = (450 / proportion) * 2;
-						endRotation = 90;
-					}
-					break;
-			}
+				orientation = sb.transforms.getOrientation(product),
+				transform = sb.transforms.getTransform(product, "product");
 
 			// resize and rotate to longest angle
-			mesh.transformedDelaunay(projected, endWidth, endHeight);
+			mesh.transformedDelaunay(projected, orientation.width, orientation.height);
 
 			// clones and recenters delaunay on its centerpoint
-			self.cloneSVG(group[0], meshSelector, endWidth, endHeight);
+			self.cloneSVG(group[0], meshSelector, orientation.width, orientation.height);
 
 			// final transform
-			group.attr("transform", transform + ' rotate(' + endRotation + ')');
+			group.attr("transform", transform + ' rotate(' + orientation.rotation + ')');
 
 			// clear mesh geometry
 			mesh.refresh();
