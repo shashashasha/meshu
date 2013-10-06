@@ -1104,9 +1104,6 @@ body.ie .frame div {
 #rotate-help .border-notch {
     border-right-color: @borderGrey;
     left: -13px;
-}
-body.firefox.win #rotate-help .border-notch {
-    left: -12px;
 }*/
 .ring-preview-frame {
   width: 21px;
@@ -1234,13 +1231,16 @@ body.firefox.win #rotate-help .border-notch {
   line-height: 18px;
 }
 #preview-coasters .product-transformer {
+  transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
   -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
   -moz-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
 }
-.ie9 #preview-coasters image {
+.ie9 #preview-coasters image,
+.ie10 #preview-coasters image {
   display: none;
 }
-.ie9 #preview-coasters .product-transformer image {
+.ie9 #preview-coasters .product-transformer image,
+.ie10 #preview-coasters .product-transformer image {
   display: block;
 }
 #product-preview p.cufflinks {
@@ -1297,7 +1297,7 @@ body.firefox.win #rotate-help .border-notch {
   width: 175px;
 }
 .ie9 .ie9-note {
-  display: none;
+  display: block;
 }
 .ie9-note a {
   color: #ff3fb4;
