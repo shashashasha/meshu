@@ -1270,6 +1270,11 @@ body.ie .frame div {
   -o-transform-origin: 50% 50%;
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
 }
+.ie .triangle {
+  font-size: 18px;
+  left: 10px;
+  top: 10px;
+}
 .ie9-note {
   display: none;
   position: absolute;
