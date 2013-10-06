@@ -182,7 +182,8 @@ $(function() {
 			sb.product.initialize(".delaunay", catalog);
 
 			// create ring preview, it's in rasterizer
-			if (!$("body").hasClass("ie9")) {
+			var isIE = $("body").hasClass("ie9") || $("body").hasClass("ie10");
+			if (!isIE) {
 				sb.rasterizer.ringPreview(meshu);
 			}
 		}
