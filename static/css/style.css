@@ -21,6 +21,9 @@ h2 {
   font-size: 28px;
   margin: 0;
 }
+.ie h2 {
+  font-size: 26px;
+}
 h2.page-header {
   padding-left: 20px;
   margin: 20px 0;
@@ -566,8 +569,7 @@ body.win #login-form ul {
   border: 1px solid #e6e6e6;
   min-height: 600px;
   position: relative;
-  /*overflow: hidden;*/
-
+  overflow: hidden;
   -webkit-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.1);
@@ -1211,6 +1213,13 @@ body.ie .frame div {
 }
 #preview-coasters .product-transformer {
   -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
+  -moz-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
+}
+.ie9 #preview-coasters image {
+  display: none;
+}
+.ie9 #preview-coasters .product-transformer image {
+  display: block;
 }
 #product-preview p.cufflinks {
   text-align: center;
@@ -1257,6 +1266,19 @@ body.ie .frame div {
   -o-transform: rotate(315deg);
   -o-transform-origin: 50% 50%;
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+}
+.ie9-note {
+  display: none;
+  position: absolute;
+  top: 550px;
+  left: 670px;
+  width: 175px;
+}
+.ie9 .ie9-note {
+  display: none;
+}
+.ie9-note a {
+  color: #ff3fb4;
 }
 #save-and-view {
   position: absolute;

@@ -2,7 +2,7 @@ sb.transforms = {
 	"earrings": {
 		"product": {
 			scale: .17,
-			transform: {x: 192, y: 170}
+			transform: {x: 195, y: 165}
 		},
 		"render": {
 			scale: .45,
@@ -12,7 +12,7 @@ sb.transforms = {
 	"pendant": {
 		"product": {
 			scale: .125,
-			transform: {x: 150, y: 205}
+			transform: {x: 155, y: 205}
 		},
 		"render": {
 			scale: .25,
@@ -41,8 +41,8 @@ sb.transforms = {
 	},
 	"coasters": {
 		"product": {
-			scale: .3,
-			transform: {x: 200, y: 200}
+			scale: .4,
+			transform: {x: 150, y: 150}
 		},
 		"render": {
 			scale: .4,
