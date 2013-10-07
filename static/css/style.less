@@ -1266,13 +1266,16 @@ body.ie .frame div {
     line-height: 18px;
 }
 #preview-coasters .product-transformer {
+    transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
     -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
     -moz-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
 }
-.ie9 #preview-coasters image {
+.ie9 #preview-coasters image,
+.ie10 #preview-coasters image {
     display: none;
 }
-.ie9 #preview-coasters .product-transformer image {
+.ie9 #preview-coasters .product-transformer image,
+.ie10 #preview-coasters .product-transformer image {
     display: block;
 }
 #product-preview p.cufflinks {
@@ -1321,6 +1324,11 @@ body.ie .frame div {
     -o-transform-origin: 50% 50%;
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
 }
+.ie .triangle {
+    font-size: 18px;
+    left: 10px;
+    top: 10px;
+}
 
 .ie9-note {
     display: none;
@@ -1330,7 +1338,7 @@ body.ie .frame div {
     width: 175px;
 }
 .ie9 .ie9-note {
-    display: none;
+    display: block;
 }
 .ie9-note a {
     color: @pink;
