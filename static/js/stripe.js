@@ -4,7 +4,7 @@ var cashier = function() {
     var self = {},
         // grab from the page right away
         // this is probably dumb
-        currentAmount = totalPrice,
+        currentAmount = totalPrice || 0,
         discountAmount = 0,
         discountPercent = 1,
         shipping = 0, // default domestic
