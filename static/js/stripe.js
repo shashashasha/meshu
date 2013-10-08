@@ -13,21 +13,21 @@ var cashier = function() {
         multipleInternationalShipping = 80;
 
     function stripeResponseHandler(status, response) {
-        // if (response.error) {
-        //     // re-enable the submit button
-        //     $('#submit-button').removeAttr("disabled").removeClass("inactive");
+        if (response.error) {
+            // re-enable the submit button
+            $('#submit-button').removeAttr("disabled").removeClass("inactive");
 
-        //     $(".payment-note").css({
-        //         color: '#FF3FB4'
-        //     }).html('There was an error processing your card. Maybe there was a typo?');
+            $(".payment-note").css({
+                color: '#FF3FB4'
+            }).html('There was an error processing your card. Maybe there was a typo?');
 
-        //     // click anywhere to revert this
-        //     $(window).click(function() {
-        //         $(".payment-note").css({
-        //             color: '#8F8F8F'
-        //         }).html('All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a>');
-        //     });
-        // } else {
+            // click anywhere to revert this
+            $(window).click(function() {
+                $(".payment-note").css({
+                    color: '#8F8F8F'
+                }).html('All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a>');
+            });
+        } else {
             var form$ = $("#payment-form");
             // token contains id, last4, and card type
             var token = response['id'];
@@ -37,7 +37,7 @@ var cashier = function() {
             form$.append("<input type='hidden' name='shipping_amount' value='" + self.getShippingCents() + "' />");
 
             form$.get(0).submit();
-        // }
+        }
     }
 
     self.submit = function() {
@@ -82,8 +82,8 @@ var cashier = function() {
         $(".ring .num").each(function(v,i){ numRings += parseInt($(this).text()); });
         var numBoxes = numItems - numRings;
 
-        shipping = value == 'international' ? 
-                            (numBoxes > 2 ? multipleInternationalShipping : internationalShipping) 
+        shipping = value == 'international' ?
+                            (numBoxes > 2 ? multipleInternationalShipping : internationalShipping)
                             : domesticShipping;
         self.update();
     };

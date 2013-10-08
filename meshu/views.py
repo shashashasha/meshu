@@ -215,15 +215,15 @@ def submit_orders(request):
 	print(stripe_desc)
 
 	# get the credit card details submitted by the form
-	# token = request.POST['stripe_token']
+	token = request.POST['stripe_token']
 
 	# create the charge on Stripe's servers - this will charge the user's card
-	# charge = stripe.Charge.create(
-	#     amount = final_amount, # amount in cents, again
-	#     currency = "usd",
-	#     card = token,
-	#     description = stripe_desc
-	# )
+	charge = stripe.Charge.create(
+	    amount = final_amount, # amount in cents, again
+	    currency = "usd",
+	    card = token,
+	    description = stripe_desc
+	)
 
 	# store the shipping address information
 	shipping = ShippingInfo()
