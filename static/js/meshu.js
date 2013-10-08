@@ -10,7 +10,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         // use the renderer given
 		mesh = sb.mesh[renderer](frame, map, width, height),
         searchError = $("#search-error"),
-        loadingGif = $("#loading");
+        loadingGif = $(".loading");
 
     self.offsetX = 0;
 
