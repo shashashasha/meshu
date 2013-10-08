@@ -133,6 +133,20 @@ def processing_order_postcard_toggle(request, order_id):
 		'postcard_ordered': order.postcard_ordered
 	})
 
+def view_emails(request):
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	users = UserProfile.objects.all()
+	emails = []
+	for profile in users:
+		emails.append(profile.user.email)
+
+	return render_to_response('meshu/processing/emails.html', {
+			'users': users,
+			'emails': emails
+	}, context_instance=RequestContext(request))
+
 def view_addresses(request):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:
 		return render_to_response('404.html', {}, context_instance=RequestContext(request))

@@ -1,0 +1,14 @@
+{% extends "meshu/base.html" %}
+
+{% block title %}User Profiles{% endblock %}
+
+{% block content %}
+	<h2 class="page-header">Postcard Notes :)</h2>
+    <ul class="notes">
+        {% for profile in users reversed %}
+        <li>
+            <div class="date">{{ profile.user.email }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -187,6 +187,7 @@ urlpatterns += patterns('meshu.pipeline',
 	url(r'^orders/addresses', 'view_addresses'),
 	url(r'^orders/notes', 'view_notes'),
 	url(r'^orders/all', 'view_all'),
+	url(r'^orders/emails', 'view_emails'),
 	url(r'^orders/', 'view_orders'),
 )
 
