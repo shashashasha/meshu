@@ -219,7 +219,7 @@ def submit_orders(request):
 
 	# create the charge on Stripe's servers - this will charge the user's card
 	charge = stripe.Charge.create(
-	    amount = final_amount, # amount in cents, again
+	    amount = int(final_amount), # amount in cents, again
 	    currency = "usd",
 	    card = token,
 	    description = stripe_desc
