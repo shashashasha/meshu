@@ -197,6 +197,7 @@ h1#meshu {
   line-height: 19px;
   font-family: Helvetica, Arial, sans-serif;
   clear: both;
+  display: none;
 }
 #login-form p {
   margin: 15px 20px 0 29px;
