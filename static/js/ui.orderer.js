@@ -163,6 +163,7 @@ sb.ui.orderer = function() {
 		} else {
 			review.find(".review-price").text("");
 			review.find(".review-make-time").text("");
+			review.find("#add-to-cart").addClass("inactive");
 		}
 	}
 
