@@ -52,10 +52,12 @@ sb.map = function(frame, width, height) {
 	else
 		self.map.add(image);
 
+	var postcard = $("body").hasClass("postcard");
+
 	// fill the background with white
 	d3.select(svgObject)
 		.attr("width", width)
-		.attr("height", "600px")
+		.attr("height", postcard ? "100%" : "600px")
 		.select("rect")
 		.attr("visibility","visible")
 		.attr("fill","white");
