@@ -260,6 +260,7 @@ def submit_multiple(request, shipping, items, discount_cents, coupon_cents):
 		order = item.product
 		order.shipping = shipping
 		order.status = 'OR'
+		order.coupon = request.POST.get('coupon_code', '')
 
 		# reduce the order amount by coupon / volume discounts
 		order.amount = float(order.amount) - discount_per
@@ -297,6 +298,7 @@ def submit_single(request, shipping, items, coupon_amount):
 	order.shipping = shipping
 	order.status = 'OR'
 	order.amount = float(order.amount) - (coupon_amount / 100.0);
+	order.coupon = request.POST.get('coupon_code', '')
 
 	order.save()
 
