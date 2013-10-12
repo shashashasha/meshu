@@ -106,7 +106,7 @@ def processing_order_update_status(request, order_id):
 		order.save()
 
 		if order.status == 'SE' or order.status == 'SH' or order.status == 'RE':
-			mail_order_status_change(order.contact, order.meshu, order)
+			mail_order_status_change(order.shipping.contact, order.meshu, order)
 
 	# returning json now, the orders status updating is all ajax
 	return json_dump({
