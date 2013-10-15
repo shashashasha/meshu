@@ -1080,7 +1080,9 @@ body.ie .frame div {
 #rotate-ccw:hover {
   background-position: -55px 80px;
 }
-#preview-ring {
+#preview-ring,
+.ie9 #ring-img,
+.ie10 #ring-img {
   display: none;
 }
 .ie9 #preview-ring,
