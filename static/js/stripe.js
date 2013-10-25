@@ -110,6 +110,9 @@ var cashier = function() {
             code: value
         }, function(data) {
             if (data.success) {
+                // store the actual code used
+                $("#payment-form").append("<input type='hidden' name='coupon_code' value='" + value + "' />");
+
                 var amt = parseFloat(data.amount);
                 if (amt < 1 && amt > 0) {
                     discountPercent = amt;

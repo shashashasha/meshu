@@ -62,8 +62,9 @@
         <div class="ring-frame">
             <div class="tri"></div>
             <div class="triangle">new</div>
+            <img id="ring-img" src="{{ STATIC_URL }}images/preview/preview_ring.png">
             <svg id="preview-ring" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_ring.png" width="300" height="300" x=0 y=0>
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_ring_ie.png" width="300" height="300" x=0 y=0>
             </svg>
             <div class="ring-preview-frame">
                 <canvas id="ring-preview-canvas" width="500" height="150"></canvas>
@@ -121,8 +122,8 @@
     </li>
     <li id="polished-brass" class="material-option">
         <div class="img-wrapper">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img ring">
+            <img src="{{ STATIC_URL }}images/materials/facet-polished-brass.jpg" class="img default">
+            <img src="{{ STATIC_URL }}images/materials/facet-ring-brass.jpg" class="img ring">
             <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img cufflinks">
         </div>
         Polished Brass<span class="price"></span>
@@ -135,6 +136,7 @@
         <h2 class="add-on-header">Ring Size: <span id="ring-number"></span></h2>
         <p>Drag the slider below to adjust the ring size:</p>
         <input id="ring-range" type="range" min="4" max="14" step=".5"/>
+        <p class="note" style="margin-top:44px;">Not sure about your ring size? <a href="http://findmyringsize.com/" style="color:#808080; text-decoration:underline;">Click here</a> for help.</p>
     </div>
     <div id="final-rotate">
         <svg id="rotate"></svg>

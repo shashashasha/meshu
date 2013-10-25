@@ -45,9 +45,7 @@ $(function() {
 			// turn the input form into text
 			$("#coupon-message").fadeIn('fast').html(value + ' discount applied!')
 			$(".coupon-form").hide();
-
-			// store it in our hidden form
-			$("#coupon").val(value);
+			
 			cashier.update();
 		});
 
