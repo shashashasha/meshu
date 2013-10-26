@@ -103,6 +103,9 @@ $(function() {
 		};
 
 		self.getRotation = function() {
+			if (!rotation || rotation == NaN) {
+				rotation = 0;
+			}
 			return (rotation) % 360;
 		};
 
