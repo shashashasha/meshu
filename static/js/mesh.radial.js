@@ -234,12 +234,12 @@ sb.mesh.radial = function (frame, map, width, height) {
             ? "https://meshu.io/proxy/router/?from="
             : "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
 
-        var base = mapquest + '{start}&to={end}';
+        var base = mapquest + '{start}&to={end}&key={key}';
 
         for (var i = 1; i < points.length; i++) {
             var end = points[i],
                 endCoords = end[1]+","+end[0],
-                url = base.replace("{start}", startCoords).replace("{end}", endCoords);
+                url = base.replace("{start}", startCoords).replace("{end}", endCoords).replace("{key}", mapquestapi);
 
             requests[zoom][i] = $.jsonp({
                 url: url,
