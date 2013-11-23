@@ -62,9 +62,9 @@ sb.catalog = function(renderer, promo) {
 	makeTimes = {
 		"bamboo":"2-3 Weeks",
 		"acrylic":"2-3 Weeks",
-		"nylon":"3-4 Weeks",
-		"silver":"4-5 Weeks",
-		"brass":"4-5 Weeks"
+		"nylon":"2-3 Weeks",
+		"silver":"3-4 Weeks",
+		"brass":"3-4 Weeks"
 	};
 
 	// set the product type options with either facet or radial
