@@ -1,5 +1,6 @@
 var sb = sb || {};
-var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
+var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--",
+    mapquestapi = 'Fmjtd%7Cluub2002n0%2Cbx%3Do5-9urx5r';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
@@ -68,9 +69,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         // var url = "/proxy/geocoder/?location=" + query;
 
         // unproxied
-        var url = "http://open.mapquestapi.com/geocoding/v1/address/?location=" + query;
-            //$('body').hasClass('ie') || window.location.protocol == 'https:'
-            // : "http://where.yahooapis.com/geocode?location=" + query + "&flags=J&appid=" + app_key;
+        var url = "http://open.mapquestapi.com/geocoding/v1/address/?location=" + query + "&key=" + mapquestapi;
 
         searchbox.val("");
 
