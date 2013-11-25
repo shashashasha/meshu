@@ -26,21 +26,6 @@ body {
     background-color: #eee;
     font-family: Futura;
 }
-@media screen and (max-height: 300px) {
-    body {
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    #mainpane {
-        width: 100%;
-        min-height: 250px;
-    }
-    #localDragDrop {
-        width: 50%;
-        height: 250px;
-        min-height: 250px;
-    }
-}
 
 #content {
     padding: 10px;
@@ -441,4 +426,27 @@ table.fileinfo .filename {
     text-transform: uppercase;
     padding: 2px 9px 3px;
     border-radius: 0;
+}
+
+@media screen and (max-height: 300px) {
+    body {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    #mainpane {
+        width: 100%;
+        min-height: 250px;
+    }
+    #localDragDrop {
+        width: 50%;
+        height: 250px;
+        min-height: 250px;
+    }
+    #fileUploadForm {
+        width: 50%;
+        height: 250px;
+        position: absolute;
+        right: 0;
+        margin-right: 0;
+    }
 }
