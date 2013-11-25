@@ -25,8 +25,6 @@ body {
     width: 875px;
     background-color: #eee;
     font-family: Futura;
-    padding: 10px;
-    box-sizing: border-box;
 }
 
 #content {
@@ -97,8 +95,11 @@ body {
 }
 #mainpane {
     background: #808080;
-    width: 100%;
-    min-height: 250px;
+    width: 665px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-height: 470px;
 }
 #mainpane p {
     font-family: Futura;
@@ -320,9 +321,8 @@ h3.filename, #mainpane #subMessage {
     padding: 0;
 }
 #localDragDrop {
-    width: 50%;
-    height: 250px;
-    min-height: 250px;
+    width: 100%;
+    height: 360px;
     background-image: url(img/starburst-wide.png);
     background-position: center;
     box-shadow: none;
@@ -335,7 +335,7 @@ h3.filename, #mainpane #subMessage {
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin: 74px 0 0 97px;
+    margin: 142px 0 0 209px;
 }
 .control-label {
     display: none;
@@ -345,11 +345,9 @@ h3.filename, #mainpane #subMessage {
     margin-right: 0;
 }
 #fileUploadForm {
-    width: 50%;
-    height: 250px;
-    position: absolute;
-    right: 0;
-    margin-right: 0;
+    width: 100%;
+    border-top: 10px solid #eee;
+    height: 110px;
 }
 #fileInputContainer {
     z-index: 1;
