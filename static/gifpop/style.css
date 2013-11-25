@@ -361,9 +361,9 @@ h3.filename, #mainpane #subMessage {
     cursor: pointer;
 }
 #fileUploadDummy {
-    background-image: url(img/gif-upload.png);
+    background-image: url(img/img-upload.png);
     height: 48px;
-    width: 485px;
+    width: 367px;
     text-indent: 150%;
     white-space: nowrap;
     overflow: hidden;
@@ -429,13 +429,22 @@ table.fileinfo .filename {
 }
 
 @media screen and (max-height: 300px) {
+    html, body {
+        min-height: 250px;
+    }
     body {
         padding: 10px;
         box-sizing: border-box;
     }
+    #content {
+        height: 250px;
+    }
     #mainpane {
         width: 100%;
         min-height: 250px;
+        position: relative;
+        top: auto;
+        right: auto;
     }
     #localDragDrop {
         width: 50%;
@@ -448,5 +457,12 @@ table.fileinfo .filename {
         position: absolute;
         right: 0;
         margin-right: 0;
+        border-left: 10px solid #eee;
+        border-top: none;
+    }
+    #fileUploadDummy {
+        background-image: url(img/gif-upload.png);
+        height: 48px;
+        width: 298px;
     }
 }
