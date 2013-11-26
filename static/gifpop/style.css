@@ -472,6 +472,10 @@ table.fileinfo .filename {
         width: 300px;
         margin-top: 50px;
     }
+    #fileUploadInput {
+        top: 50px;
+        width: 300px;
+    }
     #fileInputContainer {
         width: 50%;
         margin: 120px 0 0 68px;
@@ -479,5 +483,9 @@ table.fileinfo .filename {
     #localDragHelp {
         margin: 80px 0 0 91px;
         background-image: url(img/drag-and-drop.png);
+    }
+    .uploadProgress.well {
+        height: 208px;
+        left: 0;
     }
 }
