@@ -35,6 +35,7 @@ var cashier = function() {
             form$.append("<input type='hidden' name='stripe_token' value='" + token + "' />");
             form$.append("<input type='hidden' name='coupon_amount' value='" + self.getDiscountCents() + "' />");
             form$.append("<input type='hidden' name='shipping_amount' value='" + self.getShippingCents() + "' />");
+            form$.append("<input type='hidden' name='final_amount' value='" + self.getFinalCents() + "' />");
 
             form$.get(0).submit();
         }
@@ -153,7 +154,7 @@ var cashier = function() {
     };
 
     self.getFinalCents = function() {
-        return self.getTotal() * 100;
+        return Math.floor(self.getTotal() * 100);
     };
 
     return self;
