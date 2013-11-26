@@ -15,6 +15,7 @@
     font-weight: bold;
     padding: 5px 15px;
     margin: 7px 0;
+    text-shadow: none;
 }
 .btn-primary:hover {
     background-color: #ff9900;
@@ -329,7 +330,7 @@ h3.filename, #mainpane #subMessage {
     background-color: transparent;
 }
 #localDragHelp {
-    background-image: url(img/drag-and-drop.png);
+    background-image: url(img/drag-and-drop-img.png);
     height: 108px;
     width: 246px;
     text-indent: 100%;
@@ -468,8 +469,10 @@ table.fileinfo .filename {
     }
     #fileInputContainer {
         width: 50%;
+        margin: 120px 0 0 68px;
     }
     #localDragHelp {
         margin: 71px 0 0 91px;
+        background-image: url(img/drag-and-drop.png);
     }
 }
