@@ -331,12 +331,12 @@ h3.filename, #mainpane #subMessage {
 }
 #localDragHelp {
     background-image: url(img/drag-and-drop-img.png);
-    height: 108px;
-    width: 246px;
+    height: 90px;
+    width: 256px;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin: 142px 0 0 205px;
+    margin: 135px 0 0 205px;
 }
 .control-label {
     display: none;
