@@ -41,7 +41,7 @@ import sha
 #
 
 # hashed codes
-codes = ['e35cb562a0104caf0640831c5bbd36adc34fa738', '92de3afc458e3876e2c7a63bb273c4b213ce5090']
+codes = ['3d3af906076e59086071f656d982bf6fbe11fcf6', '92de3afc458e3876e2c7a63bb273c4b213ce5090']
 amounts = [.8, 5]
 
 # util function
