@@ -461,18 +461,23 @@ table.fileinfo .filename {
         margin-right: 0;
         border-left: 10px solid #eee;
         border-top: none;
+        background-image: url(img/upload_computer_light_grey.png);
+        background-size: 250px;
+        background-repeat: no-repeat;
+        background-position: 50% 20px;
     }
     #fileUploadDummy {
         background-image: url(img/gif-upload.png);
         height: 48px;
         width: 300px;
+        margin-top: 50px;
     }
     #fileInputContainer {
         width: 50%;
         margin: 120px 0 0 68px;
     }
     #localDragHelp {
-        margin: 71px 0 0 91px;
+        margin: 80px 0 0 91px;
         background-image: url(img/drag-and-drop.png);
     }
 }
