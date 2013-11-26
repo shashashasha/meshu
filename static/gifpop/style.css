@@ -353,7 +353,7 @@ h3.filename, #mainpane #subMessage {
     z-index: 1;
     overflow: visible;
     width: 495px;
-    margin: 30px 0 0 90px;
+    margin: 30px 0 0 148px;
 }
 #fileUploadInput{
     line-height: 48px;
@@ -363,13 +363,14 @@ h3.filename, #mainpane #subMessage {
 #fileUploadDummy {
     background-image: url(img/img-upload.png);
     height: 48px;
-    width: 367px;
+    width: 369px;
     text-indent: 150%;
     white-space: nowrap;
     overflow: hidden;
     border: none;
     background-color: transparent;
     box-shadow: none;
+    background-repeat: no-repeat;
 }
 #fileUploadDummy:hover {
     background-position: 0 0;
@@ -463,6 +464,12 @@ table.fileinfo .filename {
     #fileUploadDummy {
         background-image: url(img/gif-upload.png);
         height: 48px;
-        width: 298px;
+        width: 300px;
+    }
+    #fileInputContainer {
+        width: 50%;
+    }
+    #localDragHelp {
+        margin: 71px 0 0 91px;
     }
 }
