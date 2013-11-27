@@ -246,6 +246,7 @@ body {
 }
 #preview .ellipsize {
     white-space: inherit;
+    max-height: 210px;
 }
 #helpMessage {
     display: none;
