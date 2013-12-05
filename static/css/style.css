@@ -2622,6 +2622,9 @@ body.ie #maps .mini-meshu div {
   width: 1680px;
   height: 1275px;
 }
+.postcard #promotion {
+  display: none;
+}
 .postcard .frame {
   /*width: 1100px;
         height: 733px;*/
