@@ -95,10 +95,7 @@ var cashier = function() {
                 shipping = domesticShipping;
                 break;
             case 'Canada':
-                shipping = 20;
-                break;
-            case 'Mexico':
-                shipping = 32;
+                shipping = 35;
                 break;
             default:
                 shipping = internationalShipping;
