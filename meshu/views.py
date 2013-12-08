@@ -245,11 +245,11 @@ def submit_orders(request):
 	items = current_cart.cart.item_set.all()
 
 	if current_cart.count() > 1:
-		return submit_multiple(request, shipping, items, discount_amount, coupon_amount)
+		return submit_multiple(request, shipping, items, final_amount, discount_amount, coupon_amount)
 	elif current_cart.count() == 1:
-		return submit_single(request, shipping, items, coupon_amount)
+		return submit_single(request, shipping, items, final_amount, coupon_amount)
 
-def submit_multiple(request, shipping, items, discount_cents, coupon_cents):
+def submit_multiple(request, shipping, items, final_amount, discount_cents, coupon_cents):
 	print('submit_multiple:', shipping.contact)
 
 	discount_per = float(((discount_cents + coupon_cents) / Cart(request).count())/100.0)
@@ -283,14 +283,14 @@ def submit_multiple(request, shipping, items, discount_cents, coupon_cents):
 	current_cart = Cart(request)
 	current_cart.clear()
 
-	mail_multiple_order_confirmation(shipping.contact, orders)
+	mail_multiple_order_confirmation(shipping.contact, orders, final_amount)
 
 	return render(request, 'meshu/notification/ordered_multiple.html', {
 		'orders': orders,
 		'view': 'paid'
 	})
 
-def submit_single(request, shipping, items, coupon_amount):
+def submit_single(request, shipping, items, final_amount, coupon_amount):
 	print('submit_single:', shipping.contact)
 
 	item = items[0]
