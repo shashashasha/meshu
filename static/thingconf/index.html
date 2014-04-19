@@ -1,0 +1,340 @@
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <style>
+        body {
+            background-color: #ff0099;
+            margin: 0;
+            font-family: Helvetica Neue, Helvetica, sans-serif;
+        }
+        .wrapper {
+            background: white;
+            border-left: 1px solid #808080;
+            border-right: 1px solid #808080;
+            width: 70%;
+            margin: 0 auto;
+        }
+        .section  {
+            box-sizing: border-box;
+            padding: 50px;
+        }
+        .section ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #intro h1 {
+            text-align: center;
+            font-size: 80px;
+            margin-bottom: 15px;
+        }
+        #intro h3 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        #intro .ticket {
+            background-color: #ff0099;
+            color: white;
+            padding: 8px 20px;
+            font-size: 20px;
+            text-decoration: none;
+            width: 200px;
+            display: block;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+        .section .topics {
+            margin-bottom: 100px;
+        }
+        .topics .title {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .topics li {
+            display: inline-block;
+            float: left;
+            width: 24%;
+            background-color: #e7e7e7;
+            margin-right: 1%;
+            padding: 10px 5px 15px;
+            box-sizing: border-box;
+
+        }
+        .examples li {
+            display: block;
+            width: 100%;
+            padding: 2px 0;
+        }
+        #speakers li {
+            width: 33%;
+            display: inline-block;
+            min-height: 100px;
+            text-align: center;
+        }
+        #speakers .img {
+            width: 150px;
+            height: 150px;
+            background-size: cover;
+            background-position: 50%;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        #speakers .name {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        #speakers .company {
+            font-size: 14px;
+            color: #ff0099;
+        }
+        #speakers .bio {
+            display: none;
+        }
+        #schedule {
+            width: 600px;
+        }
+        #schedule li {
+            padding: 5px 0;
+        }
+        #schedule .time {
+            font-weight: bold;
+            width: 40px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 30px;
+        }
+        #schedule .grey {
+            background-color: #eee;
+        }
+        #shield {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: rgba(255,255,255,.7);
+            top: 0;
+            display: none;
+        }
+        #speaker-popup {
+            background-color: white;
+            border: 1px solid #808080;
+            position: fixed;
+            z-index: 1;
+            width: 40%;
+            height: 400px;
+            left: 30%;
+            top: 20%;
+            display: none;
+            padding: 35px 50px;
+            box-sizing: border-box;
+        }
+        #speaker-popup .close {
+            text-transform: uppercase;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            cursor: pointer;
+        }
+        #speaker-popup .name {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        #speaker-popup .bio {
+            color: #808080;
+        }
+        #speaker-popup .company,
+        #speaker-popup .company a {
+            color: #ff0099;
+            text-decoration: none;
+        }
+        #venue {
+            height: 600px;
+        }
+        #venue .map {
+            width: 400px;
+            height: 400px;
+            float: right;
+            background-image:url(images/LES.png);
+            background-position: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="intro" class="section">
+            <h1>ThingConf!</h1>
+            <h3>Hi hello welcome to a conference about making and selling things online.</h3>
+            <a href="" class="ticket">Buy Your Ticket Here!</a>
+            <p>It's getting easier and easier to start a small business online, and put your product directly in the hands of people around the world. This one-day conference aims to bring together people who are working in this space, to share ideas and learn some new tricks.</p>
+            <p>We're going to focus on four topics:</p>
+            <ul class="topics">
+                <li>
+                    <div class="title">Manufacturing</div>
+                    <ul class="examples">
+                        <li>Prototyping Resources</li>
+                        <li>Small-Run Manufacturers</li>
+                        <li>Scaling up</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="title">Selling</div>
+                    <ul class="examples">
+                        <li>Marketplace vs. Custom Site</li>
+                        <li>Kickstarter</li>
+                        <li>Payment Processors</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="title">Fulfilling</div>
+                    <ul class="examples">
+                        <li>Packaging</li>
+                        <li>Shipping</li>
+                        <li>Customer Service</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="title">Marketing</div>
+                    <ul class="examples">
+                        <li>Launching your Product</li>
+                        <li>Social Media</li>
+                        <li>Press Kit</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="speakers" class="section">
+            <h2>Speakers:</h2>
+            <ul>
+                <li>
+                    <div class="img"></div>
+                    <div class="name">Jessica Rosencrantz</div>
+                    <div class="company">Nervous System</div>
+                    <div class="bio">
+                        <div class="company"><a class="company" href="http://neolucida.com">Nervous System</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Pablo Garcia</div>
+                    <div class="company">NeoLucida</div>
+                    <div class="bio">
+                        <div class="company"><a class="company" href="http://neolucida.com">NeoLucida</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Sha Hwang</div>
+                    <div class="company">Gifpop + Meshu</div>
+                    <div class="bio">
+                        <div class="company"><a class="company" href="http://neolucida.com">NeoLucida</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Mary Huang</div>
+                    <div class="company">Continuum Fashion</div>
+                    <div class="bio">
+                        <div class="company"><a class="company" href="www.continuumfashion.com">Continuum Fashion</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="img" style="background-image:url(images/borgatti.jpg)"></div>
+                    <div class="name">Matthew Borgatti</div>
+                    <div class="company">Sleek and Destroy</div>
+                    <div class="bio">
+                        <div class="company"><a href="http://sleekanddestroy.com">Sleek and Destroy</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Mike Estee</div>
+                    <div class="company">OtherMachine</div>
+                    <div class="bio">
+                        <div class="company"><a href="http://othermachine.co">OtherMachine</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Numidas Prasarn</div>
+                    <div class="company">Numi Empire</div>
+                    <div class="bio">
+                        <div class="company"><a href="http://othermachine.co">OtherMachine</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="name">Christina Xu</div>
+                    <div class="company">Everyone At Once</div>
+                    <div class="bio">
+                        <div class="company"><a href="http://othermachine.co">OtherMachine</a></div>
+                        <p></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="img" style="background-image:url(images/binx.jpg); background-position: 50% 10%;"></div>
+                    <div class="name">Rachel Binx</div>
+                    <div class="company">Gifpop + Meshu</div>
+                    <div class="bio">
+                        <div class="company"><a href="http://gifpop.io">Gifpop</a> + <a href="http://meshu.io">Meshu</a></div>
+                        <p>Rachel Binx is a data visualizer, developer, designer, and mathematician. She has co-founded Meshu and Gifpop, two small companies that explore creating one-off physical objects from the data that each person finds meaningful. Previously, she worked as a design technologist for Stamen Design, where she built projects for clients such as MTV, Facebook, and Oprah. In general, she's a fan of anything that converts javascript to custom physical objects.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="schedule" class="section">
+            <h2>Schedule:</h2>
+            <ul>
+                <li><span class="time">9:00</span> Welcome</li>
+                <li><span class="time">9:15</span>Sha Hwang - Gifpop + Meshu</li>
+                <li><span class="time">9:45</span>Matthew Borgatti - Sleek and Destroy</li>
+                <li><span class="time">10:15</span>Mary Huang - Continuum Fashion</li>
+                <li><span class="time">10:45</span><span style="font-style:italic;">Group Q&A [Hwang, Borgatti, & Huang]</span></li>
+                <li class="grey"><span class="time">11:15</span>Coffee Break</li>
+                <li><span class="time">11:30</span>Mike Estee - OtherMachine</li>
+                <li><span class="time">12:00</span>Jessica Rosencranz - Nervous System</li>
+                <li class="grey"><span class="time">12:45</span>Lunch Break</li>
+                <li><span class="time">2:00</span>Pablo Garcia - NeoLucida</li>
+                <li><span class="time">2:30</span><span style="font-style:italic;">Group Q&A [Estee, Rosencranz, & Garcia]</span></li>
+                <li><span class="time">3:00</span>Numidas Prasarn - Product Photography Demonstration</li>
+                <li class="grey"><span class="time">3:30</span>Stretch Break</li>
+                <li><span class="time">4:00</span>Breakout Groups</li>
+                <li><span class="time">5:15</span>Closing</li>
+                <li class="grey"><span class="time">5:30</span>Drinks + Networking</li>
+            </ul>
+        </div>
+        <div id="photographer" class="section">
+            <h2>Photographer:</h2>
+            <p>We are thrilled to announce that we will have a photograph on hand at the event to photograph your lovely products. She'll have a flashbox and be ready to go!!</p>
+        </div>
+        <div id="venue" class="section">
+            <h2>Venue:</h2>
+            <div class="map"></div>
+            <div class="text">
+                <p>ThingConf will be held in the Lower East Side of NYC, at 155 Rivington St.</p>
+            </div>
+        </div>
+    </div>
+    <div id="shield"></div>
+    <div id="speaker-popup">
+        <div class="close">close</div>
+        <div class="name"></div>
+        <div class="bio"></div>
+    </div>
+
+    <script defer>
+        var popup = $("#speaker-popup");
+        $("#speakers li").click(function(){
+            var name = $(this).find(".name").html(),
+                bio = $(this).find(".bio").html();
+            $("#shield").fadeIn();
+            popup.fadeIn();
+            popup.find(".bio").html(bio);
+            popup.find(".name").html(name);
+        });
+        $("#speaker-popup").click(function(){
+            $("#shield").fadeOut();
+            $("#speaker-popup").fadeOut();
+        });
+    </script>
+</body>
