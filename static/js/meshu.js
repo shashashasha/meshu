@@ -18,12 +18,14 @@ sb.meshu = function(frame, renderer, existingMap) {
     // need to make these controls optional....
     $(frame).append("<div class='mapui'><div id='zoomin'></div><div id='zoomout'></div></div>");
 
+    var zoomStep = (renderer == "print") ? .5 : 1;
+
     $("#zoomin").mousedown(function(e) {
-        map.map.zoom(map.map.zoom() + 1);
+        map.map.zoom(map.map.zoom() + zoomStep);
         mesh.refresh("zoomed");
     });
     $("#zoomout").mousedown(function(e) {
-        map.map.zoom(map.map.zoom() - 1);
+        map.map.zoom(map.map.zoom() - zoomStep);
         mesh.refresh("zoomed");
     });
 
@@ -100,9 +102,19 @@ sb.meshu = function(frame, renderer, existingMap) {
 
                     switch (mesh.name) {
                         case 'facet':
+                            mesh.add(first.latLng.lat, first.latLng.lng, input);
+                            self.updateBounds();
+
+                            // set the zoom for first point
+                            if (mesh.points().length == 1) {
+                                setZoomGranularity(first.geocodeQuality);
+                            }
+                            break;
                         case 'print':
                             mesh.add(first.latLng.lat, first.latLng.lng, input);
                             self.updateBounds();
+
+                            mesh.highlightCountry(first.adminArea1);
 
                             // set the zoom for first point
                             if (mesh.points().length == 1) {

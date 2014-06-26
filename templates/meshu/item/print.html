@@ -8,18 +8,6 @@
 
 {% block page_title %}Print{% endblock %}
 
-{% block numbers %}
-    <div id="crazy">
-        <div class="line"></div>
-        <ul>
-            <li style="margin-bottom:445px;">1</li>
-            <li style="margin-bottom:400px;">2</li>
-            <li style="margin-bottom:410px;">3</li>
-            <li>4</li>
-        </ul>
-    </div>
-{% endblock %}
-
 {% block products %}
     <div class="wrapper" id="wrapper-postcard">
         <div class="ring-frame">
@@ -54,5 +42,6 @@
 
 {% block script-specific %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
 {% endblock %}

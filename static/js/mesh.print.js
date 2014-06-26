@@ -81,12 +81,12 @@ sb.mesh.print = function (frame, map, width, height) {
 
     // point being dragged, location being dragged to
     self.on("draggedPoint", function(dragging, loc) {
-        dragging[0] = loc.lon;
-        dragging[1] = loc.lat;
+        dragging[0] = loc[0];
+        dragging[1] = loc[1];
 
         var index = points.indexOf(dragging);
-        lats[index] = loc.lat;
-        lons[index] = loc.lon;
+        lons[index] = loc[0];
+        lats[index] = loc[1];
 
         /*
             the point was dragged
@@ -100,19 +100,39 @@ sb.mesh.print = function (frame, map, width, height) {
     var projection = d3.geo.mercator().scale(1).translate([0, 0]);
     var mapPath = d3.geo.path().projection(projection);
         
-    $.getJSON('/static/lib/world.json', function(json) {
+    $.getJSON('/static/lib/world_borders.json', function(json) {
+        // console.log(json)
         updateProjection();
 
         var countries = d3.select(".map").selectAll("path").data(json.features);
-        countries.enter().append("path").attr("d",mapPath);
+        countries.enter().append("path").attr("d",mapPath)
+        .attr("class",function(d){
+            return d.properties.ISO2;
+        });
     });
+
+    self.highlightCountry = function(countryCode){
+        var c = d3.select(".map").selectAll("path")
+            .filter(function(d){
+                return d.properties.ISO2 == countryCode;
+            }).classed("current",true)
+            .each(function(){
+                this.parentNode.appendChild(this);
+            });
+    }
 
     function updateProjection(){
         width = height = 600;
         projection.scale(1).translate([0, 0]);
         var e = map.getExtent(),
-        b = [projection([e[0].lon, e[0].lat]), projection([e[1].lon, e[1].lat])],
-        s = 1.2 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+
+        // dumb thing where polymaps sets an extent outside of lat/lon limits
+        // but d3 freaks out. so clamping from the polymaps extent
+
+        b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]), 
+             projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
+
+        s = 1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
         projection.scale(s).translate(t);
@@ -121,7 +141,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
     // location on the map
     self.on("clickedMap", function(loc) {
-        self.add(loc.lat, loc.lon, undefined, false);
+        self.add(loc[1], loc[0], undefined, false);
     });
 
     // point being clicked
@@ -201,7 +221,6 @@ sb.mesh.print = function (frame, map, width, height) {
 
                     $.ajax({
                         url: url,
-                        // cache: false,
                         dataType: 'jsonp',
                         success: function(data) {
                             var wayPoints = data.route.shape.shapePoints;
@@ -209,7 +228,7 @@ sb.mesh.print = function (frame, map, width, height) {
                             var drawI = [];
                             var lI = wayPoints.length;
                             for (var i = 0; i < lI; i+=2){
-                                var pt = projection(wayPoints[i]);
+                                var pt = projection([wayPoints[i+1],wayPoints[i]]);
                                 drawI.push(pt);
                             }
                             var pathLines =  "M" + drawI.join("L");
@@ -314,7 +333,7 @@ sb.mesh.print = function (frame, map, width, height) {
         circles.enter()
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
-            .attr("r", 3)
+            .attr("r", 4)
             .on("mousedown", function(d) {
                 self.dragging = d;
 
@@ -454,6 +473,8 @@ sb.mesh.print = function (frame, map, width, height) {
 
         lats.push(lat);
         lons.push(lon);
+        map.updateBounds(lats, lons);
+
         if (placename == undefined)
             places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
         else
@@ -578,6 +599,10 @@ sb.mesh.print = function (frame, map, width, height) {
     self.output = function() {
         return $('#' + selfId).html();
     };
+
+    self.getProjection = function(point){
+        return projection.invert(point);
+    }
 
     return self;
 };

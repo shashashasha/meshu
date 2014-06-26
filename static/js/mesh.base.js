@@ -32,7 +32,8 @@ sb.mesh.base = function (frame, map, width, height) {
         mouse_down = null,
         map_dragging = null,
         last_mouse = null,
-        meshuTitle = null;
+        meshuTitle = null,
+        print = $("body").hasClass("print");
 
     var content = $("#content");
 
@@ -59,14 +60,18 @@ sb.mesh.base = function (frame, map, width, height) {
             return;
         }
 
-        var m = d3.svg.mouse(frame);
+        var m = print ? d3.mouse(frame) : d3.svg.mouse(frame);
 
         // if we're dragging a point, we need to update its data
         if (self.dragging) {
-            var l = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
+            if (print) {
+                var l = self.getProjection(m);
+            } else {
+                var l = map.p2l({
+                    x: m[0],
+                    y: m[1]
+                });
+            }
             self.draggedPoint(self.dragging, l);
         }
 
@@ -103,11 +108,16 @@ sb.mesh.base = function (frame, map, width, height) {
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!self.dragging && !map_dragging) {
-            var m = d3.mouse(frame);
-            var loc = map.p2l({
-                x: m[0],
-                y: m[1]
-            });
+            if (print) {
+                var m = d3.mouse(frame);
+                var loc = self.getProjection(m);
+            } else {
+                var m = d3.svg.mouse(frame);
+                var loc = map.p2l({
+                    x: m[0],
+                    y: m[1]
+                });
+            }
 
             self.clickedMap(loc);
             map_dragging = null;

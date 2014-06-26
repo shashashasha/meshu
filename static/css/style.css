@@ -1869,18 +1869,23 @@ path {
 }
 .print .map path {
   stroke: white;
-  fill: #ddd;
+  fill: #ccc;
 }
 .print path {
   stroke-width: 0;
 }
 .print .meshu-svg path {
-  stroke-width: 1;
+  stroke-width: 3;
   stroke: #555;
 }
+.print .map path.current {
+  fill: white;
+  stroke-width: 1;
+  stroke: #808080;
+}
 .print path.air {
-  stroke-dasharray: 3 3;
-  stroke: #ff3fb4;
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
 }
 .allview path {
   stroke-width: 1;
