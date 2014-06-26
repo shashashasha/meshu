@@ -1918,10 +1918,15 @@ path {
     fill: #ddd;
 }
 .print path {
+    stroke-width: 0;
+}
+.print .meshu-svg path {
     stroke-width: 1;
+    stroke: #555;
 }
 .print path.air {
     stroke-dasharray: 3 3;
+    stroke: #ff3fb4;
 }
 .allview path {
     stroke-width: 1;
@@ -1954,6 +1959,9 @@ circle {
     stroke: black;
     stroke-width: 15;
     cursor: default;
+}
+.print circle:hover {
+    stroke: none;
 }
 .hidden, .rotate-ui, #hidden {
     display: none;
@@ -2690,8 +2698,8 @@ body.ie #maps .mini-meshu div {
     color: @grey;
 
     #content {
-        /*width: 1100px;
-        height: 733px;*/
+        /*width: 5400px;
+        height: 2100px;*/
         width: 1680px;
         height: 1275px;
     }
@@ -2701,15 +2709,15 @@ body.ie #maps .mini-meshu div {
     }
 
     .frame {
-        /*width: 1100px;
-        height: 733px;*/
+        /*width: 5400px;
+        height: 2100px;*/
         width: 1680px;
         height: 1275px;
         right: 0;
     }
 
     path {
-        stroke-width: 10;
+        stroke-width: 20;
     }
 
     #attribution {

@@ -103,7 +103,7 @@ sb.mesh.base = function (frame, map, width, height) {
 
         // if we're not dragging and we're not dragging the map, we're adding a point
         if (!self.dragging && !map_dragging) {
-            var m = d3.svg.mouse(frame);
+            var m = d3.mouse(frame);
             var loc = map.p2l({
                 x: m[0],
                 y: m[1]

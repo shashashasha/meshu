@@ -44,9 +44,9 @@ sb.map = function(frame, width, height) {
 
 	var print = $("body").hasClass("print");
 	if (print) {
-		self.map.add(po.geoJson()
-	    	.url("/static/lib/world.json")
-	    );
+		// self.map.add(po.geoJson()
+	 //    	.url("/static/lib/world.json")
+	 //    );
 	    self.map.zoom(2).center({ lat: 35, lon: 5 });
 	}
 	else
@@ -193,6 +193,10 @@ sb.map = function(frame, width, height) {
 			l: sw_pt.x,
 			r: ne_pt.x
 		};
+	};
+
+	self.getExtent = function() {
+		return self.map.extent();
 	};
 
 	self.getMapRadius = function() {
