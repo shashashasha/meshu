@@ -2647,7 +2647,7 @@ body.ie #maps .mini-meshu div {
   right: 0;
 }
 .postcard path {
-  stroke-width: 20;
+  stroke-width: 10;
 }
 .postcard #attribution {
   display: none;
