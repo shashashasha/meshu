@@ -142,7 +142,7 @@ sb.ui.orderer = function() {
 				review.find(".review-product").removeClass("inactive").html(product+" — size "+size);
 			}
 			else
-				review.find(".review-product").removeClass("inactive").text(product);
+				review.find(".review-product").removeClass("inactive").text(product.replace("_"," "));
 		}
 
 		if (color && material)
@@ -150,12 +150,13 @@ sb.ui.orderer = function() {
 		else
 			review.find(".review-material").addClass("inactive").text("not chosen");
 
-		if (product && color && material) {
+		if ((product && color && material) || (renderer == "print" && product)) {
 			review.find(".review-price").html("<span class='dollar'>$</span>" + priceCents + '.00');
 			review.find(".review-make-time").text(catalog.getMakeTime(material));
 
 			if (renderer == "facet" && miniDelaunay.children().length ||
-				renderer == "radial" && $(".meshu-svg .radial").children().length) {
+				renderer == "radial" && $(".meshu-svg .radial").children().length ||
+				renderer == "print") {
 				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
 					return;
 				review.find("#add-to-cart").removeClass("inactive");

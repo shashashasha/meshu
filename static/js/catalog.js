@@ -53,10 +53,18 @@ sb.catalog = function(renderer, promo) {
 					};
 
 	materialOptions.print = {
-						"poster":
+						"postcard":
 						{
-							"oh yes":{"price":20,"colors":[]}
-						}
+							"print":{"price":5,"colors":[]}
+						},
+						"small_poster":
+						{
+							"print":{"price":20,"colors":[]}
+						},
+						"large_poster":
+						{
+							"print":{"price":35,"colors":[]}
+						},
 					};
 
 	makeTimes = {
@@ -64,7 +72,8 @@ sb.catalog = function(renderer, promo) {
 		"acrylic":"2-3 Weeks",
 		"nylon":"2-3 Weeks",
 		"silver":"3-4 Weeks",
-		"brass":"3-4 Weeks"
+		"brass":"3-4 Weeks",
+		"print":"1-2 Weeks",
 	};
 
 	// set the product type options with either facet or radial

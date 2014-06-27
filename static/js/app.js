@@ -139,6 +139,7 @@ $(function() {
 			sb.materializer.material("reset");
 		}
 
+		if (currentRenderer == "print") sb.materializer.material("print");
 
    		switch (product) {
    			case 'cufflinks':

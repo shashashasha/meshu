@@ -1212,9 +1212,11 @@ body.ie .frame div {
 #product {
     height: 860px;
 }
-.radial #product,
-.print #product {
+.radial #product {
     height: 490px;
+}
+.print #product {
+    height: 475px;   
 }
 .edit #product-preview,
 .edit #material-list {
@@ -1241,6 +1243,7 @@ body.ie .frame div {
 }
 .print .wrapper {
     border-color: #eee;
+    height: 350px;
 }
 .wrapper:hover,
 .print .wrapper:hover {
@@ -1492,6 +1495,10 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: 300;
     font-size: 22px;
     color: @grey;
+}
+
+.print #review .review-material {
+    display: none;
 }
 
 #account input {
@@ -1919,7 +1926,7 @@ path {
     stroke-opacity: .5;
 }
 .print #projection {
-    height: 520px;
+    height: 540px;
 }
 .print .projection-preview {
     width: 575px;
@@ -1973,6 +1980,9 @@ path {
     padding: 5px;
     color: @grey;
 }
+.print .proj:first-child {
+    border-color: #eee;
+}
 .print .proj.top {
     display: block;
     text-align: center;
@@ -1980,7 +1990,7 @@ path {
 }
 .print .proj img {
     width: 150px;
-    opacity: .4;
+    opacity: .3;
     display: block;
     margin-bottom: 10px;
 }
@@ -1988,14 +1998,14 @@ path {
     border-color: @grey;
 }
 .print .proj:hover img {
-    opacity: .7;
+    opacity: .5;
 }
 .print .proj.selected {
     border-color: @pink;
     color: black;
 }
 .print .proj.selected img {
-    opacity: 1;
+    opacity: .8;
 }
 .print .map path {
     stroke: white;
