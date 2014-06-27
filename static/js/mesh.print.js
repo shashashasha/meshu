@@ -48,9 +48,6 @@ sb.mesh.print = function (frame, map, width, height) {
         .attr("class", "delaunay-ui");
 
     var placeList = d3.select("#places");
-    var placeTitle = placeList.select("#place-title").attr("class", "inactive");
-        placeTitle.append("span").attr("class", "title-text");
-        placeTitle.append("span").attr("class", "title-edit").html("edit");
 
     var list = placeList.append("ul");
 
@@ -159,7 +156,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         switch (proj) {
             case 'mercator':
-                copyProjection = d3.geo.mercator().scale(90).translate([287,212]);
+                copyProjection = d3.geo.mercator().scale(92).translate([287,212]);
                 break;
             case 'hammer':
                 copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
@@ -227,7 +224,7 @@ sb.mesh.print = function (frame, map, width, height) {
         if (width == 600) {
             if (s < 100) $("#zoomed-to-fit").hide();
             else $("#zoomed-to-fit").show();
-            
+
             projection.scale(s).translate(t);
             d3.select(frame).select(".map").selectAll("path").attr("d",mapPath);
         } else {
