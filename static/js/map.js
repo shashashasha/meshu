@@ -60,7 +60,7 @@ sb.map = function(frame, width, height) {
 		.attr("height", postcard ? "100%" : "600px")
 		.select("rect")
 		.attr("visibility","visible")
-		.attr("fill", print ? "#ddd" : "white");
+		.attr("fill", print ? "#e7e7e7" : "white");
 
 	self.frame = function() {
 		return container;
