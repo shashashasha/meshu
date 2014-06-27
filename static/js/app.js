@@ -62,7 +62,7 @@ $(function() {
 
 		// initialize product picker
 		// this needs to be after the meshu is initialized because it needs to copy the mesh over
-		if (pageType != 'postcard') {
+		if (pageType != 'postcard' && pageType != 'print') {
 			generateProductThumbnails();
 		}
 
@@ -160,7 +160,7 @@ $(function() {
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 
-				if (currentRenderer != 'radial') {
+				if (currentRenderer == 'facet') {
 					sb.rotator.update(product);
 					sb.rotator.on("rotated", function() {
 						sb.ui.orderer.updated();

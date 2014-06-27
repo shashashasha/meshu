@@ -1239,10 +1239,15 @@ body.ie .frame div {
 #product-preview .wrapper.last {
     margin-right: 0;
 }
-.wrapper:hover {
+.print .wrapper {
+    border-color: #eee;
+}
+.wrapper:hover,
+.print .wrapper:hover {
     border-color: @grey;
 }
-.wrapper.selected {
+.wrapper.selected,
+.print .wrapper.selected {
     border-color: @pink;
 }
 .wrapper.selected .important {
@@ -1256,10 +1261,6 @@ body.ie .frame div {
     width: 300px;
     height: 300px;
     margin: 0 auto;
-}
-
-.print .wrapper {
-    border-color: #eee;
 }
 
 #product-preview p {
@@ -1925,19 +1926,26 @@ path {
     height: 425px;
     float: right;
     background-color: #d7d7d7;
+    border: 2px solid #808080;
+}
+.print .projection-preview.mercator,
+.print .projection-preview.zoomed-to-fit, {
+    background-color: #e7e7e7;
 }
 .print .projection-preview .delaunay path {
     stroke-width: 1;
+    stroke: .5;
+    stroke: #555;
 }
 .print .projection-preview .delaunay path.air {
     stroke-dasharray: 2 2;
 }
-.print .stroke {
-    fill: none;
-    stroke: #d7d7d7;
-    stroke-width: 3px;
+.print .projection-preview.zoomed-to-fit .delaunay path {
+    stroke-width: 1.5;
 }
-
+.print .projection-preview.zoomed-to-fit .delaunay path.air {
+    stroke-dasharray: 3 3;
+}
 .print .projection-preview path {
     fill: inherit;
     stroke: inherit;

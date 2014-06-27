@@ -97,7 +97,7 @@ sb.mesh.print = function (frame, map, width, height) {
         
     $.getJSON('/static/lib/world_borders.json', function(json) {
         // console.log(json)
-        updateProjection();
+        updateProjection(600,600);
 
         features = json.features;
 
@@ -144,10 +144,6 @@ sb.mesh.print = function (frame, map, width, height) {
         svg.append(circles);
 
         copySVG.selectAll("circle").attr("r",2);
-
-        copySVG.append("use")
-            .attr("class", "stroke")
-            .attr("xlink:href", "#sphere");
     }
 
     var mercator = true, copyProjection;
@@ -158,9 +154,12 @@ sb.mesh.print = function (frame, map, width, height) {
         if (mercator) copyMap();
         mercator = false;
         var proj = $(this).attr("id");
+
+
+
         switch (proj) {
             case 'mercator':
-                copyProjection = d3.geo.mercator().scale(95).translate([287,212]);
+                copyProjection = d3.geo.mercator().scale(90).translate([287,212]);
                 break;
             case 'hammer':
                 copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
@@ -177,9 +176,19 @@ sb.mesh.print = function (frame, map, width, height) {
             case 'butterfly':
                 copyProjection = d3.geo.polyhedron.butterfly().scale(68).translate([287,310]);
                 break;
+            case 'zoomed-to-fit':
+                updateProjection(425, 275);
+                copyProjection = projection;
+                break;
         }
+
+        var copySVG = d3.select(".projection-preview")
+            .attr("class","projection-preview").classed(proj, true);
+
+        copySVG.selectAll("circle").attr("r",(proj == 'zoomed-to-fit') ? 3 : 2);
+
         var copyPath = d3.geo.path().projection(copyProjection);
-        var lines = d3.select(".projection-preview .map")
+        var lines = copySVG.select(".map")
             .selectAll("path").data(features)
             .attr("clip-path", "url(#clip)")
             .attr("d",copyPath)
@@ -202,8 +211,7 @@ sb.mesh.print = function (frame, map, width, height) {
             });
     }
 
-    function updateProjection(){
-        width = height = 600;
+    function updateProjection(width, height){
         projection.scale(1).translate([0, 0]);
         var e = map.getExtent(),
 
@@ -216,9 +224,17 @@ sb.mesh.print = function (frame, map, width, height) {
         s = .9 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
-        if (!mercator) return;
-        projection.scale(s).translate(t);
-        d3.select(".map").selectAll("path").attr("d",mapPath);
+        if (width == 600) {
+            if (s < 100) $("#zoomed-to-fit").hide();
+            else $("#zoomed-to-fit").show();
+            
+            projection.scale(s).translate(t);
+            d3.select(frame).select(".map").selectAll("path").attr("d",mapPath);
+        } else {
+            t = [t[0]+75, t[1]+75];
+            projection.scale(s).translate(t);
+            d3.select(".projection-preview").select(".map").selectAll("path").attr("d",mapPath);
+        }
     }
 
     // location on the map
@@ -336,7 +352,7 @@ sb.mesh.print = function (frame, map, width, height) {
     };
 
     function update(){
-        updateProjection();
+        updateProjection(600,600);
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
             .data(points);
