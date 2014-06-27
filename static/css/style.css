@@ -1914,6 +1914,7 @@ path {
   text-transform: capitalize;
   border: 2px solid white;
   padding: 5px;
+  color: #808080;
 }
 .print .proj.top {
   display: block;
@@ -1922,7 +1923,7 @@ path {
 }
 .print .proj img {
   width: 150px;
-  opacity: .5;
+  opacity: .4;
   display: block;
   margin-bottom: 10px;
 }
@@ -1930,10 +1931,11 @@ path {
   border-color: #808080;
 }
 .print .proj:hover img {
-  opacity: .8;
+  opacity: .7;
 }
 .print .proj.selected {
-  border: #ff3fb4;
+  border-color: #ff3fb4;
+  color: black;
 }
 .print .proj.selected img {
   opacity: 1;

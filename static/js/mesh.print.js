@@ -152,6 +152,9 @@ sb.mesh.print = function (frame, map, width, height) {
 
     var mercator = true, copyProjection;
     $(".proj").click(function(){
+        $(".proj").removeClass("selected");
+        $(this).addClass("selected");
+
         if (mercator) copyMap();
         mercator = false;
         var proj = $(this).attr("id");
@@ -160,7 +163,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 copyProjection = d3.geo.mercator().scale(95).translate([287,212]);
                 break;
             case 'hammer':
-                copyProjection = d3.geo.hammer().scale(100).translate([287,212]);
+                copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
                 break;
             case 'august':
                 copyProjection = d3.geo.august().scale(50).translate([287,212]);
@@ -172,12 +175,19 @@ sb.mesh.print = function (frame, map, width, height) {
                 copyProjection = d3.geo.eckert1().scale(95).translate([287,212]);
                 break;
             case 'butterfly':
-                copyProjection = d3.geo.polyhedron.butterfly().scale(65).translate([287,300]);
+                copyProjection = d3.geo.polyhedron.butterfly().scale(68).translate([287,310]);
                 break;
         }
         var copyPath = d3.geo.path().projection(copyProjection);
         var lines = d3.select(".projection-preview .map")
-            .selectAll("path").data(features).attr("clip-path", "url(#clip)").attr("d",copyPath);
+            .selectAll("path").data(features)
+            .attr("clip-path", "url(#clip)")
+            .attr("d",copyPath)
+            .attr("class",function(d){
+                var current = d3.select("#meshu-container")
+                    .select("."+d.properties.ISO2).classed("current");
+                return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
+            });
         d3.select(".projection-preview #sphere").attr("d",copyPath);
         updateMesh("projection", copyProjection);
     });
@@ -203,7 +213,7 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]), 
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        s = 1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+        s = .9 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
         if (!mercator) return;
