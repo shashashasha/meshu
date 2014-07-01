@@ -105,19 +105,14 @@ sb.mesh.print = function (frame, map, width, height) {
         });
     });
 
-    // var miniDelaunay = $(childSelector).clone()
-    //             .attr("class","product-delaunay")
-    //             .attr("transform", "translate(-" + w/2 + ", -" + h/2 + ")");
-    //         $(parent).append(miniDelaunay);
+    self.copyMap = function() {
+        var svg = $(".projection-preview").empty();
 
-    function copyMap() {
         var mapSVG = $(".map").clone();
         var lines = $(".delaunay").clone();
         var circles = $(".delaunay-ui").clone();
 
         mapSVG.find("rect").remove();
-
-        var svg = $(".projection-preview")
 
         var copySVG = d3.select(".projection-preview");
 
@@ -141,18 +136,13 @@ sb.mesh.print = function (frame, map, width, height) {
         svg.append(circles);
 
         copySVG.selectAll("circle").attr("r",2);
-    }
 
-    var mercator = true, copyProjection;
-    $(".proj").click(function(){
-        $(".proj").removeClass("selected");
-        $(this).addClass("selected");
+        applyProjection("zoomed-to-fit");
+    };
 
-        if (mercator) copyMap();
-        mercator = false;
-        var proj = $(this).attr("id");
+    function applyProjection(proj) {
 
-
+        var copyProjection;
 
         switch (proj) {
             case 'mercator':
@@ -196,6 +186,14 @@ sb.mesh.print = function (frame, map, width, height) {
             });
         d3.select(".projection-preview #sphere").attr("d",copyPath);
         updateMesh("projection", copyProjection);
+    }
+
+    $(".proj").click(function(){
+        $(".proj").removeClass("selected");
+        $(this).addClass("selected");
+
+        var proj = $(this).attr("id");
+        applyProjection(proj);
     });
 
     self.highlightCountry = function(countryCode){
@@ -238,22 +236,6 @@ sb.mesh.print = function (frame, map, width, height) {
     self.on("clickedMap", function(loc) {
         self.add(loc[1], loc[0], undefined, false);
     });
-
-    // point being clicked
-    // self.on("clickedPoint", function(pt) {
-    //     var index = points.indexOf(pt);
-    //     self.remove(index);
-
-    //     map.updateBounds(lats, lons);
-    //     self.updatePixelBounds();
-
-    //     /*
-    //         the map was updated
-    //         so our bounds aren't dirty
-    //     */
-    //     self.dirty = false;
-    //     update();
-    // });
 
     self.on("removed", function() {
         if (points.length < 3) $("#finish-button").removeClass("active");

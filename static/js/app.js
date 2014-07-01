@@ -206,6 +206,8 @@ $(function() {
 				meshu.updateBounds();
 				meshu.mesh().interactive(true);
 
+				if (currentRenderer == "print") meshu.mesh().copyMap();
+
 				generateProductThumbnails();
 				break;
 

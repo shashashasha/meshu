@@ -947,6 +947,9 @@ body.firefox .place .place-text {
 .title.active .place-edit {
   display: inline;
 }
+.print .place:first-child .mode {
+  display: none;
+}
 .place .mode span {
   padding: 1px 5px 3px 5px;
   background-color: #808080;
@@ -1957,7 +1960,6 @@ path {
 }
 .print .proj.selected {
   border-color: #ff3fb4;
-  color: black;
 }
 .print .proj.selected img {
   opacity: .8;
