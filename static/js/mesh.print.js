@@ -143,7 +143,12 @@ sb.mesh.print = function (frame, map, width, height) {
 
         copySVG.selectAll("circle").attr("r",2);
 
-        applyProjection("zoomed-to-fit");
+        var p = "zoomed-to-fit";
+        $(".proj").each(function(){
+            if ($(this).hasClass("selected"))
+                p = $(this).attr("id");
+        });
+        applyProjection(p);
     };
 
     function applyProjection(proj) {

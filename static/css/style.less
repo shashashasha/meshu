@@ -1081,6 +1081,9 @@ body.ie .frame div {
 .ie8 #attribution {
     background-color: white;
 }
+.print #attribution {
+    display: none;
+}
 
 .map .layer {
     opacity: .1;
@@ -1497,11 +1500,17 @@ input[type="range"]::-webkit-slider-thumb {
 #review .review-svg path {
     stroke-width: 15;
 }
+.print #review .review-svg {
+    display: none;
+}
 #review h3 {
     margin: 0 0 15px 170px;
     font-weight: 300;
     font-size: 22px;
     color: @grey;
+}
+.print #review h3 {
+    margin-left: 0;
 }
 
 .print #review .review-material {
