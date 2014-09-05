@@ -60,6 +60,34 @@ sb.meshu = function(frame, renderer, existingMap) {
         }
     }
 
+    self.findCountry = function(loc) {
+
+        var url = "http://open.mapquestapi.com/geocoding/v1/reverse?key=" + mapquestapi + 
+        "&location=" + loc[1] + "," + loc[0];
+
+        $.ajax({
+            url: url,
+            cache: false,
+            crossDomain: false,
+            dataType: 'json',
+            error: function(error, error1, error2){
+                console.log(error2);
+            },
+            success: function(data){
+                var results = data.results;
+
+                if (typeof results == "undefined" || results[0].locations.length == 0) {
+                    return;
+                }
+
+                else if (results.length) {
+                    var first = results[0].locations[0];
+                    mesh.addCountry(first.adminArea1);
+                }
+            }
+        });
+    }
+
     // on click of search button
     function searchPlaces(input) {
         // default input
@@ -114,7 +142,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                             mesh.add(first.latLng.lat, first.latLng.lng, input);
                             self.updateBounds();
 
-                            mesh.highlightCountry(first.adminArea1);
+                            mesh.addCountry(first.adminArea1);
 
                             // set the zoom for first point
                             if (mesh.points().length == 1) {

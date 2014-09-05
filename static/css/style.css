@@ -1965,25 +1965,16 @@ path {
   opacity: .8;
 }
 .print .map path {
-  stroke: white;
-  fill: #d7d7d7;
-  stroke-width: 0;
-}
-.print path {
-  stroke-width: 1;
-}
-.print .meshu-svg path {
-  stroke-width: 3;
-  stroke: #555;
+  /*stroke: white;
+    fill: #d7d7d7;
+    stroke-width: 0;*/
+
 }
 .print .map path.current {
-  fill: white;
-  stroke-width: 1;
-  stroke: #aaa;
-}
-.print path.air {
-  stroke-width: 2;
-  stroke-dasharray: 4 4;
+  /*fill: white;
+    stroke-width: 1;
+    stroke: #aaa;*/
+
 }
 .allview path {
   stroke-width: 1;

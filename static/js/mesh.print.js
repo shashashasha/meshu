@@ -11,6 +11,7 @@ sb.mesh.print = function (frame, map, width, height) {
     var lats = [],
         lons = [],
         places = [],
+        countries = [],
         modes = [];
 
     var decoder = document.createElement('div');
@@ -102,7 +103,8 @@ sb.mesh.print = function (frame, map, width, height) {
         countries.enter().append("path").attr("d",mapPath)
         .attr("class",function(d){
             return d.properties.ISO2;
-        });
+        }).style("fill","#d7d7d7").style("stroke","#aaa").style("stroke-width","0");
+        
     });
 
     self.copyMap = function() {
@@ -113,6 +115,7 @@ sb.mesh.print = function (frame, map, width, height) {
         var circles = $(".delaunay-ui").clone();
 
         mapSVG.find("rect").remove();
+        mapSVG = mapSVG.html();
 
         var copySVG = d3.select(".projection-preview");
 
@@ -131,7 +134,10 @@ sb.mesh.print = function (frame, map, width, height) {
             .attr("class", "fill")
             .attr("xlink:href", "#sphere");
 
-        svg.append(mapSVG);
+        var m = d3.select(".projection-preview")
+            .append("g").attr("class","map");
+        svg.find(".map").html(mapSVG);
+
         svg.append(lines);
         svg.append(circles);
 
@@ -182,6 +188,11 @@ sb.mesh.print = function (frame, map, width, height) {
             .attr("class",function(d){
                 var current = d3.select("#meshu-container")
                     .select("."+d.properties.ISO2).classed("current");
+
+                d3.select(this)
+                    .style("fill", current ? "white" : "#d7d7d7")
+                    .style("stroke-width", current ? "1" : "0");
+
                 return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
             });
         d3.select(".projection-preview #sphere").attr("d",copyPath);
@@ -196,15 +207,21 @@ sb.mesh.print = function (frame, map, width, height) {
         applyProjection(proj);
     });
 
-    self.highlightCountry = function(countryCode){
+    self.addCountry = function(country) {
+        countries.push(country);
+        highlightCountry(country, true);
+    };
+
+    function highlightCountry(countryCode, flag) {
         var c = d3.select(".map").selectAll("path")
             .filter(function(d){
                 return d.properties.ISO2 == countryCode;
-            }).classed("current",true)
+            }).classed("current",flag)
             .each(function(){
                 this.parentNode.appendChild(this);
-            });
-    }
+            }).style("fill", flag ? "white" : "d7d7d7")
+            .style("stroke-width", flag ? "1" : "0");
+    };
 
     function updateProjection(width, height){
         projection.scale(1).translate([0, 0]);
@@ -234,6 +251,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
     // location on the map
     self.on("clickedMap", function(loc) {
+        meshu.findCountry(loc);
         self.add(loc[1], loc[0], undefined, false);
     });
 
@@ -314,7 +332,9 @@ sb.mesh.print = function (frame, map, width, height) {
                     return "M" + draw[0] + " L" + draw[1];
             }).attr("class",function(d){
                 return d.mode;
-            });
+            }).style("stroke","#555")
+            .style("stroke-width",function(d){ return (d.mode == "air") ? 2 : 3; })
+            .style("stroke-dasharray",function(d){ return (d.mode == "air") ? "4 4" : ""; });
     }
 
     self.updatePixelBounds = function() {
@@ -341,6 +361,7 @@ sb.mesh.print = function (frame, map, width, height) {
             .append("svg:circle")
             .attr("id",function(d, i){ return "c-" + i; })
             .attr("r", 4)
+            .attr("fill","#FF3FB4")
             .on("mousedown", function(d) {
                 self.dragging = d;
 
@@ -518,10 +539,16 @@ sb.mesh.print = function (frame, map, width, height) {
     };
 
     self.remove = function(index) {   
+
+        var c = countries[index];
+
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
+        countries.splice(index, 1);
+
+        if (countries.indexOf(c) == -1) highlightCountry(c, false);
         
         if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
