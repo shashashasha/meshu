@@ -12,6 +12,7 @@ sb.mesh.print = function (frame, map, width, height) {
         lons = [],
         places = [],
         countries = [],
+        roadData = [],
         modes = [];
 
     var decoder = document.createElement('div');
@@ -291,7 +292,6 @@ sb.mesh.print = function (frame, map, width, height) {
         })
         // the delaunay mesh paths
         var lines = gGroup.selectAll("path")
-            // .data(d3.geom.delaunay(points));
             .data(linePairs);
 
         var radiusScale = d3.scale.linear().domain([0,600]).range([.5,.65]);
@@ -313,7 +313,16 @@ sb.mesh.print = function (frame, map, width, height) {
                     return "M" + draw[0] + " A "+dist*radiusScale(dist)+" "+dist*radiusScale(dist)+" 0 0 0 " + draw[1];
                 }
                 else if (d.mode == "road"){
-                    var base = "http://open.mapquestapi.com/directions/v1/route?generalize=10&outFormat=json&shapeFormat=raw&generalize=200&from=";
+                    var roadPath = null;
+                    roadData.forEach(function(e,i){
+                        if (e.points[0][0] == d.points[0][0] && e.points[1][1] == d.points[1][1]) {
+                            roadPath = drawRoadPath(e.wayPoints);
+                            return;
+                        }
+                    });
+                    if (roadPath) return roadPath;
+                    
+                    var base = "http://open.mapquestapi.com/directions/v1/route?generalize=500&outFormat=json&shapeFormat=raw&generalize=200&from=";
                     var url = base + d.points[0][1]+","+d.points[0][0]+"&to="+d.points[1][1]+","+d.points[1][0]+"&key="+mapquestapi;
 
                     $.ajax({
@@ -321,25 +330,34 @@ sb.mesh.print = function (frame, map, width, height) {
                         dataType: 'jsonp',
                         success: function(data) {
                             var wayPoints = data.route.shape.shapePoints;
-
-                            var drawI = [];
-                            var lI = wayPoints.length;
-                            for (var i = 0; i < lI; i+=2){
-                                var pt = proj([wayPoints[i+1],wayPoints[i]]);
-                                drawI.push(pt);
-                            }
-                            var pathLines =  "M" + drawI.join("L");
-                            d3.select(pathObject).attr("d",pathLines);
+                            console.log(wayPoints, pathObject)
+                            roadData.push({
+                                "points":d.points,
+                                "wayPoints":wayPoints
+                            });
+                            d3.select(pathObject).attr("d",drawRoadPath(wayPoints));
                         }
                     });
                 }
                 else
                     return "M" + draw[0] + " L" + draw[1];
+
             }).attr("class",function(d){
                 return d.mode;
             }).style("stroke","#555")
             .style("stroke-width",function(d){ return (d.mode == "air") ? 2 : 3; })
             .style("stroke-dasharray",function(d){ return (d.mode == "air") ? "4 4" : ""; });
+
+            function drawRoadPath(wayPoints) {
+                var drawI = [];
+                var lI = wayPoints.length;
+                for (var i = 0; i < lI; i+=2){
+                    var pt = proj([wayPoints[i+1],wayPoints[i]]);
+                    drawI.push(pt);
+                }
+                var pathLines =  "M" + drawI.join("L");
+                return pathLines;
+            }
     }
 
     self.updatePixelBounds = function() {
