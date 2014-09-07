@@ -2064,9 +2064,14 @@ circle {
     stroke-width: 15;
     cursor: default;
 }
-.print circle:hover {
+.print circle.highlight {
+    stroke: none;
+    fill: #555;
+}
+.print circle:hover, .print .edit .inactive circle:first-child {
     stroke: none;
 }
+
 .hidden, .rotate-ui, #hidden {
     display: none;
 }
