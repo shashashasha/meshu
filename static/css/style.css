@@ -959,13 +959,25 @@ body.firefox .place .place-text {
 .print .place:first-child .road {
   display: none;
 }
+.print .place:first-child .air {
+  background-image: none;
+  width: auto;
+  padding: 1px 17px;
+}
 .place .mode span {
-  padding: 1px 5px 3px 5px;
+  padding: 1px;
   border: 1px solid #808080;
   cursor: pointer;
   color: #808080;
   margin-right: 4px;
   background-color: rgba(0, 0, 0, 0.025);
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 14px;
+  float: left;
 }
 .place .mode span:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -974,6 +986,15 @@ body.firefox .place .place-text {
   border-color: #ff3fb4;
   color: black;
   background-color: rgba(255, 63, 180, 0.2);
+}
+.place .mode .rail {
+  background-image: url(../images/icons/mode-rail.png);
+}
+.place .mode .air {
+  background-image: url(../images/icons/mode-air.png);
+}
+.place .mode .road {
+  background-image: url(../images/icons/mode-road.png);
 }
 .frame {
   width: 600px;
