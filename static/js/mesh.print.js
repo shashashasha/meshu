@@ -159,8 +159,8 @@ sb.mesh.print = function (frame, map, width, height) {
             case 'mercator':
                 copyProjection = d3.geo.mercator().scale(92).translate([287,212]);
                 break;
-            case 'hammer':
-                copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
+            // case 'hammer':
+            //     copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
                 break;
             case 'august':
                 copyProjection = d3.geo.august().scale(50).translate([287,212]);
@@ -399,8 +399,8 @@ sb.mesh.print = function (frame, map, width, height) {
         
         var place = names.enter().append("li").attr("class", "place").attr("id", function(d, i) { return "p-" + i; });
         var mode = place.append("span").attr("class", "mode");
-            mode.append("span").attr("class", "air selected")
-                .html(function(d,i){ return (i == 0) ? "Origin:" : ""; });
+            mode.append("span").attr("class", "origin").html("Origin:");
+            mode.append("span").attr("class", "air selected");
             mode.append("span").attr("class", "rail");
             mode.append("span").attr("class", "road");
 
@@ -433,7 +433,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         names.select(".mode").each(function(d,i){
             if (i == 0) return;
-            
+
             var modeSet = d3.select(this).selectAll("span");
             modeSet.classed("selected",false);
             modeSet.classed("selected",function(e,j){

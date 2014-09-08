@@ -956,13 +956,18 @@ body.firefox .place .place-text {
   display: inline;
 }
 .print .place:first-child .rail,
-.print .place:first-child .road {
+.print .place:first-child .road,
+.print .place:first-child .air,
+.print .place .origin {
   display: none;
 }
-.print .place:first-child .air {
+.print .place:first-child .origin {
   background-image: none;
   width: auto;
   padding: 1px 17px;
+  display: inline-block;
+  border-color: #ff3fb4;
+  background-color: rgba(255, 63, 180, 0.2);
 }
 .place .mode span {
   padding: 1px;
@@ -984,7 +989,6 @@ body.firefox .place .place-text {
 }
 .place .mode span.selected {
   border-color: #ff3fb4;
-  color: black;
   background-color: rgba(255, 63, 180, 0.2);
 }
 .place .mode .rail {
@@ -1984,9 +1988,13 @@ path {
   border-color: #eee;
 }
 .print .proj.top {
-  display: block;
   text-align: center;
   font-size: 18px;
+  width: 164px;
+  height: 119px;
+  float: left;
+  padding-top: 47px;
+  box-sizing: border-box;
 }
 .print .proj img {
   width: 150px;
