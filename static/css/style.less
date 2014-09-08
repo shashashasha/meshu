@@ -975,6 +975,7 @@ body.firefox #place-title #input {
 }
 .print .place {
     width: auto;
+    margin: 6px 0;
 }
 .place input {
     color: gray;
@@ -998,6 +999,9 @@ body.firefox #place-title #input {
     padding: 2px;
     display: inline-block;
 }
+.print .place-text {
+
+}
 body.ie .place .place-text,
 body.win .place .place-text,
 body.firefox .place .place-text {
@@ -1007,6 +1011,14 @@ body.firefox .place .place-text {
     color: black;
     background-color: #eee;
 }
+.print .place-text {
+    cursor: move;
+    width: 235px;
+}
+.print .place:hover .place-text {
+    background-color: inherit;
+}
+
 .place.highlight {
     color: @pink;
 }
@@ -1023,22 +1035,26 @@ body.firefox .place .place-text {
     display: inline;
 }
 
-.print .place:first-child .mode {
+.print .place:first-child .rail,
+.print .place:first-child .road {
     display: none;
 }
 
 .place .mode span {
     padding: 1px 5px 3px 5px;
-    background-color: @grey;
+    border: 1px solid @grey;
     cursor: pointer;
-    color: white;
-    margin-right: 2px;
+    color: @grey;
+    margin-right: 4px;
+    background-color: rgba(0,0,0,.025);
 }
 .place .mode span:hover {
-    background-color: @pink;
+    background-color: rgba(0,0,0,.1);
 }
 .place .mode span.selected {
-    background-color: black;
+    border-color: @pink;
+    color: black;
+    background-color: rgba(255,63,180,.2);
 }
 
 .frame {

@@ -95,7 +95,6 @@ sb.mesh.print = function (frame, map, width, height) {
     var features;
         
     $.getJSON('/static/lib/world_borders.json', function(json) {
-        // console.log(json)
         updateProjection(600,600);
 
         features = json.features;
@@ -315,6 +314,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 else if (d.mode == "road"){
                     var roadPath = null;
                     roadData.forEach(function(e,i){
+                        //I'm sorry
                         if (e.points[0][0] == d.points[0][0] && e.points[1][1] == d.points[1][1]) {
                             roadPath = drawRoadPath(e.wayPoints);
                             return;
@@ -330,7 +330,6 @@ sb.mesh.print = function (frame, map, width, height) {
                         dataType: 'jsonp',
                         success: function(data) {
                             var wayPoints = data.route.shape.shapePoints;
-                            console.log(wayPoints, pathObject)
                             roadData.push({
                                 "points":d.points,
                                 "wayPoints":wayPoints
@@ -399,28 +398,26 @@ sb.mesh.print = function (frame, map, width, height) {
             .data(points);
         
         var place = names.enter().append("li").attr("class", "place").attr("id", function(d, i) { return "p-" + i; });
-            var mode = place.append("span").attr("class", "mode");
-                mode.append("span").attr("class", "air selected").html("&#x2708;");
-                mode.append("span").attr("class", "rail").html("rail");
-                mode.append("span").attr("class", "road").html("car");
+        var mode = place.append("span").attr("class", "mode");
+            mode.append("span").attr("class", "air selected")
+                .html(function(d,i){ return (i == 0) ? "Starting Place:" : "&#x2708;"; });
+            mode.append("span").attr("class", "rail").html("rail");
+            mode.append("span").attr("class", "road").html("car");
 
-            mode.selectAll("span").on("click",function(d,i){
-                var index = $(this.parentNode.parentNode).index() - 1,
-                    m = d3.select(this).attr("class");
-                modes[index] = m;
-                updateMesh("meshu-container", projection);
-                $(this.parentNode).find("span").removeClass("selected");
-                $(this).addClass("selected");
-
-                // var c = svg.select(this).attr("class");
-                // svg.select(g.selectAll(path))
+        mode.selectAll("span").on("click",function(d,i){
+            var index = $(this.parentNode.parentNode).index() - 1,
+                m = d3.select(this).attr("class");
+            modes[index] = m;
+            updateMesh("meshu-container", projection);
+            $(this.parentNode).find("span").removeClass("selected");
+            $(this).addClass("selected");
+        });
+        place.append("span").attr("class", "place-text")
+            .html(function(d, i) {
+                decoder.innerHTML = places[i];
+                return decoder.firstChild.nodeValue;
             });
-            place.append("span").attr("class", "place-text")
-                .html(function(d, i) {
-                    decoder.innerHTML = places[i];
-                    return decoder.firstChild.nodeValue;
-                });
-            place.append("span").attr("class", "place-delete").html("x");
+        place.append("span").attr("class", "place-delete").html("x");
 
         names.exit().remove();
 
@@ -433,6 +430,15 @@ sb.mesh.print = function (frame, map, width, height) {
                 decoder.innerHTML = places[i];
                 return decoder.firstChild.nodeValue;
             });
+
+        names.select(".mode").each(function(d,i){
+            var modeSet = d3.select(this).selectAll("span");
+            modeSet.classed("selected",false);
+            modeSet.classed("selected",function(e,j){
+                if (i > 0)
+                    return $(this).attr("class") == modes[i-1]; 
+            });
+        });
 
         self.updateCircleBehavior();
         updateListBehavior();
@@ -448,26 +454,11 @@ sb.mesh.print = function (frame, map, width, height) {
             if (off) return;
             else if (editMode)
                 list.select("#p-" + i).attr("class", "place highlight");
-            else {
-                placeHover.addClass("active").find("span").text(places[i]);
-                
-                var p = projection(d); //map.l2p({ lat: d[1], lon: d[0] });
-                var w = placeHover.width();
-                var top = (p[1] - 32) + "px";
-                var left = (p[0] - (w/2) - 3) + "px";
-                var bleft = w/2 - 3 + "px";
-
-                
-                placeHover.css({"top": top, "left": left})
-                    .find("b").css("left", bleft);
-            }
         });
         circles.on("mouseout", function(d, i) {
             if (off) return;
             else if (editMode)
                 list.select("#p-"+i).attr("class","place");
-            else
-                placeHover.removeClass("active");
         });
     }
 
@@ -570,6 +561,9 @@ sb.mesh.print = function (frame, map, width, height) {
         lons.splice(index, 1);
         places.splice(index, 1);
         countries.splice(index, 1);
+
+        if (index == 0) modes.splice(index, 1);
+        else modes.splice(index-1,1);
 
         if (countries.indexOf(c) == -1) highlightCountry(c, false);
         
