@@ -202,6 +202,12 @@ sb.mesh.print = function (frame, map, width, height) {
             });
         d3.select(".projection-preview #sphere").attr("d",copyPath);
         updateMesh("projection", copyProjection);
+
+        self.style({
+            projection:proj,
+            scale:copyProjection.scale(),
+            translate:copyProjection.translate()
+        });
     }
 
     $(".proj").click(function(){
@@ -630,7 +636,9 @@ sb.mesh.print = function (frame, map, width, height) {
 
     // outputs svg data
     self.output = function() {
-        return $('#' + selfId).html();
+        var SVG = $(".projection-preview").clone();
+        SVG.find(".map").remove();
+        return SVG.html();
     };
 
     self.getProjection = function(point){
