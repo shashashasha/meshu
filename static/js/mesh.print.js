@@ -159,8 +159,8 @@ sb.mesh.print = function (frame, map, width, height) {
             case 'mercator':
                 copyProjection = d3.geo.mercator().scale(92).translate([287,212]);
                 break;
-            // case 'hammer':
-            //     copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
+            case 'hammer':
+                copyProjection = d3.geo.hammer().scale(95).translate([287,212]);
                 break;
             case 'august':
                 copyProjection = d3.geo.august().scale(50).translate([287,212]);
@@ -248,8 +248,13 @@ sb.mesh.print = function (frame, map, width, height) {
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
         if (width == 600) {
-            if (s < 100) $("#zoomed-to-fit").hide();
-            else $("#zoomed-to-fit").show();
+            if (s < 100) {
+                $("#zoomed-to-fit").hide();
+                $("#hammer").css("display","inline-block");
+            } else {
+                $("#zoomed-to-fit").show();
+                $("#hammer").hide();
+            }
 
             projection.scale(s).translate(t);
             d3.select(frame).select(".map").selectAll("path").attr("d",mapPath);
@@ -379,6 +384,7 @@ sb.mesh.print = function (frame, map, width, height) {
     };
 
     function update(){
+        console.log(points, places, modes, countries);
         updateProjection(600,600);
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
@@ -428,12 +434,14 @@ sb.mesh.print = function (frame, map, width, height) {
         names.exit().remove();
 
         names.each(function(d) { d.edit = false; })
+            .attr("id",function(d,i){ return "p-"+i; })
             .select(".place-text")
-            .html(function(d) {
+            .html(function(d, j) {
                 // decode the text
                 // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
                 var i = $(this).parent().attr("id").split("-")[1];
                 decoder.innerHTML = places[i];
+                console.log(d, i, j, places[i]);
                 return decoder.firstChild.nodeValue;
             });
 
@@ -500,15 +508,24 @@ sb.mesh.print = function (frame, map, width, height) {
         $( "#places ul" ).sortable({ axis:"y", cursor:"move"});
         $( "#places ul" ).disableSelection();
         $(".place-text").mouseup(function(){
-            var dataNew = [];
+            var dataNew = [],
+            placesNew = [],
+            latNew = [],
+            lonNew = [];
             setTimeout(function(){
                 $("#places li").each(function(e,i){
+                    placesNew.push($(this).find(".place-text").text());
                     d3.select(this).each(function(d){
                         dataNew.push(d);
+                        lonNew.push(d[0]);
+                        latNew.push(d[1]);
                     })  
                 });
                 points = dataNew;
-                update(true);
+                places = placesNew;
+                lats = latNew;
+                lons = lonNew;
+                update();
             },100);
         });
     }
@@ -562,6 +579,8 @@ sb.mesh.print = function (frame, map, width, height) {
     self.remove = function(index) {   
 
         var c = countries[index];
+
+        console.log(index, places, places[index]);
 
         points.splice(index, 1);
         lats.splice(index, 1);
