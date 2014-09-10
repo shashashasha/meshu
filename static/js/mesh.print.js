@@ -384,7 +384,6 @@ sb.mesh.print = function (frame, map, width, height) {
     };
 
     function update(){
-        console.log(points, places, modes, countries);
         updateProjection(600,600);
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
@@ -441,7 +440,6 @@ sb.mesh.print = function (frame, map, width, height) {
                 // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
                 var i = $(this).parent().attr("id").split("-")[1];
                 decoder.innerHTML = places[i];
-                console.log(d, i, j, places[i]);
                 return decoder.firstChild.nodeValue;
             });
 
@@ -579,8 +577,6 @@ sb.mesh.print = function (frame, map, width, height) {
     self.remove = function(index) {   
 
         var c = countries[index];
-
-        console.log(index, places, places[index]);
 
         points.splice(index, 1);
         lats.splice(index, 1);
