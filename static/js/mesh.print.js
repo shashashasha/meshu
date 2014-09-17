@@ -655,13 +655,19 @@ sb.mesh.print = function (frame, map, width, height) {
     self.output = function() {
         var SVG = $(".projection-preview").clone();
 
-        // sphere -> butt
-        SVG.find("#sphere").attr("id", "sphere-" + selfId);
-        SVG.find("use").attr("xlink:href", "#sphere-" + selfId);
-
         // remove the map for lighter svg storage
         SVG.find(".map").remove();
-        return SVG[0].outerHTML;
+
+        // make this projection-clip path a unique id for cart/checkout
+        SVG.find("#sphere").attr("id", "sphere-" + selfId);
+
+        // for some reason attr with xlink:href doesn't work, so doing it
+        // manually with the string content
+        // SVG.find("use").attr("xlink:href", "#sphere-" + selfId);
+        var outerhtml = SVG[0].outerHTML;
+        outerhtml = outerhtml.split("#sphere").join("#sphere-" + selfId);
+
+        return outerhtml;
     };
 
     self.getProjection = function(point){
