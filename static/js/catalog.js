@@ -63,7 +63,7 @@ sb.catalog = function(renderer, promo) {
 						},
 						"large_poster":
 						{
-							"print":{"price":35,"colors":[]}
+							"print":{"price":45,"colors":[]}
 						},
 					};
 

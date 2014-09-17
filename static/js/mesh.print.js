@@ -653,7 +653,7 @@ sb.mesh.print = function (frame, map, width, height) {
     self.output = function() {
         var SVG = $(".projection-preview").clone();
         SVG.find(".map").remove();
-        return SVG.html();
+        return SVG[0].outerHTML;
     };
 
     self.getProjection = function(point){
