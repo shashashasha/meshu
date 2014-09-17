@@ -2404,8 +2404,25 @@ circle {
     height: 100px;
     border: 1px solid @borderGrey;
 }
-#cart path {
+#cart .projection-preview.meshu-svg {
+    height: 80px;
+    margin: 10px 0;
+}
+#cart .delaunay path {
     stroke-width: 15;
+}
+#cart .projection-preview path {
+    stroke-width: 0;
+}
+#cart .projection-preview {
+    background-color: #d7d7d7;
+}
+#cart path {
+    fill: inherit;
+}
+#cart .projection-preview .fill {
+    stroke-width: 0;
+    fill: #e7e7e7;
 }
 #cart .headings {
     color: @grey;
@@ -2494,10 +2511,18 @@ circle {
     width: 40px;
     height: 40px;
     border: none;
+    float: left;
+}
+.review #cart .projection-preview.meshu-svg {
+    height: 32px;
+    margin: 4px 0;
 }
 .review #cart .meshu-svg path,
 .review #cart .meshu-svg circle {
     stroke: #808080;
+}
+.review #cart .projection-preview.meshu-svg path {
+    stroke-width: 0;
 }
 .review #cart {
     color: @grey;
