@@ -54,7 +54,10 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
     <script type="text/javascript">
     	$(".cart-row").each(function(){
     		var theta = $(this).find(".theta").text();
+
+    		// transform the preview svg to be the appropriate size
     		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
+    		$(this).find(".projection-clip").attr("transform","scale(.17)");
     	});
 
     	// refresh the page if we login or out

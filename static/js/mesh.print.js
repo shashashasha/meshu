@@ -86,14 +86,14 @@ sb.mesh.print = function (frame, map, width, height) {
             so our bounds for this shape may not be correct anymore
         */
         self.dirty = true;
-    
+
         update();
     });
 
     var projection = d3.geo.mercator().scale(1).translate([0, 0]);
     var mapPath = d3.geo.path().projection(projection);
     var features;
-        
+
     $.getJSON('/static/lib/world_borders.json', function(json) {
         updateProjection(600,600);
 
@@ -104,7 +104,7 @@ sb.mesh.print = function (frame, map, width, height) {
         .attr("class",function(d){
             return d.properties.ISO2;
         }).style("fill","#d7d7d7").style("stroke","#aaa").style("stroke-width","0");
-        
+
     });
 
     self.copyMap = function() {
@@ -130,7 +130,9 @@ sb.mesh.print = function (frame, map, width, height) {
           .append("use")
             .attr("xlink:href", "#sphere");
 
-        copySVG.append("use")
+        copySVG.append("g")
+            .attr("class", "projection-clip")
+          .append("use")
             .attr("class", "fill")
             .attr("xlink:href", "#sphere");
 
@@ -181,7 +183,7 @@ sb.mesh.print = function (frame, map, width, height) {
         }
 
         var copySVG = d3.select(".projection-preview")
-            .attr("class","projection-preview").classed(proj, true);
+            .attr("class","projection-preview meshu-svg").classed(proj, true);
 
         copySVG.selectAll("circle").attr("r",(proj == 'zoomed-to-fit') ? 3 : 2);
 
@@ -241,7 +243,7 @@ sb.mesh.print = function (frame, map, width, height) {
         // dumb thing where polymaps sets an extent outside of lat/lon limits
         // but d3 freaks out. so clamping from the polymaps extent
 
-        b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]), 
+        b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
         s = .9 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
@@ -314,7 +316,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 for (var i = 0; i < l; i++){
                     var pt = proj(d.points[i]);
                     draw.push(pt);
-                } 
+                }
 
                 var pathObject = this;
 
@@ -332,7 +334,7 @@ sb.mesh.print = function (frame, map, width, height) {
                         }
                     });
                     if (roadPath) return roadPath;
-                    
+
                     var base = "http://open.mapquestapi.com/directions/v1/route?generalize=500&outFormat=json&shapeFormat=raw&generalize=200&from=";
                     var url = base + d.points[0][1]+","+d.points[0][0]+"&to="+d.points[1][1]+","+d.points[1][0]+"&key="+mapquestapi;
 
@@ -378,7 +380,7 @@ sb.mesh.print = function (frame, map, width, height) {
                             projection([d3.min(lats),d3.max(lons)]),
                             ];
         }
-        else { 
+        else {
             pixel_bounds = [];
         }
     };
@@ -401,13 +403,13 @@ sb.mesh.print = function (frame, map, width, height) {
                 // stop prop to prevent map dragging
                 d3.event.stopPropagation();
             });
-        
+
         circles.exit().remove();
 
         // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
-        
+
         var place = names.enter().append("li").attr("class", "place").attr("id", function(d, i) { return "p-" + i; });
         var mode = place.append("span").attr("class", "mode");
             mode.append("span").attr("class", "origin").html("Origin:");
@@ -449,7 +451,7 @@ sb.mesh.print = function (frame, map, width, height) {
             var modeSet = d3.select(this).selectAll("span");
             modeSet.classed("selected",false);
             modeSet.classed("selected",function(e,j){
-                return $(this).attr("class") == modes[i-1]; 
+                return $(this).attr("class") == modes[i-1];
             });
         });
 
@@ -517,7 +519,7 @@ sb.mesh.print = function (frame, map, width, height) {
                         dataNew.push(d);
                         lonNew.push(d[0]);
                         latNew.push(d[1]);
-                    })  
+                    })
                 });
                 points = dataNew;
                 places = placesNew;
@@ -543,7 +545,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         if (points.length) {
             $("#meshu-container").removeClass("inactive");
-            
+
             new_pt = [lon, lat];
             modes.push("air");
             if (skipAnimation) {
@@ -552,7 +554,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 self.updatePixelBounds();
                 update();
                 updateMesh("meshu-container", projection);
-            } else { 
+            } else {
                 // make the new point start from the last location
                 var last = points[points.length-1];
                 // points.push([last[0], last[1]]);
@@ -564,7 +566,7 @@ sb.mesh.print = function (frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
-        
+
 
         /*
             we've added a point but haven't updated the bounds
@@ -574,7 +576,7 @@ sb.mesh.print = function (frame, map, width, height) {
         return self;
     };
 
-    self.remove = function(index) {   
+    self.remove = function(index) {
 
         var c = countries[index];
 
@@ -588,7 +590,7 @@ sb.mesh.print = function (frame, map, width, height) {
         else modes.splice(index-1,1);
 
         if (countries.indexOf(c) == -1) highlightCountry(c, false);
-        
+
         if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     };
@@ -640,7 +642,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         self.refreshed();
     };
-    
+
     self.updateTitle = function(t) {
         meshuTitle = t;
     };
@@ -652,6 +654,12 @@ sb.mesh.print = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
         var SVG = $(".projection-preview").clone();
+
+        // sphere -> butt
+        SVG.find("#sphere").attr("id", "sphere-" + selfId);
+        SVG.find("use").attr("xlink:href", "#sphere-" + selfId);
+
+        // remove the map for lighter svg storage
         SVG.find(".map").remove();
         return SVG[0].outerHTML;
     };
