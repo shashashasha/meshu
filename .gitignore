@@ -59,18 +59,8 @@ meshu/__init__.pyc
 
 __init__.pyc
 
-meshu/__init__.pyc
+meshu/migrations/*.py
 
-__init__.pyc
-
-__init__.pyc
-
-__init__.pyc
-
-meshu/migrations/0001_initial.py
-
-meshu/migrations/__init__.py
-
-.gitignore
+cart/migrations/*.py
 
 .gitignore
