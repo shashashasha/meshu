@@ -394,7 +394,10 @@ document.write('email us</a>');
     <script type="text/javascript">
     	$(".cart-row").each(function(){
     		var theta = $(this).find(".theta").text();
+
+    		// transform the preview svg to be the appropriate size
     		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.07) rotate("+theta+", 300, 300)");
+    		$(this).find(".projection-clip").attr("transform","scale(.07)");
     	});
     	// refresh the page if we login or out
     	$(function() {
