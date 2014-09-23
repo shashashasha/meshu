@@ -2178,6 +2178,7 @@ circle.highlight,
   height: 306px;
   margin: 0 8px 10px 0;
   border: 5px solid white;
+  overflow: hidden;
   position: relative;
 }
 .mini-meshu:hover {
@@ -2644,6 +2645,7 @@ li.last-object {
 #maps .meshu-svg {
   border: 1px solid #e6e6e6;
   margin: -1px;
+  height: 306px;
 }
 #maps .map {
   opacity: .3;
