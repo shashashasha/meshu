@@ -617,6 +617,8 @@ sb.mesh.print = function (frame, map, width, height) {
     };
 
     self.locations = function(locs) {
+
+        console.log(locs)
         new_pt = null;
 
         points = [];

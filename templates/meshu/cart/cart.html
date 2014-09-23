@@ -16,7 +16,7 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
 				<td></td>
 			</tr>
 		{% for item in cart.items %}
-			<tr class="cart-row">
+			<tr class="cart-row {{item.product.meshu.renderer}}">
 				<td class="theta">{{item.product.meshu.theta|safe}}</td>
 				<td><a href="{{ item.product.meshu.get_edit_url }}">{{ item.product.meshu.svg|safe }}</a></td>
 				<td>{{ item.product.get_display_name }}</td>
@@ -24,7 +24,7 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
 				<td class="price"><span class="dollar">$</span>{{ item.unit_price }}</td>
 				<td>
 					<a href="/cart/remove/{{ item.product.id }}" class="cart-remove button">Remove From Cart</a>
-					<a class="button" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a>
+					<a class="button another" href="{{ item.product.meshu.get_edit_url }}">Order Another of this Design</a>
 				</td>
 			</tr>
 		{% endfor %}
@@ -53,11 +53,14 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
 {% block resources %}
     <script type="text/javascript">
     	$(".cart-row").each(function(){
-    		var theta = $(this).find(".theta").text();
+    		var row = $(this);
+    		var theta = row.find(".theta").text();
 
     		// transform the preview svg to be the appropriate size
-    		$(this).find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
-    		$(this).find(".projection-clip").attr("transform","scale(.17)");
+    		row.find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
+    		row.find(".projection-clip").attr("transform","scale(.17)");
+    		row.find(".delaunay-ui").attr("transform","scale(.17)").find("circle").attr("r",6);
+    		if (row.hasClass("print")) row.find("svg").unwrap();
     	});
 
     	// refresh the page if we login or out

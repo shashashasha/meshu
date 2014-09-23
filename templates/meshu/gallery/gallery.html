@@ -76,10 +76,8 @@
                 metadata = $(this).find(".metadata").html(),
                 svg = $(this).find(".svg").html();
 
-            console.log(renderer)
             if (renderer == "print") {
-                var p = $(this).find(".hidden.svg").removeClass("hidden");
-                p.find("svg").attr("transform","scale(.5)")
+                $(this).hide();
                 return;
             }
 
