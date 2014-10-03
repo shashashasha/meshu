@@ -2102,7 +2102,7 @@ circle {
     stroke-width: 15;
     cursor: default;
 }
-.print circle.highlight {
+.print #meshu-container circle.highlight {
     stroke: none;
     fill: #555;
 }
@@ -2398,9 +2398,6 @@ circle {
 #cart tr {
     border-bottom: 1px solid @borderGrey;
     margin-bottom: 10px;
-}
-#cart .print .another {
-    display: none;
 }
 
 #cart .meshu-svg {
@@ -2870,6 +2867,17 @@ body.ie #maps .mini-meshu div {
 
 .SH, .postcard-true {
     background-color: #00FF66;
+}
+
+.print.processing {
+    #content {
+        width: 1680px;
+        height: 1275px;
+    }
+    .projection-preview {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 /*

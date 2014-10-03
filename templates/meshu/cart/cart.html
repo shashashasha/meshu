@@ -60,7 +60,6 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
     		row.find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
     		row.find(".projection-clip").attr("transform","scale(.17)");
     		row.find(".delaunay-ui").attr("transform","scale(.17)").find("circle").attr("r",6);
-    		if (row.hasClass("print")) row.find("svg").unwrap();
     	});
 
     	// refresh the page if we login or out

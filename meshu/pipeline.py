@@ -43,6 +43,15 @@ def processing_postcard_back(request, order_id):
 		'order': order
 	}, context_instance=RequestContext(request))
 
+def processing_print(request, order_id):
+	order = get_object_or_404(Order, pk=order_id)
+
+	return render_to_response('meshu/processing/print_output.html', {
+		'order': order,
+		'meshu': order.meshu,
+		'view': 'postcard'
+	}, context_instance=RequestContext(request))	
+
 
 def view_orders(request):
 	if request.user.is_authenticated() == False or request.user.is_staff == False:

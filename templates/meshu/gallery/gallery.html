@@ -70,19 +70,26 @@
     <script type="text/javascript">
 
         $(".mini-meshu").each(function(i){
-            var frame = $(this).find("a")[0],
-                data = $(this).find(".hidden").html(),
-                renderer = $(this).find(".renderer").html(),
-                metadata = $(this).find(".metadata").html(),
-                svg = $(this).find(".svg").html();
+            var mm = $(this);
+            var frame = mm.find("a")[0],
+                data = mm.find(".hidden").html(),
+                renderer = mm.find(".renderer").html(),
+                metadata = mm.find(".metadata").html(),
+                svg = mm.find(".svg").html();
 
+            console.log(renderer)
             if (renderer == "print") {
-                $(this).hide();
-                return;
+
+                mm.find("a").addClass("print").append(svg);
+                mm.find(".projection-clip").attr("transform","scale(.53) translate(0,80)");
+                mm.find(".delaunay").attr("transform","scale(.55) translate(0,80)");
+                mm.find(".delaunay-ui").attr("transform","scale(.55) translate(0,80)").find("circle").attr("r",6);
+
+            } else {
+                var meshu = sb.minimeshu(frame, renderer);
+                meshu.initializeFromData(data, metadata, svg);
             }
 
-            var meshu = sb.minimeshu(frame, renderer);
-            meshu.initializeFromData(data, metadata, svg);
             if (renderer == "radial")
                 $(this).find(".delaunay").attr("transform","scale(.5)");
         });

@@ -7,7 +7,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         width = $(frame).width() + 'px',
         height = $(frame).height() + 'px',
 		map = existingMap || sb.map(frame, width, height),
-        renderer = renderer || 'facet',
+        renderer = renderer || 'facet';
         // use the renderer given
 		mesh = sb.mesh[renderer](frame, map, width, height),
         searchError = $("#search-error"),
@@ -253,10 +253,10 @@ sb.meshu = function(frame, renderer, existingMap) {
     }
 
     self.initializeFromData = function(data, style, svg) {
-        mesh.prerender(svg);
+        mesh.prerender(svg);        
 
         var locations = parseLocationData(data);
-        mesh.locations(locations);
+        mesh.locations(locations, data);
 
         // 'drawStyle:knockout|zoom:12' for example
         if (style) {
