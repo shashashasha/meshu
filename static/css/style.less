@@ -2102,7 +2102,7 @@ circle {
     stroke-width: 15;
     cursor: default;
 }
-.print circle.highlight {
+.print #meshu-container circle.highlight {
     stroke: none;
     fill: #555;
 }
@@ -2237,7 +2237,7 @@ circle {
     height: 306px;
     margin: 0 8px 10px 0;
     border: 5px solid white;
-
+    overflow: hidden;
     position: relative;
 
     &:hover {
@@ -2399,6 +2399,7 @@ circle {
     border-bottom: 1px solid @borderGrey;
     margin-bottom: 10px;
 }
+
 #cart .meshu-svg {
     width: 100px;
     height: 100px;
@@ -2407,6 +2408,7 @@ circle {
 #cart .projection-preview.meshu-svg {
     height: 80px;
     margin: 10px 0;
+    float: left;
 }
 #cart .delaunay path {
     stroke-width: 15;
@@ -2706,6 +2708,8 @@ li.last-object {
 #maps .meshu-svg {
     border: 1px solid @borderGrey;
     margin: -1px;
+    height: 306px;
+    width: 306px;
 }
 #maps .map {
     opacity: .3;
@@ -2863,6 +2867,17 @@ body.ie #maps .mini-meshu div {
 
 .SH, .postcard-true {
     background-color: #00FF66;
+}
+
+.print.processing {
+    #content {
+        width: 1680px;
+        height: 1275px;
+    }
+    .projection-preview {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 /*

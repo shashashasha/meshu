@@ -1,0 +1,45 @@
+{% extends "meshu/item/base_item.html" %}
+{% load shorturl %}
+
+{% block login_form %}Meshu - Postcard Front{% endblock %}
+
+{% block body_class %}print processing {{ order.product }}{% endblock body_class %}
+
+{% block edit %}
+{% endblock %}
+
+{% load shorturl %}
+
+{% block navigation %}
+<ul id="nav">
+	<li class="nav-list">{% shorturl meshu %}</li>
+	<li class="nav-list"><a href="/orders/">orders</a></li>
+	<li class="nav-list"><a href="/admin/meshu/meshu/{{ meshu.id }}/">meshu #{{ meshu.id }}</a></li>
+	<li class="nav-list"><a href="{{ meshu.get_absolute_url }}">{{ meshu.title }} by {{ meshu.user_profile.user.email }}</a></li>
+</ul>
+{% endblock %}
+
+{% block view %}
+{% endblock %}
+
+{% block script-specific %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.projection.v0.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.polyhedron.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
+{% endblock %}
+
+{% block object %}
+{% endblock %}
+
+{% block make %}
+{% endblock %}
+
+{% block addons %}
+{% endblock %}
+
+{% block checkout %}
+{% endblock %}
