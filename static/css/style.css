@@ -641,7 +641,7 @@ body.win #login-form ul {
   padding: 0;
 }
 .edit-panel {
-  width: 350px;
+  width: 400px;
 }
 #search {
   padding: 20px;
@@ -1930,7 +1930,8 @@ path {
 .roadtrip .straight {
   stroke-opacity: .5;
 }
-.print #projection {
+.print #projection,
+.print #design {
   height: 540px;
 }
 .print .projection-preview {
@@ -1962,10 +1963,11 @@ path {
   fill: inherit;
   stroke: inherit;
 }
-.print .fill {
+.print #projection .fill {
   fill: #e7e7e7;
 }
-.print .projection-list {
+.print .projection-list,
+.print .design-styles {
   width: 360px;
   float: left;
 }
@@ -2020,6 +2022,37 @@ path {
 .allview path {
   stroke-width: 1;
   stroke-opacity: .25;
+}
+#design h3 {
+  font-size: 18px;
+  font-weight: normal;
+  color: #808080;
+  margin: 0 0 .5em;
+}
+#design ul {
+  margin-bottom: 30px;
+}
+#design li {
+  border: 2px solid #e6e6e6;
+  display: inline-block;
+  width: 75px;
+  padding: 5px;
+  box-sizing: border-box;
+  margin: 0 2px;
+  text-align: center;
+  cursor: pointer;
+  color: #808080;
+}
+#design li:hover {
+  border-color: #808080;
+}
+#design li.selected {
+  border-color: #ff3fb4;
+}
+#design .preview {
+  width: 80%;
+  height: 20px;
+  margin: 3px auto 7px;
 }
 circle {
   fill: #ff3fb4;
@@ -2124,8 +2157,12 @@ circle.highlight,
 #make-landing {
   position: absolute;
   top: 80px;
-  left: 90px;
-  width: 780px;
+  /*left: 90px;*/
+
+  left: 155px;
+  /*width: 780px;*/
+
+  width: 660px;
   height: 400px;
   z-index: 4;
   background: white;
@@ -2144,8 +2181,10 @@ circle.highlight,
 }
 .splitimages {
   float: left;
-  width: 31.3%;
-  margin: 0 1% 0;
+  /*width: 31.3%;*/
+
+  width: 44%;
+  margin: 0 3% 0;
   border: 1px solid #e6e6e6;
   box-sizing: border-box;
 }

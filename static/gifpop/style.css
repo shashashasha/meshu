@@ -26,7 +26,7 @@ html {
 }
 body {
     width: 875px;
-    background-color: #eee;
+    background-color: transparent;
     font-family: Futura;
 }
 
@@ -332,7 +332,7 @@ h3.filename, #mainpane #subMessage {
     background-image: url(img/starburst-wide.png);
     background-position: center;
     box-shadow: none;
-    background-color: transparent;
+    background-color: black;
 }
 #localDragHelp {
     background-image: url(img/drag-and-drop-img.png);
@@ -354,6 +354,7 @@ h3.filename, #mainpane #subMessage {
     width: 100%;
     border-top: 10px solid #eee;
     height: 110px;
+    background-color: black;
 }
 #fileInputContainer {
     z-index: 1;
@@ -455,12 +456,12 @@ table.fileinfo .filename {
         right: auto;
     }
     #localDragDrop {
-        width: 50%;
+        width: 49%;
         height: 250px;
         min-height: 250px;
     }
     #fileUploadForm {
-        width: 50%;
+        width: 48%;
         height: 250px;
         position: absolute;
         right: 0;

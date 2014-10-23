@@ -110,6 +110,12 @@ sb.mesh.print = function (frame, map, width, height) {
             countries.forEach(function(e,i) {
                 highlightCountry(e, true);
             });
+        } else {
+            self.style({
+                mapStyle:"light",
+                dotColor:"FF3FB4",
+                countryStyle:"on"
+            });
         }
         if (processing_page) {
             self.copyMap();
@@ -133,7 +139,7 @@ sb.mesh.print = function (frame, map, width, height) {
         mapSVG.find("rect").remove();
         mapSVG = mapSVG.html();
 
-        var copySVG = d3.select(".projection-preview");
+        var copySVG = d3.selectAll(".projection-preview");
 
         var defs = copySVG.append("defs");
 
@@ -152,7 +158,7 @@ sb.mesh.print = function (frame, map, width, height) {
             .attr("class", "fill")
             .attr("xlink:href", "#sphere");
 
-        var m = d3.select(".projection-preview")
+        var m = d3.selectAll(".projection-preview")
             .append("g").attr("class","map");
         svg.find(".map").html(mapSVG);
 
@@ -201,10 +207,10 @@ sb.mesh.print = function (frame, map, width, height) {
                 break;
         }
 
-        var copySVG = d3.select(".projection-preview")
+        var copySVG = d3.selectAll(".projection-preview")
             .attr("class","projection-preview meshu-svg").classed(proj, true);
 
-        var radius = processing_page ? 5 : ((proj == 'zoomed-to-fit') ? 3 : 2)
+        var radius = processing_page ? 5 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
 
         var copyPath = d3.geo.path().projection(copyProjection);
@@ -222,8 +228,11 @@ sb.mesh.print = function (frame, map, width, height) {
 
                 return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
             });
-        d3.select(".projection-preview #sphere").attr("d",copyPath);
+        d3.selectAll(".projection-preview #sphere").attr("d",copyPath);
         updateMesh("projection", copyProjection);
+        updateMesh("design", copyProjection);
+        colorMap();
+        colorDots();
 
         if (processing_page) {
             projection = copyProjection;
@@ -244,6 +253,81 @@ sb.mesh.print = function (frame, map, width, height) {
         var proj = $(this).attr("id");
         applyProjection(proj);
     });
+
+    $(".map-style li").click(function(){
+        var style = $(this).attr("data-color");
+        self.style({ mapStyle:style });
+
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        colorMap();
+    });
+
+    $(".dot-style li").click(function(){
+        var color = $(this).attr("data-color");
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        self.style({ dotColor:color });
+        colorDots();
+    });
+
+    $(".country-style li").click(function(){
+        var highlight = $(this).attr("data-color");
+        self.style({ countryStyle:highlight });
+
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        colorMap();
+    })
+
+    function colorMap(style, highlight) {
+        var design = d3.select("#design .projection-preview");
+        var lightC, darkC, highlightC, highlightS, stroke;
+        var style = self.style().mapStyle,
+            highlight = self.style().countryStyle;
+        switch (style) {
+            case 'light':
+                lightC = "#e7e7e7";
+                darkC = "#d7d7d7";
+                highlightC = "#fff";
+                highlightS = "#aaa";
+                stroke = "#555";
+                break;
+            case 'dark':
+                lightC = "#222";
+                darkC = "#000";
+                highlightC = "#333";
+                highlightS = "#666";
+                stroke = "#aaa";
+                break;
+            case 'no':
+                lightC = "#fff";
+                darkC = "#fff";
+                highlightC = "#fff";
+                highlightC = "#aaa";
+                stroke = "#000";
+                break;
+        }
+        design.style("background-color",darkC);
+        design.select(".fill").attr("fill",lightC);
+        design.select(".map").selectAll("path").style("fill",darkC).style("stroke","none");
+        if (highlight == "on") {
+            design.select(".map").selectAll("path")
+            .filter(function(d){
+                return (countries.indexOf(d.properties.ISO2) != -1);
+            }).style("fill", highlightC)
+            .style("stroke", highlightS)
+            .each(function(){
+                this.parentNode.appendChild(this);
+            });
+        }
+        design.select(".delaunay").selectAll("path").style("stroke",stroke);
+    }
+
+    function colorDots() {
+        d3.select("#design .projection-preview").selectAll("circle")
+            .style("fill",self.style().dotColor);
+    }
 
     self.addCountry = function(country) {
         countries.push(country);
@@ -287,7 +371,7 @@ sb.mesh.print = function (frame, map, width, height) {
             d3.select("#meshu-container").select(".map").selectAll("path").attr("d",mapPath);
         } else {
             projection.scale(s).translate(t);
-            d3.select(".projection-preview").select(".map").selectAll("path").attr("d",mapPath);   
+            d3.selectAll(".projection-preview").select(".map").selectAll("path").attr("d",mapPath);   
         }
     }
 
@@ -381,8 +465,25 @@ sb.mesh.print = function (frame, map, width, height) {
             }).attr("class",function(d){
                 return d.mode;
             }).style("stroke","#555")
-            .style("stroke-width",function(d){ return (d.mode == "air") ? 2 : 3; })
-            .style("stroke-dasharray",function(d){ return (d.mode == "air") ? "4 4" : ""; });
+            .style("stroke-width",function(d){ return getWidth(d.mode); })
+            .style("stroke-dasharray",function(d){ return getDash(d.mode); });
+
+            function getWidth(mode) {
+                if (mode == "air") {
+                    if (id == "meshu-container") return 2;
+                    return 1.5;
+                } else {
+                    if (id == "meshu-container") return 3;
+                    return 2.5;
+                }
+            }
+            function getDash(mode) {
+                if (mode == "air") {
+                    if (id == "meshu-container") return "4 4";
+                    return "3 3";
+                }
+                return "";
+            }
 
             function drawRoadPath(wayPoints) {
                 var drawI = [];
@@ -679,7 +780,7 @@ sb.mesh.print = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
         
-        var SVG = $(".projection-preview").clone();
+        var SVG = $(".projection-preview").last().clone();
 
         // remove the map for lighter svg storage
         SVG.find(".map").remove();
