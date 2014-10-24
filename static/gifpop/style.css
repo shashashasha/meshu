@@ -74,6 +74,7 @@ body {
     width: 162px;
     padding-right: 0;
     color: #fff;
+    background-image: none !important;
 }
 #services > li:hover {
     background-image: url(img/edge.png);
@@ -357,7 +358,7 @@ h3.filename, #mainpane #subMessage {
 }
 #fileUploadForm {
     width: 100%;
-    border-top: 10px solid #eee;
+    margin-top: 10px;
     height: 110px;
     background-color: black;
 }
