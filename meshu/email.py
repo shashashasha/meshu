@@ -98,7 +98,7 @@ def mail_forgotten_password(email, password):
 def mail_ordered_svg(order):
 	# has to be my email because ifttt is expecting that
 	from_email = 'ifttt@meshu.io'
-	to_email = 'trigger@ifttt.com'
+	to_email = 'trigger@recipe.ifttt.com'
 	msg = EmailMultiAlternatives(order.get_svg_filename(), order.meshu.svg, from_email, [to_email])
 	msg.send()
 	return
