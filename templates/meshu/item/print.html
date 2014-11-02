@@ -107,11 +107,14 @@
     </div>      
 {% endblock %}
 
-{% block script-specific %}
+{% block extra-libraries %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.projection.v0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.polyhedron.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
+{% endblock %}
+
+{% block script-specific %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
 {% endblock %}
