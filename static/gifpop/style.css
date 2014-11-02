@@ -474,6 +474,7 @@ table.fileinfo .filename {
         position: absolute;
         right: 0;
         margin-right: 0;
+        margin-top: 0;
         border-top: none;
         background-image: url(img/upload_computer_light_grey.png);
         background-size: 250px;

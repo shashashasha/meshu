@@ -201,8 +201,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 copyProjection = d3.geo.polyhedron.butterfly().scale(pW/8.45).translate([pW/2,5*pH/7]);
                 break;
             case 'zoomed-to-fit':
-                // updateProjection(425, 275);
-                updateProjection(575, 425);
+                updateProjection(575, 425, .7);
                 copyProjection = projection;
                 break;
         }
@@ -345,8 +344,9 @@ sb.mesh.print = function (frame, map, width, height) {
             .style("stroke-width", flag ? "1" : "0");
     };
 
-    function updateProjection(w, h){
+    function updateProjection(w, h, scale){
         projection.scale(1).translate([0, 0]);
+
         var e = map.getExtent(),
 
         // dumb thing where polymaps sets an extent outside of lat/lon limits
@@ -355,7 +355,7 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        s = .99 / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
+        s = (scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
         t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
 
         if (w == 600) {

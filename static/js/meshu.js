@@ -222,7 +222,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         }
     };
 
-    function parseLocationData(data) {
+    function parseLocationData(data, skipCheck) {
         var locations = data.split('|');
         var newLocs = [],
             seen = {};
@@ -234,12 +234,14 @@ sb.meshu = function(frame, renderer, existingMap) {
                 continue;
             }
 
-            // check against the lat lon as '37.75--122.45'
-            var hash = values[0] + '-' + values[1];
-            if (seen[hash]) {
-                continue;
-            } else {
-                seen[hash] = true;
+            if (skipCheck) {
+                // check against the lat lon as '37.75--122.45'
+                var hash = values[0] + '-' + values[1];
+                if (seen[hash]) {
+                    continue;
+                } else {
+                    seen[hash] = true;
+                }
             }
 
             newLocs.push({
@@ -253,9 +255,9 @@ sb.meshu = function(frame, renderer, existingMap) {
     }
 
     self.initializeFromData = function(data, style, svg) {
-        mesh.prerender(svg);        
+        mesh.prerender(svg);
 
-        var locations = parseLocationData(data);
+        var locations = parseLocationData(data, (style.length < 20));
         mesh.locations(locations, data);
 
         // 'drawStyle:knockout|zoom:12' for example
