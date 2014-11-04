@@ -5,7 +5,7 @@ $(function() {
 	// sorry about this, future us. signed, past sha.
 	var promotion = loadedMeshu ? loadedMeshu.promo : null,
 		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
-							$("body").hasClass("radial") ? 'radial' : null;
+							$("body").hasClass("radial") ? 'radial' : 'facet';
 
 	if ($("body").hasClass("print"))
 		currentRenderer = "print";
