@@ -1328,7 +1328,8 @@ body.ie .frame div {
   -webkit-transform-origin: 50% 50%;
   -o-transform: rotate(315deg);
   -o-transform-origin: 50% 50%;
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+  /*filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);*/
+
 }
 .ie .triangle {
   font-size: 18px;

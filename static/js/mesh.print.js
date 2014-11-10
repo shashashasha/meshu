@@ -137,7 +137,7 @@ sb.mesh.print = function (frame, map, width, height) {
         }
 
         mapSVG.find("rect").remove();
-        mapSVG = mapSVG.html();
+        var newMapSVG = mapSVG.html();
 
         var copySVG = d3.selectAll(".projection-preview");
 
@@ -160,7 +160,8 @@ sb.mesh.print = function (frame, map, width, height) {
 
         var m = d3.selectAll(".projection-preview")
             .append("g").attr("class","map");
-        svg.find(".map").html(mapSVG);
+
+        svg.find(".map").html(newMapSVG);
 
         svg.append(lines);
         svg.append(circles);
@@ -324,8 +325,9 @@ sb.mesh.print = function (frame, map, width, height) {
     }
 
     function colorDots() {
+        console.log("ok", self.style().dotColor, d3.select("#design .projection-preview").selectAll("circle"))
         d3.select("#design .projection-preview").selectAll("circle")
-            .style("fill",self.style().dotColor);
+            .style("fill","#"+self.style().dotColor);
     }
 
     self.addCountry = function(country) {
