@@ -57,6 +57,8 @@ sb.mesh.print = function (frame, map, width, height) {
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", self.removeInput);
 
+    $(frame).append($("<div>").attr("class","route-error").text("Sorry, no route found! Try another mode?"));
+
     var points = [],
         new_pt = [],
         pixel_bounds = [],
@@ -104,7 +106,7 @@ sb.mesh.print = function (frame, map, width, height) {
         countryPaths.enter().append("path").attr("d",mapPath)
         .attr("class",function(d){
             return d.properties.ISO2;
-        }).style("fill","#bbb").style("stroke","#ddd").style("stroke-width","0");
+        }).style("fill","#bbb").style("stroke","#aaa").style("stroke-width","0");
 
         if (loadedMeshu) {
             countries.forEach(function(e,i) {
@@ -212,6 +214,8 @@ sb.mesh.print = function (frame, map, width, height) {
         var copySVG = d3.selectAll(".projection-preview")
             .attr("class","projection-preview meshu-svg").classed(proj, true);
 
+        copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
+
         var radius = processing_page ? parseInt(width)/300 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
 
@@ -227,7 +231,7 @@ sb.mesh.print = function (frame, map, width, height) {
                     .select("."+d.properties.ISO2).classed("current");
 
                 d3.select(this)
-                    .style("fill", current ? "white" : "#d7d7d7")
+                    .style("fill", current ? "white" : "#bbb")
                     .style("stroke-width", current ? strokeWidth : "0");
 
                 return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
@@ -282,7 +286,22 @@ sb.mesh.print = function (frame, map, width, height) {
         $(this).parent().find("li").removeClass("selected");
         $(this).addClass("selected");
         colorMap("design");
-    })
+    });
+
+    $(".frame-wrapper").click(function(){
+        console.log($(this).attr("id").split("-")[1], sb.materializer.product());
+        if ($(this).attr("id").split("-")[1] != sb.materializer.product()) return;
+        if ($(this).hasClass("selected")){
+            sb.materializer.material("unframed");
+            sb.ui.orderer.updated();
+            $(this).removeClass("selected");
+        } else {
+            sb.materializer.material("framed");
+            $(".frame-wrapper").removeClass("selected");
+            $(this).addClass("selected");
+            sb.ui.orderer.updated();
+        }
+    });
 
     function colorMap(id) {
         var design = d3.select("#"+id+" .projection-preview");
@@ -312,7 +331,11 @@ sb.mesh.print = function (frame, map, width, height) {
                 stroke = "#000";
                 break;
         }
-        design.style("background-color",darkC);
+        if (self.style().projection == "zoomed-to-fit")
+            design.style("background-color",lightC);
+        else
+            design.style("background-color",darkC);
+
         design.select(".fill").attr("fill",lightC);
         design.select(".map").selectAll("path").style("fill",darkC).style("stroke","none");
         if (highlight == "on") {
@@ -455,6 +478,9 @@ sb.mesh.print = function (frame, map, width, height) {
                         url: url,
                         dataType: 'jsonp',
                         success: function(data) {
+                            if (data.info.statusCode != 0) {
+                                $(".route-error").fadeIn().delay(3000).fadeOut('slow');
+                            }
                             var wayPoints = data.route.shape.shapePoints;
                             roadData.push({
                                 "points":d.points,

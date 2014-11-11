@@ -139,7 +139,10 @@ $(function() {
 			sb.materializer.material("reset");
 		}
 
-		if (currentRenderer == "print") sb.materializer.material("print");
+		if (currentRenderer == "print") {
+			if (product != sb.materializer.product()) $(".frame-wrapper").removeClass("selected");
+			sb.materializer.material("unframed");
+		}
 
    		switch (product) {
    			case 'cufflinks':

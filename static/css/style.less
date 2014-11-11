@@ -999,9 +999,6 @@ body.firefox #place-title #input {
     padding: 2px;
     display: inline-block;
 }
-.print .place-text {
-
-}
 body.ie .place .place-text,
 body.win .place .place-text,
 body.firefox .place .place-text {
@@ -1080,6 +1077,17 @@ body.firefox .place .place-text {
 }
 .place .mode .road {
     background-image: url(../images/icons/mode-road.png);
+}
+
+.print .route-error {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background-color: @pink;
+    color: white;
+    padding: 5px;
+    font-size: 18px;
+    display: none;
 }
 
 .frame {
@@ -1279,7 +1287,7 @@ body.ie .frame div {
 .product #material-list {
     .transition(opacity);
 }
-.wrapper {
+.wrapper, .print .frame-wrapper {
     margin: 0 9px 5px 0;
     float: left;
     width: 300px;
@@ -1293,15 +1301,12 @@ body.ie .frame div {
     margin-right: 0;
 }
 .print .wrapper {
-    border-color: #eee;
     height: 350px;
 }
-.wrapper:hover,
-.print .wrapper:hover {
+.wrapper:hover {
     border-color: @grey;
 }
-.wrapper.selected,
-.print .wrapper.selected {
+.wrapper.selected {
     border-color: @pink;
 }
 .wrapper.selected .important {
@@ -1316,7 +1321,19 @@ body.ie .frame div {
     height: 300px;
     margin: 0 auto;
 }
-.wrapper .right {
+
+.print .frame-wrapper {
+    color: @grey;
+    height: auto;
+}
+.print .frame-wrapper.selected {
+    border-color: @pink;
+    color: black;
+}
+.print #product-preview .frame-wrapper p {
+    font-size: 18px;
+}
+#product-preview .right {
     float: right;
 }
 
@@ -1557,7 +1574,7 @@ input[type="range"]::-webkit-slider-thumb {
     margin-left: 0;
 }
 
-.print #review .review-material {
+.print #review .print-hide {
     display: none;
 }
 
@@ -1993,7 +2010,7 @@ path {
     width: 575px;
     height: 425px;
     float: right;
-    background-color: #d7d7d7;
+    background-color: #e7e7e7;
     border: 2px solid #808080;
 }
 .print .projection-preview.mercator,
@@ -2041,6 +2058,7 @@ path {
     border: 2px solid white;
     padding: 5px;
     color: @grey;
+    text-align: center;
 }
 .print .proj:first-child {
     border-color: #eee;
