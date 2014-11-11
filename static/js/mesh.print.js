@@ -239,8 +239,6 @@ sb.mesh.print = function (frame, map, width, height) {
         d3.selectAll(".projection-preview #sphere").attr("d",copyPath);
         updateMesh("projection", copyProjection);
         updateMesh("design", copyProjection);
-        colorMap("design");
-        colorDots("design");
 
         if (processing_page) {
             projection = copyProjection;
@@ -252,6 +250,9 @@ sb.mesh.print = function (frame, map, width, height) {
             scale:copyProjection.scale(),
             translate:copyProjection.translate()
         });
+
+        colorMap("design");
+        colorDots("design");
     }
 
     $(".proj").click(function(){
@@ -289,8 +290,8 @@ sb.mesh.print = function (frame, map, width, height) {
     });
 
     $(".frame-wrapper").click(function(){
-        console.log($(this).attr("id").split("-")[1], sb.materializer.product());
         if ($(this).attr("id").split("-")[1] != sb.materializer.product()) return;
+        
         if ($(this).hasClass("selected")){
             sb.materializer.material("unframed");
             sb.ui.orderer.updated();
@@ -383,7 +384,7 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        s = (scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
+        s = Math.min(2000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
         t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
 
         if (w == 600) {
