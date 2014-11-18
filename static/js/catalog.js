@@ -75,7 +75,8 @@ sb.catalog = function(renderer, promo) {
 		"nylon":"2-3 Weeks",
 		"silver":"3-4 Weeks",
 		"brass":"3-4 Weeks",
-		"print":"1-2 Weeks",
+		"unframed":"1-2 Weeks",
+		"framed":"2-3 Weeks",
 	};
 
 	// set the product type options with either facet or radial

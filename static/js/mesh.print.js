@@ -112,6 +112,10 @@ sb.mesh.print = function (frame, map, width, height) {
             countries.forEach(function(e,i) {
                 highlightCountry(e, true);
             });
+            $("#"+self.style().projection).click();
+            $(".map-style").find("li[data-color="+self.style().mapStyle+"]").click();
+            $(".dot-style").find("li[data-color="+self.style().dotColor+"]").click();
+            $(".country-style").find("li[data-color="+self.style().countryStyle+"]").click();
         } else {
             self.style({
                 mapStyle:"light",
@@ -150,18 +154,18 @@ sb.mesh.print = function (frame, map, width, height) {
 
         defs.append("path")
             .datum({type: "Sphere"})
-            .attr("id", "sphere");
+            .attr("id", "sphere-" + selfId);
 
         defs.append("clipPath")
             .attr("id", "clip")
           .append("use")
-            .attr("xlink:href", "#sphere");
+            .attr("xlink:href", "#sphere-" + selfId);
 
         copySVG.append("g")
             .attr("class", "projection-clip")
           .append("use")
             .attr("class", "fill")
-            .attr("xlink:href", "#sphere");
+            .attr("xlink:href", "#sphere-" + selfId);
 
         var m = d3.selectAll(".projection-preview")
             .append("g").attr("class","map");
@@ -237,7 +241,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
                 return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
             });
-        d3.selectAll(".projection-preview #sphere").attr("d",copyPath);
+        d3.selectAll(".projection-preview #sphere-" + selfId).attr("d",copyPath);
         updateMesh("projection", copyProjection);
         updateMesh("design", copyProjection);
 
@@ -743,7 +747,6 @@ sb.mesh.print = function (frame, map, width, height) {
             d3.select(".map").attr("height","100%").select(".layer").remove();
 
             d3.select("#meshu-container").append("svg").attr("class","projection-preview")
-                //.attr("width",width).attr("height",height)
                 .style("position","absolute").style("top","0");
 
         }
@@ -773,15 +776,6 @@ sb.mesh.print = function (frame, map, width, height) {
         // remove the map for lighter svg storage
         SVG.find(".map").remove();
 
-        // make this projection-clip path a unique id for cart/checkout
-        SVG.find("#sphere").attr("id", "sphere-" + selfId);
-
-        // for some reason attr with xlink:href doesn't work, so doing it
-        // manually with the string content
-        // SVG.find("use").attr("xlink:href", "#sphere-" + selfId);
-        var outerhtml = SVG[0].outerHTML;
-        outerhtml = outerhtml.split("#sphere").join("#sphere-" + selfId);
-
         var cData = countries.join(","),
             rData = roadData.join(","),
             mData = modes.join(",");
@@ -791,8 +785,8 @@ sb.mesh.print = function (frame, map, width, height) {
             roadData:rData,
             modes:mData
         });
-
-        return outerhtml;
+        
+        return new XMLSerializer().serializeToString(d3.select(SVG).node()[0]);
     };
 
     self.getProjection = function(point){

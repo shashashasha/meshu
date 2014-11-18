@@ -174,8 +174,8 @@ class Order(models.Model):
 	tracking = models.CharField(max_length=140, default='', blank=True)
 
 	def get_display_name(self):
-		if self.material == 'print':
-			return self.product.replace("_"," ")
+		if (self.material == 'framed' or self.material == 'unframed'):
+			return self.material + ' ' + self.product.replace("_"," ")
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
 

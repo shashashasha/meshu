@@ -140,7 +140,9 @@ $(function() {
 		}
 
 		if (currentRenderer == "print") {
-			if (product != sb.materializer.product()) $(".frame-wrapper").removeClass("selected");
+			if (product != sb.materializer.product()) 
+				$(".frame-wrapper").removeClass("selected").removeClass("possible");
+			$("#frame-"+product).addClass("possible");
 			sb.materializer.material("unframed");
 		}
 

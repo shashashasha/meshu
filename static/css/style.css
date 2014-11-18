@@ -1246,6 +1246,9 @@ body.ie .frame div {
   cursor: pointer;
   position: relative;
 }
+.print .frame-wrapper.possible {
+  color: black;
+}
 #product-preview .wrapper.last {
   margin-right: 0;
 }
