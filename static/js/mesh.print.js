@@ -141,7 +141,8 @@ sb.mesh.print = function (frame, map, width, height) {
         }
 
         mapSVG.find("rect").remove();
-        var newMapSVG = mapSVG.html();
+
+        var newMapSVG = d3.select(mapSVG).node()[0];
 
         var copySVG = d3.selectAll(".projection-preview");
 
@@ -415,10 +416,6 @@ sb.mesh.print = function (frame, map, width, height) {
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     });
 
-    // self.on("interactiveToggled", function(bool) {
-    //     self.updateCircleBehavior(bool);
-    // });
-
     function updateMesh(id, proj) {
         var uiGroup = d3.select("#"+id).select(".delaunay-ui");
         var gGroup = d3.select("#"+id).select(".delaunay");
@@ -535,19 +532,6 @@ sb.mesh.print = function (frame, map, width, height) {
             }
     }
 
-    // self.updatePixelBounds = function() {
-    //     if (lats.length && lons.length) {
-    //         pixel_bounds = [projection([d3.min(lats),d3.min(lons)]),
-    //                         projection([d3.max(lats),d3.min(lons)]),
-    //                         projection([d3.max(lats),d3.max(lons)]),
-    //                         projection([d3.min(lats),d3.max(lons)]),
-    //                         ];
-    //     }
-    //     else {
-    //         pixel_bounds = [];
-    //     }
-    // };
-
     function update(){
         updateProjection(parseInt(width),parseInt(height));
         // the transparent circles that serve as ui, allowing for dragging and deleting
@@ -618,47 +602,17 @@ sb.mesh.print = function (frame, map, width, height) {
             });
         });
 
-        // self.updateCircleBehavior();
         updateListBehavior();
         updateMesh("meshu-container", projection);
     };
-
-    // self.updateCircleBehavior = function(off) {
-    //     var editMode = content.hasClass("edit");
-    //     var placeHover = $("#place-hover");
-    //     var circles = ui.selectAll("circle");
-
-    //     circles.on("mouseover", function(d, i) {
-    //         if (off) return;
-    //         else if (editMode)
-    //             list.select("#p-" + i).attr("class", "place highlight");
-    //     });
-    //     circles.on("mouseout", function(d, i) {
-    //         if (off) return;
-    //         else if (editMode)
-    //             list.select("#p-"+i).attr("class","place");
-    //     });
-    // }
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
         names.select(".place-delete").on("click",function(d,i){
             self.remove(i);
-            // self.updatePixelBounds();
             map.updateBounds(lats, lons);
             update();
         });
-
-        // names.on("mouseover",function(d,i){
-        //     ui.select("#c-"+i).attr("class","highlight");
-        // });
-        // names.on("mouseout",function(d,i){
-        //     ui.select("#c-"+i).attr("class","");
-        // });
-        // names.select(".place-edit").on("click",function(d,i){
-        //     points[i].air = !points[i].air;
-        //     update();
-        // });
 
         var tempIndex = 0;
         $( "#places ul" ).sortable({ 
@@ -670,12 +624,13 @@ sb.mesh.print = function (frame, map, width, height) {
             stop: function(event, ui) {
                 var newIndex = ui.item.index();
                 if (tempIndex == newIndex) return;
-                
+
                 places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
                 points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
                 lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
                 lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
                 countries.splice(newIndex, 0, countries.splice(tempIndex, 1)[0]);
+                tempIndex = 0;
             }
         });
         $( "#places ul" ).disableSelection();
@@ -702,15 +657,12 @@ sb.mesh.print = function (frame, map, width, height) {
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
 
-                // self.updatePixelBounds();
                 update();
                 updateMesh("meshu-container", projection);
             } else {
                 // make the new point start from the last location
                 var last = points[points.length-1];
-                // points.push([last[0], last[1]]);
                 points.push([new_pt[0], new_pt[1]]);
-                // self.updatePixelBounds();
                 update();
             }
         } else {
