@@ -291,7 +291,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
     $(".frame-wrapper").click(function(){
         if ($(this).attr("id").split("-")[1] != sb.materializer.product()) return;
-        
+
         if ($(this).hasClass("selected")){
             sb.materializer.material("unframed");
             sb.ui.orderer.updated();
@@ -369,7 +369,7 @@ sb.mesh.print = function (frame, map, width, height) {
             }).classed("current",flag)
             .each(function(){
                 this.parentNode.appendChild(this);
-            }).style("fill", flag ? "white" : "d7d7d7")
+            }).style("fill", flag ? "white" : "#bbb")
             .style("stroke-width", flag ? "1" : "0");
     };
 
@@ -415,9 +415,9 @@ sb.mesh.print = function (frame, map, width, height) {
         if (points.length == 1) $("#meshu-container").addClass("inactive");
     });
 
-    self.on("interactiveToggled", function(bool) {
-        self.updateCircleBehavior(bool);
-    });
+    // self.on("interactiveToggled", function(bool) {
+    //     self.updateCircleBehavior(bool);
+    // });
 
     function updateMesh(id, proj) {
         var uiGroup = d3.select("#"+id).select(".delaunay-ui");
@@ -535,18 +535,18 @@ sb.mesh.print = function (frame, map, width, height) {
             }
     }
 
-    self.updatePixelBounds = function() {
-        if (lats.length && lons.length) {
-            pixel_bounds = [projection([d3.min(lats),d3.min(lons)]),
-                            projection([d3.max(lats),d3.min(lons)]),
-                            projection([d3.max(lats),d3.max(lons)]),
-                            projection([d3.min(lats),d3.max(lons)]),
-                            ];
-        }
-        else {
-            pixel_bounds = [];
-        }
-    };
+    // self.updatePixelBounds = function() {
+    //     if (lats.length && lons.length) {
+    //         pixel_bounds = [projection([d3.min(lats),d3.min(lons)]),
+    //                         projection([d3.max(lats),d3.min(lons)]),
+    //                         projection([d3.max(lats),d3.max(lons)]),
+    //                         projection([d3.min(lats),d3.max(lons)]),
+    //                         ];
+    //     }
+    //     else {
+    //         pixel_bounds = [];
+    //     }
+    // };
 
     function update(){
         updateProjection(parseInt(width),parseInt(height));
@@ -618,71 +618,67 @@ sb.mesh.print = function (frame, map, width, height) {
             });
         });
 
-        self.updateCircleBehavior();
+        // self.updateCircleBehavior();
         updateListBehavior();
         updateMesh("meshu-container", projection);
     };
 
-    self.updateCircleBehavior = function(off) {
-        var editMode = content.hasClass("edit");
-        var placeHover = $("#place-hover");
-        var circles = ui.selectAll("circle");
+    // self.updateCircleBehavior = function(off) {
+    //     var editMode = content.hasClass("edit");
+    //     var placeHover = $("#place-hover");
+    //     var circles = ui.selectAll("circle");
 
-        circles.on("mouseover", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-" + i).attr("class", "place highlight");
-        });
-        circles.on("mouseout", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-"+i).attr("class","place");
-        });
-    }
+    //     circles.on("mouseover", function(d, i) {
+    //         if (off) return;
+    //         else if (editMode)
+    //             list.select("#p-" + i).attr("class", "place highlight");
+    //     });
+    //     circles.on("mouseout", function(d, i) {
+    //         if (off) return;
+    //         else if (editMode)
+    //             list.select("#p-"+i).attr("class","place");
+    //     });
+    // }
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
         names.select(".place-delete").on("click",function(d,i){
             self.remove(i);
-            self.updatePixelBounds();
+            // self.updatePixelBounds();
             map.updateBounds(lats, lons);
             update();
         });
 
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-        names.select(".place-edit").on("click",function(d,i){
-            points[i].air = !points[i].air;
-            update();
-        });
+        // names.on("mouseover",function(d,i){
+        //     ui.select("#c-"+i).attr("class","highlight");
+        // });
+        // names.on("mouseout",function(d,i){
+        //     ui.select("#c-"+i).attr("class","");
+        // });
+        // names.select(".place-edit").on("click",function(d,i){
+        //     points[i].air = !points[i].air;
+        //     update();
+        // });
 
-        $( "#places ul" ).sortable({ axis:"y", cursor:"move"});
-        $( "#places ul" ).disableSelection();
-        $(".place-text").mouseup(function(){
-            var dataNew = [],
-            placesNew = [],
-            latNew = [],
-            lonNew = [];
-            setTimeout(function(){
-                $("#places li").each(function(e,i){
-                    placesNew.push($(this).find(".place-text").text());
-                    d3.select(this).each(function(d){
-                        dataNew.push(d);
-                        lonNew.push(d[0]);
-                        latNew.push(d[1]);
-                    })
-                });
-                points = dataNew;
-                places = placesNew;
-                lats = latNew;
-                lons = lonNew;
-                update();
-            },100);
+        var tempIndex = 0;
+        $( "#places ul" ).sortable({ 
+            axis:"y", 
+            cursor:"move",
+            start: function(event, ui) {
+                tempIndex = ui.item.index();
+            },
+            stop: function(event, ui) {
+                var newIndex = ui.item.index();
+                if (tempIndex == newIndex) return;
+                
+                places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
+                points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
+                lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
+                lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
+                countries.splice(newIndex, 0, countries.splice(tempIndex, 1)[0]);
+            }
         });
+        $( "#places ul" ).disableSelection();
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
@@ -706,7 +702,7 @@ sb.mesh.print = function (frame, map, width, height) {
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
 
-                self.updatePixelBounds();
+                // self.updatePixelBounds();
                 update();
                 updateMesh("meshu-container", projection);
             } else {
@@ -714,7 +710,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 var last = points[points.length-1];
                 // points.push([last[0], last[1]]);
                 points.push([new_pt[0], new_pt[1]]);
-                self.updatePixelBounds();
+                // self.updatePixelBounds();
                 update();
             }
         } else {
