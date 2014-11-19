@@ -471,7 +471,8 @@ sb.mesh.print = function (frame, map, width, height) {
                             return;
                         }
                     });
-                    if (roadPath) return roadPath;
+                    if (roadPath == "undefined") return "";
+                    else if (roadPath) return roadPath;
 
                     var base = "http://open.mapquestapi.com/directions/v1/route?generalize=500&outFormat=json&shapeFormat=raw&generalize=200&from=";
                     var url = base + d.points[0][1]+","+d.points[0][0]+"&to="+d.points[1][1]+","+d.points[1][0]+"&key="+mapquestapi;
@@ -480,15 +481,22 @@ sb.mesh.print = function (frame, map, width, height) {
                         url: url,
                         dataType: 'jsonp',
                         success: function(data) {
-                            if (data.info.statusCode != 0) {
+                            var wayPoints = [];
+                            if (data.info.statuscode != 0) {
                                 $(".route-error").fadeIn().delay(3000).fadeOut('slow');
+                                roadData.push({
+                                    "points":d.points,
+                                    "wayPoints":wayPoints
+                                });
+                                d3.select(pathObject).attr("d","");
+                            } else {
+                                wayPoints = data.route.shape.shapePoints;
+                                roadData.push({
+                                    "points":d.points,
+                                    "wayPoints":wayPoints
+                                });
+                                d3.select(pathObject).attr("d",drawRoadPath(wayPoints));
                             }
-                            var wayPoints = data.route.shape.shapePoints;
-                            roadData.push({
-                                "points":d.points,
-                                "wayPoints":wayPoints
-                            });
-                            d3.select(pathObject).attr("d",drawRoadPath(wayPoints));
                         }
                     });
                 }
@@ -532,7 +540,7 @@ sb.mesh.print = function (frame, map, width, height) {
                     drawI.push(pt);
                 }
                 var pathLines =  "M" + drawI.join("L");
-                return pathLines;
+                return (wayPoints.length == 0) ? "undefined" : pathLines;
             }
     }
 
