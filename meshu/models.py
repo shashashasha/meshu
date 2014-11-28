@@ -181,13 +181,19 @@ class Order(models.Model):
 
 	def get_processing_time(self):
 		if self.material == 'silver':
-			return '4-5 weeks for silver'
+			return '3-4 weeks for silver'
+		elif self.material == 'brass':
+			return '3-4 weeks for brass'
 		elif self.material == 'nylon':
-			return '4-5 weeks for nylon'
+			return '3-4 weeks for nylon'
 		elif self.material == 'acrylic':
-			return '3-4 weeks for acrylic'
+			return '2-3 weeks for acrylic'
 		elif self.material == 'bamboo':
 			return '2-3 weeks for bamboo'
+		elif self.material == 'unframed':
+			return '1-2 weeks for unframed prints'
+		elif self.material == 'framed':
+			return '2-3 weeks for framed prints'
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"
