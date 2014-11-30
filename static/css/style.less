@@ -487,6 +487,9 @@ body.win #login-form ul {
 .product-shot.new:hover img {
     opacity: .9;
 }
+.product-shot.print:hover img {
+    opacity: .8;
+}
 .product-shot.old:hover img {
     opacity: .7;
 }
@@ -1327,6 +1330,9 @@ body.ie .frame div {
     height: 300px;
     margin: 0 auto;
 }
+.print .ring-frame {
+    margin-bottom: 5px;
+}
 
 .print .frame-wrapper {
     color: @grey;
@@ -1354,7 +1360,9 @@ body.ie .frame div {
 #product-preview p.note {
     font-size: 14px;
     line-height: 18px;
+    padding-top: 0;
 }
+
 #preview-coasters .product-transformer {
     transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
     -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
@@ -1549,6 +1557,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 #review {
     height: 250px;
+}
+.print #review {
+    height: 210px;
 }
 #review .review-field {
     text-transform: capitalize;
@@ -2239,10 +2250,10 @@ circle {
 #make-landing {
     position: absolute;
     top: 80px;
-    /*left: 90px;*/
-    left: 155px;
-    /*width: 780px;*/
-    width: 660px;
+    left: 90px;
+    /*left: 155px;*/
+    width: 780px;
+    /*width: 660px;*/
     height: 400px;
     z-index: 4;
     background: white;
@@ -2261,9 +2272,9 @@ circle {
 
 .splitimages {
     float: left;
-    /*width: 31.3%;*/
-    width: 44%;
-    margin: 0 3% 0;
+    width: 31.3%;
+    /*width: 44%;*/
+    margin: 0 1% 0;
     border: 1px solid @borderGrey;
     box-sizing: border-box;
 
@@ -2945,6 +2956,9 @@ body.ie #maps .mini-meshu div {
         width: 100%;
         height: 100%;
     }
+}
+.cart-row.postcard {
+    font-weight: inherit;
 }
 
 /*
