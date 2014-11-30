@@ -65,6 +65,12 @@
             }
         });
 
+        // Remove background color styling on postcard/poster svg's
+        d3.selectAll(".projection-preview.meshu-svg").each(function() {
+            var node = d3.select(this);
+            node.attr("style", "");
+        });
+
         $(".order-status-updater").click(function(e) {
             var id = e.target.id.split('-').pop();
 
