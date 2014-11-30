@@ -34,6 +34,9 @@ def mail_viewer(request, template):
  	}, context_instance=RequestContext(request))
 
 def mail_multiple_order_confirmation(email, orders, amount):
+	# Just using the first order's id for simplicity
+	subject = 'Meshu: Order Confirmation #' + str(orders[0].id)
+
 	mail_template('meshu/email/order_multiple_confirmation.html', {
 		'subject' : 'Meshu: Order Confirmation',
 		'from' : 'orders@meshu.io',
@@ -44,8 +47,10 @@ def mail_multiple_order_confirmation(email, orders, amount):
 	return
 
 def mail_order_confirmation(email, meshu, order):
+	subject = 'Meshu: Order Confirmation #' + str(order.id)
+
 	mail_template('meshu/email/order_confirmation.html', {
-		'subject' : 'Meshu: Order Confirmation',
+		'subject' : subject,
 		'from' : 'orders@meshu.io',
 		'to': email,
 		'meshu': meshu,
@@ -58,15 +63,15 @@ def mail_order_status_change(email, meshu, order):
 	print(order.status)
 
 	if order.status == 'SH':
-		subject = 'Meshu: Your order has been shipped!'
+		subject = 'Meshu: Your order #' + str(order.id) + ' has been shipped!'
 		template = 'order_shipped'
 
 	elif order.status == 'RE':
-		subject = 'Meshu: We\'ve received your order from the fabricator!'
+		subject = 'Meshu: We\'ve received your order #' + str(order.id) + ' from the fabricator!'
 		template = 'order_received_from_fabricator'
 
 	elif order.status == 'SE':
-		subject = 'Meshu: Your order has been sent to the fabricator!'
+		subject = 'Meshu: Your order #' + str(order.id) + ' has been sent to the fabricator!'
 		template = 'order_sent_to_fabricator'
 
 	print(subject)
