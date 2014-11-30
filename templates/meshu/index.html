@@ -3,6 +3,14 @@
 {% block title %}Meshu - Turn your places into beautiful objects.{% endblock %}
 
 {% block content %}
+<div class="holiday" style="background:#ccc; padding: 20px;">
+			<h3 style="margin: 0 0 5px 0; font-size: 18px;">Attention Holiday Shoppers!</h3>
+			<p style="margin-bottom: 10px;">In order to receive your meshus by Christmas, please place your orders by the following dates:</p>
+			<p style="margin-bottom: 5px;">Silver, Brass, and Nylon Rings: <b>December 1st</b><p>
+			<p style="margin-bottom: 5px;">Silver and Brass, Necklaces and Cufflinks: <b>December 5th</b><p>
+			<p style="margin-bottom: 5px;">Bamboo and Acrylic, Necklaces and Earrings: <b>December 10th</b><p>
+			<p>All Prints, for US orders only (sorry!): <b>December 5th</b><p>
+		</div>
 	<div id="photos">
 		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_01.jpg" style="">
 		<img class="banner" id="banner-1" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_02.jpg" style="display:none;">
@@ -31,7 +39,7 @@
         <li>
             <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_02.png">
             <p>We generate a Meshu to order as</p>
-            <p>a necklace, earrings, cufflinks, or a ring.</p>
+            <p>a necklace, cufflinks, ring, or a print.</p>
         </li>
         <li>
             <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_03.png">
@@ -40,7 +48,14 @@
         </li>
     </ul>
 
-
+    <a href="/make/arc" class="product-shot print" style="width:100%; height:300px;">
+    	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="margin:0; float: left;">
+    	<div style="margin-left: 520px;">
+	    	<h3 style="margin-top: 30px;">Not all who wander are lost.</h3>
+	    	<p style="width: 420px;">Accentuate your home with a map of where you've been,<br>avialable as a poster or a postcard.</p>
+	    	<div class="button pink">Make a print</div>
+    	</div>
+    </a>
     <a class="product-shot new" href="/make/facet">
     	<img src="{{ STATIC_URL }}images/index/rings.jpg">
     	<h3>Put a ring on it.</h3>
@@ -48,18 +63,19 @@
     	<div class="button pink">Make a ring</div>
     </a>
     <ul class="product-grid small">
-    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m1.jpg"></a></li>
-    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m14.jpg"></a></li>
     	<li><a href="/make/radial"><img src="{{ STATIC_URL }}images/gallery/r6.jpg"></a></li>
-    	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m5.jpg"></a></li>
+    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m1.jpg"></a></li>
+    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m10.jpg"></a></li>
+		<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m3.jpg"></a></li>
     </ul>
     <ul class="product-grid large">
+        <li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m14.jpg"></a></li> 
+    	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m5.jpg"></a></li>
     	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m11.jpg"></a></li>
     	<li><a href="/make/radial" class="dark"><img src="{{ STATIC_URL }}images/gallery/r4.jpg"></a></li>
     	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m10.jpg"></a></li>
     	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m6.jpg"></a></li>
-    	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m3.jpg"></a></li>
-    	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m7.jpg"></a></li>
+    	<!-- <li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m7.jpg"></a></li> -->
     </ul>
     <a class="product-shot old" href="/make/radial">
     	<img src="{{ STATIC_URL }}images/index/radial.jpg">

@@ -174,20 +174,26 @@ class Order(models.Model):
 	tracking = models.CharField(max_length=140, default='', blank=True)
 
 	def get_display_name(self):
-		if self.material == 'print':
-			return self.product.replace("_"," ")
+		if (self.material == 'framed' or self.material == 'unframed'):
+			return self.material + ' ' + self.product.replace("_"," ")
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
 
 	def get_processing_time(self):
 		if self.material == 'silver':
-			return '4-5 weeks for silver'
+			return '3-4 weeks for silver'
+		elif self.material == 'brass':
+			return '3-4 weeks for brass'
 		elif self.material == 'nylon':
-			return '4-5 weeks for nylon'
+			return '3-4 weeks for nylon'
 		elif self.material == 'acrylic':
-			return '3-4 weeks for acrylic'
+			return '2-3 weeks for acrylic'
 		elif self.material == 'bamboo':
 			return '2-3 weeks for bamboo'
+		elif self.material == 'unframed':
+			return '1-2 weeks for unframed prints'
+		elif self.material == 'framed':
+			return '2-3 weeks for framed prints'
 
 	def get_svg_filename(self):
 		# returns "49_294_silver_pendant"

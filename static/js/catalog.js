@@ -55,15 +55,17 @@ sb.catalog = function(renderer, promo) {
 	materialOptions.print = {
 						"postcard":
 						{
-							"print":{"price":5,"colors":[]}
+							"unframed":{"price":5,"colors":[]}
 						},
 						"small_poster":
 						{
-							"print":{"price":20,"colors":[]}
+							"unframed":{"price":25,"colors":[]},
+							"framed":{"price":45,"colors":[]}
 						},
 						"large_poster":
 						{
-							"print":{"price":45,"colors":[]}
+							"unframed":{"price":45,"colors":[]},
+							"framed":{"price":115,"colors":[]}
 						},
 					};
 
@@ -73,7 +75,8 @@ sb.catalog = function(renderer, promo) {
 		"nylon":"2-3 Weeks",
 		"silver":"3-4 Weeks",
 		"brass":"3-4 Weeks",
-		"print":"1-2 Weeks",
+		"unframed":"1-2 Weeks",
+		"framed":"2-3 Weeks",
 	};
 
 	// set the product type options with either facet or radial

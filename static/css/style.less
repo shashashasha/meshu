@@ -487,6 +487,9 @@ body.win #login-form ul {
 .product-shot.new:hover img {
     opacity: .9;
 }
+.product-shot.print:hover img {
+    opacity: .8;
+}
 .product-shot.old:hover img {
     opacity: .7;
 }
@@ -717,7 +720,7 @@ body.win #login-form ul {
     padding: 0;
 }
 .edit-panel {
-    width: 350px;
+    width: 400px;
 }
 
 #search {
@@ -993,14 +996,14 @@ body.firefox #place-title #input {
 .roadtrip .place .title {
     cursor: move;
 }
+.roadtrip .place .title:active {
+    background-color: red;
+}
 
 .place .place-text {
     width: 248px;
     padding: 2px;
     display: inline-block;
-}
-.print .place-text {
-
 }
 body.ie .place .place-text,
 body.win .place .place-text,
@@ -1080,6 +1083,17 @@ body.firefox .place .place-text {
 }
 .place .mode .road {
     background-image: url(../images/icons/mode-road.png);
+}
+
+.print .route-error {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background-color: @pink;
+    color: white;
+    padding: 5px;
+    font-size: 18px;
+    display: none;
 }
 
 .frame {
@@ -1267,7 +1281,7 @@ body.ie .frame div {
     height: 490px;
 }
 .print #product {
-    height: 475px;   
+    height: 525px;   
 }
 .edit #product-preview,
 .edit #material-list {
@@ -1279,7 +1293,7 @@ body.ie .frame div {
 .product #material-list {
     .transition(opacity);
 }
-.wrapper {
+.wrapper, .print .frame-wrapper {
     margin: 0 9px 5px 0;
     float: left;
     width: 300px;
@@ -1289,19 +1303,19 @@ body.ie .frame div {
     cursor: pointer;
     position: relative;
 }
+.print .frame-wrapper.possible {
+    color: black;
+}
 #product-preview .wrapper.last {
     margin-right: 0;
 }
 .print .wrapper {
-    border-color: #eee;
     height: 350px;
 }
-.wrapper:hover,
-.print .wrapper:hover {
+.wrapper:hover {
     border-color: @grey;
 }
-.wrapper.selected,
-.print .wrapper.selected {
+.wrapper.selected {
     border-color: @pink;
 }
 .wrapper.selected .important {
@@ -1316,6 +1330,24 @@ body.ie .frame div {
     height: 300px;
     margin: 0 auto;
 }
+.print .ring-frame {
+    margin-bottom: 5px;
+}
+
+.print .frame-wrapper {
+    color: @grey;
+    height: auto;
+}
+.print .frame-wrapper.selected {
+    border-color: @pink;
+    color: black;
+}
+.print #product-preview .frame-wrapper p {
+    font-size: 18px;
+}
+#product-preview .right {
+    float: right;
+}
 
 #product-preview p {
     margin-left: 5px;
@@ -1328,7 +1360,9 @@ body.ie .frame div {
 #product-preview p.note {
     font-size: 14px;
     line-height: 18px;
+    padding-top: 0;
 }
+
 #preview-coasters .product-transformer {
     transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
     -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
@@ -1386,7 +1420,7 @@ body.ie .frame div {
     -webkit-transform-origin: 50% 50%;
     -o-transform: rotate(315deg);
     -o-transform-origin: 50% 50%;
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
+    /*filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);*/
 }
 .ie .triangle {
     font-size: 18px;
@@ -1524,6 +1558,9 @@ input[type="range"]::-webkit-slider-thumb {
 #review {
     height: 250px;
 }
+.print #review {
+    height: 210px;
+}
 #review .review-field {
     text-transform: capitalize;
     color: black;
@@ -1554,7 +1591,7 @@ input[type="range"]::-webkit-slider-thumb {
     margin-left: 0;
 }
 
-.print #review .review-material {
+.print #review .print-hide {
     display: none;
 }
 
@@ -1982,14 +2019,15 @@ path {
 .roadtrip .straight {
     stroke-opacity: .5;
 }
-.print #projection {
+.print #projection,
+.print #design {
     height: 540px;
 }
 .print .projection-preview {
     width: 575px;
     height: 425px;
     float: right;
-    background-color: #d7d7d7;
+    background-color: #e7e7e7;
     border: 2px solid #808080;
 }
 .print .projection-preview.mercator,
@@ -2015,10 +2053,11 @@ path {
     stroke: inherit;
 }
 
-.print .fill {
+.print #projection .fill {
     fill: #e7e7e7;
 }
-.print .projection-list {
+.print .projection-list,
+.print .design-styles {
     width: 360px;
     float: left;
 }
@@ -2036,6 +2075,7 @@ path {
     border: 2px solid white;
     padding: 5px;
     color: @grey;
+    text-align: center;
 }
 .print .proj:first-child {
     border-color: #eee;
@@ -2073,6 +2113,37 @@ path {
 .allview path {
     stroke-width: 1;
     stroke-opacity: .25;
+}
+#design h3 {
+    font-size: 18px;
+    font-weight: normal;
+    color: @grey;
+    margin: 0 0 .5em;
+}
+#design ul {
+    margin-bottom: 30px;
+}
+#design li {
+    border: 2px solid @borderGrey;
+    display: inline-block;
+    width: 75px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 2px;
+    text-align: center;
+    cursor: pointer;
+    color: @grey;
+}
+#design li:hover {
+    border-color: @grey;
+}
+#design li.selected {
+    border-color: @pink;
+}
+#design .preview {
+    width: 80%;
+    height: 20px;
+    margin: 3px auto 7px;
 }
 
 circle {
@@ -2180,7 +2251,9 @@ circle {
     position: absolute;
     top: 80px;
     left: 90px;
+    /*left: 155px;*/
     width: 780px;
+    /*width: 660px;*/
     height: 400px;
     z-index: 4;
     background: white;
@@ -2200,6 +2273,7 @@ circle {
 .splitimages {
     float: left;
     width: 31.3%;
+    /*width: 44%;*/
     margin: 0 1% 0;
     border: 1px solid @borderGrey;
     box-sizing: border-box;
@@ -2424,7 +2498,7 @@ circle {
 }
 #cart .projection-preview .fill {
     stroke-width: 0;
-    fill: #e7e7e7;
+    /*fill: #e7e7e7;*/
 }
 #cart .headings {
     color: @grey;
@@ -2870,7 +2944,11 @@ body.ie #maps .mini-meshu div {
 }
 
 .print.processing {
-    #content {
+    #content, .frame {
+    /*Large Poster*/
+        /*width: 10800px;
+        height: 7200px;*/
+    /*Postcard*/
         width: 1680px;
         height: 1275px;
     }
@@ -2878,6 +2956,9 @@ body.ie #maps .mini-meshu div {
         width: 100%;
         height: 100%;
     }
+}
+.cart-row.postcard {
+    font-weight: inherit;
 }
 
 /*

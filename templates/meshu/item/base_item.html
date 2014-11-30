@@ -109,7 +109,7 @@
             </form>
             <svg class="review-svg" width="150" height="150"></svg>
             <h3>Product: <span class="review-product review-field inactive">not chosen</span></h3>
-            <h3 class="review-material">Material: <span class="review-material review-field inactive">not chosen</span></h3>
+            <h3 class="print-hide">Material: <span class="review-material review-field inactive">not chosen</span></h3>
             <h3>Price: <span class="review-price review-field"></span></h3>
             <h3>Estimated Make Time: <span class="review-make-time review-field"></span></h3>
             <div id="add-to-cart" class="button pink inactive" value="Submit Payment" tabindex="-1">Add to Cart</div>
@@ -126,6 +126,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/modernizr.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/rgbcolor.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script>
+    {% block extra-libraries %}
+    {% endblock %}
     {% if debug == false %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
     {% else %}

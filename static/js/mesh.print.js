@@ -57,6 +57,8 @@ sb.mesh.print = function (frame, map, width, height) {
     if (!$("body").hasClass("firefox"))
         $(".place-text input").live("blur", self.removeInput);
 
+    $(frame).append($("<div>").attr("class","route-error").text("Sorry, no route found! Try another mode?"));
+
     var points = [],
         new_pt = [],
         pixel_bounds = [],
@@ -104,17 +106,29 @@ sb.mesh.print = function (frame, map, width, height) {
         countryPaths.enter().append("path").attr("d",mapPath)
         .attr("class",function(d){
             return d.properties.ISO2;
-        }).style("fill","#d7d7d7").style("stroke","#aaa").style("stroke-width","0");
+        }).style("fill","#bbb").style("stroke","#aaa").style("stroke-width","0");
 
         if (loadedMeshu) {
             countries.forEach(function(e,i) {
                 highlightCountry(e, true);
+            });
+            $("#"+self.style().projection).click();
+            $(".map-style").find("li[data-color="+self.style().mapStyle+"]").click();
+            $(".dot-style").find("li[data-color="+self.style().dotColor+"]").click();
+            $(".country-style").find("li[data-color="+self.style().countryStyle+"]").click();
+        } else {
+            self.style({
+                mapStyle:"light",
+                dotColor:"FF3FB4",
+                countryStyle:"on"
             });
         }
         if (processing_page) {
             self.copyMap();
             mesh.applyStyle(loadedMeshu.metadata);
             applyProjection(self.style().projection, self.style().zoom, self.style().translate);
+            colorMap("meshu-container");
+            colorDots("meshu-container");
         }
     });
 
@@ -131,30 +145,32 @@ sb.mesh.print = function (frame, map, width, height) {
         }
 
         mapSVG.find("rect").remove();
-        mapSVG = mapSVG.html();
 
-        var copySVG = d3.select(".projection-preview");
+        var newMapSVG = d3.select(mapSVG).node()[0];
+
+        var copySVG = d3.selectAll(".projection-preview");
 
         var defs = copySVG.append("defs");
 
         defs.append("path")
             .datum({type: "Sphere"})
-            .attr("id", "sphere");
+            .attr("id", "sphere-" + selfId);
 
         defs.append("clipPath")
             .attr("id", "clip")
           .append("use")
-            .attr("xlink:href", "#sphere");
+            .attr("xlink:href", "#sphere-" + selfId);
 
         copySVG.append("g")
             .attr("class", "projection-clip")
           .append("use")
             .attr("class", "fill")
-            .attr("xlink:href", "#sphere");
+            .attr("xlink:href", "#sphere-" + selfId);
 
-        var m = d3.select(".projection-preview")
+        var m = d3.selectAll(".projection-preview")
             .append("g").attr("class","map");
-        svg.find(".map").html(mapSVG);
+
+        svg.find(".map").html(newMapSVG);
 
         svg.append(lines);
         svg.append(circles);
@@ -195,17 +211,20 @@ sb.mesh.print = function (frame, map, width, height) {
                 copyProjection = d3.geo.polyhedron.butterfly().scale(pW/8.45).translate([pW/2,5*pH/7]);
                 break;
             case 'zoomed-to-fit':
-                // updateProjection(425, 275);
-                updateProjection(575, 425);
+                updateProjection(pW, pH, .8);
                 copyProjection = projection;
                 break;
         }
 
-        var copySVG = d3.select(".projection-preview")
+        var copySVG = d3.selectAll(".projection-preview")
             .attr("class","projection-preview meshu-svg").classed(proj, true);
 
-        var radius = processing_page ? 5 : ((proj == 'zoomed-to-fit') ? 3 : 2)
+        copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
+
+        var radius = processing_page ? parseInt(width)/300 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
+
+        var strokeWidth = processing_page ? parseInt(width)/2500 : 1;
 
         var copyPath = d3.geo.path().projection(copyProjection);
         var lines = copySVG.select(".map")
@@ -217,13 +236,14 @@ sb.mesh.print = function (frame, map, width, height) {
                     .select("."+d.properties.ISO2).classed("current");
 
                 d3.select(this)
-                    .style("fill", current ? "white" : "#d7d7d7")
-                    .style("stroke-width", current ? "1" : "0");
+                    .style("fill", current ? "white" : "#bbb")
+                    .style("stroke-width", current ? strokeWidth : "0");
 
                 return current ? (d.properties.ISO2 + " current") : d.properties.ISO2;
             });
-        d3.select(".projection-preview #sphere").attr("d",copyPath);
+        d3.selectAll(".projection-preview #sphere-" + selfId).attr("d",copyPath);
         updateMesh("projection", copyProjection);
+        updateMesh("design", copyProjection);
 
         if (processing_page) {
             projection = copyProjection;
@@ -235,6 +255,9 @@ sb.mesh.print = function (frame, map, width, height) {
             scale:copyProjection.scale(),
             translate:copyProjection.translate()
         });
+
+        colorMap("design");
+        colorDots("design");
     }
 
     $(".proj").click(function(){
@@ -244,6 +267,100 @@ sb.mesh.print = function (frame, map, width, height) {
         var proj = $(this).attr("id");
         applyProjection(proj);
     });
+
+    $(".map-style li").click(function(){
+        var style = $(this).attr("data-color");
+        self.style({ mapStyle:style });
+
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        colorMap("design");
+    });
+
+    $(".dot-style li").click(function(){
+        var color = $(this).attr("data-color");
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        self.style({ dotColor:color });
+        colorDots("design");
+    });
+
+    $(".country-style li").click(function(){
+        var highlight = $(this).attr("data-color");
+        self.style({ countryStyle:highlight });
+
+        $(this).parent().find("li").removeClass("selected");
+        $(this).addClass("selected");
+        colorMap("design");
+    });
+
+    $(".frame-wrapper").click(function(){
+        if ($(this).attr("id").split("-")[1] != sb.materializer.product()) return;
+
+        if ($(this).hasClass("selected")){
+            sb.materializer.material("unframed");
+            sb.ui.orderer.updated();
+            $(this).removeClass("selected");
+        } else {
+            sb.materializer.material("framed");
+            $(".frame-wrapper").removeClass("selected");
+            $(this).addClass("selected");
+            sb.ui.orderer.updated();
+        }
+    });
+
+    function colorMap(id) {
+        var design = d3.select("#"+id+" .projection-preview");
+        var lightC, darkC, highlightC, highlightS, stroke;
+        var style = self.style().mapStyle,
+            highlight = self.style().countryStyle;
+        switch (style) {
+            case 'light':
+                lightC = "#e7e7e7";
+                darkC = "#bbb";
+                highlightC = "#fff";
+                highlightS = "#aaa";
+                stroke = "#555";
+                break;
+            case 'dark':
+                lightC = "#222";
+                darkC = "#000";
+                highlightC = "#333";
+                highlightS = "#666";
+                stroke = "#aaa";
+                break;
+            case 'no':
+                lightC = "#fff";
+                darkC = "#fff";
+                highlightC = "#e7e7e7";
+                highlightS = "#e7e7e7";
+                stroke = "#000";
+                break;
+        }
+        if (self.style().projection == "zoomed-to-fit")
+            design.style("background-color",lightC);
+        else
+            design.style("background-color",darkC);
+
+        design.select(".fill").attr("fill",lightC);
+        design.select(".map").selectAll("path").style("fill",darkC).style("stroke","none");
+        if (highlight == "on") {
+            design.select(".map").selectAll("path")
+            .filter(function(d){
+                return (countries.indexOf(d.properties.ISO2) != -1);
+            }).style("fill", highlightC)
+            .style("stroke", highlightS)
+            .each(function(){
+                this.parentNode.appendChild(this);
+            });
+        }
+        design.select(".delaunay").selectAll("path").style("stroke",stroke);
+    }
+
+    function colorDots(id) {
+        d3.select("#"+id+" .projection-preview").selectAll("circle")
+            .style("fill","#"+self.style().dotColor);
+    }
 
     self.addCountry = function(country) {
         countries.push(country);
@@ -257,12 +374,13 @@ sb.mesh.print = function (frame, map, width, height) {
             }).classed("current",flag)
             .each(function(){
                 this.parentNode.appendChild(this);
-            }).style("fill", flag ? "white" : "d7d7d7")
+            }).style("fill", flag ? "white" : "#bbb")
             .style("stroke-width", flag ? "1" : "0");
     };
 
-    function updateProjection(w, h){
+    function updateProjection(w, h, scale){
         projection.scale(1).translate([0, 0]);
+
         var e = map.getExtent(),
 
         // dumb thing where polymaps sets an extent outside of lat/lon limits
@@ -271,7 +389,7 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        s = .99 / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
+        s = Math.min(2000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
         t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
 
         if (w == 600) {
@@ -287,7 +405,7 @@ sb.mesh.print = function (frame, map, width, height) {
             d3.select("#meshu-container").select(".map").selectAll("path").attr("d",mapPath);
         } else {
             projection.scale(s).translate(t);
-            d3.select(".projection-preview").select(".map").selectAll("path").attr("d",mapPath);   
+            d3.selectAll(".projection-preview").select(".map").selectAll("path").attr("d",mapPath);   
         }
     }
 
@@ -300,10 +418,6 @@ sb.mesh.print = function (frame, map, width, height) {
     self.on("removed", function() {
         if (points.length < 3) $("#finish-button").removeClass("active");
         if (points.length == 1) $("#meshu-container").addClass("inactive");
-    });
-
-    self.on("interactiveToggled", function(bool) {
-        self.updateCircleBehavior(bool);
     });
 
     function updateMesh(id, proj) {
@@ -357,7 +471,8 @@ sb.mesh.print = function (frame, map, width, height) {
                             return;
                         }
                     });
-                    if (roadPath) return roadPath;
+                    if (roadPath == "undefined") return "";
+                    else if (roadPath) return roadPath;
 
                     var base = "http://open.mapquestapi.com/directions/v1/route?generalize=500&outFormat=json&shapeFormat=raw&generalize=200&from=";
                     var url = base + d.points[0][1]+","+d.points[0][0]+"&to="+d.points[1][1]+","+d.points[1][0]+"&key="+mapquestapi;
@@ -366,12 +481,22 @@ sb.mesh.print = function (frame, map, width, height) {
                         url: url,
                         dataType: 'jsonp',
                         success: function(data) {
-                            var wayPoints = data.route.shape.shapePoints;
-                            roadData.push({
-                                "points":d.points,
-                                "wayPoints":wayPoints
-                            });
-                            d3.select(pathObject).attr("d",drawRoadPath(wayPoints));
+                            var wayPoints = [];
+                            if (data.info.statuscode != 0) {
+                                $(".route-error").fadeIn().delay(3000).fadeOut('slow');
+                                roadData.push({
+                                    "points":d.points,
+                                    "wayPoints":wayPoints
+                                });
+                                d3.select(pathObject).attr("d","");
+                            } else {
+                                wayPoints = data.route.shape.shapePoints;
+                                roadData.push({
+                                    "points":d.points,
+                                    "wayPoints":wayPoints
+                                });
+                                d3.select(pathObject).attr("d",drawRoadPath(wayPoints));
+                            }
                         }
                     });
                 }
@@ -381,8 +506,31 @@ sb.mesh.print = function (frame, map, width, height) {
             }).attr("class",function(d){
                 return d.mode;
             }).style("stroke","#555")
-            .style("stroke-width",function(d){ return (d.mode == "air") ? 2 : 3; })
-            .style("stroke-dasharray",function(d){ return (d.mode == "air") ? "4 4" : ""; });
+            .style("stroke-width",function(d){ return getWidth(d.mode); })
+            .style("stroke-dasharray",function(d){ return getDash(d.mode); });
+
+            function getWidth(mode) {
+                if (processing_page) {
+                    var d = parseInt(width);
+                    return (d/1000);
+                }
+                if (mode == "air") {
+                    if (id == "meshu-container") return 2;
+                    return 1.5;
+                } else {
+                    if (id == "meshu-container") return 3;
+                    return 2.5;
+                }
+            }
+            function getDash(mode) {
+                if (mode != "air") return;
+                if (processing_page) {
+                    var d = parseInt(width);
+                    return (d/500) + " " + (d/500);
+                }
+                if (id == "meshu-container") return "4 4";
+                return "3 3";
+            }
 
             function drawRoadPath(wayPoints) {
                 var drawI = [];
@@ -392,22 +540,9 @@ sb.mesh.print = function (frame, map, width, height) {
                     drawI.push(pt);
                 }
                 var pathLines =  "M" + drawI.join("L");
-                return pathLines;
+                return (wayPoints.length == 0) ? "undefined" : pathLines;
             }
     }
-
-    self.updatePixelBounds = function() {
-        if (lats.length && lons.length) {
-            pixel_bounds = [projection([d3.min(lats),d3.min(lons)]),
-                            projection([d3.max(lats),d3.min(lons)]),
-                            projection([d3.max(lats),d3.max(lons)]),
-                            projection([d3.min(lats),d3.max(lons)]),
-                            ];
-        }
-        else {
-            pixel_bounds = [];
-        }
-    };
 
     function update(){
         updateProjection(parseInt(width),parseInt(height));
@@ -479,71 +614,38 @@ sb.mesh.print = function (frame, map, width, height) {
             });
         });
 
-        self.updateCircleBehavior();
         updateListBehavior();
         updateMesh("meshu-container", projection);
     };
-
-    self.updateCircleBehavior = function(off) {
-        var editMode = content.hasClass("edit");
-        var placeHover = $("#place-hover");
-        var circles = ui.selectAll("circle");
-
-        circles.on("mouseover", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-" + i).attr("class", "place highlight");
-        });
-        circles.on("mouseout", function(d, i) {
-            if (off) return;
-            else if (editMode)
-                list.select("#p-"+i).attr("class","place");
-        });
-    }
 
     function updateListBehavior() {
         var names = list.selectAll("li.place");
         names.select(".place-delete").on("click",function(d,i){
             self.remove(i);
-            self.updatePixelBounds();
             map.updateBounds(lats, lons);
             update();
         });
 
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-        names.select(".place-edit").on("click",function(d,i){
-            points[i].air = !points[i].air;
-            update();
-        });
+        var tempIndex = 0;
+        $( "#places ul" ).sortable({ 
+            axis:"y", 
+            cursor:"move",
+            start: function(event, ui) {
+                tempIndex = ui.item.index();
+            },
+            stop: function(event, ui) {
+                var newIndex = ui.item.index();
+                if (tempIndex == newIndex) return;
 
-        $( "#places ul" ).sortable({ axis:"y", cursor:"move"});
-        $( "#places ul" ).disableSelection();
-        $(".place-text").mouseup(function(){
-            var dataNew = [],
-            placesNew = [],
-            latNew = [],
-            lonNew = [];
-            setTimeout(function(){
-                $("#places li").each(function(e,i){
-                    placesNew.push($(this).find(".place-text").text());
-                    d3.select(this).each(function(d){
-                        dataNew.push(d);
-                        lonNew.push(d[0]);
-                        latNew.push(d[1]);
-                    })
-                });
-                points = dataNew;
-                places = placesNew;
-                lats = latNew;
-                lons = lonNew;
-                update();
-            },100);
+                places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
+                points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
+                lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
+                lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
+                countries.splice(newIndex, 0, countries.splice(tempIndex, 1)[0]);
+                tempIndex = 0;
+            }
         });
+        $( "#places ul" ).disableSelection();
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
@@ -567,15 +669,12 @@ sb.mesh.print = function (frame, map, width, height) {
             if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
 
-                self.updatePixelBounds();
                 update();
                 updateMesh("meshu-container", projection);
             } else {
                 // make the new point start from the last location
                 var last = points[points.length-1];
-                // points.push([last[0], last[1]]);
                 points.push([new_pt[0], new_pt[1]]);
-                self.updatePixelBounds();
                 update();
             }
         } else {
@@ -653,10 +752,11 @@ sb.mesh.print = function (frame, map, width, height) {
         self.locationsSet();
 
         if (processing_page) {
-            d3.select(".map").attr("height","1275px").select(".layer").remove();
+            d3.select(".map").attr("height","100%").select(".layer").remove();
 
             d3.select("#meshu-container").append("svg").attr("class","projection-preview")
-                .attr("width",width).attr("height",height).style("position","absolute").style("top","0");
+                .style("position","absolute").style("top","0");
+
         }
 
         return self;
@@ -679,19 +779,10 @@ sb.mesh.print = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
         
-        var SVG = $(".projection-preview").clone();
+        var SVG = $(".projection-preview").last().clone();
 
         // remove the map for lighter svg storage
         SVG.find(".map").remove();
-
-        // make this projection-clip path a unique id for cart/checkout
-        SVG.find("#sphere").attr("id", "sphere-" + selfId);
-
-        // for some reason attr with xlink:href doesn't work, so doing it
-        // manually with the string content
-        // SVG.find("use").attr("xlink:href", "#sphere-" + selfId);
-        var outerhtml = SVG[0].outerHTML;
-        outerhtml = outerhtml.split("#sphere").join("#sphere-" + selfId);
 
         var cData = countries.join(","),
             rData = roadData.join(","),
@@ -702,8 +793,8 @@ sb.mesh.print = function (frame, map, width, height) {
             roadData:rData,
             modes:mData
         });
-
-        return outerhtml;
+        
+        return new XMLSerializer().serializeToString(d3.select(SVG).node()[0]);
     };
 
     self.getProjection = function(point){

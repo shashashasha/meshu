@@ -6,7 +6,7 @@
 
 {% block body_class %}print{% endblock body_class %}
 
-{% block page_title %}Arc{% endblock %}
+{% block page_title %}Step 1: Choose Your Path{% endblock %}
 
 {% block object %}
     <div id="projection" class="section">
@@ -25,42 +25,105 @@
 {% endblock %}
 
 {% block make %}
-    <div id="product" class="section">
-        <h2>Step 3: Choose Your Size</h2>
-        <div id="product-preview">
-            <div class="wrapper" id="wrapper-postcard">
-                <div class="ring-frame">
-                    <div style="height: 46px; width: 61px; float: left; margin: 126px 120px 0; background-color: #d7d7d7;"></div>
-                </div>
-                <p>Postcard</p>
-                <p class="note">5.6"x4.25"</p>
-            </div>
-            <div class="wrapper" id="wrapper-small_poster">
-                <div class="ring-frame">
-                    <div style="width: 108px; height: 82px; float: left; margin: 109px 96px 0; background-color: #d7d7d7;"></div>
-                </div>
-                <p>Small Poster</p>
-                <p class="note">10"x8"</p>
-            </div>
-            <div class="wrapper last" id="wrapper-large_poster">
-                <div class="ring-frame">
-                    <div style="width: 260px; height: 195px; float: left; margin: 52px 20px 0; background-color: #d7d7d7;"></div>
-                </div>
-                <p>Large Poster</p>
-                <p class="note">24"x18"</p>
-            </div>
+    <div id="design" class="section">
+        <h2>Step 3: Choose Your Style</h2>
+        <div class="design-styles">
+            <h3>Map Color:</h3>
+            <ul class="map-style">
+                <li data-color="light" class="selected">
+                    <div class="preview" style="background:#d7d7d7;"></div>
+                    Light
+                </li>
+                <li data-color="dark">
+                    <div class="preview" style="background:#333;"></div>
+                    Dark
+                </li>
+                <li data-color="no">
+                    <div class="preview" style="border:1px dashed #808080;"></div>
+                    No Map
+                </li>
+            </ul>
+            <h3>Dot Color:</h3>
+            <ul class="dot-style">
+                <li data-color="FF3FB4" class="selected">
+                    <div class="preview" style="background:#FF3FB4;"></div>
+                    Pink
+                </li>
+                <li data-color="1fcaff">
+                    <div class="preview" style="background:#1fcaff;"></div>   
+                    Blue
+                </li>
+                <li data-color="000">
+                    <div class="preview" style="background:#000;"></div>
+                    Black
+                </li>
+                <li data-color="fff">
+                    <div class="preview" style="border:1px solid #808080;"></div>
+                    White
+                </li>
+            </ul>
+            <h3>Country Outlines:</h3>
+            <ul class="country-style">
+                <li data-color="on" class="selected">
+                    <div class="preview" style="border:1px solid #808080;"></div>
+                    On
+                </li>
+                <li data-color="off">
+                    <div class="preview" style="border:1px dashed #808080;"></div>   
+                    Off
+                </li>
+            </ul>
         </div>
+        <svg class="projection-preview"></svg>
     </div>
 {% endblock %}
 
-{% block addons %}        
+{% block addons %}
+    <div id="product" class="section">
+        <h2>Step 4: Choose Your Size</h2>
+        <div id="product-preview">
+            <div class="wrapper" id="wrapper-large_poster">
+                <div class="ring-frame">
+                    <!-- <div style="width: 260px; height: 195px; float: left; margin: 52px 20px 0; background-color: #d7d7d7;"></div> -->
+                    <img src="{{ STATIC_URL }}images/materials/print-24x36.jpg">
+                </div>
+                <p>Large Poster <span class="right">$45</span></p>
+                <p class="note">36"x24"</p>
+            </div>
+            <div class="wrapper" id="wrapper-small_poster">
+                <div class="ring-frame">
+                    <!-- <div style="width: 108px; height: 82px; float: left; margin: 109px 96px 0; background-color: #d7d7d7;"></div> -->
+                    <img src="{{ STATIC_URL }}images/materials/print-8x10.jpg">
+                </div>
+                <p>Small Poster <span class="right">$20</span></p>
+                <p class="note">10"x8"</p>
+            </div>
+            <div class="wrapper last" id="wrapper-postcard">
+                <div class="ring-frame">
+                    <!-- <div style="height: 46px; width: 61px; float: left; margin: 126px 120px 0; background-color: #d7d7d7;"></div> -->
+                    <img src="{{ STATIC_URL }}images/materials/print-postcard.jpg">
+                </div>
+                <p>Postcard <span class="right">$5</span></p>
+                <p class="note">5.6"x4.25"</p>
+            </div>
+            <div class="frame-wrapper" id="frame-large_poster">
+                <p>Add Frame <span class="right">+ $70</span></p>
+            </div>
+            <div class="frame-wrapper" id="frame-small_poster">
+                <p>Add Frame <span class="right">+ $25</span></p>
+            </div>
+        </div>
+    </div>      
 {% endblock %}
 
-{% block script-specific %}
+{% block extra-libraries %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.projection.v0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.polyhedron.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
+{% endblock %}
+
+{% block script-specific %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.print.js"></script>
 {% endblock %}

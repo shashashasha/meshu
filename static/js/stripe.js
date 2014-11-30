@@ -78,14 +78,38 @@ var cashier = function() {
 
     // update the shipping value
     self.shippingMode = function(value) {
-        var numItems = 0, numRings = 0;
-        $(".cart-row .num").each(function(v,i){ numItems += parseInt($(this).text()); });
-        $(".ring .num").each(function(v,i){ numRings += parseInt($(this).text()); });
-        var numBoxes = numItems - numRings;
+        var numRings = 0, boxedItems = 0;
+        // $(".cart-row .num").each(function(v,i){ numItems += parseInt($(this).text()); });
 
-        shipping = value == 'international' ?
-                            (numBoxes > 2 ? multipleInternationalShipping : internationalShipping)
+        $(".earrings .num").each(function(v,i){ boxedItems += parseInt($(this).text()); });
+        $(".necklace .num").each(function(v,i){ boxedItems += parseInt($(this).text()); });
+        $(".pendant .num").each(function(v,i){ boxedItems += parseInt($(this).text()); });
+        $(".cufflinks .num").each(function(v,i){ boxedItems += parseInt($(this).text()); });
+
+        $(".ring .num").each(function(v,i){ numRings += parseInt($(this).text()); });
+
+        if (boxedItems > 0 || numRings > 0)
+            shipping = value == 'international' ?
+                            (boxedItems > 2 ? multipleInternationalShipping : internationalShipping)
                             : domesticShipping;
+        else shipping = 0;
+
+        if (value == 'international') {
+            $(".unframed.postcard .num").each(function(v,i){ 
+                shipping += parseInt($(this).text())*4; 
+            });
+            $(".unframed.large_poster .num").each(function(v,i){ 
+                shipping += parseInt($(this).text())*10; 
+            });
+            $(".framed.small_poster .num").each(function(v,i){ 
+                shipping += parseInt($(this).text())*12; 
+            });
+        }
+
+        $(".framed.large_poster .num").each(function(v,i){
+            shipping += parseInt($(this).text())*(value == 'international' ? 7 : 58); 
+        });
+
         self.update();
     };
 
@@ -95,12 +119,12 @@ var cashier = function() {
                 shipping = domesticShipping;
                 break;
             case 'Canada':
-                shipping = 35;
+                shipping = internationalShipping = 35;
                 break;
             default:
-                shipping = internationalShipping;
+                shipping = internationalShipping = 45;
         }
-        self.update();
+        self.shippingMode(country == 'United States' ? 'domestic' : 'international');
     };
 
     self.applyCoupon = function(value, callback) {

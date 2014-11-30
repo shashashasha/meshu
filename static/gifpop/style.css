@@ -26,12 +26,11 @@ html {
 }
 body {
     width: 875px;
-    background-color: #eee;
+    background-color: transparent;
     font-family: Futura;
 }
 
 #content {
-    padding: 10px;
     height: 400px;
     width: 100%;
     position: relative;
@@ -74,6 +73,8 @@ body {
 #services a {
     width: 162px;
     padding-right: 0;
+    color: #fff;
+    background-image: none !important;
 }
 #services > li:hover {
     background-image: url(img/edge.png);
@@ -82,7 +83,7 @@ body {
 }
 #services > li:hover > a {
     border-left: none;
-    background-color: #ddd;
+    background-color: #333;
     padding-left: 13px;
 }
 #services > .active > a,
@@ -97,7 +98,7 @@ body {
     line-height: 10px;
 }
 #mainpane {
-    background: #808080;
+    background: transparent;
     width: 665px;
     position: absolute;
     top: 10px;
@@ -114,7 +115,8 @@ body {
     padding-bottom: 1px;
 }
 #services > .active a > [class^="sbicon-"],
-#services > .active a > [class*="sbicon-"]  {
+#services > .active a > [class*="sbicon-"],
+[class^="sbicon-"], [class*=" sbicon-"]  {
     background-image: url(img/local-icons-inverted.png);
 }
 .nav-list [class^="sbicon-"] {
@@ -196,6 +198,9 @@ body {
 .thumbnails h5 {
     display: none;
 }
+table {
+    color: #bbb;
+}
 .filelist.thumbnails a.selectable:hover {
     border-color: #ff9900;
 }
@@ -205,6 +210,7 @@ body {
     border-width: 3px;
     height: 130px;
     width: 130px;
+    border-color: #333;
 }
 #picker {
     width: 450px;
@@ -332,7 +338,7 @@ h3.filename, #mainpane #subMessage {
     background-image: url(img/starburst-wide.png);
     background-position: center;
     box-shadow: none;
-    background-color: transparent;
+    background-color: black;
 }
 #localDragHelp {
     background-image: url(img/drag-and-drop-img.png);
@@ -352,8 +358,9 @@ h3.filename, #mainpane #subMessage {
 }
 #fileUploadForm {
     width: 100%;
-    border-top: 10px solid #eee;
+    margin-top: 10px;
     height: 110px;
+    background-color: black;
 }
 #fileInputContainer {
     z-index: 1;
@@ -401,13 +408,14 @@ h3.filename, #mainpane #subMessage {
     border-radius: 0;
     left: -190px;
     top: 0px;
-    background-color: #fff;
+    background-color: #000;
 }
 .well {
     padding: 20px;
 }
 .progress {
     border-radius: 0;
+    background-color: #333;
 }
 .progress-striped .bar {
     background-color: #ff9900;
@@ -418,6 +426,7 @@ h3.filename, #mainpane #subMessage {
     max-width: 100px;
     border-radius: 0;
     box-shadow: none;
+    border-color: #333;
 }
 .small-thumbnail > img {
     max-height: 100px;
@@ -426,7 +435,7 @@ table.fileinfo .filename {
     max-width: 250px;
 }
 .badge-inverse, .badge-inverse:hover, .badge.badge-inverse:hover {
-    background-color: #808080;
+    background-color: #333;
 }
 .badge {
     margin-left: 20px;
@@ -455,17 +464,17 @@ table.fileinfo .filename {
         right: auto;
     }
     #localDragDrop {
-        width: 50%;
+        width: 49%;
         height: 250px;
         min-height: 250px;
     }
     #fileUploadForm {
-        width: 50%;
+        width: 49%;
         height: 250px;
         position: absolute;
         right: 0;
         margin-right: 0;
-        border-left: 10px solid #eee;
+        margin-top: 0;
         border-top: none;
         background-image: url(img/upload_computer_light_grey.png);
         background-size: 250px;
