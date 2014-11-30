@@ -627,25 +627,27 @@ sb.mesh.print = function (frame, map, width, height) {
         });
 
         var tempIndex = 0;
-        $( "#places ul" ).sortable({ 
-            axis:"y", 
-            cursor:"move",
-            start: function(event, ui) {
-                tempIndex = ui.item.index();
-            },
-            stop: function(event, ui) {
-                var newIndex = ui.item.index();
-                if (tempIndex == newIndex) return;
+        if (!processing_page) {
+            $( "#places ul" ).sortable({ 
+                axis:"y", 
+                cursor:"move",
+                start: function(event, ui) {
+                    tempIndex = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    var newIndex = ui.item.index();
+                    if (tempIndex == newIndex) return;
 
-                places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
-                points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
-                lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
-                lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
-                countries.splice(newIndex, 0, countries.splice(tempIndex, 1)[0]);
-                tempIndex = 0;
-            }
-        });
-        $( "#places ul" ).disableSelection();
+                    places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
+                    points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
+                    lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
+                    lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
+                    countries.splice(newIndex, 0, countries.splice(tempIndex, 1)[0]);
+                    tempIndex = 0;
+                }
+            });
+            $( "#places ul" ).disableSelection();
+        }
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
