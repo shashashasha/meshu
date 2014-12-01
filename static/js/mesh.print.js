@@ -738,7 +738,6 @@ sb.mesh.print = function (frame, map, width, height) {
     self.locations = function(locs, data) {
 
         mesh.applyStyle(loadedMeshu.metadata);
-        console.log(loadedMeshu.metadata, self.style())
         countries = self.style().countries.split(",");
         roadData = self.style().roadData.split(",");
         modes = self.style().modes.split(",");

@@ -128,7 +128,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}lib/canvg.js"></script>
     {% block extra-libraries %}
     {% endblock %}
-    
+    {% if debug == false %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/min/meshuapp.min.js"></script>
+    {% else %}
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
@@ -151,7 +153,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/viewhandler.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/app.js"></script>
-    
+    {% endif %}
 
 {% endblock %}
 
