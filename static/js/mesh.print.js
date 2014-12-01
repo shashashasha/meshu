@@ -464,15 +464,17 @@ sb.mesh.print = function (frame, map, width, height) {
                 }
                 else if (d.mode == "road"){
                     var roadPath = null;
-                    roadData.forEach(function(e,i){
-                        //I'm sorry
-                        if (e.points[0][0] == d.points[0][0] && e.points[1][1] == d.points[1][1]) {
-                            roadPath = drawRoadPath(e.wayPoints);
-                            return;
-                        }
-                    });
-                    if (roadPath == "undefined") return "";
-                    else if (roadPath) return roadPath;
+                    if (!loadedMeshu) {
+                        roadData.forEach(function(e,i){
+                            //I'm sorry
+                            if (e.points[0][0] == d.points[0][0] && e.points[1][1] == d.points[1][1]) {
+                                roadPath = drawRoadPath(e.wayPoints);
+                                return;
+                            }
+                        });
+                        if (roadPath == "undefined") return "";
+                        else if (roadPath) return roadPath;
+                    }
 
                     var base = "http://open.mapquestapi.com/directions/v1/route?generalize=500&outFormat=json&shapeFormat=raw&generalize=200&from=";
                     var url = base + d.points[0][1]+","+d.points[0][0]+"&to="+d.points[1][1]+","+d.points[1][0]+"&key="+mapquestapi;
