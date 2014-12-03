@@ -50,7 +50,7 @@ def processing_print(request, order_id):
 		'order': order,
 		'meshu': order.meshu,
 		'view': 'postcard'
-	}, context_instance=RequestContext(request))	
+	}, context_instance=RequestContext(request))
 
 
 def view_orders(request):
@@ -86,6 +86,9 @@ def view_orders_received(request):
 
 def view_orders_sent(request):
 	return view_orders_status(request, 'SE')
+
+def view_orders_ordered(request):
+	return view_orders_status(request, 'OR')
 
 def view_orders_canceled(request):
 	return view_orders_status(request, 'CA')
