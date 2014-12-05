@@ -50,7 +50,7 @@ def processing_print(request, order_id):
 		'order': order,
 		'meshu': order.meshu,
 		'view': 'postcard'
-	}, context_instance=RequestContext(request))	
+	}, context_instance=RequestContext(request))
 
 
 def view_orders(request):
@@ -86,6 +86,17 @@ def view_orders_received(request):
 
 def view_orders_sent(request):
 	return view_orders_status(request, 'SE')
+
+def view_orders_ordered(request):
+	if request.user.is_authenticated() == False or request.user.is_staff == False:
+		return render_to_response('404.html', {}, context_instance=RequestContext(request))
+
+	# view only ordered orders, none that have been processed or sent etc
+	orders = Order.objects.filter(status='OR')
+
+	return render_to_response('meshu/processing/orders.html', {
+			'orders': orders
+	}, context_instance=RequestContext(request))
 
 def view_orders_canceled(request):
 	return view_orders_status(request, 'CA')

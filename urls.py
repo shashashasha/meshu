@@ -171,7 +171,7 @@ urlpatterns += patterns('meshu.pipeline',
 	url(r'^orders/processing/postcard/front/(?P<order_id>\d+)', 'processing_postcard_front'),
 	url(r'^orders/processing/postcard/back/(?P<order_id>\d+)', 'processing_postcard_back'),
 
-	url(r'^orders/processing/print/(?P<order_id>\d+)', 'processing_print'),	
+	url(r'^orders/processing/print/(?P<order_id>\d+)', 'processing_print'),
 
 	# backend for our orders
 	url(r'^orders/(?P<order_id>\d+)/update/', 'processing_order_update_status'),
@@ -184,6 +184,7 @@ urlpatterns += patterns('meshu.pipeline',
 	url(r'^orders/shipped', 'view_orders_shipped'),
 	url(r'^orders/received', 'view_orders_received'),
 	url(r'^orders/sent', 'view_orders_sent'),
+	url(r'^orders/ordered', 'view_orders_ordered'),
 	url(r'^orders/canceled', 'view_orders_canceled'),
 
 	url(r'^orders/addresses', 'view_addresses'),
