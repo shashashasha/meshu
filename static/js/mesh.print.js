@@ -514,7 +514,7 @@ sb.mesh.print = function (frame, map, width, height) {
             function getWidth(mode) {
                 if (processing_page) {
                     var d = parseInt(width);
-                    return (d/800);
+                    return (d/900);
                 }
                 if (mode == "air") {
                     if (id == "meshu-container") return 2;
