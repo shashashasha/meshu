@@ -221,7 +221,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
 
-        var radius = processing_page ? parseInt(width)/400 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
+        var radius = processing_page ? parseInt(width)/500 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
 
         var strokeWidth = processing_page ? parseInt(width)/2500 : 1;
@@ -514,7 +514,7 @@ sb.mesh.print = function (frame, map, width, height) {
             function getWidth(mode) {
                 if (processing_page) {
                     var d = parseInt(width);
-                    return (d/600);
+                    return (d/800);
                 }
                 if (mode == "air") {
                     if (id == "meshu-container") return 2;
@@ -528,7 +528,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 if (mode != "air") return;
                 if (processing_page) {
                     var d = parseInt(width);
-                    return (d/300) + " " + (d/300);
+                    return (d/500) + " " + (d/500);
                 }
                 if (id == "meshu-container") return "4 4";
                 return "3 3";
