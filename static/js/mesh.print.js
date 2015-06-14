@@ -739,7 +739,6 @@ sb.mesh.print = function (frame, map, width, height) {
 
         mesh.applyStyle(loadedMeshu.metadata);
         countries = self.style().countries.split(",");
-        roadData = self.style().roadData.split(",");
         modes = self.style().modes.split(",");
 
         points = [];
