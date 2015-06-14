@@ -789,12 +789,10 @@ sb.mesh.print = function (frame, map, width, height) {
         SVG.find(".map").remove();
 
         var cData = countries.join(","),
-            rData = roadData.join(","),
             mData = modes.join(",");
 
         self.style({
             countries:cData,
-            roadData:rData,
             modes:mData
         });
         
