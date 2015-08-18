@@ -1,6 +1,8 @@
 var sb = sb || {};
 
-sb.mesh.facet = function (frame, map, width, height) {
+var processing_page = $("body").hasClass("processing");
+
+sb.mesh.orbit = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
         selfId = parseInt(Math.random() * 10000000000, 10);
 
@@ -37,11 +39,6 @@ sb.mesh.facet = function (frame, map, width, height) {
             .attr("stroke","black")
             .attr("stroke-linejoin","round");
 
-    var hidden = main.append("g")
-                 .attr("class", "hidden");
-
-    hidden.append("path");
-
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:2;")
         .style("width", width)
@@ -57,9 +54,6 @@ sb.mesh.facet = function (frame, map, width, height) {
     var placeList = d3.select("#places");
 
     var list = placeList.append("ul");
-
-    if (!$("body").hasClass("firefox"))
-        $(".place-text input").live("blur", self.removeInput);
 
     var points = [],
         new_pt = [],
@@ -227,6 +221,7 @@ sb.mesh.facet = function (frame, map, width, height) {
             var g = globalize(pt, this);
             xvalues.push(g.x);
             yvalues.push(g.y);
+
             projectedPts.push([g.x, g.y]);
         });
 
@@ -260,23 +255,26 @@ sb.mesh.facet = function (frame, map, width, height) {
             scaleHeight = projHeight / bbox.height;
 
         var lines = g.selectAll("path")
-            .data(d3.geom.delaunay(projected.pts));
+            .data(projected.pts);
+
+        var anchor = projected.pts[0];
+
+        var arc = d3.svg.arc()
+            .innerRadius(function(d){ return d[2]; })
+            .outerRadius(function(d){ return d[2]+4; })
+            .startAngle(0) //converting from degs to radians
+            .endAngle(Math.PI*2);
 
         lines.enter().append("path");
         lines.exit().remove();
         lines.attr("stroke-width", 20)
             .attr("fill", "none")
-            .attr("d", function(d) {
-            var l = d.length;
-            var draw = [];
-            for (var i = 0; i < l; i++){
-                var px = (d[i][0] - bbox.left) * scaleWidth,
-                    py = ((d[i][1] - bbox.top) * scaleHeight) + buffer;
-                draw.push([px, py]);
-            }
-
-            return "M" + draw.join(" L") + "Z";
-        });
+            .attr("transform", function(d) {
+                var s = [(anchor[0] - bbox.left) * scaleWidth, ((anchor[1] - bbox.top) * scaleHeight) + buffer],
+                    e = [(d[0] - bbox.left) * scaleWidth, ((d[1] - bbox.top) * scaleHeight) + buffer];
+                d[2] = Math.sqrt(Math.pow(e[0]-s[0],2) + Math.pow(e[1]-s[1],2))/2;
+                return "translate("+(e[0] + (s[0]-e[0])/2)+","+(e[1] + (s[1]-e[1])/2)+")";
+        }).attr("d", arc);
     };
 
     function updateMesh(skipAnimation) {
@@ -313,31 +311,32 @@ sb.mesh.facet = function (frame, map, width, height) {
                 return "translate("+(e.x + (s.x-e.x)/2)+","+(e.y + (s.y-e.y)/2)+")";
             }).attr("d", arc);
 
-        // we move the newest point closer and closer to its destination
-        // if (new_pt && skipAnimation == true) {
-        //     clearInterval(updateInterval);
-        //     new_pt = null;
-        // }
-        // else if (new_pt) {
-        //     var last = points[points.length-1] || [];
-        //     if (Math.abs(last[0] - new_pt[0]) > .0002) {
-        //         last[0] += (new_pt[0] - last[0]) / 3;
-        //     }
-        //     if (Math.abs(last[1] - new_pt[1]) > .0002) {
-        //         last[1] += (new_pt[1] - last[1]) / 3;
-        //     }
+             // clearInterval(updateInterval);
+        if (new_pt && skipAnimation == true) {
+            clearInterval(updateInterval);
+            new_pt = null;
+        }
+        else if (new_pt) {
+            // var last = points[points.length-1] || [];
+            var last = points[points.length-1] || [];
+            if (Math.abs(last[0] - new_pt[0]) > .0002) {
+                last[0] += (new_pt[0] - last[0]) / 3;
+            }
+            if (Math.abs(last[1] - new_pt[1]) > .0002) {
+                last[1] += (new_pt[1] - last[1]) / 3;
+            }
 
-        //     points[points.length - 1] = last;
+            points[points.length - 1] = last;
 
-        //     var dlon = Math.abs(last[0] - new_pt[0]);
-        //     var dlat = Math.abs(last[1] - new_pt[1]);
-        //     if (dlat < .0002 && dlon < .0002) {
-        //         clearInterval(updateInterval);
-        //         new_pt = null;
-        //     }
-        // } else {
-             clearInterval(updateInterval);
-        // }
+            var dlon = Math.abs(last[0] - new_pt[0]);
+            var dlat = Math.abs(last[1] - new_pt[1]);
+            if (dlat < .0002 && dlon < .0002) {
+                clearInterval(updateInterval);
+                new_pt = null;
+            }
+        } else {
+            clearInterval(updateInterval);
+        }
     }
 
     self.updatePixelBounds = function() {
@@ -376,57 +375,27 @@ sb.mesh.facet = function (frame, map, width, height) {
             .data(points);
 
         var place = names.enter().append("li").attr("class", "place");
-        var title = place.append("span").attr("class", "title");
-            title.append("span").attr("class", "place-text")
+        // var title = place.append("span").attr("class", "title");
+            place.append("span").attr("class", "place-text")
                 .html(function(d, i) {
                     decoder.innerHTML = places[i];
                     return decoder.firstChild.nodeValue;
                 });
-            title.append("span").attr("class", "place-edit").html("edit");
+            // title.append("span").attr("class", "place-edit").html("edit");
             place.append("span").attr("class", "place-delete").html("x");
 
         names.exit().remove();
 
         names.attr("id", function(d, i) { return "p-" + i; })
-            .select(".title").each(function(d) { d.edit = false; })
-            .attr("class","title")
+            // .select(".title").each(function(d) { d.edit = false; })
+            // .attr("class","title")
             .select(".place-text")
-            .html(function(d, i) {
+            .text(function(d, i) {
                 // decode the text
                 // http://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript
                 decoder.innerHTML = places[i];
                 return decoder.firstChild.nodeValue;
             });
-
-        // placeTitle.data(points)
-        //     .each(function(d){ d.edit = false; });
-
-        var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
-        rotate_pts.enter()
-            .append("circle")
-            .attr("class","rotation")
-            .attr("r","40")
-            .attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
-
-        rotate_pts.exit().remove();
-        rotate_pts.attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
-        var bounding_box = hidden.select("path");
-        bounding_box.attr("d", function() {
-            if (pixel_bounds.length == 0) return;
-            var draw = [];
-            $.each(pixel_bounds, function(i, p) {
-                draw.push([p.x,p.y]);
-            });
-            return "M" + draw.join("L") + "Z";
-        }).attr("class","hiddenFrame")
 
         self.updateCircleBehavior();
         updateListBehavior();
@@ -473,26 +442,28 @@ sb.mesh.facet = function (frame, map, width, height) {
             self.refresh();
         });
 
-        names.on("mouseover",function(d,i){
-            ui.select("#c-"+i).attr("class","highlight");
-        });
-        names.on("mouseout",function(d,i){
-            ui.select("#c-"+i).attr("class","");
-        });
-        names.select(".place-edit").on("click",function(d,i){
-            var node = $(this).parent();
-            if (!d.edit) {
-                self.editText(node,i,"place");
-                self.removeInput();
-            } else self.saveText(node,i,"place");
-            d.edit = !d.edit;
-        });
-        names.select(".place-text").on("click",function(d,i){
-            if (d.edit) return;
-            self.removeInput();
-            self.editText($(this).parent(),i,"place");
-            d.edit = !d.edit;
-        });
+        var tempIndex = 0;
+        if (!processing_page) {
+            $( "#places ul" ).sortable({ 
+                axis:"y", 
+                cursor:"move",
+                start: function(event, ui) {
+                    tempIndex = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    var newIndex = ui.item.index();
+                    if (tempIndex == newIndex) return;
+
+                    places.splice(newIndex, 0, places.splice(tempIndex, 1)[0]);
+                    points.splice(newIndex, 0, points.splice(tempIndex, 1)[0]);
+                    lats.splice(newIndex, 0, lats.splice(tempIndex, 1)[0]);
+                    lons.splice(newIndex, 0, lons.splice(tempIndex, 1)[0]);
+                    tempIndex = 0;
+                    update();
+                }
+            });
+            $( "#places ul" ).disableSelection();
+        }
     }
 
     self.add = function(latitude, longitude, placename, skipAnimation) {
@@ -516,22 +487,23 @@ sb.mesh.facet = function (frame, map, width, height) {
             $("#meshu-container").removeClass("inactive");
 
             new_pt = [lon, lat];
-            // if (skipAnimation) {
+            if (skipAnimation) {
                 points.push([new_pt[0], new_pt[1]]);
 
                 self.updatePixelBounds();
                 update();
                 updateMesh(skipAnimation);
-            // } else {
-            //     // make the new point start from the last location
-            //     var last = points[points.length-1];
-            //     points.push([last[0], last[1]]);
-            //     self.updatePixelBounds();
-            //     update();
+            } else {
+                // make the new point start from the last location
+                // var last = points[points.length-1];
+                var last = points[0];
+                points.push([last[0], last[1]]);
+                self.updatePixelBounds();
+                update();
 
-            //     // animate the new point in place
-            //     updateInterval = setInterval(updateMesh, 40);
-            // }
+                // animate the new point in place
+                updateInterval = setInterval(updateMesh, 40);
+            }
         } else {
             points.push([lon, lat]);
             update();
@@ -593,11 +565,11 @@ sb.mesh.facet = function (frame, map, width, height) {
         rasterize it correctly - yikes!
     */
     self.bakeStyles = function() {
-        hidden.style("display", "none");
+        // hidden.style("display", "none");
     };
 
     self.unBakeStyles = function() {
-        hidden.style("display", "");
+        // hidden.style("display", "");
     };
 
     self.locations = function(locs) {
@@ -619,36 +591,6 @@ sb.mesh.facet = function (frame, map, width, height) {
         self.locationsSet();
 
         return self;
-    };
-
-    self.editText = function(node,i,type) {
-        var button = node.find("." + type + "-edit").text("save");
-        var field = node.find("." + type + "-text");
-        var value = ((type == "title") ? field.text() : places[i]);
-
-        node.addClass("active");
-        field.html('<input value="' + value + '">').find("input").focus();
-    };
-    self.saveText = function(node, i, type) {
-        var button = node.find("." + type + "-edit").text("edit");
-        var text = node.find("input").val();
-
-        node.removeClass("active");
-        node.find("." + type + "-text").text(text);
-
-        if (type == "place") {
-            places[i] = text;
-        }
-        else return text;
-    };
-    self.removeInput = function(event){
-        var titles = d3.select("#places").selectAll("li.place .title");
-        titles.each(function(d, i) {
-            if (!d.edit) return;
-            d.edit = false;
-            self.saveText($(this), i, "place");
-        });
-        return false;
     };
 
     self.refresh = function() {

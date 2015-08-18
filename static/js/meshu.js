@@ -93,6 +93,12 @@ sb.meshu = function(frame, renderer, existingMap) {
         // default input
         if (input == "add a city, place, or address") return;
 
+        if (input.split(",").length == 2 && Number(input.split(",")[0]) && Number(input.split(",")[1])) {
+            mesh.add(input.split(",")[0], input.split(",")[1], input);
+            self.updateBounds();
+            return;
+        }
+
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
         // proxy geocoder, used for https
@@ -130,6 +136,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
                     switch (mesh.name) {
                         case 'facet':
+                        case 'orbit':
                             mesh.add(first.latLng.lat, first.latLng.lng, input);
                             self.updateBounds();
 

@@ -125,7 +125,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/facet', 'base_view', {
 		'template': 'meshu/item/item.html'
 	}),
-	url(r'^make/circle', 'base_view', {
+	url(r'^make/orbit', 'base_view', {
 		'template': 'meshu/item/circle.html'
 	}),
 	url(r'^make/radial', 'base_view', {

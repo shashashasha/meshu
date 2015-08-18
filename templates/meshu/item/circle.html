@@ -4,6 +4,8 @@
 
 {% block page_type %}edit{% endblock page_type %}
 
+{% block body_class %}orbit{% endblock body_class %}
+
 {% block page_title %}Step 1: Choose Your Places{% endblock %}
 
 {% block tooltips %}
@@ -50,36 +52,6 @@
             <p class="note">pendant max side length: 3"</p>
             <p class="note">chain length: 18"</p>
     </div>
-    <!-- <div class="wrapper" id="wrapper-cufflinks">
-            <svg id="preview-cufflinks" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_cufflinks.png" width="300" height="300" x="0" y="0">
-            </svg>
-            <p class="title">Cufflinks</p>
-            <p class="note">cufflink max side length: 1.25"</p>
-            <p class="note important">we recommend using 4-10 points for cufflinks</p>
-    </div> -->
-    <div class="wrapper last" id="wrapper-ring">
-        <div class="ring-frame">
-            <div class="tri"></div>
-            <div class="triangle">new</div>
-            <img id="ring-img" src="{{ STATIC_URL }}images/preview/preview_ring.png">
-            <svg id="preview-ring" width="100%" height="282">
-                <image xlink:href="{{ STATIC_URL }}images/preview/preview_ring_ie.png" width="300" height="300" x=0 y=0>
-            </svg>
-            <div class="ring-preview-frame">
-                <canvas id="ring-preview-canvas" width="500" height="150"></canvas>
-                <div class="ring-preview-strip-container strip">
-                </div>
-            </div>
-        </div>
-        <p class="title">Ring</p>
-        <p class="note">available in sizes 4-14</p>
-        <p class="note important">we recommend using 4-10 points for rings</p>
-    </div>
-    <div class="ie9-note">
-        To view a 3D model of this ring, please view this page in
-        <a href="https://www.google.com/chrome" target="_blank">Chrome</a>, <a href="http://www.apple.com/safari/download/" target="_blank">Safari</a>, or <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>.
-    </div>
 {% endblock %}
 
 {% block materials %}
@@ -101,43 +73,27 @@
         </div>
         White Acrylic<span class="price"></span>
     </li>
-    <!-- <li id="black-nylon" class="material-option">
-        <img src="{{ STATIC_URL }}images/materials/facet-black-nylon.jpg" class="img">
-        Black Nylon<span class="price"></span>
-    </li> -->
     <li id="white-nylon" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-nylon.jpg" class="img ring">
         </div>
         White Nylon<span class="price"></span>
     </li>
     <li id="sterling-silver" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-silver.jpg" class="img ring">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-silver.jpg" class="img cufflinks">
         </div>
         Sterling Silver<span class="price"></span>
     </li>
     <li id="polished-brass" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-polished-brass.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-brass.jpg" class="img ring">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img cufflinks">
         </div>
         Polished Brass<span class="price"></span>
     </li>
 {% endblock %}
 
 {% block final-touch %}
-    <div id="final-ring">
-        <div class="frame"></div>
-        <h2 class="add-on-header">Ring Size: <span id="ring-number"></span></h2>
-        <p>Drag the slider below to adjust the ring size:</p>
-        <input id="ring-range" type="range" min="4" max="14" step=".5"/>
-        <p class="note" style="margin-top:44px;">Not sure about your ring size? <a href="http://findmyringsize.com/" style="color:#808080; text-decoration:underline;">Click here</a> for help.</p>
-    </div>
     <div id="final-rotate">
         <svg id="rotate"></svg>
         <div id="rotate-cw" class="rotate-arrow"></div>
@@ -147,42 +103,14 @@
     </div>
 {% endblock %}
 
+{% block extra-libraries %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-sortable.min.js"></script>
+{% endblock %}    
+
 {% block script-specific %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.circle.js"></script>
 {% endblock %}
 
 {% block resources %}
-{{ block.super }}
-
-    <script type="text/javascript">
-
-    var data = [],
-    bgWidth = 500,
-    stripNum = 24,
-    stripWidth = (bgWidth / stripNum);
-
-    for (var i = 0; i < stripNum; i++) {
-      var rotate = 'rotateY(' + (i * 360 / stripNum) + 'deg) translateZ(79px)';
-      data.push({
-        // 'class': String.fromCharCode(97 + i), // 'a' through 'x'
-        'class': 'strip-rotation strip-' + i,
-        'background-position': (bgWidth - (stripWidth * i)) + 'px 0',
-        '-moz-transform': rotate,
-        '-webkit-transform': rotate
-      });
-    }
-
-    var strips = d3.select(".ring-preview-strip-container")
-        .selectAll("div")
-        .data(data);
-
-    strips.enter()
-        .append("div")
-            .attr("class", function(d) { return d.class; })
-            .style("background-position", function(d) { return d["background-position"]; })
-            .style("-moz-transform", function(d) { return d["-moz-transform"]; })
-            .style("-webkit-transform", function(d) { return d["-webkit-transform"]; })
-            .style("-webkit-transform-style", "preserve-3d");
-
-    </script>
+    {{ block.super }}   
 {% endblock %}

@@ -4,11 +4,12 @@ $(function() {
 	// initialize the catalog with the current promotion if any
 	// sorry about this, future us. signed, past sha.
 	var promotion = loadedMeshu ? loadedMeshu.promo : null,
-		currentRenderer = loadedMeshu ? loadedMeshu.renderer :
+		currentRenderer = loadedMeshu ? loadedMeshu.renderer : 'facet';
 							$("body").hasClass("radial") ? 'radial' : 'facet';
 
-	if ($("body").hasClass("print"))
-		currentRenderer = "print";
+	if ($("body").hasClass("radial")) currentRenderer = "radial";
+	else if ($("body").hasClass("print")) currentRenderer = "print";
+	else if ($("body").hasClass("orbit")) currentRenderer = "orbit";
 
 
 	// the list of all available meshu products for purchase
@@ -166,7 +167,7 @@ $(function() {
    				$("#final-rotate").show();
 				$("#final-ring").hide();
 
-				if (currentRenderer == 'facet') {
+				if (currentRenderer == 'facet' || currentRenderer == 'orbit') {
 					sb.rotator.update(product);
 					sb.rotator.on("rotated", function() {
 						sb.ui.orderer.updated();
@@ -200,6 +201,8 @@ $(function() {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
 				sb.product.initialize(canvas, catalog);
 			});
+		} else if (meshu.mesh().name == "orbit") {
+			sb.product.initialize(".delaunay", catalog);
 		}
 	}
 

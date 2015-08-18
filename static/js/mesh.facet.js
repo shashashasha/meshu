@@ -37,10 +37,10 @@ sb.mesh.facet = function (frame, map, width, height) {
             .attr("stroke","black")
             .attr("stroke-linejoin","round");
 
-    var hidden = main.append("g")
-                 .attr("class", "hidden");
+    // var hidden = main.append("g")
+    //              .attr("class", "hidden");
 
-    hidden.append("path");
+    // hidden.append("path");
 
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:2;")
@@ -402,32 +402,32 @@ sb.mesh.facet = function (frame, map, width, height) {
         // placeTitle.data(points)
         //     .each(function(d){ d.edit = false; });
 
-        var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
-        rotate_pts.enter()
-            .append("circle")
-            .attr("class","rotation")
-            .attr("r","40")
-            .attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
+        // var rotate_pts = hidden.selectAll("circle.rotation").data(pixel_bounds);
+        // rotate_pts.enter()
+        //     .append("circle")
+        //     .attr("class","rotation")
+        //     .attr("r","40")
+        //     .attr("cx", function(d, i) {
+        //         return d.x;
+        //     }).attr("cy", function(d, i) {
+        //         return d.y;
+        //     });
 
-        rotate_pts.exit().remove();
-        rotate_pts.attr("cx", function(d, i) {
-                return d.x;
-            }).attr("cy", function(d, i) {
-                return d.y;
-            });
-        var bounding_box = hidden.select("path");
-        bounding_box.attr("d", function() {
-            if (pixel_bounds.length == 0) return;
-            var draw = [];
-            $.each(pixel_bounds, function(i, p) {
-                draw.push([p.x,p.y]);
-            });
-            return "M" + draw.join("L") + "Z";
-        }).attr("class","hiddenFrame")
+        // rotate_pts.exit().remove();
+        // rotate_pts.attr("cx", function(d, i) {
+        //         return d.x;
+        //     }).attr("cy", function(d, i) {
+        //         return d.y;
+        //     });
+        // var bounding_box = hidden.select("path");
+        // bounding_box.attr("d", function() {
+        //     if (pixel_bounds.length == 0) return;
+        //     var draw = [];
+        //     $.each(pixel_bounds, function(i, p) {
+        //         draw.push([p.x,p.y]);
+        //     });
+        //     return "M" + draw.join("L") + "Z";
+        // }).attr("class","hiddenFrame")
 
         self.updateCircleBehavior();
         updateListBehavior();
@@ -594,11 +594,11 @@ sb.mesh.facet = function (frame, map, width, height) {
         rasterize it correctly - yikes!
     */
     self.bakeStyles = function() {
-        hidden.style("display", "none");
+        // hidden.style("display", "none");
     };
 
     self.unBakeStyles = function() {
-        hidden.style("display", "");
+        // hidden.style("display", "");
     };
 
     self.locations = function(locs) {

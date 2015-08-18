@@ -221,7 +221,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
 
-        var radius = processing_page ? parseInt(width)/350 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
+        var radius = processing_page ? parseInt(width)/400 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
 
         var strokeWidth = processing_page ? parseInt(width)/2500 : 1;
