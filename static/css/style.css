@@ -899,6 +899,12 @@ body.firefox #place-title #input {
   padding: 1px 0;
   width: 315px;
 }
+.orbit .place {
+  width: 273px;
+}
+.orbit .place:first-child {
+  color: red;
+}
 .print .place {
   width: auto;
   margin: 6px 0;
@@ -936,7 +942,8 @@ body.firefox .place .place-text {
   color: black;
   background-color: #eee;
 }
-.print .place-text {
+.print .place-text,
+.orbit .place-text {
   cursor: move;
   width: 235px;
 }
@@ -2808,6 +2815,9 @@ body.ie #maps .mini-meshu div {
 .status-list path {
   stroke-width: 15;
 }
+.status-list .projection-preview path {
+  stroke-width: 7px !important;
+}
 .status-block {
   float: left;
   width: 54px;
@@ -2837,6 +2847,7 @@ body.ie #maps .mini-meshu div {
   border: 1px solid #e6e6e6;
   width: 80px;
   height: 78px;
+  overflow: hidden;
 }
 .order-status-updater {
   color: black;

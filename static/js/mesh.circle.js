@@ -442,6 +442,13 @@ sb.mesh.orbit = function (frame, map, width, height) {
             self.refresh();
         });
 
+        names.on("mouseover",function(d,i){
+            ui.select("#c-"+i).attr("class","highlight");
+        });
+        names.on("mouseout",function(d,i){
+            ui.select("#c-"+i).attr("class","");
+        });
+
         var tempIndex = 0;
         if (!processing_page) {
             $( "#places ul" ).sortable({ 

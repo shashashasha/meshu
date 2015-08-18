@@ -49,21 +49,17 @@
     <script type="text/javascript">
 
         d3.selectAll("#master-svg").attr("class","meshu-svg")
-        d3.selectAll(".delaunay").each(function(){
-            var node = d3.select(this);
-            var transform = node.attr("transform");
-            if (transform) {
-                var t = node.attr("transform").split('rotate(').pop() || "";
+        d3.selectAll(".delaunay").attr("transform", function(){
+            var transform = d3.select(this).attr("transform");
 
-                if (t.length) {
-                    t = 'rotate(' + t;
-                }
+            if (transform) var t = transform.split('rotate(').pop() || "";
+            else t = "0)";
 
-                node.attr("transform","scale(.15) translate(-40, -40)" + t); // + t);
-            } else {
-                node.attr("transform","scale(.15) translate(-40, -40)"); // + t);
-            }
+            return "scale(.15) translate(-40, -40) rotate(" + t;
         });
+
+        d3.selectAll(".projection-clip").attr("transform", "scale(.14) translate(0, 75)");
+        d3.selectAll(".projection-preview .delaunay").attr("transform", "scale(.14) translate(0, 75)");
 
         // Remove background color styling on postcard/poster svg's
         d3.selectAll(".projection-preview.meshu-svg").each(function() {
