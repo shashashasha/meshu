@@ -979,8 +979,15 @@ body.firefox #place-title #input {
 .orbit .place {
     width: 273px;
 }
-.orbit .place:first-child {
-    color: red;
+.orbit .place-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+.orbit .place:first-child .place-text {
+    width: 169px;
+    margin-left: 4px;
 }
 .print .place {
     width: auto;
@@ -1023,7 +1030,7 @@ body.firefox .place .place-text {
 .print .place-text,
 .orbit .place-text {
     cursor: move;
-    width: 235px;
+    width: 249px;
 }
 .print .place:hover .place-text {
     background-color: inherit;
@@ -1045,18 +1052,20 @@ body.firefox .place .place-text {
     display: inline;
 }
 
+.orbit .origin,
 .print .place:first-child .rail,
 .print .place:first-child .road,
 .print .place:first-child .air,
 .print .place .origin {
     display: none;
 }
-.print .place:first-child .origin {
+.print .place:first-child .origin,
+.orbit .place:first-child .origin {
     background-image: none;
     width: auto;
     padding: 1px 17px;
     display: inline-block;
-    border-color: @pink;
+    border: 1px solid @pink;
     background-color: rgba(255,63,180,.2);
 }
 

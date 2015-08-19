@@ -7,7 +7,7 @@ sb.mesh.orbit = function (frame, map, width, height) {
         selfId = parseInt(Math.random() * 10000000000, 10);
 
     // the name of the product line
-    self.name = 'facet';
+    self.name = 'orbit';
 
     // making this not global ._.
     var lats = [],
@@ -375,20 +375,17 @@ sb.mesh.orbit = function (frame, map, width, height) {
             .data(points);
 
         var place = names.enter().append("li").attr("class", "place");
-        // var title = place.append("span").attr("class", "title");
+            place.append("span").attr("class","origin").text("Origin");
             place.append("span").attr("class", "place-text")
                 .html(function(d, i) {
                     decoder.innerHTML = places[i];
                     return decoder.firstChild.nodeValue;
                 });
-            // title.append("span").attr("class", "place-edit").html("edit");
             place.append("span").attr("class", "place-delete").html("x");
 
         names.exit().remove();
 
         names.attr("id", function(d, i) { return "p-" + i; })
-            // .select(".title").each(function(d) { d.edit = false; })
-            // .attr("class","title")
             .select(".place-text")
             .text(function(d, i) {
                 // decode the text
@@ -616,7 +613,14 @@ sb.mesh.orbit = function (frame, map, width, height) {
 
     // outputs svg data
     self.output = function() {
-        return $('#' + selfId).html();
+        var rotation = sb.rotator ? sb.rotator.getRotation() : 0;
+        g.attr("transform","rotate(" + rotation + ")");
+
+        var rawSVG = $('#' + selfId).html();
+
+        g.attr("transform","rotate(0)");
+
+        return rawSVG;
     };
 
     return self;

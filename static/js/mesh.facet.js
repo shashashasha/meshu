@@ -669,7 +669,13 @@ sb.mesh.facet = function (frame, map, width, height) {
     // outputs svg data
     self.output = function() {
         var rotation = sb.rotator ? sb.rotator.getRotation() : 0;
-        return $('#' + selfId).html();
+        g.attr("transform","rotate(" + rotation + ")");
+
+        var rawSVG = $('#' + selfId).html();
+
+        g.attr("transform","rotate(0)");
+
+        return rawSVG;
     };
 
     return self;
