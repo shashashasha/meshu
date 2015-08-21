@@ -443,6 +443,14 @@ body.win #login-form ul {
     background-color: #ccc;
     position: relative;
 }
+.product-shot.print {
+    width:100%; 
+    height:300px;
+    img { margin: 0; }
+    .text { margin-left: 520px; }
+    h3 { margin-top: 30px; }
+    p { width: 420px; }
+}
 .product-shot.new {
     width: 600px;
     padding-left: 310px;
@@ -543,6 +551,9 @@ body.win #login-form ul {
 .press-container {
     height: 250px;
     margin: 20px 0 40px;
+    .big {
+        margin-bottom: 20px;
+    }
 }
 
 .press-images {
@@ -3057,4 +3068,188 @@ body.ie #maps .mini-meshu div {
 }
 .notes li {
     margin-bottom: 20px;
+}
+
+@media screen and (max-width: 850px){
+    #top {
+        width: 100%;
+        #nav {
+            position: relative;
+        }
+    }
+
+    #content {
+        width: 100%;
+        #photos {
+            padding: 0;
+            height: auto;
+            background-color: white;
+            img {
+                position: relative;
+                width: 100%;
+            }
+            #intro-text {
+                margin: 10px 0 20px;
+                font-size: 14px;
+                width: 100%;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+            .large-button {
+                display: inline-block;
+                margin: 0 0 10px 10px;
+                font-size: 18px;
+            }
+        }
+        .big {
+            font-size: 22px;
+            clear: both;
+        }
+        .product-shot.new,
+        .product-shot.old {
+            display: none;
+        }
+        .product-shot, .product-grid {
+            width: 100%;
+            height: auto;
+        }
+        .product-shot.print, .product-shot.new {
+            margin-top: 40px;
+            padding: 0;
+            height: auto;
+            background-color: white;
+            img {
+                width: 100%;
+                min-width: 500px;
+            }
+            .text {
+                margin: 0;
+                right: 0;
+            }
+            h3 {
+                margin-top: 10px;
+                font-size: 18px;
+            }
+            p { 
+                width: auto; 
+                font-size: 14px;
+            }
+        }
+        .product-grid.large {
+            margin-bottom: 20px;
+        }
+        .product-grid li {
+            height: auto;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .product-shot img {
+            position: relative;
+        }
+        #banners {
+            height: auto;
+            img {
+                position: relative;
+            }
+        }
+        .press-container {
+            display: none;
+        }
+        .get-started {
+            height: auto;
+            img {
+                display: none;
+            }
+            .text {
+                margin: 0;
+                padding: 0 10px;
+                .options {
+                    margin: 10px auto;
+                    .option {
+                        font-size: 16px;
+                        margin: 0 10px 10px 0;
+                    }
+                }
+                .bottom {
+                    font-size: 14px;
+                    line-height: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px){
+    #nav {
+        margin: 5px 0;
+    }
+    #diagram li {
+        display: block;
+        margin: 0 auto;
+        width: auto;
+        height: auto;
+        img {
+            margin: 0 auto;
+            display: block;
+            width: 150px;
+        }
+        p {
+            font-size: 14px;
+        }
+    }
+    .product-shot.print {
+        img { margin-bottom: 20px; }
+        .text {
+            width: 100%;
+            padding-bottom: 20px;
+            text-align: right;
+        }
+    }
+    .product-grid li {
+        width: 33%;
+    }
+    .product-grid.small li:nth-child(2) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 850px){
+    #nav {
+        text-align: right;
+    }
+    #diagram {
+        margin: 0;
+        li {
+            display: inline-block;
+            margin: 0 1%;
+            width: 30%;
+            height: auto;
+            float: left;
+            img {
+                margin: 0 auto;
+                display: block;
+                width: 80%;
+            }
+            p {
+                font-size: 14px;
+                display: inline;
+            }
+        }
+    }
+    .product-shot.print {
+        .text {
+            position: absolute;
+            width: 50%;
+        }
+    }
+    .product-grid li {
+        width: 25%;
+    }
+    .product-grid.large li:nth-child(1),
+    .product-grid.large li:nth-child(3) {
+        display: none;
+    }
 }

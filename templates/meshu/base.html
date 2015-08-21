@@ -31,6 +31,7 @@
 
 <body class="{% block body_class %}{% endblock %}">
 	<div id="top">
+		<a href="/"><img src="{{ STATIC_URL }}images/logo.png" alt="meshu"/></a>
 		{% block navigation %}
 		<ul id="nav">
 		    <li class="nav-list"><a href="/make/">make</a></li>
@@ -98,7 +99,6 @@
 			</form>
 		</div>
 		{% endblock %}
-		<a href="/"><img src="{{ STATIC_URL }}images/logo.png" alt="meshu"/></a>
 	</div>
 
 	<div id="content" class="{% block page_type %}{% endblock %}">

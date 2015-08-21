@@ -2,6 +2,7 @@
 	Slideshow for the index.html page
 */
 $(function() {
+	if ($(window).width() < 768) return;
 	var macroIndex = 0;
 	var macroSum = $(".macro").length;
 	setInterval(function(){

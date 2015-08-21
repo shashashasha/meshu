@@ -2,6 +2,10 @@
 
 {% block title %}Meshu - Turn your places into beautiful objects.{% endblock %}
 
+{% block styles %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
 {% block content %}
 	<div id="photos">
 		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_01.jpg" style="">
@@ -13,7 +17,7 @@
 			Whether it's for a friend, a loved one, or yourself, Meshu helps you make beautiful mementos from the places that are important to you.
 		</div>
 		<div class="large-button">
-			<a href="/make/facet" class="button pink">Make Your Own</a>
+			<a href="/make/" class="button pink">Make Your Own</a>
 		</div>
 		<div class="large-button">
 			<a href="/gallery/" class="button">View Our Gallery</a>
@@ -40,11 +44,11 @@
         </li>
     </ul>
 
-    <a href="/make/arc" class="product-shot print" style="width:100%; height:300px;">
-    	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="margin:0; float: left;">
-    	<div style="margin-left: 520px;">
-	    	<h3 style="margin-top: 30px;">Trace your travels.</h3>
-	    	<p style="width: 420px;">Accentuate your home with maps of your journeys,<br>available as posters or postcards.</p>
+    <a href="/make/arc" class="product-shot print">
+    	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="float: left;">
+    	<div class="text">
+	    	<h3>Trace your travels.</h3>
+	    	<p>Accentuate your home with maps of your journeys,<br>available as posters or postcards.</p>
 	    	<div class="button pink">Make a print</div>
     	</div>
     </a>
@@ -56,7 +60,7 @@
     </a>
     <ul class="product-grid small">
     	<li><a href="/make/radial"><img src="{{ STATIC_URL }}images/gallery/r6.jpg"></a></li>
-    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m1.jpg"></a></li>
+    	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/a4.jpg"></a></li>
     	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m10.jpg"></a></li>
 		<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m3.jpg"></a></li>
     </ul>
@@ -64,10 +68,10 @@
         <li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m14.jpg"></a></li>
     	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m5.jpg"></a></li>
     	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m11.jpg"></a></li>
-    	<li><a href="/make/radial" class="dark"><img src="{{ STATIC_URL }}images/gallery/r4.jpg"></a></li>
-    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m10.jpg"></a></li>
     	<li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m6.jpg"></a></li>
-    	<!-- <li><a href="/make/facet"><img src="{{ STATIC_URL }}images/gallery/m7.jpg"></a></li> -->
+    	<li><a href="/make/radial" class="dark"><img src="{{ STATIC_URL }}images/gallery/r4.jpg"></a></li>
+    	<!-- <li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m10.jpg"></a></li> -->
+    	<li><a href="/make/facet" class="dark"><img src="{{ STATIC_URL }}images/gallery/m16.jpg"></a></li>
     </ul>
     <a class="product-shot old" href="/make/radial">
     	<img src="{{ STATIC_URL }}images/index/radial.jpg">
@@ -86,9 +90,8 @@
 		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
 	</div>
 
-	<h2 class="big">Meshu in the press:</h2>
-
 	<div class="press-container">
+		<h2 class="big">Meshu in the press:</h2>
 		<div class="press-images">
 			<div style="width: 280px;" class="double">
 				<a href="http://www.trendhunter.com/trends/meshu-jewelry#!/photos/154827/1" target="_blank"><img src="{{ STATIC_URL }}images/press/1_trendhunter.jpg"/></a>

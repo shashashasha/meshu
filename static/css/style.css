@@ -370,6 +370,22 @@ body.win #login-form ul {
   background-color: #ccc;
   position: relative;
 }
+.product-shot.print {
+  width: 100%;
+  height: 300px;
+}
+.product-shot.print img {
+  margin: 0;
+}
+.product-shot.print .text {
+  margin-left: 520px;
+}
+.product-shot.print h3 {
+  margin-top: 30px;
+}
+.product-shot.print p {
+  width: 420px;
+}
 .product-shot.new {
   width: 600px;
   padding-left: 310px;
@@ -470,6 +486,9 @@ body.win #login-form ul {
 .press-container {
   height: 250px;
   margin: 20px 0 40px;
+}
+.press-container .big {
+  margin-bottom: 20px;
 }
 .press-images {
   width: 939px;
@@ -2977,4 +2996,188 @@ body.ie #maps .mini-meshu div {
 }
 .notes li {
   margin-bottom: 20px;
+}
+@media screen and (max-width: 850px) {
+  #top {
+    width: 100%;
+  }
+  #top #nav {
+    position: relative;
+  }
+  #content {
+    width: 100%;
+  }
+  #content #photos {
+    padding: 0;
+    height: auto;
+    background-color: white;
+  }
+  #content #photos img {
+    position: relative;
+    width: 100%;
+  }
+  #content #photos #intro-text {
+    margin: 10px 0 20px;
+    font-size: 14px;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  #content #photos .large-button {
+    display: inline-block;
+    margin: 0 0 10px 10px;
+    font-size: 18px;
+  }
+  #content .big {
+    font-size: 22px;
+    clear: both;
+  }
+  #content .product-shot.new,
+  #content .product-shot.old {
+    display: none;
+  }
+  #content .product-shot,
+  #content .product-grid {
+    width: 100%;
+    height: auto;
+  }
+  #content .product-shot.print,
+  #content .product-shot.new {
+    margin-top: 40px;
+    padding: 0;
+    height: auto;
+    background-color: white;
+  }
+  #content .product-shot.print img,
+  #content .product-shot.new img {
+    width: 100%;
+    min-width: 500px;
+  }
+  #content .product-shot.print .text,
+  #content .product-shot.new .text {
+    margin: 0;
+    right: 0;
+  }
+  #content .product-shot.print h3,
+  #content .product-shot.new h3 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  #content .product-shot.print p,
+  #content .product-shot.new p {
+    width: auto;
+    font-size: 14px;
+  }
+  #content .product-grid.large {
+    margin-bottom: 20px;
+  }
+  #content .product-grid li {
+    height: auto;
+  }
+  #content .product-grid li img {
+    width: 100%;
+    height: 100%;
+  }
+  #content .product-shot img {
+    position: relative;
+  }
+  #content #banners {
+    height: auto;
+  }
+  #content #banners img {
+    position: relative;
+  }
+  #content .press-container {
+    display: none;
+  }
+  #content .get-started {
+    height: auto;
+  }
+  #content .get-started img {
+    display: none;
+  }
+  #content .get-started .text {
+    margin: 0;
+    padding: 0 10px;
+  }
+  #content .get-started .text .options {
+    margin: 10px auto;
+  }
+  #content .get-started .text .options .option {
+    font-size: 16px;
+    margin: 0 10px 10px 0;
+  }
+  #content .get-started .text .bottom {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #nav {
+    margin: 5px 0;
+  }
+  #diagram li {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+  }
+  #diagram li img {
+    margin: 0 auto;
+    display: block;
+    width: 150px;
+  }
+  #diagram li p {
+    font-size: 14px;
+  }
+  .product-shot.print img {
+    margin-bottom: 20px;
+  }
+  .product-shot.print .text {
+    width: 100%;
+    padding-bottom: 20px;
+    text-align: right;
+  }
+  .product-grid li {
+    width: 33%;
+  }
+  .product-grid.small li:nth-child(2) {
+    display: none;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 850px) {
+  #nav {
+    text-align: right;
+  }
+  #diagram {
+    margin: 0;
+  }
+  #diagram li {
+    display: inline-block;
+    margin: 0 1%;
+    width: 30%;
+    height: auto;
+    float: left;
+  }
+  #diagram li img {
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+  }
+  #diagram li p {
+    font-size: 14px;
+    display: inline;
+  }
+  .product-shot.print .text {
+    position: absolute;
+    width: 50%;
+  }
+  .product-grid li {
+    width: 25%;
+  }
+  .product-grid.large li:nth-child(1),
+  .product-grid.large li:nth-child(3) {
+    display: none;
+  }
 }
