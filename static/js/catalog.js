@@ -13,15 +13,15 @@ sb.catalog = function(renderer, promo) {
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price":85,"colors":["black","white"]},
 						"nylon":{"price":90,"colors":["white"]},
-						"brass":{"price":135,"colors":["polished"]},
-						"silver":{"price":145,"colors":["sterling"]}
+						"silver":{"price":135,"colors":["sterling"]}
+						"brass":{"price":125,"colors":["polished"]}
 						},
 				   "necklace":
 				   		{"bamboo":{"price":85,"colors":["amber"]},
 				   		"acrylic":{"price": 90,"colors":["black","white"]},
 						// "nylon":{"price":90,"colors":["black","white"]},
-						"silver":{"price":165,"colors":["sterling"]},
-						"brass":{"price":155,"colors":["polished"]}
+						"silver":{"price":145,"colors":["sterling"]},
+						"brass":{"price":135,"colors":["polished"]}
 						},
 					"cufflinks":
 						{"silver":{"price":155,"colors":["sterling"]},
@@ -29,15 +29,15 @@ sb.catalog = function(renderer, promo) {
 						},
 					"ring":
 						{"nylon":{"price":30,"colors":["white"]},
-						"silver":{"price":120,"colors":["sterling"]},
-						"brass":{"price":110,"colors":["polished"]}
+						"silver":{"price":105,"colors":["sterling"]},
+						"brass":{"price":95,"colors":["polished"]}
 						}
 					};
 
 	materialOptions.radial = {"earrings":
-						{"bamboo":{"price":80,"colors":["amber"]},
-						"acrylic":{"price":85,"colors":["black","white"]},
-						"nylon":{"price":95,"colors":["white"]}
+						{"bamboo":{"price":75,"colors":["amber"]},
+						"acrylic":{"price":80,"colors":["black","white"]},
+						"nylon":{"price":85,"colors":["white"]}
 						},
 				   "pendant":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
@@ -54,21 +54,21 @@ sb.catalog = function(renderer, promo) {
 	materialOptions.orbit = {"earrings":
 						{"bamboo":{"price":75,"colors":["amber"]},
 						"acrylic":{"price":80,"colors":["black","white"]},
-						"nylon":{"price":85,"colors":["white"]}
+						"nylon":{"price":85,"colors":["black"]}
 						},
 				   "pendant":
 				   		{"bamboo":{"price":80,"colors":["amber"]},
 				   		"acrylic":{"price":85,"colors":["black","white"]},
 						"nylon":{"price":90,"colors":["white"]},
-						"brass":{"price":135,"colors":["polished"]},
-						"silver":{"price":145,"colors":["sterling"]}
+						"silver":{"price":145,"colors":["sterling"]},
+						"brass":{"price":135,"colors":["polished"]}
 						},
 				   "necklace":
 				   		{"bamboo":{"price":85,"colors":["amber"]},
 				   		"acrylic":{"price": 90,"colors":["black","white"]},
 						// "nylon":{"price":90,"colors":["black","white"]},
-						"silver":{"price":165,"colors":["sterling"]},
-						"brass":{"price":155,"colors":["polished"]}
+						"silver":{"price":155,"colors":["sterling"]},
+						"brass":{"price":145,"colors":["polished"]}
 						}
 					};
 
