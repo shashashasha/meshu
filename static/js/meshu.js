@@ -1,7 +1,7 @@
 var sb = sb || {};
 var mapzenapi = 'search-HWoiFxs',
     routingapi = 'valhalla-Gap3BYU',
-    mapquestapi = 'Fmjtd|luub2002n0,bx=o5-9urx5r';
+    mapquestapi = 'zp2249S80Har3WjiYTzWFRFy2SafTrud';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
@@ -146,11 +146,11 @@ sb.meshu = function(frame, renderer, existingMap) {
                             mesh.add(first[1], first[0], input);
                             self.updateBounds();
 
-                            mesh.addCountry(first.adminArea1);
+                            mesh.addCountry(results[0].properties.country_a);
 
                             // set the zoom for first point
                             if (mesh.points().length == 1) {
-                                setZoomGranularity(first.geocodeQuality);
+                                setZoomGranularity(12);
                             }
                             break;
                         case 'radial':

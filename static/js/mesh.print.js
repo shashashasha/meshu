@@ -370,7 +370,9 @@ sb.mesh.print = function (frame, map, width, height) {
     function highlightCountry(countryCode, flag) {
         var c = d3.select(".map").selectAll("path")
             .filter(function(d){
-                return d.properties.ISO2 == countryCode;
+                //mapquest returns ISO2, mapzen is ISO3
+                //diff between clicking and searching for place
+                return d.properties.ISO2 == countryCode || d.properties.ISO3 == countryCode;
             }).classed("current",flag)
             .each(function(){
                 this.parentNode.appendChild(this);
