@@ -236,7 +236,7 @@ sb.mesh.radial = function (frame, map, width, height) {
 
         var base = mapquest + '{start}&to={end}&key={key}';
 
-        valhalla.mapzen.com/route?json={}&api_key=
+        //valhalla.mapzen.com/route?json={}&api_key=
 
         for (var i = 1; i < points.length; i++) {
             var end = points[i],
