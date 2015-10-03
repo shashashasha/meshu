@@ -221,8 +221,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
         copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
 
-        // var radius = processing_page ? parseInt(width)/350 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
-        var radius = 11;
+        var radius = processing_page ? parseInt(width)/350 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
         copySVG.selectAll("circle").attr("r",radius);
 
         var strokeWidth = processing_page ? parseInt(width)/2500 : 1;
@@ -390,13 +389,8 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        // s = Math.min(6000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
-        // t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
-
-
-        s = 4000;
-        t = [-3001.3382763718755, 3232.9078758098653];
-        console.log(t)
+        s = Math.min(6000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
+        t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
 
         if (w == 600) {
             if (s < 100) {
@@ -520,8 +514,7 @@ sb.mesh.print = function (frame, map, width, height) {
             function getWidth(mode) {
                 if (processing_page) {
                     var d = parseInt(width);
-                    return 9;
-                    // return (d/600);
+                    return (d/600);
                 }
                 if (mode == "air") {
                     if (id == "meshu-container") return 2;
@@ -535,8 +528,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 if (mode != "air") return;
                 if (processing_page) {
                     var d = parseInt(width);
-                    return "15 15";
-                    // return (d/300) + " " + (d/300);
+                    return (d/300) + " " + (d/300);
                 }
                 if (id == "meshu-container") return "4 4";
                 return "3 3";

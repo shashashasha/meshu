@@ -1,6 +1,7 @@
 var sb = sb || {};
 var mapzenapi = 'search-HWoiFxs',
-    routingapi = 'valhalla-Gap3BYU';
+    routingapi = 'valhalla-Gap3BYU',
+    mapquestapi = 'Fmjtd|luub2002n0,bx=o5-9urx5r';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
@@ -117,7 +118,6 @@ sb.meshu = function(frame, renderer, existingMap) {
                 console.log(error2);
             },
             success: function(data){
-                console.log(data);
                 var results = data.features;
                 loadingGif.hide();
 
