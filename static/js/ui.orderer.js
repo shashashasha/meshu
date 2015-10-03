@@ -156,7 +156,7 @@ sb.ui.orderer = function() {
 
 			if (renderer == "facet" && miniDelaunay.children().length ||
 				renderer == "radial" && $(".meshu-svg .radial").children().length ||
-				renderer == "print") {
+				renderer == "print" || renderer == "orbit") {
 				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
 					return;
 				review.find("#add-to-cart").removeClass("inactive");
