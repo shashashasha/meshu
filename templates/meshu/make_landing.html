@@ -2,18 +2,13 @@
 
 {% block title %}Meshu - Make Your Own Unique Jewelry{% endblock %}
 
+{% block page_type %}landing{% endblock page_type %}
 
 {% block content %}
 <div id="bg-map" style="position: absolute; width: 100%; height: 100%;">
 </div>
 <div id="make-landing">
-    <div class="content-banner">Meshu now comes in three flavors!</div>   
-    <div class="splitimages">
-        <a href="/make/facet">
-            <img src="{{ STATIC_URL }}images/gallery/m8.jpg"/>
-            <div class="button">Map your travels with Facet</div>
-        </a>
-    </div>
+    <div class="content-banner">Each meshu is custom-made for you!</div>   
     <div class="splitimages">
         <a href="/make/radial">
             <img src="{{ STATIC_URL }}images/gallery/r5.jpg"/>
@@ -21,8 +16,20 @@
         </a>
     </div>
     <div class="splitimages">
+        <a href="/make/facet">
+            <img src="{{ STATIC_URL }}images/gallery/m2.jpg"/>
+            <div class="button">Map your travels with Facet</div>
+        </a>
+    </div>
+    <div class="splitimages">
+        <a href="/make/orbit">
+            <img src="{{ STATIC_URL }}images/gallery/o0.jpg"/>
+            <div class="button">Trace your journey with Orbit</div>
+        </a>
+    </div>
+    <div class="bigimage">
         <a href="/make/arc">
-            <img src="{{ STATIC_URL }}images/gallery/a3.jpg"/>
+            <img src="{{ STATIC_URL }}images/index/print-wide.jpg"/>
             <div class="button">Or make a print with Arc</div>
         </a>
     </div>

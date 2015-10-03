@@ -2230,6 +2230,12 @@ circle.highlight,
     margin-right: 20px;
 }*/
 /* make landing page choice */
+.landing {
+  height: 700px;
+}
+.landing .map {
+  height: 100% !important;
+}
 #make-landing {
   position: absolute;
   top: 80px;
@@ -2239,7 +2245,7 @@ circle.highlight,
   width: 780px;
   /*width: 660px;*/
 
-  height: 400px;
+  height: 520px;
   z-index: 4;
   background: white;
   border: 1px solid #e6e6e6;
@@ -2255,7 +2261,8 @@ circle.highlight,
   font-size: 34px;
   padding: 10px 0 20px 0;
 }
-.splitimages {
+.splitimages,
+.bigimage {
   float: left;
   width: 31.3%;
   /*width: 44%;*/
@@ -2264,10 +2271,13 @@ circle.highlight,
   border: 1px solid #e6e6e6;
   box-sizing: border-box;
 }
-.splitimages img {
+.splitimages img,
+.bigimage img {
   width: 100%;
+  height: 100%;
 }
-.splitimages .button {
+.splitimages .button,
+.bigimage .button {
   width: 100%;
   margin: -3px 0 0 0;
   padding: 3px 0;
@@ -2275,13 +2285,20 @@ circle.highlight,
   font-size: 18px;
   background-color: #1fcaff;
 }
-.splitimages:hover {
+.splitimages:hover,
+.bigimage:hover {
   -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 }
-.splitimages:hover .button {
+.splitimages:hover .button,
+.bigimage:hover .button {
   background-color: #ff3fb4;
+}
+.bigimage {
+  width: 98%;
+  height: 120px;
+  margin-top: 20px;
 }
 /* mini meshu */
 #maps {

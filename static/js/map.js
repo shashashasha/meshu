@@ -10,7 +10,7 @@ sb.map = function(frame, width, height) {
 	// var baseURL = "/proxy/tiles/{S}/{Z}/{X}/{Y}"; // "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png"; // http://{S}.meshu.io
 	var baseURL = "http://tile.stamen.com/toner/{Z}/{X}/{Y}.png";
 
-	var container = d3.select(frame).append("div")[0][0];
+	var container = d3.select(frame)[0][0];
 
     d3.select(frame).append("div").attr("class","render");
 
