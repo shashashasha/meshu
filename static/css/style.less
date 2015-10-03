@@ -374,7 +374,7 @@ body.win #login-form ul {
 .big {
     font-size: 32px;
     text-align: center;
-    margin-top: 45px;
+    margin-top: 55px;
 }
 .centered {
     margin: 20px 20px 0 20px;
@@ -435,6 +435,41 @@ body.win #login-form ul {
     .minor {
         background-color: @lightGrey;
     }
+}
+
+.line {
+    width: 466px;
+    border: 1px solid @borderGrey;
+    display: inline-block;
+    position: relative;
+    img {
+        width: 100%;
+        float: left;
+    }
+    h3 {
+        background-color: rgba(255,255,255,.5);
+        font-weight: normal;
+        font-size: 28px;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        width: 100%;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        color: @grey;
+    }
+    &:hover {
+        img {
+            opacity: .7;
+        }
+        h3 { color: black; }
+    }
+}
+.line:nth-child(even) {
+    margin: 10px 20px 10px 10px;
+}
+.line:nth-child(odd) {
+    margin: 10px 10px 10px 20px;
 }
 
 .product-shot {
@@ -3117,7 +3152,7 @@ body.ie #maps .mini-meshu div {
             font-size: 22px;
             clear: both;
         }
-        .product-shot.new,
+        /*.product-shot.new,
         .product-shot.old {
             display: none;
         }
@@ -3159,6 +3194,10 @@ body.ie #maps .mini-meshu div {
         }
         .product-shot img {
             position: relative;
+        }*/
+        .line {
+            width: 46%;
+            margin: 10px 1.5%;
         }
         #banners {
             height: auto;
@@ -3212,7 +3251,7 @@ body.ie #maps .mini-meshu div {
             font-size: 14px;
         }
     }
-    .product-shot.print {
+/*    .product-shot.print {
         img { margin-bottom: 20px; }
         .text {
             width: 100%;
@@ -3225,6 +3264,10 @@ body.ie #maps .mini-meshu div {
     }
     .product-grid.small li:nth-child(2) {
         display: none;
+    }*/
+    .line {
+        width: 100% !important;
+        h3 { font-size: 18px; }
     }
 }
 
@@ -3236,7 +3279,7 @@ body.ie #maps .mini-meshu div {
         margin: 0;
         li {
             display: inline-block;
-            margin: 0 1%;
+            margin: 0 1% 30px;
             width: 30%;
             height: auto;
             float: left;
@@ -3251,6 +3294,7 @@ body.ie #maps .mini-meshu div {
             }
         }
     }
+    .line h3 { font-size: 18px; }
     .product-shot.print {
         .text {
             position: absolute;
