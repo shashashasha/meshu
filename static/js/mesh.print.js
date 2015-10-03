@@ -221,7 +221,8 @@ sb.mesh.print = function (frame, map, width, height) {
 
         copySVG.style("background-color",(proj == "zoomed-to-fit") ? "#e7e7e7" : "#bbb");
 
-        var radius = processing_page ? parseInt(width)/400 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
+        // var radius = processing_page ? parseInt(width)/350 : ((proj == 'zoomed-to-fit') ? 3 : 2.5);
+        var radius = 11;
         copySVG.selectAll("circle").attr("r",radius);
 
         var strokeWidth = processing_page ? parseInt(width)/2500 : 1;
@@ -389,8 +390,13 @@ sb.mesh.print = function (frame, map, width, height) {
         b = [projection([Math.max(e[0].lon,-180), Math.max(e[0].lat,-90)]),
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
-        s = Math.min(6000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
-        t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
+        // s = Math.min(6000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
+        // t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
+
+
+        s = 4000;
+        t = [-3001.3382763718755, 3232.9078758098653];
+        console.log(t)
 
         if (w == 600) {
             if (s < 100) {
@@ -444,7 +450,7 @@ sb.mesh.print = function (frame, map, width, height) {
         var lines = gGroup.selectAll("path")
             .data(linePairs);
 
-        var radiusScale = d3.scale.linear().domain([0,600]).range([.5,.65]);
+        var radiusScale = d3.scale.linear().domain([0,2600]).range([.5,.65]);
 
         lines.enter().append("svg:path");
         lines.exit().remove();
@@ -514,7 +520,8 @@ sb.mesh.print = function (frame, map, width, height) {
             function getWidth(mode) {
                 if (processing_page) {
                     var d = parseInt(width);
-                    return (d/600);
+                    return 9;
+                    // return (d/600);
                 }
                 if (mode == "air") {
                     if (id == "meshu-container") return 2;
@@ -528,7 +535,8 @@ sb.mesh.print = function (frame, map, width, height) {
                 if (mode != "air") return;
                 if (processing_page) {
                     var d = parseInt(width);
-                    return (d/300) + " " + (d/300);
+                    return "15 15";
+                    // return (d/300) + " " + (d/300);
                 }
                 if (id == "meshu-container") return "4 4";
                 return "3 3";

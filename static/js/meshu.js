@@ -1,6 +1,6 @@
 var sb = sb || {};
-var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--",
-    mapquestapi = 'Fmjtd%7Cluub2002n0%2Cbx%3Do5-9urx5r';
+var mapzenapi = 'search-HWoiFxs',
+    routingapi = 'valhalla-Gap3BYU';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
@@ -101,11 +101,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
 
-        // proxy geocoder, used for https
-        // var url = "/proxy/geocoder/?location=" + query;
-
-        // unproxied
-        var url = "http://open.mapquestapi.com/geocoding/v1/address/?location=" + query + "&key=" + mapquestapi;
+        var url = "https://search.mapzen.com/v1/search?text=" + query + "&api_key=" + mapzenapi;
 
         searchbox.val("");
 
@@ -121,10 +117,11 @@ sb.meshu = function(frame, renderer, existingMap) {
                 console.log(error2);
             },
             success: function(data){
-                var results = data.results;
+                console.log(data);
+                var results = data.features;
                 loadingGif.hide();
 
-                if (typeof results == "undefined" || results[0].locations.length == 0) {
+                if (typeof results == "undefined" || results[0].geometry.length == 0) {
                     // var msg = "Hrm, we weren't able to find your search. Try again?";
                     searchError.fadeIn();
                     searchbox.focus();
@@ -132,12 +129,12 @@ sb.meshu = function(frame, renderer, existingMap) {
                 }
 
                 else if (results.length) {
-                    var first = results[0].locations[0];
+                    var first = results[0].geometry.coordinates;
 
                     switch (mesh.name) {
                         case 'facet':
                         case 'orbit':
-                            mesh.add(first.latLng.lat, first.latLng.lng, input);
+                            mesh.add(first[1], first[0], input);
                             self.updateBounds();
 
                             // set the zoom for first point
@@ -146,7 +143,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                             }
                             break;
                         case 'print':
-                            mesh.add(first.latLng.lat, first.latLng.lng, input);
+                            mesh.add(first[1], first[0], input);
                             self.updateBounds();
 
                             mesh.addCountry(first.adminArea1);
@@ -158,8 +155,8 @@ sb.meshu = function(frame, renderer, existingMap) {
                             break;
                         case 'radial':
                             // set the zoom based on radius
-                            setZoomGranularity(first.geocodeQuality, 12);
-                            mesh.add(first.latLng.lat, first.latLng.lng, input);
+                            setZoomGranularity(12, 12);
+                            mesh.add(first[1], first[0], input);
                             break;
 
                     }

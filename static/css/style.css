@@ -2910,9 +2910,8 @@ body.ie #maps .mini-meshu div {
 .print.processing .frame {
   /*Large Poster*/
 
-  /*width: 10800px;
-        height: 7200px;*/
-
+  width: 10800px;
+  height: 7200px;
   /*Small Poster*/
 
   /*width: 3000px;
@@ -2920,8 +2919,9 @@ body.ie #maps .mini-meshu div {
 
   /*Postcard*/
 
-  width: 1680px;
-  height: 1275px;
+  /*width: 1680px;
+        height: 1275px;*/
+
 }
 .print.processing .projection-preview {
   width: 100%;
