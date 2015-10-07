@@ -392,12 +392,16 @@ body.win #login-form ul {
 .line:hover h3 {
   color: black;
 }
-.line:nth-child(even) {
-  margin: 10px 20px 10px 10px;
+.line {
+  width: 30.8%;
+  margin: 0 1%;
+}
+/*.line:nth-child(even) {
+    margin: 10px 20px 10px 10px;
 }
 .line:nth-child(odd) {
-  margin: 10px 10px 10px 20px;
-}
+    margin: 10px 10px 10px 20px;
+}*/
 .product-shot {
   height: 400px;
   float: left;
@@ -2279,7 +2283,9 @@ circle.highlight,
   width: 780px;
   /*width: 660px;*/
 
-  height: 520px;
+  /*height: 520px;*/
+
+  height: 400px;
   z-index: 4;
   background: white;
   border: 1px solid #e6e6e6;
@@ -2961,8 +2967,9 @@ body.ie #maps .mini-meshu div {
 .print.processing .frame {
   /*Large Poster*/
 
-  width: 10800px;
-  height: 7200px;
+  /*width: 10800px;
+        height: 7200px;*/
+
   /*Small Poster*/
 
   /*width: 3000px;
@@ -2970,9 +2977,8 @@ body.ie #maps .mini-meshu div {
 
   /*Postcard*/
 
-  /*width: 1680px;
-        height: 1275px;*/
-
+  width: 1680px;
+  height: 1275px;
 }
 .print.processing .projection-preview {
   width: 100%;
