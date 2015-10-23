@@ -1,7 +1,8 @@
 var sb = sb || {};
 var mapzenapi = 'search-HWoiFxs',
     routingapi = 'valhalla-Gap3BYU',
-    mapquestapi = 'zp2249S80Har3WjiYTzWFRFy2SafTrud';
+    // mapquestapi = 'zp2249S80Har3WjiYTzWFRFy2SafTrud';
+    mapquestapi = 'Fmjtd|luub2002n0,bx=o5-9urx5r';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},

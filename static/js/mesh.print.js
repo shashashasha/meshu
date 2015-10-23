@@ -347,7 +347,7 @@ sb.mesh.print = function (frame, map, width, height) {
         if (highlight == "on") {
             design.select(".map").selectAll("path")
             .filter(function(d){
-                return (countries.indexOf(d.properties.ISO2) != -1);
+                return (countries.indexOf(d.properties.ISO2) != -1 || countries.indexOf(d.properties.ISO3) != -1);
             }).style("fill", highlightC)
             .style("stroke", highlightS)
             .each(function(){
