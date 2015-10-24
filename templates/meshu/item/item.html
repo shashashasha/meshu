@@ -58,10 +58,8 @@
             <p class="note">cufflink max side length: 1.25"</p>
             <p class="note important">we recommend using 4-10 points for cufflinks</p>
     </div> -->
-    <div class="wrapper last" id="wrapper-ring">
+    <div class="wrapper" id="wrapper-ring">
         <div class="ring-frame">
-            <div class="tri"></div>
-            <div class="triangle">new</div>
             <img id="ring-img" src="{{ STATIC_URL }}images/preview/preview_ring.png">
             <svg id="preview-ring" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_ring_ie.png" width="300" height="300" x=0 y=0>
@@ -76,6 +74,15 @@
         <p class="note">available in sizes 4-14</p>
         <p class="note important">we recommend using 4-10 points for rings</p>
     </div>
+    <div class="wrapper last" id="wrapper-small_poster">
+        <div class="tri"></div>
+        <div class="triangle">new</div>
+        <svg id="preview-small_poster" width="100%" height="282">
+            <rect width="200" height="160" x="50" y="70" fill="#E5E5E5">
+        </svg>
+        <p class="title">Small Poster</p>
+        <p class="note">10"x8" on matte paper</p>
+    </div>
     <div class="ie9-note">
         To view a 3D model of this ring, please view this page in
         <a href="https://www.google.com/chrome" target="_blank">Chrome</a>, <a href="http://www.apple.com/safari/download/" target="_blank">Safari</a>, or <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a>.
@@ -83,35 +90,6 @@
 {% endblock %}
 
 {% block materials %}
-    <li id="amber-bamboo" class="material-option">
-        <div class="img-wrapper">
-            <img src="{{ STATIC_URL }}images/materials/facet-amber-bamboo.jpg" class="img">
-        </div>
-        Bamboo<span class="price"></span>
-    </li>
-    <li id="black-acrylic" class="material-option">
-        <div class="img-wrapper">
-            <img src="{{ STATIC_URL }}images/materials/facet-black-acrylic.jpg" class="img">
-        </div>
-        Black Acrylic<span class="price"></span>
-    </li>
-    <li id="white-acrylic" class="material-option">
-        <div class="img-wrapper">
-            <img src="{{ STATIC_URL }}images/materials/facet-white-acrylic.jpg" class="img">
-        </div>
-        White Acrylic<span class="price"></span>
-    </li>
-    <!-- <li id="black-nylon" class="material-option">
-        <img src="{{ STATIC_URL }}images/materials/facet-black-nylon.jpg" class="img">
-        Black Nylon<span class="price"></span>
-    </li> -->
-    <li id="white-nylon" class="material-option">
-        <div class="img-wrapper">
-            <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-nylon.jpg" class="img ring">
-        </div>
-        White Nylon<span class="price"></span>
-    </li>
     <li id="sterling-silver" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img default">
@@ -127,6 +105,35 @@
             <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img cufflinks">
         </div>
         Polished Brass<span class="price"></span>
+    </li>
+    <li id="amber-bamboo" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-amber-bamboo.jpg" class="img">
+        </div>
+        Bamboo<span class="price"></span>
+    </li>
+    <li id="white-acrylic" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-white-acrylic.jpg" class="img">
+        </div>
+        White Acrylic<span class="price"></span>
+    </li>
+    <li id="black-acrylic" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-black-acrylic.jpg" class="img">
+        </div>
+        Black Acrylic<span class="price"></span>
+    </li>
+    <!-- <li id="black-nylon" class="material-option">
+        <img src="{{ STATIC_URL }}images/materials/facet-black-nylon.jpg" class="img">
+        Black Nylon<span class="price"></span>
+    </li> -->
+    <li id="white-nylon" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img default">
+            <img src="{{ STATIC_URL }}images/materials/facet-ring-nylon.jpg" class="img ring">
+        </div>
+        White Nylon<span class="price"></span>
     </li>
 {% endblock %}
 

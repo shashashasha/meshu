@@ -147,7 +147,20 @@ $(function() {
 			sb.materializer.material("unframed");
 		}
 
+		if (currentRenderer == "facet" && product == "small_poster") {
+			$("#materials").fadeOut();
+   			$("#add-ons").fadeOut();
+   			$(".print-hide").fadeOut();
+   			sb.materializer.material("unframed");
+   			sb.materializer.color("null");
+		} else {
+			$("#materials").fadeIn();
+   			$("#add-ons").fadeIn();
+   			$(".print-hide").fadeIn();
+		}
+
    		switch (product) {
+   			case 'small_poster':
    			case 'cufflinks':
    				$("#final-rotate").hide();
 				$("#final-ring").hide();

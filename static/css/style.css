@@ -1379,6 +1379,9 @@ body.ie .frame div {
   line-height: 18px;
   padding-top: 0;
 }
+#product-preview #preview-small_poster path {
+  stroke-width: 10;
+}
 #preview-coasters .product-transformer {
   transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);
   -webkit-transform: rotateX(-50deg) scale(0.425) translate(369px, 527px);

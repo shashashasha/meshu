@@ -130,6 +130,9 @@ sb.ui.orderer = function() {
 
 		// correct for base rotation
 		var rotation = sb.rotator ? sb.rotator.getRotation() - sb.rotator.getBaseRotation() : 0;
+		if (renderer == "facet" && product == "small_poster")
+			rotation = sb.transforms.getOrientation("small_poster","product").rotation;
+
 		var transform = "translate(75, 75) scale(.25) rotate(" + rotation + ")";
 		var miniDelaunay = $("#product-preview .selected .product-transformer").clone()
 				.attr("class","review-delaunay").attr("transform", transform);
