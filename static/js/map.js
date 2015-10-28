@@ -137,6 +137,9 @@ sb.map = function(frame, width, height) {
 
 		// refresh the mesh (meshu.js is listening to this, calls mesh.refresh())
 		self.boundsUpdated();
+
+		meshu.map().map.zoomBy(.5);
+		meshu.mesh().refresh();
 	};
 
 	// this was old, from when we were updating the proportions of the map.

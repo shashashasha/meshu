@@ -1,6 +1,6 @@
 var sb = sb || {};
 
-var processing_page = $("body").hasClass("processing");
+var processing_page = $("body").hasClass("processing") || $("body").hasClass("postcard");
 
 sb.mesh.orbit = function (frame, map, width, height) {
     var self = sb.mesh.base(frame, map, width, height),
