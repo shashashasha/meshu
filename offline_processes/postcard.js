@@ -100,6 +100,11 @@ front.open(frontURL.replace('{id}', id), function (status) {
 			meshu.map().map.zoomBy(.75);
 			meshu.mesh().refresh();
 		});
+	} else if (system.args[1] == 'zoomout') {
+		front.evaluate(function() {
+			meshu.map().map.zoomBy(-.5);
+			meshu.mesh().refresh();
+		});
 	}
 
 	// artificially wait for tiles, etc to load
