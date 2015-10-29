@@ -449,12 +449,13 @@ body.win #login-form ul {
     h3 {
         background-color: rgba(255,255,255,.5);
         font-weight: normal;
-        font-size: 28px;
+        font-size: 18px;
+        text-align: center;
         position: absolute;
         bottom: 0;
         margin: 0;
         width: 100%;
-        padding: 5px 10px;
+        padding: 3px 10px;
         box-sizing: border-box;
         color: @grey;
     }
@@ -1666,7 +1667,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .print #review .print-hide {
-    display: none;
+    display: none !important;
 }
 
 #account input {
@@ -3046,6 +3047,13 @@ body.ie #maps .mini-meshu div {
         width: 1680px;
         height: 1275px;
     }
+    .projection-preview {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+}
+.print.display {
     .projection-preview {
         width: 100%;
         height: 100%;

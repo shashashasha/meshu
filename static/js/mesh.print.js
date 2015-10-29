@@ -6,7 +6,7 @@ sb.mesh.print = function (frame, map, width, height) {
 
     // the name of the product line
     self.name = 'print';
-    var processing_page = $("body").hasClass("processing");
+    var processing_page = $("body").hasClass("processing") || $("body").hasClass("display");
 
     // making this not global ._.
     var lats = [],
@@ -127,6 +127,7 @@ sb.mesh.print = function (frame, map, width, height) {
             self.copyMap();
             mesh.applyStyle(loadedMeshu.metadata);
             applyProjection(self.style().projection, self.style().zoom, self.style().translate);
+            console.log(loadedMeshu.metadata)
             colorMap("meshu-container");
             colorDots("meshu-container");
         }
