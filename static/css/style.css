@@ -3001,6 +3001,9 @@ body.ie #maps .mini-meshu div {
 /*
     Postcard specific css
 */
+.postcard .order-deadline {
+  display: none;
+}
 .postcard {
   font-family: 'Helvetica';
   font-weight: normal;
