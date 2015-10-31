@@ -95,12 +95,12 @@ front.open(frontURL.replace('{id}', id), function (status) {
 			meshu.map().map.zoomBy(1);
 			meshu.mesh().prerender(loadedMeshu.svg, 2);
 		});
-	} else if (system.args[1] == 'zoomin') {
+	} else if (system.args[2] == 'zoomin') {
 		front.evaluate(function() {
 			meshu.map().map.zoomBy(.75);
 			meshu.mesh().refresh();
 		});
-	} else if (system.args[1] == 'zoomout') {
+	} else if (system.args[2] == 'zoomout') {
 		front.evaluate(function() {
 			meshu.map().map.zoomBy(-.5);
 			meshu.mesh().refresh();
