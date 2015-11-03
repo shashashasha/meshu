@@ -86,6 +86,10 @@ sb.catalog = function(renderer, promo) {
 							"unframed":{"price":35,"colors":[]},
 							"framed":{"price":55,"colors":[]}
 						},
+						"medium_poster":
+						{
+							"unframed":{"price":45,"colors":[]}
+						},
 						"large_poster":
 						{
 							"unframed":{"price":55,"colors":[]},
