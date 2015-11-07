@@ -386,6 +386,7 @@ body.win #login-form ul {
   padding: 3px 10px;
   box-sizing: border-box;
   color: #808080;
+  display: none;
 }
 .line:hover img {
   opacity: .7;
@@ -393,17 +394,17 @@ body.win #login-form ul {
 .line:hover h3 {
   color: black;
 }
-/*.line:nth-child(even) {
-    margin: 10px 20px 10px 10px;
+.line:nth-child(even) {
+  margin: 10px 20px 10px 10px;
 }
 .line:nth-child(odd) {
-    margin: 10px 10px 10px 20px;
+  margin: 10px 10px 10px 20px;
 }
-.line:nth-child(2) { margin: 10px 50%; }*/
-.line {
-  width: 30%;
-  margin: 0 5px;
-}
+/*.line:nth-child(2) { margin: 10px 50%; }*/
+/*.line {
+    width: 30%;
+    margin: 0 5px;
+}*/
 .product-shot {
   height: 400px;
   float: left;
