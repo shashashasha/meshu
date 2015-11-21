@@ -50,10 +50,6 @@ sb.transforms = {
 		}
 	},
 	"ring": {
-		// "product": {
-		// 	scale: .3,
-		// 	transform: {x: 200, y: 200}
-		// },
 		"product": {
 			scale: .5,
 			transform: {x: 150, y: 150}
@@ -65,7 +61,13 @@ sb.transforms = {
 	},
 	"small_poster": {
 		"product": {
-			scale: .25,
+			scale: .2,
+			transform: {x: 150, y: 150}
+		}
+	},
+	"medium_poster": {
+		"product": {
+			scale: .35,
 			transform: {x: 150, y: 150}
 		}
 	}

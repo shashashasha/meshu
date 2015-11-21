@@ -147,7 +147,7 @@ $(function() {
 			sb.materializer.material("unframed");
 		}
 
-		if (currentRenderer == "facet" && product == "small_poster") {
+		if (currentRenderer == "facet" && (product == "small_poster" || product == "medium_poster")) {
 			$("#materials").fadeOut();
    			$("#add-ons").fadeOut();
    			$(".print-hide").fadeOut();
@@ -161,6 +161,7 @@ $(function() {
 
    		switch (product) {
    			case 'small_poster':
+   			case 'medium_poster':
    			case 'cufflinks':
    				$("#final-rotate").hide();
 				$("#final-ring").hide();
