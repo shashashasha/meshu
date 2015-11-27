@@ -48,7 +48,7 @@
 		            <input type="text" id="ship-city" class="required city-input short-input" name="shipping_city"/>
 		        </div>
 		        <div class="form-row ship-row international">
-		            <label class="short-label">Region, County or State</label>
+		            <label class="short-label">State/Province/Region</label>
 		            <input type="text" id="ship-region" class="required region-input short-input" name="shipping_region"/>
 		        </div>
 		        <div class="form-row ship-row domestic">
@@ -329,9 +329,9 @@ document.write('email us</a>');
 	            </div>
 	            <div class="form-row">
 	                <label>Expiration (MM/YYYY)</label>
-	                <input type="text" style="margin-left: 15px" size="1" maxlength="2" id="card-expiry-month" class="card-info required" value="{% if debug %}12{% endif %}" name="card_month"/>
+	                <input type="text" style="margin-left: 15px" size="2" maxlength="2" id="card-expiry-month" class="card-info required" value="{% if debug %}12{% endif %}" name="card_month"/>
 	                <span> / </span>
-	                <input type="text" size="3" maxlength="4" id="card-expiry-year" class="card-info required"  value="{% if debug %}2014{% endif %}" name="card_year" style="margin-left: 3px;"/>
+	                <input type="text" size="4" maxlength="4" id="card-expiry-year" class="card-info required"  value="{% if debug %}2014{% endif %}" name="card_year" style="margin-left: 3px;"/>
 	                <label class="payment-errors note error" style="display: none;"></label>
 	            </div>
 	        <p class="note payment-note">All of our payments are securely handled through <a href="https://stripe.com/help/security" target="_blank">Stripe</a></p>

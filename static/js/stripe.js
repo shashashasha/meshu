@@ -7,8 +7,8 @@ var cashier = function() {
         currentAmount = totalPrice || 0,
         discountAmount = 0,
         discountPercent = 1,
-        shipping = 0, // default domestic
-        domesticShipping = 0,
+        shipping = 5, // default domestic
+        domesticShipping = 5,
         internationalShipping = 45,
         multipleInternationalShipping = 80;
 
