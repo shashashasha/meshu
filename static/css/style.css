@@ -3028,8 +3028,9 @@ body.ie #maps .mini-meshu div {
 .postcard #content {
   /*Medium Poster*/
 
-  width: 7200px;
-  height: 5400px;
+  /*width: 7200px;
+            height: 5400px;*/
+
   /*Small Poster*/
 
   /*width: 3000px;
@@ -3037,9 +3038,8 @@ body.ie #maps .mini-meshu div {
 
   /*Postcard*/
 
-  /*width: 1680px;
-            height: 1275px;*/
-
+  width: 1680px;
+  height: 1275px;
 }
 .postcard #promotion {
   display: none;
@@ -3050,7 +3050,7 @@ body.ie #maps .mini-meshu div {
   right: 0;
 }
 .postcard path {
-  stroke-width: 40;
+  stroke-width: 10;
 }
 .postcard #attribution {
   display: none;
