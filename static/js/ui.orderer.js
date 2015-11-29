@@ -130,7 +130,7 @@ sb.ui.orderer = function() {
 
 		// correct for base rotation
 		var rotation = sb.rotator ? sb.rotator.getRotation() - sb.rotator.getBaseRotation() : 0;
-		if (renderer == "facet" && (product == "small_poster" || product == "medium_poster"))
+		if (product.split("_")[1] == "poster")
 			rotation = sb.transforms.getOrientation(product,"product").rotation;
 
 		var transform = "translate(75, 75) scale(.25) rotate(" + rotation + ")";

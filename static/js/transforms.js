@@ -61,11 +61,17 @@ sb.transforms = {
 	},
 	"small_poster": {
 		"product": {
-			scale: .2,
+			scale: .1,
 			transform: {x: 150, y: 150}
 		}
 	},
 	"medium_poster": {
+		"product": {
+			scale: .25,
+			transform: {x: 150, y: 150}
+		}
+	},
+	"large_poster": {
 		"product": {
 			scale: .35,
 			transform: {x: 150, y: 150}
@@ -95,6 +101,8 @@ sb.transforms.getOrientation = function(product) {
 	switch (product) {
 		// no rotation, squarify
 		case 'small_poster':
+		case 'medium_poster':
+		case 'large_poster':
 			orientation.height = 450 / proportion;
 			break;
 		case 'cufflinks':

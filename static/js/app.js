@@ -145,9 +145,7 @@ $(function() {
 				$(".frame-wrapper").removeClass("selected").removeClass("possible");
 			$("#frame-"+product).addClass("possible");
 			sb.materializer.material("unframed");
-		}
-
-		if (currentRenderer == "facet" && (product == "small_poster" || product == "medium_poster")) {
+		} else if (product.split("_")[1] == "poster") {
 			$("#materials").fadeOut();
    			$("#add-ons").fadeOut();
    			$(".print-hide").fadeOut();
@@ -162,6 +160,7 @@ $(function() {
    		switch (product) {
    			case 'small_poster':
    			case 'medium_poster':
+   			case 'large_poster':
    			case 'cufflinks':
    				$("#final-rotate").hide();
 				$("#final-ring").hide();

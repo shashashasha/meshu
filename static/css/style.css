@@ -1291,7 +1291,6 @@ body.ie .frame div {
   height: 860px;
 }
 .radial #product,
-.orbit #product,
 .print #product {
   height: 490px;
 }
@@ -1385,7 +1384,8 @@ body.ie .frame div {
   padding-top: 0;
 }
 #product-preview #preview-small_poster path,
-#product-preview #preview-medium_poster path {
+#product-preview #preview-medium_poster path,
+#product-preview #preview-large_poster path {
   stroke-width: 15;
 }
 #preview-coasters .product-transformer {
@@ -2980,13 +2980,13 @@ body.ie #maps .mini-meshu div {
 .print.processing .frame {
   /*Large Poster*/
 
-  /*width: 10800px;
-        height: 7200px;*/
-
+  width: 10800px;
+  height: 7200px;
   /*Medium Poster*/
 
-  width: 7200px;
-  height: 5400px;
+  /*width: 7200px;
+        height: 5400px;*/
+
   /*Small Poster*/
 
   /*width: 3000px;
@@ -3026,16 +3026,20 @@ body.ie #maps .mini-meshu div {
 
 }
 .postcard #content {
-  /*width: 5400px;
-        height: 2100px;*/
+  /*Medium Poster*/
 
+  width: 7200px;
+  height: 5400px;
   /*Small Poster*/
 
   /*width: 3000px;
-        height: 2400px; */
+            height: 2400px; */
 
-  width: 1680px;
-  height: 1275px;
+  /*Postcard*/
+
+  /*width: 1680px;
+            height: 1275px;*/
+
 }
 .postcard #promotion {
   display: none;
@@ -3046,7 +3050,7 @@ body.ie #maps .mini-meshu div {
   right: 0;
 }
 .postcard path {
-  stroke-width: 10;
+  stroke-width: 40;
 }
 .postcard #attribution {
   display: none;

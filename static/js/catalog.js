@@ -77,6 +77,18 @@ sb.catalog = function(renderer, promo) {
 						// "nylon":{"price":90,"colors":["black","white"]},
 						"silver":{"price":155,"colors":["sterling"]},
 						"brass":{"price":145,"colors":["polished"]}
+						},
+					"small_poster":
+						{
+							"unframed":{"price":35,"colors":["null"]}
+						},
+					"medium_poster":
+						{
+							"unframed":{"price":45,"colors":["null"]}
+						},
+					"large_poster":
+						{
+							"unframed":{"price":55,"colors":["null"]}
 						}
 					};
 

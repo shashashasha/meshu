@@ -1349,7 +1349,6 @@ body.ie .frame div {
     height: 860px;
 }
 .radial #product,
-.orbit #product,
 .print #product {
     height: 490px;
 }
@@ -1437,7 +1436,8 @@ body.ie .frame div {
 }
 
 #product-preview #preview-small_poster path,
-#product-preview #preview-medium_poster path {
+#product-preview #preview-medium_poster path,
+#product-preview #preview-large_poster path {
     stroke-width: 15;
 }
 
@@ -3046,11 +3046,11 @@ body.ie #maps .mini-meshu div {
 .print.processing {
     #content, .frame {
     /*Large Poster*/
-        /*width: 10800px;
-        height: 7200px;*/
+        width: 10800px;
+        height: 7200px;
     /*Medium Poster*/
-        width: 7200px;
-        height: 5400px;
+        /*width: 7200px;
+        height: 5400px;*/
     /*Small Poster*/
         /*width: 3000px;
         height: 2400px; */
@@ -3088,13 +3088,15 @@ body.ie #maps .mini-meshu div {
     color: @grey;
 
     #content {
-        /*width: 5400px;
-        height: 2100px;*/
+        /*Medium Poster*/
+            width: 7200px;
+            height: 5400px;
         /*Small Poster*/
-        /*width: 3000px;
-        height: 2400px; */
-        width: 1680px;
-        height: 1275px;
+            /*width: 3000px;
+            height: 2400px; */
+        /*Postcard*/
+            /*width: 1680px;
+            height: 1275px;*/
     }
 
     #promotion {
@@ -3108,7 +3110,7 @@ body.ie #maps .mini-meshu div {
     }
 
     path {
-        stroke-width: 10;
+        stroke-width: 40;
     }
 
     #attribution {
