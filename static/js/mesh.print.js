@@ -127,7 +127,6 @@ sb.mesh.print = function (frame, map, width, height) {
             self.copyMap();
             mesh.applyStyle(loadedMeshu.metadata);
             applyProjection(self.style().projection, self.style().zoom, self.style().translate);
-            console.log(loadedMeshu.metadata)
             colorMap("meshu-container");
             colorDots("meshu-container");
         }
