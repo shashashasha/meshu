@@ -101,10 +101,11 @@ front.open(frontURL.replace('{id}', id), function (status) {
 			meshu.mesh().refresh();
 		});
 	} else if (system.args[2] == 'zoom') {
-		front.evaluate(function() {
-			meshu.map().map.zoomBy(system.args[3]);
+		var z = parseFloat(system.args[3]);
+		front.evaluate(function(z) {
+			meshu.map().map.zoomBy(z);
 			meshu.mesh().refresh();
-		});
+		}, z);
 	}
 
 	// artificially wait for tiles, etc to load

@@ -92,23 +92,19 @@ var cashier = function() {
             shipping = value == 'international' ?
                             (boxedItems > 2 ? multipleInternationalShipping : internationalShipping)
                             : domesticShipping;
-        else shipping = 0;
+        else shipping = 5;
 
         if (value == 'international') {
-            $(".unframed.postcard .num").each(function(v,i){ 
+            $(".medium_poster .num").each(function(v,i){ 
                 shipping += parseInt($(this).text())*4; 
             });
-            $(".unframed.large_poster .num").each(function(v,i){ 
+            $(".large_poster .num").each(function(v,i){ 
                 shipping += parseInt($(this).text())*10; 
             });
-            $(".framed.small_poster .num").each(function(v,i){ 
-                shipping += parseInt($(this).text())*12; 
+            $(".small_poster .num").each(function(v,i){ 
+                shipping += parseInt($(this).text())*4; 
             });
         }
-
-        $(".framed.large_poster .num").each(function(v,i){
-            shipping += parseInt($(this).text())*(value == 'international' ? 7 : 58); 
-        });
 
         self.update();
     };
