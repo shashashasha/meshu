@@ -28,7 +28,8 @@ sb.catalog = function(renderer, promo) {
 						"brass":{"price":145,"colors":["polished"]}
 						},
 					"ring":
-						{"nylon":{"price":30,"colors":["white"]},
+						{
+						// "nylon":{"price":30,"colors":["white"]},
 						"silver":{"price":105,"colors":["sterling"]},
 						"brass":{"price":95,"colors":["polished"]}
 						},

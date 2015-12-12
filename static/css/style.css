@@ -2980,13 +2980,13 @@ body.ie #maps .mini-meshu div {
 .print.processing .frame {
   /*Large Poster*/
 
-  width: 10800px;
-  height: 7200px;
+  /*width: 10800px;
+        height: 7200px;*/
+
   /*Medium Poster*/
 
-  /*width: 7200px;
-        height: 5400px;*/
-
+  width: 7200px;
+  height: 5400px;
   /*Small Poster*/
 
   /*width: 3000px;
@@ -3033,13 +3033,13 @@ body.ie #maps .mini-meshu div {
 
   /*Small Poster*/
 
-  /*width: 3000px;
-            height: 2400px; */
-
+  width: 3000px;
+  height: 2400px;
   /*Postcard*/
 
-  width: 1680px;
-  height: 1275px;
+  /*width: 1680px;
+            height: 1275px;*/
+
 }
 .postcard #promotion {
   display: none;
