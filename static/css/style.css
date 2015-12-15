@@ -3033,13 +3033,13 @@ body.ie #maps .mini-meshu div {
 
   /*Small Poster*/
 
-  width: 3000px;
-  height: 2400px;
+  /*width: 3000px;
+            height: 2400px; */
+
   /*Postcard*/
 
-  /*width: 1680px;
-            height: 1275px;*/
-
+  width: 1680px;
+  height: 1275px;
 }
 .postcard #promotion {
   display: none;
