@@ -15,7 +15,7 @@ Thank you for ordering!
     <b>{{ order.get_display_name }}</b>
     Also, please review your meshus here:
 	{% for order in orders %}
-    <br />{{ order.get_display_name }} - <a href="http://meshu.io{% shorturl meshu %}"><b>http://meshu.io{% shorturl order.meshu %}</b></a>
+    <br />{{ order.get_display_name }} - <a href="http://meshu.io{% shorturl order.meshu %}"><b>http://meshu.io{% shorturl order.meshu %}</b></a>
     {% endfor %}
     <br />
 	If you see any missing or misaligned points feel free to edit your meshu and let us know so that we get everything right!
