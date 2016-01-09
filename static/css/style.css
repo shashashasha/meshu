@@ -2985,13 +2985,13 @@ body.ie #maps .mini-meshu div {
 
   /*Medium Poster*/
 
-  /*width: 7200px;
-        height: 5400px;*/
-
+  width: 7200px;
+  height: 5400px;
   /*Small Poster*/
 
-  width: 3000px;
-  height: 2400px;
+  /*        width: 3000px;
+        height: 2400px; */
+
   /*Postcard*/
 
   /*width: 1680px;
