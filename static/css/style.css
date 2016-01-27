@@ -2980,16 +2980,16 @@ body.ie #maps .mini-meshu div {
 .print.processing .frame {
   /*Large Poster*/
 
-  /*width: 10800px;
-        height: 7200px;*/
-
+  width: 10800px;
+  height: 7200px;
   /*Medium Poster*/
 
-  width: 7200px;
-  height: 5400px;
+  /*width: 7200px;
+        height: 5400px;*/
+
   /*Small Poster*/
 
-  /*        width: 3000px;
+  /*  width: 3000px;
         height: 2400px; */
 
   /*Postcard*/

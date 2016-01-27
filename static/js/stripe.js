@@ -7,8 +7,8 @@ var cashier = function() {
         currentAmount = totalPrice || 0,
         discountAmount = 0,
         discountPercent = 1,
-        shipping = 5, // default domestic
-        domesticShipping = 5,
+        shipping = 7, // default domestic
+        domesticShipping = 7,
         internationalShipping = 45,
         multipleInternationalShipping = 80;
 
@@ -92,7 +92,7 @@ var cashier = function() {
             shipping = value == 'international' ?
                             (boxedItems > 2 ? multipleInternationalShipping : internationalShipping)
                             : domesticShipping;
-        else shipping = 5;
+        else shipping = domesticShipping;
 
         if (value == 'international') {
             $(".medium_poster .num").each(function(v,i){ 
