@@ -1,5 +1,9 @@
 var sb = sb || {};
 
+SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(elem) {
+    return elem.getScreenCTM().inverse().multiply(this.getScreenCTM());
+};
+
 sb.mesh = {};
 sb.mesh.base = function (frame, map, width, height) {
 	var self = d3.dispatch("added", 
