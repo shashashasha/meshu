@@ -126,7 +126,7 @@ $(function() {
 		This handles when people select a product to order
 		and go to the materials / color selection page
 	*/
-	$("#product-preview .wrapper").live("click", function() {
+	$("#product-preview .wrapper").on("click", function() {
 
 		var wrapper = $(this);
 		wrapper.parent().find(".wrapper").removeClass("selected");

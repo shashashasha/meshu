@@ -13,7 +13,7 @@ sb.materializer = function() {
 		// list elements
 		self.materials = $("#material-list");
 
-		self.materials.find("li").live("click",function(e) {
+		self.materials.find("li").on("click",function(e) {
 			var props = e.currentTarget.id.split("-");
 			self.material(props[1]);
 			self.color(props[0]);
