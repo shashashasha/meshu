@@ -55,7 +55,7 @@ sb.mesh.print = function (frame, map, width, height) {
     var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
-        $(".place-text input").on("blur", self.removeInput);
+        $(".place-text input").live("blur", self.removeInput);
 
     $(frame).append($("<div>").attr("class","route-error").text("Sorry, no route found! Try another mode?"));
 

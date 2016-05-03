@@ -59,7 +59,7 @@ sb.mesh.facet = function (frame, map, width, height) {
     var list = placeList.append("ul");
 
     if (!$("body").hasClass("firefox"))
-        $(".place-text input").on("blur", self.removeInput);
+        $(".place-text input").live("blur", self.removeInput);
 
     var points = [],
         new_pt = [],
