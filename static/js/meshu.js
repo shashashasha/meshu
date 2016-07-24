@@ -31,12 +31,36 @@ sb.meshu = function(frame, renderer, existingMap) {
         mesh.refresh("zoomed");
     });
 
-    var searchbox = $("#searchbox");
-    searchbox.keypress(function(event) {
+    var searchbox = $("#searchbox"),
+        keyIndex = -1,
+        selectedHit;
+    searchbox.keyup(function(event) {
         searchError.fadeOut();
-        if ( event.which == 13 ) {
-            var input = searchbox.val();
-            doSearch(input);
+        var input = searchbox.val();
+        if (event.keyCode == 8) selectedHit = null;
+
+        if (!input.length) {
+            clearBox();
+        } else if (event.keyCode == 40) { //arrow down
+            keyIndex = Math.min(keyIndex+1, $(".hit").length-1);
+            d3.selectAll(".hit").classed("selected",function(d,i){ 
+                if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
+                return i == keyIndex; });
+            searchbox.val($(".hit:eq("+keyIndex+")").text());
+        } else if (event.keyCode == 38) { //arrow up
+            keyIndex = Math.max(keyIndex-1, 0);
+            d3.selectAll(".hit").classed("selected",function(d,i){ 
+                if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
+                return i == keyIndex; });
+            searchbox.val($(".hit:eq("+keyIndex+")").text());
+        } else if ( event.keyCode == 13 ) {
+            if (selectedHit) {
+                addPoint(selectedHit[0], selectedHit[1]);
+                clearBox();
+            }
+            else doSearch(input);
+        } else {
+            doSuggestion(input);
         }
     });
 
@@ -60,6 +84,43 @@ sb.meshu = function(frame, renderer, existingMap) {
         else {
             searchPlaces(input);
         }
+    }
+
+    var suggestionXHR,
+        wait = false;
+    function doSuggestion(input) {
+        var url = "https://search.mapzen.com/v1/autocomplete?text=" + input + "&api_key=" + mapzenapi;
+        if (suggestionXHR) suggestionXHR.abort();
+
+        if (!wait) {
+            suggestionXHR = d3.json(url,function(resp){
+                showSuggestion(resp.features);
+            })
+            wait = true;
+            setTimeout(function () {
+                wait = false;
+            }, 50);
+        }        
+    }
+    function showSuggestion(data) {
+        var div = d3.select("#autocomplete"),
+        hit = div.selectAll(".hit").data(data);
+
+        hit.enter().append("div").attr("class","hit");
+        hit.exit().remove();
+
+        hit.text(function(d){ return d.properties.label; })
+            .on("click",function(d){
+                addPoint(d.geometry.coordinates, d.properties.label);
+                clearBox();
+            });
+    }
+
+    function clearBox() {
+        keyIndex = -1;
+        selectedHit = null;
+        searchbox.val("");
+        showSuggestion([]);
     }
 
     self.findCountry = function(loc) {
@@ -105,7 +166,7 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         var url = "https://search.mapzen.com/v1/search?text=" + query + "&api_key=" + mapzenapi;
 
-        searchbox.val("");
+        clearBox();
 
         $.ajax({
             url: url,
@@ -127,43 +188,43 @@ sb.meshu = function(frame, renderer, existingMap) {
                     searchError.fadeIn();
                     searchbox.focus();
                     return;
-                }
-
-                else if (results.length) {
-                    var first = results[0].geometry.coordinates;
-
-                    switch (mesh.name) {
-                        case 'facet':
-                        case 'orbit':
-                            mesh.add(first[1], first[0], input);
-                            self.updateBounds();
-
-                            // set the zoom for first point
-                            if (mesh.points().length == 1) {
-                                setZoomGranularity(first.geocodeQuality);
-                            }
-                            break;
-                        case 'print':
-                            mesh.add(first[1], first[0], input);
-                            self.updateBounds();
-
-                            mesh.addCountry(results[0].properties.country_a);
-
-                            // set the zoom for first point
-                            if (mesh.points().length == 1) {
-                                setZoomGranularity(12);
-                            }
-                            break;
-                        case 'radial':
-                            // set the zoom based on radius
-                            setZoomGranularity(12, 12);
-                            mesh.add(first[1], first[0], input);
-                            break;
-
-                    }
+                } else if (results.length) {
+                    addPoint(results[0].geometry.coordinates, input);
                 }
             }
         });
+    }
+
+    function addPoint(first, input) {
+        switch (mesh.name) {
+            case 'facet':
+            case 'orbit':
+                mesh.add(first[1], first[0], input);
+                self.updateBounds();
+
+                // set the zoom for first point
+                if (mesh.points().length == 1) {
+                    setZoomGranularity(first.geocodeQuality);
+                }
+                break;
+            case 'print':
+                mesh.add(first[1], first[0], input);
+                self.updateBounds();
+
+                mesh.addCountry(results[0].properties.country_a);
+
+                // set the zoom for first point
+                if (mesh.points().length == 1) {
+                    setZoomGranularity(12);
+                }
+                break;
+            case 'radial':
+                // set the zoom based on radius
+                setZoomGranularity(12, 12);
+                mesh.add(first[1], first[0], input);
+                break;
+
+        }
     }
 
     /*

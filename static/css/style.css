@@ -729,6 +729,32 @@ body.win #login-form ul {
 #search input:hover {
   border: 1px solid #ff3fb4;
 }
+#autocomplete {
+  position: absolute;
+  width: 321px;
+  overflow: hidden;
+  z-index: 2;
+  background: white;
+}
+#autocomplete .hit {
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 1px 3px;
+  color: #808080;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+#autocomplete .hit:last-child {
+  border-bottom: 1px solid #ccc;
+}
+#autocomplete .hit:hover {
+  background: #eee;
+  color: #000;
+}
+#autocomplete .hit.selected {
+  background: #ddd;
+  color: #000;
+}
 #search-error {
   color: #ff3fb4;
   position: absolute;
@@ -962,12 +988,6 @@ body.firefox #place-title #input {
 .orbit .place {
   width: 273px;
 }
-.orbit .place-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: bottom;
-}
 .orbit .place:first-child .place-text {
   width: 169px;
   margin-left: 4px;
@@ -999,6 +1019,10 @@ body.firefox #place-title #input {
   width: 248px;
   padding: 2px;
   display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
 }
 body.ie .place .place-text,
 body.win .place .place-text,
