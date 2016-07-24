@@ -1,8 +1,8 @@
 var sb = sb || {};
-var mapzenapi = 'search-HWoiFxs',
-    routingapi = 'valhalla-Gap3BYU',
+var mapzenapi = 'search-HWoiFxs';
+var routingapi = 'valhalla-Gap3BYU';
     // mapquestapi = 'zp2249S80Har3WjiYTzWFRFy2SafTrud';
-    mapquestapi = 'Fmjtd|luub2002n0,bx=o5-9urx5r';
+var mapquestapi = 'Fmjtd|luub2002n0,bx=o5-9urx5r';
 
 sb.meshu = function(frame, renderer, existingMap) {
 	var self = {},
@@ -47,18 +47,21 @@ sb.meshu = function(frame, renderer, existingMap) {
                 if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
+
         } else if (event.keyCode == 38) { //arrow up
             keyIndex = Math.max(keyIndex-1, 0);
             d3.selectAll(".hit").classed("selected",function(d,i){ 
                 if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
+
         } else if ( event.keyCode == 13 ) {
             if (selectedHit) {
                 addPoint(selectedHit[0], selectedHit[1]);
                 clearBox();
             }
             else doSearch(input);
+            
         } else {
             doSuggestion(input);
         }
@@ -162,7 +165,8 @@ sb.meshu = function(frame, renderer, existingMap) {
             return;
         }
 
-        var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
+        //var query = input.replace("&","and").replace(/[^\w ]/ig, "").replace(" ","+");
+        var query = input;
 
         var url = "https://search.mapzen.com/v1/search?text=" + query + "&api_key=" + mapzenapi;
 

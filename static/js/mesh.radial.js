@@ -193,57 +193,6 @@ sb.mesh.radial = function (frame, map, width, height) {
         updateRoutes();
     }
 
-    function polylineDecode(str, precision) {
-        var index = 0,
-            lat = 0,
-            lng = 0,
-            coordinates = [],
-            shift = 0,
-            result = 0,
-            byte = null,
-            latitude_change,
-            longitude_change,
-            factor = Math.pow(10, precision || 6);
-
-        // Coordinates have variable length when encoded, so just keep
-        // track of whether we've hit the end of the string. In each
-        // loop iteration, a single coordinate is decoded.
-        while (index < str.length) {
-
-            // Reset shift, result, and byte
-            byte = null;
-            shift = 0;
-            result = 0;
-
-            do {
-                byte = str.charCodeAt(index++) - 63;
-                result |= (byte & 0x1f) << shift;
-                shift += 5;
-            } while (byte >= 0x20);
-
-            latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-
-            shift = result = 0;
-
-            do {
-                byte = str.charCodeAt(index++) - 63;
-                result |= (byte & 0x1f) << shift;
-                shift += 5;
-            } while (byte >= 0x20);
-
-            longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-
-            lat += latitude_change;
-            lng += longitude_change;
-
-            //coordinates.push([lat / factor, lng / factor]);
-            coordinates.push(lat / factor);
-            coordinates.push(lng / factor);
-        }
-
-        return coordinates;
-    }
-
     function checkRequests(zoom) {
         var allDone = true,
             calculated = 0;
@@ -283,91 +232,43 @@ sb.mesh.radial = function (frame, map, width, height) {
         // use https proxy for apis that don't support
         var mapquest = $('body').hasClass('ie') || window.location.protocol == 'https:'
             ? "https://meshu.io/proxy/router/?from="
-        //    : "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
-            : 'valhalla.mapzen.com/route?json={';
-        // 
-        //json={"locations":[{"lat":42.358528,"lon":-83.271400},{"lat":42.996613,"lon":-78.749855],
+            : "http://open.mapquestapi.com/directions/v1/route?routeType=pedestrian&outFormat=json&shapeFormat=raw&generalize=200&from=";
 
-        //var base = mapquest + '{start}&to={end}&key={key}';
+        var base = mapquest + '{start}&to={end}&key={key}';
 
         //valhalla.mapzen.com/route?json={}&api_key=
 
         for (var i = 1; i < points.length; i++) {
             var end = points[i],
                 endCoords = end[1]+","+end[0],
-                //url = base.replace("{start}", startCoords).replace("{end}", endCoords).replace("{key}", mapquestapi);
+                url = base.replace("{start}", startCoords).replace("{end}", endCoords).replace("{key}", mapquestapi);
 
-            url = mapquest + '"locations":[{"lat":' + start[1] + ',"lon":' + start[0] + '},{"lat":' + end[1] + ',"lon":' + end[0] + '}]';
-            url = url + ',"costing":"pedestrian"}&api_key=valhalla-Gap3BYU';
+            requests[zoom][i] = $.jsonp({
+                url: url,
+                callbackParameter: 'callback',
+                error: function(j) {
+                    return function(data) {
+                        requests[zoom][j] = 'done';
+                        checkRequests(zoom);
+                    };
+                }(i),
+                success: function(j) {
+                    return function(data) {
+                        if (!data.route.shape) {
+                            requests[zoom][j] = 'done';
+                            return;
+                        } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
+                            return;
+                        }
 
-            // console.log(url);
-
-            // var serialized = encodeURIComponent(url);
-
-            // console.log(serialized);
-
-            // requests[zoom][i] = $.jsonp({
-            //     url: url,
-            //     callbackParameter: 'callback',
-            //     error: function(j) {
-            //         return function(data) {
-            //             requests[zoom][j] = 'done';
-            //             checkRequests(zoom);
-            //         };
-            //     }(i),
-            //     success: function(j) {
-            //         return function(data) {
-            //             console.log(data);
-            //             if (!data.route.shape) {
-            //                 requests[zoom][j] = 'done';
-            //                 return;
-            //             } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
-            //                 return;
-            //             }
-
-            //             var wayPoints = data.route.shape.shapePoints;
-            //             addRoute(wayPoints);
-            //             requests[zoom][j] = 'done';
-
-            //             checkRequests(zoom);
-            //         };
-            //     }(i)
-            // });
-            requests[zoom][i] = $.ajax({
-              url: "https://valhalla.mapzen.com/route",
-              method: "GET",
-              dataType: "json",
-              data: {
-                "json": '{"locations":[{"lat":' + start[1] + ',"lon":' + start[0] + '},{"lat":' + end[1] + ',"lon":' + end[0] + '}],"costing":"pedestrian"}',
-                "api_key": "valhalla-Gap3BYU"
-              },
-              success: function( data, status, jqxhr ){
-                console.log( "Request received:", data );
-                var wayPoints = polylineDecode(data.trip.legs[0].shape, 6);
-                console.log(wayPoints);
-                addRoute(wayPoints);
-                        requests[zoom][i] = 'done';
+                        var wayPoints = data.route.shape.shapePoints;
+                        addRoute(wayPoints);
+                        requests[zoom][j] = 'done';
 
                         checkRequests(zoom);
-              },
-              error: function( jqxhr, status, error ){
-                console.log( "Something went wrong!" );
-              }
+                    };
+                }(i)
             });
-            // requests[zoom][i] = $.getJSON(url, function(data){
-            //             if (!data.route.shape) {
-            //                 requests[zoom][j] = 'done';
-            //                 return;
-            //             } else if (requests[zoom] == undefined || requests[zoom][j] == undefined || requests[zoom] == 'inactive') {
-            //                 return;
-            //             }
-
-            //             var wayPoints = data.route.shape.shapePoints;
-            //             addRoute(wayPoints);
-            //             requests[zoom][j] = 'done';
-
-            //             checkRequests(zoom);
-            // });
         }
     }
 
