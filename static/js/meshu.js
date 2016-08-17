@@ -453,8 +453,7 @@ sb.meshu = function(frame, renderer, existingMap) {
           'svg': self.outputSVG(),
           'location_data' : self.outputLocationData(),
           'renderer': mesh.name,
-          'metadata': mesh.outputStyle(),
-          'promo': meshu.promo
+          'metadata': mesh.outputStyle()
         };
     };
 

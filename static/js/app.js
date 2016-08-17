@@ -3,8 +3,7 @@ $(function() {
 
 	// initialize the catalog with the current promotion if any
 	// sorry about this, future us. signed, past sha.
-	var promotion = loadedMeshu ? loadedMeshu.promo : null,
-		currentRenderer = loadedMeshu ? loadedMeshu.renderer : 'facet';
+	var currentRenderer = loadedMeshu ? loadedMeshu.renderer : 'facet';
 							$("body").hasClass("radial") ? 'radial' : 'facet';
 
 	if ($("body").hasClass("radial")) currentRenderer = "radial";
@@ -13,7 +12,7 @@ $(function() {
 
 
 	// the list of all available meshu products for purchase
-	var catalog = sb.catalog(currentRenderer, promotion);
+	var catalog = sb.catalog(currentRenderer);
 
 	// this listens to material and product selection changes, updates prices
 	sb.materializer.initialize(catalog);

@@ -98,8 +98,6 @@ def item_from_preset(request, item_encoded):
 	meshu.location_data = item.location_data
 	meshu.svg = item.svg
 
-	meshu.promo = item.promo
-
 	# wtf dawg
 	meshu.theta = item.theta
 

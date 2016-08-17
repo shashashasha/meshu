@@ -361,8 +361,7 @@ def meshu_update(request, meshu):
 
 	meshu.renderer = request.POST.get('renderer', meshu.renderer)
 	meshu.metadata = request.POST.get('metadata', meshu.metadata)
-
-	meshu.promo = request.POST.get('promo', meshu.promo)
+	
 	return meshu
 
 def meshu_get_or_create(request, profile):

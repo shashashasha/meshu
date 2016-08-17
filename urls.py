@@ -103,14 +103,6 @@ urlpatterns += patterns('meshu.views',
 		'template': 'meshu/item/radial.html'
 	}),
 
-	# promo
-	url(r'^marathon/', 'base_view', {
-		'template': 'meshu/promo/marathon.html'
-	}),
-	url(r'^royalparkshalf/', 'base_view', {
-		'template': 'meshu/promo/marathon.html'
-	}),
-
 	##
 	##	base make pages
 	##

@@ -63,9 +63,6 @@ class Meshu(models.Model):
 	# rotation angle, around the center
 	theta = models.IntegerField(default=0, blank=True)
 
-	# marathon etc
-	promo = models.CharField(max_length=140, default='', blank=True)
-
 	# if it's a readymade, we need to define what product it is
 	product = models.CharField(max_length=140, default='', blank=True)
 

@@ -152,7 +152,6 @@ var saver = function() {
         self.meshu.view_url = data.view_url;
         self.meshu.username = data.username;
         self.meshu.title = data.title;
-        self.meshu.promo = data.promo;
 
         if (data.image_url)
           self.meshu.image_url = data.image_url;

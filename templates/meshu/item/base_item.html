@@ -146,8 +146,6 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/preview.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/materializer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/saver.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/facebook.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.orderer.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ui.socialsharer.js"></script>
@@ -180,8 +178,7 @@
         renderer: '{{ meshu.renderer }}',
         metadata: '{{ meshu.metadata }}',
         location_data: "{{ meshu.location_data|safe }}",
-        svg: '{{ meshu.svg|safe }}',
-        promo: '{{ meshu.promo }}'
+        svg: '{{ meshu.svg|safe }}'
     };
     {% else %}
     var loadedMeshu = null;
