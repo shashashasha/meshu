@@ -37,7 +37,7 @@ sb.mesh.base = function (frame, map, width, height) {
         map_dragging = null,
         last_mouse = null,
         meshuTitle = null,
-        print = $("body").hasClass("print");
+        print = $("body").hasClass("print") || $("body").hasClass("streets");
 
     var content = $("#content");
 

@@ -62,6 +62,10 @@ sb.map = function(frame, width, height) {
 		.attr("visibility","visible")
 		.attr("fill", print ? "#e7e7e7" : "white");
 
+	self.getStart = function() {
+		return cities[c];
+	};
+
 	self.frame = function() {
 		return container;
 	};
@@ -137,53 +141,7 @@ sb.map = function(frame, width, height) {
 
 		// refresh the mesh (meshu.js is listening to this, calls mesh.refresh())
 		self.boundsUpdated();
-
-		// XXXX not sure what this was doing
-		// meshu.map().map.zoomBy(.5);
-		// meshu.mesh().refresh();
 	};
-
-	// this was old, from when we were updating the proportions of the map.
-	// there are a lot of quirks here because of the difference
-	// between the extent you give it and the one polymaps ends up with
-	// self.resizeContainer = function(lats, lons) {
-	// 	// south-west, north-east
-	// 	var extent = [{
-	// 		lat: d3.min(lats),
-	// 		lon: d3.min(lons)
-	// 	},
-	// 	{
-	// 		lat: d3.max(lats),
-	// 		lon: d3.max(lons)
-	// 	}];
-
-	// 	// reset the view for a bit
-	// 	self.map.zoom(10).center({
-	// 		lat: 0, lon: 0
-	// 	});
-
-	// 	var sw_pt = self.map.locationPoint(extent[0]);
-	// 	var ne_pt = self.map.locationPoint(extent[1]);
-
-	// 	var width = Math.abs(ne_pt.x - sw_pt.x);
-	// 	var height = Math.abs(ne_pt.y - sw_pt.y);
-	// 	var max = 430; // so it can rotate in a 600x600 square
-	// 	var ratio = width > height ? max / width : max / height;
-
-	// 	width *= ratio;
-	// 	height *= ratio;
-
-	// 	container.style.width = (width) + 'px';
-	// 	container.style.height = (height) + 'px';
-
-	// 	self.map.extent(extent);
-
-	// 	var dif = self.l2p(extent[0]).y - self.l2p(self.map.extent()[0]).y;
-
-	// 	if (dif) {
-	// 		container.style.top = (150 - dif) + 'px';
-	// 	}
-	// };
 
 	// take extent and get it in x y
 	self.getBounds = function() {

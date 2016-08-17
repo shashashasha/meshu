@@ -10,6 +10,7 @@ $(function() {
 	if ($("body").hasClass("radial")) currentRenderer = "radial";
 	else if ($("body").hasClass("print")) currentRenderer = "print";
 	else if ($("body").hasClass("orbit")) currentRenderer = "orbit";
+	else if ($("body").hasClass("streets")) currentRenderer = "streets";
 
 
 	// the list of all available meshu products for purchase
