@@ -22,7 +22,6 @@ $(function() {
 
 	// hotfix for postcard pages
 	meshu.zoomOffset = window.location.href.search("postcard") > 0 ? -.25 : 0;
-	meshu.isReadymade = loadedMeshu && loadedMeshu.product != '';
 
 	// initialize ordering ui
 	// it listens to when the form ui is validated, then moves to the review view
@@ -51,10 +50,6 @@ $(function() {
 
 		// if svg is enabled
 		if (svgEnabled) {
-			// readymade.js
-			if (meshu.isReadymade && readymade) {
-				readymade.initialize(meshu);
-			}
 
 			// render the meshu
 			meshu.initializeFromData(loadedMeshu.location_data, loadedMeshu.metadata, loadedMeshu.svg);
@@ -232,7 +227,6 @@ $(function() {
 				break;
 
 			case 'make':
-			case 'readymade':
 				meshu.mesh().interactive(false);
 
 			// 	// update the render background to be the product preview

@@ -126,10 +126,7 @@ var saver = function() {
     };
 
     self.createOrUpdateMeshu = function(callback) {
-        // protect the saving so we don't save readymades
-        if (self.meshu.isReadymade && callback) {
-            callback();
-        } else if (self.meshu.username && self.meshu.username == 'guest') {
+        if (self.meshu.username && self.meshu.username == 'guest') {
             assignGuestMeshu();
 
             if (callback) {

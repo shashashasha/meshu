@@ -38,15 +38,6 @@ def item_display(request, item_encoded):
 	item_id = int(str(item_encoded).decode("hex"))
 	return item_handler(request, item_id, 'display.html', 'view')
 
-def item_readymade(request, item_id):
-	item = get_object_or_404(Meshu, pk=item_id)
-
-	# don't let people 'shop' for other users items yet
-	if item.user_profile.user.is_staff == False:
-		return notify(request, 'authorization_required')
-
-	return item_handler(request, item_id, 'readymade.html', 'readymade')
-
 def item_delete(request, item_id):
 
 	meshu = meshu_delete(request, item_id)
