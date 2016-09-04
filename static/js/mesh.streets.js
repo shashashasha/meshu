@@ -21,8 +21,6 @@ var width = 600,
 var tile = d3.geo.tile()
     .size([width, height]);
 
-    map.hide();
-
 var start = map.getStart();
 var origin = [start.lon, start.lat, start.zoom];
 
@@ -43,7 +41,7 @@ var zoom = d3.behavior.zoom()
     .translate(projection([origin[0], origin[1]]) //la
     // .translate(projection([-122.4407, 37.7524]) //sf
       .map(function(x) { return -x; }))
-    .on("zoom", zoomed)
+    //.on("zoom", zoomed)
     .on("zoomend",function(){
       setTimeout(sortFeatures, 1000);
     });
@@ -103,7 +101,7 @@ function zoomed() {
   mapCenter = projection.invert([width/2, height/2]);
 
   // adding zoom level as a class  
-  d3.select(".layer").attr("class",function(){ return "layer z"+zoomLevel; });
+  d3.select("#map-now .layer").attr("class",function(){ return "layer z"+zoomLevel; });
   // url hash for the location
   window.location.hash = [mapCenter[0].toFixed(5), mapCenter[1].toFixed(5), zoomLevel].join("/");
 
@@ -185,7 +183,7 @@ function interpolateZoom (translate, scale) {
     });
 }
 
-function zoomTo(latlon) {
+  self.zoomTo = function(latlon) {
     var proj = projection(latlon).map(function(x){ return -x; }),
         center = [width / 2 + proj[0], height / 2 + proj[1] ],
         translate = zoom.translate(),
@@ -196,14 +194,10 @@ function zoomTo(latlon) {
 
     zoom.translate([view.x, view.y]).scale(view.k);
     zoomed();
-}
+  };
 
-function zoomClick() {
-    console.log("hi", d3.event.target);
-    var clicked = d3.event.target,
-        direction = 1,
-        factor = 0.2,
-        target_zoom = 1,
+function zoomClick(dir) {
+    var target_zoom = 1,
         center = [width / 2, height / 2],
         extent = zoom.scaleExtent(),
         translate = zoom.translate(),
@@ -212,8 +206,8 @@ function zoomClick() {
         view = {x: translate[0], y: translate[1], k: zoom.scale()};
 
     d3.event.preventDefault();
-    direction = (this.id === 'zoomin') ? 1 : -1;
-    target_zoom = zoom.scale() * (1 + factor * direction);
+    direction = (dir === 'zoomin') ? 2 : .5;
+    target_zoom = zoom.scale() * direction;
 
     if (target_zoom < extent[0] || target_zoom > extent[1]) { return false; }
 
@@ -293,13 +287,15 @@ function renderTiles(d) {
         if(d.properties.boundary=='yes')
           {kind += '_boundary';} 
         return d.layer_name + '-layer ' + kind; })
-      .attr("d", tilePath)
-      .style("display",function(d){ return d.display ? "block" : "none"; });
+      .attr("d", tilePath);
   });
 }
 
 setTimeout(function(){
-    d3.selectAll('.mapui div').on('click', zoomClick);    
+    d3.selectAll('.mapui div').on('click', function(){
+      zoomClick(d3.select(this).attr("id"));
+    });
+    
 },1000);
 
 

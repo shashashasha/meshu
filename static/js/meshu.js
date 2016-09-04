@@ -222,6 +222,10 @@ sb.meshu = function(frame, renderer, existingMap) {
                     setZoomGranularity(12);
                 }
                 break;
+            case 'streets':
+                mesh.zoomTo(first);
+                map.map.center({ lat: first[1], lon: first[0] });
+                break;
             case 'radial':
                 // set the zoom based on radius
                 setZoomGranularity(12, 12);

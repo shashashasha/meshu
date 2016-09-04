@@ -2088,8 +2088,19 @@ path {
   overflow: hidden;
   box-sizing: border-box;
 }
-.streets .path,
-.streets .minor-road {
+.streets #map-now svg {
+  margin: -20px;
+}
+.z15 .path,
+.z14 .path,
+.z14 .minor-road,
+.z13 .path,
+.z13 .minor-road,
+.z12 .path,
+.z12 .minor-road,
+.z11 .path,
+.z11 .minor-road,
+.z11 .major-road {
   display: none;
 }
 .streets path {
