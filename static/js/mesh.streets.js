@@ -22,6 +22,7 @@ var tile = d3.geo.tile()
     .size([width, height]);
 
 var start = map.getStart();
+map.hide();
 var origin = [start.lon, start.lat, start.zoom];
 
 // translating tile zoom levels to d3's scale
@@ -41,7 +42,7 @@ var zoom = d3.behavior.zoom()
     .translate(projection([origin[0], origin[1]]) //la
     // .translate(projection([-122.4407, 37.7524]) //sf
       .map(function(x) { return -x; }))
-    //.on("zoom", zoomed)
+    .on("zoom", zoomed)
     .on("zoomend",function(){
       setTimeout(sortFeatures, 1000);
     });
@@ -62,10 +63,18 @@ var mapShape = d3.select("#meshu-container").append("div")
     .style("height", height + "px")
     .call(zoom);
 
-var svg = mapShape.append("div")
-    .attr("class", "layer")
-    .append("svg").attr("width","600px").attr("height","600px")
+mapShape.append("div")
+    .attr("class", "layer");
+
+var rasters = mapShape.select(".layer")
+    .append("svg").attr("id","raster-tiles")
+    .attr("width","600px").attr("height","600px")
     .append("g");
+  
+var svg = mapShape.select(".layer")
+    .append("div").attr("id","map-boundary")
+    .append("svg").attr("width","600px").attr("height","600px")
+    .append("g").attr("id","vector-tiles");
 
 var zoom_controls = mapShape.append("div")
     .attr("class", "zoom-container");
@@ -88,6 +97,7 @@ zoomed();
 setTimeout(sortFeatures, 1500);
 
 function zoomed() {
+
   var tiles = tile
       .scale(zoom.scale())
       .translate(zoom.translate())
@@ -97,13 +107,11 @@ function zoomed() {
       .scale(zoom.scale() / 2 / Math.PI)
       .translate(zoom.translate());
 
-  var zoomLevel = tiles[0][2],
-  mapCenter = projection.invert([width/2, height/2]);
+  var zoomLevel = tiles[0][2]
+  // mapCenter = projection.invert([width/2, height/2]);
 
   // adding zoom level as a class  
   d3.select("#map-now .layer").attr("class",function(){ return "layer z"+zoomLevel; });
-  // url hash for the location
-  window.location.hash = [mapCenter[0].toFixed(5), mapCenter[1].toFixed(5), zoomLevel].join("/");
 
   var image = svg
       .attr("transform", matrix3d(tiles.scale, tiles.translate))
@@ -116,8 +124,26 @@ function zoomed() {
 
   image.enter().append("g")
       .attr("class", "tile")
+      .attr("transform",function(d){ return "translate("+ d[0] * 256 +","+ d[1] * 256 +")"; });
+  
+  image.each(renderTiles);
+
+  var raster = rasters
+      .attr("transform", matrix3d(tiles.scale, tiles.translate))
+    .selectAll(".tile")
+      .data(tiles, function(d){ return d; });
+
+  raster.exit().remove();
+  raster.enter().append("g")
+      .attr("class", "tile")
       .attr("transform",function(d){ return "translate("+ d[0] * 256 +","+ d[1] * 256 +")"; })
-      .each(renderTiles);
+      .append("image");
+
+  raster.select("image")
+    .attr("xlink:href", function(d) { return "http://tile.stamen.com/toner/" + d[2] + "/" + d[0] + "/" + d[1] + ".png"; })
+    .attr("opacity",.2)
+    .attr("width", 256)
+    .attr("height", 256)
 }
 
 //use d3 nest to group the entire page's features by type
@@ -281,7 +307,8 @@ function renderTiles(d) {
         return a.properties.sort_key ? a.properties.sort_key - b.properties.sort_key : 0 }));
     paths.enter().append("path");
     paths.exit().remove();
-    paths.attr("class", function(d) {
+    paths
+      .attr("class", function(d) {
         var kind = d.properties.kind || '',
           kind = kind.replace("_","-");
         if(d.properties.boundary=='yes')
@@ -317,17 +344,21 @@ setTimeout(function(){
         if (points.length == 0) $("#scroll-down").fadeOut();
     });
 
+    // self.on("draggedMap", function() {
+    //   zoomed();
+    // });
+
     // update rotation and bounding box stuff
     function update(){
-        zoomed();
+        //zoomed();
     }
     self.refresh = function(flag) {
-        if (flag == 'zoomed' && lats.length > 0 && lons.length > 0) {
-            self.add(lats[0], lons[0], meshuTitle);
-        } else {
-            update();
-            self.refreshed();
-        }
+        // if (flag == 'zoomed' && lats.length > 0 && lons.length > 0) {
+        //     self.add(lats[0], lons[0], meshuTitle);
+        // } else {
+        //     update();
+        //     self.refreshed();
+        // }
     };
 
     // update the place title editing

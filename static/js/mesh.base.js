@@ -42,9 +42,10 @@ sb.mesh.base = function (frame, map, width, height) {
     var content = $("#content");
 
     // d3.select(uiFrame.node())
-    d3.select(".frame")
-        .on("mousemove", mousemove)
-        .on("mousedown", mousedown);
+    if (!$("body").hasClass("streets"))
+        d3.select(".frame")
+            .on("mousemove", mousemove)
+            .on("mousedown", mousedown);
 
     d3.select('body').on("mouseup", mouseup);
 

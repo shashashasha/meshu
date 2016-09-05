@@ -2125,13 +2125,19 @@ path {
 .roadtrip .straight {
     stroke-opacity: .5;
 }
-.streets #map-now {
+.streets #raster-tiles {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.streets #map-boundary {
     border: 20px solid black;
     border-radius: 50%;
     overflow: hidden;
     box-sizing: border-box;
+    position: absolute;
 }
-.streets #map-now svg {
+.streets #map-boundary svg {
     margin: -20px;
 }
 .z15 .path,
