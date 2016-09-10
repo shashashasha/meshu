@@ -211,7 +211,7 @@ $(function() {
 				sb.rasterizer.ringPreview(meshu);
 			}
 		}
-		else if (meshu.mesh().name == "radial") {
+		else if (meshu.mesh().name == "radial" || meshu.mesh().name == "streets") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
 				sb.product.initialize(canvas, catalog);
 			});

@@ -1406,6 +1406,24 @@ body.ie .frame div {
 .print .frame-wrapper.possible {
     color: black;
 }
+.streets #wrapper-pendant img {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    top: 184px;
+    left: 111px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+.streets #wrapper-earrings img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 125px;
+    left: 150px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
 #product-preview .wrapper.last {
     margin-right: 0;
 }
@@ -2140,17 +2158,23 @@ path {
 .streets #map-boundary svg {
     margin: -20px;
 }
-.z15 .path,
-.z14 .path, .z14 .minor-road,
-.z13 .path, .z13 .minor-road,
-.z12 .path, .z12 .minor-road,
-.z11 .path, .z11 .minor-road, .z11 .major-road {
+
+.z14 .minor-road,
+.z13 .minor-road,
+.z12 .minor-road, .z12 .major-road,
+.z11 .minor-road, .z11 .major-road,
+.z10 .major-road {
     display: none;
 }
-
 .streets path {
-    stroke-width: 7;
+    stroke-width: 9;
     stroke-linecap: round;
+}
+.z17 path,
+.z10 path, .z9 path,
+.z8 path, .z7 path,
+.z6 path, .z5 path {
+    stroke-width: 10;
 }
 .print #projection,
 .print #design {

@@ -42,26 +42,16 @@ var zoom = d3.behavior.zoom()
     .translate(projection([origin[0], origin[1]]) //la
     // .translate(projection([-122.4407, 37.7524]) //sf
       .map(function(x) { return -x; }))
-    .on("zoom", zoomed)
-    .on("zoomend",function(){
-      setTimeout(sortFeatures, 1000);
-    });
-
-function search(text) {
-  var text = document.getElementById('search-text').value;
-  d3.json("https://search.mapzen.com/v1/search?text="+text+"&api_key=search-owZDPeC", function(error, json) {
-        var latlon = json.features[0].geometry.coordinates;
-        zoomTo(latlon);
-        document.getElementById('search-text').value = '';
-    });
-}
+    .on("zoom", zoomed);
 
 var mapShape = d3.select("#meshu-container").append("div")
     .attr("id", "map-now")
     .style({"position":"absolute","top":"0"})
     .style("width", width + "px")
     .style("height", height + "px")
-    .call(zoom);
+    .call(zoom)
+    .on("mousewheel.zoom", null)
+    .on("DOMMouseScroll.zoom", null);
 
 mapShape.append("div")
     .attr("class", "layer");
@@ -76,27 +66,16 @@ var svg = mapShape.select(".layer")
     .append("svg").attr("width","600px").attr("height","600px")
     .append("g").attr("id","vector-tiles");
 
-var zoom_controls = mapShape.append("div")
-    .attr("class", "zoom-container");
-
-var zoom_in = zoom_controls.append("a")
-    .attr("class", "zoom")
-    .attr("id", "zoom_in")
-    .text("+");
-
-var zoom_out = zoom_controls.append("a")
-    .attr("class", "zoom")
-    .attr("id", "zoom_out")
-    .text("-");
-
-var info = mapShape.append("div")
-    .attr("class", "info")
+var info = d3.select("#attribution")
     .html('<a href="http://bl.ocks.org/mbostock/5593150" target="_top">Mike Bostock</a> | © <a href="https://www.openstreetmap.org/copyright" target="_top">OpenStreetMap contributors</a> | <a href="https://mapzen.com/projects/vector-tiles" title="Tiles courtesy of Mapzen" target="_top">Mapzen</a>');
 
 zoomed();
-setTimeout(sortFeatures, 1500);
 
 function zoomed() {
+  if (event && event.type == "wheel") {
+    zoom.scale(projection.scale() * 2 * Math.PI);
+    return;
+  }
 
   var tiles = tile
       .scale(zoom.scale())
@@ -128,6 +107,11 @@ function zoomed() {
   
   image.each(renderTiles);
 
+  // setTimeout(function(){
+  //   var displayed = d3.selectAll(".tile path")[0].filter(function(d){ return d3.select(d).style("display") != "none"; })
+  //   console.log(d3.selectAll("path")[0].length, displayed.length)
+  // },1000);
+
   var raster = rasters
       .attr("transform", matrix3d(tiles.scale, tiles.translate))
     .selectAll(".tile")
@@ -148,7 +132,7 @@ function zoomed() {
 
 //use d3 nest to group the entire page's features by type
 function sortData(thorough) {
-  var mapData = d3.select("svg").selectAll("path").data();
+  var mapData = svg.selectAll("path").data();
   var t = d3.nest()
     .key(function(d){ return d.layer_name; })
     .key(function(d){ 
@@ -158,33 +142,73 @@ function sortData(thorough) {
       return kind; })
     .entries(mapData);
 
+  t[0].values = t[0].values.filter(function(d){
+    return d3.select("."+d.key.replace("_","-")).style("display") != "none";
+  });
   return t;
 }
+
+var svg2 = d3.select("body").append("svg")
+    .attr("width",width).attr("height",height)
+    .attr("id","svg-download"),
+    group = svg2.append("g").attr("class","tile"),
+    clipCircle = group.append("circle");
 
 //get list of feature types and figure out which are currently visible
 function sortFeatures() {
   var featureTypes = sortData();
-  featureTypes.forEach(function(l){
-    var layerIndex;
-    layers.forEach(function(d,i){ if (d.layer == l.key) layerIndex = i; });
-    var currentTypes = l.values.map(function(d){ return d.key; });
-    
-    layers[layerIndex].types.forEach(function(d,i){ d.visible = false; });
 
-    l.values.forEach(function(f){
-      var featureIndex = -1;
-      layers[layerIndex].types.forEach(function(d,i){ if (d.type == f.key) featureIndex = i; });
-      if (featureIndex == -1)
-        layers[layerIndex].types.push({
-          type: f.key,
-          display: true,
-          visible: true
-        });
-      else
-        layers[layerIndex].types[featureIndex].visible = true;
-    });
-  });
+    var tiles = tile.scale(zoom.scale()).translate(zoom.translate())(),
+      top = tiles[0],
+      k = Math.pow(2, top[2]) * 256; // size of the world in pixels
 
+    tilePath.projection()
+        .translate([k / 2 - top[0] * 256, k / 2 - top[1] * 256]) // [0°,0°] in pixels
+        .scale(k / 2 / Math.PI)
+        .precision(0);
+
+    var featureList = ["svg", "tile"];
+
+    var layerType = svg2.selectAll(".tile").data(featureTypes);
+
+    var features = layerType.selectAll(".feature-type")
+      .data(function(d){ return d.values; });
+    features.enter().append("g").attr("class","feature-type");
+    features.attr("id",function(d){ featureList.push(d.key.replace("_","-")); return d.key; });
+    features.exit().remove();
+
+    var paths = features.selectAll("path").data(function(d){ return d.values; });
+    paths.enter().append("path");
+    paths.exit().remove();
+    paths.attr("class", function(d) {
+        var kind = d.properties.kind || '',
+          kind = kind.replace("_","-");
+        if(d.properties.boundary=='yes')
+          {kind += '_boundary';} 
+        return d.layer_name + '-layer ' + kind; })
+      .attr("d", tilePath)
+      .attr("fill","none").attr("stroke-width",7);
+
+    var circle = projection.invert([width/2,height/2]),
+      topLeft = projection.invert([0,0]);
+
+    var t = projection.translate(),
+      s = projection.scale();
+
+    projection.translate([k / 2 - top[0] * 256, k / 2 - top[1] * 256]) // [0°,0°] in pixels
+        .scale(k / 2 / Math.PI);
+
+  var newCircle = projection(circle),
+    translateG = projection(topLeft);
+
+  svg2.select(".tile").attr("transform","translate(-"+translateG[0]+",-"+translateG[1]+")")
+
+  clipCircle.style("fill","none").style("stroke","black").style("stroke-width","2px")
+    .attr("cx", newCircle[0])
+    .attr("cy", newCircle[1])
+    .attr("r",280);
+
+  projection.translate(t).scale(s);
 }
 
 function matrix3d(scale, translate) {
@@ -209,7 +233,22 @@ function interpolateZoom (translate, scale) {
     });
 }
 
-  self.zoomTo = function(latlon) {
+function fitZoom(bbox) {
+  var pi = Math.PI,
+    tau = 2 * pi;
+  var p0 = projection([bbox[0], bbox[1]]),
+    p1 = projection([bbox[2], bbox[3]]);
+
+  function floor(k) {
+    return Math.pow(2, Math.floor(Math.log(k * tau) / Math.LN2)) / tau;
+  }
+
+  //var k = floor(0.95 / Math.max((p1[0] - p0[0]) / width, (p1[1] - p0[1]) / height)) * 2 * Math.PI;
+  var k = floor(0.95 / Math.max((p1[0] - p0[0]) / 600, (p1[1] - p0[1]) / 600)) * zoom.scale();
+  return k;
+}
+
+  self.zoomTo = function(latlon, bbox) {
     var proj = projection(latlon).map(function(x){ return -x; }),
         center = [width / 2 + proj[0], height / 2 + proj[1] ],
         translate = zoom.translate(),
@@ -217,6 +256,7 @@ function interpolateZoom (translate, scale) {
 
     view.x += center[0];
     view.y += center[1];
+
 
     zoom.translate([view.x, view.y]).scale(view.k);
     zoomed();
@@ -290,6 +330,8 @@ function renderTiles(d) {
           for (var j in sorted[i].values) {
             // Don't include any label placement points
             if(sorted[i].values[j].properties.label_placement == 'yes') { continue }
+
+            if(sorted[i].values[j].properties.kind == 'path' || sorted[i].values[j].properties.kind == 'ferry') { continue }
             // Don't show small buildings at z14 or below.
             if(zoom <= 14 && layer == 'buildings' && sorted[i].values[j].properties.area < 2000) { continue }
 
@@ -361,48 +403,6 @@ setTimeout(function(){
         // }
     };
 
-    // update the place title editing
-    function updateListBehavior() {
-        placeTitle.attr("class","").select(".title-text")
-            .text(function(d){
-                if (d && d.title)
-                    return d.title;
-                else
-                    return meshuTitle;
-            });
-
-        placeTitle.select(".title-text").on("click",function(d){
-            if (d.edit) return;
-            self.editText($(this).parent(),0,"title");
-            d.edit = !d.edit;
-        });
-
-        placeTitle.select(".title-edit").on("click",function(d){
-            var node = $(this).parent();
-            if (!d.edit) self.editText(node,0,"title");
-            else d.title = meshuTitle = self.saveText(node,0,"title");
-            d.edit = !d.edit;
-        });
-    }
-
-    self.editText = function(node,i,type) {
-        var button = node.find("." + type + "-edit").text("save");
-        var field = node.find("." + type + "-text");
-        var value = field.text();
-
-        node.addClass("active");
-        field.html('<input value="' + value + '">').find("input").focus();
-    };
-    self.saveText = function(node, i, type) {
-        var button = node.find("." + type + "-edit").text("edit");
-        var text = node.find("input").val();
-
-        node.removeClass("active");
-        node.find("." + type + "-text").text(text);
-
-        return text;
-    };
-
     self.add = function(latitude, longitude, placename, skipAnimation) {
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
@@ -418,6 +418,8 @@ setTimeout(function(){
         else {
             meshuTitle = placename[0].toUpperCase() + placename.substr(1, placename.length-1);
         }
+
+        $("#place-title").text(meshuTitle);
 
 
         $("#places").removeClass("inactive");
@@ -485,10 +487,18 @@ setTimeout(function(){
     self.outputTitle = function() {
         return meshuTitle || "My Meshu";
     };
+    self.bakeStyles = function() {
+        var stroke = $(".streets path").css("stroke-width");
+        d3.selectAll(".streets path").attr("stroke-width",stroke).attr("fill","none");
+    };
+    self.unBakeStyles = function() {
+        d3.selectAll(".streets path").attr('stroke-width','');  
+    };
 
     // outputs svg data
     self.output = function() {
-        return $('#' + selfId).html();
+        sortFeatures();
+        return $('#svg-download').html();
     };
 
     self.id = function() {

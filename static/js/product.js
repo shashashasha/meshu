@@ -76,18 +76,40 @@ $(function() {
 			var svg = d3.select("#preview-" + product),
 				transform = sb.transforms.getTransform(product, "product");
 
-			var g = svg.append("g")
-				.attr("class", "product-transformer")
-				.attr("transform", transform);
+			if ($("body").hasClass("streets")) {
+				/*
 
-			g.append("svg:image")
-				.attr('x', 0)
-				.attr('y', 0)
-				.attr('width', '600px')
-				.attr('height', '600px')
-				.attr("class","product-delaunay")
-				.attr("transform", "translate(-300, -300)")
-				.attr('xlink:href', element.toDataURL());
+				yoooooooooooooooooo
+
+				*/
+
+				// get the pixel data from the canvas
+				var ctx = element.getContext('2d');
+				  var alphaPixels = 0;
+
+				  var data = ctx.getImageData(0,0, ctx.canvas.width,ctx.canvas.height).data;
+				  for(var i=3; i<data.length; i+=4) {
+				    if(data[i] > 0) alphaPixels++;
+				  }
+
+				  console.log(alphaPixels / (ctx.canvas.width * ctx.canvas.height));
+				d3.select("#wrapper-" + product)
+					.select(".product-transformer")
+					.attr("src",element.toDataURL());
+			} else {
+				var g = svg.append("g")
+					.attr("class", "product-transformer")
+					.attr("transform", transform);
+
+				g.append("svg:image")
+					.attr('x', 0)
+					.attr('y', 0)
+					.attr('width', '600px')
+					.attr('height', '600px')
+					.attr("class","product-delaunay")
+					.attr("transform", "translate(-300, -300)")
+					.attr('xlink:href', element.toDataURL());
+			}
 		};
 
 		return self;

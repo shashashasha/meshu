@@ -43,7 +43,8 @@ sb.catalog = function(renderer, promo) {
 						}
 					};
 
-	materialOptions.radial = {"earrings":
+	materialOptions.radial =
+	materialOptions.streets = {"earrings":
 						{"bamboo":{"price":75,"colors":["amber"]},
 						"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["white"]}

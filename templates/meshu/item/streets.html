@@ -15,6 +15,13 @@
 </div>
 {% endblock %}
 
+{% block places %}
+    <div id="places" class="edit-panel inactive">
+        <h2 id="place-title" style="font-size: 22px;"></h2>
+        <p>Different zoom levels show different types of roads. Trying zooming in or out (using the + and - buttons on the map) to change your design.</p>
+    </div>
+{% endblock %}
+
 {% block finish %}
 {% endblock %}
 
@@ -23,42 +30,40 @@
             <svg id="preview-pendant" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="0">
             </svg>
+            <img class="product-transformer"/>
             <p class="title">Pendant Necklace</p>
-            <p class="note">pendant max side length: 1.5"</p>
+            <p class="note">pendant max side length: 2.5"</p>
             <p class="note">chain length: 18"</p>
     </div>
     <div class="wrapper" id="wrapper-earrings">
             <svg id="preview-earrings" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="0">
             </svg>
+            <img class="product-transformer"/>
             <p class="title">Earrings</p>
             <p class="note">earrings 1.75" tall</p>
             <p class="note">nickel-free posts available</p>
     </div>
-    <div class="wrapper last" id="wrapper-necklace">
+    <!-- <div class="wrapper last" id="wrapper-necklace">
             <svg id="preview-necklace" width="100%" height="282">
                 <image xlink:href="{{ STATIC_URL }}images/preview/preview_necklace.png" width="300" height="300" x="0" y="0">
             </svg>
             <p class="title">Large Necklace</p>
             <p class="note">pendant max side length: 3"</p>
             <p class="note">chain length: 18"</p>
-    </div>
+    </div> -->
 {% endblock %}
 
 {% block materials %}
     <li id="sterling-silver" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-silver.jpg" class="img ring">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-silver.jpg" class="img cufflinks">
         </div>
         Sterling Silver<span class="price"></span>
     </li>
     <li id="polished-brass" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-polished-brass.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-brass.jpg" class="img ring">
-            <img src="{{ STATIC_URL }}images/materials/facet-cufflink-brass.jpg" class="img cufflinks">
         </div>
         Polished Brass<span class="price"></span>
     </li>
@@ -80,34 +85,12 @@
         </div>
         Black Acrylic<span class="price"></span>
     </li>
-    <!-- <li id="black-nylon" class="material-option">
-        <img src="{{ STATIC_URL }}images/materials/facet-black-nylon.jpg" class="img">
-        Black Nylon<span class="price"></span>
-    </li> -->
     <li id="white-nylon" class="material-option">
         <div class="img-wrapper">
             <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img default">
-            <img src="{{ STATIC_URL }}images/materials/facet-ring-nylon.jpg" class="img ring">
         </div>
         White Nylon<span class="price"></span>
     </li>
-{% endblock %}
-
-{% block final-touch %}
-    <div id="final-ring">
-        <div class="frame"></div>
-        <h2 class="add-on-header">Ring Size: <span id="ring-number"></span></h2>
-        <p>Drag the slider below to adjust the ring size:</p>
-        <input id="ring-range" type="range" min="4" max="14" step=".5"/>
-        <p class="note" style="margin-top:44px;">Not sure about your ring size? <a href="http://findmyringsize.com/" style="color:#808080; text-decoration:underline;">Click here</a> for help.</p>
-    </div>
-    <div id="final-rotate">
-        <svg id="rotate"></svg>
-        <div id="rotate-cw" class="rotate-arrow"></div>
-        <div id="rotate-ccw" class="rotate-arrow"></div>
-        <h2 class="add-on-header">Meshu Rotation:</h2>
-        <p>If you'd like to adjust the orientation of your meshu, click on one of the above arrows to rotate it.</p>
-    </div>
 {% endblock %}
 
 {% block extra-libraries %}
