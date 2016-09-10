@@ -192,6 +192,9 @@ $(function() {
    				break;
    		}
 
+   		if ($("#product-preview").hasClass("dense") && product == "pendant")
+   			product = "dense_pendant";
+
 		/*
 			i suck.
 		*/

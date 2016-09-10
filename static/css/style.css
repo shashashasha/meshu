@@ -1360,7 +1360,8 @@ body.ie .frame div {
 .print .frame-wrapper.possible {
   color: black;
 }
-.streets #wrapper-pendant img {
+.streets #wrapper-pendant img,
+.streets #wrapper-dense_pendant img {
   position: absolute;
   width: 85px;
   height: 85px;
@@ -1462,6 +1463,23 @@ body.ie .frame div {
 }
 #product-preview p.cufflinks:hover {
   border-color: #000;
+}
+#product-preview #dense-note {
+  display: none;
+  width: 28%;
+  background: rgba(250, 61, 176, 0.25);
+  padding: 20px;
+}
+#product-preview #dense-note p {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #444;
+}
+#product-preview #dense-note .important {
+  color: #000;
+}
+#product-preview.dense #dense-note {
+  display: inline-block;
 }
 .tri {
   border-width: 40px;

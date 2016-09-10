@@ -32,6 +32,8 @@ sb.materializer = function() {
 		product = p;
 		var materials = catalog.getMaterials(p);
 
+		console.log(p, materials)
+
 		$.each(self.materials.find("li"),function(i,v){
 			var item = $(this).attr("id");
 			if (materials[item]) {

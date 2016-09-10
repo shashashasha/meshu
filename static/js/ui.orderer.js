@@ -143,9 +143,11 @@ sb.ui.orderer = function() {
 			if (product == "ring") {
 				var size = sb.ui.orderer.metadata().ringSize ? sb.ui.orderer.metadata().ringSize : "<span class='inactive'>not chosen</span>";
 				review.find(".review-product").removeClass("inactive").html(product+" — size "+size);
+			} else {
+				var displayText = product.replace("_"," ");
+				if (displayText.indexOf("Dense") != 1) displayText = displayText.split(" ")[1];
+				review.find(".review-product").removeClass("inactive").text(displayText);
 			}
-			else
-				review.find(".review-product").removeClass("inactive").text(product.replace("_"," "));
 		}
 
 		if (color && material)

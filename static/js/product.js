@@ -77,22 +77,20 @@ $(function() {
 				transform = sb.transforms.getTransform(product, "product");
 
 			if ($("body").hasClass("streets")) {
-				/*
-
-				yoooooooooooooooooo
-
-				*/
 
 				// get the pixel data from the canvas
 				var ctx = element.getContext('2d');
-				  var alphaPixels = 0;
+				var alphaPixels = 0;
 
-				  var data = ctx.getImageData(0,0, ctx.canvas.width,ctx.canvas.height).data;
-				  for(var i=3; i<data.length; i+=4) {
-				    if(data[i] > 0) alphaPixels++;
-				  }
+				var data = ctx.getImageData(0,0, ctx.canvas.width,ctx.canvas.height).data;
+				for(var i=3; i<data.length; i+=4) {
+					if(data[i] > 0) alphaPixels++;
+				}
+				var density = alphaPixels / (ctx.canvas.width * ctx.canvas.height);
+				
+				d3.select("#product-preview").classed("dense",density > .33);
+				if ($(".wrapper.selected")) $(".wrapper.selected").click();
 
-				  console.log(alphaPixels / (ctx.canvas.width * ctx.canvas.height));
 				d3.select("#wrapper-" + product)
 					.select(".product-transformer")
 					.attr("src",element.toDataURL());

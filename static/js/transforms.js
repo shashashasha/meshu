@@ -19,6 +19,16 @@ sb.transforms = {
 			transform: {x: 900, y: 1375}
 		}
 	},
+	"dense_pendant": {
+		"product": {
+			scale: .125,
+			transform: {x: 155, y: 205}
+		},
+		"render": {
+			scale: .25,
+			transform: {x: 900, y: 1375}
+		}
+	},
 	"necklace": {
 		"product": {
 			scale: .22,

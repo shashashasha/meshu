@@ -1,5 +1,5 @@
 var sb = sb || {};
-sb.catalog = function(renderer, promo) {
+sb.catalog = function(renderer) {
 	var self = {},
 		materialOptions = {},
 		renderer = renderer || 'facet';
@@ -55,6 +55,13 @@ sb.catalog = function(renderer, promo) {
 						"nylon":{"price":95,"colors":["black","white"]},
 						"silver":{"price":155,"colors":["sterling"]},
 						"brass":{"price":145,"colors":["polished"]}
+						},
+					"dense_pendant":
+				   		{"bamboo":{"price":80,"colors":["amber"]},
+				   		"acrylic":{"price":85,"colors":["black","white"]},
+						"nylon":{"price":95,"colors":["black","white"]},
+						"silver":{"price":180,"colors":["sterling"]},
+						"brass":{"price":170,"colors":["polished"]}
 						},
 					"coasters":
 				   		{"bamboo":{"price":45,"colors":["amber"]},
@@ -128,20 +135,6 @@ sb.catalog = function(renderer, promo) {
 	// set the product type options with either facet or radial
 	var options = materialOptions[renderer];
 
-	var promotions = {};
-	promotions.marathon = {
-					"earrings":
-						{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
-				   	"pendant":
-				   		{"bamboo":{"price":64,"colors":["Amber"], "discount": .85, "originalPrice": 75}},
-				   	"necklace":
-				   		{"bamboo":{"price":68,"colors":["Amber"], "discount": .85, "originalPrice": 80}}
-				   	};
-
-	if (promo && promotions[promo]) {
-		options = promotions[promo];
-	}
-
 	// check if this exists
 	self.check = function(type, material) {
 		return options[type] && options[type][material];
@@ -166,62 +159,25 @@ sb.catalog = function(renderer, promo) {
 		return makeTimes[material];
 	};
 
-	/*
-		this is ugly, but I want to remove catalog.marathon.js
-	*/
-	if (promo) {
-		self.getProducts = function() {
-			var products = [];
+	self.getProducts = function() {
+		var products = [];
 
-			for (var type in options) {
-				var prices = [],
-					originals = [],
-					discounts = [],
-					product = options[type];
-
-				for (var material in product) {
-					prices.push(product[material].price);
-
-					if (product[material].originalPrice)
-						originals.push(product[material].originalPrice);
-
-					if (product[material].discount)
-						discounts.push(product[material].discount);
-				}
-
-				products.push({
-					type: type,
-					prices: prices,
-					originals: originals,
-					// just use one discount for now
-					// assuming we won't have multiple different ones
-					discount: discounts.length ? discounts[0] : undefined
-				});
+		for (var type in options) {
+			var prices = [],
+				product = options[type];
+			for (var material in product) {
+				prices.push(product[material].price);
 			}
 
-			return products;
-		};
-	} else {
-		self.getProducts = function() {
-			var products = [];
+			products.push({
+				type: type,
+				prices: prices,
+				discount: product.discount
+			});
+		}
 
-			for (var type in options) {
-				var prices = [],
-					product = options[type];
-				for (var material in product) {
-					prices.push(product[material].price);
-				}
-
-				products.push({
-					type: type,
-					prices: prices,
-					discount: product.discount
-				});
-			}
-
-			return products;
-		};
-	}
+		return products;
+	};
 
 	self.getMaterials = function(type) {
 		var materials = {};
