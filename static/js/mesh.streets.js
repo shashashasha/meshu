@@ -173,9 +173,9 @@ function sortData(thorough) {
   return t;
 }
 
-var svg2 = d3.select("body").append("svg")
-    .attr("width",width).attr("height",height)
-    .attr("id","svg-download").attr("display","none"),
+var svg2 = d3.select("body").append("div")
+    .attr("id","svg-download").style("display","none")
+    .append("svg").attr("width","100%").attr("height","100%")
     clipGroup = svg2.append("g").attr("clip-path","url(#dl-clip)").attr("class","delaunay")
     group = clipGroup.append("g").attr("class","tile");
 
@@ -505,7 +505,8 @@ setTimeout(function(){
         
         if (self.style() != undefined) {
           var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); });
-          t[0] += 200;
+          if ($("body").hasClass("display"))
+            t[0] += 200;
           zoom.scale(parseFloat(self.style().scale))
             .translate(t);
           zoomed();
@@ -532,6 +533,11 @@ setTimeout(function(){
     };
     self.unBakeStyles = function() {
         d3.selectAll(".streets path").attr('stroke-width','');  
+    };
+
+    self.outputG = function() {
+      sortFeatures();
+        return $("#svg-download svg").html();
     };
 
     // outputs svg data

@@ -2676,6 +2676,10 @@ circle.highlight,
   padding-top: 7px;
   text-transform: capitalize;
 }
+#cart .cart-row.streets svg {
+  width: 100px;
+  height: 100px;
+}
 #cart .cart-row.streets circle {
   stroke: black;
   stroke-width: 25;

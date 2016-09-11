@@ -430,6 +430,10 @@ sb.meshu = function(frame, renderer, existingMap) {
         return mesh.outputTitle();
     };
 
+    self.outputG = function() {
+        return mesh.outputG();
+    };
+
     // output the contents of our mesh as svg
     self.outputSVG = function() {
     	return mesh.output();

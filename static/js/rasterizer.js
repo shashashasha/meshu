@@ -151,7 +151,7 @@ sb.rasterizer = function() {
 		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
-			str = meshu.outputSVG();
+			str = meshu.mesh().name == "streets" ? meshu.outputG() : meshu.outputSVG();
 
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);

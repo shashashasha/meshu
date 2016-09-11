@@ -107,9 +107,9 @@ sb.ui.orderer = function() {
 		$("#svg-theta").val(sb.rotator ? sb.rotator.getRotation() : 0);
 
 		// outputting meshu data
-		if (meshu.mesh().name == "streets")
-			$("#svg-file").val('<svg class="meshu-svg" width="80" height="80">'+meshu.outputSVG()+"</svg>");
-		else
+		// if (meshu.mesh().name == "streets")
+		// 	$("#svg-file").val('<svg class="meshu-svg" width="80" height="80">'+meshu.outputSVG()+"</svg>");
+		// else
 			$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
