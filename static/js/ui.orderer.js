@@ -107,7 +107,10 @@ sb.ui.orderer = function() {
 		$("#svg-theta").val(sb.rotator ? sb.rotator.getRotation() : 0);
 
 		// outputting meshu data
-		$("#svg-file").val(meshu.outputSVG());
+		// if (meshu.mesh().name == "streets")
+		// 	$("#svg-file").val('<svg class="meshu-svg" width="80" height="80">'+meshu.outputSVG()+"</svg>");
+		// else
+			$("#svg-file").val(meshu.outputSVG());
 		$("#meshu-data").val(meshu.outputLocationData());
 		$("#meshu-title").val(loadedMeshu ? loadedMeshu.title : meshu.outputTitle());
 
@@ -143,9 +146,11 @@ sb.ui.orderer = function() {
 			if (product == "ring") {
 				var size = sb.ui.orderer.metadata().ringSize ? sb.ui.orderer.metadata().ringSize : "<span class='inactive'>not chosen</span>";
 				review.find(".review-product").removeClass("inactive").html(product+" — size "+size);
+			} else {
+				var displayText = product.replace("_"," ");
+				if (displayText.indexOf("Dense") != -1) displayText = displayText.split(" ")[1];
+				review.find(".review-product").removeClass("inactive").text(displayText);
 			}
-			else
-				review.find(".review-product").removeClass("inactive").text(product.replace("_"," "));
 		}
 
 		if (color && material)
@@ -159,7 +164,7 @@ sb.ui.orderer = function() {
 
 			if (renderer == "facet" && miniDelaunay.children().length ||
 				renderer == "radial" && $(".meshu-svg .radial").children().length ||
-				renderer == "print" || renderer == "orbit") {
+				renderer == "print" || renderer == "orbit" || renderer == "streets") {
 				if (product == "ring" && !sb.ui.orderer.metadata().ringSize)
 					return;
 				review.find("#add-to-cart").removeClass("inactive");

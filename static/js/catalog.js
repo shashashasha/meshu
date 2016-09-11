@@ -43,7 +43,8 @@ sb.catalog = function(renderer) {
 						}
 					};
 
-	materialOptions.radial = {"earrings":
+	materialOptions.radial =
+	materialOptions.streets = {"earrings":
 						{"bamboo":{"price":75,"colors":["amber"]},
 						"acrylic":{"price":80,"colors":["black","white"]},
 						"nylon":{"price":85,"colors":["white"]}
@@ -54,6 +55,13 @@ sb.catalog = function(renderer) {
 						"nylon":{"price":95,"colors":["black","white"]},
 						"silver":{"price":155,"colors":["sterling"]},
 						"brass":{"price":145,"colors":["polished"]}
+						},
+					"dense_pendant":
+				   		{"bamboo":{"price":80,"colors":["amber"]},
+				   		"acrylic":{"price":85,"colors":["black","white"]},
+						"nylon":{"price":95,"colors":["black","white"]},
+						"silver":{"price":180,"colors":["sterling"]},
+						"brass":{"price":170,"colors":["polished"]}
 						},
 					"coasters":
 				   		{"bamboo":{"price":45,"colors":["amber"]},
@@ -151,7 +159,6 @@ sb.catalog = function(renderer) {
 		return makeTimes[material];
 	};
 
-	
 	self.getProducts = function() {
 		var products = [];
 

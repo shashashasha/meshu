@@ -7,8 +7,9 @@ sb.rasterizer = function() {
 
 	var makeCanvas = function(name, manualTracking) {
 		var canvas = document.createElement('canvas');
-		canvas.width = 400;
-		canvas.height = 400;
+		canvas.width = 600;
+		canvas.height = 600;
+		// changed this from 400,400, not sure why it was that
 		canvas.style.position = 'absolute';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
@@ -136,6 +137,7 @@ sb.rasterizer = function() {
 
 				// draw the meshu onto a canvas
 				drawMeshu(frame, canvas, ctx, meshu, callback);
+				self.clearCanvases();
 			}
 		});
 	};
@@ -149,7 +151,7 @@ sb.rasterizer = function() {
 		var canvas = makeCanvas(),
 			frame = meshu.getFrame(),
 			ctx = canvas.getContext('2d'),
-			str = meshu.outputSVG();
+			str = meshu.mesh().name == "streets" ? meshu.outputG() : meshu.outputSVG();
 
 		// we need the canvas on the DOM to draw it
 		frame.appendChild(canvas);

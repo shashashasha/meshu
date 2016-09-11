@@ -31,6 +31,10 @@ def item_edit(request, item_encoded):
 		return item_handler(request, item_id, 'usermade_radial.html', 'radial edit')
 	elif item.renderer == "print":
 		return item_handler(request, item_id, 'usermade_print.html', 'print edit')
+	elif item.renderer == "orbit":
+		return item_handler(request, item_id, 'usermade_circle.html', 'orbit edit')
+	elif item.renderer == "streets":
+		return item_handler(request, item_id, 'usermade_streets.html', 'streets edit')
 	else:
 		return item_handler(request, item_id, 'usermade.html', 'edit')
 

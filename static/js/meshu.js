@@ -43,21 +43,27 @@ sb.meshu = function(frame, renderer, existingMap) {
             clearBox();
         } else if (event.keyCode == 40) { //arrow down
             keyIndex = Math.min(keyIndex+1, $(".hit").length-1);
-            d3.selectAll(".hit").classed("selected",function(d,i){ 
-                if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
+            d3.selectAll(".hit").classed("selected",function(d,i){
+                if (i == keyIndex) {
+                    var bbox = d.bbox ? d.bbox : null;
+                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox];
+                }
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
 
         } else if (event.keyCode == 38) { //arrow up
             keyIndex = Math.max(keyIndex-1, 0);
             d3.selectAll(".hit").classed("selected",function(d,i){ 
-                if (i == keyIndex) selectedHit = [d.geometry.coordinates, d.properties.label];
+                if (i == keyIndex) {
+                    var bbox = d.bbox ? d.bbox : null;
+                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox];
+                }
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
 
         } else if ( event.keyCode == 13 ) {
             if (selectedHit) {
-                addPoint(selectedHit[0], selectedHit[1]);
+                addPoint(selectedHit[0], selectedHit[1], selectedHit[2]);
                 clearBox();
             }
             else doSearch(input);
@@ -114,7 +120,8 @@ sb.meshu = function(frame, renderer, existingMap) {
 
         hit.text(function(d){ return d.properties.label; })
             .on("click",function(d){
-                addPoint(d.geometry.coordinates, d.properties.label);
+                var bbox = d.bbox ? d.bbox : null;
+                addPoint(d.geometry.coordinates, d.properties.label, bbox);
                 clearBox();
             });
     }
@@ -122,6 +129,7 @@ sb.meshu = function(frame, renderer, existingMap) {
     function clearBox() {
         keyIndex = -1;
         selectedHit = null;
+        suggestionXHR.abort();
         searchbox.val("");
         showSuggestion([]);
     }
@@ -193,13 +201,14 @@ sb.meshu = function(frame, renderer, existingMap) {
                     searchbox.focus();
                     return;
                 } else if (results.length) {
-                    addPoint(results[0].geometry.coordinates, input);
+                    var bbox = results[0].bbox ? results[0].bbox : null;
+                    addPoint(results[0].geometry.coordinates, input, bbox);
                 }
             }
         });
     }
 
-    function addPoint(first, input) {
+    function addPoint(first, input, bbox) {
         switch (mesh.name) {
             case 'facet':
             case 'orbit':
@@ -221,6 +230,11 @@ sb.meshu = function(frame, renderer, existingMap) {
                 if (mesh.points().length == 1) {
                     setZoomGranularity(12);
                 }
+                break;
+            case 'streets':
+                mesh.zoomTo(first, bbox);
+                mesh.add(first[1], first[0], input);
+                map.map.center({ lat: first[1], lon: first[0] });
                 break;
             case 'radial':
                 // set the zoom based on radius
@@ -254,6 +268,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                 return 10;
 
             case 'STATE':
+            case 'REGION':
                 return 6;
             case 'COUNTRY':
                 return 4;
@@ -413,6 +428,10 @@ sb.meshu = function(frame, renderer, existingMap) {
 
     self.outputTitle = function() {
         return mesh.outputTitle();
+    };
+
+    self.outputG = function() {
+        return mesh.outputG();
     };
 
     // output the contents of our mesh as svg

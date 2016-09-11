@@ -1406,6 +1406,25 @@ body.ie .frame div {
 .print .frame-wrapper.possible {
     color: black;
 }
+.streets #wrapper-pendant img,
+.streets #wrapper-dense_pendant img {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    top: 184px;
+    left: 111px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+.streets #wrapper-earrings img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 125px;
+    left: 150px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
 #product-preview .wrapper.last {
     margin-right: 0;
 }
@@ -1494,6 +1513,23 @@ body.ie .frame div {
 }
 #product-preview p.cufflinks:hover {
     border-color: #000;
+}
+#product-preview #dense-note {
+    display: none;
+    width: 28%;
+    background: rgba(250,61,176,.25);
+    padding: 20px;
+}
+#product-preview #dense-note p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #444;
+}
+#product-preview #dense-note .important {
+    color: #000;
+}
+#product-preview.dense #dense-note {
+    display: inline-block;
 }
 .tri {
     border-width: 40px;
@@ -1680,6 +1716,14 @@ input[type="range"]::-webkit-slider-thumb {
 #review .review-svg {
     float: left;
     border: 1px solid @borderGrey;
+    width: 150px;
+    height: 150px;
+}
+#review .review-svg img {
+    width: 100%;
+    border: 5px solid black;
+    box-sizing: border-box;
+    border-radius: 50%;
 }
 #review .review-svg path {
     stroke-width: 15;
@@ -2125,6 +2169,32 @@ path {
 .roadtrip .straight {
     stroke-opacity: .5;
 }
+.streets #raster-tiles {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.streets #map-boundary {
+    position: absolute;
+}
+
+.z14 .minor-road,
+.z13 .minor-road,
+.z12 .minor-road, .z12 .major-road,
+.z11 .minor-road, .z11 .major-road,
+.z10 .major-road {
+    display: none;
+}
+.streets path {
+    stroke-width: 9;
+    stroke-linecap: round;
+}
+.z17 path,
+.z10 path, .z9 path,
+.z8 path, .z7 path,
+.z6 path, .z5 path {
+    stroke-width: 10;
+}
 .print #projection,
 .print #design {
     height: 540px;
@@ -2262,6 +2332,11 @@ circle {
 .print circle {
     fill-opacity: 1;
 }
+.streets circle {
+    fill: none;
+    stroke: black;
+    stroke-width: 15;
+}
 .circleFrame {
     stroke: black;
     fill: none;
@@ -2285,6 +2360,11 @@ circle {
 }
 .print circle:hover, .print .edit .inactive circle:first-child {
     stroke: none;
+}
+.streets .edit circle:hover {
+    stroke: black;
+    stroke-width: 15;
+    cursor: default;
 }
 
 .hidden, .rotate-ui, #hidden {
@@ -2629,6 +2709,17 @@ circle {
 #cart .cart-row td {
     padding-top: 7px;
     text-transform: capitalize;
+}
+#cart .cart-row.streets svg {
+    width: 100px;
+    height: 100px;
+}
+#cart .cart-row.streets circle {
+    stroke: black;
+    stroke-width: 25;
+}
+.review #cart .cart-row.streets svg {
+    border: 1px solid #808080;
 }
 #cart .button {
     padding: 3px 5px;

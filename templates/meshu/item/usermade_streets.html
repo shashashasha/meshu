@@ -1,0 +1,17 @@
+{% extends "meshu/item/streets.html" %}
+
+{% load shorturl %}
+
+{% block title %}Meshu - {{ meshu.title }}{% endblock %}
+
+{% block login_form %}Please sign in{% endblock %}
+
+{% block finish %}
+    <div id="edit-footer" class="edit-panel">
+	    <div id="cancel-button" class="nav">Cancel</div>
+	    <div id="save-button" class="nav">Save as New</div>
+	    <div id="update-button" class="nav active">Save Current</div>
+	</div>
+{% endblock %}
+
+{% block saveExit %}{% endblock %}

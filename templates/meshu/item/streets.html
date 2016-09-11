@@ -1,0 +1,109 @@
+{% extends "meshu/item/base_item.html" %}
+
+{% block title %}Meshu - Make Your Own{% endblock %}
+
+{% block page_type %}edit{% endblock page_type %}
+
+{% block body_class %}streets{% endblock body_class %}
+
+{% block page_title %}Step 1: Choose Your Places{% endblock %}
+
+{% block tooltips %}
+<div class="tooltip top left" style="top: 125px; left: 20px;">
+    <span>Start by searching for an address or city</span>
+    <b class="notch"></b>
+</div>
+{% endblock %}
+
+{% block places %}
+    <div id="places" class="edit-panel inactive">
+        <h2 id="place-title" style="font-size: 22px;"></h2>
+        <p>Different zoom levels show different types of roads. Trying zooming in or out (using the + and - buttons on the map) to change your design.</p>
+    </div>
+{% endblock %}
+
+{% block finish %}
+{% endblock %}
+
+{% block products %}
+    <div class="wrapper" id="wrapper-pendant">
+            <svg id="preview-pendant" width="100%" height="282">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_pendant.png" width="300" height="300" x="0" y="0">
+            </svg>
+            <img class="product-transformer"/>
+            <p class="title">Pendant Necklace</p>
+            <p class="note">pendant max side length: 2.5"</p>
+            <p class="note">chain length: 18"</p>
+    </div>
+    <div class="wrapper" id="wrapper-earrings">
+            <svg id="preview-earrings" width="100%" height="282">
+                <image xlink:href="{{ STATIC_URL }}images/preview/preview_earrings.png" width="300" height="300" x="0" y="0">
+            </svg>
+            <img class="product-transformer"/>
+            <p class="title">Earrings</p>
+            <p class="note">earrings 1.75" tall</p>
+            <p class="note">nickel-free posts available</p>
+    </div>
+    <div id="dense-note">
+        <p>Please note, you have selected a dense design. There will be a <span class="important">$25 materials fee</span> for silver and brass necklaces.</p>
+        <p>If you would like to remove this fee, please try a different zoom level in the map above.</p>
+        <p>Thank you for your understanding!</p>
+    </div>
+{% endblock %}
+
+{% block materials %}
+    <li id="sterling-silver" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-silver.jpg" class="img default">
+        </div>
+        Sterling Silver<span class="price"></span>
+    </li>
+    <li id="polished-brass" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-polished-brass.jpg" class="img default">
+        </div>
+        Polished Brass<span class="price"></span>
+    </li>
+    <li id="amber-bamboo" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-amber-bamboo.jpg" class="img">
+        </div>
+        Bamboo<span class="price"></span>
+    </li>
+    <li id="white-acrylic" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-white-acrylic.jpg" class="img">
+        </div>
+        White Acrylic<span class="price"></span>
+    </li>
+    <li id="black-acrylic" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-black-acrylic.jpg" class="img">
+        </div>
+        Black Acrylic<span class="price"></span>
+    </li>
+    <li id="white-nylon" class="material-option">
+        <div class="img-wrapper">
+            <img src="{{ STATIC_URL }}images/materials/facet-white-nylon.jpg" class="img default">
+        </div>
+        White Nylon<span class="price"></span>
+    </li>
+{% endblock %}
+
+{% block extra-libraries %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
+    <script src="https://cdn.rawgit.com/mbostock/topojson/3ed6ee9e04d4/topojson.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.tile.v0.min.js"></script>
+{% endblock %}
+
+{% block script-specific %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.streets.js"></script>
+{% endblock %}
+
+{% block resources %}
+{{ block.super }}
+
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

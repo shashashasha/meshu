@@ -1,15 +1,13 @@
 $(function() {
 	var svgEnabled = $("html").hasClass("svg");
 
-	// initialize the catalog with the current promotion if any
-	// sorry about this, future us. signed, past sha.
 	var currentRenderer = loadedMeshu ? loadedMeshu.renderer : 'facet';
 							$("body").hasClass("radial") ? 'radial' : 'facet';
 
 	if ($("body").hasClass("radial")) currentRenderer = "radial";
 	else if ($("body").hasClass("print")) currentRenderer = "print";
 	else if ($("body").hasClass("orbit")) currentRenderer = "orbit";
-
+	else if ($("body").hasClass("streets")) currentRenderer = "streets";
 
 	// the list of all available meshu products for purchase
 	var catalog = sb.catalog(currentRenderer);
@@ -185,6 +183,9 @@ $(function() {
    				break;
    		}
 
+   		if ($("#product-preview").hasClass("dense") && product == "pendant")
+   			product = "dense_pendant";
+
 		/*
 			i suck.
 		*/
@@ -204,7 +205,7 @@ $(function() {
 				sb.rasterizer.ringPreview(meshu);
 			}
 		}
-		else if (meshu.mesh().name == "radial") {
+		else if (meshu.mesh().name == "radial" || meshu.mesh().name == "streets") {
 			sb.rasterizer.thumbnail(meshu, function(canvas) {
 				sb.product.initialize(canvas, catalog);
 			});

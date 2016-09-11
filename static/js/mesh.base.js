@@ -37,14 +37,15 @@ sb.mesh.base = function (frame, map, width, height) {
         map_dragging = null,
         last_mouse = null,
         meshuTitle = null,
-        print = $("body").hasClass("print");
+        print = $("body").hasClass("print") || $("body").hasClass("streets");
 
     var content = $("#content");
 
     // d3.select(uiFrame.node())
-    d3.select(".frame")
-        .on("mousemove", mousemove)
-        .on("mousedown", mousedown);
+    if (!$("body").hasClass("streets"))
+        d3.select(".frame")
+            .on("mousemove", mousemove)
+            .on("mousedown", mousedown);
 
     d3.select('body').on("mouseup", mouseup);
 
