@@ -61,13 +61,26 @@ var rasters = mapShape.select(".layer")
     .attr("width","600px").attr("height","600px")
     .append("g");
   
-var svg = mapShape.select(".layer")
+var vSVG = mapShape.select(".layer")
     .append("div").attr("id","map-boundary")
-    .append("svg").attr("width","600px").attr("height","600px")
-    .append("g").attr("id","vector-tiles");
+    .append("svg").attr("width","600px").attr("height","600px");
+    
+vSVG.append("defs").append("clipPath").attr("id","circle-clip")
+    .append("circle")
+    .attr("cx",300).attr("cy",300).attr("r",280);
+
+vSVG.append("circle").attr("cx",300).attr("cy",300)
+    .attr("r",280);
+
+var svg = vSVG.append("g").attr("clip-path","url(#circle-clip)")
+  .append("g").attr("id","vector-tiles");
 
 var info = d3.select("#attribution")
     .html('<a href="http://bl.ocks.org/mbostock/5593150" target="_top">Mike Bostock</a> | © <a href="https://www.openstreetmap.org/copyright" target="_top">OpenStreetMap contributors</a> | <a href="https://mapzen.com/projects/vector-tiles" title="Tiles courtesy of Mapzen" target="_top">Mapzen</a>');
+
+$(".review-svg").replaceWith(function() {
+    return $("<div>",{'class':'review-svg'});
+});
 
 zoomed();
 
@@ -150,9 +163,16 @@ function sortData(thorough) {
 
 var svg2 = d3.select("body").append("svg")
     .attr("width",width).attr("height",height)
-    .attr("id","svg-download"),
-    group = svg2.append("g").attr("class","tile"),
-    clipCircle = group.append("circle");
+    .attr("id","svg-download").attr("display","none"),
+    clipGroup = svg2.append("g").attr("clip-path","url(#dl-clip)").attr("class","delaunay")
+    group = clipGroup.append("g").attr("class","tile");
+
+svg2.append("defs").append("clipPath").attr("id","dl-clip")
+    .append("circle")
+    .attr("cx",300).attr("cy",300).attr("r",280);
+
+clipGroup.append("circle").attr("cx",300).attr("cy",300)
+    .attr("r",280).attr("fill","none");
 
 //get list of feature types and figure out which are currently visible
 function sortFeatures() {
@@ -202,11 +222,6 @@ function sortFeatures() {
     translateG = projection(topLeft);
 
   svg2.select(".tile").attr("transform","translate(-"+translateG[0]+",-"+translateG[1]+")")
-
-  clipCircle.style("fill","none").style("stroke","black").style("stroke-width","2px")
-    .attr("cx", newCircle[0])
-    .attr("cy", newCircle[1])
-    .attr("r",280);
 
   projection.translate(t).scale(s);
 }

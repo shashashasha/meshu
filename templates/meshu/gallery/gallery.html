@@ -63,6 +63,8 @@
 {% block script %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/polymaps.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
+    <script src="https://cdn.rawgit.com/mbostock/topojson/3ed6ee9e04d4/topojson.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.tile.v0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/gallery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/minimeshu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
@@ -70,6 +72,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.circle.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.streets.js"></script>
     <script type="text/javascript">
 
         $(".mini-meshu").each(function(i){
@@ -87,13 +90,18 @@
                 mm.find(".delaunay").attr("transform","scale(.55) translate(0,80)");
                 mm.find(".delaunay-ui").attr("transform","scale(.55) translate(0,80)").find("circle").attr("r",6);
 
+            } else if (renderer == "streets") {
+                mm.find("a").addClass("streets").append(svg);
+                mm.find(".delaunay").attr("transform","scale(.5)");
+                mm.find(".delaunay circle").attr("r",250);
+                
+            } else if (renderer == "radial") {
+                $(this).find(".delaunay").attr("transform","scale(.5)");
+            
             } else {
                 var meshu = sb.minimeshu(frame, renderer);
                 meshu.initializeFromData(data, metadata, svg);
             }
-
-            if (renderer == "radial")
-                $(this).find(".delaunay").attr("transform","scale(.5)");
         });
 
         /*

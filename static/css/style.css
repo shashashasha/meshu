@@ -1667,6 +1667,14 @@ input[type="range"]::-webkit-slider-thumb {
 #review .review-svg {
   float: left;
   border: 1px solid #e6e6e6;
+  width: 150px;
+  height: 150px;
+}
+#review .review-svg img {
+  width: 100%;
+  border: 5px solid black;
+  box-sizing: border-box;
+  border-radius: 50%;
 }
 #review .review-svg path {
   stroke-width: 15;
@@ -2124,14 +2132,7 @@ path {
   left: 0;
 }
 .streets #map-boundary {
-  border: 20px solid black;
-  border-radius: 50%;
-  overflow: hidden;
-  box-sizing: border-box;
   position: absolute;
-}
-.streets #map-boundary svg {
-  margin: -20px;
 }
 .z14 .minor-road,
 .z13 .minor-road,
@@ -2290,6 +2291,11 @@ circle {
 .print circle {
   fill-opacity: 1;
 }
+.streets circle {
+  fill: none;
+  stroke: black;
+  stroke-width: 15;
+}
 .circleFrame {
   stroke: black;
   fill: none;
@@ -2316,6 +2322,11 @@ circle.highlight,
 .print circle:hover,
 .print .edit .inactive circle:first-child {
   stroke: none;
+}
+.streets .edit circle:hover {
+  stroke: black;
+  stroke-width: 15;
+  cursor: default;
 }
 .hidden,
 .rotate-ui,
@@ -2664,6 +2675,13 @@ circle.highlight,
 #cart .cart-row td {
   padding-top: 7px;
   text-transform: capitalize;
+}
+#cart .cart-row.streets circle {
+  stroke: black;
+  stroke-width: 25;
+}
+.review #cart .cart-row.streets svg {
+  border: 1px solid #808080;
 }
 #cart .button {
   padding: 3px 5px;

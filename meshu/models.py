@@ -176,6 +176,8 @@ class Order(models.Model):
 	def get_display_name(self):
 		if (self.material == 'framed' or self.material == 'unframed'):
 			return self.material + ' ' + self.product.replace("_"," ")
+		elif (self.product == 'dense_pendant'):
+			return self.color + ' ' + self.material + ' pendant'
 		else:
 			return self.color + ' ' + self.material + ' ' + self.product
 

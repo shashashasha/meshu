@@ -18,7 +18,7 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
 		{% for item in cart.items %}
 			<tr class="cart-row {{item.product.meshu.renderer}}">
 				<td class="theta">{{item.product.meshu.theta|safe}}</td>
-				<td><a href="{{ item.product.meshu.get_edit_url }}">{{ item.product.meshu.svg|safe }}</a></td>
+				<td><a href="{{ item.product.meshu.get_edit_url }}" class="svg-wrapper">{{ item.product.meshu.svg|safe }}</a></td>
 				<td>{{ item.product.get_display_name }}</td>
 				<td><input class="quantity" value="{{ item.quantity }}" min="1" type="number" onchange="location.href='/cart/update/{{ item.product.id }}/'+this.value"></td>
 				<td class="price"><span class="dollar">$</span>{{ item.unit_price }}</td>
@@ -49,6 +49,9 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
 {% endif %}
 
 {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ STATIC_URL }}lib/d3.v2.min.js"></script>
+{% endblock %}
 
 {% block resources %}
     <script type="text/javascript">
@@ -56,8 +59,8 @@ Save 10% on two, 15% on three, and 20% on four or more!</div>
     		var row = $(this);
     		var theta = row.find(".theta").text();
 
-    		// transform the preview svg to be the appropriate size
     		row.find(".delaunay").attr("transform","translate(0,0) scale(.17) rotate("+theta+", 300, 300)");
+
     		row.find(".projection-clip").attr("transform","scale(.17)");
     		row.find(".delaunay-ui").attr("transform","scale(.17)").find("circle").attr("r",6);
     	});
