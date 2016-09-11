@@ -15,7 +15,7 @@ sb.mesh.streets = function (frame, map, width, height) {
       types: []} ,
     ];
 
-var width = 600,
+var width = $("#meshu-container").width(),
     height = 600;
 
 var tile = d3.geo.tile()
@@ -41,8 +41,12 @@ var zoom = d3.behavior.zoom()
     // .translate(projection([-74.0059, 40.7128]) //nyc
     .translate(projection([origin[0], origin[1]]) //la
     // .translate(projection([-122.4407, 37.7524]) //sf
-      .map(function(x) { return -x; }))
-    .on("zoom", zoomed);
+    .map(function(x) { return -x; }));
+
+if (!$("body").hasClass("display"))
+  zoom
+    .on("zoom", zoomed)
+    .on("zoomend", endZoom);
 
 var mapShape = d3.select("#meshu-container").append("div")
     .attr("id", "map-now")
@@ -58,18 +62,18 @@ mapShape.append("div")
 
 var rasters = mapShape.select(".layer")
     .append("svg").attr("id","raster-tiles")
-    .attr("width","600px").attr("height","600px")
+    .attr("width",width).attr("height","600px")
     .append("g");
   
 var vSVG = mapShape.select(".layer")
     .append("div").attr("id","map-boundary")
-    .append("svg").attr("width","600px").attr("height","600px");
+    .append("svg").attr("width",width).attr("height","600px");
     
 vSVG.append("defs").append("clipPath").attr("id","circle-clip")
     .append("circle")
-    .attr("cx",300).attr("cy",300).attr("r",280);
+    .attr("cx",width/2).attr("cy",300).attr("r",280);
 
-vSVG.append("circle").attr("cx",300).attr("cy",300)
+vSVG.append("circle").attr("cx",width/2).attr("cy",300)
     .attr("r",280);
 
 var svg = vSVG.append("g").attr("clip-path","url(#circle-clip)")
@@ -84,6 +88,13 @@ $(".review-svg").replaceWith(function() {
 
 zoomed();
 
+function endZoom() {
+  self.style({
+      scale: zoom.scale(),
+      translate: zoom.translate().join(",")
+  });
+}
+ 
 function zoomed() {
   if (event && event.type == "wheel") {
     zoom.scale(projection.scale() * 2 * Math.PI);
@@ -155,9 +166,10 @@ function sortData(thorough) {
       return kind; })
     .entries(mapData);
 
-  t[0].values = t[0].values.filter(function(d){
-    return d3.select("."+d.key.replace("_","-")).style("display") != "none";
-  });
+  if (t[0] && t[0].values)
+    t[0].values = t[0].values.filter(function(d){
+      return d3.select("."+d.key.replace("_","-")).style("display") != "none";
+    });
   return t;
 }
 
@@ -275,6 +287,7 @@ function fitZoom(bbox) {
 
     zoom.translate([view.x, view.y]).scale(view.k);
     zoomed();
+    setTimeout(endZoom, 100);
   };
 
 function zoomClick(dir) {
@@ -300,6 +313,7 @@ function zoomClick(dir) {
     view.y += center[1] - l[1];
 
     interpolateZoom([view.x, view.y], view.k);
+    setTimeout(endZoom, 350);
 }
 
 function renderTiles(d) {
@@ -487,6 +501,16 @@ setTimeout(function(){
         // don't redraw just yet, we'll call this outside in meshu.js
         self.dirty = true;
         self.locationsSet();
+        mesh.applyStyle(loadedMeshu.metadata);
+        
+        if (self.style() != undefined) {
+          var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); });
+          t[0] += 200;
+          zoom.scale(parseFloat(self.style().scale))
+            .translate(t);
+          zoomed();
+        }
+
 
         return self;
     };
