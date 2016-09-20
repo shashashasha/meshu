@@ -9,8 +9,8 @@ var cashier = function() {
         discountPercent = 1,
         shipping = 7, // default domestic
         domesticShipping = 7,
-        internationalShipping = 45,
-        multipleInternationalShipping = 80;
+        internationalShipping = 35,
+        multipleInternationalShipping = 70;
 
     function stripeResponseHandler(status, response) {
         if (response.error) {
@@ -115,10 +115,10 @@ var cashier = function() {
                 shipping = domesticShipping;
                 break;
             case 'Canada':
-                shipping = internationalShipping = 35;
+                shipping = internationalShipping = 25;
                 break;
             default:
-                shipping = internationalShipping = 45;
+                shipping = internationalShipping = 35;
         }
         self.shippingMode(country == 'United States' ? 'domestic' : 'international');
     };

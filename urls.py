@@ -126,7 +126,7 @@ urlpatterns += patterns('meshu.views',
 	url(r'^make/arc', 'base_view', {
 		'template': 'meshu/item/print.html'
 	}),
-	url(r'^make/streets', 'base_view', {
+	url(r'^make/grid', 'base_view', {
 		'template': 'meshu/item/streets.html'
 	}),
 

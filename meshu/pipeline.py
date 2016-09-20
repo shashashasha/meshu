@@ -31,6 +31,12 @@ def item_postcard(request, item_id):
 def processing_postcard_front(request, order_id):
 	order = get_object_or_404(Order, pk=order_id)
 
+	if order.meshu.renderer == 'streets':
+		return render_to_response('meshu/processing/postcard_streets.html', {
+			'meshu': order.meshu,
+			'view': 'postcard'
+		}, context_instance = RequestContext(request))
+
 	return render_to_response('meshu/processing/postcard_front.html', {
 		'meshu': order.meshu,
 		'view': 'postcard'

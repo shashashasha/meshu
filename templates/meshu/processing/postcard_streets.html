@@ -3,7 +3,7 @@
 
 {% block login_form %}Meshu - Postcard Front{% endblock %}
 
-{% block body_class %}postcard{% endblock body_class %}
+{% block body_class %}postcard streets{% endblock body_class %}
 
 {% block edit %}
 {% endblock %}
@@ -28,10 +28,14 @@
     </div>
 {% endblock %}
 
+{% block extra-libraries %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.min.js"></script>
+    <script src="https://cdn.rawgit.com/mbostock/topojson/3ed6ee9e04d4/topojson.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/d3.geo.tile.v0.min.js"></script>
+{% endblock %}
+
 {% block script-specific %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.facet.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.radial.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.circle.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mesh.streets.js"></script>
 {% endblock %}
 
 {% block object %}

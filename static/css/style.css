@@ -706,6 +706,42 @@ body.win #login-form ul {
 .edit-panel {
   width: 360px;
 }
+.streets-help {
+  background: rgba(250, 61, 176, 0.25);
+  padding: 20px;
+  position: absolute;
+  bottom: 20px;
+  width: 320px;
+}
+.streets-help p {
+  color: #808080;
+  margin-bottom: 10px;
+}
+.streets-help .info {
+  font-family: Times;
+  font-style: italic;
+  border: 1px solid #fa3db0;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  text-align: center;
+  line-height: 15px;
+  font-weight: bold;
+  color: #fa3db0;
+  margin-right: 5px;
+}
+.streets-help .zoom {
+  background: #808080;
+  color: white;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: top;
+  line-height: 13px;
+}
 #search {
   padding: 20px;
 }

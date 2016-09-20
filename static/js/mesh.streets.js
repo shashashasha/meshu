@@ -16,7 +16,7 @@ sb.mesh.streets = function (frame, map, width, height) {
     ];
 
 var width = $("#meshu-container").width(),
-    height = 600;
+    height = $("#meshu-container").height();
 
 var tile = d3.geo.tile()
     .size([width, height]);
@@ -43,7 +43,7 @@ var zoom = d3.behavior.zoom()
     // .translate(projection([-122.4407, 37.7524]) //sf
     .map(function(x) { return -x; }));
 
-if (!$("body").hasClass("display"))
+if (!$("body").hasClass("display") && !$("body").hasClass("postcard"))
   zoom
     .on("zoom", zoomed)
     .on("zoomend", endZoom);
@@ -62,18 +62,18 @@ mapShape.append("div")
 
 var rasters = mapShape.select(".layer")
     .append("svg").attr("id","raster-tiles")
-    .attr("width",width).attr("height","600px")
+    .attr("width",width).attr("height",height)
     .append("g");
   
 var vSVG = mapShape.select(".layer")
     .append("div").attr("id","map-boundary")
-    .append("svg").attr("width",width).attr("height","600px");
+    .append("svg").attr("width",width).attr("height",height);
     
 vSVG.append("defs").append("clipPath").attr("id","circle-clip")
     .append("circle")
-    .attr("cx",width/2).attr("cy",300).attr("r",280);
+    .attr("cx",width/2).attr("cy",height/2).attr("r",280);
 
-vSVG.append("circle").attr("cx",width/2).attr("cy",300)
+vSVG.append("circle").attr("cx",width/2).attr("cy",height/2)
     .attr("r",280);
 
 var svg = vSVG.append("g").attr("clip-path","url(#circle-clip)")
@@ -271,7 +271,7 @@ function fitZoom(bbox) {
   }
 
   //var k = floor(0.95 / Math.max((p1[0] - p0[0]) / width, (p1[1] - p0[1]) / height)) * 2 * Math.PI;
-  var k = floor(0.95 / Math.max((p1[0] - p0[0]) / 600, (p1[1] - p0[1]) / 600)) * zoom.scale();
+  var k = floor(0.95 / Math.max((p1[0] - p0[0]) / width, (p1[1] - p0[1]) / height)) * zoom.scale();
   return k;
 }
 
@@ -504,11 +504,15 @@ setTimeout(function(){
         mesh.applyStyle(loadedMeshu.metadata);
         
         if (self.style() != undefined) {
-          var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); });
+          var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); }),
+            s = parseFloat(self.style().scale);
           if ($("body").hasClass("display"))
             t[0] += 200;
-          zoom.scale(parseFloat(self.style().scale))
-            .translate(t);
+          else if ($("body").hasClass("postcard")) {
+            t[0] += 540;
+            t[1] += 337.5;
+          }
+          zoom.scale(s).translate(t);
           zoomed();
         }
 
