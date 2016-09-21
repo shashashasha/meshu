@@ -46,7 +46,7 @@ sb.meshu = function(frame, renderer, existingMap) {
             d3.selectAll(".hit").classed("selected",function(d,i){
                 if (i == keyIndex) {
                     var bbox = d.bbox ? d.bbox : null;
-                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox];
+                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox, d.properties.country_a];
                 }
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
@@ -56,14 +56,14 @@ sb.meshu = function(frame, renderer, existingMap) {
             d3.selectAll(".hit").classed("selected",function(d,i){ 
                 if (i == keyIndex) {
                     var bbox = d.bbox ? d.bbox : null;
-                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox];
+                    selectedHit = [d.geometry.coordinates, d.properties.label, bbox, d.properties.country_a];
                 }
                 return i == keyIndex; });
             searchbox.val($(".hit:eq("+keyIndex+")").text());
 
         } else if ( event.keyCode == 13 ) {
             if (selectedHit) {
-                addPoint(selectedHit[0], selectedHit[1], selectedHit[2]);
+                addPoint(selectedHit[0], selectedHit[1], selectedHit[2], selectedHit[3]);
                 clearBox();
             }
             else doSearch(input);
@@ -121,7 +121,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         hit.text(function(d){ return d.properties.label; })
             .on("click",function(d){
                 var bbox = d.bbox ? d.bbox : null;
-                addPoint(d.geometry.coordinates, d.properties.label, bbox);
+                addPoint(d.geometry.coordinates, d.properties.label, bbox, d.properties.country_a);
                 clearBox();
             });
     }
@@ -202,13 +202,13 @@ sb.meshu = function(frame, renderer, existingMap) {
                     return;
                 } else if (results.length) {
                     var bbox = results[0].bbox ? results[0].bbox : null;
-                    addPoint(results[0].geometry.coordinates, input, bbox);
+                    addPoint(results[0].geometry.coordinates, input, bbox, results[0].properties.country_a);
                 }
             }
         });
     }
 
-    function addPoint(first, input, bbox) {
+    function addPoint(first, input, bbox, country) {
         switch (mesh.name) {
             case 'facet':
             case 'orbit':
@@ -224,7 +224,7 @@ sb.meshu = function(frame, renderer, existingMap) {
                 mesh.add(first[1], first[0], input);
                 self.updateBounds();
 
-                mesh.addCountry(results[0].properties.country_a);
+                mesh.addCountry(country);
 
                 // set the zoom for first point
                 if (mesh.points().length == 1) {
