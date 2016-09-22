@@ -129,7 +129,7 @@ sb.meshu = function(frame, renderer, existingMap) {
     function clearBox() {
         keyIndex = -1;
         selectedHit = null;
-        suggestionXHR.abort();
+        if (suggestionXHR) suggestionXHR.abort();
         searchbox.val("");
         showSuggestion([]);
     }

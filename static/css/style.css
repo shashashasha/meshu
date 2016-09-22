@@ -3036,16 +3036,18 @@ body.ie #maps .mini-meshu div {
   text-align: center;
 }
 .about {
-  width: 460px;
-  float: left;
   margin-top: 20px;
+}
+.about-wrapper p {
+  font-size: 18px;
+  line-height: 1.5em;
 }
 .about a,
 .paid a {
   color: #ff3fb4;
 }
 .about img {
-  width: 240px;
+  width: 150px;
   float: left;
   padding: 0 10px 0 0;
 }

@@ -4,23 +4,35 @@
 
 {% block content %}
 <div class="inner-content">
-	<h2 class="page-header">If you have questions or suggestions, please get in touch at <script language="javascript"><!--
+	<h3 class="page-header" style="margin-top: 50px; font-size: 24px;">If you have questions or suggestions, please get in touch at <script language="javascript"><!--
 var name = "hi";
 var domain = "meshu.io";
 document.write('<a href=\"mailto:' + name + '@' + domain + '\" style=\"text-decoration: underline;\">');
 document.write(name + '@' + domain + '</a>');
-// --></script></h2>
-	<div class="about">
-		<img src="{{ STATIC_URL }}images/photos/rachel_about.jpg" style="float:left;">
-		<h2>Rachel Binx</h2>
-		<p>Rachel is obsessed with travel and maps, so Meshu was a natural next step! Other projects of hers include <a href="http://monochome.com">Monochōme</a> and <a href="http://treknotes.co">TrekNotes</a>.</p>
+// --></script></h3>
+
+	<div class="about-wrapper">
+		<hr style="clear: both; margin: 50px 0;">
+		<p style="text-align: center; margin-bottom: 20px; clear: both;">Meshu was started in 2012 by <a href="http://rachelbinx.com" class="about-link">Rachel Binx</a> and <a href="http://postarchitectural.com/" class="about-link">Sha Hwang</a>.</p>
+		<p style="text-align: center; margin-bottom: 20px; clear: both;">Special thanks to <a href="http://about.me/nadyalev" class="about-link">Nadya Lev</a> for her gorgeous photography, and to <a href="https://www.instagram.com/tessaquarium/" class="about-link">Tess Aquarium</a> for running fulfillment for several years.</p>
+		<p style="text-align: center; margin-bottom: 60px; clear: both;">We would be nothing without our lovely customers. To everyone who has supported Meshu, thank you! <3</p>
+		<hr style="clear: both; margin: 50px 0;">
+
+		<div class="about">
+			<img src="{{ STATIC_URL }}images/photos/rachel_about.jpg" style="float:left;">
+			<p>Meshu is currently run by Rachel Binx, operating out of sunny Los Angeles. She has a deep love for travel, maps, and jewelry, so Meshu was a natural combination of all three. Additional projects of hers include <a href="http://monochome.com">Monochōme</a> and <a href="http://treknotes.co">TrekNotes</a>.</p>
+		</div>
 	</div>
-	<div class="about right" style="margin-bottom:40px">
-		<img src="{{ STATIC_URL }}images/photos/tess_about.jpg">
-		<h2>Tess Aquarium</h2>
-		<p>Tess loves selfies and puppies and packages all your Meshu orders with love! </p>
-	</div>
-	<p style="font-size: 18px; text-align: center; margin-bottom: 20px; clear: both;">Meshu was started in 2012 by Rachel Binx and Sha Hwang. Special thanks to <a href="http://about.me/nadyalev" class="about-link">Nadya Lev</a> for her gorgeous photography. </p>
-	<p style="font-size: 18px; text-align: center; margin-bottom: 60px; clear: both;">We would be nothing without our lovely customers. To everyone who has supported Meshu, thank you! <3</p>
 </div>
+{% endblock %}
+
+{% block footer %}
+	<div id="footer">
+		<p>Keep in touch! Email us at <script language="javascript"><!--
+var name = "hi";
+var domain = "meshu.io";
+document.write('<a href=\"mailto:' + name + '@' + domain + '\" style=\"text-decoration: underline;\">');
+document.write(name + '@' + domain + '</a>');
+// --></script>, or like us on <a href="http://facebook.com/meshuio" target="_blank">Facebook</a>!</p>
+	</div>
 {% endblock %}
