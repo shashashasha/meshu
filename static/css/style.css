@@ -1308,9 +1308,7 @@ body.ie .frame div {
   height: 300px;
   border: none;
 }
-.chrome #wrapper-ring {
-  display: none;
-}
+/*.chrome #wrapper-ring { display: none; }*/
 #wrapper-ring:hover .strip {
   -webkit-animation-play-state: running;
   -moz-animation-play-state: running;
@@ -1332,7 +1330,7 @@ body.ie .frame div {
   background: -webkit-canvas(ring-preview);
   height: 150px;
   width: 21px;
-  opacity: 1;
+  opacity: .8;
 }
 @-moz-keyframes spin {
   from {
@@ -1353,9 +1351,7 @@ body.ie .frame div {
 #product {
   height: 860px;
 }
-.chrome #product {
-  height: 490px;
-}
+/*.chrome #product { height: 490px; }*/
 .radial #product,
 .orbit #product,
 .print #product {
@@ -3149,7 +3145,7 @@ body.ie #maps .mini-meshu div {
   height: 5400px;
   /*Small Poster*/
 
-  /*        width: 3000px;
+  /*  width: 3000px;
         height: 2400px; */
 
   /*Postcard*/

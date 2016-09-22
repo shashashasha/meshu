@@ -222,10 +222,17 @@ sb.rasterizer = function() {
 					bgContext = document.getCSSCanvasContext('2d', 'ring-preview', projWidth, projHeight + topBorder + bottomBorder);
 				}
 
+				var chrome = $("body").hasClass("chrome");
+
 				bgContext.clearRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
-				bgContext.fillStyle = 'rgba(255, 255, 255, .75)';
+				bgContext.fillStyle = 'rgba(255, 255, 255, '+(chrome ? 1 : .8)+')';
 				bgContext.fillRect(0, 0, projWidth, projHeight + topBorder + bottomBorder);
 				bgContext.drawImage(canvas, 0, 0, projWidth, projHeight, 0, topBorder, projWidth, projHeight);
+
+				if (chrome) {
+					var url = d3.select("#ring-preview-canvas").node().toDataURL('image/jpeg');
+					$(".strip div").css("background-image","url("+url+")");
+				}
 
 				if (callback) {
 					callback(canvas);

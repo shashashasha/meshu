@@ -211,7 +211,7 @@ sb.mesh.print = function (frame, map, width, height) {
                 copyProjection = d3.geo.polyhedron.butterfly().scale(pW/8.45).translate([pW/2,5*pH/7]);
                 break;
             case 'zoomed-to-fit':
-                updateProjection(pW, pH, .8);
+                updateProjection(pW, pH, .99);
                 copyProjection = projection;
                 break;
         }
