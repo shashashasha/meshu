@@ -3339,6 +3339,16 @@ body.ie #maps .mini-meshu div {
     font-size: 22px;
     clear: both;
   }
+  #content .one-third {
+    width: 30%;
+  }
+  #content .one-third img {
+    height: auto;
+  }
+  #content .product-shot,
+  #content .product-grid {
+    display: none;
+  }
   #content .line {
     width: 46%;
     margin: 10px 1.5% !important;
@@ -3392,6 +3402,21 @@ body.ie #maps .mini-meshu div {
   }
   #diagram li p {
     font-size: 14px;
+  }
+  #content #diagram {
+    margin-bottom: 20px;
+  }
+  #content .one-third {
+    width: 100%;
+    margin: 5px 0;
+  }
+  #content .one-third img {
+    height: auto;
+    width: 50%;
+  }
+  .product-shot,
+  .product-grid {
+    display: none;
   }
   /*    .product-shot.print {
           img { margin-bottom: 20px; }
