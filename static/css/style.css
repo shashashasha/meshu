@@ -1354,7 +1354,8 @@ body.ie .frame div {
 /*.chrome #product { height: 490px; }*/
 .radial #product,
 .orbit #product,
-.print #product {
+.print #product,
+.streets #product {
   height: 490px;
 }
 /*.print #product {
