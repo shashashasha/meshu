@@ -62,7 +62,7 @@ sb.meshu = function(frame, renderer, existingMap) {
             searchbox.val($(".hit:eq("+keyIndex+")").text());
 
         } else if ( event.keyCode == 13 ) {
-            if (selectedHit) {
+            if (selectedHit) { 
                 addPoint(selectedHit[0], selectedHit[1], selectedHit[2], selectedHit[3]);
                 clearBox();
             }
@@ -112,6 +112,7 @@ sb.meshu = function(frame, renderer, existingMap) {
         }        
     }
     function showSuggestion(data) {
+        if ($("#searchbox").val() == "") data = [];
         var div = d3.select("#autocomplete"),
         hit = div.selectAll(".hit").data(data);
 
