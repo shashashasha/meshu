@@ -408,6 +408,8 @@ body.win #login-form ul {
 .one-third {
   width: 31%;
   margin: 10px 10px 100px 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 .one-third a {
   display: block;
