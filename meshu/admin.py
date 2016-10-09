@@ -19,7 +19,7 @@ class MeshuAdmin(admin.ModelAdmin):
 	inlines = [ MeshuImageInline, ]
 
 	raw_id_fields = ('user_profile', )
-	list_display = ('title', 'date_created', 'user_profile')
+	list_display = ('title', 'date_created', 'renderer', 'user_profile')
 
 admin.site.register(Meshu, MeshuAdmin)
 
