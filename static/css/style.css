@@ -405,21 +405,21 @@ body.win #login-form ul {
     width: 30%;
     margin: 0 5px;
 }*/
-.one-third {
+.explanation-wrapper .one-third {
   width: 31%;
   margin: 10px 10px 100px 10px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-.one-third a {
+.explanation-wrapper .one-third a {
   display: block;
 }
-.one-third:hover {
+.explanation-wrapper .one-third:hover {
   -webkit-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
 }
-.one-third img {
+.explanation-wrapper .one-third img {
   width: 100%;
   height: 312px;
   float: left;
