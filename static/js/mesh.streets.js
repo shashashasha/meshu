@@ -319,11 +319,12 @@ function zoomClick(dir) {
 function renderTiles(d) {
   var displayLayers = layers.filter(function(d){ return d.display; })
       .map(function(d){ return d.layer; }),
-    requestLayers = displayLayers.join(",");
+    // requestLayers = displayLayers.join(",");
+    requestLayers = "all";
 
   var svg = d3.select(this);
   var zoom = d[2];
-  this._xhr = d3.json("https://vector.mapzen.com/osm/"+requestLayers+"/" + zoom + "/" + d[0] + "/" + d[1] + ".topojson?api_key=vector-tiles-LM25tq4", function(error, json) {
+  this._xhr = d3.json("https://vector.mapzen.com/osm/"+requestLayers+"/" + zoom + "/" + d[0] + "/" + d[1] + ".topojson?api_key=vector-tiles-9rqLeje", function(error, json) {
     var k = Math.pow(2, d[2]) * 256; // size of the world in pixels
 
     tilePath.projection()
@@ -340,7 +341,7 @@ function renderTiles(d) {
     var features = [];
     layers.forEach(function(l){
       if (!l.display) return;
-      var layer = displayLayers.length > 1 ? l.layer : 'vectile';
+      var layer = l.layer;
       if(data[layer])
       {
         // Don't show large buildings at z13 or below.
