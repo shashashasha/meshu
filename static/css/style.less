@@ -82,7 +82,7 @@ h3.tiny {
     letter-spacing: 3px;
     font-size: 18px;
     margin: 0;
-    color: #808080;
+    color: black;
 }
 
 a {
@@ -618,13 +618,12 @@ body.win #login-form ul {
 .inspired {
     width: 100%;
     background: @pink;
-    height: 500px;
+    height: 400px;
     text-align: center;
     clear: both;
     h2 {
         font-size: 48px;
         color: white;
-        font-weight: bold;
     }
 }
 
@@ -643,8 +642,9 @@ body.win #login-form ul {
 }
 .press-container {
     height: 250px;
-    margin: 20px 0 100px;
+    margin: 20px auto 100px;
     clear: both;
+    width: 1000px;
     .big {
         margin-bottom: 20px;
     }
@@ -686,18 +686,23 @@ body.win #login-form ul {
 }
 
 #diagram {
-    margin: 0 44px 100px;
+    /*width: 1000px;*/
+    margin: 20px auto 100px;
 }
 #diagram li {
     display: inline-block;
-    width: 301px;
+    width: 33%;
     height: 240px;
     margin: 0;
     position: relative;
-}
-#diagram li p {
-    text-align: center;
-    font-size: 17px;
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+    p {
+        text-align: center;
+        font-size: 17px;    
+    }
 }
 
 #main form {
@@ -765,6 +770,9 @@ body.win #login-form ul {
     opacity: 1;
     .transition(opacity);
     background-color: white;
+}
+#content.index {
+    width: 100%;
 }
 #content .section {
     width: 100%;
@@ -2573,17 +2581,13 @@ circle {
     }
     .overlay {
         width: 100%;
-        height: 100%;
+        height: 184px;
         background: rgba(255, 255, 255, 0.66);
         position: absolute;
         top: 0;
         text-align: center;
         padding-top: 120px;
         font-size: 56px;
-        display: none;
-    }
-    &:hover .overlay {
-        display: block;
     }
 }
 
@@ -3366,13 +3370,30 @@ body.ie #maps .mini-meshu div {
 .notes li {
     margin-bottom: 20px;
 }
+@media screen and (min-width: 850px){
+    .splitimages {
+        .overlay {
+            display: none;
+        }
+        &:hover .overlay {
+            display: block;
+        }
+    }
 
+}
 @media screen and (max-width: 850px){
     #top {
         width: 100%;
         #nav {
             position: relative;
         }
+    }
+
+    .splitimages .overlay {
+        position: relative;
+        padding-top: 10px;
+        font-size: 36px;
+        height: auto;
     }
 
     #content {
@@ -3401,6 +3422,9 @@ body.ie #maps .mini-meshu div {
         .big {
             font-size: 22px;
             clear: both;
+        }
+        h3.tiny {
+            font-weight: 300;
         }
         /*.product-shot.new,
         .product-shot.old {

@@ -2,6 +2,8 @@
 
 {% block title %}Meshu - Turn your places into beautiful objects.{% endblock %}
 
+{% block page_type %}{% endblock %}
+
 {% block styles %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
@@ -24,7 +26,7 @@
 		</div>
 	</div>
 
-	<h2 class="big" style="margin-bottom: 20px">each meshu is custom-made, and designed by you:</h2>
+	<h2 class="big" style="margin-bottom: 20px">each meshu is custom-made for you:</h2>
 	<div class="explanation-wrapper">
 		<div class="one-third">
 			<a href="/make/orbit">
@@ -70,7 +72,12 @@
         </li>
     </ul>
 
-    <a href="/make/arc" class="product-shot print">
+    <!-- <a class="button outline" href="/make/">get started making</a> -->
+
+    <!-- <div style="background-image: url('{{ STATIC_URL }}images/index/meshu-hero.jpg'); width: 100%; height: 700px; background-size: cover; background-position: 50%; margin-bottom: 100px;">
+    </div> -->
+
+    <!-- <a href="/make/arc" class="product-shot print">
     	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="float: left;">
     	<div class="text">
 	    	<h3>trace your travels</h3>
@@ -103,19 +110,19 @@
     	<h3>hometown pride</h3>
     	<p>Created from the streets <br>around your home.</p>
     	<div class="button pink">Make a Grid</div>
-    </a>
+    </a> -->
 
 
-	<!-- <h2 class="big">Each Meshu tells a story:</h2>
+	<h2 class="big">each meshu tells a story:</h2>
 
 	<div id="banners">
 		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/index/note_banners/macro0.jpg" />
 		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/index/note_banners/macro1.jpg" style="display: none;"/>
 		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/index/note_banners/macro2.jpg" style="display: none;"/>
 		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
-	</div> -->
+	</div>
 
-<!-- 	<div class="inspired">
+	<!-- <div class="inspired">
 		<h2>get inspired!</h2>
 		<h2>visit our gallery</h2>
 		<div class="button">go to gallery</div>
