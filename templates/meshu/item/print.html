@@ -6,11 +6,12 @@
 
 {% block body_class %}print{% endblock body_class %}
 
-{% block page_title %}Step 1: Choose Your Path{% endblock %}
+{% block page_title %}choose your path{% endblock %}
 
 {% block object %}
     <div id="projection" class="section">
-        <h2>Step 2: Choose Your Projection</h2>
+        <h3 class="tiny">Step 2:</h3>
+        <h2>choose your projection</h2>
         <div class="projection-list">
             <div class="proj top selected" id="zoomed-to-fit">zoom to fit</div>
             <div class="proj" id="mercator"><img src="{{ STATIC_URL }}images/projections/mercator.png">mercator</div>
@@ -26,9 +27,10 @@
 
 {% block make %}
     <div id="design" class="section">
-        <h2>Step 3: Choose Your Style</h2>
+        <h3 class="tiny">Step 3:</h3>
+        <h2>choose your style</h2>
         <div class="design-styles">
-            <h3>Map Color:</h3>
+            <h3 class="title">Map Color:</h3>
             <ul class="map-style">
                 <li data-color="light" class="selected">
                     <div class="preview" style="background:#d7d7d7;"></div>
@@ -43,7 +45,7 @@
                     No Map
                 </li>
             </ul>
-            <h3>Dot Color:</h3>
+            <h3 class="title">Dot Color:</h3>
             <ul class="dot-style">
                 <li data-color="FF3FB4" class="selected">
                     <div class="preview" style="background:#FF3FB4;"></div>
@@ -62,7 +64,7 @@
                     White
                 </li>
             </ul>
-            <h3>Country Outlines:</h3>
+            <h3 class="title">Country Outlines:</h3>
             <ul class="country-style">
                 <li data-color="on" class="selected">
                     <div class="preview" style="border:1px solid #808080;"></div>
@@ -80,7 +82,8 @@
 
 {% block addons %}
     <div id="product" class="section">
-        <h2>Step 4: Choose Your Size</h2>
+        <h3 class="tiny">Step 4:</h3>
+        <h2>choose your size</h2>
         <div id="product-preview">
             <div class="wrapper" id="wrapper-large_poster">
                 <div class="ring-frame">

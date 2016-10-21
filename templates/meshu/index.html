@@ -13,7 +13,7 @@
 		<img class="banner" id="banner-2" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_02.jpg" style="display: none;">
 		<img class="banner" id="banner-3" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_01.jpg" style="display:none;">
 		<div id="intro-text">
-			<span class="meshu-title">Make memories.</span><br/>
+			<span class="meshu-title">make memories.</span><br/>
 			Whether it's for a friend, a loved one, or yourself, Meshu helps you make beautiful mementos from the places that are important to you.
 		</div>
 		<div class="large-button">
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 
-	<h2 class="big" style="margin-bottom: 20px">Each Meshu is custom-made, and designed by you:</h2>
+	<h2 class="big" style="margin-bottom: 20px">each meshu is custom-made, and designed by you:</h2>
 	<div class="explanation-wrapper">
 		<div class="one-third">
 			<a href="/make/orbit">
@@ -50,7 +50,7 @@
 		</div>
 	</div>
 
-	<h2 class="big">Here's how it works:</h2>
+	<h2 class="big">how it works:</h2>
 
     <ul id="diagram">
         <li>
@@ -73,14 +73,14 @@
     <a href="/make/arc" class="product-shot print">
     	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="float: left;">
     	<div class="text">
-	    	<h3>Trace your travels.</h3>
+	    	<h3>trace your travels</h3>
 	    	<p>Accentuate your home with maps of your journeys.</p>
 	    	<div class="button pink">Make a print</div>
     	</div>
     </a>
     <a class="product-shot new" href="/make/facet">
     	<img src="{{ STATIC_URL }}images/index/rings.jpg">
-    	<h3>Put a ring on it.</h3>
+    	<h3>put a ring on it</h3>
     	<p>Introducing meshu rings, 3D-printed in silver, brass, and nylon.</p>
     	<div class="button pink">Make a ring</div>
     </a>
@@ -100,23 +100,29 @@
     </ul>
     <a class="product-shot old" href="/make/grid">
     	<img src="{{ STATIC_URL }}images/index/grid.jpg">
-    	<h3>Hometown Pride.</h3>
+    	<h3>hometown pride</h3>
     	<p>Created from the streets <br>around your home.</p>
     	<div class="button pink">Make a Grid</div>
     </a>
 
 
-	<h2 class="big">Each Meshu tells a story:</h2>
+	<!-- <h2 class="big">Each Meshu tells a story:</h2>
 
 	<div id="banners">
 		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/index/note_banners/macro0.jpg" />
 		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/index/note_banners/macro1.jpg" style="display: none;"/>
 		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/index/note_banners/macro2.jpg" style="display: none;"/>
 		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
-	</div>
+	</div> -->
+
+<!-- 	<div class="inspired">
+		<h2>get inspired!</h2>
+		<h2>visit our gallery</h2>
+		<div class="button">go to gallery</div>
+	</div> -->
 
 	<div class="press-container">
-		<h2 class="big">Meshu in the press:</h2>
+		<h2 class="big">meshu in the press:</h2>
 		<div class="press-images">
 			<div style="width: 280px;" class="double">
 				<a href="http://www.trendhunter.com/trends/meshu-jewelry#!/photos/154827/1" target="_blank"><img src="{{ STATIC_URL }}images/press/1_trendhunter.jpg"/></a>
@@ -139,10 +145,10 @@
 		</div>
 	</div>
 
-	<div class="get-started">
+	<div class="get-started" style="margin: 100px 0; clear: both">
 		<img src="{{ STATIC_URL }}images/index/footer.jpg" style="float: right;">
 		<div class="text">
-			<h2 class="big">Ready to get started?</h2>
+			<h2 class="big">ready to get started?</h2>
 			<div class="options">
 				<a class="option" href="/gallery/">View Our Gallery</a>
 				<a class="option pink" href="/make/">Make Your Own!</a>
@@ -168,9 +174,7 @@ document.write(name + '@' + domain + '</a>');
 
     {% if debug == false %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/min/index.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/min/foursquare.min.js"></script>
     {% else %}
 	<script type="text/javascript" src="{{ STATIC_URL }}js/index.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/foursquare.js"></script>
 	{% endif %}
 {% endblock %}

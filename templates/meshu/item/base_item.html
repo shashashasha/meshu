@@ -19,8 +19,8 @@
     {% block edit %}
         <div id="edit" class="section">
             <div id="search" class="edit-panel">
+                <h3 class="tiny">Step 1:</h3>
                 <h2>{% block page_title %}{% endblock %}</h2>
-                <p class="note">Add places by searching, or clicking on the map.</p>
                 <input type="text" id="searchbox" size="29" value="add a city, place, or address"
                     onfocus="value=''"/>
                 <div class="loading"></div>
@@ -50,7 +50,8 @@
     {% block object %}
         <div id="product" class="section">
             {% block saveExit %}<div id="save-and-view" class="button nav">save meshu and exit</div>{% endblock %}
-            <h2>Step 2: Choose Your Style</h2>
+            <h3 class="tiny">Step 2:</h3>
+            <h2>choose your style</h2>
             <div id="product-preview">
                 {% block products %}
                 {% endblock %}
@@ -60,7 +61,8 @@
 
     {% block make %}
         <div id="materials" class="section">
-            <h2>Step 3: Choose Your Material</h2>
+            <h3 class="tiny">Step 3:</h3>
+            <h2>choose your material</h2>
             <ul id="material-list">
                 {% block materials %}
                 {% endblock %}
@@ -70,7 +72,8 @@
 
     {% block addons %}
         <div id="add-ons" class="section">
-            <h2>Step 4: Finishing Touches</h2>
+            <h3 class="tiny">Step 4:</h3>
+            <h2>finishing touches</h2>
             <div class="two-third">
                 <img src="{{ STATIC_URL }}images/index/diagrams/postcard_shoot_web.jpg" style="width: 100%; height: 297px;">
                 <div class="postcard-form">
@@ -88,7 +91,7 @@
 
     {% block checkout %}
         <div id="review" class="section last">
-            <h2>All Set?</h2>
+            <h2>all set?</h2>
             <form action="/cart/add/" method="POST" id="order-form" name="order-form">
                 {# put a csrf token in every form in django, for security #}
                 {% csrf_token %}

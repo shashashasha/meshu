@@ -49,7 +49,7 @@ body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
     font-weight: 300;
-    background-color: rgba(187, 187, 187, 0.1);
+    /*background-color: rgba(187, 187, 187, 0.1);*/
 }
 
 ul {
@@ -68,12 +68,21 @@ h2 {
 }
 
 h2.page-header {
-    padding-left: 20px;
     margin: 20px 0;
 }
 
 h2.content-header {
     margin: 50px 0 20px 0;
+}
+
+h3.tiny {
+    font-weight: 100;
+    font-family: Helvetica Neue;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 18px;
+    margin: 0;
+    color: #808080;
 }
 
 a {
@@ -109,7 +118,7 @@ image {
 
 #top {
     width: @pageWidth;
-    margin: 30px auto 0;
+    margin: 30px auto 20px;
     position: relative;
 }
 
@@ -136,9 +145,13 @@ h1#meshu {
         display: inline-block;
         margin-right: 20px;
         cursor: pointer;
+        color: @pink;
+        a {
+            color: @pink;
+        }
 
         &:hover, &:hover a {
-            color: @pink;
+            color: black;
         }
 
         &.inactive {
@@ -149,7 +162,7 @@ h1#meshu {
         }
     }
     .num {
-        color: @blue;
+        color: black;
     }
     #nav-cart:hover .num {
         color: @pink;
@@ -602,6 +615,19 @@ body.win #login-form ul {
     height: 200px;
 }
 
+.inspired {
+    width: 100%;
+    background: @pink;
+    height: 500px;
+    text-align: center;
+    clear: both;
+    h2 {
+        font-size: 48px;
+        color: white;
+        font-weight: bold;
+    }
+}
+
 #banners {
     position: relative;
     clear: both;
@@ -617,7 +643,8 @@ body.win #login-form ul {
 }
 .press-container {
     height: 250px;
-    margin: 20px 0 40px;
+    margin: 20px 0 100px;
+    clear: both;
     .big {
         margin-bottom: 20px;
     }
@@ -717,6 +744,7 @@ body.win #login-form ul {
 }
 
 #footer {
+    clear: both;
     margin-bottom: 50px;
 }
 
@@ -730,21 +758,20 @@ body.win #login-form ul {
 #content {
     width: @pageWidth;
     margin: 0 auto 50px auto;
-    border: 1px solid @borderGrey;
     min-height: 600px;
     position: relative;
-    overflow: hidden;
-    .shadow();
+    /*overflow: hidden;*/
+    /*.shadow();*/
     opacity: 1;
     .transition(opacity);
     background-color: white;
 }
 #content .section {
     width: 100%;
-    border-bottom: 1px dashed @grey;
+    border-top: 1px solid black;
+    padding-top: 20px;
     .borderBox();
     position: relative;
-    padding: 20px;
     background-color: white;
 }
 #content .section.last {
@@ -794,7 +821,7 @@ body.win #login-form ul {
 */
 
 #edit.section {
-    height: 601px;
+    height: 641px;
     padding: 0;
 }
 .edit-panel {
@@ -839,7 +866,7 @@ body.win #login-form ul {
 }
 
 #search {
-    padding: 20px;
+    padding-top: 20px;
 }
 #edit-footer {
     height: 47px;
@@ -852,7 +879,7 @@ body.win #login-form ul {
 }
 
 #search h2, #places h2 {
-    margin: 0 0 5px;
+    margin: 0 0 25px;
 }
 #search input {
     border: 1px solid @blue;
@@ -1052,7 +1079,6 @@ body.win .notch {
     opacity: 1;
     .transition(opacity);
     width: 360px;
-    padding: 0 20px;
 }
 #places.inactive {
     display: none;
@@ -1257,8 +1283,8 @@ body.firefox .place .place-text {
     height: 600px;
     position: absolute;
     right: 0px;
-    top: 0;
-    border-left: 1px solid @borderGrey;
+    top: 20px;
+    border: 1px solid @borderGrey;
 }
 #meshu-container > div {
     top: 0;
@@ -1342,7 +1368,7 @@ body.ie .frame div {
     position: absolute;
     height: 80px;
     width: 50px;
-    top: 170px;
+    top: 210px;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -1432,14 +1458,14 @@ body.ie .frame div {
   to   { -webkit-transform: rotateY(360deg)}}
 
 #product {
-    height: 860px;
+    height: 900px;
 }
 /*.chrome #product { height: 490px; }*/
 .radial #product,
 .orbit #product,
 .print #product,
 .streets #product {
-    height: 490px;
+    height: 530px;
 }
 /*.print #product {
     height: 525px;   
@@ -1460,6 +1486,7 @@ body.ie .frame div {
     width: 300px;
     height: 365px;
     border: 2px solid white;
+    border-radius: 10px;
     padding: 5px;
     cursor: pointer;
     position: relative;
@@ -1723,13 +1750,15 @@ body.ie .frame div {
     left: 7px;
 }
 #materials {
-    height: 460px;
+    height: 500px;
 }
 #add-ons {
-    height: 540px;
+    height: 600px;
 }
-.add-on-header {
+.section .add-on-header {
     font-size: 22px;
+    font-weight: lighter;
+    margin: 20px 0 0;
 }
 #final-rotate, #final-ring {
     display: none;
@@ -2024,7 +2053,9 @@ body.ie8 .city-input {
     margin-top: 0;
 }
 .section h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 30px 0;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 #material-list {
@@ -2034,7 +2065,8 @@ body.ie8 .city-input {
         cursor: pointer;
         font-size: 22px;
         border: 2px solid white;
-        padding: 6px;
+        padding: 6px 12px;
+        border-radius: 10px;
         color: #808080;
         width: 33.3%;
         float: left;
@@ -2061,11 +2093,8 @@ body.ie8 .city-input {
         float: right;
     }
     .img {
-        margin-bottom: 2px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 6px;
+        display: block;
+        margin: 0 auto 2px;
     }
 }
 .img-wrapper {
@@ -2190,11 +2219,16 @@ body.ie8 .city-input {
 }
 
 #submit-button, #add-to-cart {
-    border: none;
+    border: 2px solid @pink;
+    color: @pink;
+    background: transparent;
+    border-radius: 10px;
+    padding: 8px 25px !important;
+    text-transform: lowercase;
     font-size: 22px;
     padding: 5px 10px;
     position: absolute;
-    bottom: 20px;
+    bottom: 0px;
     right: 20px;
     margin: 0;
 }
@@ -2203,7 +2237,8 @@ body.ie8 .city-input {
     right: 0;
 }
 #submit-button.inactive, #add-to-cart.inactive {
-    background-color: @grey;
+    border-color: @grey;
+    color: @grey;
     cursor: auto;
     pointer-events: none;
 }
@@ -2258,7 +2293,7 @@ path {
 }
 .print #projection,
 .print #design {
-    height: 540px;
+    height: 580px;
 }
 .print .projection-preview {
     width: 575px;
@@ -2310,6 +2345,7 @@ path {
     margin: 0 10px 10px 0;
     text-transform: capitalize;
     border: 2px solid white;
+    border-radius: 10px;
     padding: 5px;
     color: @grey;
     text-align: center;
@@ -2351,7 +2387,7 @@ path {
     stroke-width: 1;
     stroke-opacity: .25;
 }
-#design h3 {
+#design .title {
     font-size: 18px;
     font-weight: normal;
     color: @grey;
@@ -2362,6 +2398,7 @@ path {
 }
 #design li {
     border: 2px solid @borderGrey;
+    border-radius: 10px;
     display: inline-block;
     width: 75px;
     padding: 5px;
@@ -2500,21 +2537,17 @@ circle {
         height: 100% !important;
     }
 }
-#make-landing {
+/*#make-landing {
     position: absolute;
     top: 80px;
     left: 90px;
-    /*left: 155px;*/
     width: 780px;
-    /*width: 660px;*/
     height: 535px;
-    /*height: 400px;*/
     z-index: 4;
-    background: white;
     border: 1px solid @borderGrey;
+    background: white;
     padding: 20px;
-    .shadow(100px);
-}
+}*/
 
 .content-banner {
     margin: auto;
@@ -2524,40 +2557,34 @@ circle {
     padding: 10px 0 20px 0;
 }
 
-.splitimages, .bigimage {
+#make-landing {
+    width: 700px;
+    margin: 0 auto;
+}
+.splitimages {
+    display: inline-block;
+    width: 50%;
     float: left;
-    width: 31.3%;
-    /*width: 44%;*/
-    margin: 0 1% 0;
-    border: 1px solid @borderGrey;
-    box-sizing: border-box;
-
+    position: relative;
+    margin-bottom: 50px;
     img {
+        margin: 0 auto;
+        display: block;
+    }
+    .overlay {
         width: 100%;
         height: 100%;
-        cursor: pointer;
+        background: rgba(255, 255, 255, 0.66);
+        position: absolute;
+        top: 0;
+        text-align: center;
+        padding-top: 120px;
+        font-size: 56px;
+        display: none;
     }
-
-    .button {
-        width: 100%;
-        margin: -3px 0 0 0;
-        padding: 3px 0;
+    &:hover .overlay {
         display: block;
-        font-size: 18px;
-        background-color: @blue;
     }
-    &:hover {
-        .shadow(20px, rgba(0, 0, 0, .25));
-
-        .button {
-            background-color: @pink;
-        }
-    }
-}
-.bigimage {
-    width: 98%;
-    height: 120px;
-    margin-top: 20px;
 }
 
 
@@ -2637,8 +2664,11 @@ circle {
         position: absolute;
         background: rgba(255, 255, 255, .8);
         bottom: 0;
-        color: @grey;
         border-top: 1px solid @borderGrey;
+        display: none;
+    }
+    &:hover .text-block {
+        display: block;
     }
     .title {
         font-size: 18px;
@@ -2718,11 +2748,10 @@ circle {
     font-size: 14px;
 }
 .cart-message {
-    padding-left:20px;
-    color: @blue;
+    color: @grey;
 }
 .cart-wrapper {
-    padding: 50px 20px 40px;
+    padding: 50px 0px 40px;
 }
 #cart {
     width: 100%;
@@ -2811,18 +2840,16 @@ circle {
     width: 100%;
 }
 .total-inside {
-    width: 40%;
+    width: 50%;
     float: right;
     border-bottom: 1px solid @borderGrey;
-    margin-right: 20px;
-    padding: 0 0 20px 20px;
+    padding-bottom: 20px;
     .borderBox();
 }
 .total-wrapper span {
     width: 140px;
     float: right;
     text-align: right;
-    margin-right: 60px;
 }
 .total-wrapper h2 {
     font-size: 24px;
@@ -2838,14 +2865,18 @@ circle {
 }
 .action-buttons {
     clear: both;
-    margin: 200px 20px 20px 0;
+    margin: 150px 0 20px;
     height: 50px;
 }
 .action-buttons .button {
     float: right;
     font-size: 22px;
-    padding: 5px 11px;
+    padding: 8px 25px;
     margin-left: 10px;
+    color: @pink;
+    border: 2px solid @pink;
+    background: transparent;
+    border-radius: 10px;
 }
 
 /*
@@ -2880,6 +2911,10 @@ circle {
 }
 #checkout {
     margin-top: 10px;
+    h2 {
+        font-weight: lighter;
+        font-size: 28px;
+    }
 }
 .section .review-header {
     margin-top: 20px;
@@ -2894,7 +2929,6 @@ circle {
     width: 50%;
     position: absolute;
     top: 375px;
-    left: 20px;
 }
 .coupon .review-header {
     float: left;
@@ -2903,7 +2937,7 @@ circle {
 }
 .coupon #coupon-code {
     float: left;
-    margin-top: 3px;
+    margin-top: 8px;
 }
 #payment-form, .half {
     height: 100%;
