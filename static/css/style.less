@@ -385,9 +385,10 @@ body.win #login-form ul {
 }
 
 .big {
-    font-size: 32px;
+    font-size: 36px;
     text-align: center;
     margin-top: 55px;
+    font-weight: bold;
 }
 .centered {
     margin: 20px 20px 0 20px;
@@ -400,6 +401,7 @@ body.win #login-form ul {
     height: 400px;
     background-color: #ddd;
     padding: 20px;
+    margin-bottom: 100px;
     .borderBox();
 
     img {
@@ -408,21 +410,8 @@ body.win #login-form ul {
         left: 0;
     }
 
-    #intro-text {
-        font-size: 18px;
-        width: 300px;
-        margin-bottom: 160px;
-        position: relative;
-
-        .meshu-title {
-            color: @pink;
-            font-size: 28px;
-        }
-    }
-
     .large-button {
-        font-size: 22px;
-        margin-top: 20px;
+        margin-top: 30px;
         position: relative;
     }
 
@@ -435,18 +424,31 @@ body.win #login-form ul {
         float: left;
     }
 
-    .button {
-        padding: 5px 11px;
-    }
-    .button:hover {
-        background-color: @blue;
-    }
-    .button.pink:hover {
-        background-color: @pink;
-    }
-
     .minor {
         background-color: @lightGrey;
+    }
+    .hero-text {
+        position: relative;
+        color: white;
+        font-weight: bold;
+        font-size: 48px;
+        width: 300px;
+        display: block;
+        margin-left: 10px;
+        margin-top: 48px;
+    }
+}
+#intro-text {
+    font-size: 18px;
+    text-align: center;
+    color: @grey;
+    margin-bottom: 60px;
+
+    .meshu-title {
+        color: black;
+        font-weight: bold;
+        /*font-size: 48px;*/
+        margin-bottom: 5px;
     }
 }
 
@@ -493,27 +495,29 @@ body.win #login-form ul {
     margin: 0 5px;
 }*/
 
-.explanation-wrapper .one-third {
-    width: 31%;
-    margin: 10px 10px 100px 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-
-    a { display: block; }
-    &:hover {
-        .shadow(50px);
+.index-gallery {
+    .col-sm {
+        width: 284px;
     }
-    img {
-        width: 100%;
-        height: 312px;
+    .col-lg {
+        width: 430px;
+    }
+    .col-sm, .col-lg {
+        display: inline-block;
         float: left;
-        margin-bottom: 15px;
+        margin-bottom: 120px;
     }
-    .label {
-        text-align: center;
-        font-size: 18px;
-        margin-bottom: 15px;
+    a { display: block; }
+    img {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-bottom: 5%;
+        float: left;
     }
+}
+.after-gallery {
+    clear: both; 
+    margin-bottom: 50px;
 }
 
 
@@ -618,12 +622,21 @@ body.win #login-form ul {
 .inspired {
     width: 100%;
     background: @pink;
-    height: 400px;
+    height: 460px;
     text-align: center;
     clear: both;
-    h2 {
-        font-size: 48px;
+    margin-bottom: 100px;
+    img {
+        margin-top: 50px;
+    }
+    h2.big {
         color: white;
+        margin: 10px 0; 
+        font-size: 56px;
+    }
+    .button {
+        display: inline-block;
+        margin-top: 40px;
     }
 }
 
@@ -642,11 +655,11 @@ body.win #login-form ul {
 }
 .press-container {
     height: 250px;
-    margin: 20px auto 100px;
+    margin: 20px auto 200px;
     clear: both;
     width: 1000px;
     .big {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
 }
 
@@ -685,9 +698,12 @@ body.win #login-form ul {
     background-color: @grey;
 }
 
+.meshu-hero {
+    width: 100%; 
+    margin-bottom: 45px;
+}
 #diagram {
-    /*width: 1000px;*/
-    margin: 20px auto 100px;
+    margin: 20px auto 60px;
 }
 #diagram li {
     display: inline-block;
@@ -701,8 +717,14 @@ body.win #login-form ul {
     }
     p {
         text-align: center;
-        font-size: 17px;    
+        font-size: 17px;   
+        color: @grey; 
     }
+}
+.diagram-p {
+    text-align: center;
+    margin-bottom: 100px;
+    clear: both;
 }
 
 #main form {
@@ -940,26 +962,33 @@ body.win #login-form ul {
 }
 .button {
     cursor: pointer;
-    background-color: @blue;
-    color: white;
-    padding: 3px 5px;
-    margin: 4px 0;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 8px 25px;
+    margin: 0 4px 4px 0;
     text-align: center;
     display: inline;
+    text-transform: lowercase;
+    font-size: 22px;
 }
 
 .button.pink {
-    background-color: @pink;
+    border-color: @pink;
+    color: @pink;
+}
+.button.white {
+    border-color: white;
+    color: white;
 }
 .button.grey {
-    background-color: @grey;
+    border-color: @grey;
+    color: @grey;
 }
 .action-buttons .button.grey:hover {
     background-color: @grey;
 }
 
 .button:hover {
-    background-color: @pink;
     .shadow(10px, rgba(0, 0, 0, .25));
 }
 
@@ -2229,9 +2258,6 @@ body.ie8 .city-input {
 #submit-button, #add-to-cart {
     border: 2px solid @pink;
     color: @pink;
-    background: transparent;
-    border-radius: 10px;
-    padding: 8px 25px !important;
     text-transform: lowercase;
     font-size: 22px;
     padding: 5px 10px;
@@ -3402,94 +3428,63 @@ body.ie #maps .mini-meshu div {
             padding: 0;
             height: auto;
             background-color: white;
+            margin-bottom: 20px;
             img {
                 position: relative;
                 width: 100%;
             }
-            #intro-text {
-                margin: 10px 0 20px;
-                font-size: 14px;
-                width: 100%;
-                padding: 0 10px;
-                box-sizing: border-box;
-            }
-            .large-button {
-                display: inline-block;
-                margin: 0 0 10px 10px;
-                font-size: 18px;
+            .hero-text, .large-button {
+                display: none;
             }
         }
         .big {
             font-size: 22px;
             clear: both;
         }
+        #intro-text .meshu-title {
+            font-size: 48px;
+            margin-top: 0;
+        }
         h3.tiny {
             font-weight: 300;
         }
-        /*.product-shot.new,
-        .product-shot.old {
-            display: none;
+        .diagram-p {
+            margin: 50px 0;
         }
-        .product-shot, .product-grid {
-            width: 100%;
-            height: auto;
+        .meshu-hero {
+            margin-bottom: 0px;
         }
-        .product-shot.print, .product-shot.new {
-            margin-top: 40px;
-            padding: 0;
-            height: auto;
-            background-color: white;
-            img {
+        .inspired { 
+            height: 260px;
+            img { 
+                width: 50px; 
+                margin-top: 20px;
+            }
+            .button {
+                margin-top: 20px;
+            }
+        }
+        .index-gallery {
+            .col-sm {
                 width: 100%;
-                min-width: 500px;
-            }
-            .text {
                 margin: 0;
-                right: 0;
+                img {
+                    width: 33%;
+                    display: inline-block;
+                    margin: 0;
+                }
+                &:nth-child(3) {
+                    margin-bottom: 50px;
+                }
             }
-            h3 {
-                margin-top: 10px;
-                font-size: 18px;
-            }
-            p { 
-                width: auto; 
-                font-size: 14px;
+            .col-lg {
+                display: none;
             }
         }
-        .product-grid.large {
+        .after-gallery {
             margin-bottom: 20px;
         }
-        .product-grid li {
-            height: auto;
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .product-shot img {
-            position: relative;
-        }*/
 
-        .one-third {
-            width: 30%;
-            img {
-                height: auto;
-            }
-        }
-        .product-shot, .product-grid {
-            display: none;
-        }
-
-        .line {
-            width: 46%;
-            margin: 10px 1.5% !important;
-        }
-        #banners {
-            height: auto;
-            img {
-                position: relative;
-            }
-        }
         .press-container {
             display: none;
         }
@@ -3552,6 +3547,9 @@ body.ie #maps .mini-meshu div {
     .product-shot, .product-grid {
         display: none;
     }
+    #intro-text .meshu-title {
+        font-size: 36px !important;
+    }
 /*    .product-shot.print {
         img { margin-bottom: 20px; }
         .text {
@@ -3580,7 +3578,7 @@ body.ie #maps .mini-meshu div {
         margin: 0;
         li {
             display: inline-block;
-            margin: 0 1% 30px;
+            margin: 0 1% 50px;
             width: 30%;
             height: auto;
             float: left;

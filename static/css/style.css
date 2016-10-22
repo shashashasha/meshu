@@ -318,9 +318,10 @@ body.win #login-form ul {
   width: 50px;
 }
 .big {
-  font-size: 32px;
+  font-size: 36px;
   text-align: center;
   margin-top: 55px;
+  font-weight: bold;
 }
 .centered {
   margin: 20px 20px 0 20px;
@@ -333,6 +334,7 @@ body.win #login-form ul {
   height: 400px;
   background-color: #ddd;
   padding: 20px;
+  margin-bottom: 100px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -342,19 +344,8 @@ body.win #login-form ul {
   top: 0;
   left: 0;
 }
-#photos #intro-text {
-  font-size: 18px;
-  width: 300px;
-  margin-bottom: 160px;
-  position: relative;
-}
-#photos #intro-text .meshu-title {
-  color: #ff3fb4;
-  font-size: 28px;
-}
 #photos .large-button {
-  font-size: 22px;
-  margin-top: 20px;
+  margin-top: 30px;
   position: relative;
 }
 #photos .minor-actions {
@@ -365,17 +356,31 @@ body.win #login-form ul {
   line-height: 1.7;
   float: left;
 }
-#photos .button {
-  padding: 5px 11px;
-}
-#photos .button:hover {
-  background-color: #1fcaff;
-}
-#photos .button.pink:hover {
-  background-color: #ff3fb4;
-}
 #photos .minor {
   background-color: #8f8f8f;
+}
+#photos .hero-text {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  font-size: 48px;
+  width: 300px;
+  display: block;
+  margin-left: 10px;
+  margin-top: 48px;
+}
+#intro-text {
+  font-size: 18px;
+  text-align: center;
+  color: #808080;
+  margin-bottom: 60px;
+}
+#intro-text .meshu-title {
+  color: black;
+  font-weight: bold;
+  /*font-size: 48px;*/
+
+  margin-bottom: 5px;
 }
 .line {
   width: 466px;
@@ -418,30 +423,30 @@ body.win #login-form ul {
     width: 30%;
     margin: 0 5px;
 }*/
-.explanation-wrapper .one-third {
-  width: 31%;
-  margin: 10px 10px 100px 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+.index-gallery .col-sm {
+  width: 284px;
 }
-.explanation-wrapper .one-third a {
+.index-gallery .col-lg {
+  width: 430px;
+}
+.index-gallery .col-sm,
+.index-gallery .col-lg {
+  display: inline-block;
+  float: left;
+  margin-bottom: 120px;
+}
+.index-gallery a {
   display: block;
 }
-.explanation-wrapper .one-third:hover {
-  -webkit-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
-}
-.explanation-wrapper .one-third img {
-  width: 100%;
-  height: 312px;
+.index-gallery img {
+  width: 95%;
+  margin-left: 2.5%;
+  margin-bottom: 5%;
   float: left;
-  margin-bottom: 15px;
 }
-.explanation-wrapper .one-third .label {
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 15px;
+.after-gallery {
+  clear: both;
+  margin-bottom: 50px;
 }
 .product-shot {
   height: 400px;
@@ -553,13 +558,22 @@ body.win #login-form ul {
 .inspired {
   width: 100%;
   background: #ff3fb4;
-  height: 400px;
+  height: 460px;
   text-align: center;
   clear: both;
+  margin-bottom: 100px;
 }
-.inspired h2 {
-  font-size: 48px;
+.inspired img {
+  margin-top: 50px;
+}
+.inspired h2.big {
   color: white;
+  margin: 10px 0;
+  font-size: 56px;
+}
+.inspired .button {
+  display: inline-block;
+  margin-top: 40px;
 }
 #banners {
   position: relative;
@@ -575,12 +589,12 @@ body.win #login-form ul {
 }
 .press-container {
   height: 250px;
-  margin: 20px auto 100px;
+  margin: 20px auto 200px;
   clear: both;
   width: 1000px;
 }
 .press-container .big {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 .press-images {
   width: 939px;
@@ -614,10 +628,12 @@ body.win #login-form ul {
 .call .shop {
   background-color: #808080;
 }
+.meshu-hero {
+  width: 100%;
+  margin-bottom: 45px;
+}
 #diagram {
-  /*width: 1000px;*/
-
-  margin: 20px auto 100px;
+  margin: 20px auto 60px;
 }
 #diagram li {
   display: inline-block;
@@ -633,6 +649,12 @@ body.win #login-form ul {
 #diagram li p {
   text-align: center;
   font-size: 17px;
+  color: #808080;
+}
+.diagram-p {
+  text-align: center;
+  margin-bottom: 100px;
+  clear: both;
 }
 #main form {
   margin: 50px 0;
@@ -866,24 +888,31 @@ body.win #login-form ul {
 }
 .button {
   cursor: pointer;
-  background-color: #1fcaff;
-  color: white;
-  padding: 3px 5px;
-  margin: 4px 0;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 8px 25px;
+  margin: 0 4px 4px 0;
   text-align: center;
   display: inline;
+  text-transform: lowercase;
+  font-size: 22px;
 }
 .button.pink {
-  background-color: #ff3fb4;
+  border-color: #ff3fb4;
+  color: #ff3fb4;
+}
+.button.white {
+  border-color: white;
+  color: white;
 }
 .button.grey {
-  background-color: #808080;
+  border-color: #808080;
+  color: #808080;
 }
 .action-buttons .button.grey:hover {
   background-color: #808080;
 }
 .button:hover {
-  background-color: #ff3fb4;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -2180,9 +2209,6 @@ body.ie8 .city-input {
 #add-to-cart {
   border: 2px solid #ff3fb4;
   color: #ff3fb4;
-  background: transparent;
-  border-radius: 10px;
-  padding: 8px 25px !important;
   text-transform: lowercase;
   font-size: 22px;
   padding: 5px 10px;
@@ -3319,98 +3345,65 @@ body.ie #maps .mini-meshu div {
   }
   #content {
     width: 100%;
-    /*.product-shot.new,
-          .product-shot.old {
-              display: none;
-          }
-          .product-shot, .product-grid {
-              width: 100%;
-              height: auto;
-          }
-          .product-shot.print, .product-shot.new {
-              margin-top: 40px;
-              padding: 0;
-              height: auto;
-              background-color: white;
-              img {
-                  width: 100%;
-                  min-width: 500px;
-              }
-              .text {
-                  margin: 0;
-                  right: 0;
-              }
-              h3 {
-                  margin-top: 10px;
-                  font-size: 18px;
-              }
-              p { 
-                  width: auto; 
-                  font-size: 14px;
-              }
-          }
-          .product-grid.large {
-              margin-bottom: 20px;
-          }
-          .product-grid li {
-              height: auto;
-              img {
-                  width: 100%;
-                  height: 100%;
-              }
-          }
-          .product-shot img {
-              position: relative;
-          }*/
-  
   }
   #content #photos {
     padding: 0;
     height: auto;
     background-color: white;
+    margin-bottom: 20px;
   }
   #content #photos img {
     position: relative;
     width: 100%;
   }
-  #content #photos #intro-text {
-    margin: 10px 0 20px;
-    font-size: 14px;
-    width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
+  #content #photos .hero-text,
   #content #photos .large-button {
-    display: inline-block;
-    margin: 0 0 10px 10px;
-    font-size: 18px;
+    display: none;
   }
   #content .big {
     font-size: 22px;
     clear: both;
   }
+  #content #intro-text .meshu-title {
+    font-size: 48px;
+    margin-top: 0;
+  }
   #content h3.tiny {
     font-weight: 300;
   }
-  #content .one-third {
-    width: 30%;
+  #content .diagram-p {
+    margin: 50px 0;
   }
-  #content .one-third img {
-    height: auto;
+  #content .meshu-hero {
+    margin-bottom: 0px;
   }
-  #content .product-shot,
-  #content .product-grid {
+  #content .inspired {
+    height: 260px;
+  }
+  #content .inspired img {
+    width: 50px;
+    margin-top: 20px;
+  }
+  #content .inspired .button {
+    margin-top: 20px;
+  }
+  #content .index-gallery .col-sm {
+    width: 100%;
+    margin: 0;
+  }
+  #content .index-gallery .col-sm img {
+    width: 33%;
+    display: inline-block;
+    margin: 0;
+  }
+  #content .index-gallery .col-sm:nth-child(3) {
+    margin-bottom: 50px;
+  }
+  #content .index-gallery .col-lg {
     display: none;
   }
-  #content .line {
-    width: 46%;
-    margin: 10px 1.5% !important;
-  }
-  #content #banners {
-    height: auto;
-  }
-  #content #banners img {
-    position: relative;
+  #content .after-gallery {
+    margin-bottom: 20px;
   }
   #content .press-container {
     display: none;
@@ -3473,6 +3466,9 @@ body.ie #maps .mini-meshu div {
   .product-grid {
     display: none;
   }
+  #intro-text .meshu-title {
+    font-size: 36px !important;
+  }
   /*    .product-shot.print {
           img { margin-bottom: 20px; }
           .text {
@@ -3503,7 +3499,7 @@ body.ie #maps .mini-meshu div {
   }
   #diagram li {
     display: inline-block;
-    margin: 0 1% 30px;
+    margin: 0 1% 50px;
     width: 30%;
     height: auto;
     float: left;
