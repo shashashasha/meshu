@@ -912,12 +912,8 @@ body.win #login-form ul {
     margin: 0 0 25px;
 }
 #search input {
-    border: 1px solid @blue;
+    border: 1px solid @grey;
     font-size: 16px;
-
-    &:hover {
-        border: 1px solid @pink;
-    }
 }
 #autocomplete {
     position: absolute;
@@ -993,8 +989,11 @@ body.win #login-form ul {
 }
 
 #search-button {
-    font-size: 19px;
-    padding: 3px 8px 4px 8px;
+    font-size: 18px;
+    padding: 2px 8px 3px;
+    border: 1px solid @grey;
+    border-radius: 0;
+    color: @grey;
 
     &:hover {
         .shadow(10px, rgba(0, 0, 0, .1));
@@ -1713,7 +1712,9 @@ body.ie .frame div {
     position: absolute;
     right: 20px;
     margin: 0;
-    background-color: @grey;
+    color: @grey;
+    border-color: @grey;
+    background: white;
 }
 
 .social-media {

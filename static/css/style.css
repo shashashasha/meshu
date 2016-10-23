@@ -841,11 +841,8 @@ body.win #login-form ul {
   margin: 0 0 25px;
 }
 #search input {
-  border: 1px solid #1fcaff;
+  border: 1px solid #808080;
   font-size: 16px;
-}
-#search input:hover {
-  border: 1px solid #ff3fb4;
 }
 #autocomplete {
   position: absolute;
@@ -918,8 +915,11 @@ body.win #login-form ul {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 #search-button {
-  font-size: 19px;
-  padding: 3px 8px 4px 8px;
+  font-size: 18px;
+  padding: 2px 8px 3px;
+  border: 1px solid #808080;
+  border-radius: 0;
+  color: #808080;
 }
 #search-button:hover {
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -1659,7 +1659,9 @@ body.ie .frame div {
   position: absolute;
   right: 20px;
   margin: 0;
-  background-color: #808080;
+  color: #808080;
+  border-color: #808080;
+  background: white;
 }
 .social-media {
   clear: both;
