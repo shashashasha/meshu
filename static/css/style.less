@@ -2258,6 +2258,7 @@ body.ie8 .city-input {
 #submit-button, #add-to-cart {
     border: 2px solid @pink;
     color: @pink;
+    background: white;
     text-transform: lowercase;
     font-size: 22px;
     padding: 5px 10px;
@@ -2779,6 +2780,9 @@ circle {
 }
 .cart-message {
     color: @grey;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.5em;
 }
 .cart-wrapper {
     padding: 50px 0px 40px;
@@ -2848,11 +2852,8 @@ circle {
     display: inline-block;
     line-height: 16px;
     float: right;
-    background-color: @grey;
-    color: white;
     margin-left: 10px;
     &:hover {
-        background-color: @pink;
         .shadow(10px, rgba(0, 0, 0, .25));
     }
 }
@@ -3168,39 +3169,30 @@ body.ie #maps .mini-meshu div {
 .about-link {
     color: @pink;
 }
-.inner-content h3 {
-    font-size: 18px;
-    font-weight: normal;
-    text-align: center;
+.about-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    .one-half {
+        width: 45%;
+        margin-right: 5%;
+        float: left;
+        text-align: left;
+        margin-bottom: 100px;
+        img {
+            width: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        p {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        a {
+            color: @pink;
+        }
+    }
 }
 
-.about {
-    margin-top: 20px;
-}
-
-.about-wrapper p {
-    font-size: 18px;
-    line-height: 1.5em;
-}
-
-.about a, .paid a {
-    color: @pink;
-}
-
-.about img {
-    width: 150px;
-    float: left;
-    padding: 0 10px 0 0;
-}
-.about.right {
-    float: right;
-    text-align: right;
-}
-
-.about.right img {
-    float: right;
-    padding: 0 0 0 10px;
-}
 
 /* blog */
 #tumblr_controls {

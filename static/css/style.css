@@ -2209,6 +2209,7 @@ body.ie8 .city-input {
 #add-to-cart {
   border: 2px solid #ff3fb4;
   color: #ff3fb4;
+  background: white;
   text-transform: lowercase;
   font-size: 22px;
   padding: 5px 10px;
@@ -2732,6 +2733,9 @@ circle.highlight,
 }
 .cart-message {
   color: #808080;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.5em;
 }
 .cart-wrapper {
   padding: 50px 0px 40px;
@@ -2800,12 +2804,9 @@ circle.highlight,
   display: inline-block;
   line-height: 16px;
   float: right;
-  background-color: #808080;
-  color: white;
   margin-left: 10px;
 }
 #cart .button:hover {
-  background-color: #ff3fb4;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -3111,34 +3112,28 @@ body.ie #maps .mini-meshu div {
 .about-link {
   color: #ff3fb4;
 }
-.inner-content h3 {
-  font-size: 18px;
-  font-weight: normal;
-  text-align: center;
+.about-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
 }
-.about {
-  margin-top: 20px;
-}
-.about-wrapper p {
-  font-size: 18px;
-  line-height: 1.5em;
-}
-.about a,
-.paid a {
-  color: #ff3fb4;
-}
-.about img {
-  width: 150px;
+.about-wrapper .one-half {
+  width: 45%;
+  margin-right: 5%;
   float: left;
-  padding: 0 10px 0 0;
+  text-align: left;
+  margin-bottom: 100px;
 }
-.about.right {
-  float: right;
-  text-align: right;
+.about-wrapper .one-half img {
+  width: 50%;
+  display: block;
+  margin: 0 auto 20px;
 }
-.about.right img {
-  float: right;
-  padding: 0 0 0 10px;
+.about-wrapper .one-half p {
+  margin: 20px 0;
+  font-size: 18px;
+}
+.about-wrapper .one-half a {
+  color: #ff3fb4;
 }
 /* blog */
 #tumblr_controls {
