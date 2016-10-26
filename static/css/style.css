@@ -700,12 +700,23 @@ body.win #login-form ul {
 #footer {
   clear: both;
   margin-bottom: 50px;
+  text-align: center;
 }
 #footer p {
   text-align: center;
 }
 #footer a {
   color: #ff3fb4;
+}
+#footer .social {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  opacity: .4;
+}
+#footer .social:hover {
+  opacity: .6;
 }
 #content {
   width: 1000px;
