@@ -2008,7 +2008,9 @@ body.ie8 .city-input {
   cursor: pointer;
 }
 #view.radial .show-places,
-#view.radial #display-places {
+#view.radial #display-places,
+#view.streets .show-places,
+#view.streets #display-places {
   display: none;
 }
 .view .share-buttons {
@@ -2159,9 +2161,9 @@ body.ie8 .city-input {
 }
 /* display.html actions, order, edit, share */
 .view .item-actions {
-  font-size: 14px;
+  font-size: 20px;
   float: left;
-  margin-top: 6px;
+  margin-top: 18px;
   width: auto;
 }
 .view .item-actions .nav {
