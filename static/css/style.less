@@ -324,17 +324,21 @@ body.win #login-form ul {
     height: 20px;
 }
 #login-form .login-cancel {
-    background-color: @grey;
+    border-color: @grey;
     position: absolute;
     bottom: 15px;
-    right: 90px;
+    right: 120px;
+    font-size: 14px;
+    color: @grey;
 }
 
 #login-form.account .login-cancel {
-    right: 150px;
+    right: 180px;
 }
 #login-form #login-signin, #login-form #login-account {
-    background-color: @pink;
+    border: 2px solid @pink;
+    background: transparent;
+    color: @pink;
     font-size: 14px;
     position: absolute;
     bottom: 15px;
@@ -377,11 +381,9 @@ body.win #login-form ul {
     min-height: 33px;
 }
 
-#login-form #login-account {
-    width: 110px;
-}
-#login-form #login-signin{
-    width: 50px;
+#login-form #login-account,
+#login-form #login-signin {
+    width: auto;
 }
 
 .big {
@@ -2614,20 +2616,24 @@ circle {
     width: 50%;
     float: left;
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px 0;
+    margin-top: -20px;
+
     img {
         margin: 0 auto;
         display: block;
     }
     .overlay {
-        width: 100%;
-        height: 184px;
-        background: rgba(255, 255, 255, 0.66);
-        position: absolute;
-        top: 0;
         text-align: center;
-        padding-top: 120px;
-        font-size: 56px;
+        font-size: 18px;
+        padding-top: 5px;
+    }
+    &:hover {
+        border: 2px solid @pink;
     }
 }
 
@@ -3401,30 +3407,12 @@ body.ie #maps .mini-meshu div {
 .notes li {
     margin-bottom: 20px;
 }
-@media screen and (min-width: 850px){
-    .splitimages {
-        .overlay {
-            display: none;
-        }
-        &:hover .overlay {
-            display: block;
-        }
-    }
-
-}
 @media screen and (max-width: 850px){
     #top {
         width: 100%;
         #nav {
             position: relative;
         }
-    }
-
-    .splitimages .overlay {
-        position: relative;
-        padding-top: 10px;
-        font-size: 36px;
-        height: auto;
     }
 
     #content {

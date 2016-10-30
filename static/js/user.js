@@ -36,6 +36,7 @@ var user = function() {
         });
 
         $(".login-cancel").click(self.hideModal);
+        $("#modal-bg").click(self.hideModal);
 
         // switching mode
         $("#login-form li").click(function(){
