@@ -2078,6 +2078,7 @@ body.ie8 .city-input {
 #material-list .img {
   display: block;
   margin: 0 auto 2px;
+  position: absolute;
 }
 .img-wrapper {
   width: 100%;

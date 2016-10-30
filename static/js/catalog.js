@@ -29,7 +29,7 @@ sb.catalog = function(renderer) {
 						},
 					"ring":
 						{
-						// "nylon":{"price":30,"colors":["white"]},
+						"nylon":{"price":30,"colors":["white"]},
 						"silver":{"price":105,"colors":["sterling"]},
 						"brass":{"price":95,"colors":["polished"]}
 						},
