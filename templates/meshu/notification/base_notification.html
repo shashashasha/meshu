@@ -5,31 +5,31 @@
 {% block page_type %}{{ view }}{% endblock page_type %}
 
 {% block content %}
-	<h2 id="notification" class="page-header">
-        {% if view == 'signedup' %}
-            Awesome, thank you for signing up!
-        {% endif %}
-        {% if view == 'paid' %}
-            Awesome, thank you for ordering!
-        {% endif %}
-        {% if view == 'login_error' %}
-            Oops, we don't have a user matching that email and password.
-        {% endif %}
-        {% if view == 'authorization_required' %}
-            Sorry, you need to log in to see that page.
-        {% endif %}
-        {% if view == '404' %}
-            Oh, our bad.
-        {% endif %}
-        {% if view == 'password_reset' %}
-            Your password has been reset, please check your email for instructions.
-        {% endif %}
-        {% if view == 'password_reset_success' %}
-            Sweet! You're logged in again.
-        {% endif %}
-    </h2>
     <div class="inner-content">
-    {% block message %}
-    {% endblock %}
+    	<h2 id="notification" class="page-header">
+            {% if view == 'signedup' %}
+                Thank you for signing up!
+            {% endif %}
+            {% if view == 'paid' %}
+                Thank you for your order!
+            {% endif %}
+            {% if view == 'login_error' %}
+                Oops, we don't have a user matching that email and password.
+            {% endif %}
+            {% if view == 'authorization_required' %}
+                Sorry, you need to log in to see that page.
+            {% endif %}
+            {% if view == '404' %}
+                Oh, our bad.
+            {% endif %}
+            {% if view == 'password_reset' %}
+                Your password has been reset, please check your email for instructions.
+            {% endif %}
+            {% if view == 'password_reset_success' %}
+                Sweet! You're logged in again.
+            {% endif %}
+        </h2>
+        {% block message %}
+        {% endblock %}
     </div>
 {% endblock %}
