@@ -3156,6 +3156,25 @@ body.ie #maps .mini-meshu div {
 .about-wrapper .one-half a {
   color: #ff3fb4;
 }
+.about-wrapper .one-half .question {
+  margin-bottom: 50px;
+  display: block;
+  color: #808080;
+  font-size: 16px;
+}
+.about-wrapper .one-half .question p {
+  font-size: 16px;
+  margin: 10px 0;
+  line-height: 18px;
+}
+.about-wrapper .one-half .question .q {
+  font-weight: 400;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #808080;
+  padding-bottom: 3px;
+  display: block;
+  color: black;
+}
 /* blog */
 #tumblr_controls {
   display: none;

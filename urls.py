@@ -98,6 +98,11 @@ urlpatterns += patterns('meshu.views',
 		'template': 'meshu/base_about.html'
 	}),
 
+	# faq page
+	url(r'^faq/', 'base_view', {
+		'template': 'meshu/base_faq.html'
+	}),
+
 	# radial road test
 	url(r'^radial/', 'base_view', {
 		'template': 'meshu/item/radial.html'
