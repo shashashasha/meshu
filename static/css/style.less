@@ -391,6 +391,7 @@ body.win #login-form ul {
     text-align: center;
     margin-top: 55px;
     font-weight: bold;
+    clear: both;
 }
 .centered {
     margin: 20px 20px 0 20px;
@@ -400,10 +401,10 @@ body.win #login-form ul {
     /* bit of pixel twiddling to line up with the banner photos */
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 500px;
     background-color: #ddd;
     padding: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
     .borderBox();
 
     img {
@@ -413,7 +414,7 @@ body.win #login-form ul {
     }
 
     .large-button {
-        margin-top: 30px;
+        margin: 50px 0 0 10px;
         position: relative;
     }
 
@@ -431,14 +432,13 @@ body.win #login-form ul {
     }
     .hero-text {
         position: relative;
-        color: white;
-        font-weight: bold;
         font-size: 32px;
-        width: 300px;
-        display: block;
+        width: 330px;
         margin-left: 10px;
+        display: block;
         margin-top: 48px;
         letter-spacing: .5px;
+        line-height: 1.4em;
     }
 }
 #intro-text {
@@ -508,7 +508,7 @@ body.win #login-form ul {
     .col-sm, .col-lg {
         display: inline-block;
         float: left;
-        margin-bottom: 120px;
+        margin-bottom: 70px;
     }
     a { display: block; }
     img {
@@ -624,18 +624,24 @@ body.win #login-form ul {
 
 .inspired {
     width: 100%;
-    background: @pink;
-    height: 460px;
+    background-image: url(../images/index/index_big/inspired.jpg);
+    background-size: cover;
+    background-position: 100% 0%;
+    height: 550px;
     text-align: center;
     clear: both;
     margin-bottom: 100px;
+    .text {
+        width: 50%;
+    }
     img {
         margin-top: 50px;
     }
     h2.big {
-        color: white;
+        color: black;
         margin: 10px 0; 
         font-size: 56px;
+        font-weight: normal;
     }
     .button {
         display: inline-block;
@@ -647,7 +653,7 @@ body.win #login-form ul {
     position: relative;
     clear: both;
     height: 400px;
-    margin-top: 20px;
+    margin: 40px 0 80px;
 }
 
 .macro {
@@ -658,7 +664,7 @@ body.win #login-form ul {
 }
 .press-container {
     height: 250px;
-    margin: 20px auto 200px;
+    margin: 20px auto 170px;
     clear: both;
     width: 1000px;
     .big {
@@ -3484,7 +3490,13 @@ body.ie #maps .mini-meshu div {
                 }
             }
             .col-lg {
-                display: none;
+                width: 100%;
+                margin: 0;
+                img {
+                    width: 50%;
+                    display: inline-block;
+                    margin: 0;
+                }
             }
         }
         .after-gallery {

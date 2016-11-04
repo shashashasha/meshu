@@ -10,11 +10,11 @@
 
 {% block content %}
 	<div id="photos">
-		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_01.jpg" style="">
-		<img class="banner" id="banner-1" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_02.jpg" style="display:none;">
-		<img class="banner" id="banner-2" src="{{ STATIC_URL }}images/index/index_banners/index_banners_mirror_02.jpg" style="display: none;">
-		<img class="banner" id="banner-3" src="{{ STATIC_URL }}images/index/index_banners/index_banners_chin_01.jpg" style="display:none;">
-		<span class="hero-text">meshu is custom jewelry based on the places you've been</span>
+		<img class="banner" id="banner-0" src="{{ STATIC_URL }}images/index/index_banners/slide1.jpg" style="">
+		<img class="banner" id="banner-1" src="{{ STATIC_URL }}images/index/index_banners/slide2.jpg" style="display:none;">
+		<img class="banner" id="banner-2" src="{{ STATIC_URL }}images/index/index_banners/slide3.jpg" style="display: none;">
+		<img class="banner" id="banner-3" src="{{ STATIC_URL }}images/index/index_banners/slide4.jpg" style="display:none;">
+		<span class="hero-text">custom-made jewelry, created from the places that are important to you</span>
 		<div class="large-button">
 			<a href="/make/" class="button">get started</a>
 		</div>
@@ -22,10 +22,32 @@
 			<a href="/gallery/" class="button">View Our Gallery</a>
 		</div> -->
 	</div>
-	<div id="intro-text">
-		<div class="meshu-title big">make memories</div>
+<!-- 	<div id="intro-text">
+		<div class="meshu-title big">each meshu tells a story</div>
 		meshu helps you make beautiful mementos from the places that are important to you.
-	</div>
+	</div> -->
+
+	<h2 class="big">how it works</h2>
+
+    <ul id="diagram">
+        <li>
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_01.png">
+            <p>Enter in cities you've been to,</p>
+            <p>or any places you like.</p>
+        </li>
+        <li>
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_02.png">
+            <p>We generate a meshu to order as</p>
+            <p>a necklace, earrings, ring, or a print.</p>
+        </li>
+        <li>
+            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_03.png">
+            <p>We fabricate and ship your</p>
+            <p>finished piece to you!</p>
+        </li>
+    </ul>
+
+    <p class="diagram-p"><a class="button" href="/make/">get started making</a></p>
 
 	<div class="index-gallery">
 		<div class="col-sm">
@@ -64,31 +86,6 @@
 		</div>
 	</div>
 
-	<h2 class="big after-gallery">each meshu is custom-made for you</h2>	
-	<img src="{{ STATIC_URL }}images/index/meshu-hero.jpg" class="meshu-hero">
-
-	<h2 class="big">how it works</h2>
-
-    <ul id="diagram">
-        <li>
-            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_01.png">
-            <p>Enter in cities you've been to,</p>
-            <p>or any places you like.</p>
-        </li>
-        <li>
-            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_02.png">
-            <p>We generate a meshu to order as</p>
-            <p>a necklace, earrings, ring, or a print.</p>
-        </li>
-        <li>
-            <img src="{{ STATIC_URL }}images/index/diagrams/diagrams_03.png">
-            <p>We fabricate and ship your</p>
-            <p>finished piece to you!</p>
-        </li>
-    </ul>
-
-    <p class="diagram-p"><a class="button" href="/make/">get started making</a></p>
-
     <!-- <a href="/make/arc" class="product-shot print">
     	<img src="{{ STATIC_URL }}images/index/print-banner.jpg" style="float: left;">
     	<div class="text">
@@ -125,21 +122,17 @@
     </a> -->
 
 
-<!-- 	<h2 class="big">each meshu tells a story:</h2>
+	<h2 class="big">each meshu tells a story</h2>
 
 	<div id="banners">
 		<img class="macro" id="macro-0" src="{{ STATIC_URL }}images/index/note_banners/macro0.jpg" />
 		<img class="macro" id="macro-1" src="{{ STATIC_URL }}images/index/note_banners/macro1.jpg" style="display: none;"/>
 		<img class="macro" id="macro-2" src="{{ STATIC_URL }}images/index/note_banners/macro2.jpg" style="display: none;"/>
 		<img class="macro" id="macro-3" src="{{ STATIC_URL }}images/index/note_banners/macro3.jpg" style="display: none;"/>
-	</div> -->
-
-	<div class="inspired">
-		<img src="{{ STATIC_URL }}images/logo_knockout.png" />
-		<h2 class="big">get inspired!</h2>
-		<h2 class="big">visit our gallery</h2>
-		<a class="button white" href="/gallery/">go to gallery</a>
 	</div>
+
+<!-- 	<h2 class="big after-gallery">each meshu is custom-made for you</h2>	
+	<img src="{{ STATIC_URL }}images/index/meshu-hero.jpg" class="meshu-hero"> -->
 
 	<div class="press-container">
 		<h2 class="big">meshu in the press</h2>
@@ -162,6 +155,16 @@
 			<a href="http://www.psfk.com/2012/05/foursquare-check-in-jewelry.html" target="_blank"><img src="{{ STATIC_URL }}images/press/10_psfk.jpg"/></a>
 			<a href="http://www.thrillist.com/travel/nation/meshu" target="_blank"><img src="{{ STATIC_URL }}images/press/11_thrillist.jpg"/></a>
 			<a href="http://www.jaunted.com/story/2013/4/30/13959/5180/travel/Turning+a+Trip+Itinerary+Into+Jewelry+is+the+Best+Gift+Idea+Ever" target="_blank"><img src="{{ STATIC_URL }}images/press/12_jaunted.jpg"/></a>
+		</div>
+	</div>
+
+	
+	<div class="inspired">
+		<div class="text">
+			<img src="{{ STATIC_URL }}images/logo_knockout.png" />
+			<h2 class="big">get inspired!</h2>
+			<h2 class="big">visit our gallery</h2>
+			<a class="button" href="/gallery/">go to gallery</a>
 		</div>
 	</div>
 
