@@ -572,7 +572,7 @@ body.win #login-form ul {
   width: 50%;
 }
 .inspired img {
-  margin-top: 50px;
+  margin-top: 75px;
 }
 .inspired h2.big {
   color: black;
@@ -3379,7 +3379,13 @@ body.ie #maps .mini-meshu div {
     position: relative;
     width: 100%;
   }
-  #content #photos .hero-text,
+  #content #photos .hero-text {
+    width: auto;
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 0 20px;
+    text-align: center;
+  }
   #content #photos .large-button {
     display: none;
   }
@@ -3399,6 +3405,9 @@ body.ie #maps .mini-meshu div {
   }
   #content .meshu-hero {
     margin-bottom: 0px;
+  }
+  #content #banners {
+    height: 250px;
   }
   #content .inspired {
     height: 260px;
@@ -3490,6 +3499,9 @@ body.ie #maps .mini-meshu div {
     height: auto;
     width: 70%;
     margin: 0 15% 5px;
+  }
+  #content #banners {
+    height: 150px;
   }
   .product-shot,
   .product-grid {

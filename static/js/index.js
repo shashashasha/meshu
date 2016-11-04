@@ -2,7 +2,6 @@
 	Slideshow for the index.html page
 */
 $(function() {
-	if ($(window).width() < 768) return;
 	var macroIndex = 0;
 	var macroSum = $(".macro").length;
 	setInterval(function(){
@@ -10,6 +9,8 @@ $(function() {
 		$("#macro-" + (macroIndex + 1) % macroSum).fadeIn('slow');
 		macroIndex = (macroIndex + 1) % macroSum;
 	}, 7000);
+
+	if ($(window).width() < 768) return;
 
 	var bannerIndex = 0;
 	var bannerSum = $(".banner").length;
