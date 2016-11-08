@@ -730,7 +730,7 @@ body.win #login-form ul {
 #content {
   width: 1000px;
   margin: 0 auto 100px auto;
-  min-height: 500px;
+  min-height: 550px;
   position: relative;
   /*overflow: hidden;*/
 

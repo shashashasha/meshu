@@ -48,7 +48,7 @@ if (id.split('_').length) {
 // set the viewport to be the size of our postcard at 300dpi
 front.viewportSize = back.viewportSize = { width: 1680, height: 1400 };
 // front.clipRect = back.clipRect = { top: 60, left: 0, width: 1680, height: 1275 };
-front.clipRect = back.clipRect = { top: 68, left: 8, width: 1680, height: 1275 };
+front.clipRect = back.clipRect = { top: 107, left: 8, width: 1680, height: 1275 };
 
 console.log(id, 'rendering back');
 
