@@ -123,11 +123,11 @@ sb.catalog = function(renderer) {
 					};
 
 	makeTimes = {
-		"bamboo":"2-3 Weeks",
-		"acrylic":"2-3 Weeks",
+		"bamboo":"1-2 Weeks",
+		"acrylic":"1-2 Weeks",
 		"nylon":"2-3 Weeks",
-		"silver":"3-4 Weeks",
-		"brass":"3-4 Weeks",
+		"silver":"2-3 Weeks",
+		"brass":"2-3 Weeks",
 		"unframed":"1-2 Weeks",
 		"framed":"2-3 Weeks",
 	};

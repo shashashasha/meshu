@@ -180,15 +180,15 @@ class Order(models.Model):
 
 	def get_processing_time(self):
 		if self.material == 'silver':
-			return '3-4 weeks for silver'
+			return '2-3 weeks for silver'
 		elif self.material == 'brass':
-			return '3-4 weeks for brass'
+			return '2-3 weeks for brass'
 		elif self.material == 'nylon':
-			return '3-4 weeks for nylon'
+			return '2-3 weeks for nylon'
 		elif self.material == 'acrylic':
-			return '2-3 weeks for acrylic'
+			return '1-2 weeks for acrylic'
 		elif self.material == 'bamboo':
-			return '2-3 weeks for bamboo'
+			return '1-2 weeks for bamboo'
 		elif self.material == 'unframed':
 			return '1-2 weeks for unframed prints'
 		elif self.material == 'framed':
