@@ -522,6 +522,26 @@ body.win #login-form ul {
     clear: both; 
     margin-bottom: 50px;
 }
+.index-wrapper {
+    p { 
+        text-align: center; 
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .one-third { 
+        width: 31.3%;
+        border: 2px solid @borderGrey;
+        box-sizing: border-box;
+        padding: 10px 2% 2%;
+        margin: 50px 1% 100px;
+        border-radius: 20px;
+        &:hover { border-color: @pink; }
+    }
+    .one-third img {
+        width: 100%;
+        float: left;
+    }
+}
 
 
 .product-shot {
@@ -3559,6 +3579,7 @@ body.ie #maps .mini-meshu div {
             font-size: 14px;
         }
     }
+    .index-gallery { display: none; }
     #content {
         #diagram { margin-bottom: 20px; }
         .one-third {
@@ -3567,8 +3588,7 @@ body.ie #maps .mini-meshu div {
             border: none;
             img {
                 height: auto;
-                width: 70%;
-                margin: 0 15% 5px;
+                width: 50%;
             }
         }
         #banners {
