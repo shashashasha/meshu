@@ -3548,6 +3548,10 @@ body.ie #maps .mini-meshu div {
   #diagram li p {
     font-size: 14px;
   }
+  .exp-text p {
+    font-size: 16px;
+    line-height: 22px;
+  }
   .index-gallery {
     display: none;
   }
