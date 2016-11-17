@@ -334,6 +334,12 @@ body.win #login-form ul {
   font-weight: bold;
   clear: both;
 }
+.ultra-big {
+  text-align: center;
+  font-size: 56px;
+  margin: 10px 0 50px;
+  font-weight: bold;
+}
 .centered {
   margin: 20px 20px 0 20px;
 }
@@ -3457,6 +3463,9 @@ body.ie #maps .mini-meshu div {
     font-size: 22px;
     clear: both;
   }
+  #content .ultra-big {
+    font-size: 36px;
+  }
   #content #intro-text .meshu-title {
     font-size: 48px;
     margin-top: 0;
@@ -3531,6 +3540,20 @@ body.ie #maps .mini-meshu div {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 20px;
+  }
+  #content #make-landing {
+    width: 100%;
+  }
+  #content #make-landing .splitimages {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  #content #make-landing .splitimages img {
+    width: 100%;
+  }
+  #content #make-landing .splitimages .overlay {
+    margin-bottom: 20px;
+    font-size: 16px;
   }
 }
 @media screen and (max-width: 480px) {
