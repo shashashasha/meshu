@@ -37,11 +37,12 @@
 	<div id="top">
 		<a href="/"><img src="{{ STATIC_URL }}images/logo.png" alt="meshu" width="120px"/></a>
 		{% block navigation %}
+		<img src="{{ STATIC_URL }}images/icons/hamburger.png" class="hamburger">
 		<ul id="nav">
 		    <li class="nav-list"><a href="/make/">make</a></li>
 			<li class="nav-list"><a href="/gallery/">gallery</a></li>
 			<li class="nav-list"><a href="/faq/">faq</a></li>
-			<li class="nav-list" style="margin-right: 20px; padding-right: 20px; border-right: 1px solid #000;"><a href="/about/">about</a></li>
+			<li class="nav-list about"><a href="/about/">about</a></li>
 			<!-- <li class="nav-list" style="margin-right: 20px; padding-right: 20px; border-right: 1px solid #000;"><a href="http://blog.meshu.io/">blog</a></li> -->
 			<li id="profile" {% if user.is_anonymous %}style="display: none;"{% endif %} class="nav-list"><a href="/user/">my meshus</a></li>
 			{% if cart_count > 0 %}<li class="nav-list" id="nav-cart"><a href="/cart/view">cart
@@ -189,6 +190,10 @@
 			return this;
 		};
 		$("body").detect();
+
+		$(".hamburger").click(function(){
+			$("#nav").slideToggle();
+		});
     </script>
 
 	{% block script %}

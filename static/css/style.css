@@ -79,6 +79,9 @@ h1#meshu {
   margin: 0;
   font-weight: 300;
 }
+.hamburger {
+  display: none;
+}
 #nav {
   position: absolute;
   bottom: 4px;
@@ -96,6 +99,11 @@ h1#meshu {
   margin-right: 20px;
   cursor: pointer;
   color: #ff3fb4;
+}
+#nav li.about {
+  margin-right: 20px;
+  padding-right: 20px;
+  border-right: 1px solid #000;
 }
 #nav li a {
   color: #ff3fb4;
@@ -3392,7 +3400,27 @@ body.ie #maps .mini-meshu div {
     width: 100%;
   }
   #top #nav {
+    display: none;
     position: relative;
+    text-align: right;
+  }
+  #top #nav li {
+    display: block;
+    margin: 0;
+    padding: 7px 10px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  #top #nav li.about {
+    margin: 0;
+    padding: 7px 10px;
+    border-right: none;
+  }
+  #top .hamburger {
+    display: block;
+    width: 30px;
+    height: 30px;
+    float: right;
+    cursor: pointer;
   }
   #content {
     width: 100%;
@@ -3506,9 +3534,6 @@ body.ie #maps .mini-meshu div {
   }
 }
 @media screen and (max-width: 480px) {
-  #nav {
-    margin: 5px 0;
-  }
   #diagram li {
     display: block;
     margin: 0 auto;
@@ -3570,9 +3595,6 @@ body.ie #maps .mini-meshu div {
   }
 }
 @media screen and (min-width: 480px) and (max-width: 850px) {
-  #nav {
-    text-align: right;
-  }
   #diagram {
     margin: 0;
   }

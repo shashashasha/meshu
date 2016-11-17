@@ -126,7 +126,7 @@ h1#meshu {
     margin: 0;
     font-weight: 300;
 }
-
+.hamburger { display: none; }
 #nav {
     position: absolute;
     bottom: 4px;
@@ -146,6 +146,11 @@ h1#meshu {
         margin-right: 20px;
         cursor: pointer;
         color: @pink;
+        &.about {
+            margin-right: 20px; 
+            padding-right: 20px; 
+            border-right: 1px solid #000;
+        }
         a {
             color: @pink;
         }
@@ -3458,7 +3463,27 @@ body.ie #maps .mini-meshu div {
     #top {
         width: 100%;
         #nav {
+            display: none;
             position: relative;
+            text-align: right;
+            li {
+                display: block;
+                margin: 0;
+                padding: 7px 10px;
+                border-bottom: 1px solid @borderGrey;
+                &.about {
+                    margin: 0;
+                    padding: 7px 10px;
+                    border-right: none;
+                }
+            }
+        }
+        .hamburger { 
+            display: block; 
+            width: 30px;
+            height: 30px;
+            float: right;
+            cursor: pointer;
         }
     }
 
@@ -3575,9 +3600,6 @@ body.ie #maps .mini-meshu div {
 }
 
 @media screen and (max-width: 480px){
-    #nav {
-        margin: 5px 0;
-    }
     #diagram li {
         display: block;
         margin: 0 auto;
@@ -3635,9 +3657,6 @@ body.ie #maps .mini-meshu div {
 }
 
 @media screen and (min-width: 480px) and (max-width: 850px){
-    #nav {
-        text-align: right;
-    }
     #diagram {
         margin: 0;
         li {
