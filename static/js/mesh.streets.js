@@ -95,7 +95,7 @@ function endZoom() {
   });
 }
  
-function zoomed() {
+function zoomed(event) {
   if (event && event.type == "wheel") {
     zoom.scale(projection.scale() * 2 * Math.PI);
     return;
