@@ -2686,32 +2686,19 @@ circle.highlight,
 #gallery li.object {
   float: left;
   width: 306px;
-  height: 336px;
   margin: 0 10px 40px 0;
-  border: 5px solid white;
   position: relative;
+  padding: 5px;
 }
 #gallery li.object a {
   display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 #gallery li.object img {
   width: 100%;
-  height: 306px;
-  border: 1px solid #e6e6e6;
 }
 #gallery li.object .text-block {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   width: 100%;
   padding: 2px 5px;
-  position: absolute;
   color: #808080;
 }
 #gallery li.object .title {
@@ -3430,6 +3417,7 @@ body.ie #maps .mini-meshu div {
   }
   #content {
     width: 100%;
+    min-height: auto;
   }
   #content #photos {
     padding: 0;
@@ -3541,6 +3529,9 @@ body.ie #maps .mini-meshu div {
     line-height: 20px;
     margin-bottom: 20px;
   }
+  #content.landing {
+    height: auto;
+  }
   #content #make-landing {
     width: 100%;
   }
@@ -3554,6 +3545,29 @@ body.ie #maps .mini-meshu div {
   #content #make-landing .splitimages .overlay {
     margin-bottom: 20px;
     font-size: 16px;
+  }
+  #content #gallery {
+    margin-left: 0;
+  }
+  #content #gallery li.object {
+    width: 32%;
+    height: auto;
+    border: none;
+    margin: 0 1% 0px 0;
+    box-sizing: border-box;
+  }
+  #content #gallery li.object:last-child {
+    display: none;
+  }
+  #content #gallery li.object img {
+    height: auto;
+  }
+  #content #gallery li.object .title {
+    font-size: 14px;
+  }
+  #content #gallery li.object .text-block {
+    font-size: 12px;
+    height: 55px;
   }
 }
 @media screen and (max-width: 480px) {
@@ -3589,6 +3603,13 @@ body.ie #maps .mini-meshu div {
   }
   #content #banners {
     height: 150px;
+  }
+  #content #gallery li.object {
+    width: 49%;
+    margin-bottom: 0;
+  }
+  #content #gallery li.object .text-block {
+    height: 55px;
   }
   .product-shot,
   .product-grid {
