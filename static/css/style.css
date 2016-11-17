@@ -3638,6 +3638,13 @@ body.ie #maps .mini-meshu div {
   .line h3 {
     font-size: 18px;
   }
+  .about-wrapper .one-half {
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  .about-wrapper .one-half p {
+    font-size: 16px;
+  }
 }
 @media screen and (min-width: 480px) and (max-width: 850px) {
   #diagram {
