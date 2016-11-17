@@ -891,8 +891,11 @@ body.win #login-form ul {
 }
 #edit-footer {
   height: 47px;
-  top: 553px;
+  top: 448px;
   position: absolute;
+}
+.streets #edit-footer {
+  top: ;
 }
 #search .note {
   margin: 5px 0 10px;

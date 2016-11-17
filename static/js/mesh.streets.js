@@ -505,6 +505,7 @@ setTimeout(function(){
         mesh.applyStyle(loadedMeshu.metadata);
         
         if (self.style() != undefined) {
+          console.log(self.style());
           var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); }),
             s = parseFloat(self.style().scale);
           if ($("body").hasClass("display"))
