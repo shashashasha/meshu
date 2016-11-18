@@ -14,7 +14,7 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		//$(canvas).addClass("hidden");
+		$(canvas).addClass("hidden");
 
 		// this is for ringPreview
 		// because we don't want to destroy the canvas right away
