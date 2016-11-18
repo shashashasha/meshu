@@ -14,7 +14,7 @@ sb.rasterizer = function() {
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 
-		$(canvas).addClass("hidden");
+		//$(canvas).addClass("hidden");
 
 		// this is for ringPreview
 		// because we don't want to destroy the canvas right away
@@ -145,27 +145,44 @@ sb.rasterizer = function() {
 	// create a canvas version of the mesh that we can use as a thumbnail
 	// for products, etc
 	self.thumbnail = function(meshu, callback) {
+		// meshu.mesh().bakeStyles();
+
+		// // draw the mesh object
+		// var canvas = makeCanvas(),
+		// 	frame = meshu.getFrame(),
+		// 	ctx = canvas.getContext('2d'),
+		// 	str = meshu.mesh().name == "streets" ? meshu.outputG() : meshu.outputSVG();
+
+		// // we need the canvas on the DOM to draw it
+		// frame.appendChild(canvas);
+
+		// canvg(canvas, str, {
+		// 	renderCallback: function() {
+		// 		// combine the canvases
+		// 		meshu.mesh().unBakeStyles();
+
+		// 		if (callback) {
+		// 			callback(canvas);
+		// 		}
+		// 	}
+		// });
 		meshu.mesh().bakeStyles();
+		var svgString = new XMLSerializer().serializeToString(document.getElementById('streets-svg'));
 
-		// draw the mesh object
-		var canvas = makeCanvas(),
-			frame = meshu.getFrame(),
-			ctx = canvas.getContext('2d'),
-			str = meshu.mesh().name == "streets" ? meshu.outputG() : meshu.outputSVG();
-
-		// we need the canvas on the DOM to draw it
-		frame.appendChild(canvas);
-
-		canvg(canvas, str, {
-			renderCallback: function() {
-				// combine the canvases
-				meshu.mesh().unBakeStyles();
-
-				if (callback) {
-					callback(canvas);
-				}
-			}
-		});
+		var canvas = makeCanvas();
+		var ctx = canvas.getContext("2d");
+		var DOMURL = window.URL || self.webkitURL || self;
+		var img = new Image();
+		var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+		var url = DOMURL.createObjectURL(svg);
+		img.onload = function() {
+		    ctx.drawImage(img, 0, 0);
+		    var png = canvas.toDataURL("image/png");
+		    d3.selectAll(".product-transformer").attr("src",png);
+		    DOMURL.revokeObjectURL(png);
+		};
+		img.src = url;
+		meshu.mesh().unBakeStyles();
 	};
 
 	self.ringPreview = function(meshu, callback) {

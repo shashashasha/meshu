@@ -67,13 +67,15 @@ var rasters = mapShape.select(".layer")
   
 var vSVG = mapShape.select(".layer")
     .append("div").attr("id","map-boundary")
-    .append("svg").attr("width",width).attr("height",height);
+    .append("svg").attr("id","streets-svg")
+    .attr("width",width).attr("height",height);
     
 vSVG.append("defs").append("clipPath").attr("id","circle-clip")
     .append("circle")
     .attr("cx",width/2).attr("cy",height/2).attr("r",280);
 
-vSVG.append("circle").attr("cx",width/2).attr("cy",height/2)
+vSVG.append("circle").attr("id","border")
+    .attr("cx",width/2).attr("cy",height/2)
     .attr("r",280);
 
 var svg = vSVG.append("g").attr("clip-path","url(#circle-clip)")
@@ -365,6 +367,9 @@ function renderTiles(d) {
             // Don't show small buildings at z14 or below.
             if(zoom <= 14 && layer == 'buildings' && sorted[i].values[j].properties.area < 2000) { continue }
 
+            if(zoom <=14 && zoom>=11 && sorted[i].values[j].properties.kind == 'minor_road'){ continue;}
+            if(zoom <=12 && zoom>=10 && sorted[i].values[j].properties.kind == 'major_road'){ continue;}
+
             sorted[i].values[j].layer_name = layer;
             sorted[i].values[j].display = displayFeature;
             features.push(sorted[i].values[j]);
@@ -505,7 +510,6 @@ setTimeout(function(){
         mesh.applyStyle(loadedMeshu.metadata);
         
         if (self.style() != undefined) {
-          console.log(self.style());
           var t = self.style().translate.split(",").map(function(a){ return parseFloat(a); }),
             s = parseFloat(self.style().scale);
           if ($("body").hasClass("display"))
@@ -534,16 +538,24 @@ setTimeout(function(){
         return meshuTitle || "My Meshu";
     };
     self.bakeStyles = function() {
-        var stroke = $(".streets path").css("stroke-width");
-        d3.selectAll(".streets path").attr("stroke-width",stroke).attr("fill","none");
+
+      sortFeatures();
+      d3.select("#border")
+        .attr("r",300)
+        .attr("stroke-width",15).attr("fill","none").attr("stroke","black");
+      // var stroke = $(".streets path").css("stroke-width");
+      // console.log(stroke)
+      d3.selectAll("#streets-svg path")
+        .attr("stroke-width",7).attr("fill","none").attr("stroke","black");
     };
     self.unBakeStyles = function() {
-        d3.selectAll(".streets path").attr('stroke-width','');  
+        d3.select("#border").attr("r",280)
+        d3.selectAll("#streets-svg path").attr('stroke-width','');  
     };
 
     self.outputG = function() {
       sortFeatures();
-        return $("#svg-download svg").html();
+      return $("#svg-download svg").parent().html();
     };
 
     // outputs svg data

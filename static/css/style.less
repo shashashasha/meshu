@@ -1597,8 +1597,6 @@ body.ie .frame div {
     height: 85px;
     top: 184px;
     left: 111px;
-    border: 2px solid black;
-    border-radius: 50%;
 }
 .streets #wrapper-earrings img {
     position: absolute;
@@ -1606,6 +1604,10 @@ body.ie .frame div {
     height: 80px;
     top: 125px;
     left: 150px;
+}
+.firefox.streets #wrapper-earrings img,
+.firefox.streets #wrapper-pendant img,
+.firefox.streets #wrapper-dense_pendant img {
     border: 2px solid black;
     border-radius: 50%;
 }
@@ -1909,8 +1911,9 @@ input[type="range"]::-webkit-slider-thumb {
 }
 #review .review-svg img {
     width: 100%;
-    border: 5px solid black;
-    box-sizing: border-box;
+}
+.firefox #review .review-svg img {
+    border: 2px solid black;
     border-radius: 50%;
 }
 #review .review-svg path {
@@ -2896,9 +2899,6 @@ circle {
     stroke: black;
     stroke-width: 25;
 }
-.review #cart .cart-row.streets svg {
-    border: 1px solid #808080;
-}
 #cart .button {
     padding: 3px 5px;
     font-size: 12px;
@@ -2979,6 +2979,10 @@ circle {
 .review #cart .projection-preview.meshu-svg {
     height: 32px;
     margin: 4px 0;
+}
+.review #cart .cart-row.streets svg {
+    width: 45px;
+    height: 45px;
 }
 .review #cart .meshu-svg path,
 .review #cart .meshu-svg circle {
