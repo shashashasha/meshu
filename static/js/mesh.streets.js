@@ -18,6 +18,8 @@ sb.mesh.streets = function (frame, map, width, height) {
 var width = $("#meshu-container").width(),
     height = $("#meshu-container").height();
 
+var firefox = $("body").hasClass("firefox");
+
 var tile = d3.geo.tile()
     .size([width, height]);
 
@@ -540,8 +542,9 @@ setTimeout(function(){
     self.bakeStyles = function() {
 
       sortFeatures();
+      console.log(firefox)
       d3.select("#border")
-        .attr("r",300)
+        .attr("r", firefox ? 300 : 280)
         .attr("stroke-width",15).attr("fill","none").attr("stroke","black");
       // var stroke = $(".streets path").css("stroke-width");
       // console.log(stroke)
