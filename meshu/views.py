@@ -42,8 +42,8 @@ import sha
 
 # hashed codes
 # sha.new("CODE").hexdigest()
-codes = ['0d60afad360472e420d360a7fb603f2ec2e7ebdf','300401a84d67586db775523074e0d58be6b7fc9a','4fe90519ba1e3288873b107039f3473a1e6a6183', 'e7bdea8f5c1f802c5ddb2288ac28c1995d1cfafc', 'fdee1f33572b220c782cb567f9504fcd96159163', '1d94a169ad6aca68d3b794af7c0fd6823a2c6eb9']
-amounts = [100, 50, 35, 50, 125, 125]
+codes = ['fdee1f33572b220c782cb567f9504fcd96159163', '1d94a169ad6aca68d3b794af7c0fd6823a2c6eb9', 'c2ad09e23da367fd1dce6b0c9a64273ce6c8658d']
+amounts = [125, 125, .85]
 
 # util function
 def json_dump(json):
