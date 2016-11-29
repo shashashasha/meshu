@@ -114,5 +114,5 @@ front.open(frontURL.replace('{id}', id), function (status) {
 		front.render(directory + id + '-front.png');
 		console.log(id, 'rendered front');
 		phantom.exit();
-	}, 10000);
+	}, 5000);
 });
