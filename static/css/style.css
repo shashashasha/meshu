@@ -891,11 +891,11 @@ body.win #login-form ul {
 }
 #edit-footer {
   height: 47px;
-  top: 448px;
+  top: 584px;
   position: absolute;
 }
 .streets #edit-footer {
-  top: ;
+  top: 448px;
 }
 #search .note {
   margin: 5px 0 10px;
@@ -3297,13 +3297,13 @@ body.ie #maps .mini-meshu div {
 
   /*Medium Poster*/
 
-  width: 7200px;
-  height: 5400px;
+  /*width: 7200px;
+        height: 5400px;*/
+
   /*Small Poster*/
 
-  /*  width: 3000px;
-        height: 2400px; */
-
+  width: 3000px;
+  height: 2400px;
   /*Postcard*/
 
   /*width: 1680px;

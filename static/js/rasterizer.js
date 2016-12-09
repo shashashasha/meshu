@@ -233,6 +233,7 @@ sb.rasterizer = function() {
 					bgContext;
 
 				if (typeof document.getCSSCanvasContext != 'function') {
+					if (! d3.select("#ring-preview-canvas").node()) return;
 					bgContext = d3.select("#ring-preview-canvas").node().getContext('2d');
 					$(".strip div").css("background-image", "-moz-element(#ring-preview-canvas)");
 				} else {

@@ -16,12 +16,17 @@
         <h2>
             <!-- <span>{{ meshu.title }}</span> -->
             {% if user.is_authenticated %}
-            {% if user.id == meshu.user_profile.user.id %}
+                {% if user.id == meshu.user_profile.user.id %}
+                    <div class="item-actions">
+                        <!-- <a id="order-button" class="nav active" href="{{ meshu.get_order_url }}">order meshu</a> -->
+                        <a id="reedit" class="nav active"  href="{{ meshu.get_edit_url }}">order or edit meshu</a>
+                    </div>
+                {% endif %}
+            {% else %}
                 <div class="item-actions">
                     <!-- <a id="order-button" class="nav active" href="{{ meshu.get_order_url }}">order meshu</a> -->
                     <a id="reedit" class="nav active"  href="{{ meshu.get_edit_url }}">order or edit meshu</a>
                 </div>
-            {% endif %}
             {% endif %}
         </h2>
         <p class="show-places">show places list</p>
