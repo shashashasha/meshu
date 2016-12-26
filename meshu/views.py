@@ -199,15 +199,15 @@ def submit_orders(request):
 		email = profile.user.email
 
 	# subscribing people to mailchimp
-	if request.POST.get('email_checkbox','') and email != '':
-		ms = MailSnake(settings.MAILCHIMP_KEY)
-		lists = ms.lists()
-		ms.listSubscribe(
-		    id = lists['data'][0]['id'],
-		    email_address = email,
-		    update_existing = True,
-		    double_optin = False,
-		)
+	# if request.POST.get('email_checkbox','') and email != '':
+	# 	ms = MailSnake(settings.MAILCHIMP_KEY)
+	# 	lists = ms.lists()
+	# 	ms.listSubscribe(
+	# 	    id = lists['data'][0]['id'],
+	# 	    email_address = email,
+	# 	    update_existing = True,
+	# 	    double_optin = False,
+	# 	)
 
 	# see your keys here https://manage.stripe.com/account
 	stripe.api_key = settings.STRIPE_SECRET_KEY # key the binx gave
