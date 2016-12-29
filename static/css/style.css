@@ -3288,8 +3288,17 @@ body.ie #maps .mini-meshu div {
 .postcard-true {
   background-color: #00FF66;
 }
+.print.processing {
+  margin: 0;
+}
+.print.processing #top {
+  display: none;
+}
 .print.processing #content,
 .print.processing .frame {
+  margin: 0;
+  top: 0;
+  overflow: hidden;
   /*Large Poster*/
 
   /*        width: 10800px;
@@ -3309,6 +3318,9 @@ body.ie #maps .mini-meshu div {
   /*width: 1680px;
         height: 1275px;*/
 
+}
+.print.processing #footer {
+  display: none;
 }
 .print.processing .projection-preview {
   width: 100%;

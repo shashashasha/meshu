@@ -392,6 +392,7 @@ sb.mesh.print = function (frame, map, width, height) {
              projection([Math.min(e[1].lon,180), Math.min(e[1].lat,90)])],
 
         s = Math.min(6000,(scale ? scale : .95) / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h)),
+        s = s*1,
         t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
 
         if (w == 600) {

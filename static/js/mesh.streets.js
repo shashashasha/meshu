@@ -194,6 +194,8 @@ clipGroup.append("circle").attr("cx",300).attr("cy",300)
 function sortFeatures() {
   var featureTypes = sortData();
 
+  console.log("sortFeatures")
+
     var tiles = tile.scale(zoom.scale()).translate(zoom.translate())(),
       top = tiles[0],
       k = Math.pow(2, top[2]) * 256; // size of the world in pixels
@@ -542,7 +544,6 @@ setTimeout(function(){
     self.bakeStyles = function() {
 
       sortFeatures();
-      console.log(firefox)
       d3.select("#border")
         .attr("r", firefox ? 300 : 280)
         .attr("stroke-width",15).attr("fill","none").attr("stroke","black");
